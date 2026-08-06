@@ -24,6 +24,8 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(QSize size READ get_size NOTIFY size_changed)
 	Q_PROPERTY(int width READ get_width NOTIFY size_changed)
 	Q_PROPERTY(int height READ get_height NOTIFY size_changed)
+	Q_PROPERTY(int map_block_grid_width READ get_map_block_grid_width NOTIFY size_changed)
+	Q_PROPERTY(int map_block_grid_height READ get_map_block_grid_height NOTIFY size_changed)
 	Q_PROPERTY(QVariantList provinces READ get_provinces_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list NOTIFY sites_changed)
 	Q_PROPERTY(QSize diplomatic_map_image_size READ get_diplomatic_map_image_size NOTIFY diplomatic_map_image_size_changed)
@@ -72,6 +74,9 @@ public:
 	{
 		return this->get_size().height();
 	}
+
+	int get_map_block_grid_width() const;
+	int get_map_block_grid_height() const;
 
 	bool contains(const QPoint &pos) const
 	{

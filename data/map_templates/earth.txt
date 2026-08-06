@@ -27,7 +27,7 @@ earth = {
 
 aegean = {
 	name = "Aegean"
-	size = { 480 416 }
+	size = { 512 512 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 8544 3968 }
@@ -37,7 +37,7 @@ aegean = {
 
 africa = {
 	name = "Africa"
-	size = { 3200 3520 }
+	size = { 3328 3584 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 6848 4192 }
@@ -47,7 +47,7 @@ africa = {
 
 central_europe = {
 	name = "Central Europe"
-	size = { 1120 1088 }
+	size = { 1280 1280 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 7776 2816 }
@@ -68,20 +68,20 @@ central_europe = {
 
 eastern_mediterranean = {
 	name = "Eastern Mediterranean"
-	size = { 1856 1568 }
+	size = { 2048 1792 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 8544 3968 }
+	map_start_pos = { 8448 3840 }
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 }
 
 egypt = {
 	name = "Egypt"
-	size = { 448 864 }
+	size = { 512 1024 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 8960 4244 }
+	map_start_pos = { 8960 4352 }
 	minimap_tile_scale = 0.5
 	diplomatic_map_tile_scale = 2
 	ignored_provinces = {
@@ -95,7 +95,7 @@ egypt = {
 
 europe = {
 	name = "Europe"
-	size = { 2816 2144 }
+	size = { 2816 2304 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 7168 2816 }
@@ -114,7 +114,7 @@ europe = {
 
 south_america = {
 	name = "South America"
-	size = { 2208 3488 }
+	size = { 2304 3584 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 3936 5408 }

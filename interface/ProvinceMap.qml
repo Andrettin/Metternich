@@ -1,13 +1,20 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
+import map_grid_model 1.0
 
-Flickable {
+TableView {
 	id: province_map
+	leftMargin: 0
+	rightMargin: 0
+	topMargin: 0
+	bottomMargin: 0
 	contentWidth: metternich.map.province_map_image_size.width * scale_factor
 	contentHeight: metternich.map.province_map_image_size.height * scale_factor
 	boundsBehavior: Flickable.StopAtBounds
 	clip: true
+	model: MapGridModel {}
+	delegate: MapBlockView {}
 	
 	enum Mode {
 		Political,
@@ -31,102 +38,11 @@ Flickable {
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
 	property var hovered_site: null
 	
-	Item {
-		id: unscaled_province_map
-		width: metternich.map.province_map_image_size.width
-		height: metternich.map.province_map_image_size.height
-		layer.enabled: true
-		
-		Repeater {
-			model: metternich.map.provinces
-			
-			Shape {
-				id: province_shape
-				visible: province_polygon_path !== null
-				
-				readonly property var province: model.modelData
-				readonly property var province_polygon_path: province.map_data.polygon_path.length > 0 ? province.map_data.polygon_path : null
-				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
-				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
-				property int change_count: 0
-				
-				ShapePath {
-					strokeColor: fillColor
-					fillColor: selected ? metternich.defines.selected_country_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province, change_count)) //the change count is there to force a re-evaluation of the binding if a relevant property has changed
-					startX: 0
-					startY: 0
-					
-					PathSvg {
-						path: province_polygon_path ? province_polygon_path : ""
-					}
-				}
-				
-				Connections {
-					target: province ? province.game_data : null
-					
-					function onMap_image_changed() {
-						change_count += 1
-					}
-					
-					function onMap_mode_image_changed(map_mode_identifier) {
-						switch (mode) {
-							case ProvinceMap.Mode.Political:
-								return
-							case ProvinceMap.Mode.Terrain:
-								if (map_mode_identifier !== "terrain") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.Cultural:
-								if (map_mode_identifier !== "cultural") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.Religious:
-								if (map_mode_identifier !== "religious") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.Technology:
-								if (map_mode_identifier !== "technology") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.TradeZone:
-								if (map_mode_identifier !== "trade_zone") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.Temple:
-								if (map_mode_identifier !== "temple") {
-									return
-								}
-								break
-							case ProvinceMap.Mode.CulturalSociety:
-								if (map_mode_identifier !== "cultural_society") {
-									return
-								}
-								break
-						}
-						
-						change_count += 1
-					}
-				}
-			}
-		}
-	}
-	
-	ScaledImage {
-		id: scaled_province_map
-		width: unscaled_province_map.width * scale_factor
-		height: unscaled_province_map.height * scale_factor
-        source: unscaled_province_map
-	}
-	
 	MouseArea {
 		width: province_map.contentWidth
 		height: province_map.contentHeight
 		hoverEnabled: true
+		z: 100
 		
 		onReleased: function (mouse) {
 			metternich.defines.click_sound.play()
@@ -168,6 +84,7 @@ Flickable {
 		
 		Shape {
 			id: route_shape
+			z: 100
 			visible: route.game_data.active && route.type !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.type.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.type.output_commodity !== metternich.defines.piety_commodity)
 			
 			readonly property var route: model.modelData
@@ -198,6 +115,7 @@ Flickable {
 			y: Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
 			width: province_label_column.width
 			height: province_label_column.height
+			z: 100
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
@@ -422,6 +340,7 @@ Flickable {
 			y: site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0
 			width: site_icon.width + 4 * scale_factor
 			height: site_icon.height + 4 * scale_factor
+			z: 100
 			visible: province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData

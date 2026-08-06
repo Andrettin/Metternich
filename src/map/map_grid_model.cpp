@@ -3,21 +3,10 @@
 #include "map/map_grid_model.h"
 
 #include "database/defines.h"
-#include "domain/domain.h"
-#include "domain/domain_game_data.h"
-#include "economy/resource.h"
-#include "game/game.h"
-#include "infrastructure/holding_type.h"
-#include "map/celestial_body_type.h"
 #include "map/map.h"
 #include "map/province.h"
-#include "map/province_game_data.h"
-#include "map/site.h"
-#include "map/site_game_data.h"
-#include "map/terrain_type.h"
-#include "map/tile.h"
-#include "ui/icon.h"
-#include "util/assert_util.h"
+#include "map/province_map_data.h"
+#include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
 
@@ -25,32 +14,39 @@ namespace metternich {
 
 map_grid_model::map_grid_model()
 {
-	connect(map::get(), &map::tile_prospection_changed, this, &map_grid_model::on_tile_prospection_changed);
-	connect(map::get(), &map::tile_resource_changed, this, &map_grid_model::on_tile_resource_changed);
-	connect(map::get(), &map::tile_holding_type_changed, this, &map_grid_model::on_tile_holding_type_changed);
-}
+	const int map_grid_width = map::get()->get_map_block_grid_width();
+	const int map_grid_height = map::get()->get_map_block_grid_height();
 
-QString map_grid_model::build_image_source(const terrain_type *terrain, const short tile_frame)
-{
-	QString image_source = "tile/terrain/" + terrain->get_identifier_qstring();
+	this->map_block_data.resize(map_grid_width * map_grid_height);
 
-	image_source += "/" + QString::number(tile_frame);
+	for (int x = 0; x < map_grid_width; ++x) {
+		for (int y = 0; y < map_grid_height; ++y) {
+			const int map_block_index = point::to_index(x, y, map_grid_width);
+			const QRect map_block_rect(QPoint(x * defines::get()->get_map_block_size().width(), y * defines::get()->get_map_block_size().height()), defines::get()->get_map_block_size());
 
-	return image_source;
+			metternich::map_block_data &map_block_data = this->map_block_data.at(map_block_index);
+
+			for (const province *province : map::get()->get_provinces()) {
+				if (province->get_map_data()->get_territory_rect().intersects(map_block_rect)) {
+					map_block_data.provinces.push_back(province);
+				}
+			}
+		}
+	}
 }
 
 int map_grid_model::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
 
-	return map::get()->get_height();
+	return map::get()->get_map_block_grid_height();
 }
 
 int map_grid_model::columnCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
 
-	return map::get()->get_width();
+	return map::get()->get_map_block_grid_width();
 }
 
 QVariant map_grid_model::data(const QModelIndex &index, const int role) const
@@ -61,146 +57,34 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 
 	try {
 		const map_grid_model::role model_role = static_cast<map_grid_model::role>(role);
-		const QPoint tile_pos(index.column(), index.row());
 
-		if (!map::get()->contains(tile_pos)) {
-			throw std::runtime_error("Invalid tile position: " + point::to_string(tile_pos) + ".");
-		}
-
-		const tile *tile = map::get()->get_tile(tile_pos);
+		const int map_block_x = index.column();
+		const int map_block_y = index.row();
+		const metternich::map_block_data &map_block_data = this->map_block_data.at(point::to_index(map_block_x, map_block_y, map::get()->get_map_block_grid_width()));
 
 		switch (model_role) {
-			case role::base_image_sources: {
-				QStringList image_sources;
-				return image_sources;
-			}
-			case role::image_sources: {
-				QStringList image_sources;
-				return image_sources;
-			}
-			case role::underlay_image_sources: {
-				QStringList underlay_image_sources;
-				return underlay_image_sources;
-			}
-			case role::overlay_image_sources: {
-				QStringList overlay_image_sources;
-				return overlay_image_sources;
-			}
-			case role::object_image_sources: {
-				QStringList object_image_sources;
-
-				if (tile->get_site() != nullptr) {
-					if (tile->get_site() != nullptr && tile->get_site()->is_celestial_body()) {
-						QString image_source = "tile/celestial_body/" + tile->get_site()->get_celestial_body_type()->get_identifier_qstring();
-
-						image_source += "/0"; //FIXME: add celestial body variations
-
-						object_image_sources.push_back(std::move(image_source));
-					} else if (tile->get_holding_type() != nullptr) {
-						QString image_source = "tile/settlement/" + tile->get_holding_type()->get_identifier_qstring() + "/0";
-						object_image_sources.push_back(std::move(image_source));
-					}
-
-					if (
-						tile->get_resource() != nullptr
-						&& tile->is_resource_discovered()
-						&& (
-							(tile->get_holding_type() == nullptr && !tile->get_site()->is_celestial_body())
-							|| tile->get_resource()->is_natural_wonder()
-						)
-					) {
-						object_image_sources.push_back("icon/" + tile->get_resource()->get_icon()->get_identifier_qstring());
-					}
-				}
-
-				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
-					object_image_sources.push_back(map_grid_model::build_image_source(defines::get()->get_unexplored_terrain(), 0));
-				}
-
-				return object_image_sources;
-			}
-			case role::site:
-				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
-					return QVariant::fromValue(nullptr);
-				}
-
-				return QVariant::fromValue(tile->get_site());
-			case role::province:
-				return QVariant::fromValue(tile->get_province());
-			case role::terrain:
-				return QVariant::fromValue(tile->get_province()->get_game_data()->get_terrain());
-			case role::resource:
-				if (!tile->is_resource_discovered()) {
-					return QVariant::fromValue(nullptr);
-				}
-
-				return QVariant::fromValue(tile->get_resource());
-			case role::upper_label: {
-				const QPoint upper_tile_pos = tile_pos - QPoint(0, 1);
-
-				if (!map::get()->contains(upper_tile_pos)) {
-					return QString();
-				}
-
-				if (!game::get()->get_player_country()->get_game_data()->is_tile_explored(upper_tile_pos)) {
-					return QString();
-				}
-
-				const metternich::tile *upper_tile = map::get()->get_tile(upper_tile_pos);
-
-				if (upper_tile->get_site() != nullptr) {
-					return upper_tile->get_site()->get_game_data()->get_current_cultural_name_qstring();
-				}
-
-				const province *upper_tile_province = upper_tile->get_province();
-
-				if (upper_tile_province != nullptr && upper_tile_province->get_game_data()->get_center_tile_pos() == upper_tile_pos) {
-					const province_game_data *upper_tile_province_game_data = upper_tile_province->get_game_data();
-					if (upper_tile_province_game_data->is_capital() && upper_tile_province_game_data->get_owner()->get_game_data()->get_province_count() > 1) {
-						assert_throw(upper_tile->get_settlement() != nullptr);
-						return upper_tile->get_settlement()->get_game_data()->get_current_cultural_name_qstring();
-					} else {
-						return upper_tile_province_game_data->get_current_cultural_name_qstring();
-					}
-				}
-
-				return QString();
-			}
-			case role::prospected:
-				return game::get()->get_player_country()->get_game_data()->is_tile_prospected(tile_pos);
+			case role::provinces:
+				return container::to_qvariant_list(map_block_data.provinces);
+			case role::sites:
+				return container::to_qvariant_list(map_block_data.sites);
+			case role::routes:
+				return container::to_qvariant_list(map_block_data.routes);
+			case role::map_block_start_x:
+				return map_block_x * defines::get()->get_map_block_size().width();
+			case role::map_block_start_y:
+				return map_block_y * defines::get()->get_map_block_size().height();
+			case role::map_block_width:
+				return defines::get()->get_map_block_size().width();
+			case role::map_block_height:
+				return defines::get()->get_map_block_size().height();
 			default:
-				throw std::runtime_error("Invalid map grid model role: " + std::to_string(role) + ".");
+				throw std::runtime_error(std::format("Invalid map grid model role: {}.", role));
 		}
 	} catch (...) {
 		exception::report(std::current_exception());
 	}
 
 	return QVariant();
-}
-
-void map_grid_model::on_tile_prospection_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::prospected)
-	});
-}
-
-void map_grid_model::on_tile_resource_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::object_image_sources),
-		static_cast<int>(role::resource)
-	});
-}
-
-void map_grid_model::on_tile_holding_type_changed(const QPoint &tile_pos)
-{
-	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
-	emit dataChanged(index, index, {
-		static_cast<int>(role::object_image_sources)
-	});
 }
 
 }

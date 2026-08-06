@@ -316,6 +316,16 @@ void map::clear()
 	this->empty_terrain_diplomatic_map_image = QImage();
 }
 
+int map::get_map_block_grid_width() const
+{
+	return this->get_width() / defines::get()->get_map_block_size().width();
+}
+
+int map::get_map_block_grid_height() const
+{
+	return this->get_height() / defines::get()->get_map_block_size().height();
+}
+
 int map::get_pos_index(const QPoint &pos) const
 {
 	return point::to_index(pos, this->get_width());

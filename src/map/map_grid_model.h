@@ -6,7 +6,16 @@
 
 namespace metternich {
 
-class terrain_type;
+class province;
+class route;
+class site;
+
+struct map_block_data final
+{
+	std::vector<const province *> provinces;
+	std::vector<const site *> sites;
+	std::vector<const route *> routes;
+};
 
 class map_grid_model : public QAbstractItemModel
 {
@@ -14,21 +23,14 @@ class map_grid_model : public QAbstractItemModel
 
 public:
 	enum class role {
-		base_image_sources = Qt::UserRole,
-		image_sources,
-		underlay_image_sources,
-		overlay_image_sources,
-		object_image_sources,
-		site,
-		province,
-		terrain,
-		river,
-		resource,
-		upper_label,
-		prospected
+		provinces = Qt::UserRole,
+		sites,
+		routes,
+		map_block_start_x,
+		map_block_start_y,
+		map_block_width,
+		map_block_height
 	};
-
-	static QString build_image_source(const terrain_type *terrain, const short tile_frame);
 
 	map_grid_model();
 
@@ -58,25 +60,18 @@ public:
 	{
 		QHash<int, QByteArray> role_names;
 
-		role_names.insert(static_cast<int>(role::base_image_sources), "base_image_sources");
-		role_names.insert(static_cast<int>(role::image_sources), "image_sources");
-		role_names.insert(static_cast<int>(role::underlay_image_sources), "underlay_image_sources");
-		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
-		role_names.insert(static_cast<int>(role::object_image_sources), "object_image_sources");
-		role_names.insert(static_cast<int>(role::site), "site");
-		role_names.insert(static_cast<int>(role::province), "province");
-		role_names.insert(static_cast<int>(role::terrain), "terrain");
-		role_names.insert(static_cast<int>(role::river), "river");
-		role_names.insert(static_cast<int>(role::resource), "resource");
-		role_names.insert(static_cast<int>(role::upper_label), "upper_label");
-		role_names.insert(static_cast<int>(role::prospected), "prospected");
+		role_names.insert(static_cast<int>(role::provinces), "provinces");
+		role_names.insert(static_cast<int>(role::sites), "sites");
+		role_names.insert(static_cast<int>(role::map_block_start_x), "map_block_start_x");
+		role_names.insert(static_cast<int>(role::map_block_start_y), "map_block_start_y");
+		role_names.insert(static_cast<int>(role::map_block_width), "map_block_width");
+		role_names.insert(static_cast<int>(role::map_block_height), "map_block_height");
 
 		return role_names;
 	}
 
-	void on_tile_prospection_changed(const QPoint &tile_pos);
-	void on_tile_resource_changed(const QPoint &tile_pos);
-	void on_tile_holding_type_changed(const QPoint &tile_pos);
+private:
+	std::vector<map_block_data> map_block_data;
 };
 
 }

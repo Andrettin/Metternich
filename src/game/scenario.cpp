@@ -2,8 +2,9 @@
 
 #include "game/scenario.h"
 
+#include "database/defines.h"
 #include "domain/domain.h"
-#include "time/calendar.h"
+#include "map/map_template.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 
@@ -62,6 +63,14 @@ void scenario::check() const
 {
 	assert_throw(this->get_start_date().isValid());
 	assert_throw(this->get_map_template() != nullptr);
+
+	if (this->get_map_template()->get_size().width() % defines::get()->get_map_block_size().width() != 0) {
+		throw std::runtime_error(std::format("Scenario \"{}\" has a map template with a width that isn't a multiple of the map block size.", this->get_identifier()));
+	}
+
+	if (this->get_map_template()->get_size().height() % defines::get()->get_map_block_size().height() != 0) {
+		throw std::runtime_error(std::format("Scenario \"{}\" has a map template with a height that isn't a multiple of the map block size.", this->get_identifier()));
+	}
 }
 
 QVariantList scenario::get_default_domains_qvariant_list() const
