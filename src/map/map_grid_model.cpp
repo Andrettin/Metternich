@@ -6,6 +6,10 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_map_data.h"
+#include "map/route.h"
+#include "map/route_game_data.h"
+#include "map/site.h"
+#include "map/site_map_data.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
@@ -22,13 +26,34 @@ map_grid_model::map_grid_model()
 	for (int x = 0; x < map_grid_width; ++x) {
 		for (int y = 0; y < map_grid_height; ++y) {
 			const int map_block_index = point::to_index(x, y, map_grid_width);
-			const QRect map_block_rect(QPoint(x * defines::get()->get_map_block_size().width(), y * defines::get()->get_map_block_size().height()), defines::get()->get_map_block_size());
+			const int map_block_start_x = x * defines::get()->get_map_block_size().width();
+			const int map_block_start_y = y * defines::get()->get_map_block_size().height();
+			const QRect map_block_rect(QPoint(map_block_start_x, map_block_start_y), defines::get()->get_map_block_size());
 
 			metternich::map_block_data &map_block_data = this->map_block_data.at(map_block_index);
 
 			for (const province *province : map::get()->get_provinces()) {
 				if (province->get_map_data()->get_territory_rect().intersects(map_block_rect)) {
 					map_block_data.provinces.push_back(province);
+				}
+			}
+
+			static constexpr int site_map_range = 16;
+			const QRect map_block_site_rect(QPoint(map_block_start_x - site_map_range, map_block_start_y - site_map_range), defines::get()->get_map_block_size() + QSize(site_map_range, site_map_range));
+
+			for (const site *site : map::get()->get_sites()) {
+				if (map_block_site_rect.contains(site->get_map_data()->get_tile_pos())) {
+					map_block_data.sites.push_back(site);
+				}
+			}
+
+			for (const route *route : route::get_all()) {
+				if (!route->get_game_data()->is_on_map()) {
+					continue;
+				}
+
+				if (route->get_game_data()->get_map_rect().intersects(map_block_rect)) {
+					map_block_data.routes.push_back(route);
 				}
 			}
 		}

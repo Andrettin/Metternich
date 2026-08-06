@@ -42,7 +42,11 @@ void route_game_data::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	throw std::runtime_error(std::format("Invalid route game data scope: \"{}\".", tag));
+	if (tag == "map_rect") {
+		this->map_rect = scope.to_rect();
+	} else {
+		throw std::runtime_error(std::format("Invalid route game data scope: \"{}\".", tag));
+	}
 }
 
 gsml_data route_game_data::to_gsml_data() const
@@ -52,8 +56,26 @@ gsml_data route_game_data::to_gsml_data() const
 	assert_throw(this->is_on_map());
 
 	data.add_property("active", string::from_bool(this->is_active()));
+	data.add_child("map_rect", gsml_data::from_rect(this->get_map_rect()));
 
 	return data;
+}
+
+void route_game_data::on_setup_finished()
+{
+	assert_throw(this->is_on_map());
+
+	bool first = true;
+	for (const province *province : this->route->get_path_provinces()) {
+		assert_throw(province->get_map_data()->is_on_map());
+
+		if (first) {
+			this->map_rect = province->get_map_data()->get_territory_rect();
+			first = false;
+		} else {
+			this->map_rect = this->map_rect.united(province->get_map_data()->get_territory_rect());
+		}
+	}
 }
 
 bool route_game_data::is_on_map() const

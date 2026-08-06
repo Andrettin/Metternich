@@ -25,6 +25,8 @@ public:
 
 	gsml_data to_gsml_data() const;
 
+	void on_setup_finished();
+
 	bool is_on_map() const;
 
 	bool is_active() const
@@ -34,6 +36,11 @@ public:
 
 	void set_active(const bool active);
 	void check_active();
+
+	const QRect &get_map_rect() const
+	{
+		return this->map_rect;
+	}
 
 	centesimal_int get_output() const;
 	void apply_output(const int multiplier);
@@ -47,6 +54,7 @@ signals:
 private:
 	const metternich::route *route = nullptr;
 	bool active = false;
+	QRect map_rect;
 };
 
 }

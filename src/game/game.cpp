@@ -1876,6 +1876,14 @@ QCoro::Task<void> game::on_setup_finished()
 	emit domains_changed();
 	emit countries_changed();
 
+	for (const route *route : route::get_all()) {
+		if (!route->get_game_data()->is_on_map()) {
+			continue;
+		}
+
+		route->get_game_data()->on_setup_finished();
+	}
+
 	for (const character *character : character::get_all()) {
 		character->get_game_data()->on_setup_finished();
 

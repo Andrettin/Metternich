@@ -62,6 +62,7 @@ public:
 
 		role_names.insert(static_cast<int>(role::provinces), "provinces");
 		role_names.insert(static_cast<int>(role::sites), "sites");
+		role_names.insert(static_cast<int>(role::routes), "routes");
 		role_names.insert(static_cast<int>(role::map_block_start_x), "map_block_start_x");
 		role_names.insert(static_cast<int>(role::map_block_start_y), "map_block_start_y");
 		role_names.insert(static_cast<int>(role::map_block_width), "map_block_width");

@@ -56,6 +56,7 @@ public:
 	static constexpr const char class_identifier[] = "map_template";
 	static constexpr const char property_class_identifier[] = "metternich::map_template*";
 	static constexpr const char database_folder[] = "map_templates";
+	static constexpr int site_map_size = 8;
 
 	static const std::set<std::string> database_dependencies;
 

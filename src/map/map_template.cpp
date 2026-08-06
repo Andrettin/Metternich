@@ -699,7 +699,7 @@ bool map_template::is_pos_available_for_site(const QPoint &tile_pos, const provi
 		return false;
 	}
 
-	static const int site_check_range = 8 / defines::get()->get_province_map_tile_scale();
+	static const int site_check_range = map_template::site_map_size / defines::get()->get_province_map_tile_scale();
 	const QRect site_check_rect(tile_pos - QPoint(site_check_range, site_check_range), tile_pos + QPoint(site_check_range, site_check_range));
 
 	rect::for_each_point_until(site_check_rect, [this, &map_rect, &available, site_province](const QPoint &rect_pos) {
