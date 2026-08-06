@@ -98,10 +98,6 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 				return map_block_x * defines::get()->get_map_block_size().width();
 			case role::map_block_start_y:
 				return map_block_y * defines::get()->get_map_block_size().height();
-			case role::map_block_width:
-				return defines::get()->get_map_block_size().width();
-			case role::map_block_height:
-				return defines::get()->get_map_block_size().height();
 			default:
 				throw std::runtime_error(std::format("Invalid map grid model role: {}.", role));
 		}

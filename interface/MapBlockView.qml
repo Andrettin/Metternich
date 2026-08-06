@@ -4,8 +4,8 @@ import QtQuick.Shapes
 
 Item {
 	id: map_block
-	implicitWidth: map_block_width * metternich.defines.province_map_tile_scale * scale_factor
-	implicitHeight: map_block_height * metternich.defines.province_map_tile_scale * scale_factor
+	implicitWidth: metternich.defines.map_block_size.width * metternich.defines.province_map_tile_scale * scale_factor
+	implicitHeight: metternich.defines.map_block_size.height * metternich.defines.province_map_tile_scale * scale_factor
 	clip: true
 	
 	readonly property int scaled_map_block_start_x: map_block_start_x * metternich.defines.province_map_tile_scale * scale_factor
@@ -13,8 +13,8 @@ Item {
 	
 	Item {
 		id: unscaled_province_map
-		width: map_block_width * metternich.defines.province_map_tile_scale
-		height: map_block_height * metternich.defines.province_map_tile_scale
+		width: metternich.defines.map_block_size.width * metternich.defines.province_map_tile_scale
+		height: metternich.defines.map_block_size.height * metternich.defines.province_map_tile_scale
 		clip: true
 		layer.enabled: true
 		
