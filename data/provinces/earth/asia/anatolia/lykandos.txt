@@ -8,6 +8,12 @@ lykandos = {
 	}
 	
 	history = {
+		-1650 = {
+			owner = hittite_empire #part of the Hittite Kingdom in the 1650-1590 BC period; Source: "Civilizations Map by Map", 2026, p. 50.
+			culture = hittite
+			religion = cybelene
+		}
+		
 		-1450 = {
 			owner = egypt #subject to Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 			culture = hittite #inhabited by Hittites c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.

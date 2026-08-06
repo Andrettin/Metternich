@@ -7,6 +7,12 @@ kayseri = {
 	}
 	
 	history = {
+		-1650 = {
+			owner = hittite_empire #part of the Hittite Kingdom in the 1650-1590 BC period; Source: "Civilizations Map by Map", 2026, p. 50.
+			culture = hittite
+			religion = cybelene
+		}
+		
 		-1279 = {
 			owner = hittite_empire #part of the Hittite Empire in the 1279-1213 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
 			culture = hittite

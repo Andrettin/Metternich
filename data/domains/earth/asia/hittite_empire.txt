@@ -5,33 +5,15 @@ hittite_empire = {
 	default_culture = hittite
 	default_religion = cybelene
 	default_tier = kingdom
+	max_tier = empire
 	default_government_type = monarchy
-	default_capital = corum #Hattusa
+	default_capital = hattusa
 	definite_article = true
 	short_name = true
 	short_names = {
 		tribe = "Hittites"
-	}
-	eras = {
-		ancient_era
-	}
-	core_provinces = {
-		corum
-		afyonkarahisar
-		ancyra
-		attaleia
-		burdur
-		denizli
-		gaziantep
-		germiyan
-		hatay
-		karaman
-		kayseri
-		lykandos
-		malatya
-		mersin
-		ramadan
-		sardis
-		smyrna
+		monarchy = {
+			kingdom = "Hittite Kingdom"
+		}
 	}
 }

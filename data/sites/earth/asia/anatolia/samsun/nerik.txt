@@ -1,0 +1,15 @@
+nerik = {
+	name = "Nerik"
+	world = earth
+	geocoordinate = { 35.42 41.207 }
+	type = holding
+	holding_type = temple #Hittite religious shrine sacred to their Storm god
+	province = samsun
+	
+	history = {
+		-1600 = {
+			buildings += shrine #main Hittite religious shrine in the c. 1600-1200 BC period; Source: "Civilizations Map by Map", 2026, p. 50.
+			owner = hittite_empire
+		}
+	}
+}

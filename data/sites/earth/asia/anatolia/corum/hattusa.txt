@@ -1,0 +1,14 @@
+hattusa = {
+	name = "Hattusa"
+	world = earth
+	geocoordinate = { 34.615277777778 40.019722222222 }
+	type = holding
+	holding_type = royal_palace #royal capital of the Hittites
+	province = corum
+	
+	history = {
+		-1650 = {
+			developed = true #the Hittites established their imperial capital in Hattusa c. 1650 BC; Source: "Civilizations Map by Map", 2026, p. 50.
+		}
+	}
+}
