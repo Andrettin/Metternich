@@ -1024,6 +1024,8 @@ public:
 	int64_t get_maintenance_cost() const;
 
 	bool can_form_domain(const metternich::domain *other) const;
+	bool can_form_domain_by_culture(const metternich::domain *other) const;
+	bool can_form_domain_by_territory(const metternich::domain *other) const;
 	bool can_release_domain(const metternich::domain *other) const;
 	[[nodiscard]] QCoro::Task<void> release_domain(const metternich::domain *releasable_domain);
 	bool has_domain_cores(const metternich::domain *other) const;

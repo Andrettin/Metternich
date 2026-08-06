@@ -188,6 +188,7 @@ public:
 	}
 
 	bool is_cultural_union_of(const culture *culture) const;
+	bool is_derived_cultural_domain_of(const culture *culture) const;
 
 	void add_culture(const culture *culture)
 	{

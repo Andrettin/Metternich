@@ -4356,38 +4356,76 @@ bool domain_game_data::can_form_domain(const metternich::domain *other) const
 		return false;
 	}
 
-	if (this->get_culture()->get_primary_domain() == other || other->is_cultural_union_of(this->get_culture())) {
-		if (this->get_province_count() > 0) { //only for domains with provinces
-			//allow forming the primary domain of our culture or one of its cultural unions if we own the majority of the population for that culture/group, and if we aren't already the cultural union of an upper group
-			int64_t domain_culture_population = 0;
-			int64_t total_culture_population = 0;
-
-			for (const metternich::culture *culture : other->get_cultures()) {
-				total_culture_population += game::get()->get_population()->get_culture_size(culture);
-			}
-
-			for (const province *province : this->get_provinces()) {
-				for (const metternich::culture *culture : other->get_cultures()) {
-					domain_culture_population += province->get_game_data()->get_population()->get_culture_size(culture);
-				}
-			}
-
-			if (total_culture_population > 0 && (domain_culture_population * 100 / total_culture_population) >= 50) {
-				return true;
-			}
-		}
+	if (this->can_form_domain_by_culture(other)) {
+		return true;
 	}
 
-	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
-		//to form a domain by core provinces/holdings, the formable domain must have a higher maximum tier than our current domain
-		if (other->get_max_tier() <= this->domain->get_max_tier()) {
-			return false;
-		}
-
-		return this->has_domain_cores(other);
+	if (this->can_form_domain_by_territory(other)) {
+		return true;
 	}
 
 	return false;
+}
+
+bool domain_game_data::can_form_domain_by_culture(const metternich::domain *other) const
+{
+	if (!vector::contains(other->get_cultures(), this->get_culture()) && !other->is_derived_cultural_domain_of(this->get_culture())) {
+		return false;
+	}
+
+	if (this->get_province_count() == 0) {
+		//only for domains with provinces
+		return false;
+	}
+
+	//allow forming the primary domain of our culture or one of its cultural unions if we own the majority of the population for that culture/group, and if we aren't already the cultural union of an upper group
+
+	//also allow forming domains of a culture derived from ours, if we both own the majority of the population for the culture/group, and more of our population belongs to that culture/group than our current culture
+
+	int64_t formable_domain_culture_population = 0;
+	int64_t domain_population = 0;
+	int64_t domain_current_culture_population = 0;
+	int64_t total_culture_population = 0;
+
+	for (const metternich::culture *culture : other->get_cultures()) {
+		total_culture_population += game::get()->get_population()->get_culture_size(culture);
+	}
+
+	for (const province *province : this->get_provinces()) {
+		domain_population += province->get_game_data()->get_population()->get_size();
+		domain_current_culture_population += province->get_game_data()->get_population()->get_culture_size(this->get_culture());
+
+		for (const metternich::culture *culture : other->get_cultures()) {
+			formable_domain_culture_population += province->get_game_data()->get_population()->get_culture_size(culture);
+		}
+	}
+
+	if (!vector::contains(other->get_cultures(), this->get_culture()) && other->is_derived_cultural_domain_of(this->get_culture())) {
+		//for forming a domain of a culture derived from ours, more of our population needs to belong to that culture than our own
+		if (formable_domain_culture_population <= domain_current_culture_population) {
+			return false;
+		}
+	}
+
+	if (total_culture_population == 0 || (formable_domain_culture_population * 100 / total_culture_population) < 50) {
+		return false;
+	}
+
+	return true;
+}
+
+bool domain_game_data::can_form_domain_by_territory(const metternich::domain *other) const
+{
+	if (other->get_core_provinces().empty() && other->get_core_holdings().empty()) {
+		return false;
+	}
+
+	//to form a domain by core provinces/holdings, the formable domain must have a higher maximum tier than our current domain
+	if (other->get_max_tier() <= this->domain->get_max_tier()) {
+		return false;
+	}
+
+	return this->has_domain_cores(other);
 }
 
 bool domain_game_data::can_release_domain(const metternich::domain *other) const

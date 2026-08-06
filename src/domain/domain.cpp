@@ -468,6 +468,17 @@ bool domain::is_cultural_union_of(const culture *culture) const
 	return false;
 }
 
+bool domain::is_derived_cultural_domain_of(const culture *culture) const
+{
+	for (const auto &cultural_derivation : culture->get_cultural_derivations()) {
+		if (vector::contains(this->get_cultures(), cultural_derivation->culture)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 std::vector<const province *> domain::get_core_provinces_for_tier(const domain_tier tier) const
 {
 	std::vector<const province *> core_provinces;
