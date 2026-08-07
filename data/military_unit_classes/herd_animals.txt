@@ -3,3 +3,9 @@
 #	domain = land
 #	category = mace_infantry
 #}
+
+#elephant = {
+#	name = "Elephant"
+#	domain = land
+#	category = mace_infantry
+#}
