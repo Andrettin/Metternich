@@ -3375,12 +3375,30 @@ QCoro::Task<void> domain_game_data::on_character_recruited(const character *char
 	co_await domain_event::check_events_for_scope(this->domain, event_trigger::character_recruited, ctx);
 }
 
-QCoro::Task<void> domain_game_data::generate_ruler()
+QCoro::Task<const character *> domain_game_data::generate_character(const std::vector<const character_class *> &allowed_character_classes, const int level, const gender gender)
 {
-	const metternich::government_type *government_type = this->get_government_type();
-	assert_throw(government_type != nullptr);
+	assert_throw(!allowed_character_classes.empty());
+	assert_throw(level >= 1);
 
-	std::vector<const species *> species_list = this->get_culture()->get_species();
+	std::vector<const species *> species_list;
+
+	const int64_t population_culture_size = this->get_population()->get_culture_size(this->get_culture());
+	if (population_culture_size == 0 || this->get_culture()->get_species().size() == 1) {
+		species_list = this->get_culture()->get_species();
+	} else {
+		species_list.reserve(static_cast<size_t>(population_culture_size));
+
+		//use weighted species by population
+		const phenotype_map<int64_t> phenotype_sizes = this->get_population()->get_phenotype_sizes_for_culture(this->get_culture());
+		assert_throw(!phenotype_sizes.empty());
+
+		for (const auto &[phenotype, phenotype_size] : phenotype_sizes) {
+			for (int64_t i = 0; i < phenotype_size; ++i) {
+				species_list.push_back(phenotype->get_species());
+			}
+		}
+	}
+
 	assert_throw(!species_list.empty());
 
 	const species *species = nullptr;
@@ -3389,7 +3407,10 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 	while (potential_classes.empty() && !species_list.empty()) {
 		species = vector::take_random(species_list);
 
-		for (const character_class *character_class : government_type->get_ruler_character_classes()) {
+		//remove duplicates (which could be present due to population-weighting)
+		std::erase(species_list, species);
+
+		for (const character_class *character_class : allowed_character_classes) {
 			if (!character_class->is_allowed_for_species(species)) {
 				continue;
 			}
@@ -3398,12 +3419,24 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 		}
 	}
 
+	assert_throw(species != nullptr);
 	assert_throw(!potential_classes.empty());
 
 	const character_class *character_class = vector::get_random(potential_classes);
 
-	const character *ruler = co_await character::generate(species, character_class, 1, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender::none);
+	const character *generated_character = co_await character::generate(species, character_class, level, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender, false);
+
+	co_return generated_character;
+}
+
+QCoro::Task<void> domain_game_data::generate_ruler()
+{
+	const metternich::government_type *government_type = this->get_government_type();
+	assert_throw(government_type != nullptr);
+
+	const character *ruler = co_await this->generate_character(government_type->get_ruler_character_classes(), 1, gender::none);
 	ruler->get_game_data()->set_domain(this->domain);
+
 	co_await this->on_character_recruited(ruler);
 	co_await this->get_government()->set_office_holder(defines::get()->get_ruler_office(), ruler);
 }

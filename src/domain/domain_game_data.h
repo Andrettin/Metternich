@@ -37,6 +37,7 @@ Q_MOC_INCLUDE("unit/transporter_type.h")
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
+	enum class gender;
 }
 
 namespace metternich {
@@ -755,6 +756,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_characters();
 	[[nodiscard]] QCoro::Task<void> on_character_recruited(const character *character);
 
+	[[nodiscard]] QCoro::Task<const character *> generate_character(const std::vector<const character_class *> &allowed_character_classes, const int level, const gender gender);
 	[[nodiscard]] QCoro::Task<void> generate_ruler();
 
 	const std::map<QDate, const character *> &get_historical_rulers() const
