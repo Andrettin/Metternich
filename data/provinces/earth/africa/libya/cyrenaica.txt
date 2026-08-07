@@ -7,13 +7,6 @@ cyrenaica = {
 	}
 	
 	history = {
-		-37000000 = {
-			owner = proboscids #inhabited by Phiomia in the 37-30 mya period; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
-			phenotype = elephant #phiomia
-			culture = proboscid
-			religion = kemetic
-		}
-		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = egyptian

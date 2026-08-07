@@ -7,13 +7,6 @@ ajdabiya = {
 	}
 	
 	history = {
-		-37000000 = {
-			owner = proboscids #inhabited by Phiomia in the 37-30 mya period; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
-			phenotype = elephant #phiomia
-			culture = proboscid
-			religion = kemetic
-		}
-		
 		1360 = {
 			owner = egypt #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = arabic
