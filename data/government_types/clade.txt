@@ -1,8 +1,11 @@
 clade = {
 	name = "Clade"
 	group = clade
-	icon = bow
+	icon = lion
 	primary_domain_attribute = stability
+	preferred_holding_types = {
+		castle
+	}
 	conditions = {
 		country_type = clade
 	}

@@ -16,6 +16,11 @@ castle = {
 		regency = 1
 	}
 	conditional_names = {
+		"Lair" = {
+			domain = {
+				government_group = clade
+			}
+		}
 		"Tribal Hold" = {
 			domain = {
 				scripted_condition = is_tribe
