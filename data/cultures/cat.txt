@@ -1,18 +1,12 @@
-felid = {
-	name = "Felid"
+cat = {
+	name = "Cat"
 	color = { 25 76 25 }
-	group = mammal
+	group = felid
 	species = {
-		lion
 		tiger
 		felis_attica
 		nimravus #feliform
 		proailurus
 		schizaelurus
-	}
-	title_names = {
-		clade = {
-			barony = "Pride"
-		}
 	}
 }

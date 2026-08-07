@@ -1,0 +1,13 @@
+lion = {
+	name = "Lion"
+	color = { 127 102 25 }
+	group = felid
+	species = {
+		lion
+	}
+	title_names = {
+		clade = {
+			barony = "Pride"
+		}
+	}
+}

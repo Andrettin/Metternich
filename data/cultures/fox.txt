@@ -1,0 +1,8 @@
+fox = {
+	name = "Fox"
+	color = { 204 153 76 }
+	group = canid
+	species = {
+		fox
+	}
+}

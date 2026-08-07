@@ -1,13 +1,13 @@
-canid = {
-	name = "Canid"
+wolf = {
+	name = "Wolf"
 	color = { 102 76 0 }
-	group = mammal
+	group = canid
 	species = {
 		wolf
 		osteoborus
 	}
 	given_names = {
-		#dogs
+		#Dogs
 		"Surefoot" #William Morris, "The Roots of the Mountains", 1889, p. 82.
 	}
 }

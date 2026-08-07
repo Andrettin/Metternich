@@ -1,0 +1,8 @@
+fox = {
+	name = "Fox"
+	supertaxon = canidae
+	era = holocene
+	pre_evolutions = {
+		osteoborus #earlier canid
+	}
+}
