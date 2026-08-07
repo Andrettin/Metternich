@@ -1,0 +1,7 @@
+palaeotherium = {
+	name = "Palaeotherium"
+	supertaxon = perissodactyla
+	pre_evolutions = {
+		phenacodus
+	}
+}

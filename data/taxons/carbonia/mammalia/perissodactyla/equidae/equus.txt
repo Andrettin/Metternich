@@ -1,0 +1,5 @@
+equus = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=180689
+	name = "Equus"
+	rank = genus
+	supertaxon = equidae
+}

@@ -1,0 +1,9 @@
+mesohippus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43010
+	name = "Mesohippus"
+	supertaxon = mesohippus
+	era = eocene
+	pre_evolutions = {
+		palaeotherium
+	}
+	#ground dwelling browser
+}

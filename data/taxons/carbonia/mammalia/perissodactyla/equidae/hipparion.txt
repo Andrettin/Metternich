@@ -1,0 +1,5 @@
+hipparion = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 52-53.
+	name = "Hipparion"
+	rank = genus
+	supertaxon = equidae
+}

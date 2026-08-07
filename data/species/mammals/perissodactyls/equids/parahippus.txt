@@ -1,0 +1,11 @@
+parahippus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43016
+	name = "Parahippus"
+	supertaxon = parahippus
+	specific_name = "cognatus" #type species of the Parahippus genus
+	era = miocene #also occurred in the Oligocene, but in a much lesser frequency; Parahippus cognatus (the type species) is given as appearing only in the Miocene; Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=44053
+	pre_evolutions = {
+		mesohippus #earlier equid
+	}
+	
+	#ground dwelling browser
+}

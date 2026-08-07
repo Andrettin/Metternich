@@ -1,0 +1,10 @@
+merychippus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43009
+	name = "Merychippus"
+	supertaxon = merychippus
+	era = miocene
+	pre_evolutions = {
+		mesohippus #earlier equid
+	}
+	
+	#ground dwelling grazer-browser
+}

@@ -1,0 +1,14 @@
+anchitherium = { #Anchitherium cursor; Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 52-53.
+	name = "Anchitherium"
+	supertaxon = anchitherium
+	specific_name = "cursor"
+	era = miocene #Middle Miocene
+	pre_evolutions = {
+		mesohippus #earlier equid
+	}
+	
+	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle
+	#lived in Madrid
+	#100cm shoulder height
+	#great runner
+}

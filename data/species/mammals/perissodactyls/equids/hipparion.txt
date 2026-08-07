@@ -1,0 +1,13 @@
+hipparion = { #Hipparion primigenium; Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 52-53.
+	name = "Hipparion"
+	supertaxon = hipparion
+	specific_name = "primigenium"
+	era = miocene #Upper Miocene
+	pre_evolutions = {
+		mesohippus #earlier equid
+	}
+	
+	#135cm shoulder height
+	#lived in Eurasia
+	#their teeth allowed them to eat almost any kind of vegetable (including harder and more fibrous ones)
+}

@@ -1,0 +1,10 @@
+nannippus = { #Source: http://fossilworks.org/?a=taxonInfo&taxon_no=43012
+	name = "Nannippus"
+	supertaxon = nannippus
+	era = miocene
+	pre_evolutions = {
+		mesohippus #earlier equid
+	}
+	
+	#ground dwelling grazer
+}
