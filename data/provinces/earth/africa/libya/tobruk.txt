@@ -1,6 +1,7 @@
 tobruk = {
 	name = "Tobruk"
 	color = { 0 72 130 }
+	terrain = desert
 	default_provincial_capital = tobruk
 	regions = {
 		libya
