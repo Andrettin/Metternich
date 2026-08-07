@@ -1,0 +1,14 @@
+equid = {
+	name = "Equid"
+	color = { 76 25 25 }
+	species = {
+		horse
+		anchitherium
+		hipparion
+		merychippus
+		mesohippus
+		nannippus
+		parahippus
+		pliohippus
+	}
+}
