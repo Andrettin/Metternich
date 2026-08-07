@@ -1,6 +1,7 @@
 equid = {
 	name = "Equid"
 	color = { 76 25 25 }
+	group = mammal
 	species = {
 		horse
 		anchitherium

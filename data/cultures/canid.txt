@@ -1,6 +1,7 @@
 canid = {
 	name = "Canid"
 	color = { 102 76 0 }
+	group = mammal
 	species = {
 		wolf
 		osteoborus

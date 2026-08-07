@@ -1,6 +1,7 @@
 ailurid = {
 	name = "Ailurid"
 	color = { 255 76 0 }
+	group = mammal
 	species = {
 		amphictis
 		magerictis

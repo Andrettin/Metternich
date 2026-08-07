@@ -1,0 +1,4 @@
+mammal = {
+	name = "Mammal"
+	rank = supergroup
+}

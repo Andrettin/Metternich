@@ -7,4 +7,9 @@ bear = {
 		brown_bear
 		hemicyon
 	}
+	given_names = {
+		male = {
+			"Wojtek" #Polish World War II army brown bear
+		}
+	}
 }

@@ -1,6 +1,7 @@
 felid = {
 	name = "Felid"
 	color = { 25 76 25 }
+	group = mammal
 	species = {
 		lion
 		tiger
