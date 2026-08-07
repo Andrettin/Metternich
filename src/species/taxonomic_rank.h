@@ -14,6 +14,7 @@ enum class taxonomic_rank {
 	infraorder,
 	suborder,
 	order,
+	superorder,
 	infraclass,
 	subclass,
 	class_rank,
