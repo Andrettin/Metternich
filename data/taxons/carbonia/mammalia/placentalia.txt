@@ -1,0 +1,5 @@
+placentalia = {
+	name = "Placentalia"
+	rank = infraclass
+	supertaxon = mammalia #Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
+}

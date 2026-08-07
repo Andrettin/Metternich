@@ -2,5 +2,5 @@ proboscidea = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del ho
 	name = "Proboscidea"
 	common_name = "Proboscid"
 	rank = order
-	supertaxon = mammalia
+	supertaxon = afrotheria #Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 }

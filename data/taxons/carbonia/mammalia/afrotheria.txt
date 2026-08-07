@@ -1,0 +1,5 @@
+afrotheria = {
+	name = "Afrotheria"
+	rank = superorder
+	supertaxon = placentalia #Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
+}

@@ -1,8 +1,13 @@
-phiomia = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43252
+phiomia = {
 	name = "Phiomia"
-	supertaxon = phiomia
-	era = oligocene
+	supertaxon = phiomia #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43252
+	era = oligocene #37-30 mya; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 	pre_evolutions = {
 		eritherium #earlier proboscid
 	}
+	
+	#5m/16ft in length
+	#lived in plains and woodland; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
+	#weighted 3 tons; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
+	#fed on plants; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 }
