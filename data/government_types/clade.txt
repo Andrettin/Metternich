@@ -6,7 +6,10 @@ clade = {
 	conditions = {
 		country_type = clade
 	}
-	ruler_character_classes = {
-		warrior
+	ruler_monster_types = {
+		giant_bat
+		giant_rat
+		giant_toad
+		wolf
 	}
 }

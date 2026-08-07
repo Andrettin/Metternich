@@ -64,6 +64,7 @@ class government_type;
 class idea;
 class idea_slot;
 class journal_entry;
+class monster_type;
 class opinion_modifier;
 class pathway;
 class phenotype;
@@ -756,7 +757,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_characters();
 	[[nodiscard]] QCoro::Task<void> on_character_recruited(const character *character);
 
-	[[nodiscard]] QCoro::Task<const character *> generate_character(const std::vector<const character_class *> &allowed_character_classes, const int level, const gender gender);
+	[[nodiscard]] QCoro::Task<const character *> generate_character(const std::vector<const character_class *> &allowed_character_classes, const std::vector<const monster_type *> &allowed_monster_types, const int level, const gender gender);
 	[[nodiscard]] QCoro::Task<void> generate_ruler();
 
 	const std::map<QDate, const character *> &get_historical_rulers() const

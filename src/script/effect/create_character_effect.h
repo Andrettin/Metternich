@@ -75,7 +75,7 @@ public:
 
 			created_character = this->character;
 		} else if (this->character_class != nullptr) {
-			created_character = co_await scope->get_game_data()->generate_character({ this->character_class }, std::max(this->level, 1), this->gender);
+			created_character = co_await scope->get_game_data()->generate_character({ this->character_class }, {}, std::max(this->level, 1), this->gender);
 		} else if (this->monster_type != nullptr) {
 			created_character = co_await character::generate(this->monster_type, nullptr, nullptr, nullptr, 0, {}, false, false);
 		} else {

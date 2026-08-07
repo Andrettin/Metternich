@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_game_data.h"
+#include "character/monster_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "domain/country_type.h"
@@ -3375,9 +3376,9 @@ QCoro::Task<void> domain_game_data::on_character_recruited(const character *char
 	co_await domain_event::check_events_for_scope(this->domain, event_trigger::character_recruited, ctx);
 }
 
-QCoro::Task<const character *> domain_game_data::generate_character(const std::vector<const character_class *> &allowed_character_classes, const int level, const gender gender)
+QCoro::Task<const character *> domain_game_data::generate_character(const std::vector<const character_class *> &allowed_character_classes, const std::vector<const monster_type *> &allowed_monster_types, const int level, const gender gender)
 {
-	assert_throw(!allowed_character_classes.empty());
+	assert_throw(!allowed_character_classes.empty() || !allowed_monster_types.empty());
 	assert_throw(level >= 1);
 
 	std::vector<const species *> species_list;
@@ -3401,10 +3402,12 @@ QCoro::Task<const character *> domain_game_data::generate_character(const std::v
 
 	assert_throw(!species_list.empty());
 
-	const species *species = nullptr;
-	std::vector<const character_class *> potential_classes;
+	using character_type_variant = std::variant<const character_class *, const monster_type *>;
 
-	while (potential_classes.empty() && !species_list.empty()) {
+	const species *species = nullptr;
+	std::vector<character_type_variant> potential_character_types;
+
+	while (potential_character_types.empty() && !species_list.empty()) {
 		species = vector::take_random(species_list);
 
 		//remove duplicates (which could be present due to population-weighting)
@@ -3415,16 +3418,34 @@ QCoro::Task<const character *> domain_game_data::generate_character(const std::v
 				continue;
 			}
 
-			potential_classes.push_back(character_class);
+			potential_character_types.push_back(character_class);
+		}
+
+		for (const monster_type *monster_type : allowed_monster_types) {
+			if (monster_type->get_species() != species) {
+				continue;
+			}
+
+			potential_character_types.push_back(monster_type);
 		}
 	}
 
 	assert_throw(species != nullptr);
-	assert_throw(!potential_classes.empty());
+	assert_throw(!potential_character_types.empty());
 
-	const character_class *character_class = vector::get_random(potential_classes);
+	const character_type_variant character_type = vector::get_random(potential_character_types);
 
-	const character *generated_character = co_await character::generate(species, character_class, level, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender, false);
+	const character *generated_character = nullptr;
+
+	if (std::holds_alternative<const character_class *>(character_type)) {
+		const character_class *character_class = std::get<const metternich::character_class *>(character_type);
+		generated_character = co_await character::generate(species, character_class, level, nullptr, this->get_culture(), this->get_religion(), this->get_capital(), {}, 0, {}, false, gender, false);
+	} else {
+		const monster_type *monster_type = std::get<const metternich::monster_type *>(character_type);
+		generated_character = co_await character::generate(monster_type, this->get_culture(), this->get_religion(), this->get_capital(), 0, {}, false, false);
+	}
+
+	assert_throw(generated_character != nullptr);
 
 	co_return generated_character;
 }
@@ -3434,7 +3455,7 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 	const metternich::government_type *government_type = this->get_government_type();
 	assert_throw(government_type != nullptr);
 
-	const character *ruler = co_await this->generate_character(government_type->get_ruler_character_classes(), 1, gender::none);
+	const character *ruler = co_await this->generate_character(government_type->get_ruler_character_classes(), government_type->get_ruler_monster_types(), 1, gender::none);
 	ruler->get_game_data()->set_domain(this->domain);
 
 	co_await this->on_character_recruited(ruler);

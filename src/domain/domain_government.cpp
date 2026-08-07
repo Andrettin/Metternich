@@ -738,7 +738,10 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 	}
 
 	if (office->is_ruler() || office->is_heir()) {
-		if (character->get_character_class() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_character_classes(), character->get_character_class())) {
+		if (
+			(character->get_character_class() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_character_classes(), character->get_character_class()))
+			&& (character->get_monster_type() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_monster_types(), character->get_monster_type()))
+		) {
 			return false;
 		}
 

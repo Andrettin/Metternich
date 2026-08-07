@@ -22,6 +22,7 @@ class government_group;
 class holding_type;
 class law;
 class law_group;
+class monster_type;
 class office;
 class technology;
 enum class domain_tier;
@@ -146,6 +147,11 @@ public:
 		return this->ruler_character_classes;
 	}
 
+	const std::vector<const monster_type *> &get_ruler_monster_types() const
+	{
+		return this->ruler_monster_types;
+	}
+
 signals:
 	void changed();
 
@@ -162,6 +168,7 @@ private:
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const modifier<const domain>> modifier;
 	std::vector<const character_class *> ruler_character_classes;
+	std::vector<const monster_type *> ruler_monster_types;
 	title_name_map title_names;
 	site_title_name_map site_title_names;
 	office_title_name_map office_title_names;

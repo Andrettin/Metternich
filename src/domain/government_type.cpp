@@ -3,6 +3,7 @@
 #include "domain/government_type.h"
 
 #include "character/character_class.h"
+#include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "domain/domain_tier.h"
@@ -312,6 +313,10 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->ruler_character_classes.push_back(character_class::get(value));
 		}
+	} else if (tag == "ruler_monster_types") {
+		for (const std::string &value : values) {
+			this->ruler_monster_types.push_back(monster_type::get(value));
+		}
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
 	} else if (tag == "site_title_names") {
@@ -356,8 +361,8 @@ void government_type::check() const
 		this->get_conditions()->check_validity();
 	}
 
-	if (this->get_ruler_character_classes().empty()) {
-		throw std::runtime_error(std::format("Government type \"{}\" has no ruler character classes.", this->get_identifier()));
+	if (this->get_ruler_character_classes().empty() && this->get_ruler_monster_types().empty()) {
+		throw std::runtime_error(std::format("Government type \"{}\" has no ruler character classes and no ruler monster types.", this->get_identifier()));
 	}
 }
 
