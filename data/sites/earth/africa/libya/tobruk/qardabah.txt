@@ -1,0 +1,8 @@
+qardabah = {
+	name = "Qardabah"
+	world = earth
+	geocoordinate = { 23.480555555555554 32.1375 } #Al Qardabah
+	type = holding
+	holding_type = castle
+	province = tobruk
+}

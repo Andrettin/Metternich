@@ -1,0 +1,8 @@
+acroma = {
+	name = "Acroma"
+	world = earth
+	geocoordinate = { 23.698888888889 32.052777777778 }
+	type = holding
+	holding_type = castle
+	province = tobruk
+}

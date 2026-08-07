@@ -1,0 +1,8 @@
+sollum = {
+	name = "Sollum"
+	world = earth
+	geocoordinate = { 25.150031 31.566974 } #from Natural Earth (Salum)
+	type = holding
+	holding_type = temple
+	province = alexandria
+}

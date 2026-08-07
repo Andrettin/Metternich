@@ -1,0 +1,8 @@
+zanzur = {
+	name = "Zanzur"
+	world = earth
+	geocoordinate = { 24.7478 31.9706 } #Zawiyat Janzur
+	type = holding
+	holding_type = castle
+	province = tobruk
+}

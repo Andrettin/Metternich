@@ -1,0 +1,8 @@
+kambut = {
+	name = "Kambut"
+	world = earth
+	geocoordinate = { 24.481388888889 31.905277777778 }
+	type = holding
+	holding_type = castle
+	province = tobruk
+}

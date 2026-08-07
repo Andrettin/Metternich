@@ -1,0 +1,8 @@
+rukbah = {
+	name = "Rukbah"
+	world = earth
+	geocoordinate = { 24.935833333333 31.935 } #Wādī Umm Rukbah
+	type = holding
+	holding_type = castle
+	province = tobruk
+}

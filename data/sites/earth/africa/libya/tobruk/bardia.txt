@@ -1,0 +1,8 @@
+bardia = {
+	name = "Bardia"
+	world = earth
+	geocoordinate = { 25.075 31.76 }
+	type = holding
+	holding_type = castle #or guild
+	province = tobruk
+}
