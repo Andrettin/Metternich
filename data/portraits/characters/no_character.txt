@@ -1,6 +1,10 @@
 no_character = {
 	filepath = "portraits/characters/no_character.png"
 	character_conditions = {
-		species = wolf
+		or = {
+			species = elephant
+			species = mammoth
+			species = wolf
+		}
 	}
 }
