@@ -156,10 +156,13 @@ hattia = {
 		strength
 		war
 	}
+	worshiper_conditions = {
+		#Hattian culture
+	}
 	character = {
 		species = human
 		character_class = warrior
-		culture = hittite
+		culture = hittite #actually Hattian
 		religion = cybelene
 		gender = male
 		contemporary_character = teshub #to give him a start date
