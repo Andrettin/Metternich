@@ -5,4 +5,8 @@ elephant = {
 	pre_evolutions = {
 		phiomia
 	}
+	modifier = {
+		movement = 15
+		trait = iron_will
+	}
 }
