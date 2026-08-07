@@ -1,0 +1,11 @@
+tiger = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=183805
+	name = "Tiger"
+	supertaxon = panthera
+	specific_name = "tigris"
+	era = holocene
+	pre_evolutions = {
+		#earlier felines (the pantherinae originated from the felinae)
+		felis_attica
+		schizaelurus
+	}
+}

@@ -1,0 +1,15 @@
+felis_attica = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 46-47.
+	name = "Felis attica"
+	supertaxon = felis
+	specific_name = "attica"
+	era = miocene #Upper Miocene
+	pre_evolutions = {
+		nimravus #earlier feliform
+		proailurus #earlier felid
+	}
+	
+	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle
+	#35 cm shoulder height
+	#lived in Eurasia
+	#as fast and agile as a mountain cat
+}

@@ -1,0 +1,16 @@
+schizaelurus = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 46-47.
+	name = "Schizaelurus" #Schizaelurus lorteti
+	supertaxon = schizaelurus
+	specific_name = "lorteti"
+	era = miocene #Middle Miocene
+	pre_evolutions = {
+		nimravus #earlier feliform
+		proailurus #earlier felid
+	}
+	
+	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle
+	#had the size of a lynx
+	#45 cm shoulder height
+	#likely inhabited areas with abundant vegetation
+	#lived in Eurasia
+}

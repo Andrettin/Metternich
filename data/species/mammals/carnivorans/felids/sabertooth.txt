@@ -1,0 +1,8 @@
+sabertooth = {
+	name = "Sabertooth"
+	supertaxon = felidae
+	pre_evolutions = {
+		nimravus #earlier feliform
+		proailurus #earlier felid
+	}
+}

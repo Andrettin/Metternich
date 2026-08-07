@@ -1,0 +1,12 @@
+felid = {
+	name = "Felid"
+	color = { 25 76 25 }
+	species = {
+		lion
+		tiger
+		felis_attica
+		nimravus #feliform
+		proailurus
+		schizaelurus
+	}
+}

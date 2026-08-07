@@ -1,0 +1,11 @@
+lion = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=183803
+	name = "Lion"
+	supertaxon = panthera
+	specific_name = "leo"
+	era = holocene
+	pre_evolutions = {
+		#earlier felines (the pantherinae originated from the felinae)
+		felis_attica
+		schizaelurus
+	}
+}
