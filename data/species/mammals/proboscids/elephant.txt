@@ -1,0 +1,8 @@
+elephant = {
+	name = "Elephant"
+	supertaxon = proboscidea
+	era = holocene
+	pre_evolutions = {
+		phiomia
+	}
+}

@@ -1,0 +1,22 @@
+eritherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, p. 50.
+	name = "Eritherium" #Eritherium azzouzorum
+	supertaxon = eritherium
+	specific_name = "azzouzorum"
+	era = paleocene
+	#pre_evolutions = {
+	#	chriacus
+	#	hyopsodus
+	#	phenacodus
+	#}
+	pre_evolutions = {
+		crusafontia
+		megazostrodon
+		zalambdalestes
+		hyopsodus
+		phenacodus
+	}
+	
+	#first known proboscid
+	#lived in Africa
+	#weighted up to 5 kg
+}

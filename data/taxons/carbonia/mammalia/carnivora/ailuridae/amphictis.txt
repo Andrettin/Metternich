@@ -1,0 +1,5 @@
+amphictis = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, p. 40.
+	name = "Amphictis"
+	rank = genus
+	supertaxon = ailuridae
+}

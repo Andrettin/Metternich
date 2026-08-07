@@ -1,0 +1,9 @@
+ailurid = {
+	name = "Ailurid"
+	color = { 255 76 0 }
+	species = {
+		amphictis
+		magerictis
+		simocyon
+	}
+}

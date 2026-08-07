@@ -1,0 +1,5 @@
+simocyon = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, p. 41.
+	name = "Simocyon"
+	rank = genus
+	supertaxon = ailuridae
+}

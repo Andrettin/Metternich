@@ -1,0 +1,12 @@
+magerictis = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 40-41.
+	name = "Magerictis" #Magerictis imperialensis
+	supertaxon = magerictis
+	specific_name = "imperialensis"
+	era = miocene #Middle Miocene
+	pre_evolutions = {
+		amphictis #earlier ailurid
+	}
+	
+	#30 cm shoulder height
+	#inhabited Spain
+}

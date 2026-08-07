@@ -1,0 +1,21 @@
+amphictis = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, p. 40.
+	name = "Amphictis" #Amphictis ambiguus
+	supertaxon = amphictis
+	specific_name = "ambiguus"
+	era = oligocene #Upper Oligocene and Lower Miocene (25-18 million years ago)
+	#pre_evolutions = {
+	#	amphicyon
+	#	hemicyon
+	#	miacis
+	#}
+	pre_evolutions = {
+		alphadon
+		leptictidium
+		zalambdalestes
+		miacis
+	}
+	
+	#oldest ailurid
+	#was of a similar size as the modern red panda
+	#carnivore (its teeth were adapted to the consumption of meat)
+}

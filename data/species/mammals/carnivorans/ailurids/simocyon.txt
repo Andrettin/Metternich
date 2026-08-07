@@ -1,0 +1,13 @@
+simocyon = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, p. 41.
+	name = "Simocyon" #Simocyon batalleri
+	supertaxon = simocyon
+	specific_name = "batalleri"
+	era = miocene #Upper Miocene
+	pre_evolutions = {
+		amphictis #earlier ailurid
+	}
+	
+	#70 cm shoulder height
+	#inhabited Eurasia and Africa
+	#weighted up to 65kg
+}

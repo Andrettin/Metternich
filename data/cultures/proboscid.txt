@@ -1,0 +1,10 @@
+proboscid = {
+	name = "Proboscid"
+	color = { 204 204 204 }
+	species = {
+		elephant
+		mammoth
+		eritherium
+		phiomia
+	}
+}

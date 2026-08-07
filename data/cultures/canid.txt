@@ -1,0 +1,8 @@
+canid = {
+	name = "Canid"
+	color = { 102 76 0 }
+	species = {
+		wolf
+		osteoborus
+	}
+}
