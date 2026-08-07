@@ -6,4 +6,8 @@ canid = {
 		wolf
 		osteoborus
 	}
+	given_names = {
+		#dogs
+		"Surefoot" #William Morris, "The Roots of the Mountains", 1889, p. 82.
+	}
 }
