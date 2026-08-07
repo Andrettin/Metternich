@@ -1,0 +1,10 @@
+bear = {
+	name = "Bear"
+	group = bear
+	color = { 25 25 76 }
+	species = {
+		black_bear
+		brown_bear
+		hemicyon
+	}
+}

@@ -1,0 +1,16 @@
+brown_bear = {
+	name = "Brown Bear"
+	supertaxon = ursidae
+	era = holocene
+	#ecological_niche = predator
+	pre_evolutions = {
+		amphicyon
+		hemicyon
+		miacis
+	}
+	given_names = {
+		male = {
+			"Wojtek" #Polish World War II army brown bear
+		}
+	}
+}

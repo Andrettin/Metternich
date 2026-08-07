@@ -1,0 +1,4 @@
+bear = {
+	name = "Bear"
+	rank = group
+}

@@ -1,0 +1,8 @@
+polar_bear = {
+	name = "Polar Bear"
+	group = bear
+	color = { 200 200 200 }
+	species = {
+		polar_bear
+	}
+}

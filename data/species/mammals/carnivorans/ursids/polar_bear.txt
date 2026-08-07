@@ -1,0 +1,11 @@
+polar_bear = {
+	name = "Polar Bear"
+	supertaxon = ursidae
+	era = holocene
+	#ecological_niche = predator
+	pre_evolutions = {
+		amphicyon
+		hemicyon
+		miacis
+	}
+}
