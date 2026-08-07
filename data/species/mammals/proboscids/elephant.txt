@@ -4,6 +4,7 @@ elephant = {
 	era = holocene
 	pre_evolutions = {
 		phiomia
+		moeritherium #earlier proboscid
 	}
 	modifier = {
 		movement = 15

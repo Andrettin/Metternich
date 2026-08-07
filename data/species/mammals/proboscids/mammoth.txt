@@ -4,5 +4,6 @@ mammoth = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43252
 	era = pleistocene #Quarternary
 	pre_evolutions = {
 		phiomia
+		moeritherium #earlier proboscid
 	}
 }

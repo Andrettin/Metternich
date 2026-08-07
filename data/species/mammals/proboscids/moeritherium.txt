@@ -1,0 +1,12 @@
+moeritherium = {
+	name = "Moeritherium"
+	supertaxon = proboscidea #Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+	era = eocene #41-34 mya; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+	pre_evolutions = {
+		eritherium #earlier proboscid
+	}
+	
+	#3m in length; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+	#weighted 200 kg; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+	#fed on water plants; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+}

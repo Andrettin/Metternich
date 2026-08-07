@@ -50,3 +50,11 @@ cenozoic = {
 	map_template = europe
 	hidden = true
 }
+
+oligocene = {
+	name = "Oligocene"
+	parent_scenario = cenozoic
+	start_date = -33900000
+	map_template = europe
+	hidden = true
+}
