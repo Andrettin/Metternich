@@ -9,4 +9,9 @@ felid = {
 		proailurus
 		schizaelurus
 	}
+	title_names = {
+		clade = {
+			barony = "Pride"
+		}
+	}
 }

@@ -1,6 +1,7 @@
 proboscid = {
 	name = "Proboscid"
 	color = { 204 204 204 }
+	primary_domain = proboscids
 	species = {
 		elephant
 		mammoth

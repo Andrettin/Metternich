@@ -15,6 +15,7 @@ cow = {
 			species = cow
 			species = elephant
 			species = mammoth
+			species = phiomia
 		}
 	}
 }

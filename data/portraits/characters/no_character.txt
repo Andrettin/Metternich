@@ -4,6 +4,7 @@ no_character = {
 		or = {
 			species = elephant
 			species = mammoth
+			species = phiomia
 			species = wolf
 		}
 	}
