@@ -1,0 +1,9 @@
+dryosaurus = {
+	name = "Dryosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		pareiasaurus
+		petrolacosaurus
+		thadeosaurus
+	}
+}

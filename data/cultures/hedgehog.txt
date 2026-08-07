@@ -1,0 +1,7 @@
+hedgehog = {
+	name = "Hedgehog"
+	color = { 51 76 255 }
+	species = {
+		hedgehog
+	}
+}

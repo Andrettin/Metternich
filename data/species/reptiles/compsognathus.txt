@@ -1,0 +1,9 @@
+compsognathus = {
+	name = "Compsognathus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		ornithosuchus
+		saltopus
+		ticinosuchus
+	}
+}

@@ -1,0 +1,10 @@
+avian = {
+	name = "Avian"
+	color = { 255 255 255 }
+	species = {
+		archaeopteryx
+		duck
+		ichthyornis
+		presbyornis
+	}
+}

@@ -1,0 +1,8 @@
+ichthyornis = {
+	name = "Ichthyornis"
+	supertaxon = aves
+	pre_evolutions = {
+		archaeopteryx
+		gallimimus
+	}
+}

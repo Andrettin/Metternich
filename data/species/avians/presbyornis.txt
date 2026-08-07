@@ -1,0 +1,8 @@
+presbyornis = {
+	name = "Presbyornis"
+	supertaxon = aves
+	pre_evolutions = {
+		archaeopteryx
+		gallimimus
+	}
+}

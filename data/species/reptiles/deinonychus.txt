@@ -1,0 +1,8 @@
+deinonychus = {
+	name = "Deinonychus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		dryosaurus
+		saltopus
+	}
+}
