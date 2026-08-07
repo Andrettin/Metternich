@@ -6,8 +6,8 @@ phiomia = {
 		eritherium #earlier proboscid
 	}
 	
-	#5m/16ft in length; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 	#lived in plains and woodland; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
+	#5m/16ft in length; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 	#weighted 3 tons; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 	#fed on plants; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 162-163.
 }

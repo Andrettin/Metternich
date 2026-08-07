@@ -6,6 +6,7 @@ moeritherium = {
 		eritherium #earlier proboscid
 	}
 	
+	#lived in rivers and swamps; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
 	#3m in length; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
 	#weighted 200 kg; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
 	#fed on water plants; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
