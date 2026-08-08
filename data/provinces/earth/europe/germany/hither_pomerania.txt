@@ -8,6 +8,12 @@ hither_pomerania = {
 	}
 	
 	history = {
+		-8600 = {
+			owner = maglemose #inhabited by the Maglemosian-Duvensee culture in the 8600-8000 BC period; Source: Jacques Jaubert and Mélanie Marie, "Atlas de la Préhistoire", 2025, pp. 64-65.
+			culture = maglemosian
+			religion = pagan
+		}
+		
 		526 = {
 			owner = slavs #territory of Slavic peoples in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = slavic

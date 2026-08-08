@@ -1,0 +1,9 @@
+maglemosian = {
+	name = "Maglemosian"
+	group = occidental
+	color = { 0 0 153 }
+	primary_domain = maglemose
+	species = {
+		human
+	}
+}
