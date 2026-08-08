@@ -7,11 +7,10 @@ colombia = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = arawaks
 			culture = arawak
+			religion = pagan
 		}
 		
 		1836 = {

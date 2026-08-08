@@ -7,11 +7,10 @@ la_pampa = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = charrua
 			culture = charruan
+			religion = pagan
 		}
 		
 		1790 = {

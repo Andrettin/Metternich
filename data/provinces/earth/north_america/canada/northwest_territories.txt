@@ -7,11 +7,10 @@ northwest_territories = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = sioux
 			culture = sioux
+			religion = pagan
 		}
 	}
 }

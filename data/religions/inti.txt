@@ -1,0 +1,6 @@
+inti = {
+	name = "Inti"
+	group = pagan
+	color = { 64 115 115 }
+	icon = mountains
+}

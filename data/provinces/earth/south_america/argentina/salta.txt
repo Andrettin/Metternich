@@ -7,11 +7,10 @@ salta = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = inca_empire
 			culture = inca
+			religion = inti
 		}
 		
 		1600 = {
