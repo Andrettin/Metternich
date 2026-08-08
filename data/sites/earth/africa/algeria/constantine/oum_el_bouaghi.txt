@@ -1,0 +1,8 @@
+oum_el_bouaghi = {
+	name = "Oum el Bouaghi"
+	world = earth
+	geocoordinate = { 7.149997 35.849997 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = constantine
+}

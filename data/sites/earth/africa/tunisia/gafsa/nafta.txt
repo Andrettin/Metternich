@@ -1,0 +1,8 @@
+nafta = {
+	name = "Nafta"
+	world = earth
+	geocoordinate = { 7.88163 33.872164 }
+	type = holding
+	holding_type = guild
+	province = gafsa
+}

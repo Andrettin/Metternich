@@ -1,0 +1,8 @@
+bou_djama = {
+	name = "Bou Djama"
+	world = earth
+	geocoordinate = { 6.388 37.062 }
+	type = holding
+	holding_type = castle
+	province = annaba
+}

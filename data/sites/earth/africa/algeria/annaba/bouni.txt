@@ -1,0 +1,8 @@
+bouni = {
+	name = "Bouni" #El Bouni
+	world = earth
+	geocoordinate = { 7.7438888888889 36.850555555556 }
+	type = holding
+	holding_type = castle
+	province = annaba
+}

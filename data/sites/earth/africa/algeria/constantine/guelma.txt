@@ -1,0 +1,8 @@
+guelma = {
+	name = "Guelma"
+	world = earth
+	geocoordinate = { 7.427998 36.466002 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = constantine
+}

@@ -1,0 +1,8 @@
+gafsa = {
+	name = "Gafsa"
+	world = earth
+	geocoordinate = { 8.780022 34.420443 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = gafsa
+}

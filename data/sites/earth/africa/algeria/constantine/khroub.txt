@@ -1,0 +1,8 @@
+khroub = {
+	name = "Khroub" #El Khroub
+	world = earth
+	geocoordinate = { 6.6936111111111 36.263333333333 }
+	type = holding
+	holding_type = temple
+	province = constantine
+}

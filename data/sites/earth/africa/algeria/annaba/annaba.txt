@@ -2,7 +2,9 @@ annaba = {
 	name = "Annaba" #also known as Bona
 	world = earth
 	geocoordinate = { 7.75998083358 36.92000612290 } #from Natural Earth
-	province = constantine
+	type = holding
+	holding_type = castle
+	province = annaba
 	
 	history = {
 		1360 = {

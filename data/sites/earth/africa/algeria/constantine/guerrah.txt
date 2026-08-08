@@ -1,0 +1,8 @@
+guerrah = {
+	name = "Guerrah"
+	world = earth
+	geocoordinate = { 6.6085 36.1399 }
+	type = holding
+	holding_type = castle
+	province = constantine
+}

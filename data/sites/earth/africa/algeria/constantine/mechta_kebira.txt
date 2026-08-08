@@ -1,0 +1,8 @@
+mechta_kebira = {
+	name = "Mechta Kebira"
+	world = earth
+	geocoordinate = { 6.374 36.296 }
+	type = holding
+	holding_type = castle
+	province = constantine
+}

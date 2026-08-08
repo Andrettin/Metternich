@@ -3,5 +3,6 @@ constantine = {
 	world = earth
 	geocoordinate = { 6.59994828149 36.35998862610 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	province = constantine
 }

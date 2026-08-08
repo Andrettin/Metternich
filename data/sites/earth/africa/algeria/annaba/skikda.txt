@@ -1,0 +1,8 @@
+skikda = {
+	name = "Skikda"
+	world = earth
+	geocoordinate = { 6.899982 36.880422 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = annaba
+}

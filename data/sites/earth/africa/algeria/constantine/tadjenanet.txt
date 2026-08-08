@@ -1,0 +1,8 @@
+tadjenanet = {
+	name = "Tadjenanet"
+	world = earth
+	geocoordinate = { 5.983333333333333 36.11666666666667 }
+	type = holding
+	holding_type = castle
+	province = constantine
+}

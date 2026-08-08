@@ -1,8 +1,8 @@
-constantine = {
-	name = "Constantine"
-	color = { 42 120 138 }
-	terrain = mountains
-	default_provincial_capital = constantine
+annaba = {
+	name = "Annaba"
+	color = { 0 117 10 }
+	terrain = plains
+	default_provincial_capital = annaba
 	regions = {
 		algeria
 	}
@@ -14,8 +14,12 @@ constantine = {
 			religion = asatru
 		}
 		
+		1096 = {
+			trade_zone = doria
+		}
+		
 		1360 = {
-			owner = algeria #part of Algeria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = arabic
 			religion = sunni
 		}

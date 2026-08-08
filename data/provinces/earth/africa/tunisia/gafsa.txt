@@ -1,0 +1,17 @@
+gafsa = {
+	name = "Gafsa"
+	color = { 43 66 63 }
+	terrain = desert
+	default_provincial_capital = gafsa
+	regions = {
+		tunisia
+	}
+	
+	history = {
+		1360 = {
+			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+	}
+}

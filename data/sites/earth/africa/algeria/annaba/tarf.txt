@@ -1,0 +1,8 @@
+tarf = {
+	name = "Tarf" #El Tarf
+	world = earth
+	geocoordinate = { 8.3136111111111 36.766944444444 } #El Taref
+	type = holding
+	holding_type = guild
+	province = annaba
+}

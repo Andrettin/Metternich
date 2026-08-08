@@ -1,0 +1,8 @@
+meroudj = {
+	name = "Meroudj"
+	world = earth
+	geocoordinate = { 8.44 36.555277777778 }
+	type = holding
+	holding_type = castle
+	province = tunisia #Jendouba
+}

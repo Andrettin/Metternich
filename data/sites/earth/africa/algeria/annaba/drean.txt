@@ -1,0 +1,8 @@
+drean = {
+	name = "Drean" #"Dréan"
+	world = earth
+	geocoordinate = { 7.75 36.68333 }
+	type = holding
+	holding_type = castle
+	province = annaba
+}

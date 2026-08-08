@@ -1,0 +1,8 @@
+souk_ahras = {
+	name = "Souk Ahras"
+	world = earth
+	geocoordinate = { 7.949995 36.290381 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = constantine
+}
