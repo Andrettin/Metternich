@@ -8,6 +8,6 @@ guelmim = {
 	
 	history = {
 		culture = maurian
-		religion = pagan
+		religion = megalithic
 	}
 }

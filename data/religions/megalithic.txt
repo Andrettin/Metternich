@@ -1,0 +1,6 @@
+megalithic = { #Berber pagan religion
+	name = "Megalithic"
+	group = pagan
+	color = { 102 66 51 }
+	icon = oasis
+}
