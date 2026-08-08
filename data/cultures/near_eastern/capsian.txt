@@ -1,0 +1,9 @@
+capsian = {
+	name = "Capsian"
+	group = berber
+	color = { 102 178 255 }
+	primary_domain = capsa
+	species = {
+		human
+	}
+}

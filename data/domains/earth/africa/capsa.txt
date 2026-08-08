@@ -1,0 +1,13 @@
+capsa = {
+	name = "Capsa"
+	type = polity
+	color = { 102 178 255 }
+	default_culture = capsian
+	default_religion = megalithic
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = gafsa #Capsa
+	short_names = {
+		tribe = "Capsians"
+	}
+}

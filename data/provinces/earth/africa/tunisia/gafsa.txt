@@ -8,6 +8,12 @@ gafsa = {
 	}
 	
 	history = {
+		-8600 = {
+			owner = capsa #inhabited by the Typical Capsian culture in the 8600-8000 BC period; Source: Jacques Jaubert and Mélanie Marie, "Atlas de la Préhistoire", 2025, pp. 64-65.
+			culture = capsian
+			religion = megalithic
+		}
+		
 		1360 = {
 			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = arabic
