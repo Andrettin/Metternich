@@ -8,7 +8,7 @@ central_gold_coast = {
 	
 	history = {
 		culture = akan
-		religion = pagan
+		religion = akom
 		
 		1482 = {
 			owner = portugal #São Jorge da Mina founded by the Portuguese in 1482; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.

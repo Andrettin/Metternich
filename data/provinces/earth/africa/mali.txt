@@ -8,6 +8,6 @@ mali = {
 	
 	history = {
 		culture = mande
-		religion = pagan
+		religion = siguic
 	}
 }

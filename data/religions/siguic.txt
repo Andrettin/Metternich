@@ -1,0 +1,6 @@
+siguic = { #Mandé paganism
+	name = "Siguic"
+	group = pagan
+	color = { 204 89 0 }
+	icon = oasis
+}

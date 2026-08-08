@@ -8,6 +8,6 @@ bosaso = {
 	
 	history = {
 		culture = somali
-		religion = pagan
+		religion = waaqi
 	}
 }

@@ -1,0 +1,6 @@
+waaqi = { #Oromo/Somali paganism
+	name = "Waaqi"
+	group = pagan
+	color = { 215 40 30 }
+	icon = oasis
+}

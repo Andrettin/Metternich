@@ -8,7 +8,7 @@ ashanti = {
 	
 	history = {
 		culture = akan
-		religion = pagan
+		religion = akom
 		
 		1898 = {
 			owner = gold_coast #became part of the British Gold Coast in 1898; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.

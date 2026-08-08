@@ -1,0 +1,6 @@
+akom = { #Akan paganism
+	name = "Akom"
+	group = pagan
+	color = { 229 178 76 }
+	icon = oasis
+}

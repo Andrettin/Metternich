@@ -1,0 +1,6 @@
+ngaiist = { #Kikuyu paganism
+	name = "Ngaiist"
+	group = pagan
+	color = { 255 114 0 }
+	icon = oasis
+}
