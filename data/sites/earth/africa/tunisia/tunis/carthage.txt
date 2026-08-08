@@ -1,0 +1,11 @@
+carthage = {
+	name = "Carthage"
+	world = earth
+	geocoordinate = { 10.323461 36.852558 }
+	type = holding
+	holding_type = castle
+	province = tunis
+	cultural_names = {
+		#roman = "Carthago" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+}

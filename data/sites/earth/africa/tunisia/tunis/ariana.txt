@@ -1,0 +1,8 @@
+ariana = {
+	name = "Ariana"
+	world = earth
+	geocoordinate = { 10.199998 36.866673 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = tunis #Manouba/Ariana
+}

@@ -4,7 +4,7 @@ gabes = {
 	geocoordinate = { 10.09999304060 33.90042299300 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = tunisia
+	province = tunis
 	
 	history = {
 		1360 = {

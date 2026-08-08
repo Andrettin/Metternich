@@ -2,7 +2,9 @@ sousse = {
 	name = "Sousse" #also known as Susa
 	world = earth
 	geocoordinate = { 10.62502559270 35.82999513660 } #from Natural Earth
-	province = tunisia
+	type = holding
+	holding_type = guild
+	province = tunis #Sousse
 	
 	history = {
 		1360 = {

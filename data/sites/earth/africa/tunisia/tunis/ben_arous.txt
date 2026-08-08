@@ -1,0 +1,8 @@
+ben_arous = {
+	name = "Ben Arous"
+	world = earth
+	geocoordinate = { 10.218888888889 36.753055555556 }
+	type = holding
+	holding_type = castle
+	province = tunis #Ben Arous
+}

@@ -1,0 +1,8 @@
+tamra = {
+	name = "Tamra"
+	world = earth
+	geocoordinate = { 9.120278 37.055 } #Tamera
+	type = holding
+	holding_type = castle
+	province = bizerte
+}

@@ -1,0 +1,8 @@
+netza = {
+	name = "Netza"
+	world = earth
+	geocoordinate = { 9.080951 36.975198 } #Nefza
+	type = holding
+	holding_type = castle
+	province = bizerte #Beja
+}

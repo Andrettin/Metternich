@@ -1,0 +1,8 @@
+zaghouan = {
+	name = "Zaghouan"
+	world = earth
+	geocoordinate = { 10.146997 36.399996 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = tunis #Zaghouan
+}

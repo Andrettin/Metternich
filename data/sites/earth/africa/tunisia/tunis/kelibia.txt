@@ -1,0 +1,8 @@
+kelibia = {
+	name = "Kelibia"
+	world = earth
+	geocoordinate = { 11.093888888889 36.8475 }
+	type = holding
+	holding_type = castle
+	province = tunis #Nabeul
+}

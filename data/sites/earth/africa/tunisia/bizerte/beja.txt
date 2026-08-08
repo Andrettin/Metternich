@@ -1,0 +1,8 @@
+beja_tunisia = {
+	name = "Beja"
+	world = earth
+	geocoordinate = { 9.190023 36.730405 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = bizerte #Beja
+}

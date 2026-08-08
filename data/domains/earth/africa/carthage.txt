@@ -10,10 +10,4 @@ carthage = {
 	short_names = {
 		tribe = "Carthaginians"
 	}
-	eras = {
-		ancient_era
-	}
-	core_provinces = {
-		tunisia
-	}
 }

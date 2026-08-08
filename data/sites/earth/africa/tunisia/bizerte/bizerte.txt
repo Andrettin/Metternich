@@ -1,0 +1,8 @@
+bizerte = {
+	name = "Bizerte"
+	world = earth
+	geocoordinate = { 9.854995 37.290423 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bizerte
+}

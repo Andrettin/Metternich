@@ -1,0 +1,8 @@
+ghezala = {
+	name = "Ghezala"
+	world = earth
+	geocoordinate = { 9.5355555555556 37.083888888889 }
+	type = holding
+	holding_type = castle
+	province = bizerte
+}

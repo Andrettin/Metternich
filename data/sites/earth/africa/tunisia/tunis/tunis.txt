@@ -1,7 +1,9 @@
-mahdia = {
-	name = "Mahdia" #also known as Mahedia
+tunis = {
+	name = "Tunis"
 	world = earth
-	geocoordinate = { 11.04087661530 35.48391304450 } #from Natural Earth
+	geocoordinate = { 10.17967809920 36.80277813620 } #from Natural Earth
+	type = holding
+	holding_type = castle
 	province = tunis
 	
 	history = {

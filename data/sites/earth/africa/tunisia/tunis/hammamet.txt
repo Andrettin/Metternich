@@ -1,0 +1,8 @@
+hammamet = {
+	name = "Hammamet"
+	world = earth
+	geocoordinate = { 10.6 36.416666666667 }
+	type = holding
+	holding_type = castle
+	province = tunis #Nabeul
+}

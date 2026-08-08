@@ -1,0 +1,31 @@
+bizerte = {
+	name = "Bizerte"
+	color = { 168 114 137 }
+	terrain = plains
+	default_provincial_capital = bizerte
+	regions = {
+		tunisia
+	}
+	
+	history = {
+		526 = {
+			owner = vandalia #part of the Kingdom of the Vandals in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = vandal
+			religion = asatru
+		}
+		
+		1082 = {
+			trade_zone = doria
+		}
+		
+		1360 = {
+			owner = tunisia #part of Tunis in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = arabic
+			religion = sunni
+		}
+		
+		1740 = {
+			owner = tunisia #part of Tunis c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
+}

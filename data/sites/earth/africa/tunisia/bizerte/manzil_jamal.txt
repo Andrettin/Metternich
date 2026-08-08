@@ -1,0 +1,8 @@
+manzil_jamal = {
+	name = "Manzil Jamal"
+	world = earth
+	geocoordinate = { 9.91 37.23 } #Menzel Jemil
+	type = holding
+	holding_type = castle
+	province = bizerte
+}
