@@ -63,10 +63,7 @@
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
 #include "map/map.h"
-#include "map/map_country_model.h"
 #include "map/map_grid_model.h"
-#include "map/map_province_model.h"
-#include "map/map_site_model.h"
 #include "map/map_template.h"
 #include "map/moisture_type.h"
 #include "map/province.h"
@@ -277,10 +274,7 @@ int main(int argc, char **argv)
 		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");
 		qmlRegisterType<combat_map_grid_model>("combat_map_grid_model", 1, 0, "CombatMapGridModel");
 		qmlRegisterType<family_tree_model>("family_tree_model", 1, 0, "FamilyTreeModel");
-		qmlRegisterType<map_country_model>("map_country_model", 1, 0, "MapCountryModel");
 		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
-		qmlRegisterType<map_province_model>("map_province_model", 1, 0, "MapProvinceModel");
-		qmlRegisterType<map_site_model>("map_site_model", 1, 0, "MapSiteModel");
 		qmlRegisterType<scenario_model>("scenario_model", 1, 0, "ScenarioModel");
 		qmlRegisterType<technology_model>("technology_model", 1, 0, "TechnologyModel");
 		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");

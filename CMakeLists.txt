@@ -180,11 +180,8 @@ set(map_SRCS
 	src/map/combat_map_grid_model.cpp
 	src/map/diplomatic_map_image_provider.cpp
 	src/map/map.cpp
-	src/map/map_country_model.cpp
 	src/map/map_generator.cpp
 	src/map/map_grid_model.cpp
-	src/map/map_province_model.cpp
-	src/map/map_site_model.cpp
 	src/map/map_template.cpp
 	src/map/province.cpp
 	src/map/province_container.cpp
@@ -570,11 +567,8 @@ set(map_HDRS
 	src/map/elevation_type.h
 	src/map/forestation_type.h
 	src/map/map.h
-	src/map/map_country_model.h
 	src/map/map_generator.h
 	src/map/map_grid_model.h
-	src/map/map_province_model.h
-	src/map/map_site_model.h
 	src/map/map_template.h
 	src/map/moisture_type.h
 	src/map/province.h

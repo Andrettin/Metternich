@@ -1,10 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtPositioning
-import map_country_model 1.0
 import map_grid_model 1.0
-import map_province_model 1.0
-import map_site_model 1.0
 import "./dialogs"
 
 Item {
