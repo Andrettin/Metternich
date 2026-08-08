@@ -4,6 +4,7 @@
 #include "culture/culture_container.h"
 #include "database/data_type.h"
 #include "species/phenotype_container.h"
+#include "util/color_container.h"
 
 namespace archimedes {
 	class language;
@@ -55,6 +56,10 @@ public:
 
 	using culture_base::database_dependencies;
 
+private:
+	static inline color_set culture_colors;
+
+public:
 	explicit culture(const std::string &identifier);
 	~culture();
 

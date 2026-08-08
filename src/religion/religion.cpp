@@ -35,7 +35,12 @@ void religion::process_gsml_scope(const gsml_data &scope)
 
 void religion::initialize()
 {
-	if (!this->color.isValid()) {
+	if (this->color.isValid()) {
+		const auto [it, inserted] = religion::religion_colors.insert(this->get_color());
+		if (!inserted) {
+			throw std::runtime_error(std::format("The color for religion \"{}\" is already used for a different religion.", this->get_identifier()));
+		}
+	} else {
 		log::log_error("Religion \"" + this->get_identifier() + "\" has no color. A random one will be generated for it.");
 		this->color = random::get()->generate_color();
 	}

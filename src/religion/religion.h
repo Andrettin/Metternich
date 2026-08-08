@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "religion/religion_base.h"
+#include "util/color_container.h"
 
 Q_MOC_INCLUDE("religion/religious_group.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -28,6 +29,10 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::religion*";
 	static constexpr const char database_folder[] = "religions";
 
+private:
+	static inline color_set religion_colors;
+
+public:
 	explicit religion(const std::string &identifier) : religion_base(identifier)
 	{
 	}

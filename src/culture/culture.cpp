@@ -59,7 +59,12 @@ void culture::process_gsml_scope(const gsml_data &scope)
 
 void culture::initialize()
 {
-	if (!this->color.isValid()) {
+	if (this->color.isValid()) {
+		const auto [it, inserted] = culture::culture_colors.insert(this->get_color());
+		if (!inserted) {
+			throw std::runtime_error(std::format("The color for culture \"{}\" is already used for a different culture.", this->get_identifier()));
+		}
+	} else {
 		log::log_error(std::format("Culture \"{}\" has no color. A random one will be generated for it.", this->get_identifier()));
 		this->color = random::get()->generate_color();
 	}
