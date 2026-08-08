@@ -11,7 +11,7 @@ kentucky = {
 		1300 = {
 			owner = cherokee
 			culture = cherokee
-			religion = pagan
+			religion = totemist
 		}
 		
 		1682 = {

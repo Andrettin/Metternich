@@ -14,7 +14,7 @@ new_mexico = {
 		-4000 = {
 			owner = apache
 			culture = apache
-			religion = pagan
+			religion = totemist
 		}
 		
 		1600 = {

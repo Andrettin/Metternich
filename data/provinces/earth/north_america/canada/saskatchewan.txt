@@ -15,7 +15,7 @@ saskatchewan = {
 		-4000 = {
 			owner = sioux
 			culture = sioux
-			religion = pagan
+			religion = totemist
 		}
 		
 		1670 = {

@@ -1,0 +1,6 @@
+totemist = {
+	name = "Totemist"
+	group = pagan
+	color = { 127 115 115 }
+	icon = pine_tree
+}

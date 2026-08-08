@@ -10,7 +10,7 @@ oregon = {
 		1300 = {
 			owner = kwakiutl #territory of the Northwest Coast cultural group (to which the Kwakiutl belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 			culture = kwakiutl
-			religion = pagan
+			religion = totemist
 		}
 		
 		1811 = {

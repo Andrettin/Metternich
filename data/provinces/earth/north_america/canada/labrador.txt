@@ -10,7 +10,7 @@ labrador = {
 		-4000 = {
 			owner = huron
 			culture = huron
-			religion = pagan
+			religion = totemist
 		}
 		
 		1600 = {
