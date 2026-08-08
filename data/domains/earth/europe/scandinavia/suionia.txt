@@ -3,17 +3,11 @@ suionia = {
 	type = polity
 	color = { 150 108 150 }
 	default_culture = suioni
-	default_religion = asatru
+	default_religion = tuistic
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = stockholm
 	short_names = {
 		tribe = "Suiones"
-	}
-	eras = {
-		ancient_era
-	}
-	core_provinces = {
-		uppland
 	}
 }

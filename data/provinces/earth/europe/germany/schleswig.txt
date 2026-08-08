@@ -20,7 +20,7 @@ schleswig = {
 		-264 = {
 			owner = anglia #territory of the Angles in the 264 BC - 180 AD period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = anglian
-			religion = asatru
+			religion = tuistic
 		}
 		
 		919 = {

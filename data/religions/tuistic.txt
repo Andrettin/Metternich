@@ -1,0 +1,6 @@
+tuistic = { #early Germanic religion
+	name = "Tuistic"
+	group = pagan
+	color = { 76 39 22 }
+	icon = pine_tree
+}

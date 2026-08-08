@@ -24,6 +24,7 @@ frey = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 242; Sourc
 		religion = asatru
 		gender = male
 		father = njord
+		mother = nerthus #correct?
 	}
 }
 
@@ -52,9 +53,48 @@ freyja = { #Source: Peter Buchholz, "Perspectives for Historical Research in Ger
 		religion = asatru
 		gender = female
 		father = njord
+		mother = nerthus #correct?
 	}
 	
 	#fertility goddess, and a goddess of love
+}
+
+nerthus = { #Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 44, 47.
+	name = "Nerthus" #same etymological root as Njord, likely originally the same deity
+	pantheon = vanir #since Njord is a part of the Vanir
+	divine_rank = greater_deity
+	religions = {
+		tuistic
+	}
+	major_domains = {
+		animal
+		charm
+		creation
+		earth
+		guardian
+		healing
+		necromantic
+		plant
+		protection
+		weather
+	}
+	minor_domains = {
+		air
+		divination
+		sun
+		wards
+		water
+	}
+	character = {
+		species = elf
+		character_class = cleric
+		culture = elven
+		religion = tuistic
+		gender = female
+	}
+	
+	#worshipped by the Langobards
+	#earth goddess
 }
 
 njord = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 248; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, p. 135; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 54.

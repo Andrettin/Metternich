@@ -34,8 +34,9 @@ elf = {
 	}
 	character_class_level_limits = {
 		bard = 9
-		mage = U
-		ranger = 12
+		cleric = 12
+		mage = 15
+		ranger = 15
 		rogue = 12
 		warrior = 12
 	}

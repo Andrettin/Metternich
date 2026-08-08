@@ -3,17 +3,11 @@ teutonia = {
 	type = polity
 	color = { 175 175 90 }
 	default_culture = teutonian
-	default_religion = asatru
+	default_religion = tuistic
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = kiel
 	short_names = {
 		tribe = "Teutones"
-	}
-	eras = {
-		ancient_era
-	}
-	core_provinces = {
-		holstein
 	}
 }

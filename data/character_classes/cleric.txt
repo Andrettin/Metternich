@@ -24,6 +24,7 @@ cleric = {
 	}
 	allowed_species = {
 		dwarf
+		elf
 		gnome
 		half_elf
 		halfling

@@ -169,6 +169,33 @@ loki = { #son of two giants; attractive, mischief-making and ambivalent god; kno
 	}
 }
 
+mannus = {
+	name = "Mannus"
+	pantheon = aesir
+	divine_rank = lesser_deity
+	religions = {
+		tuistic
+	}
+	major_domains = {
+		combat
+		creation
+		guardian
+		protection
+	}
+	minor_domains = {
+		charm
+		war
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = suioni
+		religion = tuistic
+		gender = male
+		start_date = -2000
+	}
+}
+
 odin = { #known as Allfather, the Terrible One, One-eyed, Father of Battle; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 248; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75; Source: Peter Buchholz, "Perspectives for Historical Research in Germanic Religion", 1968, pp. 128, 132.
 	name = "Odin"
 	pantheon = aesir
