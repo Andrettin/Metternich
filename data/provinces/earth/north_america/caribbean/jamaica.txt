@@ -11,7 +11,7 @@ jamaica = {
 	
 	history = {
 		culture = arawak
-		religion = pagan
+		religion = animist
 		
 		1600 = {
 			owner = santiago #part of Spanish Jamaica in 1600; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.

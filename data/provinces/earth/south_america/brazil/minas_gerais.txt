@@ -10,7 +10,7 @@ minas_gerais = {
 		1300 = {
 			owner = tupi
 			culture = tupi
-			religion = pagan
+			religion = animist
 		}
 		
 		1716 = {
@@ -73,7 +73,7 @@ minas_gerais = {
 		
 		1855 = {
 			population_groups = {
-				tribesmen.tupi.pagan = 1000 #1,000 Indians lived in Minas Gerais in 1855; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 194.
+				tribesmen.tupi.animist = 1000 #1,000 Indians lived in Minas Gerais in 1855; Source: "O Brasil Imperial - Volume I - 1808-1831", p. 194.
 			}
 		}
 	}

@@ -8,6 +8,6 @@ el_salvador = {
 	
 	history = {
 		culture = arawak
-		religion = pagan
+		religion = animist
 	}
 }

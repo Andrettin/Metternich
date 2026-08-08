@@ -10,7 +10,7 @@ entre_rios = {
 		-4000 = {
 			owner = charrua
 			culture = charruan
-			religion = pagan
+			religion = animist
 		}
 		
 		1600 = {

@@ -10,7 +10,7 @@ amazonas_venezuela = {
 		-4000 = {
 			owner = arawaks
 			culture = arawak
-			religion = pagan
+			religion = animist
 		}
 	}
 }

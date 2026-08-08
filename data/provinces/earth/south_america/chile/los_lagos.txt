@@ -10,7 +10,7 @@ los_lagos = {
 		-4000 = {
 			owner = mapuche
 			culture = mapuche
-			religion = pagan
+			religion = animist
 		}
 	}
 }

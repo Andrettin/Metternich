@@ -8,6 +8,6 @@ darfur = {
 	
 	history = {
 		culture = fur
-		religion = pagan
+		religion = kemetic
 	}
 }

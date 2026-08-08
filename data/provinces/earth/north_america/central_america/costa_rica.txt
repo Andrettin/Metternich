@@ -8,6 +8,6 @@ costa_rica = {
 	
 	history = {
 		culture = arawak
-		religion = pagan
+		religion = animist
 	}
 }

@@ -1,0 +1,6 @@
+animist = {
+	name = "Animist"
+	group = pagan
+	color = { 127 0 0 }
+	icon = pine_tree
+}

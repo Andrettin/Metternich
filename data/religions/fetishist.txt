@@ -1,0 +1,6 @@
+fetishist = {
+	name = "Fetishist"
+	group = pagan
+	color = { 127 76 76 }
+	icon = oasis
+}

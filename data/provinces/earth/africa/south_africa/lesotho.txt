@@ -7,8 +7,6 @@ lesotho = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-201400000 = {
 			#Megazostrodon lived in Lesotho in the Jurassic; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=txn:39752
 		}
@@ -16,6 +14,7 @@ lesotho = {
 		-4000 = {
 			owner = zululand
 			culture = zulu
+			religion = fetishist
 		}
 	}
 }

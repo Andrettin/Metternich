@@ -10,7 +10,7 @@ boqueron = {
 		-4000 = {
 			owner = tupi
 			culture = tupi
-			religion = pagan
+			religion = animist
 		}
 		
 		1790 = {

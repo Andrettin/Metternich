@@ -10,7 +10,7 @@ tierra_del_fuego = {
 		-4000 = {
 			owner = mapuche
 			culture = mapuche
-			religion = pagan
+			religion = animist
 		}
 		
 		1911 = {

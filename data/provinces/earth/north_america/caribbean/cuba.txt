@@ -8,7 +8,7 @@ cuba = {
 	
 	history = {
 		culture = arawak
-		religion = pagan
+		religion = animist
 		
 		1600 = {
 			owner = cuba #part of Spanish Cuba in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.

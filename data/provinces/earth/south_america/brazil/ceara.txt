@@ -10,7 +10,7 @@ ceara = {
 		1300 = {
 			owner = tupi #territory of the Tropical Forest cultural group (to which the Tupi belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 			culture = tupi
-			religion = pagan
+			religion = animist
 		}
 		
 		1790 = {

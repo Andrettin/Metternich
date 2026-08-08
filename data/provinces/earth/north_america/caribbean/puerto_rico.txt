@@ -8,7 +8,7 @@ puerto_rico = {
 	
 	history = {
 		culture = arawak
-		religion = pagan
+		religion = animist
 		
 		1513 = {
 			owner = puerto_rico #the Spanish were established in Puerto Rico by 1513; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.

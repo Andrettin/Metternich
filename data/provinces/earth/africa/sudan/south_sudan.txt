@@ -8,6 +8,6 @@ south_sudan = {
 	
 	history = {
 		culture = dinka
-		religion = pagan
+		religion = kemetic
 	}
 }
