@@ -1,7 +1,7 @@
 phrygian = {
 	name = "Phrygian"
 	group = anatolian
-	color = { 246 223 15 }
+	color = { 29 97 36 }
 	language = phrygian
 	primary_domain = phrygia
 	species = {
