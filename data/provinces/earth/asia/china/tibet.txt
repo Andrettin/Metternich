@@ -8,6 +8,6 @@ tibet = {
 	
 	history = {
 		culture = chinese
-		religion = pagan
+		religion = taoist
 	}
 }

@@ -1,6 +1,6 @@
 shinto = {
 	name = "Shinto"
-	group = eastern
+	group = sinitic
 	color = { 204 0 0 }
 	icon = mountains
 }

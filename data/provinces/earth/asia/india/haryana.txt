@@ -7,11 +7,10 @@ haryana = {
 	}
 	
 	history = {
-		culture = indian
-		religion = pagan
-		
 		1803 = {
 			owner = great_britain #became a British possession in 1803; Source: William R. Shepherd, "Historical Atlas", 1911, p. 152.
+			culture = indian
+			religion = hindu
 		}
 	}
 }

@@ -3,17 +3,11 @@ cantabria = {
 	type = polity
 	color = { 135 54 71 }
 	default_culture = cantabrian
-	default_religion = pagan
+	default_religion = iberic
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = santander
 	short_names = {
 		tribe = "Cantabri"
-	}
-	eras = {
-		ancient_era
-	}
-	core_provinces = {
-		cantabria
 	}
 }

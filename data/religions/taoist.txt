@@ -1,0 +1,6 @@
+taoist = {
+	name = "Taoist"
+	group = sinitic
+	color = { 226 241 182 }
+	icon = mountains
+}

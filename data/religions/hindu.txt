@@ -1,0 +1,6 @@
+hindu = {
+	name = "Hindu"
+	group = dharmic
+	color = { 255 0 0 }
+	icon = mountains
+}

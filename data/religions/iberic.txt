@@ -1,0 +1,6 @@
+iberic = {
+	name = "Iberic"
+	group = pagan
+	color = { 255 106 0 }
+	icon = pine_tree
+}

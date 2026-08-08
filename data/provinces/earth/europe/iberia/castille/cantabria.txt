@@ -15,7 +15,7 @@ cantabria = {
 		-264 = {
 			owner = cantabria #territory of the Cantabri in the 264-17 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
 			culture = cantabrian
-			religion = pagan
+			religion = iberic
 		}
 		
 		526 = {

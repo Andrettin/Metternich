@@ -15,7 +15,7 @@ navarre = {
 		526 = {
 			owner = basques #territory of the Basques in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = basque
-			religion = pagan
+			religion = iberic
 		}
 		
 		1360 = {

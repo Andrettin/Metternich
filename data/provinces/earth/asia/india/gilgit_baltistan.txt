@@ -8,6 +8,6 @@ gilgit_baltistan = {
 	
 	history = {
 		culture = indian
-		religion = pagan
+		religion = hindu
 	}
 }

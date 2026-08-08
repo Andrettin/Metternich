@@ -8,6 +8,6 @@ kyushu = {
 	
 	history = {
 		culture = japanese
-		religion = pagan
+		religion = shinto
 	}
 }

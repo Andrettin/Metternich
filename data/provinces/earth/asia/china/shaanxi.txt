@@ -8,6 +8,6 @@ shaanxi = {
 	
 	history = {
 		culture = chinese
-		religion = pagan
+		religion = taoist
 	}
 }

@@ -1,0 +1,6 @@
+zoroastrian = {
+	name = "Zoroastrian"
+	group = mazdan
+	color = { 127 178 51 }
+	icon = mountains
+}

@@ -8,6 +8,6 @@ sindh = {
 	
 	history = {
 		culture = indian
-		religion = pagan
+		religion = hindu
 	}
 }

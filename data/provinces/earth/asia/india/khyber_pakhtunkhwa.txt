@@ -8,6 +8,6 @@ khyber_pakhtunkhwa = {
 	
 	history = {
 		culture = indian
-		religion = pagan
+		religion = hindu
 	}
 }

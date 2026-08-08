@@ -1,3 +1,0 @@
-eastern = {
-	name = "Eastern"
-}

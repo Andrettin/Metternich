@@ -8,6 +8,6 @@ xinjiang = {
 	
 	history = {
 		culture = chinese
-		religion = pagan
+		religion = taoist
 	}
 }
