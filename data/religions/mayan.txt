@@ -1,0 +1,6 @@
+mayan = {
+	name = "Mayan"
+	group = pagan
+	color = { 127 25 178 }
+	icon = pine_tree
+}

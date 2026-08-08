@@ -7,8 +7,6 @@ montana = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-68178000 = {
 			#Alphadon lived there 68.178-66.38 millions of years ago; Source: https://fossilworks.org/?a=samplePage&sample_no=4558
 		}
@@ -16,6 +14,7 @@ montana = {
 		-4000 = {
 			owner = sioux
 			culture = sioux
+			religion = pagan
 		}
 		
 		1673 = {

@@ -3,6 +3,7 @@ aztec = {
 	group = mesoamerican
 	color = { 88 175 160 }
 	language = nahuatl
+	primary_domain = aztec_empire
 	species = {
 		human
 	}

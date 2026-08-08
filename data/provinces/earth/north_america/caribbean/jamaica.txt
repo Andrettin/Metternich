@@ -10,7 +10,6 @@ jamaica = {
 	}
 	
 	history = {
-		owner = arawaks
 		culture = arawak
 		religion = pagan
 		

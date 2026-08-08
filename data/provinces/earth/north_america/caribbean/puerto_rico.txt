@@ -7,7 +7,6 @@ puerto_rico = {
 	}
 	
 	history = {
-		owner = arawaks
 		culture = arawak
 		religion = pagan
 		

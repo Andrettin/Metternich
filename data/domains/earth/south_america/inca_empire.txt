@@ -11,12 +11,6 @@ inca_empire = {
 	short_names = {
 		tribe = "Incas"
 	}
-	eras = {
-		renaissance_era
-	}
-	core_provinces = {
-		cuzco
-	}
 	
 	history = {
 		1530 = {

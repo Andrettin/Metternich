@@ -16,7 +16,7 @@ new_jersey = {
 		
 		1585 = {
 			owner = virginia #became part of Raleigh's Colony of Virginia in 1585; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110.
-			culture = american
+			culture = english
 			religion = protestant
 		}
 		
@@ -34,6 +34,7 @@ new_jersey = {
 		
 		1655 = {
 			owner = new_netherland #became part of New Netherland in 1655; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = dutch
 		}
 		
 		1664 = {
@@ -42,11 +43,12 @@ new_jersey = {
 		
 		1673 = {
 			owner = new_netherland #restored to New Netherland in 1673; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
+			culture = dutch
 		}
 		
 		1674 = {
 			owner = new_england #became an English possession in 1674; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
-			culture = american
+			culture = english
 		}
 		
 		1776 = {

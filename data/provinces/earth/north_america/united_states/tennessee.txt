@@ -8,16 +8,10 @@ tennessee = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = cherokee
-			culture = cherokee
-		}
-		
 		1300 = {
 			owner = cherokee
 			culture = cherokee
+			religion = pagan
 		}
 		
 		1682 = {

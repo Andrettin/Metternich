@@ -7,8 +7,7 @@ belize = {
 	}
 	
 	history = {
-		owner = mayas
 		culture = maya
-		religion = pagan
+		religion = mayan
 	}
 }

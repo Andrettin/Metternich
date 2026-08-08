@@ -2,6 +2,7 @@ inca = {
 	name = "Inca"
 	group = andean
 	color = { 178 141 85 }
+	primary_domain = inca_empire
 	species = {
 		human
 	}

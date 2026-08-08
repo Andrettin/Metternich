@@ -8,16 +8,10 @@ new_york = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = iroquois
-			culture = iroquois
-		}
-		
 		1300 = {
 			owner = iroquois #Iroquois territory in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 			culture = iroquois
+			religion = pagan
 		}
 		
 		1609 = {
@@ -36,7 +30,7 @@ new_york = {
 		
 		1674 = {
 			owner = new_england #became an English possession in 1674; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
-			culture = american
+			culture = english
 		}
 		
 		1776 = {

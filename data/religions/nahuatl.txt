@@ -1,0 +1,6 @@
+nahuatl = {
+	name = "Nahuatl"
+	group = pagan
+	color = { 204 51 51 }
+	icon = oasis
+}

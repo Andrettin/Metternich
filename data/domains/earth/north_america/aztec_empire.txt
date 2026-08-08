@@ -3,18 +3,12 @@ aztec_empire = {
 	type = polity
 	color = { 48 149 21 }
 	default_culture = aztec
-	default_religion = pagan
+	default_religion = nahuatl
 	default_tier = empire
 	default_government_type = tribal_despotism
 	default_capital = mexico_city
 	short_name = true
 	short_names = {
 		tribe = "Aztecs"
-	}
-	eras = {
-		renaissance_era
-	}
-	core_provinces = {
-		mexico
 	}
 }

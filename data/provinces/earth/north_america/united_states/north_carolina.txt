@@ -8,21 +8,15 @@ north_carolina = {
 	}
 	
 	history = {
-		religion = pagan
-		
-		-4000 = {
-			owner = cherokee
-			culture = cherokee
-		}
-		
 		1300 = {
 			owner = cherokee #territory of the Southeastern cultural group (to which the Cherokee belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 			culture = cherokee
+			religion = pagan
 		}
 		
 		1607 = {
 			owner = virginia #became part of Virginia in 1607; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
-			culture = american
+			culture = english
 			religion = protestant
 		}
 		

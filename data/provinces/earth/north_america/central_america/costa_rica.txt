@@ -7,7 +7,6 @@ costa_rica = {
 	}
 	
 	history = {
-		owner = arawaks
 		culture = arawak
 		religion = pagan
 	}

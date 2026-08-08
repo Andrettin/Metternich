@@ -7,8 +7,6 @@ south_dakota = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-143100000 = {
 			#Alphadon lived in South Dakota in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
@@ -16,6 +14,7 @@ south_dakota = {
 		-4000 = {
 			owner = sioux
 			culture = sioux
+			religion = pagan
 		}
 		
 		1673 = {

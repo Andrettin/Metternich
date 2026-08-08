@@ -34,7 +34,7 @@ pennsylvania = {
 		
 		1674 = {
 			owner = new_england #became an English possession in 1674; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
-			culture = american
+			culture = english
 		}
 		
 		1776 = {

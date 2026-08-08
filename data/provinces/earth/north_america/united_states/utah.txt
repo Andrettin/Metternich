@@ -7,8 +7,6 @@ utah = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-86300000 = {
 			#Alphadon lived there in the Santonian period; Source: https://fossilworks.org/?a=samplePage&sample_no=4596
 		}
@@ -20,6 +18,7 @@ utah = {
 		-4000 = {
 			owner = apache
 			culture = apache
+			religion = pagan
 		}
 		
 		1848 = {

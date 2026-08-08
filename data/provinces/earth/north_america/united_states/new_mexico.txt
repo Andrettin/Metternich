@@ -7,8 +7,6 @@ new_mexico = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-143100000 = {
 			#Alphadon lived in New Mexico in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
@@ -16,6 +14,7 @@ new_mexico = {
 		-4000 = {
 			owner = apache
 			culture = apache
+			religion = pagan
 		}
 		
 		1600 = {

@@ -7,11 +7,10 @@ colorado = {
 	}
 	
 	history = {
-		religion = pagan
-		
 		-4000 = {
 			owner = apache
 			culture = apache
+			religion = pagan
 		}
 		
 		1682 = {
