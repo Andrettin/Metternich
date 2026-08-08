@@ -6,9 +6,6 @@ wessex = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = wells #Winchester
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		somerset
 		devon

@@ -14,11 +14,6 @@ ottoman_empire = {
 	short_names = {
 		tribe = "Ottoman Turks"
 	}
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		thrace
 		ancyra

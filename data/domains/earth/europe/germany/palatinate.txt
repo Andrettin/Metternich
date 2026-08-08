@@ -7,10 +7,6 @@ palatinate = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = mainz #Kaiserslautern
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		palatinate
 	}

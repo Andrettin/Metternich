@@ -8,9 +8,6 @@ parma = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = parma
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		parma
 	}

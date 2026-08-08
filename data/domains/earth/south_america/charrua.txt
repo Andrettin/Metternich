@@ -7,9 +7,6 @@ charrua = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = buenos_aires
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		buenos_aires
 	}

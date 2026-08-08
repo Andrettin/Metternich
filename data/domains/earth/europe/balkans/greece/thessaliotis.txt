@@ -6,9 +6,6 @@ thessaliotis = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = larissa
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		thessaly
 	}

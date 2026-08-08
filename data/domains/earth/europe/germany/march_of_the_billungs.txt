@@ -7,9 +7,6 @@ march_of_the_billungs = {
 	default_government_type = monarchy
 	default_capital = schwerin
 	short_name = true
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		mecklenburg
 	}

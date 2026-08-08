@@ -9,10 +9,6 @@ spain = {
 	default_government_type = monarchy
 	default_capital = madrid
 	max_tier = empire
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		castille
 		leon

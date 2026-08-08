@@ -15,11 +15,6 @@ bavaria = {
 			government_group = monarchy
 		}
 	}
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		eichstatt
 		freising

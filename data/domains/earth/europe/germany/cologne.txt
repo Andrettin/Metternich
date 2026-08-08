@@ -8,10 +8,6 @@ cologne = {
 	default_tier = duchy #archbishopric
 	default_government_type = theocracy
 	default_capital = cologne
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_holdings = {
 		cologne
 	}

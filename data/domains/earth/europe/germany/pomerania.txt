@@ -8,10 +8,6 @@ pomerania = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = stettin
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		hither_pomerania
 		farther_pomerania

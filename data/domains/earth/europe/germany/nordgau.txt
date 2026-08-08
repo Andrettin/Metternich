@@ -7,9 +7,6 @@ nordgau = {
 	default_tier = duchy #margraviate
 	default_government_type = monarchy
 	default_capital = nuremberg
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		eichstatt
 	}

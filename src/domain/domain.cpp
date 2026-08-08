@@ -23,7 +23,6 @@
 #include "script/condition/and_condition.h"
 #include "technology/technology.h"
 #include "technology/technology_container.h"
-#include "time/era.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/gender.h"
@@ -55,10 +54,6 @@ void domain::process_gsml_scope(const gsml_data &scope)
 			conditions->process_gsml_data(child_scope);
 			this->conditional_flags[child_tag] = std::move(conditions);
 		});
-	} else if (tag == "eras") {
-		for (const std::string &value : values) {
-			this->eras.push_back(era::get(value));
-		}
 	} else if (tag == "cultural_names") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const culture_base *culture = cultural_group::try_get(property.get_key());

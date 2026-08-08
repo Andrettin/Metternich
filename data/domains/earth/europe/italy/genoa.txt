@@ -8,10 +8,6 @@ genoa = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = genoa
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		genoa
 	}

@@ -6,9 +6,6 @@ burgundians = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = worms
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		burgundy
 		dauphiny

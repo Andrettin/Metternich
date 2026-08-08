@@ -7,9 +7,6 @@ achaea = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = vostitza
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		achaea
 	}

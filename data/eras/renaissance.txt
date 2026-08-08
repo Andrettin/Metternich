@@ -1,0 +1,4 @@
+renaissance = {
+	name = "Renaissance"
+	start_date = 1492
+}

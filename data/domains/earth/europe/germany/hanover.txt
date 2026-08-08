@@ -8,10 +8,6 @@ hanover = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = hanover
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		hanover
 		luneburg

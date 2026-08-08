@@ -11,9 +11,6 @@ saxony = {
 	short_names = {
 		tribe = "Saxons"
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		brunswick
 		bremen

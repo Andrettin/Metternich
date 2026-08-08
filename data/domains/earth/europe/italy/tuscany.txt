@@ -13,10 +13,6 @@ tuscany = {
 			dynasty = habsburg
 		}
 	}
-	eras = {
-		medieval_era
-		industrial_era
-	}
 	core_provinces = {
 		arezzo
 		tuscany

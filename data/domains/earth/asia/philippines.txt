@@ -7,9 +7,6 @@ philippines = {
 	default_tier = kingdom
 	default_government_type = republic
 	default_capital = manila
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		luzon
 		mindanao

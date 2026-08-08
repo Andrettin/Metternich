@@ -7,9 +7,6 @@ new_netherland = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = new_york
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		new_york
 	}

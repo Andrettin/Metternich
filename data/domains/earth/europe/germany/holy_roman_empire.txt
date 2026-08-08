@@ -9,10 +9,6 @@ holy_roman_empire = {
 	default_capital = frankfurt
 	definite_article = true
 	short_name = true
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		#Germany
 		brandenburg

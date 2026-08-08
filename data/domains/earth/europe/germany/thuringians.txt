@@ -6,9 +6,6 @@ thuringians = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = erfurt
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		thuringia
 		franconia

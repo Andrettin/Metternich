@@ -15,9 +15,6 @@ brazil = {
 			tier <= kingdom
 		}
 	}
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		rio_de_janeiro
 		acre

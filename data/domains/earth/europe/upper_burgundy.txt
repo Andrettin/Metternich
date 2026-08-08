@@ -6,9 +6,6 @@ upper_burgundy = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = geneva
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		geneva
 		basel

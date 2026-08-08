@@ -6,9 +6,6 @@ tupi = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = salvador
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		bahia
 		alagoas

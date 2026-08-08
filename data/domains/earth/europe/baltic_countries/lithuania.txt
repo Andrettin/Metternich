@@ -10,9 +10,6 @@ lithuania = {
 	short_names = {
 		tribe = "Lithuanians"
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		lithuania
 	}

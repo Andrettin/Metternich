@@ -7,9 +7,6 @@ qara_qoyunlu = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = van
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		van
 		al_hasakah

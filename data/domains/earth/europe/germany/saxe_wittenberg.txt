@@ -6,9 +6,6 @@ saxe_wittenberg = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = wittenberg
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		upper_saxony
 	}

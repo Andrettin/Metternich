@@ -8,11 +8,6 @@ wallachia = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = bucharest
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		wallachia
 		oltenia

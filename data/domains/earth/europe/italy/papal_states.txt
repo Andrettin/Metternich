@@ -10,11 +10,6 @@ papal_states = {
 	default_capital = lateran
 	definite_article = true
 	short_name = true
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		latium
 		bologna

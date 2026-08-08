@@ -6,9 +6,6 @@ togoland = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = lome
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		togo
 	}

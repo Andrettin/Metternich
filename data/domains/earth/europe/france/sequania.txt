@@ -10,9 +10,6 @@ sequania = {
 	short_names = {
 		tribe = "Sequani"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		franche_comte
 	}

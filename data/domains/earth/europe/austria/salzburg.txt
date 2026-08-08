@@ -8,10 +8,6 @@ salzburg = {
 	default_tier = duchy #archbishopric
 	default_government_type = theocracy
 	default_capital = salzburg
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_holdings = {
 		salzburg
 	}

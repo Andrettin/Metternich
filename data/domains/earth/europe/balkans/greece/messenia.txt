@@ -7,9 +7,6 @@ messenia = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = pylos #Messene
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		methone
 	}

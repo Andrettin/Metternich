@@ -10,9 +10,6 @@ arvernia = {
 	short_names = {
 		tribe = "Arverni"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		auvergne
 	}

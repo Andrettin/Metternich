@@ -7,7 +7,4 @@ muscovy = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = moscow
-	eras = {
-		renaissance_era
-	}
 }

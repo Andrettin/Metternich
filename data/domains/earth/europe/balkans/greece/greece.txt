@@ -8,9 +8,6 @@ greece = {
 	default_tier = kingdom
 	default_government_type = republic
 	default_capital = athens
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		achaea
 		aetolia

@@ -6,9 +6,6 @@ northmen = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = oslo
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		akershus
 		rogaland

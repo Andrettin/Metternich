@@ -8,9 +8,6 @@ lombardy_venetia = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = milan
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		lombardy
 		venetia

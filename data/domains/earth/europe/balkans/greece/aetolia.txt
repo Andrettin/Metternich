@@ -7,9 +7,6 @@ aetolia = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = naupaktos
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		aetolia
 	}

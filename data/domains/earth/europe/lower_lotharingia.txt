@@ -7,9 +7,6 @@ lower_lotharingia = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = cologne #Aachen
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		rhineland
 		brabant

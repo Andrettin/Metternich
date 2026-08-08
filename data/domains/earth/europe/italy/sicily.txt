@@ -8,11 +8,6 @@ sicily = {
 	default_government_type = monarchy
 	default_capital = palermo
 	min_tier = county
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		sicily
 	}

@@ -8,10 +8,6 @@ switzerland = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = bern
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		bern
 		basel

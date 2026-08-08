@@ -6,9 +6,6 @@ cilicia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = tarsus
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		mersin
 		karaman

@@ -8,11 +8,6 @@ hesse = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = frankfurt #Cassel
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		hesse
 	}

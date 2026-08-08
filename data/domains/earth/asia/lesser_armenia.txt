@@ -6,9 +6,6 @@ lesser_armenia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = lykandos
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		ramadan
 		lykandos

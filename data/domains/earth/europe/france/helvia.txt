@@ -10,9 +10,6 @@ helvia = {
 	short_names = {
 		tribe = "Helvii"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		vivarais
 	}

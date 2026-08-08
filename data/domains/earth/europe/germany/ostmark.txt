@@ -7,9 +7,6 @@ ostmark = {
 	default_tier = duchy #march
 	default_government_type = monarchy
 	default_capital = dresden
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		upper_saxony
 	}

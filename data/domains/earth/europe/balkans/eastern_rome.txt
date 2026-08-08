@@ -11,9 +11,6 @@ eastern_rome = {
 			empire = "Eastern Roman Empire"
 		}
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		thrace
 		achaea

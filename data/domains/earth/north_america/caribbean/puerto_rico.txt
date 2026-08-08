@@ -6,9 +6,6 @@ puerto_rico = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = san_juan
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		puerto_rico
 	}

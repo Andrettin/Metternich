@@ -9,10 +9,6 @@ upper_saxony = {
 	default_government_type = monarchy
 	default_capital = dresden
 	max_tier = kingdom
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		upper_saxony
 	}

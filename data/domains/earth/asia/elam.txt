@@ -6,9 +6,6 @@ elam = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = susa
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		arrajan
 		elam

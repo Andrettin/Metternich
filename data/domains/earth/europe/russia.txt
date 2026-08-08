@@ -13,9 +13,6 @@ russia = {
 			empire = "Russian Empire"
 		}
 	}
-	eras = {
-		industrial_era
-	}
 	
 	history = {
 		1505 = {

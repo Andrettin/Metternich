@@ -1,8 +1,3 @@
-ancient_era = {
-	name = "Ancient Era"
-	start_date = -1450
-}
-
 classical_antiquity = {
 	name = "Classical Antiquity"
 	start_date = -500

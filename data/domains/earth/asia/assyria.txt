@@ -8,9 +8,6 @@ assyria = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = nineveh
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		assyria
 		al_hasakah

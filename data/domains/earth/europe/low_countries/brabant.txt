@@ -7,9 +7,6 @@ brabant = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = brussels
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		brabant
 	}

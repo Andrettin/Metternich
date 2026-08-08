@@ -9,10 +9,6 @@ bohemia = {
 	default_government_type = monarchy
 	default_capital = prague
 	min_tier = duchy
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		bohemia
 		budweis

@@ -6,9 +6,6 @@ new_mexico = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = santa_fe
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		new_mexico
 	}

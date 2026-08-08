@@ -8,9 +8,6 @@ babylonia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = babylon
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		babylon
 	}

@@ -7,9 +7,6 @@ golden_horde = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = sarai
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		astrakhan
 		atyrau

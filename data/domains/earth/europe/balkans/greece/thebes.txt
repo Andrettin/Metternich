@@ -7,9 +7,6 @@ thebes = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = thebes
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		boeotia
 	}

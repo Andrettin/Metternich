@@ -8,9 +8,6 @@ francia = {
 	default_government_type = monarchy
 	default_capital = paris
 	max_tier = empire
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		ile_de_france
 		anjou

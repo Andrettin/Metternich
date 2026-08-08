@@ -8,10 +8,6 @@ teutonic_order = {
 	default_capital = konigsberg
 	definite_article = true
 	short_name = true
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		east_prussia
 		west_prussia

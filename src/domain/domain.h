@@ -15,7 +15,6 @@ Q_MOC_INCLUDE("map/site.h")
 Q_MOC_INCLUDE("religion/religion.h")
 
 namespace archimedes {
-	class era;
 	enum class gender;
 }
 
@@ -225,11 +224,6 @@ public:
 		return this->conditional_flags;
 	}
 
-	const std::vector<const era *> &get_eras() const
-	{
-		return this->eras;
-	}
-
 	const std::vector<const province *> &get_core_provinces() const
 	{
 		return this->core_provinces;
@@ -271,7 +265,6 @@ private:
 	bool short_name = false;
 	bool definite_article = false;
 	std::map<std::string, std::unique_ptr<const and_condition<domain>>> conditional_flags;
-	std::vector<const era *> eras; //eras this country appears in at start, for random maps
 	std::map<const culture_base *, std::string> cultural_names;
 	std::map<const culture_base *, title_name_map> short_names;
 	title_name_map title_names;

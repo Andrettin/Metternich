@@ -6,10 +6,6 @@ virginia = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = richmond
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		virginia
 		west_virginia

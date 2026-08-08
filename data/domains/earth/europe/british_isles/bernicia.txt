@@ -6,9 +6,6 @@ bernicia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = newcastle #Bamburgh
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		northumberland
 	}

@@ -8,9 +8,6 @@ mexico = {
 	max_tier = empire
 	default_government_type = republic
 	default_capital = mexico_city
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		mexico
 		veracruz

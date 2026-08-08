@@ -7,9 +7,6 @@ trent = {
 	default_tier = county #bishopric
 	default_government_type = theocracy
 	default_capital = trent
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		trent
 	}

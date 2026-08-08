@@ -7,9 +7,6 @@ florida = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = tallahassee
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		florida
 	}

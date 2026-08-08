@@ -6,9 +6,6 @@ new_sweden = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = dover_delaware #not really correct
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		delaware
 	}

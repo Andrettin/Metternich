@@ -10,9 +10,6 @@ phrygia = {
 	short_names = {
 		tribe = "Phrygians"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		afyonkarahisar
 		ancyra

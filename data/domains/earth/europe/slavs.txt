@@ -7,9 +7,6 @@ slavs = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = warsaw
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		warsaw
 		brandenburg

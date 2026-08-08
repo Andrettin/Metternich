@@ -12,9 +12,6 @@ byzantium = {
 			empire = "Byzantine Empire"
 		}
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		thrace
 		achaea

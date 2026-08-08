@@ -10,9 +10,6 @@ asturia = {
 	short_names = {
 		tribe = "Astures"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		asturias
 	}

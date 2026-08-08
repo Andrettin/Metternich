@@ -7,10 +7,6 @@ friesland = {
 	default_tier = county #lordship
 	default_government_type = monarchy
 	default_capital = leeuwarden
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		friesland
 	}

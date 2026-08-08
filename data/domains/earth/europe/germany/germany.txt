@@ -9,7 +9,4 @@ germany = {
 	default_government_type = monarchy
 	default_capital = berlin
 	min_tier = kingdom
-	eras = {
-		industrial_era
-	}
 }

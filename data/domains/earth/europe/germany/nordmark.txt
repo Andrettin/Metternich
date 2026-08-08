@@ -7,9 +7,6 @@ nordmark = {
 	default_tier = duchy #march
 	default_government_type = monarchy
 	default_capital = berlin
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		brandenburg
 	}

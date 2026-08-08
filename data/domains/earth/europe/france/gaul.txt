@@ -10,9 +10,6 @@ gaul = {
 	short_names = {
 		tribe = "Gauls"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		ile_de_france
 	}

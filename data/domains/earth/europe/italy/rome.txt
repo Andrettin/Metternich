@@ -13,9 +13,6 @@ rome = {
 			empire = "Roman Empire"
 		}
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		latium
 	}

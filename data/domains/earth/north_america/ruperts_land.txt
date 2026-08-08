@@ -6,9 +6,6 @@ ruperts_land = {
 	default_tier = duchy
 	default_government_type = republic
 	default_capital = winnipeg #probably not correct
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		manitoba
 	}

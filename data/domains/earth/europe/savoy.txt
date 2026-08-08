@@ -8,9 +8,6 @@ savoy = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = chambery
-	eras = {
-		renaissance_era
-	}
 	
 	history = {
 		1233 = {

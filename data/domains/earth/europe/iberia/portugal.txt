@@ -9,11 +9,6 @@ portugal = {
 	default_government_type = monarchy
 	default_capital = lisbon
 	min_tier = county
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		estremadura
 		alentejo

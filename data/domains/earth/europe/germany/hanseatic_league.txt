@@ -9,10 +9,6 @@ hanseatic_league = {
 	default_capital = lubeck
 	definite_article = true
 	short_name = true
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		holstein
 		hamburg

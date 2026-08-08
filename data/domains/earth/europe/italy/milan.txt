@@ -8,10 +8,6 @@ milan = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = milan
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		lombardy
 	}

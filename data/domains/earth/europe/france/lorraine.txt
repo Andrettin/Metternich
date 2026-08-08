@@ -8,10 +8,6 @@ lorraine = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = nancy
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_provinces = {
 		lorraine
 		moselle

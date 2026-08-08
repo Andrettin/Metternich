@@ -7,9 +7,6 @@ scotland = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = edinburgh
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		lothian
 		highlands
@@ -17,7 +14,7 @@ scotland = {
 	}
 	
 	history = {
-		renaissance_era = {
+		renaissance = {
 			culture = scottish
 		}
 	}

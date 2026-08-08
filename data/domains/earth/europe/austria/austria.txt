@@ -16,11 +16,6 @@ austria = {
 			tier >= empire
 		}
 	}
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		freistadt
 		krems

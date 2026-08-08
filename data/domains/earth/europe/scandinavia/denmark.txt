@@ -11,11 +11,6 @@ denmark = {
 	short_names = {
 		tribe = "Danes"
 	}
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		zealand
 		jutland

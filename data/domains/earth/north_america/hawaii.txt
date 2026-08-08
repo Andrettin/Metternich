@@ -7,9 +7,6 @@ hawaii = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = honolulu
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		hawaii
 	}

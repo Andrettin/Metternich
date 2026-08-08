@@ -7,9 +7,6 @@ gepids = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = klausenburg
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		bihar
 		feher

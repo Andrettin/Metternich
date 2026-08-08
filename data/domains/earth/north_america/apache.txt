@@ -6,9 +6,6 @@ apache = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = santa_fe #Albuquerque
-	eras = {
-		renaissance_era
-	}
 	core_provinces = {
 		new_mexico
 	}

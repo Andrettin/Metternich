@@ -7,9 +7,6 @@ normandy = {
 	default_tier = duchy
 	default_government_type = monarchy
 	default_capital = rouen
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		normandy
 	}

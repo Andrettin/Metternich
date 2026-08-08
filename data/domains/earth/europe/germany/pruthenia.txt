@@ -10,9 +10,6 @@ pruthenia = {
 	short_names = {
 		tribe = "Prussians"
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		east_prussia
 	}

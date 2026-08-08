@@ -6,9 +6,6 @@ lower_burgundy = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = marseilles #Arles
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		provence
 		nice

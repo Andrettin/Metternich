@@ -7,9 +7,6 @@ cephalonia = {
 	default_tier = county
 	default_government_type = monarchy
 	default_capital = cephalonia
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		cephalonia
 	}

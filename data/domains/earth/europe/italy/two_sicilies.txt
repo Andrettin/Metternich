@@ -8,9 +8,6 @@ two_sicilies = {
 	default_government_type = monarchy
 	default_capital = naples
 	definite_article = true
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		naples
 		cosenza

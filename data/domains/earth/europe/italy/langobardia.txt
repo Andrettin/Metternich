@@ -7,9 +7,6 @@ langobardia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = milan #Pavia
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		lombardy
 		arezzo

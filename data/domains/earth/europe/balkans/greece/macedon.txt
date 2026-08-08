@@ -7,9 +7,6 @@ macedon = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = thessalonica
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		central_macedonia
 		west_macedonia

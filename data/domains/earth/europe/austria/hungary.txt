@@ -8,11 +8,6 @@ hungary = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = pest
-	eras = {
-		medieval_era
-		renaissance_era
-		industrial_era #since after 1867 it had substantial autonomy
-	}
 	core_provinces = {
 		pest
 		banat

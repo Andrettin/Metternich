@@ -10,9 +10,6 @@ india = {
 	short_names = {
 		tribe = "Indians"
 	}
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		haryana
 	}

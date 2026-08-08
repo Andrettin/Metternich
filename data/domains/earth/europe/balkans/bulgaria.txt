@@ -7,10 +7,6 @@ bulgaria = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = sofia
-	eras = {
-		medieval_era
-		industrial_era
-	}
 	core_provinces = {
 		bulgaria
 		eastern_rumelia

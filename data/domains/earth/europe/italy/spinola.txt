@@ -6,10 +6,6 @@ spinola = {
 	default_tier = barony
 	default_government_type = patrician_house
 	default_capital = spinola
-	eras = {
-		medieval_era
-		renaissance_era
-	}
 	core_holdings = {
 		spinola
 	}

@@ -6,10 +6,6 @@ rosengarten = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = rosengarten
-	eras = {
-		ancient_era
-		medieval_era
-	}
 	core_holdings = {
 		rosengarten
 	}

@@ -6,9 +6,6 @@ mercia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = coventry #Tamworth
-	eras = {
-		medieval_era
-	}
 	core_provinces = {
 		warwickshire
 		derbyshire

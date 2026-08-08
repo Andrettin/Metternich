@@ -8,10 +8,6 @@ prussia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = berlin
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		brandenburg
 		east_prussia

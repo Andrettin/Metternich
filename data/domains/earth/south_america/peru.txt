@@ -7,9 +7,6 @@ peru = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = lima
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		lima
 		ayacucho

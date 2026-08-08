@@ -6,10 +6,6 @@ gold_coast = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = accra
-	eras = {
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		accra
 		western_gold_coast

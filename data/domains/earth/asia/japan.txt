@@ -10,12 +10,6 @@ japan = {
 	short_names = {
 		tribe = "Japanese"
 	}
-	eras = {
-		ancient_era
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_provinces = {
 		honshu
 	}

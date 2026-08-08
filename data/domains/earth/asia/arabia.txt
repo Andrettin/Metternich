@@ -10,9 +10,6 @@ arabia = {
 	short_names = {
 		tribe = "Arabs"
 	}
-	eras = {
-		ancient_era
-	}
 	core_provinces = {
 		mecca
 		asir

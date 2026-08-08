@@ -10,9 +10,6 @@ zululand = {
 	short_names = {
 		tribe = "Zulus"
 	}
-	eras = {
-		industrial_era
-	}
 	core_provinces = {
 		zululand
 	}
