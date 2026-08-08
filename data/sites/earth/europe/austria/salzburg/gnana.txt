@@ -10,7 +10,7 @@ gnana = { #capital of Untersberg; Source: Franz Hartmann, "Among the Gnomes", 18
 		high_middle_ages = {
 			owner = untersberg
 			culture = gnomish
-			religion = pagan
+			religion = hellenic
 			developed = true
 		}
 	}

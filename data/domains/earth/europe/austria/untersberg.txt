@@ -2,16 +2,10 @@ untersberg = {
 	name = "Untersberg"
 	type = polity
 	default_culture = gnomish
-	default_religion = pagan
+	default_religion = hellenic
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = gnana
-	eras = {
-		ancient_era
-		medieval_era
-		renaissance_era
-		industrial_era
-	}
 	core_holdings = {
 		gnana
 	}
