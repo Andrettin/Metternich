@@ -173,6 +173,9 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 		}
 	}
 
+	//check building conditions, in case the holding's buildings have conditions that ultimately rely on other buildings being present
+	co_await this->get_settlement()->get_game_data()->check_building_conditions();
+
 	if (game::get()->is_running()) {
 		emit building_changed();
 	}
