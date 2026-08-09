@@ -1,0 +1,19 @@
+earth_hillfort = {
+	name = "Earth Hillfort"
+	slot_type = keep
+}
+
+wooden_hillfort = {
+	name = "Wooden Hillfort"
+	slot_type = keep
+}
+
+reinforced_hillfort = {
+	name = "Reinforced Hillfort"
+	slot_type = keep
+}
+
+stone_hillfort = {
+	name = "Stone Hillfort"
+	slot_type = keep
+}

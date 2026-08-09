@@ -1,0 +1,86 @@
+earth_hillfort = {
+	name = "Earth Hillfort"
+	building_class = earth_hillfort
+	portrait = fort
+	icon = wall
+	holding_level = 0.5
+	required_technology = hill_fort
+	free_on_start_extra_technology = 0.3
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	conditions = {
+		scripted_condition = is_tribal
+	}
+}
+
+wooden_hillfort = {
+	name = "Wooden Hillfort"
+	building_class = wooden_hillfort
+	portrait = fort
+	icon = wall
+	holding_level = 1
+	base_building = earth_hillfort
+	required_technology = hill_fort
+	free_on_start_extra_technology = 1.5
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	conditions = {
+		scripted_condition = is_tribal
+	}
+}
+
+reinforced_hillfort = {
+	name = "Reinforced Hillfort"
+	building_class = reinforced_hillfort
+	portrait = fort
+	icon = wall
+	holding_level = 1.5
+	base_building = wooden_hillfort
+	required_technology = small_castle
+	free_on_start_extra_technology = 2
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	conditions = {
+		scripted_condition = is_tribal
+	}
+}
+
+stone_hillfort = {
+	name = "Stone Hillfort"
+	building_class = stone_hillfort
+	portrait = fort
+	icon = wall
+	holding_level = 2
+	base_building = reinforced_hillfort
+	required_technology = small_castle
+	free_on_start_extra_technology = 2.5
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		marshal
+		engineer
+	}
+	conditions = {
+		scripted_condition = is_tribal
+	}
+}

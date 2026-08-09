@@ -1,0 +1,3 @@
+is_tribal = {
+	tribesmen >= 50
+}
