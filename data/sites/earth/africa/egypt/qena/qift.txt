@@ -1,0 +1,8 @@
+qift = {
+	name = "Qift"
+	world = earth
+	geocoordinate = { 32.816666666667 26 }
+	type = holding
+	holding_type = temple
+	province = qena
+}

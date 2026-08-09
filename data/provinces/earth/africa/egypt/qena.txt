@@ -1,7 +1,8 @@
-upper_egypt = {
-	name = "Upper Egypt"
-	color = { 146 51 56 }
-	default_provincial_capital = luxor
+qena = {
+	name = "Qena"
+	color = { 42 30 223 }
+	terrain = desert
+	default_provincial_capital = qena
 	regions = {
 		egypt
 	}

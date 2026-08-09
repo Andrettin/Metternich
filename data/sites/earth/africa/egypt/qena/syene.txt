@@ -4,7 +4,7 @@ syene = {
 	geocoordinate = { 32.89891149770 24.08750775040 } #from Natural Earth
 	type = resource
 	resource = stone
-	province = upper_egypt
+	province = qena #Aswan
 	cultural_names = {
 		arabic = "Aswan"
 	}

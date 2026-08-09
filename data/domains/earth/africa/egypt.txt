@@ -17,11 +17,11 @@ egypt = {
 		ikhmim
 		kharibta
 		mahalla
+		qena
 		rosetta
 		sinai
 		suez
 		tinnis
-		upper_egypt
 	}
 	
 	history = {

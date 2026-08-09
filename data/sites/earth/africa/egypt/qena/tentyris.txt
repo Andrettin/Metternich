@@ -4,7 +4,7 @@ tentyris = {
 	geocoordinate = { 32.669722 26.142194 }
 	type = resource
 	resource = cotton #linen
-	province = upper_egypt
+	province = qena
 	
 	history = {
 		-1450 = {

@@ -2,7 +2,7 @@ karnak = {
 	name = "Karnak"
 	world = earth
 	geocoordinate = { 32.65805 25.718372 }
-	province = upper_egypt
+	province = qena #Luxor
 	
 	history = {
 		-1450 = {
