@@ -173,6 +173,9 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 		}
 	}
 
+	//update the holding's type name, since it can depend on buildings
+	this->get_settlement()->get_game_data()->update_holding_type_name();
+
 	//check building conditions, in case the holding's buildings have conditions that ultimately rely on other buildings being present
 	co_await this->get_settlement()->get_game_data()->check_building_conditions();
 
