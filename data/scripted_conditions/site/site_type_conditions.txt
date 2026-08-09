@@ -1,3 +1,5 @@
 is_tribal = {
-	tribesmen >= 50
+	province = {
+		province_level < 2
+	}
 }

@@ -22,24 +22,18 @@ castle = {
 			}
 		}
 		"Tribal Hold" = {
-			domain = {
-				scripted_condition = is_tribe
-			}
+			scripted_condition = is_tribal
 		}
 		"Manor" = {
 			not = {
 				has_building_class = donjon
-				domain = {
-					scripted_condition = is_tribe
-				}
+				scripted_condition = is_tribal
 			}
 		}
 		"Castle" = {
 			has_building_class = donjon
 			not = {
-				domain = {
-					scripted_condition = is_tribe
-				}
+				scripted_condition = is_tribal
 			}
 		}
 	}
