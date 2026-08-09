@@ -100,6 +100,7 @@
 #include "script/condition/promotion_condition.h"
 #include "script/condition/province_condition.h"
 #include "script/condition/province_count_condition.h"
+#include "script/condition/province_level_condition.h"
 #include "script/condition/provincial_capital_condition.h"
 #include "script/condition/random_chance_condition.h"
 #include "script/condition/rank_condition.h"
@@ -247,6 +248,10 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
 		if (key == "population_type") {
 			return std::make_unique<population_type_condition>(value, condition_operator);
+		}
+	} else if constexpr (std::is_same_v<scope_type, province>) {
+		if (key == "province_level") {
+			return std::make_unique<province_level_condition>(value, condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, site>) {
 		if (key == "available_employment") {

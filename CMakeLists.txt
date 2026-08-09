@@ -743,6 +743,7 @@ set(script_condition_HDRS
 	src/script/condition/promotion_condition.h
 	src/script/condition/province_condition.h
 	src/script/condition/province_count_condition.h
+	src/script/condition/province_level_condition.h
 	src/script/condition/provincial_capital_condition.h
 	src/script/condition/random_chance_condition.h
 	src/script/condition/rank_condition.h
