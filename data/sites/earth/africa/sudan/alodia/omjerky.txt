@@ -1,0 +1,8 @@
+omjerky = {
+	name = "Omjerky"
+	world = earth
+	geocoordinate = { 32.8 16.48333333 }
+	type = holding
+	holding_type = castle
+	province = alodia #River Nile State
+}

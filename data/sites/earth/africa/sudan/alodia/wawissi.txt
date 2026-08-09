@@ -1,0 +1,8 @@
+wawissi = {
+	name = "Wawissi"
+	world = earth
+	geocoordinate = { 32.584722222222 16.066666666667 } #Wadi Wawissi
+	type = holding
+	holding_type = castle
+	province = alodia #Khartoum
+}

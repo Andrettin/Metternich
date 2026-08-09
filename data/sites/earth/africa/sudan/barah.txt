@@ -1,0 +1,8 @@
+barah = {
+	name = "Barah"
+	world = earth
+	geocoordinate = { 30.36666667 13.7 }
+	type = holding
+	holding_type = guild
+	province = kordofan #North Kordofan
+}

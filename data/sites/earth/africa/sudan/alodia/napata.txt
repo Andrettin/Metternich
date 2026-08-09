@@ -4,7 +4,7 @@ napata = {
 	geocoordinate = { 31.81666667 18.53333333 }
 	type = resource
 	resource = cotton #linen
-	province = nubia
+	province = alodia #Northern State
 	
 	history = {
 		-1450 = {

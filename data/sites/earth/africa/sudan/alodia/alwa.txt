@@ -1,0 +1,8 @@
+alwa = {
+	name = "Alwa"
+	world = earth
+	geocoordinate = { 33.983333 17.65 } #Alodia
+	type = holding
+	holding_type = temple
+	province = alodia #River Nile State
+}

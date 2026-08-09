@@ -1,0 +1,8 @@
+soba = {
+	name = "Soba"
+	world = earth
+	geocoordinate = { 32.68094444 15.52397222 }
+	type = holding
+	holding_type = castle
+	province = alodia #Khartoum
+}

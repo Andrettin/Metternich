@@ -1,0 +1,8 @@
+omdurman = {
+	name = "Omdurman"
+	world = earth
+	geocoordinate = { 32.480022 15.616681 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = alodia #Khartoum
+}

@@ -1,0 +1,8 @@
+malaka = {
+	name = "Malaka"
+	world = earth
+	geocoordinate = { 31.655990 9.536897 } #from Natural Earth (Malakal)
+	type = holding
+	holding_type = temple
+	province = kordofan #Upper Nile State
+}
