@@ -9,6 +9,6 @@ west_papua = {
 	
 	history = {
 		culture = moluccan
-		religion = pagan
+		religion = animist
 	}
 }

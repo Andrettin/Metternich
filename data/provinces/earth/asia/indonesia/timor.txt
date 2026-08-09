@@ -9,6 +9,6 @@ timor = {
 	
 	history = {
 		culture = javanese
-		religion = pagan
+		religion = animist
 	}
 }

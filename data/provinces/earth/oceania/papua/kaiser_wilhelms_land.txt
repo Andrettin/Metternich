@@ -8,6 +8,6 @@ kaiser_wilhelms_land = {
 	
 	history = {
 		culture = moluccan
-		religion = pagan
+		religion = animist
 	}
 }

@@ -8,6 +8,6 @@ anseba = {
 	
 	history = {
 		culture = tigray
-		religion = pagan
+		religion = waaqi
 	}
 }

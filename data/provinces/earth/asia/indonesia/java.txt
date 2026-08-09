@@ -9,6 +9,6 @@ java = {
 	
 	history = {
 		culture = javanese
-		religion = pagan
+		religion = hindu
 	}
 }

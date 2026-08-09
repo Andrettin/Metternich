@@ -9,6 +9,6 @@ borneo = {
 	
 	history = {
 		culture = malay
-		religion = pagan
+		religion = hindu
 	}
 }

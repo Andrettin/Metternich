@@ -9,6 +9,6 @@ celebes = {
 	
 	history = {
 		culture = moluccan
-		religion = pagan
+		religion = animist
 	}
 }
