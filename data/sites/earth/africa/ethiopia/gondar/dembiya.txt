@@ -1,0 +1,8 @@
+dembiya = {
+	name = "Dembiya"
+	world = earth
+	geocoordinate = { 37.1667 12.6667 }
+	type = holding
+	holding_type = castle
+	province = gondar #Central Gondar
+}

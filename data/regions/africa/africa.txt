@@ -30,6 +30,12 @@ eritrea = {
 	}
 }
 
+ethiopia = {
+	superregions = {
+		africa
+	}
+}
+
 sudan = {
 	superregions = {
 		africa

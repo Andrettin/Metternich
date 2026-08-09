@@ -1,0 +1,8 @@
+fasilghebbi = {
+	name = "Fasilghebbi"
+	world = earth
+	geocoordinate = { 37.469722222222 12.608055555556 }
+	type = holding
+	holding_type = castle
+	province = gondar #North Gondar
+}

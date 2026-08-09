@@ -1,0 +1,8 @@
+roha = {
+	name = "Roha"
+	world = earth
+	geocoordinate = { 39.046203 12.035561 } #Lalibela
+	type = holding
+	holding_type = temple
+	province = gondar #North Wollo
+}

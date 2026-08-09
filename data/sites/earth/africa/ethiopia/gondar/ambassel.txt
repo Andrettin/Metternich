@@ -1,0 +1,8 @@
+ambassel = {
+	name = "Ambassel"
+	world = earth
+	geocoordinate = { 39.25 11.75 }
+	type = holding
+	holding_type = castle
+	province = gondar #South Wollo
+}

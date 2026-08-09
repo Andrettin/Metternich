@@ -1,0 +1,9 @@
+gondar = {
+	name = "Gondar"
+	color = { 126 120 209 }
+	terrain = mountains
+	default_provincial_capital = gondar
+	regions = {
+		ethiopia
+	}
+}

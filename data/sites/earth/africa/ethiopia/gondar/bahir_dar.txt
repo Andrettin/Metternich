@@ -1,0 +1,8 @@
+bahir_dar = {
+	name = "Bahir Dar"
+	world = earth
+	geocoordinate = { 37.383289 11.600053 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = gondar #West Gojjam
+}

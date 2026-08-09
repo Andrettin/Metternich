@@ -1,0 +1,8 @@
+gondar = {
+	name = "Gondar"
+	world = earth
+	geocoordinate = { 37.460028 12.610043 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = gondar #North Gondar
+}

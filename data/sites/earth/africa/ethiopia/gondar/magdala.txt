@@ -1,0 +1,8 @@
+magdala = {
+	name = "Magdala"
+	world = earth
+	geocoordinate = { 39.283333333333 11.2 } #Amba Mariam
+	type = holding
+	holding_type = guild
+	province = gondar #South Wollo
+}

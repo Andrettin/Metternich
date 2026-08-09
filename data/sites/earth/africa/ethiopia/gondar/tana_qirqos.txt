@@ -1,0 +1,8 @@
+tana_qirqos = {
+	name = "Tana Qirqos"
+	world = earth
+	geocoordinate = { 37.490833333333 11.863611111111 }
+	type = holding
+	holding_type = temple
+	province = gondar #South Gondar
+}
