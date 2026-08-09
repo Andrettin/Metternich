@@ -1,0 +1,8 @@
+ghazali = {
+	name = "Ghazali"
+	world = earth
+	geocoordinate = { 31.93138889 18.44166667 } #Monastery in Ghazali
+	type = holding
+	holding_type = temple
+	province = napata #Northern State
+}

@@ -1,0 +1,8 @@
+keheilli = {
+	name = "Keheilli"
+	world = earth
+	geocoordinate = { 32.833333333333 19.4 } #Khawr Kuḩaylī/Khor Keheili
+	type = holding
+	holding_type = castle
+	province = alodia #River Nile State
+}

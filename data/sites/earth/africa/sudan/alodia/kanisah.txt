@@ -1,0 +1,8 @@
+kanisah = {
+	name = "Kanisah"
+	world = earth
+	geocoordinate = { 33.47723539694876 19.230771352008954 } #Kanisah Kurgus
+	type = holding
+	holding_type = temple
+	province = alodia #River Nile State
+}

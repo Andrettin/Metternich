@@ -1,0 +1,8 @@
+karima = {
+	name = "Karima"
+	world = earth
+	geocoordinate = { 31.845 18.545 }
+	type = holding
+	holding_type = castle
+	province = napata #Northern State
+}

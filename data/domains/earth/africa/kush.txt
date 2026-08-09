@@ -5,8 +5,9 @@ kush = {
 	default_religion = kemetic
 	default_tier = kingdom
 	default_government_type = monarchy
-	default_capital = soba #Napata
+	default_capital = napata
 	core_provinces = {
+		napata
 		alodia
 	}
 }

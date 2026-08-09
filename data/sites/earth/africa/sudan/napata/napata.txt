@@ -2,9 +2,12 @@ napata = {
 	name = "Napata"
 	world = earth
 	geocoordinate = { 31.81666667 18.53333333 }
-	type = resource
-	resource = cotton #linen
-	province = alodia #Northern State
+	type = holding
+	holding_type = castle
+	province = napata #Northern State
+	features = {
+		prime_cotton_land #linen
+	}
 	
 	history = {
 		-1450 = {
