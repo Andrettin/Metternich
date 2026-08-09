@@ -1,0 +1,6 @@
+era_zaharra = { #Basque paganism
+	name = "Era Zaharra"
+	group = pagan
+	color = { 140 107 10 }
+	icon = pine_tree
+}
