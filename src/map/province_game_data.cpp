@@ -119,7 +119,7 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "pathway_construction_progress") {
 		this->pathway_construction_progress = decimillesimal_int(value);
 	} else if (key == "total_holding_level") {
-		this->total_holding_level = std::stoi(value);
+		this->total_holding_level = centesimal_int(value);
 	} else if (key == "trade_efficiency_modifier") {
 		this->trade_efficiency_modifier = std::stoi(value);
 	} else if (key == "movement_cost_modifier") {
@@ -218,7 +218,7 @@ gsml_data province_game_data::to_gsml_data() const
 	}
 
 	if (this->get_total_holding_level() != 0) {
-		data.add_property("total_holding_level", std::to_string(this->get_total_holding_level()));
+		data.add_property("total_holding_level", this->get_total_holding_level().to_string());
 	}
 
 	if (this->get_trade_efficiency_modifier() != 0) {
@@ -656,7 +656,7 @@ void province_game_data::check_trade_zone_domain()
 		return;
 	}
 
-	domain_map<int> domain_economic_holding_levels;
+	domain_map<centesimal_int> domain_economic_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
@@ -699,7 +699,7 @@ void province_game_data::check_trade_zone_domain()
 		}
 	}
 
-	int best_holding_level = -1;
+	centesimal_int best_holding_level = centesimal_int(-1);
 	const domain *best_domain = nullptr;
 	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
 		if (holding_level > best_holding_level) {
@@ -745,7 +745,7 @@ void province_game_data::check_temple_domain()
 		return;
 	}
 
-	domain_map<int> domain_religious_holding_levels;
+	domain_map<centesimal_int> domain_religious_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
@@ -788,7 +788,7 @@ void province_game_data::check_temple_domain()
 		}
 	}
 
-	int best_holding_level = -1;
+	centesimal_int best_holding_level = centesimal_int(-1);
 	const domain *best_domain = nullptr;
 	for (const auto &[domain, holding_level] : domain_religious_holding_levels) {
 		if (holding_level > best_holding_level) {
@@ -834,7 +834,7 @@ void province_game_data::check_cultural_society_domain()
 		return;
 	}
 
-	domain_map<int> domain_cultural_holding_levels;
+	domain_map<centesimal_int> domain_cultural_holding_levels;
 	for (const site *holding_site : this->get_settlement_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
@@ -877,7 +877,7 @@ void province_game_data::check_cultural_society_domain()
 		}
 	}
 
-	int best_holding_level = -1;
+	centesimal_int best_holding_level = centesimal_int(-1);
 	const domain *best_domain = nullptr;
 	for (const auto &[domain, holding_level] : domain_cultural_holding_levels) {
 		if (holding_level > best_holding_level) {
@@ -1053,7 +1053,7 @@ void province_game_data::choose_provincial_capital()
 	std::vector<const site *> potential_provincial_capitals;
 	bool found_default_provincial_capital = false;
 	bool found_preferred_holding_type = false;
-	int best_holding_level = 0;
+	centesimal_int best_holding_level;
 
 	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
 		if (!site->get_game_data()->is_built()) {
@@ -1118,7 +1118,7 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 	std::vector<const site *> potential_provincial_capitals;
 	bool found_default_provincial_capital = false;
 	bool found_preferred_holding_type = false;
-	int best_holding_level = 0;
+	centesimal_int best_holding_level;
 
 	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
 		if (site->get_game_data()->is_built()) {
@@ -1555,13 +1555,13 @@ QVariantList province_game_data::get_dungeon_sites_qvariant_list() const
 	return container::to_qvariant_list(dungeon_sites);
 }
 
-void province_game_data::change_total_holding_level(const int change)
+void province_game_data::change_total_holding_level(const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int old_total_holding_level = this->get_total_holding_level();
+	const centesimal_int old_total_holding_level = this->get_total_holding_level();
 
 	this->total_holding_level += change;
 

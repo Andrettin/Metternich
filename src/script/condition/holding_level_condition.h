@@ -6,11 +6,11 @@
 
 namespace metternich {
 
-class holding_level_condition final : public numerical_condition<site, read_only_context>
+class holding_level_condition final : public numerical_condition<site, read_only_context, centesimal_int>
 {
 public:
 	explicit holding_level_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<site, read_only_context>(value, condition_operator)
+		: numerical_condition<site, read_only_context, centesimal_int>(value, condition_operator)
 	{
 	}
 
@@ -20,7 +20,7 @@ public:
 		return class_identifier;
 	}
 
-	virtual int get_scope_value(const site *scope, const read_only_context &ctx) const override
+	virtual centesimal_int get_scope_value(const site *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 

@@ -549,7 +549,7 @@ void domain_game_data::collect_regency()
 		collected_regency += province->get_game_data()->get_level();
 	}
 
-	data_entry_map<holding_type, int> total_holding_type_levels;
+	data_entry_map<holding_type, centesimal_int> total_holding_type_levels;
 	for (const site *site : this->get_sites()) {
 		if (!site->is_settlement() || site->get_holding_type() == nullptr) {
 			continue;
@@ -562,9 +562,9 @@ void domain_game_data::collect_regency()
 	if (ruler_character_class != nullptr) {
 		for (const auto &[holding_type, total_level] : total_holding_type_levels) {
 			if (ruler_character_class->is_holding_type_favored(holding_type)) {
-				collected_regency += total_level;
+				collected_regency += total_level.to_int();
 			} else if (ruler_character_class->is_holding_type_allowed(holding_type)) {
-				collected_regency += total_level / 2;
+				collected_regency += (total_level / 2).to_int();
 			}
 		}
 	}
@@ -1642,8 +1642,8 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 
 	if (site->is_settlement() && site_game_data->is_built()) {
 		co_await this->change_holding_count(1 * multiplier);
-		this->change_score(site_game_data->get_holding_level() * 100 * multiplier);
-		this->change_domain_power(site_game_data->get_holding_level() * multiplier);
+		this->change_score((site_game_data->get_holding_level() * 100).to_int() * multiplier);
+		this->change_domain_power(site_game_data->get_holding_level().to_int() * multiplier);
 
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
 			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);

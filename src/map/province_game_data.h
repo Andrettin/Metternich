@@ -240,12 +240,12 @@ public:
 		this->settlement_count += change;
 	}
 
-	int get_total_holding_level() const
+	const centesimal_int &get_total_holding_level() const
 	{
 		return this->total_holding_level;
 	}
 
-	void change_total_holding_level(const int change);
+	void change_total_holding_level(const centesimal_int &change);
 
 	const resource_map<int> &get_resource_counts() const;
 
@@ -682,7 +682,7 @@ private:
 	decimillesimal_int pathway_construction_progress;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
-	int total_holding_level = 0;
+	centesimal_int total_holding_level;
 	data_entry_map<site_feature, int> site_feature_counts;
 	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;

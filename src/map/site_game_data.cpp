@@ -91,7 +91,7 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "holding_type") {
 		this->holding_type = holding_type::get(value);
 	} else if (key == "holding_level") {
-		this->holding_level = std::stoi(value);
+		this->holding_level = centesimal_int(value);
 	} else if (key == "fortification_level") {
 		this->fortification_level = centesimal_int(value);
 	} else if (key == "holding_type_name") {
@@ -211,7 +211,7 @@ gsml_data site_game_data::to_gsml_data() const
 	}
 
 	if (this->get_holding_level() != 0) {
-		data.add_property("holding_level", std::to_string(this->get_holding_level()));
+		data.add_property("holding_level", this->get_holding_level().to_string());
 	}
 
 	if (this->get_fortification_level() != 0) {
@@ -419,7 +419,7 @@ void site_game_data::collect_income()
 		return;
 	}
 
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
 		return;
@@ -587,7 +587,7 @@ bool site_game_data::can_be_capital() const
 int site_game_data::get_level() const
 {
 	if (this->get_holding_type() != nullptr) {
-		return this->get_holding_level();
+		return this->get_holding_level().to_int();
 	}
 
 	return 0;
@@ -627,7 +627,7 @@ std::string site_game_data::get_display_text() const
 	std::string text = this->get_titled_name();
 
 	if (this->get_holding_type() != nullptr) {
-		text += std::format(" (Level {})", this->get_holding_level());
+		text += std::format(" (Level {})", this->get_holding_level().to_int());
 
 		if (this->get_owner() != nullptr && this->get_owner() != this->get_province()->get_game_data()->get_owner()) {
 			text += std::format(" ({})", this->get_owner()->get_name());
@@ -967,7 +967,12 @@ std::vector<const metternich::holding_type *> site_game_data::get_best_holding_t
 	return potential_holding_types;
 }
 
-void site_game_data::set_holding_level(const int level)
+QString site_game_data::get_holding_level_qstring() const
+{
+	return QString::fromStdString(number::to_formatted_string(this->get_holding_level().to_int()));
+}
+
+void site_game_data::set_holding_level(const centesimal_int &level)
 {
 	assert_throw(this->site->is_settlement());
 	assert_throw(level <= this->get_province()->get_game_data()->get_max_level());
@@ -976,7 +981,7 @@ void site_game_data::set_holding_level(const int level)
 		return;
 	}
 
-	const int holding_level_change = level - this->get_holding_level();
+	const centesimal_int holding_level_change = level - this->get_holding_level();
 
 	for (const route *route : this->site->get_routes()) {
 		if (route->get_game_data()->is_active()) {
@@ -985,22 +990,22 @@ void site_game_data::set_holding_level(const int level)
 	}
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_score(-this->get_holding_level() * 100);
-		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level());
+		this->get_owner()->get_game_data()->change_score((-this->get_holding_level() * 100).to_int());
+		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level().to_int());
 	}
 
 	this->holding_level = level;
 
-	if (this->get_holding_level() > this->get_province()->get_game_data()->get_level()) {
-		this->get_province()->get_game_data()->set_level(this->get_holding_level());
-		assert_throw(this->get_province()->get_game_data()->get_level() == this->get_holding_level());
+	if (this->get_holding_level().to_int() > this->get_province()->get_game_data()->get_level()) {
+		this->get_province()->get_game_data()->set_level(this->get_holding_level().to_int());
+		assert_throw(this->get_province()->get_game_data()->get_level() == this->get_holding_level().to_int());
 	}
 
 	this->get_province()->get_game_data()->change_total_holding_level(holding_level_change);
 
 	if (this->get_owner() != nullptr) {
-		this->get_owner()->get_game_data()->change_score(this->get_holding_level() * 100);
-		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level());
+		this->get_owner()->get_game_data()->change_score((this->get_holding_level() * 100).to_int());
+		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level().to_int());
 	}
 
 	for (const route *route : this->site->get_routes()) {
@@ -1036,16 +1041,16 @@ void site_game_data::set_holding_level(const int level)
 	}
 }
 
-int site_game_data::get_building_holding_level_change(const building_type *building) const
+centesimal_int site_game_data::get_building_holding_level_change(const building_type *building) const
 {
 	assert_throw(building != nullptr);
 
 	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
 	if (building_slot == nullptr) {
-		return 0;
+		return centesimal_int(0);
 	}
 
-	int holding_level_change = building != nullptr ? building->get_holding_level() : 0;
+	centesimal_int holding_level_change = building != nullptr ? building->get_holding_level() : centesimal_int(0);
 
 	if (building_slot->get_building() != nullptr) {
 		holding_level_change -= building_slot->get_building()->get_holding_level();
@@ -1057,10 +1062,10 @@ int site_game_data::get_building_holding_level_change(const building_type *build
 QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int level)
 {
 	bool changed = true;
-	while (level > this->get_holding_level() && changed) {
+	while (level > this->get_holding_level().to_int() && changed) {
 		changed = false;
 
-		const int holding_level_difference = level - this->get_holding_level();
+		const centesimal_int holding_level_difference = level - this->get_holding_level();
 		std::vector<const building_type *> potential_buildings;
 
 		for (const building_type *building : building_type::get_all()) {
@@ -1085,7 +1090,7 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 		}
 	}
 
-	if (level != this->get_holding_level()) {
+	if (level != this->get_holding_level().to_int()) {
 		log::log_error(std::format("Failed to set holding level {} from buildings for site \"{}\".", level, this->site->get_identifier()));
 	}
 }
@@ -1630,7 +1635,7 @@ QCoro::Task<void> site_game_data::add_building_with_prerequisites(const building
 {
 	assert_throw(building != nullptr);
 
-	if (building->get_min_holding_level() > 0 && building->get_min_holding_level() > this->get_holding_level()) {
+	if (building->get_min_holding_level() > 0 && building->get_min_holding_level() > this->get_holding_level().to_int()) {
 		co_await this->set_holding_level_from_buildings(building->get_min_holding_level());
 	}
 
@@ -2621,11 +2626,11 @@ int64_t site_game_data::get_min_income() const
 	assert_throw(this->is_built());
 	assert_throw(this->get_owner() != nullptr);
 
-	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+	if (this->get_holding_level().to_int() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
 		return 0;
 	}
 
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
 		return 0;
@@ -2640,11 +2645,11 @@ int64_t site_game_data::get_max_income() const
 	assert_throw(this->is_built());
 	assert_throw(this->get_owner() != nullptr);
 
-	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+	if (this->get_holding_level().to_int() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
 		return 0;
 	}
 
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level(), this->get_province()->get_game_data()->get_level());
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
 		return 0;

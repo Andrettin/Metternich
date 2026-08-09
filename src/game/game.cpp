@@ -1242,7 +1242,7 @@ QCoro::Task<void> game::apply_sites()
 			continue;
 		}
 
-		std::map<const holding_type *, int> holding_type_levels;
+		std::map<const holding_type *, centesimal_int> holding_type_levels;
 
 		for (const site *holding_site : province->get_map_data()->get_settlement_sites()) {
 			if (!holding_site->get_game_data()->is_built()) {
@@ -1252,13 +1252,13 @@ QCoro::Task<void> game::apply_sites()
 			holding_type_levels[holding_site->get_game_data()->get_holding_type()] += holding_site->get_game_data()->get_holding_level();
 		}
 
-		int highest_holding_level = 0;
+		centesimal_int highest_holding_level;
 		for (const auto &[holding_type, holding_level] : holding_type_levels) {
 			assert_throw(holding_type != nullptr);
-			highest_holding_level = std::max(highest_holding_level, holding_level);
+			highest_holding_level = centesimal_int::max(highest_holding_level, holding_level);
 		}
 
-		province->get_game_data()->set_level(std::max(highest_holding_level, province->get_game_data()->get_level()));
+		province->get_game_data()->set_level(std::max(highest_holding_level.to_int(), province->get_game_data()->get_level()));
 	}
 }
 

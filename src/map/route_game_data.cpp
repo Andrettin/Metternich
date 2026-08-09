@@ -152,7 +152,7 @@ centesimal_int route_game_data::get_output() const
 		return centesimal_int(0);
 	}
 
-	const int total_holding_level = this->route->get_start_site()->get_game_data()->get_holding_level() + this->route->get_end_site()->get_game_data()->get_holding_level();
+	const centesimal_int total_holding_level = this->route->get_start_site()->get_game_data()->get_holding_level() + this->route->get_end_site()->get_game_data()->get_holding_level();
 
 	centesimal_int output(this->route->get_output_multiplier());
 	output *= total_holding_level;
