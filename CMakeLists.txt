@@ -671,6 +671,7 @@ set(script_condition_HDRS
 	src/script/condition/can_gain_technology_condition.h
 	src/script/condition/can_gain_trait_condition.h
 	src/script/condition/capital_condition.h
+	src/script/condition/capital_scope_condition.h
 	src/script/condition/caster_level_condition.h
 	src/script/condition/cavalry_condition.h
 	src/script/condition/character_condition.h

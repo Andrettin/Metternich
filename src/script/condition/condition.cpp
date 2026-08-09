@@ -28,6 +28,7 @@
 #include "script/condition/can_gain_technology_condition.h"
 #include "script/condition/can_gain_trait_condition.h"
 #include "script/condition/capital_condition.h"
+#include "script/condition/capital_scope_condition.h"
 #include "script/condition/caster_level_condition.h"
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/character_condition.h"
@@ -444,6 +445,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
 		} else if (tag == "any_subject_country") {
 			condition = std::make_unique<any_subject_country_condition>(condition_operator);
+		} else if (tag == "capital") {
+			condition = std::make_unique<capital_scope_condition>(condition_operator);
 		} else if (tag == "opinion") {
 			condition = std::make_unique<opinion_condition>(condition_operator);
 		} else if (tag == "overlord") {
