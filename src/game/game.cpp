@@ -1306,6 +1306,11 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 	domain_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
+		//add the building's required technology first, so that even if the building cannot be applied, its technology is still added
+		if (building->get_required_technology() != nullptr && settlement_game_data->get_province() != nullptr) {
+			co_await settlement_game_data->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+		}
+
 		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
 		if (building_slot == nullptr) {
 			if (settlement == site) {
