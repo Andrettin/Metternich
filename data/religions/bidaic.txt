@@ -1,0 +1,6 @@
+bidaic = { #Soninke paganism
+	name = "Bidaic"
+	group = pagan
+	color = { 204 89 76 }
+	icon = oasis
+}

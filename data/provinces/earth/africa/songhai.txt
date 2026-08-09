@@ -8,6 +8,6 @@ songhai = {
 	
 	history = {
 		culture = songhai
-		religion = pagan
+		religion = bidaic
 	}
 }

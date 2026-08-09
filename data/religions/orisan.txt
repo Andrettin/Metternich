@@ -1,0 +1,6 @@
+orisan = { #Yoruba paganism
+	name = "Orisan"
+	group = pagan
+	color = { 38 63 125 }
+	icon = oasis
+}
