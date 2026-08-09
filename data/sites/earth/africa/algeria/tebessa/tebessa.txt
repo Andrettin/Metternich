@@ -1,0 +1,8 @@
+tebessa = {
+	name = "Tebessa"
+	world = earth
+	geocoordinate = { 8.120011 35.410434 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = tebessa
+}

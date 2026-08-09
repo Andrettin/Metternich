@@ -1,0 +1,8 @@
+baghaya = {
+	name = "Baghaya"
+	world = earth
+	geocoordinate = { 7.1143341 35.5219228 } #Baghai
+	type = holding
+	holding_type = guild
+	province = tebessa #Khenchela
+}

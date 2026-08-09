@@ -4,5 +4,5 @@ oum_el_bouaghi = {
 	geocoordinate = { 7.149997 35.849997 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = constantine
+	province = constantine #Oum el Bouaghi
 }

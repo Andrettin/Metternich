@@ -1,0 +1,12 @@
+kef_zoura = {
+	name = "Kef Zoura" #Kef Zoura D
+	world = earth
+	geocoordinate = { 7.8 35.1 }
+	province = tebessa
+	
+	history = {
+		-8600 = {
+			#Kef Zoura D had a rock shelter in the 8600-8000 BC period; Source: Jacques Jaubert and Mélanie Marie, "Atlas de la Préhistoire", 2025, pp. 64-65.
+		}
+	}
+}

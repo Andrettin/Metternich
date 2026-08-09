@@ -7,12 +7,6 @@ biskra = {
 	}
 	
 	history = {
-		-8600 = {
-			owner = capsa #inhabited by the Typical Capsian culture in the 8600-8000 BC period; Source: Jacques Jaubert and Mélanie Marie, "Atlas de la Préhistoire", 2025, pp. 64-65.
-			culture = capsian
-			religion = megalithic
-		}
-		
 		526 = {
 			owner = mauretania #territory of the Mauretanians in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = maurian

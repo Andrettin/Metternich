@@ -1,0 +1,12 @@
+berriche = {
+	name = "Berriche"
+	world = earth
+	geocoordinate = { 7.3768044 35.9164425 }
+	province = constantine #Oum el Bouaghi
+	
+	history = {
+		-8600 = {
+			developed = true #Aïoun Berriche was an open-air mesolithic site in the 8600-8000 BC period; Source: Jacques Jaubert and Mélanie Marie, "Atlas de la Préhistoire", 2025, pp. 64-65.
+		}
+	}
+}
