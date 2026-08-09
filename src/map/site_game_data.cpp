@@ -1673,6 +1673,7 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 			continue;
 		}
 
+		const building_type *old_building = building;
 		const int building_level = building->get_level();
 
 		const wonder *wonder = building_slot->get_wonder();
@@ -1710,12 +1711,22 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 			}
 		}
 
-		if (building != nullptr && building->get_level() < building_level) {
-			for (int i = building->get_level() + 1; i <= building_level; ++i) {
+		if (building != nullptr) {
+			while (building->get_holding_level() < old_building->get_holding_level() || building->get_fortification_level() < old_building->get_fortification_level() || building->get_level() < building_level) {
 				std::vector<const building_type *> potential_buildings;
 
 				for (const building_type *derived_building : building->get_derived_buildings()) {
 					if (!building_slot->can_maintain_building(derived_building)) {
+						continue;
+					}
+
+					//ignore buildings with higher holding level than the target
+					if (derived_building->get_holding_level() > old_building->get_holding_level()) {
+						continue;
+					}
+
+					//ignore buildings with higher fortification level than the target, but only if the holding level target is already fulfilled
+					if (derived_building->get_fortification_level() > old_building->get_fortification_level() && derived_building->get_holding_level() == old_building->get_holding_level()) {
 						continue;
 					}
 
@@ -1727,7 +1738,6 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 				}
 
 				building = vector::get_random(potential_buildings);
-				assert_throw(building->get_level() == i);
 			}
 		}
 
