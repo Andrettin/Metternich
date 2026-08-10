@@ -1,6 +1,7 @@
 troll = {
 	name = "Troll"
 	group = giant
+	color = { 102 229 51 }
 	language = troll
 	species = {
 		troll

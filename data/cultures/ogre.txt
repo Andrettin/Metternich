@@ -1,6 +1,7 @@
 ogre = {
 	name = "Ogre"
 	group = giant
+	color = { 129 148 165 }
 	language = ogre
 	species = {
 		ogre

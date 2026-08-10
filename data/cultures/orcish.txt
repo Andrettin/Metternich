@@ -1,5 +1,6 @@
 orcish = {
 	name = "Orcish"
+	color = { 51 204 25 }
 	language = orcish
 	species = {
 		orc

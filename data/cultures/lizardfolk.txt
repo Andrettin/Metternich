@@ -1,5 +1,6 @@
 lizardfolk = {
 	name = "Lizardfolk"
+	color = { 76 153 76 }
 	species = {
 		lizardfolk
 	}
