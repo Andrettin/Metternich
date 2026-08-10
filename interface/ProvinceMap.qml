@@ -12,6 +12,7 @@ TableView {
 	contentWidth: metternich.map.province_map_image_size.width * scale_factor
 	contentHeight: metternich.map.province_map_image_size.height * scale_factor
 	boundsBehavior: Flickable.StopAtBounds
+	reuseItems: true
 	clip: true
 	model: MapGridModel {}
 	delegate: MapBlockView {}
