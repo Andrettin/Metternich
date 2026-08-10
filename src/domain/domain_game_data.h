@@ -136,6 +136,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int domain_power READ get_domain_power NOTIFY domain_power_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
+	Q_PROPERTY(metternich::population* country_population READ get_country_population CONSTANT)
 	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int max_current_constructions READ get_max_current_constructions NOTIFY max_current_constructions_changed)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
@@ -596,6 +597,11 @@ public:
 	metternich::population *get_population() const
 	{
 		return this->population.get();
+	}
+
+	metternich::population *get_country_population() const
+	{
+		return this->country_population.get();
 	}
 
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
@@ -1131,6 +1137,7 @@ private:
 	int domain_power = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
+	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
 	int population_growth = 0; //population growth counter
 	int food_consumption = 0;
 	building_type_map<int> settlement_building_counts;

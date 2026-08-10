@@ -14,6 +14,7 @@ MenuBase {
 	property var selected_scenario: null
 	readonly property var selected_country: diplomatic_map.selected_country
 	readonly property var selected_country_game_data: selected_country ? selected_country.game_data : null
+	readonly property var selected_country_population: selected_country_game_data ? (selected_country_game_data.provinces.length > 0 ? selected_country_game_data.country_population : selected_country_game_data.population) : null
 	property int setup_count: 0
 	readonly property var scenarios: metternich.get_top_level_scenarios()
 	property string status_text: ""
@@ -329,7 +330,7 @@ MenuBase {
 			id: country_text
 			width: country_text_area.width
 			wrapMode: Text.WordWrap
-			text: selected_country ? format_text(
+			text: selected_country && selected_country_game_data && selected_country_population ? format_text(
 				selected_country.game_data.type_name
 				+ (selected_country.game_data.diplomacy.overlord ? (
 					"\n" + selected_country.game_data.diplomacy.subject_type.name + " of " + (selected_country.game_data.diplomacy.overlord.definite_article ? "the " : "") + selected_country.game_data.diplomacy.overlord.name
@@ -343,8 +344,8 @@ MenuBase {
 				+ (selected_country.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country.game_data.attribute_values)) : "")
 				+ (selected_country.game_data.consumption > 0 ? ("\nConsumption: " + number_string(selected_country.game_data.consumption)) : "")
 				+ (selected_country.game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country.game_data.unrest)) : "")
-				+ (population_visible ? ("\nPopulation: " + number_string(selected_country.game_data.population.size)) : "")
-				+ "\nLiteracy: " + selected_country.game_data.population.literacy_rate + "%"
+				+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
+				+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
 				+ get_subject_type_counts_string(selected_country.game_data.diplomacy.subject_type_counts)
 				+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
 			) : ""
@@ -699,10 +700,12 @@ MenuBase {
 			ruler_portrait.portrait = ruler_portrait.ruler.game_data.portrait
 		}
 		
-		population_type_chart.population_data = country ? country.game_data.population.type_sizes : null
-		culture_chart.population_data = country ? country.game_data.population.culture_sizes : null
-		religion_chart.population_data = country ? country.game_data.population.religion_sizes : null
-		phenotype_chart.population_data = country ? country.game_data.population.phenotype_sizes : null
+		var country_population = country ? (country.game_data.provinces.length > 0 ? country.game_data.country_population : country.game_data.population) : null
+		
+		population_type_chart.population_data = country_population ? country_population.type_sizes : null
+		culture_chart.population_data = country_population ? country_population.culture_sizes : null
+		religion_chart.population_data = country_population ? country_population.religion_sizes : null
+		phenotype_chart.population_data = country_population ? country_population.phenotype_sizes : null
 	}
 	
 	onSelected_countryChanged: {

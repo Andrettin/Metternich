@@ -495,10 +495,12 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 
 	if (old_owner != nullptr) {
 		co_await old_owner->get_game_data()->remove_province(this->province);
+		this->population->remove_upper_population(old_owner->get_game_data()->get_country_population());
 	}
 
 	if (this->get_owner() != nullptr) {
 		co_await this->get_owner()->get_game_data()->add_province(this->province);
+		this->population->add_upper_population(this->get_owner()->get_game_data()->get_country_population());
 
 		if (this->get_population()->get_main_culture() == nullptr) {
 			this->set_culture(this->get_owner()->get_game_data()->get_culture());

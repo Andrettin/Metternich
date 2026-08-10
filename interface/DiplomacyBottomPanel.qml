@@ -8,6 +8,7 @@ Rectangle {
 	clip: true
 	
 	readonly property var selected_country_ruler: selected_country_game_data ? selected_country_game_data.government.ruler : null
+	readonly property var selected_country_population: selected_country_game_data ? (selected_country_game_data.provinces.length > 0 ? selected_country_game_data.country_population : selected_country_game_data.population) : null
 	
 	PanelTiledBackground {
 	}
@@ -261,7 +262,7 @@ Rectangle {
 	
 	SmallText {
 		id: country_text
-		text: format_text(selected_country && selected_country_game_data ? (
+		text: format_text(selected_country && selected_country_game_data && selected_country_population ? (
 			selected_country_game_data.type_name
 			+ (selected_country_game_data.diplomacy.overlord ? (
 				"\n" + selected_country_game_data.diplomacy.subject_type.name + " of " + selected_country_game_data.diplomacy.overlord.name
@@ -275,9 +276,9 @@ Rectangle {
 			+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
 			+ (selected_country_game_data.consumption > 0 ? ("\nConsumption: " + number_string(selected_country_game_data.consumption)) : "")
 			+ (selected_country_game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country_game_data.unrest)) : "")
-			+ (population_visible ? ("\nPopulation: " + number_string(selected_country_game_data.population.size)) : "")
+			+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
 			//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
-			+ "\nLiteracy: " + selected_country_game_data.population.literacy_rate + "%"
+			+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
 		) : "")
 		anchors.left: bottom_panel.left
 		anchors.leftMargin: 16 * scale_factor
@@ -339,7 +340,7 @@ Rectangle {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_game_data ? selected_country_game_data.population : null
+		data_source: selected_country_population
 		visible: population_visible && data_source !== null
 	}
 	
@@ -357,7 +358,7 @@ Rectangle {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_game_data ? selected_country_game_data.population : null
+		data_source: selected_country_population
 		visible: population_visible && data_source !== null
 	}
 	
@@ -374,7 +375,7 @@ Rectangle {
 		anchors.top: population_type_chart.top
 		anchors.right: map_mode_button_grid.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_game_data ? selected_country_game_data.population : null
+		data_source: selected_country_population
 		visible: population_visible && data_source !== null
 	}
 	

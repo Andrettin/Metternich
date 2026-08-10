@@ -119,6 +119,8 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 	this->population = make_qunique<metternich::population>();
 	connect(this->get_population(), &population::population_unit_gained, this, &domain_game_data::on_population_unit_gained);
 
+	this->country_population = make_qunique<metternich::population>();
+
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::income_changed);
@@ -4437,26 +4439,17 @@ bool domain_game_data::can_form_domain_by_culture(const metternich::domain *othe
 	//also allow forming domains of a culture derived from ours, if we both own the majority of the population for the culture/group, and more of our population belongs to that culture/group than our current culture
 
 	int64_t formable_domain_culture_population = 0;
-	int64_t domain_population = 0;
-	int64_t domain_current_culture_population = 0;
+	const int64_t country_current_culture_population = this->get_country_population()->get_culture_size(this->get_culture());
 	int64_t total_culture_population = 0;
 
 	for (const metternich::culture *culture : other->get_cultures()) {
 		total_culture_population += game::get()->get_population()->get_culture_size(culture);
-	}
-
-	for (const province *province : this->get_provinces()) {
-		domain_population += province->get_game_data()->get_population()->get_size();
-		domain_current_culture_population += province->get_game_data()->get_population()->get_culture_size(this->get_culture());
-
-		for (const metternich::culture *culture : other->get_cultures()) {
-			formable_domain_culture_population += province->get_game_data()->get_population()->get_culture_size(culture);
-		}
+		formable_domain_culture_population += this->get_country_population()->get_culture_size(culture);
 	}
 
 	if (!vector::contains(other->get_cultures(), this->get_culture()) && other->is_derived_cultural_domain_of(this->get_culture())) {
 		//for forming a domain of a culture derived from ours, more of our population needs to belong to that culture than our own
-		if (formable_domain_culture_population <= domain_current_culture_population) {
+		if (formable_domain_culture_population <= country_current_culture_population) {
 			return false;
 		}
 	}
