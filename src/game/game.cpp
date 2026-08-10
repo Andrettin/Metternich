@@ -1236,6 +1236,13 @@ QCoro::Task<void> game::apply_sites()
 		throw aggregate_exception("Failed to apply site history.", std::move(exceptions));
 	}
 
+	for (const domain *domain : this->get_domains()) {
+		//ensure domain capitals start with a holding level of at least 1
+		if (domain->get_game_data()->get_capital() != nullptr && domain->get_game_data()->get_capital()->get_game_data()->get_holding_level() == 0) {
+			co_await domain->get_game_data()->get_capital()->get_game_data()->set_holding_level_from_buildings(1);
+		}
+	}
+
 	//set province ratings based on holding levels
 	for (const province *province : map::get()->get_provinces()) {
 		if (province->is_water_zone()) {
