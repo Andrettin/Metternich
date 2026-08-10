@@ -1,3 +1,8 @@
+bronze_age = {
+	name = "Bronze Age"
+	start_date = -3000
+}
+
 classical_antiquity = {
 	name = "Classical Antiquity"
 	start_date = -500
