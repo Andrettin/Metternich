@@ -29,7 +29,7 @@ Item {
 				visible: province_polygon_path.length > 0
 				
 				readonly property var province: model.modelData
-				readonly property var province_polygon_path: province.map_data.polygon_path
+				readonly property var province_polygon_path: province ? province.map_data.polygon_path : ""
 				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
 				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 				property int change_count: 0
@@ -154,10 +154,10 @@ Item {
 			id: route_shape
 			x: -scaled_map_block_start_x
 			y: -scaled_map_block_start_y
-			visible: route.game_data.active && route.type !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.type.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.type.output_commodity !== metternich.defines.piety_commodity)
+			visible: route && route.game_data.active && route.type !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.type.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.type.output_commodity !== metternich.defines.piety_commodity)
 			
 			readonly property var route: model.modelData
-			readonly property var route_line_path: route.game_data.get_line_path()
+			readonly property var route_line_path: route ? route.game_data.get_line_path() : ""
 			
 			ShapePath {
 				strokeWidth: 2 * scale_factor
