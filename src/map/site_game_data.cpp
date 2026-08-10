@@ -381,6 +381,10 @@ QCoro::Task<void> site_game_data::initialize()
 	}
 
 	for (const site_feature *feature : this->site->get_features()) {
+		if (!feature->get_holding_types().empty()) {
+			continue;
+		}
+
 		co_await this->add_feature(feature);
 	}
 }
@@ -851,6 +855,12 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
 		co_await this->on_settlement_built(1);
 
+		for (const site_feature *feature : this->site->get_features()) {
+			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), holding_type)) {
+				co_await this->add_feature(feature);
+			}
+		}
+
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
 				co_await this->get_owner()->get_game_data()->set_capital(this->site);
@@ -858,6 +868,12 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		}
 	} else if (old_holding_type != nullptr && this->get_holding_type() == nullptr) {
 		co_await this->on_settlement_built(-1);
+
+		for (const site_feature *feature : this->site->get_features()) {
+			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), old_holding_type)) {
+				co_await this->remove_feature(feature);
+			}
+		}
 
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
