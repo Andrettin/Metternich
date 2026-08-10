@@ -10,6 +10,7 @@ Item {
 	
 	readonly property int scaled_map_block_start_x: map_block_start_x * metternich.defines.province_map_tile_scale * scale_factor
 	readonly property int scaled_map_block_start_y: map_block_start_y * metternich.defines.province_map_tile_scale * scale_factor
+	readonly property int map_block_index: index
 	
 	Item {
 		id: unscaled_province_map
@@ -232,9 +233,14 @@ Item {
 								
 								if (containsMouse) {
 									status_text = text
+									hovered_icon_map_block_index = map_block_index
 								} else {
-									if (status_text === text) {
-										status_text = ""
+									if (hovered_icon_map_block_index === map_block_index) {
+										if (status_text === text) {
+											status_text = ""
+										}
+										
+										hovered_icon_map_block_index = -1
 									}
 								}
 							}
@@ -302,9 +308,14 @@ Item {
 									
 									if (containsMouse) {
 										status_text = text
+										hovered_icon_map_block_index = map_block_index
 									} else {
-										if (status_text === text) {
-											status_text = ""
+										if (hovered_icon_map_block_index === map_block_index) {
+											if (status_text === text) {
+												status_text = ""
+											}
+											
+											hovered_icon_map_block_index = -1
 										}
 									}
 								}
@@ -380,13 +391,18 @@ Item {
 									if (containsMouse) {
 										hovered_site = site
 										status_text = text
+										hovered_icon_map_block_index = map_block_index
 									} else {
-										if (status_text === text) {
-											status_text = ""
-										}
-										
-										if (hovered_site === site) {
-											hovered_site = null
+										if (hovered_icon_map_block_index === map_block_index) {
+											if (status_text === text) {
+												status_text = ""
+											}
+											
+											if (hovered_site === site) {
+												hovered_site = null
+											}
+											
+											hovered_icon_map_block_index = -1
 										}
 									}
 								}
@@ -453,13 +469,18 @@ Item {
 					if (containsMouse) {
 						hovered_site = site
 						status_text = text
+						hovered_icon_map_block_index = map_block_index
 					} else {
-						if (status_text === text) {
-							status_text = ""
-						}
-						
-						if (hovered_site === site) {
-							hovered_site = null
+						if (hovered_icon_map_block_index === map_block_index) {
+							if (status_text === text) {
+								status_text = ""
+							}
+							
+							if (hovered_site === site) {
+								hovered_site = null
+							}
+							
+							hovered_icon_map_block_index = -1
 						}
 					}
 				}
