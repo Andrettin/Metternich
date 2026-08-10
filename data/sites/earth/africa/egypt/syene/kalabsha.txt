@@ -1,0 +1,8 @@
+kalabsha = {
+	name = "Kalabsha"
+	world = earth
+	geocoordinate = { 32.86734 23.9609 } #Temple of Kalabsha
+	type = holding
+	holding_type = temple
+	province = syene
+}

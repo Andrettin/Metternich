@@ -1,10 +1,12 @@
 luxor = {
-	name = "Luxor"
+	name = "Luxor" #also known as Thebes/Veset
 	world = earth
 	geocoordinate = { 32.65003779980 25.70001914370 } #from Natural Earth
+	type = holding
+	holding_type = castle
 	province = qena #Luxor
 	cultural_names = {
-		egyptian = "Thebes"
+		egyptian = "Veset"
 		greek = "Thebes"
 		roman = "Thebes"
 	}

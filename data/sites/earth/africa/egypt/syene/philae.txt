@@ -1,0 +1,8 @@
+philae = {
+	name = "Philae"
+	world = earth
+	geocoordinate = { 32.88891 24.02174 }
+	type = holding
+	holding_type = castle
+	province = syene
+}

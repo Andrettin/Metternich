@@ -4,7 +4,10 @@ abu_simbel = {
 	geocoordinate = { 31.625555555556 22.336944444444 }
 	type = resource
 	resource = cattle
-	province = qena #Aswan
+	province = syene
+	features = {
+		prime_cattle_land
+	}
 	
 	history = {
 		-1450 = {

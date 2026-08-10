@@ -2,9 +2,10 @@ syene = {
 	name = "Syene"
 	world = earth
 	geocoordinate = { 32.89891149770 24.08750775040 } #from Natural Earth
-	type = resource
-	resource = stone
-	province = qena #Aswan
+	type = holding
+	holding_type = castle
+	#resource = stone
+	province = syene
 	cultural_names = {
 		arabic = "Aswan"
 	}

@@ -1,0 +1,8 @@
+bigeh = {
+	name = "Bigeh"
+	world = earth
+	geocoordinate = { 32.884780555556 24.020305555556 }
+	type = holding
+	holding_type = castle
+	province = syene
+}

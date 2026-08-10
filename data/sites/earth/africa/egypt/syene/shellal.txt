@@ -1,0 +1,8 @@
+shellal = {
+	name = "Shellal"
+	world = earth
+	geocoordinate = { 32.88333333 24.05 }
+	type = holding
+	holding_type = guild
+	province = syene
+}

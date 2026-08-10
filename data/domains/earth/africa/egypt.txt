@@ -21,6 +21,7 @@ egypt = {
 		rosetta
 		sinai
 		suez
+		syene
 		tinnis
 	}
 	

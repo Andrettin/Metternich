@@ -1,0 +1,8 @@
+elephantine = {
+	name = "Elephantine"
+	world = earth
+	geocoordinate = { 32.89 24.09 }
+	type = holding
+	holding_type = temple
+	province = syene
+}

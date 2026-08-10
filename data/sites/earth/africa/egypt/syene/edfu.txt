@@ -1,0 +1,8 @@
+edfu = {
+	name = "Edfu"
+	world = earth
+	geocoordinate = { 32.878888888889 24.978055555556 }
+	type = holding
+	holding_type = guild
+	province = syene
+}
