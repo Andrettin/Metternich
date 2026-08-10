@@ -12,7 +12,7 @@ cartagena = {
 	}
 	features = {
 		iron_deposit
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 	}
 	
 	history = {

@@ -8,8 +8,8 @@ nantes = {
 		frankish = "Namnetes"
 	}
 	features = {
-		academic #historical university
-		holy_site #historical cathedral
+		#academic #historical university
+		#holy_site #historical cathedral
 		prime_grain_land
 	}
 	

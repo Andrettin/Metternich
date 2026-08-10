@@ -11,8 +11,8 @@ reims = {
 		roman = "Durocortorum" #Source: "Ancient Warfare VII.6", 2013, p. 7.
 	}
 	features = {
-		academic #historical university
-		holy_site #historical cathedral
+		#academic #historical university
+		#holy_site #historical cathedral
 	}
 	
 	history = {

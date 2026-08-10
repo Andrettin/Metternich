@@ -8,8 +8,8 @@ poitiers = {
 		frankish = "Pictavis"
 	}
 	features = {
-		academic #historical university
-		holy_site #historical cathedral
+		#academic #historical university
+		#holy_site #historical cathedral
 	}
 	
 	history = {

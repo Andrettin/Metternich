@@ -6,7 +6,7 @@ lincoln_england = {
 	resource = iron_ore
 	province = derbyshire
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 	}
 	
 	history = {

@@ -6,7 +6,7 @@ cairo = {
 	holding_type = castle
 	province = cairo
 	features = {
-		crossroads #important market or fair
+		#crossroads #important market or fair
 	}
 	
 	history = {

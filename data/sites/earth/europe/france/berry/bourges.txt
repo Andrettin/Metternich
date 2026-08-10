@@ -9,7 +9,7 @@ bourges = {
 		frankish = "Bituricae"
 	}
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 		prime_timber
 	}
 	

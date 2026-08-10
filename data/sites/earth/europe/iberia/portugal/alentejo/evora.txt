@@ -5,7 +5,7 @@ evora = {
 	type = holding
 	holding_type = castle
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 	}
 	
 	history = {

@@ -9,7 +9,7 @@ ancyra = {
 		turkish = "Ankara"
 	}
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 	}
 	
 	history = {

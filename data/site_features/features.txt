@@ -6,6 +6,17 @@ academic = {
 	}
 }
 
+cosmopolitan = {
+	name = "Cosmopolitan"
+	icon = music
+	holding_types = {
+		university
+	}
+	modifier = {
+		holding_level = 1
+	}
+}
+
 cove = {
 	name = "Cove"
 	icon = anchor
@@ -17,14 +28,32 @@ cove = {
 crossroads = {
 	name = "Crossroads"
 	icon = chest
+	holding_types = {
+		guild
+	}
 	modifier = {
+		holding_level = 1
 		productivity = 1
+	}
+}
+
+devout = {
+	name = "Devout"
+	icon = wooden_cross
+	holding_types = {
+		temple
+	}
+	modifier = {
+		holding_level = 1
 	}
 }
 
 holy_site = {
 	name = "Holy Site"
 	icon = wooden_cross
+	holding_types = {
+		temple
+	}
 	modifier = {
 		corruption = -2
 	}

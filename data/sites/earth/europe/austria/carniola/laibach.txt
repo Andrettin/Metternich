@@ -3,19 +3,21 @@ laibach = {
 	world = earth
 	geocoordinate = { 14.51496903350 46.05528830880 } #from Natural Earth
 	type = holding
-	#resource = cotton
+	holding_type = castle
+	province = carniola
 	cultural_names = {
 		roman = "Emona" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
 		slovene = "Ljubljana"
 	}
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
+		prime_cotton_land
 	}
 	
 	history = {
 		395 = {
-			buildings += cathedral #Laibach was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
-			holding_type = city
+			#buildings += cathedral #Laibach was the seat of a bishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			developed = true
 		}
 		
 		1815 = {

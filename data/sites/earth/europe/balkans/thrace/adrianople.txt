@@ -9,7 +9,7 @@ adrianople = {
 		turkish = "Edirne"
 	}
 	features = {
-		holy_site #historical cathedral
+		#holy_site #historical cathedral
 	}
 	
 	history = {
