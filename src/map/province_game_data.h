@@ -247,6 +247,8 @@ public:
 
 	void change_total_holding_level(const centesimal_int &change);
 
+	int64_t get_population_capacity_for_holding_level(const centesimal_int &holding_level) const;
+
 	const resource_map<int> &get_resource_counts() const;
 
 	const data_entry_map<site_feature, int> &get_site_feature_counts() const

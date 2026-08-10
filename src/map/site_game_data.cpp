@@ -1010,7 +1010,16 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level().to_int());
 	}
 
+	if (this->get_holding_level() > 0) {
+		this->change_population_capacity(-this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+	}
+
 	this->holding_level = level;
+
+	if (this->get_holding_level() > 0) {
+		//need to do this before changing the province's level or its total holding level, since those update the province's holdings' population capacity based on their holding level
+		this->change_population_capacity(this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+	}
 
 	if (this->get_holding_level().to_int() > this->get_province()->get_game_data()->get_level()) {
 		this->get_province()->get_game_data()->set_level(this->get_holding_level().to_int());
@@ -1930,10 +1939,6 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 	if (multiplier > 0 && building->get_effects() != nullptr) {
 		context effects_ctx(this->site);
 		co_await building->get_effects()->do_effects(this->site, effects_ctx);
-	}
-
-	if (building->get_holding_level() > 0) {
-		this->change_population_capacity(building->get_population_capacity_for_province_level(this->get_province()->get_game_data()->get_level(), this->get_province()->get_game_data()->get_total_holding_level()) * multiplier);
 	}
 }
 

@@ -911,7 +911,15 @@ void province_game_data::set_level(const int level)
 		return;
 	}
 
-	const int old_level = this->get_level();
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_level() > 0) {
+			holding_site->get_game_data()->change_population_capacity(-this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		}
+	}
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score(-this->get_level() * 100);
@@ -930,16 +938,8 @@ void province_game_data::set_level(const int level)
 			continue;
 		}
 
-		for (const qunique_ptr<building_slot> &building_slot : holding_site->get_game_data()->get_building_slots()) {
-			const building_type *building = building_slot->get_building();
-
-			if (building == nullptr || building->get_holding_level() == 0) {
-				continue;
-			}
-
-			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(old_level, this->get_total_holding_level());
-			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(level, this->get_total_holding_level());
-			holding_site->get_game_data()->change_population_capacity(new_population_capacity - old_population_capacity);
+		if (holding_site->get_game_data()->get_holding_level() > 0) {
+			holding_site->get_game_data()->change_population_capacity(this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 		}
 
 		emit holding_site->get_game_data()->income_changed();
@@ -1563,6 +1563,16 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 
 	const centesimal_int old_total_holding_level = this->get_total_holding_level();
 
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_level() > 0) {
+			holding_site->get_game_data()->change_population_capacity(-this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		}
+	}
+
 	this->total_holding_level += change;
 
 	for (const site *holding_site : this->get_settlement_sites()) {
@@ -1570,18 +1580,15 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 			continue;
 		}
 
-		for (const qunique_ptr<building_slot> &building_slot : holding_site->get_game_data()->get_building_slots()) {
-			const building_type *building = building_slot->get_building();
-
-			if (building == nullptr || building->get_holding_level() == 0) {
-				continue;
-			}
-
-			const int64_t old_population_capacity = building->get_population_capacity_for_province_level(this->get_level(), old_total_holding_level);
-			const int64_t new_population_capacity = building->get_population_capacity_for_province_level(this->get_level(), this->get_total_holding_level());
-			holding_site->get_game_data()->change_population_capacity(new_population_capacity - old_population_capacity);
+		if (holding_site->get_game_data()->get_holding_level() > 0) {
+			holding_site->get_game_data()->change_population_capacity(this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 		}
 	}
+}
+
+int64_t province_game_data::get_population_capacity_for_holding_level(const centesimal_int &holding_level) const
+{
+	return (defines::get()->get_province_population_for_level(this->get_level()) * holding_level / centesimal_int::max(this->get_total_holding_level(), 1)).to_int64();
 }
 
 const resource_map<int> &province_game_data::get_resource_counts() const
