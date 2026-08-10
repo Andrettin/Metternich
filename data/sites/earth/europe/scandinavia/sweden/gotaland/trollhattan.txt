@@ -1,0 +1,6 @@
+trollhattan = {
+	name = "Trollhattan" #"Trollhättan"
+	world = earth
+	geocoordinate = { 12.29996211610 58.26710105300 } #from Natural Earth
+	province = vastergotland
+}
