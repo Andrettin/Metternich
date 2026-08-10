@@ -1,0 +1,8 @@
+shalateen = {
+	name = "Shalateen"
+	world = earth
+	geocoordinate = { 35.5 23.0833 }
+	type = holding
+	holding_type = castle
+	province = aydhab
+}

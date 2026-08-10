@@ -1,0 +1,8 @@
+aydhab = {
+	name = "Aydhab"
+	world = earth
+	geocoordinate = { 36.490277777778 22.330833333333 }
+	type = holding
+	holding_type = guild
+	province = aydhab
+}

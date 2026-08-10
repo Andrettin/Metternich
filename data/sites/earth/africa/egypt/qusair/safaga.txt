@@ -1,0 +1,8 @@
+safaga = {
+	name = "Safaga"
+	world = earth
+	geocoordinate = { 33.933319 26.733729 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = qusair
+}

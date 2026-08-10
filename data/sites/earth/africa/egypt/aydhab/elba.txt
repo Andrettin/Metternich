@@ -1,0 +1,8 @@
+elba_egypt = {
+	name = "Elba"
+	world = earth
+	geocoordinate = { 36.370555555556 22.187777777778 } #Elba, Egypt
+	type = holding
+	holding_type = temple
+	province = aydhab
+}

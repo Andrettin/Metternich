@@ -1,0 +1,8 @@
+zabargad = {
+	name = "Zabargad"
+	world = earth
+	geocoordinate = { 36.195833333333 23.609722222222 } #St. John's Island, Egypt
+	type = holding
+	holding_type = temple
+	province = aydhab
+}

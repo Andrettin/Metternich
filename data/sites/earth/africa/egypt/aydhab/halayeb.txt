@@ -1,0 +1,8 @@
+halayeb = {
+	name = "Halayeb"
+	world = earth
+	geocoordinate = { 36.6475 22.223056 }
+	type = holding
+	holding_type = castle
+	province = aydhab
+}

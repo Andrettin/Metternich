@@ -144,7 +144,7 @@ void map_template::initialize()
 				int64_t best_distance = std::numeric_limits<int64_t>::max();
 				QPoint best_tile_pos = tile_pos;
 
-				static constexpr int max_range = 16;
+				static constexpr int max_range = 32;
 				for (int i = 1; i <= max_range; ++i) {
 					const QRect rect(tile_pos - QPoint(i, i), tile_pos + QPoint(i, i));
 

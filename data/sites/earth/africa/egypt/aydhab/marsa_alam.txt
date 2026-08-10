@@ -1,0 +1,8 @@
+marsa_alam = {
+	name = "Marsa Alam"
+	world = earth
+	geocoordinate = { 34.9 25.066666666667 }
+	type = holding
+	holding_type = castle
+	province = aydhab
+}
