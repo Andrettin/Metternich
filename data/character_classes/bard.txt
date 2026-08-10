@@ -32,7 +32,7 @@ bard = {
 		human
 	}
 	favored_holding_types = {
-		great_library
+		library
 		mausoleum
 		university
 	}

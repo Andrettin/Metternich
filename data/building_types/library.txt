@@ -6,7 +6,7 @@ library = {
 	holding_level = 2
 	wealth_cost = 6gb
 	holding_types = {
-		great_library
+		library
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -32,7 +32,7 @@ great_library = {
 	holding_level = 4
 	base_building = library
 	holding_types = {
-		great_library
+		library
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -56,7 +56,7 @@ history_collection = {
 	wealth_cost = 47400gp
 	required_technology = chronicle_writing
 	holding_types = {
-		great_library
+		library
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -78,7 +78,7 @@ poetry_and_drama_collection = {
 	icon = book
 	wealth_cost = 47400gp
 	holding_types = {
-		great_library
+		library
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -100,7 +100,7 @@ scribe_room = {
 	icon = book
 	wealth_cost = 47400gp
 	holding_types = {
-		great_library
+		library
 	}
 	builder_civilian_unit_types = {
 		ruler

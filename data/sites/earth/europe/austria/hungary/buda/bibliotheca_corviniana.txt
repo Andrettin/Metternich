@@ -3,7 +3,7 @@ bibliotheca_corviniana = {
 	world = earth
 	geocoordinate = { 19.039722222222224 47.49611111111111 }
 	type = holding
-	holding_type = great_library
+	holding_type = library
 	province = buda
 	
 	history = {

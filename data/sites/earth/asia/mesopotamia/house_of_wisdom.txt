@@ -3,6 +3,6 @@ house_of_wisdom = {
 	world = earth
 	geocoordinate = { 44.3836 33.3423 }
 	type = holding
-	holding_type = great_library
+	holding_type = library
 	province = diyala
 }

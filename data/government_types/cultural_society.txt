@@ -7,7 +7,7 @@ cultural_society = {
 		university
 	}
 	allowed_holding_types = {
-		great_library
+		library
 		mausoleum
 	}
 	default_laws = {

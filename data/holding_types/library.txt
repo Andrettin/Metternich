@@ -1,5 +1,5 @@
-great_library = {
-	name = "Great Library"
+library = {
+	name = "Library"
 	icon = law
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
@@ -14,6 +14,11 @@ great_library = {
 	fortification_level_commodity_costs = {
 		wealth = 4gb
 		regency = 1
+	}
+	conditional_names = {
+		"Great Library" = {
+			has_building_class = great_library
+		}
 	}
 	tier_levels = {
 		great_library = 4
