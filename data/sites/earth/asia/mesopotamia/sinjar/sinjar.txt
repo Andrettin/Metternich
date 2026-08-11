@@ -2,7 +2,9 @@ sinjar = {
 	name = "Sinjar"
 	world = earth
 	geocoordinate = { 41.876388888889 36.320833333333 }
-	province = assyria
+	type = holding
+	holding_type = castle
+	province = sinjar
 	
 	history = {
 		1360 = {

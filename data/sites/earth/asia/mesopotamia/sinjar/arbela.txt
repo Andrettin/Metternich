@@ -4,7 +4,7 @@ arbela = {
 	geocoordinate = { 44.00862097040 36.17904359850 } #from Natural Earth
 	type = resource
 	resource = sheep
-	province = assyria
+	province = sinjar #Erbil
 	cultural_names = {
 		arabic = "Erbil"
 	}

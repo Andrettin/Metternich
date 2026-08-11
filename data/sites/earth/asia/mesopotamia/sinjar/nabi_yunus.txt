@@ -1,0 +1,8 @@
+nabi_yunus = {
+	name = "Nabi Yunus"
+	world = earth
+	geocoordinate = { 43.159811 36.348332 }
+	type = holding
+	holding_type = castle
+	province = sinjar
+}

@@ -4,5 +4,5 @@ kirkuk = {
 	geocoordinate = { 44.39226680380 35.47223919580 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = assyria
+	province = sinjar #Kirkuk
 }

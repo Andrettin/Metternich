@@ -1,7 +1,8 @@
-assyria = {
-	name = "Assyria"
-	color = { 201 204 84 }
-	default_provincial_capital = nineveh
+sinjar = {
+	name = "Sinjar"
+	color = { 42 3 183 }
+	terrain = desert
+	default_provincial_capital = sinjar
 	regions = {
 		asia
 		middle_east

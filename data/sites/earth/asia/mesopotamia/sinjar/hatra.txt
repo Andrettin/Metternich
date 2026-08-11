@@ -1,0 +1,8 @@
+hatra = {
+	name = "Hatra"
+	world = earth
+	geocoordinate = { 42.718333333333 35.588055555556 }
+	type = holding
+	holding_type = temple
+	province = sinjar
+}

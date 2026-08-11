@@ -12,7 +12,7 @@ persian_royal_highway = {
 		sivas
 		malatya
 		amida
-		assyria
+		sinjar
 		kermanshah
 		elam
 		arrajan

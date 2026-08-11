@@ -1,0 +1,8 @@
+telassar = {
+	name = "Telassar"
+	world = earth
+	geocoordinate = { 42.449750 36.375983 } #from Natural Earth (Tal Afar)
+	type = holding
+	holding_type = guild
+	province = sinjar
+}

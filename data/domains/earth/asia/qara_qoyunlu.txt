@@ -12,9 +12,9 @@ qara_qoyunlu = {
 		al_hasakah
 		amida
 		armenia
-		assyria
 		kars
 		nakhchivan
 		sanliurfa
+		sinjar
 	}
 }

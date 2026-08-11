@@ -1,0 +1,9 @@
+#kouyunik = {
+	#name = "Kouyunik"
+	#world = earth
+	#type = holding
+	#holding_type = temple
+	#province = sinjar
+	
+	#in the city of Nineveh, but which geocoordinate?
+#}

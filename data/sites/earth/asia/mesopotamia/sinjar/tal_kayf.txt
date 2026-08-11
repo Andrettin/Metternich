@@ -1,0 +1,8 @@
+tal_kayf = {
+	name = "Tal Kayf"
+	world = earth
+	geocoordinate = { 43.12026 36.49109 } #Tel Keppe
+	type = holding
+	holding_type = castle
+	province = sinjar
+}
