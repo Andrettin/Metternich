@@ -1,5 +1,6 @@
 gnomish = {
 	name = "Gnomish"
+	color = { 255 168 0 }
 	language = gnomish
 	species = {
 		gnome
