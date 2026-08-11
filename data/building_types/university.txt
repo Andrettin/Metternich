@@ -15,7 +15,7 @@ academy = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 160
+		lumber = 160
 		iron = 50
 	}
 	modifier = {
@@ -55,7 +55,7 @@ small_university = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 200
+		lumber = 200
 		iron = 100
 	}
 	modifier = {
@@ -114,7 +114,7 @@ university = {
 		#merchant
 	}
 	commodity_cost_weights = {
-		carpentry = 200
+		lumber = 200
 		iron = 100
 	}
 	modifier = {
@@ -175,7 +175,7 @@ large_university = {
 		#merchant
 	}
 	commodity_cost_weights = {
-		carpentry = 200
+		lumber = 200
 		iron = 100
 	}
 	modifier = {

@@ -421,19 +421,14 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 	}
 }
 
-QCoro::Task<void> province_game_data::do_construction(const decimillesimal_int &construction_per_project)
+QCoro::Task<void> province_game_data::do_construction()
 {
 	if (this->get_under_construction_pathway() == nullptr) {
 		co_return;
 	}
 
 	const commodity_map<int64_t> commodity_costs = this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province);
-	if (commodity_costs.contains(defines::get()->get_construction_commodity())) {
-		const decimillesimal_int construction_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_construction_commodity())->second);
-		this->change_pathway_construction_progress(construction_per_project * 100 / construction_cost);
-	} else {
-		this->change_pathway_construction_progress(decimillesimal_int(100));
-	}
+	this->change_pathway_construction_progress(decimillesimal_int(100));
 
 	if (this->get_pathway_construction_progress() >= 100) {
 		const metternich::pathway *pathway = this->get_under_construction_pathway();
@@ -1247,10 +1242,6 @@ bool province_game_data::can_build_pathway(const metternich::pathway *pathway) c
 	const domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		if (commodity == defines::get()->get_construction_commodity()) {
-			continue;
-		}
-
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -1272,10 +1263,6 @@ void province_game_data::build_pathway(const metternich::pathway *pathway)
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		if (commodity == defines::get()->get_construction_commodity()) {
-			continue;
-		}
-
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
@@ -1296,10 +1283,6 @@ void province_game_data::cancel_pathway_construction()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province)) {
-			if (commodity == defines::get()->get_construction_commodity()) {
-				continue;
-			}
-
 			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
@@ -1327,12 +1310,7 @@ const decimillesimal_int &province_game_data::get_pathway_construction_progress(
 
 qint64 province_game_data::get_pathway_construction_progress_commodity_quantity() const
 {
-	const commodity_map<int64_t> commodity_costs = this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province);
-	if (!commodity_costs.contains(defines::get()->get_construction_commodity())) {
-		return 0;
-	}
-
-	return (commodity_costs.find(defines::get()->get_construction_commodity())->second * this->get_pathway_construction_progress() / 100).to_int64();
+	return 0;
 }
 
 QString province_game_data::get_pathway_construction_progress_qstring() const

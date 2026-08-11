@@ -19,7 +19,7 @@ monastic_school = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 	}
 	modifier = {
 		monthly_regency_bonus = 0.05
@@ -58,7 +58,7 @@ cathedral_school = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 	}
 	modifier = {
 		monthly_regency_bonus = 0.1

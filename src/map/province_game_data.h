@@ -102,7 +102,7 @@ public:
 	void do_ai_turn();
 	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
-	[[nodiscard]] QCoro::Task<void> do_construction(const decimillesimal_int &construction_per_project);
+	[[nodiscard]] QCoro::Task<void> do_construction();
 	void do_population_literacy_change();
 
 	bool is_on_map() const;

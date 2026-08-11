@@ -13,7 +13,7 @@ trade_shop = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 		iron = 20
 	}
 	modifier = {

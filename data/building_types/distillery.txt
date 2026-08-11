@@ -17,7 +17,7 @@ liquor_distillery = {
 		feature = liquor
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 		iron = 20
 	}
 	modifier = {

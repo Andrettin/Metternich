@@ -174,7 +174,7 @@ void building_type::initialize()
 	this->building_class->get_slot_type()->add_building_type(this);
 
 	if (this->commodity_cost_weights.empty()) {
-		this->commodity_cost_weights[defines::get()->get_construction_commodity()] = 1;
+		this->commodity_cost_weights[defines::get()->get_wealth_commodity()] = 1;
 	}
 
 	if (this->wealth_cost != 0) {
@@ -386,7 +386,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		}
 	}
 
-	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty()) {
+	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty() && (!this->commodity_cost_weights.contains(defines::get()->get_wealth_commodity()) || this->commodity_cost_weights.size() > 1)) {
 		const commodity_map<int64_t> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
 
 		for (const auto &[weighted_commodity, weighted_cost] : weighted_commodity_costs) {

@@ -19,7 +19,7 @@ small_stable = {
 		heavy_cavalry
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Medium Stable
+		lumber = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -56,7 +56,7 @@ medium_stable = {
 		heavy_cavalry
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 	}
 	modifier = {
 		employment_capacity = {
@@ -98,7 +98,7 @@ large_stable = {
 		heavy_cavalry
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Medium Stable
+		lumber = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -137,7 +137,7 @@ great_stable = {
 		heavy_cavalry
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Medium Stable
+		lumber = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {
@@ -180,7 +180,7 @@ royal_stable = {
 		heavy_cavalry
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Medium Stable
+		lumber = 64 #as Medium Stable
 	}
 	modifier = {
 		employment_capacity = {

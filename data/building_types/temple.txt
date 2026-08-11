@@ -44,7 +44,7 @@ temple = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -75,7 +75,7 @@ large_temple = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Temple
+		lumber = 64 #as Temple
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -110,7 +110,7 @@ cathedral = {
 		feature = holy_site
 	}
 	commodity_cost_weights = {
-		carpentry = 176
+		lumber = 176
 		iron = 100
 	}
 	modifier = {
@@ -151,7 +151,7 @@ large_cathedral = {
 		feature = holy_site
 	}
 	commodity_cost_weights = {
-		carpentry = 176 #as Cathedral
+		lumber = 176 #as Cathedral
 		iron = 100 #as Cathedral
 	}
 	modifier = {
@@ -192,7 +192,7 @@ grand_cathedral = {
 		feature = holy_site
 	}
 	commodity_cost_weights = {
-		carpentry = 176 #as Cathedral
+		lumber = 176 #as Cathedral
 		iron = 100 #as Cathedral
 	}
 	modifier = {
@@ -232,7 +232,7 @@ monastery = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64 #as Temple
+		lumber = 64 #as Temple
 	}
 	modifier = {
 		law = 1

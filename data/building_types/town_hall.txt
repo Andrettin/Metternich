@@ -15,7 +15,7 @@ town_hall = {
 		engineer
 	}
 	commodity_cost_weights = {
-		carpentry = 64
+		lumber = 64
 	}
 	modifier = {
 		law = 1

@@ -77,7 +77,7 @@ void pathway::initialize()
 		assert_throw(this->commodity_costs.empty());
 
 		if (this->commodity_cost_weights.empty()) {
-			this->commodity_cost_weights[defines::get()->get_construction_commodity()] = 1;
+			this->commodity_cost_weights[defines::get()->get_wealth_commodity()] = 1;
 		}
 
 		int64_t total_weight = 0;

@@ -18,7 +18,7 @@ pier = {
 		}
 	}
 	commodity_cost_weights = {
-		carpentry = 52
+		lumber = 52
 	}
 	modifier = {
 		crime = 1

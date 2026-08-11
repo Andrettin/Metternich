@@ -8,7 +8,7 @@ road = {
 	required_technology = road_building
 	#river_crossing_required_technology = bridge_building
 	commodity_cost_weights = {
-		carpentry = 1
+		lumber = 1
 		iron = 1
 	}
 	modifier = {
