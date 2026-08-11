@@ -19,6 +19,16 @@ beneficial_domain_event = {
 	}
 }
 
+dangerous_domain_event = {
+	name = "Dangerous Domain Event"
+	trigger = per_turn_pulse
+	random_weight = 25
+	hidden = true
+	immediate_effects = {
+		event_group = dangerous_domain_events
+	}
+}
+
 beneficial_holding_event = {
 	name = "Beneficial Holding Event"
 	trigger = per_turn_pulse

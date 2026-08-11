@@ -1,0 +1,14 @@
+fire_at_tobacco_warehouse = {
+	name = "Fire at Tobacco Warehouse"
+	portrait = trading_post
+	description = "[root.form_of_address], a fire at one of our warehouses has destroyed a good portion of our stores of tobacco!"
+	random_group = dangerous_domain_events
+	conditions = {
+		tobacco > 3
+	}
+	option = {
+		effects = {
+			tobacco_percent -= 33
+		}
+	}
+}
