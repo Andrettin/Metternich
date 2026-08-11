@@ -38,6 +38,8 @@ void event::initialize()
 			this->set_random(true);
 		}
 	}
+
+	named_data_entry::initialize();
 }
 
 event_instance *event::create_instance(const context &ctx) const

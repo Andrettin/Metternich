@@ -36,7 +36,7 @@ public:
 	virtual void initialize() override
 	{
 		scoped_event_base::initialize();
-		named_data_entry::initialize();
+		event::initialize();
 	}
 
 	virtual void check() const override
