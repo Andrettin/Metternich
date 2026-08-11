@@ -1,4 +1,48 @@
 mammal = {
 	name = "Mammal"
 	rank = supergroup
+	given_names = {
+		#Bulls
+		male = {
+			"Apis" #name of a bull in Egyptian mythology; Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 119.
+			"Buchis" #name of a bull in Egyptian mythology; Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 119.
+			"Mnevis" #name of a bull in Egyptian mythology; Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 119.
+		}
+		
+		#Cows
+		female = {
+			"Audhumla" #Auðhumla"; name of a cow in Norse mythology; Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, p. 59.
+		}
+		
+		#Squirrels
+		"Ratatosk" #Ratatoskr is a squirrel in Norse mythology; Cleasby gives the meaning of the name as "Tusk the traveller" or "the climber Tusk", while Bellows gives the meaning as "The Swift-Tusked"; "rata" is presumably the genitive form; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, pp. 317, 483, 638; Source: Henry Adams Bellows (transl.), "The Poetic Edda", 1936, p. 97.
+		
+		#Goats
+		male = {
+			"Tanngnjost" #Tanngnjóstr was one of Thor's male goats; the name means "teeth-gnasher"; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 207.
+			"Tanngrisnir" #Tanngrisnir was one of the goats who pulls Thor's chariot; Source: Richard Cleasby and Gudbrand Vigfusson, "An Icelandic-English Dictionary", 1874, p. 625.
+		}
+		
+		female = {
+			"Amaltheia" #Amaltheia was a female goat from Greek mythology who fed child Zeus
+			"Heidrun" #Heidrun was a female goat from Norse mythology
+		}
+		
+		"Aegipan" #Aegipan was a figure from Greek mythology which is represented by the constellation Capricorn; name means "Goat-Pan" or "Goat-All"
+		
+		#Stags
+		male = {
+			"Dain" #"Dáinn"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 56.
+			"Duneyr" #"Duneyrr"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 67.
+			"Durathror" #"Duraþrór"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 67.
+			"Dvalar" #"Dvalarr"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 67.
+			"Dvalin" #"Dvalinn"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 67.
+			"Eikthyrnir" #"Eikþyrnir"; stag from Norse mythology; Source: Rudolf Simek, "Dictionary of Northern Mythology", 1993, p. 70.
+		}
+		
+		#Boars
+		"Gullinbursti" #Gullinbursti is Frey's boar in Norse mythology, given to him by the dwarf Brokk; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 52.
+		"Hildisvini" #Hildisvini is Freya's battle-boar in Norse mythology; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 100.
+		"Saehrimnir" #Saehrimnir is the boar who is boiled in Valhalla in Norse mythology; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 61.
+	}
 }
