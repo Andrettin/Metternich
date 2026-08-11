@@ -68,7 +68,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->get_quantity(scope));
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->commodity->value_to_string(this->get_quantity(scope), false));
 	}
 
 	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
@@ -81,7 +81,7 @@ public:
 			return std::string();
 		}
 
-		return std::format("Gain {} {}", quantity, string::highlight(this->commodity->get_name()));
+		return std::format("Gain {} {}", this->commodity->value_to_string(quantity, false), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string(const domain *scope, const read_only_context &ctx) const override
@@ -93,7 +93,7 @@ public:
 			return std::string();
 		}
 
-		return std::format("Lose {} {}", quantity, string::highlight(this->commodity->get_name()));
+		return std::format("Lose {} {}", this->commodity->value_to_string(quantity, false), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual bool is_hidden() const override
