@@ -3,11 +3,14 @@ england = {
 	type = polity
 	color = { 206 8 8 }
 	flag = england
-	default_culture = english
-	default_religion = protestant
+	default_culture = anglo_saxon
+	default_religion = asatru
 	default_tier = kingdom
-	default_government_type = monarchy
+	default_government_type = tribal_despotism
 	default_capital = london
+	short_names = {
+		tribe = "Anglo-Saxons"
+	}
 	core_provinces = {
 		middlesex
 		somerset
@@ -24,8 +27,16 @@ england = {
 	}
 	
 	history = {
+		526 = {
+			government_type = tribal_despotism
+			culture = anglo_saxon
+			religion = asatru
+		}
+		
 		828 = {
 			government_type = monarchy
+			culture = anglo_saxon
+			religion = catholic
 			
 			offices = {
 				ruler = ecgberht_i_of_england #Egbert became king of England in 828; Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 601.
@@ -69,6 +80,8 @@ england = {
 		}
 		
 		1199 = {
+			culture = english
+		
 			offices = {
 				ruler = john_i_of_england #John became king of England in 1199; Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
 			}

@@ -8,7 +8,7 @@ somerset = {
 	
 	history = {
 		526 = {
-			owner = anglo_saxons #territory of the Anglo-Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			owner = england #territory of the Anglo-Saxons in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			culture = anglo_saxon
 			religion = asatru
 		}
