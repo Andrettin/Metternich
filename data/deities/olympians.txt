@@ -15,7 +15,7 @@ aphrodite = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p
 	}
 	character = {
 		monster_type = trumpet_archon #Olympian
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = female
 		father = zeus #according to Homer; according to Hesiod she was born out of Uranus instead
@@ -45,7 +45,7 @@ apollo = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
@@ -74,7 +74,7 @@ ares = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -109,7 +109,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = female
 		father = zeus
@@ -142,7 +142,7 @@ athena = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		portrait = athena
 		gender = female
@@ -169,7 +169,7 @@ demeter = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = female
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -195,7 +195,7 @@ dionysus = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -220,7 +220,7 @@ hades = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -254,7 +254,7 @@ hephaestus = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -294,7 +294,7 @@ hera = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 23
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = female
 		father = cronus
@@ -337,7 +337,7 @@ hermes = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = zeus
@@ -362,7 +362,7 @@ hestia = {
 	}
 	character = {
 		monster_type = trumpet_archon
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = female
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
@@ -446,7 +446,7 @@ zeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 28
 	}
 	character = {
 		monster_type = trumpet_archon #Olympian
-		culture = celestial
+		culture = archon
 		religion = hellenic
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.

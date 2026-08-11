@@ -1,7 +1,7 @@
 eos = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 176.
 	name = "Eos"
 	monster_type = trumpet_archon
-	culture = celestial
+	culture = archon
 	religion = hellenic
 	gender = female
 	father = hyperion
@@ -16,7 +16,7 @@ eos = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 176.
 phosphorus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 400.
 	name = "Phosphorus"
 	monster_type = trumpet_archon
-	culture = celestial
+	culture = archon
 	religion = hellenic
 	gender = male
 	father = astraeus

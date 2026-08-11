@@ -1,0 +1,7 @@
+archon = {
+	name = "Archon"
+	color = { 255 237 155 }
+	species = {
+		trumpet_archon
+	}
+}

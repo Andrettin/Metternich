@@ -1,6 +1,4 @@
 celestial = {
 	name = "Celestial"
-	species = {
-		trumpet_archon
-	}
+	rank = group
 }
