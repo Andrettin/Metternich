@@ -1,7 +1,7 @@
 fire_at_tobacco_warehouse = {
 	name = "Fire at Tobacco Warehouse"
 	portrait = trading_post
-	description = "[root.form_of_address], a fire at one of our warehouses has destroyed a good portion of our stores of tobacco!"
+	description = "[root.form_of_address], a fire at one of our tobacco warehouses has destroyed a good portion of our stores of tobacco!"
 	random_group = dangerous_domain_events
 	conditions = {
 		tobacco > 3
@@ -9,6 +9,81 @@ fire_at_tobacco_warehouse = {
 	option = {
 		effects = {
 			tobacco_percent -= 33
+		}
+	}
+}
+
+fire_at_coal_warehouse = {
+	name = "Fire at Coal Warehouse"
+	portrait = trading_post
+	description = "[root.form_of_address], a fire at one of our coal warehouses has destroyed a good portion of our stores of coal!"
+	random_group = dangerous_domain_events
+	conditions = {
+		coal > 3
+	}
+	option = {
+		effects = {
+			coal_percent -= 33
+		}
+	}
+}
+
+fire_at_lumber_warehouse = {
+	name = "Fire at Lumber Warehouse"
+	portrait = trading_post
+	description = "[root.form_of_address], a fire at one of our lumber warehouses has destroyed a good portion of our stores of lumber!"
+	random_group = dangerous_domain_events
+	conditions = {
+		lumber > 3
+	}
+	option = {
+		effects = {
+			lumber_percent -= 33
+		}
+	}
+}
+
+flood_at_cotton_warehouse = {
+	name = "Flood at Cotton Warehouse"
+	portrait = trading_post
+	description = "[root.form_of_address], water damage at one of our cotton warehouses has destroyed much of our stores of cotton!"
+	random_group = dangerous_domain_events
+	conditions = {
+		cotton > 3
+	}
+	option = {
+		effects = {
+			cotton_percent -= 33
+		}
+	}
+}
+
+rusted_iron = {
+	name = "Rusted Iron"
+	portrait = factory
+	description = "[root.form_of_address], a substantial amount of our stores of iron have rusted, rendering them unusable!"
+	random_group = dangerous_domain_events
+	conditions = {
+		iron > 3
+	}
+	option = {
+		effects = {
+			iron_percent -= 33
+		}
+	}
+}
+
+spoiled_grain = {
+	name = "Spoiled Grain"
+	portrait = trading_post
+	description = "[root.form_of_address], a substantial amount of our stores of grain have spoiled!"
+	random_group = dangerous_domain_events
+	conditions = {
+		grain > 3
+	}
+	option = {
+		effects = {
+			grain_percent -= 33
 		}
 	}
 }
