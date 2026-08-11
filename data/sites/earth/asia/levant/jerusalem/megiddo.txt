@@ -2,9 +2,7 @@ megiddo = {
 	name = "Megiddo"
 	world = earth
 	geocoordinate = { 35.184444444444445 32.585277777777776 }
-	type = resource
-	resource = cotton #cotton-producing area; Source: https://maps.lib.utexas.edu/maps/atlas_middle_east/israel_land.jpg
-	province = palestine
+	province = jerusalem #Hazafon
 	
 	history = {
 		-1450 = {

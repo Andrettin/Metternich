@@ -1,0 +1,8 @@
+jericho = {
+	name = "Jericho"
+	world = earth
+	geocoordinate = { 35.463055555556 31.856111111111 }
+	type = holding
+	holding_type = castle
+	province = jerusalem #West Bank
+}

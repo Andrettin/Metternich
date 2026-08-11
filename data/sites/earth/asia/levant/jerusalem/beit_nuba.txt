@@ -1,0 +1,8 @@
+beit_nuba = {
+	name = "Beit Nuba"
+	world = earth
+	geocoordinate = { 35.0325 31.85333333 } #Bayt Nuba
+	type = holding
+	holding_type = castle
+	province = jerusalem #West Bank
+}

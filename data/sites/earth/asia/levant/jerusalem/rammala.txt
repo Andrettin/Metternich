@@ -1,0 +1,8 @@
+rammala = {
+	name = "Rammala"
+	world = earth
+	geocoordinate = { 35.206209 31.902945 } #from Natural Earth (Rammalah)
+	type = holding
+	holding_type = castle
+	province = jerusalem #West Bank
+}

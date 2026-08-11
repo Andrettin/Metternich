@@ -7,7 +7,4 @@ israel = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = jerusalem
-	core_provinces = {
-		palestine
-	}
 }

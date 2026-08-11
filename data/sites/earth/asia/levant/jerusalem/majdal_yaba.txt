@@ -1,0 +1,8 @@
+majdal_yaba = {
+	name = "Majdal Yaba" #also known as Mirabel
+	world = earth
+	geocoordinate = { 34.934048 32.116466 }
+	type = holding
+	holding_type = castle
+	province = jerusalem #Hamerkaz
+}

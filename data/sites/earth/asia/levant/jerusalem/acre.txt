@@ -4,7 +4,7 @@ acre = {
 	geocoordinate = { 35.083888888889 32.926111111111 }
 	type = resource
 	resource = fruit
-	province = palestine
+	province = jerusalem #Hazafon
 	
 	history = {
 		1360 = {

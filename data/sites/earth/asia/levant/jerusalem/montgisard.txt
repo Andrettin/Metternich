@@ -1,0 +1,8 @@
+montgisard = {
+	name = "Montgisard"
+	world = earth
+	geocoordinate = { 34.919166666667 31.859166666667 } #Gezer
+	type = holding
+	holding_type = castle
+	province = jerusalem #Hamerkaz
+}

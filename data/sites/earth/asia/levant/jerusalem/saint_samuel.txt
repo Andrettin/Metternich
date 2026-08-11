@@ -1,0 +1,8 @@
+saint_samuel = {
+	name = "Saint Samuel"
+	world = earth
+	geocoordinate = { 35.1801 31.8327 } #Tomb of Samuel
+	type = holding
+	holding_type = temple
+	province = jerusalem #West Bank
+}

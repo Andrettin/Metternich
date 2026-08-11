@@ -4,7 +4,7 @@ jaffa = {
 	geocoordinate = { 34.77001175820 32.07999147440 } #from Natural Earth (Tel Aviv-Yafo)
 	type = resource
 	resource = fruit
-	province = palestine
+	province = jerusalem #Tel Aviv
 	
 	history = {
 		1360 = {

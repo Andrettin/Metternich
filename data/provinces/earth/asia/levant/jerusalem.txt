@@ -1,6 +1,7 @@
-palestine = {
-	name = "Palestine"
-	color = { 113 221 147 }
+jerusalem = {
+	name = "Jerusalem"
+	color = { 168 192 87 }
+	terrain = hills
 	default_provincial_capital = jerusalem
 	regions = {
 		asia

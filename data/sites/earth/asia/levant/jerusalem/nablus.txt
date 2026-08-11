@@ -2,7 +2,8 @@ nablus = {
 	name = "Nablus"
 	world = earth
 	geocoordinate = { 35.25442663450 32.22148154600 } #from Natural Earth
-	type = resource
-	resource = fruit
-	province = palestine
+	type = holding
+	holding_type = guild
+	#resource = fruit
+	province = jerusalem #West Bank
 }
