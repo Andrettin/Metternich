@@ -1,0 +1,8 @@
+dire_wolf = {
+	name = "Dire Wolf"
+	color = { 209 211 214 }
+	group = canid
+	species = {
+		dire_wolf
+	}
+}
