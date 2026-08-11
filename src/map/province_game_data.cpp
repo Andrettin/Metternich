@@ -307,6 +307,13 @@ QCoro::Task<void> province_game_data::initialize()
 	if (terrain != nullptr && terrain->get_province_modifier() != nullptr) {
 		co_await terrain->get_province_modifier()->apply(this->province);
 	}
+
+	//coastal provinces receive +1 max level
+	if (this->is_coastal()) {
+		this->change_max_level(1);
+	}
+
+	//FIXME: add +1 max level to provinces with a major river
 }
 
 QCoro::Task<void> province_game_data::do_turn()
