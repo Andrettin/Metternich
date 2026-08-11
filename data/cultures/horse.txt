@@ -1,0 +1,8 @@
+horse = {
+	name = "Horse"
+	color = { 76 25 25 }
+	group = mammal
+	species = {
+		horse
+	}
+}

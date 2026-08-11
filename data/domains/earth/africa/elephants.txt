@@ -1,8 +1,8 @@
-proboscids = {
-	name = "Proboscids"
+elephants = {
+	name = "Elephants"
 	type = clade
 	color = { 204 204 204 }
-	default_culture = proboscid
+	default_culture = elephant
 	default_religion = kemetic
 	default_tier = duchy
 	default_government_type = clade

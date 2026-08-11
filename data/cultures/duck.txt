@@ -1,0 +1,8 @@
+duck = {
+	name = "Duck"
+	color = { 255 255 255 }
+	group = avian
+	species = {
+		duck
+	}
+}

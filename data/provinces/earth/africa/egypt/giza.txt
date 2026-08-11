@@ -9,9 +9,9 @@ giza = {
 	
 	history = {
 		-41000000 = {
-			owner = proboscids #Lake Moeris was inhabited by Moeritherium in the 41-34 mya period; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+			owner = elephants #Lake Moeris was inhabited by Moeritherium in the 41-34 mya period; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
 			phenotype = elephant #moeritherium
-			culture = proboscid
+			culture = elephant
 			religion = kemetic
 		}
 		

@@ -1,0 +1,5 @@
+ailurid = {
+	name = "Ailurid"
+	rank = group
+	upper_group = mammal
+}

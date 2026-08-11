@@ -1,7 +1,7 @@
 hedgehog = {
 	name = "Hedgehog"
 	color = { 51 76 255 }
-	group = mammal
+	group = erinaceid
 	species = {
 		hedgehog
 	}
