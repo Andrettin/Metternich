@@ -32,6 +32,7 @@ class civilian_unit;
 class commodity;
 class culture;
 class domain;
+class domain_skill;
 class icon;
 class military_unit;
 class pathway;
@@ -246,6 +247,20 @@ public:
 	}
 
 	void change_total_holding_level(const centesimal_int &change);
+
+	const centesimal_int &get_domain_skill_total_holding_level(const domain_skill *domain_skill) const
+	{
+		const auto find_iterator = this->domain_skill_total_holding_levels.find(domain_skill);
+
+		if (find_iterator != this->domain_skill_total_holding_levels.end()) {
+			return find_iterator->second;
+		}
+
+		static const centesimal_int zero;
+		return zero;
+	}
+
+	void change_domain_skill_total_holding_level(const domain_skill *domain_skill, const centesimal_int &change);
 
 	int64_t get_population_capacity_for_holding_level(const centesimal_int &holding_level) const;
 
@@ -685,6 +700,7 @@ private:
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
 	centesimal_int total_holding_level;
+	data_entry_map<domain_skill, centesimal_int> domain_skill_total_holding_levels;
 	data_entry_map<site_feature, int> site_feature_counts;
 	technology_set technologies;
 	scripted_province_modifier_map<int> scripted_modifiers;

@@ -1022,6 +1022,9 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	}
 
 	this->get_province()->get_game_data()->change_total_holding_level(holding_level_change);
+	if (this->site->get_holding_type()->get_domain_skill() != nullptr) {
+		this->get_province()->get_game_data()->change_domain_skill_total_holding_level(this->site->get_holding_type()->get_domain_skill(), holding_level_change);
+	}
 
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score((this->get_holding_level() * 100).to_int());

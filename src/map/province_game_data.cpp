@@ -2,6 +2,7 @@
 
 #include "map/province_game_data.h"
 
+#include "character/domain_skill.h"
 #include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -138,6 +139,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "domain_skill_total_holding_levels") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->domain_skill_total_holding_levels[domain_skill::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "site_feature_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->site_feature_counts[site_feature::get(property.get_key())] = std::stoi(property.get_value());
@@ -227,6 +232,14 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_movement_cost_modifier() != 0) {
 		data.add_property("movement_cost_modifier", std::to_string(this->get_movement_cost_modifier()));
+	}
+
+	if (!this->domain_skill_total_holding_levels.empty()) {
+		gsml_data domain_skill_total_holding_levels_data("domain_skill_total_holding_levels");
+		for (const auto &[domain_skill, total_level] : this->domain_skill_total_holding_levels) {
+			domain_skill_total_holding_levels_data.add_property(domain_skill->get_identifier(), total_level.to_string());
+		}
+		data.add_child(std::move(domain_skill_total_holding_levels_data));
 	}
 
 	if (!this->get_site_feature_counts().empty()) {
@@ -1563,6 +1576,19 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 		if (holding_site->get_game_data()->get_holding_level() > 0) {
 			holding_site->get_game_data()->change_population_capacity(this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 		}
+	}
+}
+
+void province_game_data::change_domain_skill_total_holding_level(const domain_skill *domain_skill, const centesimal_int &change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const centesimal_int &new_value = (this->domain_skill_total_holding_levels[domain_skill] += change);
+
+	if (new_value == 0) {
+		this->domain_skill_total_holding_levels.erase(domain_skill);
 	}
 }
 
