@@ -316,7 +316,12 @@ void character_data_model::reset_model()
 			this->create_craft_row();
 		}
 
-		this->create_combat_rows();
+		this->create_armor_class_rows();
+		this->create_to_hit_bonus_rows();
+		this->create_damage_row();
+		this->create_range_row();
+		this->create_movement_row();
+		this->create_initiative_bonus_row();
 		this->create_saving_throw_rows();
 		this->create_skill_rows();
 		if (character_game_data->has_domain_skill()) {
@@ -497,25 +502,11 @@ void character_data_model::update_craft_row()
 	}
 }
 
-void character_data_model::create_combat_rows()
-{
-	auto row = std::make_unique<character_data_row>("Combat");
-	this->combat_row = row.get();
-	this->top_rows.push_back(std::move(row));
-
-	this->create_armor_class_rows();
-	this->create_to_hit_bonus_rows();
-	this->create_damage_row();
-	this->create_range_row();
-	this->create_movement_row();
-	this->create_initiative_bonus_row();
-}
-
 void character_data_model::create_armor_class_rows()
 {
-	auto row = std::make_unique<character_data_row>("Armor Class:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("Armor Class:");
 	this->armor_class_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_armor_class_rows();
 }
@@ -536,15 +527,13 @@ void character_data_model::update_armor_class_rows()
 	}
 
 	this->on_child_rows_inserted(this->armor_class_row);
-
-	this->on_row_changed(this->armor_class_row);
 }
 
 void character_data_model::create_to_hit_bonus_rows()
 {
-	auto row = std::make_unique<character_data_row>("To Hit:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("To Hit:");
 	this->to_hit_bonus_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_to_hit_bonus_rows();
 }
@@ -555,15 +544,13 @@ void character_data_model::update_to_hit_bonus_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 	this->to_hit_bonus_row->value = number::to_signed_string(character_game_data->get_to_hit_bonus());
-
-	this->on_row_changed(this->to_hit_bonus_row);
 }
 
 void character_data_model::create_damage_row()
 {
-	auto row = std::make_unique<character_data_row>("Damage:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("Damage:");
 	this->damage_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_damage_row();
 }
@@ -577,15 +564,13 @@ void character_data_model::update_damage_row()
 	dice damage_dice = character_game_data->get_damage_dice();
 	damage_dice.change_modifier(character_game_data->get_damage_bonus());
 	this->damage_row->value = damage_dice.to_display_string();
-
-	this->on_row_changed(this->damage_row);
 }
 
 void character_data_model::create_range_row()
 {
-	auto row = std::make_unique<character_data_row>("Range:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("Range:");
 	this->range_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_range_row();
 }
@@ -597,15 +582,13 @@ void character_data_model::update_range_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->range_row->value = std::to_string(character_game_data->get_range());
-
-	this->on_row_changed(this->range_row);
 }
 
 void character_data_model::create_movement_row()
 {
-	auto row = std::make_unique<character_data_row>("Movement:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("Movement:");
 	this->movement_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_movement_row();
 }
@@ -617,15 +600,13 @@ void character_data_model::update_movement_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->movement_row->value = std::to_string(character_game_data->get_movement());
-
-	this->on_row_changed(this->movement_row);
 }
 
 void character_data_model::create_initiative_bonus_row()
 {
-	auto row = std::make_unique<character_data_row>("Initiative:", "", this->combat_row);
+	auto row = std::make_unique<character_data_row>("Initiative:");
 	this->initiative_bonus_row = row.get();
-	this->combat_row->child_rows.push_back(std::move(row));
+	this->top_rows.push_back(std::move(row));
 
 	this->update_initiative_bonus_row();
 }
@@ -637,8 +618,6 @@ void character_data_model::update_initiative_bonus_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->initiative_bonus_row->value = number::to_signed_string(character_game_data->get_initiative_bonus());
-
-	this->on_row_changed(this->initiative_bonus_row);
 }
 
 void character_data_model::create_saving_throw_rows()
@@ -814,14 +793,12 @@ void character_data_model::update_wealth_row()
 	this->wealth_row->value = defines::get()->get_wealth_commodity()->value_to_string(character_game_data->get_wealth(), false);
 }
 
-std::optional<size_t> character_data_model::get_row_index(const character_data_row *row) const
+std::optional<size_t> character_data_model::get_top_row_index(const character_data_row *row) const
 {
 	if (row != nullptr) {
-		const std::vector<std::unique_ptr<character_data_row>> &rows = row->parent_row != nullptr ? row->parent_row->child_rows : this->top_rows;
-
-		for (size_t i = 0; i < rows.size(); ++i) {
-			const std::unique_ptr<character_data_row> &child_row = rows.at(i);
-			if (child_row.get() == row) {
+		for (size_t i = 0; i < this->top_rows.size(); ++i) {
+			const std::unique_ptr<const character_data_row> &top_row = this->top_rows.at(i);
+			if (top_row.get() == row) {
 				return i;
 			}
 		}
@@ -830,21 +807,10 @@ std::optional<size_t> character_data_model::get_row_index(const character_data_r
 	return std::nullopt;
 }
 
-void character_data_model::on_row_changed(character_data_row *row)
-{
-	if (this->resetting_model) {
-		return;
-	}
-
-	const size_t row_index = this->get_row_index(row).value();
-	const QModelIndex row_model_index = this->createIndex(static_cast<int>(row_index), 0, row);
-	emit dataChanged(row_model_index, row_model_index);
-}
-
 void character_data_model::clear_child_rows(character_data_row *row)
 {
-	const size_t row_index = this->get_row_index(row).value();
-	const QModelIndex row_model_index = this->createIndex(static_cast<int>(row_index), 0, row);
+	const size_t row_index = this->get_top_row_index(row).value();
+	const QModelIndex row_model_index = this->index(static_cast<int>(row_index), 0);
 	const size_t child_row_count = row->child_rows.size();
 
 	if (child_row_count == 0) {
@@ -865,8 +831,8 @@ void character_data_model::clear_child_rows(character_data_row *row)
 void character_data_model::on_child_rows_inserted(character_data_row *row)
 {
 	if (!this->resetting_model && !row->child_rows.empty()) {
-		const size_t row_index = this->get_row_index(row).value();
-		const QModelIndex row_model_index = this->createIndex(static_cast<int>(row_index), 0, row);
+		const size_t row_index = this->get_top_row_index(row).value();
+		const QModelIndex row_model_index = this->index(static_cast<int>(row_index), 0);
 		this->beginInsertRows(row_model_index, 0, static_cast<int>(row->child_rows.size()) - 1);
 		this->endInsertRows();
 	}
