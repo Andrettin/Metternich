@@ -30,6 +30,7 @@
 #include "item/item_slot.h"
 #include "item/item_type.h"
 #include "item/object_type.h"
+#include "map/province_feature.h"
 #include "map/site_attribute.h"
 #include "map/site_feature.h"
 #include "religion/divine_domain.h"
@@ -74,6 +75,7 @@ template struct data_entry_compare<monster_type>;
 template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<object_type>;
 template struct data_entry_compare<office>;
+template struct data_entry_compare<province_feature>;
 template struct data_entry_compare<saving_throw_type>;
 template struct data_entry_compare<site_attribute>;
 template struct data_entry_compare<site_feature>;

@@ -32,6 +32,7 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
+#include "map/province_feature.h"
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
 #include "map/route.h"
@@ -65,6 +66,7 @@
 #include "util/dice.h"
 #include "util/map_util.h"
 #include "util/vector_random_util.h"
+#include "util/vector_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -135,7 +137,11 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "technologies") {
+	if (tag == "features") {
+		for (const std::string &value : values) {
+			this->features.insert(province_feature::get(value));
+		}
+	} else if (tag == "technologies") {
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
@@ -234,6 +240,14 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_property("movement_cost_modifier", std::to_string(this->get_movement_cost_modifier()));
 	}
 
+	if (!this->get_features().empty()) {
+		gsml_data features_data("features");
+		for (const province_feature *feature : this->get_features()) {
+			features_data.add_value(feature->get_identifier());
+		}
+		data.add_child(std::move(features_data));
+	}
+
 	if (!this->domain_skill_total_holding_levels.empty()) {
 		gsml_data domain_skill_total_holding_levels_data("domain_skill_total_holding_levels");
 		for (const auto &[domain_skill, total_level] : this->domain_skill_total_holding_levels) {
@@ -314,6 +328,12 @@ QCoro::Task<void> province_game_data::initialize()
 	}
 
 	//FIXME: add +1 max level to provinces with a major river
+
+	for (const province_feature *feature : this->province->get_features()) {
+		assert_throw(feature->get_terrain_types().empty() || vector::contains(feature->get_terrain_types(), this->get_terrain()));
+
+		co_await this->add_feature(feature);
+	}
 }
 
 QCoro::Task<void> province_game_data::do_turn()
@@ -1371,6 +1391,41 @@ const std::vector<const site *> &province_game_data::get_sites() const
 const std::vector<const site *> &province_game_data::get_settlement_sites() const
 {
 	return this->province->get_map_data()->get_settlement_sites();
+}
+
+QVariantList province_game_data::get_features_qvariant_list() const
+{
+	return archimedes::container::to_qvariant_list(this->get_features());
+}
+
+QCoro::Task<void> province_game_data::add_feature(const province_feature *feature)
+{
+	assert_throw(!this->has_feature(feature));
+
+	this->features.insert(feature);
+
+	if (feature->get_modifier() != nullptr) {
+		co_await feature->get_modifier()->apply(this->province);
+	}
+
+	if (game::get()->is_running()) {
+		emit features_changed();
+	}
+}
+
+QCoro::Task<void> province_game_data::remove_feature(const province_feature *feature)
+{
+	assert_throw(this->has_feature(feature));
+
+	this->features.erase(feature);
+
+	if (feature->get_modifier() != nullptr) {
+		co_await feature->get_modifier()->remove(this->province);
+	}
+
+	if (game::get()->is_running()) {
+		emit features_changed();
+	}
 }
 
 const QColor &province_game_data::get_map_color() const

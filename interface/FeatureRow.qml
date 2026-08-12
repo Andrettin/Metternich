@@ -6,14 +6,14 @@ Row {
 	height: 32 * scale_factor
 	spacing: 4 * scale_factor
 	
-	property var site: null
+	property var location: null
 	
 	Repeater {
-		model: site ? site.game_data.features : []
+		model: location ? location.game_data.features : []
 		
 		FeatureImage {
 			feature: model.modelData
-			site: feature_row.site
+			location: feature_row.location
 		}
 	}
 }

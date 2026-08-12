@@ -3,6 +3,9 @@ rimini = {
 	color = { 43 21 183 }
 	terrain = plains
 	default_provincial_capital = rimini
+	features = {
+		fertile
+	}
 	regions = {
 		italy
 	}

@@ -6,6 +6,9 @@ pressburg = {
 	cultural_names = {
 		slovak = "Bratislava"
 	}
+	features = {
+		fertile
+	}
 	regions = {
 		slovakia
 	}

@@ -3,6 +3,9 @@ holstein = {
 	color = { 128 65 96 }
 	terrain = plains
 	default_provincial_capital = kiel
+	features = {
+		fertile
+	}
 	regions = {
 		germany
 	}

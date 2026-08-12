@@ -40,6 +40,7 @@ class phenotype;
 class population;
 class population_unit;
 class province;
+class province_feature;
 class religion;
 class scripted_province_modifier;
 class site;
@@ -75,6 +76,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::pathway* under_construction_pathway READ get_under_construction_pathway WRITE set_under_construction_pathway NOTIFY under_construction_pathway_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
 	Q_PROPERTY(QVariantList dungeon_sites READ get_dungeon_sites_qvariant_list NOTIFY dungeon_sites_changed)
+	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -220,6 +222,21 @@ public:
 	const std::vector<QPoint> &get_resource_tiles() const;
 	const std::vector<const site *> &get_sites() const;
 	const std::vector<const site *> &get_settlement_sites() const;
+
+	const data_entry_set<province_feature> &get_features() const
+	{
+		return this->features;
+	}
+
+	QVariantList get_features_qvariant_list() const;
+
+	bool has_feature(const province_feature *feature) const
+	{
+		return this->get_features().contains(feature);
+	}
+
+	[[nodiscard]] QCoro::Task<void> add_feature(const province_feature *feature);
+	[[nodiscard]] QCoro::Task<void> remove_feature(const province_feature *feature);
 
 	const QColor &get_map_color() const;
 	QColor get_technology_map_color() const;
@@ -668,6 +685,7 @@ signals:
 	void provincial_capital_changed();
 	void pathway_changed();
 	void under_construction_pathway_changed();
+	void features_changed();
 	void map_image_changed();
 	void map_mode_image_changed(QString map_mode_identifier);
 	void text_rect_changed();
@@ -697,6 +715,7 @@ private:
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;
 	decimillesimal_int pathway_construction_progress;
+	data_entry_set<province_feature> features;
 	QRect text_rect;
 	int settlement_count = 0; //only includes built settlements
 	centesimal_int total_holding_level;

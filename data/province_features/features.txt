@@ -1,0 +1,23 @@
+blighted = {
+	name = "Blighted"
+	icon = skull
+	modifier = {
+		max_level = -1
+	}
+}
+
+fertile = {
+	name = "Fertile"
+	icon = grain
+	modifier = {
+		max_level = 1
+	}
+}
+
+major_river = {
+	name = "Major River"
+	icon = mountains
+	modifier = {
+		max_level = 1
+	}
+}

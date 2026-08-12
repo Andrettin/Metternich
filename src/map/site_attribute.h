@@ -6,6 +6,7 @@
 namespace metternich {
 
 class site;
+class skill;
 
 template <typename scope_type>
 class modifier;

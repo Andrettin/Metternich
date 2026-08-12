@@ -8,6 +8,6 @@ CustomIconImage {
 	icon_identifier: feature.icon.identifier
 	
 	property var feature: null
-	property var site: null
-	readonly property string modifier_string: feature.get_modifier_string(site)
+	property var location: null
+	readonly property string modifier_string: feature.get_modifier_string(location)
 }

@@ -187,8 +187,8 @@ Rectangle {
 		FeatureRow {
 			id: feature_row
 			anchors.verticalCenter: parent.verticalCenter
-			site: selected_site
-			visible: selected_site && !selected_garrison && selected_site.game_data.features.length > 0 && !viewing_population && !viewing_population_units
+			location: selected_site !== null ? selected_site : selected_province
+			visible: location && location.game_data.features.length > 0 && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_settlement_info
 		}
 		
 		CustomIconImage {

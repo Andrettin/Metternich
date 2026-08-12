@@ -6,6 +6,7 @@
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "map/province_feature.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
 #include "map/province_map_data.h"
@@ -72,6 +73,10 @@ void province::process_gsml_scope(const gsml_data &scope)
 			}
 			this->cultural_names[culture] = property.get_value();
 		});
+	} else if (tag == "features") {
+		for (const std::string &value : values) {
+			this->features.push_back(province_feature::get(value));
+		}
 	} else if (tag == "resource_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const site_feature *resource = site_feature::get(property.get_key());
@@ -141,6 +146,12 @@ void province::check() const
 	if (this->get_primary_star() != nullptr && !this->get_primary_star()->is_celestial_body()) {
 		throw std::runtime_error(std::format("Province \"{}\" has a primary star (\"{}\") which is not a celestial body.", this->get_identifier(), this->get_primary_star()->get_identifier()));
 	}
+
+	for (const province_feature *feature : this->get_features()) {
+		if (!this->can_have_feature(feature)) {
+			throw std::runtime_error(std::format("Province \"{}\" has the \"{}\" feature predefined for it, but the province does not fulfill the feature's requirements.", this->get_identifier(), feature->get_identifier()));
+		}
+	}
 }
 
 data_entry_history *province::get_history_base()
@@ -200,6 +211,17 @@ const std::string &province::get_cultural_name(const culture_base *culture) cons
 	}
 
 	return this->get_name();
+}
+
+bool province::can_have_feature(const province_feature *feature) const
+{
+	if (!feature->get_terrain_types().empty()) {
+		if (this->get_terrain() != nullptr && !vector::contains(feature->get_terrain_types(), this->get_terrain())) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void province::add_region(region *region)

@@ -17,6 +17,7 @@ namespace metternich {
 class character;
 class culture_base;
 class domain;
+class province_feature;
 class province_game_data;
 class province_history;
 class province_map_data;
@@ -225,6 +226,13 @@ public:
 	virtual std::string get_scope_name() const override;
 	const std::string &get_cultural_name(const culture_base *culture) const;
 
+	const std::vector<const province_feature *> &get_features() const
+	{
+		return this->features;
+	}
+
+	bool can_have_feature(const province_feature *feature) const;
+
 	const data_entry_map<site_feature, int> &get_resource_counts() const
 	{
 		return this->resource_counts;
@@ -305,6 +313,7 @@ private:
 	bool hidden = false;
 	std::vector<const metternich::terrain_type *> terrain_types;
 	std::map<const culture_base *, std::string> cultural_names;
+	std::vector<const province_feature *> features;
 	data_entry_map<site_feature, int> resource_counts;
 	std::vector<region *> regions; //regions where this province is located
 	std::vector<const domain *> core_domains;
