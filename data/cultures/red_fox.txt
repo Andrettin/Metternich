@@ -2,6 +2,7 @@ red_fox = {
 	name = "Red Fox"
 	color = { 204 153 76 }
 	group = canid
+	fauna = true
 	species = {
 		fox
 	}

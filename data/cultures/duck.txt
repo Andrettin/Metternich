@@ -2,6 +2,7 @@ duck = {
 	name = "Duck"
 	color = { 255 255 255 }
 	group = avian
+	fauna = true
 	species = {
 		duck
 	}

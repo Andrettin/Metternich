@@ -2,6 +2,7 @@ lion = {
 	name = "Lion"
 	color = { 127 102 25 }
 	group = felid
+	fauna = true
 	species = {
 		lion
 	}

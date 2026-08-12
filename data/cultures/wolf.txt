@@ -2,6 +2,7 @@ wolf = {
 	name = "Wolf"
 	color = { 102 76 0 }
 	group = canid
+	fauna = true
 	species = {
 		wolf
 		osteoborus

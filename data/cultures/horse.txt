@@ -2,6 +2,7 @@ horse = {
 	name = "Horse"
 	color = { 76 25 25 }
 	group = equid
+	fauna = true
 	species = {
 		horse
 	}

@@ -2,4 +2,5 @@ canid = {
 	name = "Canid"
 	rank = group
 	upper_group = mammal
+	fauna = true
 }

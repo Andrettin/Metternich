@@ -2,4 +2,5 @@ bear = {
 	name = "Bear"
 	rank = group
 	upper_group = mammal
+	fauna = true
 }

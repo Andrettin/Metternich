@@ -1,6 +1,7 @@
 mammal = {
 	name = "Mammal"
 	rank = supergroup
+	fauna = true
 	given_names = {
 		#Bulls
 		male = {

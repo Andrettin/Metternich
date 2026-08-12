@@ -2,6 +2,7 @@ red_panda = {
 	name = "Red Panda"
 	color = { 255 76 0 }
 	group = ailurid
+	fauna = true
 	species = {
 		amphictis
 		magerictis

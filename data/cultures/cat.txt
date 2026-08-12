@@ -2,6 +2,7 @@ cat = {
 	name = "Cat"
 	color = { 25 76 25 }
 	group = felid
+	fauna = true
 	species = {
 		tiger
 		felis_attica

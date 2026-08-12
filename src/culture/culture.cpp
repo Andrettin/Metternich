@@ -88,8 +88,16 @@ void culture::check() const
 		throw std::runtime_error(std::format("Culture \"{}\" has no phenotype weights.", this->get_identifier()));
 	}
 
-	if (this->get_language() == nullptr) {
-		log::log_error(std::format("Culture \"{}\" has no language.", this->get_identifier()));
+	if (this->get_language() == nullptr && !this->is_fauna()) {
+		log::log_error(std::format("Sapient culture \"{}\" has no language.", this->get_identifier()));
+	}
+
+	for (const metternich::species *species : this->get_species()) {
+		if (this->is_fauna() && species->is_sapient()) {
+			throw std::runtime_error(std::format("Fauna culture \"{}\" has a sapient species.", this->get_identifier()));
+		} else if (!this->is_fauna() && !species->is_sapient()) {
+			throw std::runtime_error(std::format("Sapient culture \"{}\" has a non-sapient species.", this->get_identifier()));
+		}
 	}
 
 	culture_base::check();

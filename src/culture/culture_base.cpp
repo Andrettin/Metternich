@@ -288,6 +288,10 @@ void culture_base::check() const
 	for (const auto &[unit_class, unit_type] : this->military_class_unit_types) {
 		assert_throw(unit_type->get_unit_class() == unit_class);
 	}
+
+	if (this->get_group() != nullptr && this->is_fauna() != this->get_group()->is_fauna()) {
+		throw std::runtime_error(std::format("Culture or cultural group \"{}\" has a \"fauna\" value that is incompatible with that of its group.", this->get_identifier()));
+	}
 }
 
 data_entry_history *culture_base::get_history_base()

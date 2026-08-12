@@ -2,4 +2,5 @@ proboscid = {
 	name = "Proboscid"
 	rank = group
 	upper_group = mammal
+	fauna = true
 }

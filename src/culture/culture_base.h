@@ -42,6 +42,7 @@ class culture_base : public named_data_entry
 
 	Q_PROPERTY(metternich::cultural_group* group MEMBER group WRITE set_group NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group WRITE set_group NOTIFY changed)
+	Q_PROPERTY(bool fauna MEMBER fauna READ is_fauna)
 	Q_PROPERTY(bool use_language_data_for_name_generation MEMBER use_language_data_for_name_generation READ uses_language_data_for_name_generation)
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
@@ -85,6 +86,11 @@ public:
 	}
 
 	bool is_part_of_group(const cultural_group *group) const;
+
+	bool is_fauna() const
+	{
+		return this->fauna;
+	}
 
 	virtual const language *get_language() const
 	{
@@ -152,6 +158,7 @@ signals:
 
 private:
 	cultural_group *group = nullptr;
+	bool fauna = false;
 	std::map<gender, std::string> patronyms;
 	bool use_language_data_for_name_generation = false;
 	phenotype *default_phenotype = nullptr;

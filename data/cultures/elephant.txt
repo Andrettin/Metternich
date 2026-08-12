@@ -1,8 +1,9 @@
 elephant = {
 	name = "Elephant"
 	color = { 204 204 204 }
-	primary_domain = elephants
 	group = proboscid
+	fauna = true
+	primary_domain = elephants
 	species = {
 		elephant
 	}

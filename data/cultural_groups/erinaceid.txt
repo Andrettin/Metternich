@@ -2,4 +2,5 @@ erinaceid = {
 	name = "Erinaceid"
 	rank = group
 	upper_group = mammal
+	fauna = true
 }

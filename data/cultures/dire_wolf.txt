@@ -2,6 +2,7 @@ dire_wolf = {
 	name = "Dire Wolf"
 	color = { 209 211 214 }
 	group = canid
+	fauna = true
 	species = {
 		dire_wolf
 	}
