@@ -417,7 +417,6 @@ MenuBase {
 		anchors.rightMargin: 32 * scale_factor
 		portrait_identifier: portrait ? portrait.identifier : ""
 		visible: ruler !== null
-		tooltip: ruler && selected_country ? ruler.game_data.titled_name : ""
 		
 		property var ruler: null
 		property var portrait: null
@@ -425,6 +424,14 @@ MenuBase {
 		onClicked: {
 			character_dialog.character = ruler
 			character_dialog.open()
+		}
+		
+		onHoveredChanged: {
+			if (hovered) {
+				status_text = ruler && selected_country ? ruler.game_data.titled_name : ""
+			} else {
+				status_text = ""
+			}
 		}
 	}
 	
