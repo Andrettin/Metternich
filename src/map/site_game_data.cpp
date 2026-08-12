@@ -985,8 +985,10 @@ QString site_game_data::get_holding_level_qstring() const
 
 void site_game_data::set_holding_level(const centesimal_int &level)
 {
+	province_game_data *province_game_data = this->get_province()->get_game_data();
+
 	assert_throw(this->site->is_settlement());
-	assert_throw(level <= this->get_province()->get_game_data()->get_max_level());
+	assert_throw(level <= province_game_data->get_max_level());
 
 	if (level == this->get_holding_level()) {
 		return;
@@ -1006,24 +1008,31 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	}
 
 	if (this->get_holding_level() > 0) {
-		this->change_population_capacity(-this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity(-province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_level = level;
 
 	if (this->get_holding_level() > 0) {
 		//need to do this before changing the province's level or its total holding level, since those update the province's holdings' population capacity based on their holding level
-		this->change_population_capacity(this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity(province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
 
-	if (this->get_holding_level().to_int() > this->get_province()->get_game_data()->get_level()) {
-		this->get_province()->get_game_data()->set_level(this->get_holding_level().to_int());
-		assert_throw(this->get_province()->get_game_data()->get_level() == this->get_holding_level().to_int());
+	//use the site's holding type, rather than the constructed holding type, in case the holding type is being lost
+	const domain_skill *domain_skill = this->site->get_holding_type()->get_domain_skill();
+	if (domain_skill != nullptr) {
+		//the site's province increases in level whenever the total holding level for a domain skill goes beyond the current province level
+		//the total holding level can continue to go beyond the province's max level (albeit holdings in the province are limited in their holding level to the province's max level), but it won't continue to increase the province's level
+		const int new_domain_skill_total_holding_level = (province_game_data->get_domain_skill_total_holding_level(domain_skill) + holding_level_change).to_int();
+		if (new_domain_skill_total_holding_level > province_game_data->get_level() && province_game_data->get_level() < province_game_data->get_max_level()) {
+			province_game_data->set_level(std::min(new_domain_skill_total_holding_level, province_game_data->get_max_level()));
+			assert_throw(province_game_data->get_level() == new_domain_skill_total_holding_level || province_game_data->get_level() == province_game_data->get_max_level());
+		}
 	}
 
-	this->get_province()->get_game_data()->change_total_holding_level(holding_level_change);
-	if (this->site->get_holding_type()->get_domain_skill() != nullptr) {
-		this->get_province()->get_game_data()->change_domain_skill_total_holding_level(this->site->get_holding_type()->get_domain_skill(), holding_level_change);
+	province_game_data->change_total_holding_level(holding_level_change);
+	if (domain_skill != nullptr) {
+		province_game_data->change_domain_skill_total_holding_level(domain_skill, holding_level_change);
 	}
 
 	if (this->get_owner() != nullptr) {
@@ -1047,15 +1056,15 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 
 	if (this->get_holding_type() != nullptr) {
 		if (this->get_holding_type()->is_economic()) {
-			this->get_province()->get_game_data()->check_trade_zone_domain_for_province_and_neighbors();
+			province_game_data->check_trade_zone_domain_for_province_and_neighbors();
 		}
 
 		if (this->get_holding_type()->is_religious()) {
-			this->get_province()->get_game_data()->check_temple_domain_for_province_and_neighbors();
+			province_game_data->check_temple_domain_for_province_and_neighbors();
 		}
 
 		if (this->get_holding_type()->is_cultural()) {
-			this->get_province()->get_game_data()->check_cultural_society_domain_for_province_and_neighbors();
+			province_game_data->check_cultural_society_domain_for_province_and_neighbors();
 		}
 	}
 

@@ -993,6 +993,16 @@ void province_game_data::set_max_level(const int level)
 
 	if (this->get_max_level() < this->get_level()) {
 		this->set_level(this->get_max_level());
+	} else if (this->get_max_level() > this->get_level()) {
+		for (const auto &[domain_skill, domain_skill_total_holding_level] : this->domain_skill_total_holding_levels) {
+			if (domain_skill_total_holding_level.to_int() > this->get_level()) {
+				this->set_level(std::min(domain_skill_total_holding_level.to_int(), this->get_max_level()));
+
+				if (this->get_level() == this->get_max_level()) {
+					break;
+				}
+			}
+		}
 	}
 
 	if (game::get()->is_running()) {

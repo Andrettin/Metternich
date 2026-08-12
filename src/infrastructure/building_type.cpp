@@ -322,16 +322,18 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 
 	commodity_map<int64_t> costs = this->get_commodity_costs();
 
+	const holding_type *holding_type = site->get_game_data()->get_holding_type();
+
 	if (this->get_holding_level() > 0) {
-		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
+		assert_throw(holding_type != nullptr);
 		const centesimal_int holding_level_change = site->get_game_data()->get_building_holding_level_change(this);
 
 		for (int i = 0; i < holding_level_change.to_int(); ++i) {
-			for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_level_commodity_costs()) {
+			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
 				costs[commodity] += level_cost;
 			}
 
-			for (const auto &[commodity, level_cost_per_level] : site->get_game_data()->get_holding_type()->get_level_commodity_costs_per_level()) {
+			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
 				const int64_t level_cost = (level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i)).to_int64();
 				costs[commodity] += level_cost;
 			}
@@ -340,38 +342,40 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		if (holding_level_change.get_fractional_value() != 0) {
 			const centesimal_int holding_level_change_fraction = centesimal_int::from_value(holding_level_change.get_fractional_value());
 
-			for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_level_commodity_costs()) {
+			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
 				costs[commodity] += (level_cost * holding_level_change_fraction).to_int();
 			}
 
-			for (const auto &[commodity, level_cost_per_level] : site->get_game_data()->get_holding_type()->get_level_commodity_costs_per_level()) {
+			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
 				const int64_t level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + holding_level_change).to_ceil_int64();
 				costs[commodity] += (level_cost * holding_level_change_fraction).to_int();
 			}
 		}
 
 		//if increasing the holding level will also increase the province level, then the building costs more
-		const centesimal_int new_holding_level = site->get_game_data()->get_holding_level() + holding_level_change;
-		const province *province = site->get_game_data()->get_province();
-		if (new_holding_level.to_int() > province->get_game_data()->get_level()) {
-			const int province_level_change = new_holding_level.to_int() - province->get_game_data()->get_level();
-			for (int i = 0; i < province_level_change; ++i) {
-				for (const auto &[commodity, base_level_cost_per_level] : defines::get()->get_province_level_commodity_costs_per_level()) {
-					int64_t level_cost_per_level = base_level_cost_per_level;
-					if (commodity == defines::get()->get_wealth_commodity()) {
-						level_cost_per_level *= defines::get()->get_domain_income_unit_value();
+		if (holding_type->get_domain_skill() != nullptr) {
+			const centesimal_int new_domain_skill_total_holding_level = site->get_game_data()->get_province()->get_game_data()->get_domain_skill_total_holding_level(holding_type->get_domain_skill()) + holding_level_change;
+			const province *province = site->get_game_data()->get_province();
+			if (new_domain_skill_total_holding_level.to_int() > province->get_game_data()->get_level()) {
+				const int province_level_change = std::min(new_domain_skill_total_holding_level.to_int(), province->get_game_data()->get_max_level()) - province->get_game_data()->get_level();
+				for (int i = 0; i < province_level_change; ++i) {
+					for (const auto &[commodity, base_level_cost_per_level] : defines::get()->get_province_level_commodity_costs_per_level()) {
+						int64_t level_cost_per_level = base_level_cost_per_level;
+						if (commodity == defines::get()->get_wealth_commodity()) {
+							level_cost_per_level *= defines::get()->get_domain_income_unit_value();
+						}
+						costs[commodity] += level_cost_per_level * (province->get_game_data()->get_level() + 1 + i);
 					}
-					costs[commodity] += level_cost_per_level * (province->get_game_data()->get_level() + 1 + i);
 				}
 			}
 		}
 	}
 
 	if (this->get_fortification_level() > 0) {
-		assert_throw(site->get_game_data()->get_holding_type() != nullptr);
+		assert_throw(holding_type != nullptr);
 		const centesimal_int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
 		const centesimal_int total_fortification_level = site->get_game_data()->get_fortification_level() + fortification_level_change;
-		for (const auto &[commodity, level_cost] : site->get_game_data()->get_holding_type()->get_fortification_level_commodity_costs()) {
+		for (const auto &[commodity, level_cost] : holding_type->get_fortification_level_commodity_costs()) {
 			int fortification_cost = (level_cost * fortification_level_change).to_int();
 			if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
 				//double the cost if fortifying the provincial capital (i.e. fortifying the province itself)
