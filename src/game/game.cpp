@@ -14,6 +14,7 @@
 #include "database/gsml_parser.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
+#include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
@@ -1237,6 +1238,10 @@ QCoro::Task<void> game::apply_sites()
 	}
 
 	for (const domain *domain : this->get_domains()) {
+		if (domain->get_type() == country_type::clade) {
+			continue;
+		}
+
 		//ensure domain capitals start with a holding level of at least 1
 		if (domain->get_game_data()->get_capital() != nullptr && domain->get_game_data()->get_capital()->get_game_data()->get_holding_level() == 0) {
 			co_await domain->get_game_data()->get_capital()->get_game_data()->set_holding_level_from_buildings(1);
