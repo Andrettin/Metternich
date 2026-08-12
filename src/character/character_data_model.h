@@ -87,6 +87,7 @@ public:
 	void update_mana_row();
 	void create_craft_row();
 	void update_craft_row();
+	void create_combat_rows();
 	void create_armor_class_rows();
 	void update_armor_class_rows();
 	void create_to_hit_bonus_rows();
@@ -111,7 +112,9 @@ public:
 	void create_wealth_row();
 	void update_wealth_row();
 
+	std::optional<size_t> get_row_index(const character_data_row *row) const;
 	std::optional<size_t> get_top_row_index(const character_data_row *row) const;
+	void on_row_changed(character_data_row *row);
 	void clear_child_rows(character_data_row *row);
 	void on_child_rows_inserted(character_data_row *row);
 
@@ -120,10 +123,11 @@ signals:
 
 private:
 	const metternich::character *character = nullptr;
-	std::vector<std::unique_ptr<const character_data_row>> top_rows;
+	std::vector<std::unique_ptr<character_data_row>> top_rows;
 	std::map<character_attribute_type, character_data_row *> attribute_type_rows;
 	character_data_row *mana_row = nullptr;
 	character_data_row *craft_row = nullptr;
+	character_data_row *combat_row = nullptr;
 	character_data_row *armor_class_row = nullptr;
 	character_data_row *to_hit_bonus_row = nullptr;
 	character_data_row *damage_row = nullptr;
