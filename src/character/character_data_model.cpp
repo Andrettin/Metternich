@@ -599,7 +599,7 @@ void character_data_model::update_movement_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->movement_row->value = std::to_string(character_game_data->get_combat_movement());
+	this->movement_row->value = std::to_string(character_game_data->get_movement());
 }
 
 void character_data_model::create_initiative_bonus_row()
