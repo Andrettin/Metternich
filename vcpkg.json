@@ -12,14 +12,12 @@
     {
       "name": "opencv",
       "default-features": false,
-      "features": [
-      ]
+      "features": []
     },
     {
       "name": "opencv4",
       "default-features": false,
-      "features": [
-      ]
+      "features": []
     },
     {
       "name": "qtbase",
@@ -60,5 +58,5 @@
       ]
     }
   ],
-  "builtin-baseline": "86dc619bd8d9697405ae5c944b474117ea9457ce"
+  "builtin-baseline": "aae277acf4e7de287ddb5e208b5316614de6aad7"
 }
