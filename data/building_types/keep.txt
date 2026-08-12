@@ -16,6 +16,7 @@ donjon = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}
@@ -43,6 +44,7 @@ keep = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}
@@ -77,6 +79,7 @@ expanded_keep = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}
@@ -105,6 +108,7 @@ large_keep = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}
@@ -133,6 +137,7 @@ great_keep = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}
@@ -161,6 +166,7 @@ epic_keep = {
 	}
 	conditions = {
 		not = {
+			scripted_condition = is_lair
 			scripted_condition = is_tribal
 		}
 	}

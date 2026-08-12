@@ -12,6 +12,11 @@ jail = {
 		royal_enforcer
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	modifier = {
 		crime = -1
 		law = 1

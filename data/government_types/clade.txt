@@ -4,7 +4,7 @@ clade = {
 	icon = lion
 	primary_domain_attribute = stability
 	preferred_holding_types = {
-		castle
+		castle #lair
 	}
 	conditions = {
 		country_type = clade

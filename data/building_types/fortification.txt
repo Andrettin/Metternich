@@ -16,6 +16,11 @@ watchtower = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	domain_modifier = {
 		stability = 1
 		unrest = -1
@@ -41,6 +46,11 @@ castle = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	domain_modifier = {
 		economy = 2

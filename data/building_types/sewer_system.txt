@@ -14,6 +14,11 @@ sewer_system = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 2

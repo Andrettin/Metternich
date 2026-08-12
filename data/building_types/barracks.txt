@@ -22,6 +22,11 @@ guard_quarters = {
 		heavy_infantry
 		general
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	modifier = {
 		employment_capacity = {
 			employment_type = heavy_infantry
@@ -48,6 +53,11 @@ small_barracks = {
 	}
 	required_buildings = {
 		wooden_palisade
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -88,6 +98,11 @@ medium_barracks = {
 	}
 	required_buildings = {
 		low_stone_wall
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -136,6 +151,11 @@ large_barracks = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	recruited_military_unit_categories = {
 		mace_infantry
 		spear_infantry
@@ -178,6 +198,11 @@ great_barracks = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	recruited_military_unit_categories = {
 		mace_infantry
 		spear_infantry
@@ -219,6 +244,11 @@ royal_barracks = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	recruited_military_unit_categories = {
 		mace_infantry

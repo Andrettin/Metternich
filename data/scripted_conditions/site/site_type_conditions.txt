@@ -1,3 +1,9 @@
+is_lair = {
+	domain = {
+		country_type = clade
+	}
+}
+
 is_tribal = {
 	province = {
 		province_level < 2

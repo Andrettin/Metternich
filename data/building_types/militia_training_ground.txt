@@ -13,6 +13,11 @@ militia_training_ground = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	recruited_military_unit_categories = {
 		light_infantry
 		bowmen
@@ -49,6 +54,11 @@ archery_range = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	recruited_military_unit_categories = {
 		light_infantry
 		bowmen
@@ -81,6 +91,11 @@ large_archery_range = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	recruited_military_unit_categories = {
 		light_infantry

@@ -14,6 +14,11 @@ wooden_palisade = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	commodity_cost_weights = {
 		lumber = 64
 	}
@@ -35,6 +40,11 @@ low_stone_wall = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_cost_weights = {
 		lumber = 120
@@ -59,6 +69,11 @@ medium_stone_wall = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_cost_weights = {
 		lumber = 120
@@ -86,6 +101,11 @@ large_stone_wall = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	commodity_cost_weights = {
 		lumber = 320
 		iron = 200
@@ -111,6 +131,11 @@ huge_stone_wall = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_cost_weights = {
 		lumber = 320

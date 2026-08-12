@@ -17,6 +17,11 @@ warehouse = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	commodity_cost_weights = {
 		lumber = 80
 	}

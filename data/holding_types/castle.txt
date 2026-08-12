@@ -17,9 +17,7 @@ castle = {
 	}
 	conditional_names = {
 		"Lair" = {
-			domain = {
-				government_group = clade
-			}
+			scripted_condition = is_lair
 		}
 		"Tribal Hold" = {
 			scripted_condition = is_tribal
@@ -28,13 +26,11 @@ castle = {
 			not = {
 				has_building_class = donjon
 				scripted_condition = is_tribal
+				scripted_condition = is_lair
 			}
 		}
 		"Castle" = {
 			has_building_class = donjon
-			not = {
-				scripted_condition = is_tribal
-			}
 		}
 	}
 	tier_levels = {

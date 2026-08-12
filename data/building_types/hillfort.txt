@@ -16,6 +16,9 @@ earth_hillfort = {
 	}
 	conditions = {
 		scripted_condition = is_tribal
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 }
 
@@ -38,6 +41,9 @@ wooden_hillfort = {
 	}
 	conditions = {
 		scripted_condition = is_tribal
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 }
 
@@ -60,6 +66,9 @@ reinforced_hillfort = {
 	}
 	conditions = {
 		scripted_condition = is_tribal
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 }
 
@@ -82,5 +91,8 @@ stone_hillfort = {
 	}
 	conditions = {
 		scripted_condition = is_tribal
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 }

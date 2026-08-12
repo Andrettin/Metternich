@@ -18,6 +18,11 @@ small_stable = {
 		light_cavalry
 		heavy_cavalry
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	commodity_cost_weights = {
 		lumber = 64 #as Medium Stable
 	}
@@ -48,6 +53,11 @@ medium_stable = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	recruited_military_unit_categories = {
 		spear_cavalry
@@ -90,6 +100,11 @@ large_stable = {
 		marshal
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	recruited_military_unit_categories = {
 		spear_cavalry
 		light_cavalry
@@ -127,6 +142,11 @@ great_stable = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	recruited_military_unit_categories = {
 		spear_cavalry
@@ -169,6 +189,11 @@ royal_stable = {
 		ruler
 		marshal
 		engineer
+	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	recruited_military_unit_categories = {
 		spear_cavalry
