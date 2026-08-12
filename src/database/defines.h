@@ -243,6 +243,16 @@ public:
 		return this->battle_round_duration;
 	}
 
+	int get_battle_tile_length() const
+	{
+		return this->battle_tile_length;
+	}
+
+	int get_battle_movement_rate() const
+	{
+		return this->battle_movement_rate;
+	}
+
 	const terrain_type *get_default_base_terrain() const
 	{
 		return this->default_base_terrain;
@@ -620,6 +630,8 @@ private:
 	std::map<int, int> months_per_turn_from_year;
 	std::chrono::seconds combat_round_duration;
 	std::chrono::seconds battle_round_duration;
+	int battle_tile_length = 0; //the length of each side of a battle tile, in feet
+	int battle_movement_rate = 0; //movement in battle per character movement point, in feet
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_province_terrain = nullptr;

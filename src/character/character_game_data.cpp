@@ -67,6 +67,7 @@
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
+#include "unit/military_unit_stat.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/date_util.h"
@@ -2307,6 +2308,10 @@ void character_game_data::set_movement(const int movement)
 
 	this->movement = movement;
 
+	if (this->get_military_unit() != nullptr) {
+		this->update_military_unit_stats();
+	}
+
 	if (game::get()->is_running()) {
 		emit movement_changed();
 	}
@@ -3098,6 +3103,13 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	if (trait->get_office_modifier(office) != nullptr) {
 		co_await trait->get_office_modifier(office)->apply(domain, multiplier);
 	}
+}
+
+void character_game_data::update_military_unit_stats()
+{
+	assert_throw(this->get_military_unit() != nullptr);
+
+	this->get_military_unit()->set_stat(military_unit_stat::movement, centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length());
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const

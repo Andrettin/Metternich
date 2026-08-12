@@ -48,6 +48,10 @@ void defines::process_gsml_property(const gsml_property &property)
 		this->combat_round_duration = string::to_duration(value);
 	} else if (key == "battle_round_duration") {
 		this->battle_round_duration = string::to_duration(value);
+	} else if (key == "battle_tile_length") {
+		this->battle_tile_length = string::to_length(value);
+	} else if (key == "battle_movement_rate") {
+		this->battle_movement_rate = string::to_length(value);
 	} else {
 		defines_base::process_gsml_property(property);
 	}

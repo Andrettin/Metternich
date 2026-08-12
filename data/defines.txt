@@ -32,6 +32,8 @@ default_months_per_turn = 3
 #}
 combat_round_duration = 6s
 battle_round_duration = 5min
+battle_tile_length = 60yd #the length of each side of a battle tile
+battle_movement_rate = 10yd #movement in battle per character movement point
 
 default_population_class = laborers
 default_tribal_population_class = tribesmen

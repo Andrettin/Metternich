@@ -466,7 +466,7 @@ centesimal_int military_unit::get_effective_stat(const military_unit_stat stat) 
 
 int military_unit::get_battle_movement() const
 {
-	return this->get_effective_stat(military_unit_stat::movement).to_int() * 2;
+	return (this->get_effective_stat(military_unit_stat::movement) * 2).to_int();
 }
 
 QVariantList military_unit::get_promotions_qvariant_list() const
