@@ -253,10 +253,7 @@ public:
 		return this->settlement_count;
 	}
 
-	void change_settlement_count(const int change)
-	{
-		this->settlement_count += change;
-	}
+	void change_settlement_count(const int change);
 
 	const centesimal_int &get_total_holding_level() const
 	{

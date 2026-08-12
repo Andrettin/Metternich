@@ -843,9 +843,15 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		if (old_holding_type->get_modifier() != nullptr) {
 			co_await old_holding_type->get_modifier()->apply(this->site, -1);
 		}
+
+		this->change_population_capacity(-this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_type = holding_type;
+
+	if (this->get_holding_type() != nullptr) {
+		this->change_population_capacity(this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+	}
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
 		co_await this->on_settlement_built(1);
@@ -1007,13 +1013,13 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level().to_int());
 	}
 
-	if (this->get_holding_level() > 0) {
+	if (this->get_holding_type() != nullptr) {
 		this->change_population_capacity(-province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_level = level;
 
-	if (this->get_holding_level() > 0) {
+	if (this->get_holding_type() != nullptr) {
 		//need to do this before changing the province's level or its total holding level, since those update the province's holdings' population capacity based on their holding level
 		this->change_population_capacity(province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
