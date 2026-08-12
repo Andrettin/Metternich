@@ -3109,7 +3109,7 @@ void character_game_data::update_military_unit_stats()
 {
 	assert_throw(this->get_military_unit() != nullptr);
 
-	this->get_military_unit()->set_stat(military_unit_stat::movement, centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length());
+	this->get_military_unit()->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const
