@@ -112,6 +112,7 @@ public:
 	void update_wealth_row();
 
 	std::optional<size_t> get_top_row_index(const character_data_row *row) const;
+	void on_top_row_changed(character_data_row *row);
 	void clear_child_rows(character_data_row *row);
 	void on_child_rows_inserted(character_data_row *row);
 

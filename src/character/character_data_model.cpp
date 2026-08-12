@@ -527,6 +527,8 @@ void character_data_model::update_armor_class_rows()
 	}
 
 	this->on_child_rows_inserted(this->armor_class_row);
+
+	this->on_top_row_changed(this->armor_class_row);
 }
 
 void character_data_model::create_to_hit_bonus_rows()
@@ -544,6 +546,8 @@ void character_data_model::update_to_hit_bonus_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 	this->to_hit_bonus_row->value = number::to_signed_string(character_game_data->get_to_hit_bonus());
+
+	this->on_top_row_changed(this->to_hit_bonus_row);
 }
 
 void character_data_model::create_damage_row()
@@ -564,6 +568,8 @@ void character_data_model::update_damage_row()
 	dice damage_dice = character_game_data->get_damage_dice();
 	damage_dice.change_modifier(character_game_data->get_damage_bonus());
 	this->damage_row->value = damage_dice.to_display_string();
+
+	this->on_top_row_changed(this->damage_row);
 }
 
 void character_data_model::create_range_row()
@@ -582,6 +588,8 @@ void character_data_model::update_range_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->range_row->value = std::to_string(character_game_data->get_range());
+
+	this->on_top_row_changed(this->range_row);
 }
 
 void character_data_model::create_movement_row()
@@ -600,6 +608,8 @@ void character_data_model::update_movement_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->movement_row->value = std::to_string(character_game_data->get_movement());
+
+	this->on_top_row_changed(this->movement_row);
 }
 
 void character_data_model::create_initiative_bonus_row()
@@ -618,6 +628,8 @@ void character_data_model::update_initiative_bonus_row()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	this->initiative_bonus_row->value = number::to_signed_string(character_game_data->get_initiative_bonus());
+
+	this->on_top_row_changed(this->initiative_bonus_row);
 }
 
 void character_data_model::create_saving_throw_rows()
@@ -805,6 +817,17 @@ std::optional<size_t> character_data_model::get_top_row_index(const character_da
 	}
 
 	return std::nullopt;
+}
+
+void character_data_model::on_top_row_changed(character_data_row *row)
+{
+	if (this->resetting_model) {
+		return;
+	}
+
+	const size_t row_index = this->get_top_row_index(row).value();
+	const QModelIndex row_model_index = this->index(static_cast<int>(row_index), 0);
+	emit dataChanged(row_model_index, row_model_index);
 }
 
 void character_data_model::clear_child_rows(character_data_row *row)
