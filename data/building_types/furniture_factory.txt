@@ -22,6 +22,5 @@ furniture_factory = {
 			employment_type = furniture_making
 			capacity = 10000
 		}
-		population_capacity = 10000
 	}
 }

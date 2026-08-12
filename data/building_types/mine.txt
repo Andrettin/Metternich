@@ -23,7 +23,6 @@ coal_mine = {
 			employment_type = coal_mining
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		economy = 1
@@ -56,7 +55,6 @@ gold_mine = {
 			employment_type = gold_mining
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		economy = 1
@@ -89,7 +87,6 @@ iron_mine = {
 			employment_type = iron_mining
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		economy = 1
@@ -122,7 +119,6 @@ silver_mine = {
 			employment_type = silver_mining
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		economy = 1
@@ -155,7 +151,6 @@ sulfur_mine = {
 			employment_type = sulfur_mining
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		economy = 1

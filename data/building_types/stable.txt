@@ -26,7 +26,6 @@ small_stable = {
 			employment_type = light_cavalry
 			capacity = 35
 		}
-		population_capacity = 35
 	}
 }
 
@@ -63,7 +62,6 @@ medium_stable = {
 			employment_type = light_cavalry
 			capacity = 80
 		}
-		population_capacity = 80
 	}
 	domain_modifier = {
 		economy = 1
@@ -105,7 +103,6 @@ large_stable = {
 			employment_type = light_cavalry
 			capacity = 135
 		}
-		population_capacity = 135
 	}
 	domain_modifier = {
 		economy = 1
@@ -148,7 +145,6 @@ great_stable = {
 			employment_type = heavy_cavalry
 			capacity = 5
 		}
-		population_capacity = 195
 	}
 	domain_modifier = {
 		economy = 1
@@ -191,7 +187,6 @@ royal_stable = {
 			employment_type = heavy_cavalry
 			capacity = 15
 		}
-		population_capacity = 260
 	}
 	domain_modifier = {
 		economy = 1

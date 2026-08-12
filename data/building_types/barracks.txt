@@ -31,7 +31,6 @@ guard_quarters = {
 			employment_type = pikemen
 			capacity = 15
 		}
-		population_capacity = 45
 	}
 }
 
@@ -72,7 +71,6 @@ small_barracks = {
 			employment_type = pikemen
 			capacity = 30
 		}
-		population_capacity = 100
 	}
 }
 
@@ -114,7 +112,6 @@ medium_barracks = {
 			employment_type = pikemen
 			capacity = 50
 		}
-		population_capacity = 165
 	}
 	domain_modifier = {
 		unrest = -1
@@ -157,7 +154,6 @@ large_barracks = {
 			employment_type = pikemen
 			capacity = 75
 		}
-		population_capacity = 240
 	}
 	domain_modifier = {
 		unrest = -1
@@ -200,7 +196,6 @@ great_barracks = {
 			employment_type = pikemen
 			capacity = 100
 		}
-		population_capacity = 325
 	}
 	domain_modifier = {
 		unrest = -1
@@ -243,7 +238,6 @@ royal_barracks = {
 			employment_type = pikemen
 			capacity = 130
 		}
-		population_capacity = 420
 	}
 	domain_modifier = {
 		unrest = -1

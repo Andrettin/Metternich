@@ -28,7 +28,6 @@ lumber_mill = {
 		#	employment_type = lumber_making
 		#	capacity = 10000
 		#}
-		#population_capacity = 10000
 		lumber_throughput_modifier = 50 #bonus to sawmill production
 		productivity = 1
 	}

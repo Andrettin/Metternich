@@ -24,7 +24,6 @@ bowyer = {
 			employment_type = archery
 			capacity = 95
 		}
-		population_capacity = 190
 	}
 }
 
@@ -58,6 +57,5 @@ crossbow_workshop = {
 			employment_type = archery
 			capacity = 215
 		}
-		population_capacity = 430
 	}
 }

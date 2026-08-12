@@ -24,6 +24,5 @@ glassworks = {
 			employment_type = glass_making
 			capacity = 10000
 		}
-		population_capacity = 10000
 	}
 }

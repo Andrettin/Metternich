@@ -25,7 +25,6 @@ liquor_distillery = {
 			employment_type = liquor_distilling
 			capacity = 10000
 		}
-		population_capacity = 10000
 	}
 	domain_modifier = { #same as brewery
 		loyalty = 1

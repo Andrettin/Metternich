@@ -24,6 +24,5 @@ fertilizer_factory = {
 			employment_type = fertilizer_making
 			capacity = 10000
 		}
-		population_capacity = 10000
 	}
 }

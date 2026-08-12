@@ -62,7 +62,6 @@ swordsmithy = {
 			employment_type = pikemen
 			capacity = 65
 		}
-		population_capacity = 150
 	}
 	domain_modifier = {
 		economy = 1

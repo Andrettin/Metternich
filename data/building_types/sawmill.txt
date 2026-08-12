@@ -22,7 +22,6 @@ sawmill = {
 			employment_type = lumberjacking
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		stability = 1

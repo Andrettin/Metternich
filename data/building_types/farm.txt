@@ -34,7 +34,6 @@ cattle_ranch = {
 			employment_type = cattle_ranching
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		consumption = -2
@@ -74,7 +73,6 @@ grain_farm = {
 			employment_type = grain_farming
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		consumption = -2
@@ -114,7 +112,6 @@ sheep_ranch = {
 			employment_type = sheep_ranching
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		consumption = -2
@@ -154,7 +151,6 @@ tobacco_plantation = {
 			employment_type = tobacco_planting
 			capacity = 40000
 		}
-		population_capacity = 40000
 	}
 	domain_modifier = {
 		consumption = -2

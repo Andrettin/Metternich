@@ -26,7 +26,6 @@ militia_training_ground = {
 			employment_type = archery
 			capacity = 10
 		}
-		population_capacity = 90
 	}
 }
 
@@ -63,7 +62,6 @@ archery_range = {
 			employment_type = archery
 			capacity = 60
 		}
-		population_capacity = 190
 	}
 }
 
@@ -97,6 +95,5 @@ large_archery_range = {
 			employment_type = archery
 			capacity = 150
 		}
-		population_capacity = 300
 	}
 }
