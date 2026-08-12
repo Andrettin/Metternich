@@ -1292,6 +1292,9 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		co_return;
 	}
 
+	//holding level before applying buildings, e.g. from site features
+	const int holding_level_before_building_application = site_game_data->get_holding_level().to_int();
+
 	const site_history *site_history = site->get_history();
 
 	if (site == settlement && settlement_game_data->is_built()) {
@@ -1386,7 +1389,8 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		}
 	}
 
-	const int holding_level = site_history->get_development_level();
+	//the development level should be added to the holding level from features to get the final holding level to be set
+	const int holding_level = site_history->get_development_level() + holding_level_before_building_application;
 	if (site_game_data->get_holding_type() != nullptr && holding_level != 0 && site_game_data->get_holding_level() < holding_level) {
 		co_await site_game_data->set_holding_level_from_buildings(holding_level);
 	}
