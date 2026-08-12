@@ -19,6 +19,20 @@ MenuBase {
 	readonly property var scenarios: metternich.get_top_level_scenarios()
 	property string status_text: ""
 	
+	MouseArea {
+		id: menu_mouse_area
+		anchors.fill: parent
+		hoverEnabled: true
+		
+		onContainsMouseChanged: {
+			if (typeof status_text !== 'undefined') {
+				if (containsMouse) {
+					status_text = ""
+				}
+			}
+		}
+	}
+	
 	Item {
 		id: top_area
 		anchors.left: diplomatic_map_background.left
