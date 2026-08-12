@@ -133,7 +133,7 @@ Popup {
 	
 	function receive_focus() {
 		pane.forceActiveFocus()
-		dialog.z = 1 + (open_dialogs ? open_dialogs.length : 0)
+		dialog.z = 100 + (open_dialogs ? open_dialogs.length : 0)
 	}
 	
 	function calculate_max_button_width(button_container) {
