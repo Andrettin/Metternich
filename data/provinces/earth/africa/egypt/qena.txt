@@ -3,6 +3,9 @@ qena = {
 	color = { 42 30 223 }
 	terrain = desert
 	default_provincial_capital = qena
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

@@ -3,6 +3,9 @@ damietta = {
 	color = { 126 51 99 }
 	terrain = plains
 	default_provincial_capital = damietta
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

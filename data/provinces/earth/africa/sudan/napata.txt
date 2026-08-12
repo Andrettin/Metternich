@@ -3,6 +3,9 @@ napata = {
 	color = { 43 144 63 }
 	terrain = desert
 	default_provincial_capital = napata
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		sudan
 	}

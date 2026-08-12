@@ -2,6 +2,9 @@ babylon = {
 	name = "Babylon"
 	color = { 110 155 24 }
 	default_provincial_capital = babylon
+	features = {
+		major_river #Euphrates River
+	}
 	regions = {
 		asia
 		middle_east

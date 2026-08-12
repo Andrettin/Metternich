@@ -6,6 +6,9 @@ syene = {
 	cultural_names = {
 		arabic = "Aswan"
 	}
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

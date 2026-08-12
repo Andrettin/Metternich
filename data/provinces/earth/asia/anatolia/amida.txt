@@ -6,6 +6,9 @@ amida = {
 	cultural_names = {
 		turkish = "Diyarbakir" #"Diyarbakır"
 	}
+	features = {
+		major_river #Tigris River
+	}
 	regions = {
 		anatolia
 	}

@@ -2,6 +2,9 @@ chaldea = {
 	name = "Chaldea"
 	color = { 155 16 90 }
 	default_provincial_capital = basra
+	features = {
+		major_river #Euphrates River
+	}
 	regions = {
 		asia
 		middle_east

@@ -3,6 +3,9 @@ sinjar = {
 	color = { 42 3 183 }
 	terrain = desert
 	default_provincial_capital = sinjar
+	features = {
+		major_river #Tigris River
+	}
 	regions = {
 		asia
 		middle_east

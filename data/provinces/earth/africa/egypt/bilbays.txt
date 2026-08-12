@@ -3,6 +3,9 @@ bilbays = {
 	color = { 0 27 95 }
 	terrain = desert
 	default_provincial_capital = bilbays
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

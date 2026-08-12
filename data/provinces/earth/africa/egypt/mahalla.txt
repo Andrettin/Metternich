@@ -3,6 +3,9 @@ mahalla = {
 	color = { 84 48 226 }
 	terrain = plains
 	default_provincial_capital = mahalla
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

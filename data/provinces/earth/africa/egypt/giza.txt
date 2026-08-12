@@ -3,6 +3,9 @@ giza = {
 	color = { 0 57 0 }
 	terrain = desert
 	default_provincial_capital = giza
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

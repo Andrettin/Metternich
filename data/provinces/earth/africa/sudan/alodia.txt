@@ -3,6 +3,9 @@ alodia = {
 	color = { 169 168 67 }
 	terrain = plains
 	default_provincial_capital = soba
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		sudan
 	}

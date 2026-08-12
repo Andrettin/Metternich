@@ -2,6 +2,9 @@ sumer = {
 	name = "Sumer"
 	color = { 100 170 57 }
 	default_provincial_capital = ur
+	features = {
+		major_river #Euphrates River
+	}
 	regions = {
 		asia
 		middle_east

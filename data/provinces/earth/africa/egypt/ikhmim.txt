@@ -3,6 +3,9 @@ ikhmim = {
 	color = { 86 42 1 }
 	terrain = desert
 	default_provincial_capital = ikhmim
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

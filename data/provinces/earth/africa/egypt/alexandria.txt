@@ -3,6 +3,9 @@ alexandria = {
 	color = { 249 44 41 }
 	terrain = desert
 	default_provincial_capital = alexandria
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

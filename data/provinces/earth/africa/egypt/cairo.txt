@@ -3,6 +3,9 @@ cairo = {
 	color = { 42 45 98 }
 	terrain = desert
 	default_provincial_capital = cairo
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}

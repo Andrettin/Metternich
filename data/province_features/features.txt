@@ -16,7 +16,7 @@ fertile = {
 
 major_river = {
 	name = "Major River"
-	icon = mountains
+	icon = oasis
 	modifier = {
 		max_level = 1
 	}

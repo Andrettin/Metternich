@@ -6,6 +6,9 @@ rosetta = {
 	cultural_names = {
 		arabic = "Rashid"
 	}
+	features = {
+		major_river #Nile River
+	}
 	regions = {
 		egypt
 	}
