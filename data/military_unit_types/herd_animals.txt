@@ -1,31 +1,32 @@
-#cattle = {
-#	name = "Cattle"
-#	unit_class = cattle
-#	icon = cow
-#	stats = {
-#		hit_points = 2
-#		movement = 3
-#		defense = 2
-#		melee = 2
-#		range = 1
-#	}
+cattle = {
+	name = "Cattle"
+	unit_class = cattle
+	icon = cow
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 2
+		melee = 2
+		range = 1
+	}
 #	commodity_costs = {
 #		cattle = 200
 #	}
-#}
+}
 
-#elephant = {
-#	name = "Elephant"
-#	unit_class = elephant
-#	icon = cow
-#	stats = {
-#		hit_points = 3
-#		movement = 2
-#		defense = 4
-#		melee = 4
-#		range = 1
-#	}
+elephants = {
+	name = "Elephants"
+	unit_class = elephants
+	culture = elephant
+	icon = cow
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 4
+		melee = 4
+		range = 1
+	}
 #	commodity_costs = {
 #		elephants = 100
 #	}
-#}
+}

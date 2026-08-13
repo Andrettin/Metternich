@@ -1,11 +1,11 @@
-#cattle = {
-#	name = "Cattle"
-#	domain = land
-#	category = mace_infantry
-#}
+cattle = {
+	name = "Cattle"
+	domain = land
+	category = medium_herd_animal
+}
 
-#elephant = {
-#	name = "Elephant"
-#	domain = land
-#	category = mace_infantry
-#}
+elephants = {
+	name = "Elephant"
+	domain = land
+	category = huge_herd_animal
+}
