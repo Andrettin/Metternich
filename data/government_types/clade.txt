@@ -6,6 +6,15 @@ clade = {
 	preferred_holding_types = {
 		castle #lair
 	}
+	default_laws = {
+		taxation = no_taxation
+	}
+	forbidden_laws = {
+		light_taxation
+		moderate_taxation
+		heavy_taxation
+		overwhelming_taxation
+	}
 	conditions = {
 		country_type = clade
 	}
