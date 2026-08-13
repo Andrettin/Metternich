@@ -40,7 +40,7 @@ Flickable {
 					if (building !== null) {
 						building_dialog.building_slot = building_slot
 						building_dialog.open()
-					} else if (building_slot.country === metternich.game.player_country) { //FIXME: also allow building in vassal holdings, or in friendly/neutral holdings in owned provinces
+					} else if (building_slot.country === metternich.game.player_domain) { //FIXME: also allow building in vassal holdings, or in friendly/neutral holdings in owned provinces
 						if (building_slot.under_construction_building !== null) {
 							cancel_construction_dialog.building_slot = building_slot
 							cancel_construction_dialog.open()

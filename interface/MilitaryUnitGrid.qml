@@ -14,7 +14,7 @@ Grid {
 			
 			readonly property var military_unit_category: model.modelData.key
 			readonly property int military_unit_count: model.modelData.value
-			readonly property int domain_military_unit_count: selected_province.game_data.get_domain_military_unit_category_count(military_unit_category, metternich.game.player_country)
+			readonly property int domain_military_unit_count: selected_province.game_data.get_domain_military_unit_category_count(military_unit_category, metternich.game.player_domain)
 			
 			Image {
 				id: military_unit_icon

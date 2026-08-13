@@ -12,7 +12,7 @@ Item {
 	}
 	
 	property int mode: JournalView.Mode.Active
-	readonly property var country: metternich.game.player_country
+	readonly property var country: metternich.game.player_domain
 	readonly property var country_game_data: country ? country.game_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
@@ -44,9 +44,9 @@ Item {
 			readonly property var journal_entry: model.modelData
 			
 			readonly property string completion_conditions_string: journal_entry.get_completion_conditions_string()
-			readonly property string completion_effects_string: journal_entry.get_completion_effects_string(metternich.game.player_country)
+			readonly property string completion_effects_string: journal_entry.get_completion_effects_string(metternich.game.player_domain)
 			readonly property string failure_conditions_string: journal_entry.get_failure_conditions_string()
-			readonly property string failure_effects_string: journal_entry.get_failure_effects_string(metternich.game.player_country)
+			readonly property string failure_effects_string: journal_entry.get_failure_effects_string(metternich.game.player_domain)
 			
 			Image {
 				id: portrait

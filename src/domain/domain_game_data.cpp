@@ -795,7 +795,7 @@ QCoro::Task<void> domain_game_data::do_starvation()
 		}
 	}
 
-	if (starvation_count > 0 && this->domain == game::get()->get_player_country()) {
+	if (starvation_count > 0 && this->domain == game::get()->get_player_domain()) {
 		const bool plural = starvation_count > 1;
 
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
@@ -915,7 +915,7 @@ QCoro::Task<void> domain_game_data::do_events()
 
 bool domain_game_data::is_ai() const
 {
-	return this->domain != game::get()->get_player_country();
+	return this->domain != game::get()->get_player_domain();
 }
 
 domain_ai *domain_game_data::get_ai() const
@@ -962,11 +962,11 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 				co_await this->get_diplomacy()->set_diplomacy_state(vassal, diplomacy_state::peace);
 				co_await vassal->get_diplomacy()->set_diplomacy_state(this->domain, diplomacy_state::peace);
 
-				if (this->domain == game::get()->get_player_country()) {
+				if (this->domain == game::get()->get_player_domain()) {
 					const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
 
 					engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the loss of standing incurred by our demotion to {} {}, our vassal, the {}, has decided to break free of our control!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), vassal->get_game_data()->get_titled_name()));
-				} else if (vassal == game::get()->get_player_country()) {
+				} else if (vassal == game::get()->get_player_domain()) {
 					const portrait *foreign_minister_portrait = vassal->get_government()->get_foreign_minister_portrait();
 
 					engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the loss of standing incurred by the demotion of our overlord, the {}, to {} {}, we have managed to break free of their control!", vassal->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
@@ -974,11 +974,11 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 			}
 		}
 	} else if (tier > old_tier && this->get_diplomacy()->get_overlord() != nullptr && tier >= this->get_diplomacy()->get_overlord()->get_game_data()->get_tier()) {
-		if (this->get_diplomacy()->get_overlord() == game::get()->get_player_country()) {
+		if (this->get_diplomacy()->get_overlord() == game::get()->get_player_domain()) {
 			const portrait *foreign_minister_portrait = this->get_diplomacy()->get_overlord()->get_government()->get_foreign_minister_portrait();
 
 			engine_interface::get()->add_notification("Vassal Breaks Free", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by the promotion of our vassal, the {}, to {} {}, they have decided to break free of our control!", this->get_diplomacy()->get_overlord()->get_game_data()->get_form_of_address(), this->get_titled_name(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
-		} else if (this->domain == game::get()->get_player_country()) {
+		} else if (this->domain == game::get()->get_player_domain()) {
 			const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
 
 			engine_interface::get()->add_notification("Independence!", foreign_minister_portrait, std::format("{}, due to the increase in standing incurred by our promotion to {} {}, we have managed to break free of the control of our overlord, the {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name(), this->get_diplomacy()->get_overlord()->get_game_data()->get_titled_name()));
@@ -1062,7 +1062,7 @@ QCoro::Task<void> domain_game_data::check_tier()
 
 	co_await this->set_tier(new_tier);
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification(this->get_titled_name(), interior_minister_portrait, std::format("{}, due to its recent change in size, our domain is now known as {} {}!", this->get_form_of_address(), string::get_indefinite_article(this->get_title_name()), this->get_title_name()));
@@ -1167,7 +1167,7 @@ QCoro::Task<void> domain_game_data::check_culture()
 
 	co_await this->set_culture(chosen_culture);
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 		engine_interface::get()->add_notification("New State Culture", interior_minister_portrait, std::format("{}, the {} culture has taken hold of our institutions, becoming our new state culture!", this->get_form_of_address(), chosen_culture->get_name()));
@@ -2909,7 +2909,7 @@ void domain_game_data::set_idea(const idea_slot *slot, const idea *idea)
 	if (game::get()->is_running()) {
 		emit ideas_changed();
 
-		if (this->domain == game::get()->get_player_country() && idea != nullptr) {
+		if (this->domain == game::get()->get_player_domain() && idea != nullptr) {
 			const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 			switch (slot->get_idea_type()) {
@@ -2993,7 +2993,7 @@ void domain_game_data::check_idea(const idea_slot *slot)
 		this->set_idea(slot, nullptr);
 
 		if (game::get()->is_running()) {
-			if (this->domain == game::get()->get_player_country()) {
+			if (this->domain == game::get()->get_player_domain()) {
 				const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
 
 				switch (slot->get_idea_type()) {
@@ -3326,7 +3326,7 @@ QCoro::Task<void> domain_game_data::check_characters()
 
 			site_character->get_game_data()->set_domain(this->domain);
 
-			if (this->domain == game::get()->get_player_country()) {
+			if (this->domain == game::get()->get_player_domain()) {
 				engine_interface::get()->add_notification(std::format("{} Joined Us", site_character->get_game_data()->get_full_name()), site_character, std::format("{} has joined our domain!", site_character->get_game_data()->get_full_name()));
 			}
 
@@ -3542,7 +3542,7 @@ bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_u
 
 void domain_game_data::add_civilian_unit(qunique_ptr<civilian_unit> &&civilian_unit)
 {
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		engine_interface::get()->add_active_civilian_unit(civilian_unit.get());
 	}
 
@@ -3554,7 +3554,7 @@ void domain_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 {
 	assert_throw(civilian_unit != nullptr);
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		engine_interface::get()->remove_active_civilian_unit(civilian_unit);
 	}
 
@@ -4064,7 +4064,7 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 
 	this->explored_provinces.insert(province);
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		map::get()->update_minimap_rect(province_map_data->get_territory_rect());
 		game::get()->set_exploration_changed();
 	}
@@ -4100,7 +4100,7 @@ QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)
 
 	emit prospected_tiles_changed();
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		emit map::get()->tile_prospection_changed(tile_pos);
 	}
 }
@@ -4111,7 +4111,7 @@ void domain_game_data::reset_tile_prospection(const QPoint &tile_pos)
 
 	emit prospected_tiles_changed();
 
-	if (this->domain == game::get()->get_player_country()) {
+	if (this->domain == game::get()->get_player_domain()) {
 		emit map::get()->tile_prospection_changed(tile_pos);
 	}
 }
@@ -4294,7 +4294,7 @@ QCoro::Task<bool> domain_game_data::check_active_journal_entries(const read_only
 				context effects_ctx(this->domain);
 				co_await journal_entry->get_failure_effects()->do_effects(this->domain, effects_ctx);
 
-				if (this->domain == game::get()->get_player_country()) {
+				if (this->domain == game::get()->get_player_domain()) {
 					engine_interface::get()->add_notification(journal_entry->get_name(), journal_entry->get_portrait(), std::format("{}{}{}", journal_entry->get_description(), (!journal_entry->get_description().empty() ? "\n\n" : ""), journal_entry->get_failure_effects()->get_effects_string(this->domain, ctx)));
 				}
 			}

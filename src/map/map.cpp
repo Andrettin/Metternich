@@ -822,7 +822,7 @@ void map::update_minimap_rect(const QRect &tile_rect)
 			const QPoint pixel_pos(x, y);
 			const QPoint tile_pos = pixel_pos / minimap_tile_scale;
 
-			if (game::get()->get_player_country()->get_game_data()->is_tile_explored(tile_pos)) {
+			if (game::get()->get_player_domain()->get_game_data()->is_tile_explored(tile_pos)) {
 				const tile *tile = this->get_tile(tile_pos);
 
 				if (tile->get_province() != nullptr && tile->get_province()->is_water_zone()) {

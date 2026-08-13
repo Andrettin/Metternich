@@ -282,7 +282,7 @@ Item {
 	}
 	
 	Connections {
-		target: metternich.game.player_country.game_data
+		target: metternich.game.player_domain.game_data
 		
 		function onJournal_entry_completed(journal_entry) {
 			if (notification_dialog_component.status == Component.Error) {
@@ -294,7 +294,7 @@ Item {
 				title: journal_entry.name,
 				portrait_object: journal_entry.portrait,
 				text: journal_entry.description,
-				effects_text: journal_entry.get_completion_effects_string(metternich.game.player_country)
+				effects_text: journal_entry.get_completion_effects_string(metternich.game.player_domain)
 			})
 			
 			dialog.open()
@@ -310,8 +310,8 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: "Building Constructed",
-				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: metternich.game.player_country.game_data.form_of_address + ", we have finished the construction of a " + building.name + " in " + site.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
+				portrait_object: metternich.game.player_domain.game_data.government.interior_minister_portrait,
+				text: metternich.game.player_domain.game_data.form_of_address + ", we have finished the construction of a " + building.name + " in " + site.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
 			})
 			
 			dialog.open()
@@ -327,8 +327,8 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: "Pathway Built",
-				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: metternich.game.player_country.game_data.form_of_address + ", we have finished the construction of a " + pathway.name + " in " + province.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
+				portrait_object: metternich.game.player_domain.game_data.government.interior_minister_portrait,
+				text: metternich.game.player_domain.game_data.form_of_address + ", we have finished the construction of a " + pathway.name + " in " + province.game_data.current_cultural_name + "!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string) : "")
 			})
 			
 			dialog.open()
@@ -336,7 +336,7 @@ Item {
 	}
 	
 	Connections {
-		target: metternich.game.player_country.game_data.technology
+		target: metternich.game.player_domain.game_data.technology
 		
 		function onTechnology_researched(technology) {
 			if (notification_dialog_component.status == Component.Error) {
@@ -344,12 +344,12 @@ Item {
 				return
 			}
 			
-			var effects_string = technology.get_effects_qstring(metternich.game.player_country)
+			var effects_string = technology.get_effects_qstring(metternich.game.player_domain)
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: technology.discovery ? "Discovery" : "Technology Researched",
-				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: technology.discovery ? (metternich.game.player_country.game_data.form_of_address + ", we have discovered " + technology.name + "!") : (metternich.game.player_country.game_data.form_of_address + ", our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
+				portrait_object: metternich.game.player_domain.game_data.government.interior_minister_portrait,
+				text: technology.discovery ? (metternich.game.player_domain.game_data.form_of_address + ", we have discovered " + technology.name + "!") : (metternich.game.player_domain.game_data.form_of_address + ", our scholars have made a breakthrough in the research of the " + technology.name + " technology!" + (effects_string.length > 0 ? ("\n\nEffects:\n" + effects_string): "")),
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
@@ -369,8 +369,8 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: "Technology Lost",
-				portrait_object: metternich.game.player_country.game_data.government.interior_minister_portrait,
-				text: metternich.game.player_country.game_data.form_of_address + ", we have lost knowledge of the " + technology.name + " technology!",
+				portrait_object: metternich.game.player_domain.game_data.government.interior_minister_portrait,
+				text: metternich.game.player_domain.game_data.form_of_address + ", we have lost knowledge of the " + technology.name + " technology!",
 				second_button_text: "View Technologies",
 				second_button_effects: () => {
 					if (!technology.discovery && !(menu_stack.currentItem instanceof TechnologyView)) {
@@ -384,7 +384,7 @@ Item {
 	}
 	
 	Connections {
-		target: metternich.game.player_country.game_data.military
+		target: metternich.game.player_domain.game_data.military
 		
 		function onLeader_recruited(leader) {
 			if (notification_dialog_component.status == Component.Error) {
@@ -394,8 +394,8 @@ Item {
 			
 			var dialog = notification_dialog_component.createObject(map_view, {
 				title: leader.leader_type_name + " Recruited",
-				portrait_object: metternich.game.player_country.game_data.government.war_minister_portrait,
-				text: metternich.game.player_country.game_data.form_of_address + ", the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
+				portrait_object: metternich.game.player_domain.game_data.government.war_minister_portrait,
+				text: metternich.game.player_domain.game_data.form_of_address + ", the " + leader.leader_type_name.toLowerCase() + " " + leader.full_name  + " has joined our nation!"
 			})
 			
 			dialog.open()
@@ -407,7 +407,7 @@ Item {
 	}
 	
 	Component.onCompleted: {
-		province_map.center_on_country_capital(metternich.game.player_country)
+		province_map.center_on_country_capital(metternich.game.player_domain)
 		go_to_next_civilian_unit(false)
 	}
 	

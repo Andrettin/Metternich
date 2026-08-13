@@ -311,7 +311,7 @@ public:
 
 		combat->initialize();
 
-		if (scope == game::get()->get_player_country()) {
+		if (scope == game::get()->get_player_domain()) {
 			game::get()->set_current_combat(std::move(combat));
 		} else {
 			QTimer::singleShot(0, [combat = std::move(combat)]() -> QCoro::Task<void> {

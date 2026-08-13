@@ -9,7 +9,7 @@ DialogBase {
 	height: content_column.y + content_column.height + 8 * scale_factor
 	
 	property var recruitable_military_unit_categories: selected_province ? selected_province.game_data.recruitable_military_unit_categories : []
-	readonly property var domain: metternich.game.player_country
+	readonly property var domain: metternich.game.player_domain
 	readonly property var domain_game_data: domain ? domain.game_data : null
 	property var selected_military_unit_type: null
 	
@@ -47,7 +47,7 @@ DialogBase {
 						spacing: 4 * scale_factor
 						
 						Repeater {
-							model: selected_military_unit_type ? selected_military_unit_type.get_stats_for_domain_qvariant_list(metternich.game.player_country) : []
+							model: selected_military_unit_type ? selected_military_unit_type.get_stats_for_domain_qvariant_list(metternich.game.player_domain) : []
 							
 							Row {
 								id: military_unit_stat_row

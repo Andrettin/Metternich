@@ -53,11 +53,11 @@ bool scoped_event_base<scope_type>::is_player_scope(const scope_type *scope)
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		return scope == game::get()->get_player_character();
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
-		return scope == game::get()->get_player_country();
+		return scope == game::get()->get_player_domain();
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		return scope->get_game_data()->get_owner() == game::get()->get_player_country();
+		return scope->get_game_data()->get_owner() == game::get()->get_player_domain();
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		return scope->get_game_data()->get_owner() == game::get()->get_player_country();
+		return scope->get_game_data()->get_owner() == game::get()->get_player_domain();
 	}
 }
 

@@ -97,7 +97,7 @@ void domain_military::clear_leaders()
 QCoro::Task<void> domain_military::on_leader_died(const character *leader)
 {
 	//do not notify if it is an officer holder who is a military leader who died, since the office holder death is already notified on its own
-	if (this->domain == game::get()->get_player_country() && leader->get_game_data()->get_office() == nullptr) {
+	if (this->domain == game::get()->get_player_domain() && leader->get_game_data()->get_office() == nullptr) {
 		const portrait *war_minister_portrait = this->domain->get_government()->get_war_minister_portrait();
 
 		const std::string_view leader_type_name = leader->get_leader_type_name();

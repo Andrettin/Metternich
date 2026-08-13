@@ -2734,7 +2734,7 @@ QCoro::Task<void> site_game_data::explore_dungeon(const std::shared_ptr<party> &
 		ctx.dungeon_site = this->site;
 		co_await domain_event::check_events_for_scope(party->get_domain(), event_trigger::dungeon_cleared, ctx);
 
-		if (party->get_domain() == game::get()->get_player_country()) {
+		if (party->get_domain() == game::get()->get_player_domain()) {
 			const portrait *war_minister_portrait = party->get_domain()->get_government()->get_war_minister_portrait();
 
 			engine_interface::get()->add_notification("Dungeon Cleared", war_minister_portrait, std::format("You have cleared the {} dungeon!", this->get_dungeon()->get_name()));

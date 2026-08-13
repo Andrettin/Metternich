@@ -296,7 +296,7 @@ void civilian_unit::set_original_province(const metternich::province *province)
 	this->original_province = province;
 	emit original_province_changed();
 
-	if (this->get_owner() == game::get()->get_player_country()) {
+	if (this->get_owner() == game::get()->get_player_domain()) {
 		if (was_moving != this->is_moving()) {
 			if (was_moving) {
 				engine_interface::get()->add_active_civilian_unit(this);
@@ -736,7 +736,7 @@ void civilian_unit::set_work_progress(const std::optional<decimillesimal_int> &p
 	this->work_progress = progress;
 	emit work_progress_changed();
 
-	if (this->get_owner() == game::get()->get_player_country()) {
+	if (this->get_owner() == game::get()->get_player_domain()) {
 		if (was_working != this->is_working()) {
 			if (was_working) {
 				engine_interface::get()->add_active_civilian_unit(this);

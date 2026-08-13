@@ -250,7 +250,7 @@ void engine_interface::change_selected_military_unit_category_count(const metter
 		int added_count = 0;
 
 		for (military_unit *military_unit : province_game_data->get_military_units()) {
-			if (military_unit->get_country() != game::get()->get_player_country()) {
+			if (military_unit->get_country() != game::get()->get_player_domain()) {
 				continue;
 			}
 
@@ -304,7 +304,7 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 	if (tile->get_province() != nullptr) {
 		if (tile->get_province() == this->get_selected_military_units().front()->get_province()) {
 			const site *site = tile->get_site();
-			if (site != nullptr && site->get_game_data()->can_be_visited_by(game::get()->get_player_country())) {
+			if (site != nullptr && site->get_game_data()->can_be_visited_by(game::get()->get_player_domain())) {
 				target = site;
 			}
 		} else {
@@ -340,7 +340,7 @@ void engine_interface::reset_active_civilian_units()
 	this->active_civilian_units.clear();
 	emit active_civilian_units_changed();
 
-	for (const qunique_ptr<civilian_unit> &civilian_unit : game::get()->get_player_country()->get_game_data()->get_civilian_units()) {
+	for (const qunique_ptr<civilian_unit> &civilian_unit : game::get()->get_player_domain()->get_game_data()->get_civilian_units()) {
 		this->add_active_civilian_unit(civilian_unit.get());
 	}
 }

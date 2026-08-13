@@ -141,8 +141,8 @@ void game::process_gsml_property(const gsml_property &property)
 		this->scenario = scenario::get(value);
 	} else if (key == "player_character") {
 		this->player_character = this->get_character(value);
-	} else if (key == "player_country") {
-		this->player_country = domain::get(value);
+	} else if (key == "player_domain") {
+		this->player_domain = domain::get(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid game data property: \"{}\".", key));
 	}
@@ -310,7 +310,7 @@ gsml_data game::to_gsml_data() const
 	data.add_child(std::move(generated_characters_data));
 
 	data.add_property("player_character", this->get_player_character()->get_identifier());
-	data.add_property("player_country", this->get_player_country()->get_identifier());
+	data.add_property("player_domain", this->get_player_domain()->get_identifier());
 
 	if (!this->character_delayed_effects.empty()) {
 		gsml_data delayed_effects_data("character_delayed_effects");
@@ -531,7 +531,7 @@ QCoro::Task<void> game::stop_coro()
 		co_await this->clear_coro();
 		map::get()->clear();
 		this->set_player_character(nullptr);
-		this->set_player_country(nullptr);
+		this->set_player_domain(nullptr);
 	} catch (...) {
 		exception::report(std::current_exception());
 	}
@@ -1990,28 +1990,28 @@ QCoro::Task<void> game::do_turn_coro()
 			}
 		}
 
-		if (!game::get()->get_player_country()->get_turn_data()->get_disbanded_military_units().empty()) {
-			const portrait *war_minister_portrait = game::get()->get_player_country()->get_government()->get_war_minister_portrait();
+		if (!this->get_player_domain()->get_turn_data()->get_disbanded_military_units().empty()) {
+			const portrait *war_minister_portrait = this->get_player_domain()->get_government()->get_war_minister_portrait();
 
 			std::string disbanded_units_str;
-			for (const auto &[military_unit_type, disbanded_count] : game::get()->get_player_country()->get_turn_data()->get_disbanded_military_units()) {
+			for (const auto &[military_unit_type, disbanded_count] : this->get_player_domain()->get_turn_data()->get_disbanded_military_units()) {
 				disbanded_units_str += std::format("\n{} {}", disbanded_count, military_unit_type->get_name());
 			}
 
-			engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), disbanded_units_str));
+			engine_interface::get()->add_notification("Military Units Disbanded", war_minister_portrait, std::format("{}, due to a lack of available resources, we were forced to disband some of our military units.\n\nDisbanded Units:{}", this->get_player_domain()->get_game_data()->get_form_of_address(), disbanded_units_str));
 		}
 
-		if (!game::get()->get_player_country()->get_turn_data()->get_province_spread_technologies().empty()) {
-			const portrait *interior_minister_portrait = game::get()->get_player_country()->get_game_data()->get_government()->get_interior_minister_portrait();
+		if (!this->get_player_domain()->get_turn_data()->get_province_spread_technologies().empty()) {
+			const portrait *interior_minister_portrait = this->get_player_domain()->get_game_data()->get_government()->get_interior_minister_portrait();
 
 			std::string spread_technologies_str;
-			for (const auto &[province, spread_technologies] : game::get()->get_player_country()->get_turn_data()->get_province_spread_technologies()) {
+			for (const auto &[province, spread_technologies] : this->get_player_domain()->get_turn_data()->get_province_spread_technologies()) {
 				for (const technology *technology : spread_technologies) {
 					spread_technologies_str += std::format("\n{} to {}", technology->get_name(), province->get_game_data()->get_current_cultural_name());
 				}
 			}
 
-			engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", game::get()->get_player_country()->get_game_data()->get_form_of_address(), spread_technologies_str));
+			engine_interface::get()->add_notification("Technology Spread", interior_minister_portrait, std::format("{}, new technologies have spread to our provinces!\n\nSpread Technologies:{}", this->get_player_domain()->get_game_data()->get_form_of_address(), spread_technologies_str));
 		}
 
 		for (const domain *domain : this->get_domains()) {
@@ -2284,16 +2284,16 @@ void game::calculate_domain_ranks()
 	}
 }
 
-void game::set_player_country(const domain *domain)
+void game::set_player_domain(const domain *domain)
 {
-	if (domain == this->get_player_country()) {
+	if (domain == this->get_player_domain()) {
 		return;
 	}
 
-	this->player_country = domain;
+	this->player_domain = domain;
 
 	if (this->is_running()) {
-		emit player_country_changed();
+		emit player_domain_changed();
 	}
 
 	this->set_player_character(domain ? domain->get_government()->get_ruler() : nullptr);
@@ -2389,7 +2389,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();
 
-	const domain_game_data *domain_game_data = this->get_player_country()->get_game_data();
+	const domain_game_data *domain_game_data = this->get_player_domain()->get_game_data();
 
 	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
 		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
@@ -2532,11 +2532,11 @@ QCoro::Task<bool> game::do_battle(army *attacking_army, army *defending_army)
 
 	military_unit_type_map<int> lost_unit_count;
 	//keep track of the player's starting unit count, so that we can later calculate their lost unit count
-	if (attacking_army->get_domain() == this->get_player_country()) {
+	if (attacking_army->get_domain() == this->get_player_domain()) {
 		for (const military_unit *military_unit : attacking_army->get_military_units()) {
 			lost_unit_count[military_unit->get_type()]++;
 		}
-	} else if (defending_army->get_domain() == this->get_player_country()) {
+	} else if (defending_army->get_domain() == this->get_player_domain()) {
 		for (const military_unit *military_unit : defending_army->get_military_units()) {
 			lost_unit_count[military_unit->get_type()]++;
 		}
@@ -2608,10 +2608,10 @@ QCoro::Task<bool> game::do_battle(army *attacking_army, army *defending_army)
 	const bool attack_success = defending_army->get_military_units().empty() && !attacking_army->get_military_units().empty();
 
 	//display a notification for the player about the battle
-	if (attacking_army->get_domain() == this->get_player_country() || defending_army->get_domain() == this->get_player_country()) {
-		const bool is_attacker = attacking_army->get_domain() == this->get_player_country();
+	if (attacking_army->get_domain() == this->get_player_domain() || defending_army->get_domain() == this->get_player_domain()) {
+		const bool is_attacker = attacking_army->get_domain() == this->get_player_domain();
 		const bool victory = (is_attacker == attack_success);
-		const portrait *war_minister_portrait = this->get_player_country()->get_government()->get_war_minister_portrait();
+		const portrait *war_minister_portrait = this->get_player_domain()->get_government()->get_war_minister_portrait();
 
 		std::string lost_units_str;
 		const std::vector<military_unit *> &remaining_military_units = is_attacker ? attacking_army->get_military_units() : defending_army->get_military_units();

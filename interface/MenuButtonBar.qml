@@ -46,7 +46,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("PoliticsView.qml", {
-					country: metternich.game.player_country
+					country: metternich.game.player_domain
 				})
 			}
 			

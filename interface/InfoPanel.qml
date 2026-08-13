@@ -54,7 +54,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("TransportView.qml", {
-					country: metternich.game.player_country
+					country: metternich.game.player_domain
 				})
 			}
 			
@@ -74,7 +74,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("IndustryView.qml", {
-					country: metternich.game.player_country,
+					country: metternich.game.player_domain,
 					interface_style: map_view.interface_style
 				})
 			}
@@ -577,7 +577,7 @@ Rectangle {
 		IconButton {
 			id: garrison_details_button
 			icon_identifier: "crossed_sabers"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_country).length > 0
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0
 			
 			onReleased: {
 				garrison_dialog.open()
@@ -595,7 +595,7 @@ Rectangle {
 		IconButton {
 			id: explore_dungeon_button
 			icon_identifier: "skull"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_country).length > 0 && can_visit_dungeons(metternich.selected_military_units)
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0 && can_visit_dungeons(metternich.selected_military_units)
 			
 			onClicked: {
 				dungeon_dialog.dungeon_sites = selected_province.game_data.dungeon_sites
@@ -628,7 +628,7 @@ Rectangle {
 		IconButton {
 			id: recruit_military_units_button
 			icon_identifier: "musket"
-			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_country
+			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_domain
 			
 			onReleased: {
 				military_unit_recruiment_dialog.open()

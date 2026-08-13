@@ -204,7 +204,7 @@ QCoro::Task<void> battle::start_coro()
 
 	emit finished();
 
-	if (this->scope != game::get()->get_player_country()) {
+	if (this->scope != game::get()->get_player_domain()) {
 		co_await this->on_ended_coro();
 	}
 }
@@ -256,7 +256,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 
 		QPoint target_pos(-1, -1);
 
-		if (army->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
+		if (army->get_domain() == game::get()->get_player_domain() && !this->is_autoplay_enabled()) {
 			emit movable_tiles_changed();
 
 			target_pos = co_await this->get_target();
@@ -442,7 +442,7 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 			break;
 	}
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		if (!ranged && unit->get_type()->get_melee_attack_sound() != nullptr) {
 			co_await unit->get_type()->get_melee_attack_sound()->play_coro(std::chrono::milliseconds(100));
 		} else if (ranged && unit->get_type()->get_ranged_attack_sound() != nullptr) {
@@ -455,7 +455,7 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 		killed_units.push_back(enemy);
 		this->remove_unit_info(enemy);
 
-		if (this->scope == game::get()->get_player_country()) {
+		if (this->scope == game::get()->get_player_domain()) {
 			if (enemy_unit_type != nullptr && enemy_unit_type->get_death_sound() != nullptr) {
 				co_await enemy_unit_type->get_death_sound()->play_coro();
 			}
@@ -489,7 +489,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 
 		unit->get_character()->get_game_data()->change_mana(-spell->get_mana_cost(unit->get_character()->get_game_data()->get_character_class()));
 
-		if (this->scope == game::get()->get_player_country()) {
+		if (this->scope == game::get()->get_player_domain()) {
 			if (spell->get_sound() != nullptr) {
 				co_await spell->get_sound()->play_coro(std::chrono::milliseconds(100));
 			}
@@ -500,7 +500,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 			killed_units.push_back(target);
 			this->remove_unit_info(target);
 
-			if (this->scope == game::get()->get_player_country()) {
+			if (this->scope == game::get()->get_player_domain()) {
 				if (target_unit_type != nullptr && target_unit_type->get_death_sound() != nullptr) {
 					co_await target_unit_type->get_death_sound()->play_coro();
 				}
@@ -513,7 +513,7 @@ void battle::notify_result()
 {
 	const bool success = this->attacking_army->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
@@ -609,7 +609,7 @@ QCoro::Task<void> battle::move_unit_to(military_unit *unit, const QPoint tile_po
 	battle_unit_info *unit_info = this->get_unit_info(unit);
 	const QPoint old_tile_pos = unit_info->get_tile_pos();
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		static constexpr int milliseconds_per_tile = 200;
 
 		const int distance = point::distance_to(old_tile_pos, tile_pos);
@@ -747,12 +747,12 @@ const character *battle_unit_info::get_character() const
 
 bool battle_unit_info::is_player_unit() const
 {
-	return this->get_unit()->get_country() == game::get()->get_player_country();
+	return this->get_unit()->get_country() == game::get()->get_player_domain();
 }
 
 bool battle_unit_info::is_player_enemy() const
 {
-	return this->get_unit()->get_country() != game::get()->get_player_country();
+	return this->get_unit()->get_country() != game::get()->get_player_domain();
 }
 
 }

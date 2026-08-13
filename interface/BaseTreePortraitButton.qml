@@ -149,7 +149,7 @@ Item {
 			readonly property Component icon_delegate: IconButton {
 				id: secondary_parent_icon_button
 				icon_identifier: secondary_parent.game_data ? secondary_parent.game_data.icon.identifier : secondary_parent.icon.identifier
-				highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_country.game_data.technology.has_technology(secondary_parent)
+				highlighted: secondary_parent.class_name === "metternich::technology" && metternich.game.player_domain.game_data.technology.has_technology(secondary_parent)
 				circle: true
 				
 				readonly property var secondary_parent: model.modelData

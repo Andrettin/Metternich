@@ -12,8 +12,8 @@ DialogBase {
 	
 	property var character: null
 	property var office: null
-	readonly property string office_name: office ? metternich.game.player_country.game_data.government.get_office_title_name_qstring(office) : ""
-	readonly property bool is_appointee: office ? metternich.game.player_country.game_data.government.get_appointed_office_holder(office) === character : false
+	readonly property string office_name: office ? metternich.game.player_domain.game_data.government.get_office_title_name_qstring(office) : ""
+	readonly property bool is_appointee: office ? metternich.game.player_domain.game_data.government.get_appointed_office_holder(office) === character : false
 	property bool show_family_tree_button: true
 	property var office_holder_choice_dialog: null
 	
@@ -102,7 +102,7 @@ DialogBase {
 				visible: office !== null && office.appointable
 				onClicked: {
 					if (is_appointee) {
-						metternich.game.player_country.game_data.government.set_appointed_office_holder(office, null)
+						metternich.game.player_domain.game_data.government.set_appointed_office_holder(office, null)
 						character_dialog.close()
 					} else {
 						if (character_dialog.office_holder_choice_dialog !== null) {
@@ -128,7 +128,7 @@ DialogBase {
 			IconButton {
 				id: military_deployment_button
 				icon_identifier: "flag"
-				visible: character !== null && !character.game_data.dead && deployable_military_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				visible: character !== null && !character.game_data.dead && deployable_military_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_domain
 				
 				readonly property var deployable_military_unit_type: character !== null && !character.game_data.dead ? character.game_data.get_deployable_military_unit_type() : null
 				
@@ -147,7 +147,7 @@ DialogBase {
 			IconButton {
 				id: civilian_deployment_button
 				icon_identifier: "labor_hammer"
-				visible: character !== null && !character.game_data.dead && deployable_civilian_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_country
+				visible: character !== null && !character.game_data.dead && deployable_civilian_unit_type !== null && character.game_data.military_unit === null && character.game_data.civilian_unit === null && character.game_data.domain === metternich.game.player_domain
 				
 				readonly property var deployable_civilian_unit_type: character !== null && !character.game_data.dead ? character.game_data.get_deployable_civilian_unit_type() : null
 				

@@ -7,7 +7,7 @@ Rectangle {
 	height: 16 * scale_factor
 	clip: true
 	
-	readonly property var domain: metternich.game.player_country
+	readonly property var domain: metternich.game.player_domain
 	readonly property var stored_commodities: domain ? domain.game_data.economy.stored_commodities : []
 	readonly property var commodity_storage_capacities: domain ? domain.game_data.economy.commodity_storage_capacities : []
 	readonly property var regency_commodity: metternich.get_commodity("regency")

@@ -4,7 +4,7 @@ import ".."
 
 ModifierDialog {
 	id: dialog
-	title: idea ? idea.get_cultural_name_qstring(metternich.game.player_country.culture) : ""
+	title: idea ? idea.get_cultural_name_qstring(metternich.game.player_domain.culture) : ""
 	portrait_identifier: idea ? (idea.portrait.identifier + (is_appointee ? "/grayscale" : "")) : ""
 	modifier_string: idea ? idea.get_modifier_qstring(country) : ""
 	ok_button_top_anchor: appoint_button.bottom
@@ -12,7 +12,7 @@ ModifierDialog {
 	
 	property var idea: null
 	property var idea_slot: null
-	readonly property bool is_appointee: idea_slot ? metternich.game.player_country.game_data.get_appointed_idea(idea_slot) === idea : false
+	readonly property bool is_appointee: idea_slot ? metternich.game.player_domain.game_data.get_appointed_idea(idea_slot) === idea : false
 	
 	TextButton {
 		id: appoint_button
@@ -22,7 +22,7 @@ ModifierDialog {
 		text: is_appointee ? "Unappoint" : "Appoint"
 		onClicked: {
 			if (is_appointee) {
-				metternich.game.player_country.game_data.set_appointed_idea(idea_slot, null)
+				metternich.game.player_domain.game_data.set_appointed_idea(idea_slot, null)
 				dialog.close()
 			} else {
 				idea_choice_dialog.idea_slot = idea_slot

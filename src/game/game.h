@@ -45,7 +45,7 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(QVariantList domains READ get_domains_qvariant_list NOTIFY domains_changed)
 	Q_PROPERTY(QVariantList countries READ get_countries_qvariant_list NOTIFY countries_changed)
 	Q_PROPERTY(const metternich::character* player_character READ get_player_character WRITE set_player_character NOTIFY player_character_changed)
-	Q_PROPERTY(const metternich::domain* player_country READ get_player_country WRITE set_player_country NOTIFY player_country_changed)
+	Q_PROPERTY(const metternich::domain* player_domain READ get_player_domain WRITE set_player_domain NOTIFY player_domain_changed)
 	Q_PROPERTY(bool combat_running READ is_combat_running NOTIFY combat_running_changed)
 	Q_PROPERTY(metternich::combat_base* current_combat READ get_current_combat NOTIFY current_combat_changed)
 	Q_PROPERTY(QVariantList active_routes READ get_active_routes_qvariant_list NOTIFY active_routes_changed)
@@ -229,12 +229,12 @@ public:
 		emit player_character_changed();
 	}
 
-	const domain *get_player_country() const
+	const domain *get_player_domain() const
 	{
-		return this->player_country;
+		return this->player_domain;
 	}
 
-	void set_player_country(const domain *domain);
+	void set_player_domain(const domain *domain);
 
 	Q_INVOKABLE qint64 get_price(const metternich::commodity *commodity) const;
 	void set_price(const commodity *commodity, const int64_t value);
@@ -352,7 +352,7 @@ signals:
 	void domains_changed();
 	void countries_changed();
 	void player_character_changed();
-	void player_country_changed();
+	void player_domain_changed();
 	void combat_running_changed();
 	void current_combat_changed();
 	void active_routes_changed();
@@ -368,7 +368,7 @@ private:
 	std::vector<domain *> domains; //the domain currently in the game, i.e. those with at least 1 province or holding
 	std::vector<domain *> countries; //the domains which have at least 1 province
 	const character *player_character = nullptr;
-	const domain *player_country = nullptr;
+	const domain *player_domain = nullptr;
 	commodity_map<int64_t> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;

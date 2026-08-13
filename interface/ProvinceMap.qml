@@ -36,7 +36,7 @@ TableView {
 	
 	property int mode: ProvinceMap.Mode.Political
 	property int show_site_mode: ProvinceMap.SiteMode.Show
-	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_country ? metternich.game.player_country : null)
+	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_domain ? metternich.game.player_domain : null)
 	property var hovered_site: null
 	property int hovered_icon_map_block_index: -1
 	

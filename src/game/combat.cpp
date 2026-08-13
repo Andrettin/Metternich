@@ -305,7 +305,7 @@ QCoro::Task<void> combat::start_coro()
 
 	emit finished();
 
-	if (this->scope != game::get()->get_player_country()) {
+	if (this->scope != game::get()->get_player_domain()) {
 		co_await this->on_ended_coro();
 	}
 }
@@ -392,7 +392,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 
 		QPoint target_pos(-1, -1);
 
-		if (party->get_domain() == game::get()->get_player_country() && !this->is_autoplay_enabled()) {
+		if (party->get_domain() == game::get()->get_player_domain() && !this->is_autoplay_enabled()) {
 			emit movable_tiles_changed();
 
 			target_pos = co_await this->get_target();
@@ -507,7 +507,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 							}
 
 							if (disarmed) {
-								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+								if (character->get_game_data()->get_domain() == game::get()->get_player_domain()) {
 									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
 									engine_interface::get()->add_combat_notification(std::format("{} Disarmed", tile.object->get_trap()->get_name()), war_minister_portrait, std::format("You have disarmed the {} trap!", tile.object->get_trap()->get_name()));
@@ -516,7 +516,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 								context ctx = this->ctx;
 								ctx.root_scope = character;
 
-								if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+								if (character->get_game_data()->get_domain() == game::get()->get_player_domain()) {
 									const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 									const std::string effects_string = tile.object->get_trap()->get_trigger_effects()->get_effects_string(character, ctx);
 
@@ -538,7 +538,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 							context ctx = this->ctx;
 							ctx.root_scope = character;
 
-							if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+							if (character->get_game_data()->get_domain() == game::get()->get_player_domain()) {
 								std::string text = tile.object->get_description();
 
 								const std::string effects_string = tile.object->get_use_effects()->get_effects_string(character, ctx);
@@ -556,7 +556,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 						this->remove_object(tile.object);
 						attacked = true;
 					} else {
-						if (character->get_game_data()->get_domain() == game::get()->get_player_country()) {
+						if (character->get_game_data()->get_domain() == game::get()->get_player_domain()) {
 							const portrait *war_minister_portrait = character->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 
 							engine_interface::get()->add_combat_notification(std::format("Cannot Use {}", tile.object->get_object_type()->get_name()), war_minister_portrait, std::format("{}, the {} can only be used once all enemies have been defeated.", character->get_game_data()->get_domain()->get_game_data()->get_form_of_address(), string::lowered(tile.object->get_object_type()->get_name())));
@@ -655,7 +655,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 {
 	const bool hit = this->do_to_hit_check(character, enemy, to_hit_modifier);
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		if (character->get_game_data()->get_attack_sound() != nullptr) {
 			co_await character->get_game_data()->get_attack_sound()->play_coro(std::chrono::milliseconds(100));
 		}
@@ -686,7 +686,7 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 
 	const bool hit = !spell->requires_to_hit_check() || this->do_to_hit_check(caster, target, to_hit_modifier);
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		if (spell->get_sound() != nullptr) {
 			co_await spell->get_sound()->play_coro(std::chrono::milliseconds(100));
 		}
@@ -725,7 +725,7 @@ QCoro::Task<void> combat::on_character_killed(const character *dead_character, p
 			context ctx = this->ctx;
 			ctx.root_scope = killer->get_game_data()->get_domain();
 
-			if (killer->get_game_data()->get_domain() == game::get()->get_player_country()) {
+			if (killer->get_game_data()->get_domain() == game::get()->get_player_domain()) {
 				const portrait *war_minister_portrait = killer->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
 				const std::string effects_string = dead_character_info->get_kill_effects()->get_effects_string(killer->get_game_data()->get_domain(), ctx);
 
@@ -741,7 +741,7 @@ QCoro::Task<void> combat::on_character_killed(const character *dead_character, p
 
 QCoro::Task<void> combat::on_character_died(const character *dead_character, party *dead_character_party)
 {
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		if (dead_character->get_species()->get_death_sound() != nullptr) {
 			co_await dead_character->get_species()->get_death_sound()->play_coro();
 		}
@@ -758,7 +758,7 @@ void combat::notify_result()
 	context ctx = this->ctx;
 	ctx.in_combat = false;
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
@@ -882,7 +882,7 @@ QCoro::Task<void> combat::move_character_to(const character *character, const QP
 	combat_character_info *character_info = this->get_character_info(character);
 	const QPoint old_tile_pos = character_info->get_tile_pos();
 
-	if (this->scope == game::get()->get_player_country()) {
+	if (this->scope == game::get()->get_player_domain()) {
 		static constexpr int milliseconds_per_tile = 200;
 
 		const int distance = point::distance_to(old_tile_pos, tile_pos);
@@ -1039,12 +1039,12 @@ int combat_character_info::get_range() const
 
 bool combat_character_info::is_player_unit() const
 {
-	return this->get_character()->get_game_data()->get_domain() == game::get()->get_player_country();
+	return this->get_character()->get_game_data()->get_domain() == game::get()->get_player_domain();
 }
 
 bool combat_character_info::is_player_enemy() const
 {
-	return this->get_character()->get_game_data()->get_domain() != game::get()->get_player_country();
+	return this->get_character()->get_game_data()->get_domain() != game::get()->get_player_domain();
 }
 
 int combat_object::get_disarm_chance(const metternich::character *character) const

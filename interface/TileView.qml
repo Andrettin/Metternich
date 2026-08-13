@@ -7,7 +7,7 @@ Item {
 	implicitHeight: tile_size
 	
 	readonly property bool tile_selected: site !== null && selected_site === site && !selected_garrison
-	readonly property bool civilian_unit_interactable: civilian_unit !== null && civilian_unit.owner === metternich.game.player_country
+	readonly property bool civilian_unit_interactable: civilian_unit !== null && civilian_unit.owner === metternich.game.player_domain
 	readonly property point tile_pos: Qt.point(column, row)
 	readonly property bool is_center_tile: province !== null && province.game_data.center_tile_pos === tile_pos
 	readonly property var entering_army: (site !== null && site.game_data.visiting_armies.length > 0) ? site.game_data.visiting_armies[0] : ((province !== null && is_center_tile && province.game_data.entering_armies.length > 0) ? province.game_data.entering_armies[0] : null)
@@ -78,8 +78,8 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin: visible && is_on_water ? (Math.floor(tile_size / 2) - Math.floor(height / 2)) : (8 * scale_factor)
 		source: "image://icon/" + (visible && is_on_water ? (
-			(province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) ?
-				province.game_data.get_domain_military_unit_icon(metternich.game.player_country).identifier
+			(province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_domain).length > 0) ?
+				province.game_data.get_domain_military_unit_icon(metternich.game.player_domain).identifier
 				: province.game_data.get_military_unit_icon().identifier
 		) : "garrison") + (selected ? "/selected" : "")
 		visible: province !== null && is_center_tile && province.game_data.military_unit_category_counts.length > 0
@@ -152,7 +152,7 @@ Item {
 		hoverEnabled: true
 		
 		onReleased: {
-			var explored = metternich.game.player_country.game_data.is_tile_explored(tile_pos)
+			var explored = metternich.game.player_domain.game_data.is_tile_explored(tile_pos)
 			
 			if (!explored) {
 				selected_civilian_unit = null
@@ -224,7 +224,7 @@ Item {
 			
 			text += "("
 			
-			var explored = metternich.game.player_country.game_data.is_tile_explored(tile_pos)
+			var explored = metternich.game.player_domain.game_data.is_tile_explored(tile_pos)
 			
 			if (!explored) {
 				text += "Unexplored"
@@ -287,7 +287,7 @@ Item {
 		width: Math.min(garrison_icon.width + 8 * scale_factor, tile_size)
 		height: Math.min(garrison_icon.height + 8 * scale_factor, tile_size)
 		hoverEnabled: true
-		enabled: garrison_icon.visible && province !== null && ((province.water_zone && province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) || (province.game_data.owner !== null && (province.game_data.owner === metternich.game.player_country || province.game_data.owner.game_data.diplomacy.is_any_vassal_of(metternich.game.player_country))))
+		enabled: garrison_icon.visible && province !== null && ((province.water_zone && province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_domain).length > 0) || (province.game_data.owner !== null && (province.game_data.owner === metternich.game.player_domain || province.game_data.owner.game_data.diplomacy.is_any_vassal_of(metternich.game.player_domain))))
 		visible: enabled
 		
 		onReleased: {

@@ -38,8 +38,8 @@ Rectangle {
 				readonly property var decision: model.modelData
 				
 				onClicked: {
-					if (decision.can_be_enacted_by(metternich.game.player_country)) {
-						decision.enact_for(metternich.game.player_country)
+					if (decision.can_be_enacted_by(metternich.game.player_domain)) {
+						decision.enact_for(metternich.game.player_domain)
 						update_status_text()
 					} else {
 						metternich.defines.error_sound.play()
@@ -53,10 +53,10 @@ Rectangle {
 				function update_status_text() {
 					if (hovered) {
 						status_text = decision.name
-						if (!decision.can_be_enacted_by(metternich.game.player_country)) {
-							right_status_text = format_text(decision.get_conditions_string(metternich.game.player_country))
+						if (!decision.can_be_enacted_by(metternich.game.player_domain)) {
+							right_status_text = format_text(decision.get_conditions_string(metternich.game.player_domain))
 						} else {
-							right_status_text = format_text(decision.get_effects_string(metternich.game.player_country))
+							right_status_text = format_text(decision.get_effects_string(metternich.game.player_domain))
 						}
 					} else {
 						status_text = ""

@@ -446,7 +446,7 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 
 		assert_throw(this->military_unit_recruitment_counts.empty());
 
-		if (this->get_owner() == game::get()->get_player_country()) {
+		if (this->get_owner() == game::get()->get_player_domain()) {
 			std::string recruitment_counts_str;
 			for (const auto &[military_unit_type, recruitment_count] : recruitment_counts) {
 				recruitment_counts_str += std::format("\n{} {}", recruitment_count, military_unit_type->get_name());

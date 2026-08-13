@@ -595,7 +595,7 @@ MenuBase {
 			)
 			
 			onClicked: {
-				metternich.game.player_country = selected_country
+				metternich.game.player_domain = selected_country
 				metternich.game.start()
 			}
 		}

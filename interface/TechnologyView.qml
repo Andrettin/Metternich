@@ -13,7 +13,7 @@ Item {
 		TechTree
 	}
 	
-	readonly property var country: metternich.game.player_country
+	readonly property var country: metternich.game.player_domain
 	readonly property var country_game_data: country ? country.game_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
@@ -46,7 +46,7 @@ Item {
 			height: technology_row.height + entry_border.height
 			
 			readonly property var technology: model.modelData
-			readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_country)
+			readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_domain)
 			
 			Image {
 				id: portrait

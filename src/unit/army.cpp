@@ -117,7 +117,7 @@ QCoro::Task<void> army::do_turn()
 				auto defending_army = make_qunique<army>(garrison, std::monostate());
 				auto battle = make_qunique<metternich::battle>(this, defending_army.get(), QSize());
 				const metternich::domain *scope = this->get_domain();
-				if (defending_army->get_domain() == game::get()->get_player_country()) {
+				if (defending_army->get_domain() == game::get()->get_player_domain()) {
 					scope = defending_army->get_domain();
 				}
 				battle->set_scope(scope);
@@ -130,7 +130,7 @@ QCoro::Task<void> army::do_turn()
 
 				QFuture<bool> success_future = battle->get_future();
 
-				if (this->get_domain() == game::get()->get_player_country() || defending_army->get_domain() == game::get()->get_player_country()) {
+				if (this->get_domain() == game::get()->get_player_domain() || defending_army->get_domain() == game::get()->get_player_domain()) {
 					game::get()->set_current_combat(std::move(battle));
 				} else {
 					QTimer::singleShot(0, [battle = std::move(battle)]() -> QCoro::Task<void> {
@@ -144,8 +144,8 @@ QCoro::Task<void> army::do_turn()
 			} else {
 				success = true;
 
-				const portrait *war_minister_portrait = game::get()->get_player_country()->get_government()->get_war_minister_portrait();
-				if (this->get_domain() == game::get()->get_player_country()) {
+				const portrait *war_minister_portrait = game::get()->get_player_domain()->get_government()->get_war_minister_portrait();
+				if (this->get_domain() == game::get()->get_player_domain()) {
 					engine_interface::get()->add_notification("Victory!", war_minister_portrait, std::format("We have won a battle in {}!", target_province->get_game_data()->get_current_cultural_name()));
 				}
 			}

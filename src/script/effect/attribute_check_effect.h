@@ -76,7 +76,7 @@ public:
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			is_player = scope == game::get()->get_player_character();
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			is_player = scope == game::get()->get_player_country();
+			is_player = scope == game::get()->get_player_domain();
 		}
 
 		if (is_player) {

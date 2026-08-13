@@ -202,8 +202,8 @@ Item {
 					Image {
 						id: garrison_icon
 						source: "image://icon/" + (visible && province.water_zone ? 
-							((province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_country).length > 0) ?
-								province.game_data.get_domain_military_unit_icon(metternich.game.player_country).identifier
+							((province.game_data.military_unit_category_counts.length > 0 && province.game_data.get_domain_military_unit_category_counts(metternich.game.player_domain).length > 0) ?
+								province.game_data.get_domain_military_unit_icon(metternich.game.player_domain).identifier
 								: province.game_data.get_military_unit_icon().identifier
 							) : "garrison")
 							+ (selected ? "/selected" : "")
@@ -253,10 +253,10 @@ Item {
 						Image {
 							id: civilian_unit_icon
 							source: "image://icon/alliance" + (grayscale ? "/grayscale" : "") + (selected ? "/selected" : "")
-							visible: civilian_unit.owner === metternich.game.player_country
+							visible: civilian_unit.owner === metternich.game.player_domain
 							
 							readonly property var civilian_unit: model.modelData
-							readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_country
+							readonly property bool civilian_unit_interactive: civilian_unit.owner === metternich.game.player_domain
 							readonly property bool selected: civilian_unit === selected_civilian_unit
 							readonly property bool grayscale: civilian_unit.moving || civilian_unit.working
 							

@@ -42,15 +42,15 @@ DialogBase {
 				tooltip: format_text(small_text((costs_string.length > 0 ? (costs_string + "\n") : "") + (effects_string.length > 0 ? effects_string : "No effect")))
 				
 				readonly property var technology: model.modelData
-				readonly property string costs_string: "Costs: " + costs_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_country), 0, ", ")
-				readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_country)
+				readonly property string costs_string: "Costs: " + costs_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_domain), 0, ", ")
+				readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_domain)
 				
 				onClicked: {
 					research_choice_dialog.close()
 					if (free_technology) {
-						metternich.game.player_country.game_data.technology.gain_free_technology(technology)
+						metternich.game.player_domain.game_data.technology.gain_free_technology(technology)
 					} else {
-						metternich.game.player_country.game_data.technology.add_current_research(technology)
+						metternich.game.player_domain.game_data.technology.add_current_research(technology)
 					}
 					
 					potential_technologies = []

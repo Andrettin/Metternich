@@ -997,7 +997,7 @@ QString technology::get_effects_qstring(const domain *domain) const
 
 bool technology::is_hidden_in_tree() const
 {
-	return !this->is_available_for_domain(game::get()->get_player_country());
+	return !this->is_available_for_domain(game::get()->get_player_domain());
 }
 
 bool technology::is_enabled() const

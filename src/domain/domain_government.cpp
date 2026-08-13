@@ -516,7 +516,7 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 	}
 
 	if (office->is_ruler()) {
-		if (this->domain == game::get()->get_player_country()) {
+		if (this->domain == game::get()->get_player_domain()) {
 			game::get()->set_player_character(character);
 		}
 
@@ -553,7 +553,7 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 			emit heir_changed();
 		}
 
-		if (this->domain == game::get()->get_player_country() && character != nullptr) {
+		if (this->domain == game::get()->get_player_domain() && character != nullptr) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			engine_interface::get()->add_notification(std::format("New {}", office->get_name()), interior_minister_portrait, std::format("{} has become our new {}!\n\n{}", character->get_game_data()->get_full_name(), string::lowered(office->get_name()), character->get_game_data()->get_office_modifier_string(this->domain, office)));
@@ -797,7 +797,7 @@ QCoro::Task<void> domain_government::on_office_holder_died(const office *office,
 	assert_throw(office_holder != nullptr);
 
 	if (game::get()->is_running()) {
-		if (this->domain == game::get()->get_player_country()) {
+		if (this->domain == game::get()->get_player_domain()) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
 			if (game::get()->get_current_combat() != nullptr) {
