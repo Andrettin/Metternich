@@ -6,7 +6,7 @@ no_taxation = {
 		wealth = 1gb
 	}
 	modifier = {
-		loyalty = -1
+		loyalty = 1
 	}
 }
 
