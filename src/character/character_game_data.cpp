@@ -2011,6 +2011,10 @@ QCoro::Task<void> character_game_data::set_health(int health)
 
 	this->health = health;
 
+	if (this->get_military_unit() != nullptr) {
+		co_await this->update_military_unit_hit_points();
+	}
+
 	if (this->get_health() <= 0 && this->get_max_health() > 0) {
 		co_await this->die();
 	}
@@ -2039,6 +2043,10 @@ QCoro::Task<void> character_game_data::set_max_health(const int max_health, cons
 		co_await this->set_health(this->get_max_health());
 	} else if (change > 0 && increase_health) {
 		co_await this->change_health(change);
+	}
+
+	if (this->get_military_unit() != nullptr) {
+		co_await this->update_military_unit_hit_points();
 	}
 
 	if (game::get()->is_running()) {
@@ -3103,6 +3111,32 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	if (trait->get_office_modifier(office) != nullptr) {
 		co_await trait->get_office_modifier(office)->apply(domain, multiplier);
 	}
+}
+
+QCoro::Task<void> character_game_data::set_military_unit(metternich::military_unit *military_unit)
+{
+	if (military_unit == this->get_military_unit()) {
+		co_return;
+	}
+
+	this->military_unit = military_unit;
+
+	if (military_unit != nullptr) {
+		co_await this->update_military_unit_hit_points();
+		this->update_military_unit_stats();
+	}
+
+	emit military_unit_changed();
+}
+
+QCoro::Task<void> character_game_data::update_military_unit_hit_points()
+{
+	assert_throw(this->get_military_unit() != nullptr);
+
+	const int max_hp = std::max(this->get_max_health() / defines::get()->get_battle_hit_point_rate(), 1);
+	co_await this->get_military_unit()->set_max_hit_points(max_hp);
+	co_await this->get_military_unit()->set_hit_points(std::max(this->get_health() / defines::get()->get_battle_hit_point_rate(), 1));
+	this->get_military_unit()->set_stat(military_unit_stat::hit_points, centesimal_int(max_hp));
 }
 
 void character_game_data::update_military_unit_stats()

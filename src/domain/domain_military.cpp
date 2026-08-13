@@ -101,7 +101,7 @@ QCoro::Task<void> domain_military::on_leader_died(const character *leader)
 
 		const std::string_view leader_type_name = leader->get_leader_type_name();
 
-		engine_interface::get()->add_notification(std::format("{} Retired", leader_type_name), war_minister_portrait, std::format("{}, after a distinguished career in our service, the {} {} has decided to retire.", this->get_game_data()->get_form_of_address(), string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
+		engine_interface::get()->add_notification(std::format("{} Died", leader_type_name), war_minister_portrait, std::format("{}, after a distinguished career in our service, the {} {} has sadly passed away.", this->get_game_data()->get_form_of_address(), string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
 	}
 
 	co_await leader->get_game_data()->get_military_unit()->disband(false);

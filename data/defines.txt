@@ -34,6 +34,7 @@ combat_round_duration = 6s
 battle_round_duration = 5min
 battle_tile_length = 60yd #the length of each side of a battle tile
 battle_movement_rate = 10yd #movement in battle per character movement point
+battle_hit_point_rate = 90 #character health per military unit hit point
 
 default_population_class = laborers
 default_tribal_population_class = tribesmen

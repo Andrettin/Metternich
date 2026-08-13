@@ -660,21 +660,8 @@ public:
 		return this->military_unit;
 	}
 	
-	void set_military_unit(metternich::military_unit *military_unit)
-	{
-		if (military_unit == this->get_military_unit()) {
-			return;
-		}
-
-		this->military_unit = military_unit;
-
-		if (military_unit != nullptr) {
-			this->update_military_unit_stats();
-		}
-
-		emit military_unit_changed();
-	}
-
+	[[nodiscard]] QCoro::Task<void> set_military_unit(metternich::military_unit *military_unit);
+	[[nodiscard]] QCoro::Task<void> update_military_unit_hit_points();
 	void update_military_unit_stats();
 
 	metternich::civilian_unit *get_civilian_unit() const

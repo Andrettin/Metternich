@@ -77,7 +77,7 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 	military_unit->character = character;
 	military_unit->name = character->get_game_data()->get_full_name();
 
-	character->get_game_data()->set_military_unit(military_unit.get());
+	co_await character->get_game_data()->set_military_unit(military_unit.get());
 	co_await character->get_game_data()->apply_military_unit_modifier(military_unit.get(), 1);
 
 	//character military units do not have any province set as their home province, since they don't consume food
@@ -659,7 +659,7 @@ QCoro::Task<void> military_unit::disband(const bool dead)
 {
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
-		character_game_data->set_military_unit(nullptr);
+		co_await character_game_data->set_military_unit(nullptr);
 
 		if (dead) {
 			co_await character_game_data->die();
