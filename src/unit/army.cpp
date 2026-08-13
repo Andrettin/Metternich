@@ -139,6 +139,8 @@ QCoro::Task<void> army::do_turn()
 				}
 
 				success = co_await success_future;
+
+				defending_army->clear();
 			} else {
 				success = true;
 
