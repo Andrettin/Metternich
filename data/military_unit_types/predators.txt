@@ -1,3 +1,37 @@
+bears = { #brown or grizzly bear
+	name = "Bears"
+	unit_class = bears
+	culture = bear
+	icon = lion
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 3
+		melee = 3
+		range = 1
+	}
+#	commodity_costs = {
+#		bears = 100
+#	}
+}
+
+lions = {
+	name = "Lions"
+	unit_class = lions
+	culture = lion
+	icon = lion
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 3
+		melee = 4
+		range = 1
+	}
+#	commodity_costs = {
+#		lions = 100
+#	}
+}
+
 wolves = {
 	name = "Wolves"
 	unit_class = wolves

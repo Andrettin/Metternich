@@ -1,3 +1,15 @@
+bears = {
+	name = "Bears"
+	domain = land
+	category = large_predators
+}
+
+lions = {
+	name = "Lions"
+	domain = land
+	category = large_predators
+}
+
 wolves = {
 	name = "Wolves"
 	domain = land
