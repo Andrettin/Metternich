@@ -338,10 +338,9 @@ bool domain_diplomacy::can_attack(const metternich::domain *other_domain) const
 		return false;
 	}
 
-	if (other_domain->is_clade()) {
+	//clades can always attack and be attacked by others, as they don't have diplomacy
+	if (other_domain->is_clade() || this->get_game_data()->is_clade()) {
 		return true;
-	} else if (this->get_game_data()->is_clade()) {
-		return false;
 	}
 
 	switch (this->get_diplomacy_state(other_domain)) {
