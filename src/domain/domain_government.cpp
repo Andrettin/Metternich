@@ -800,10 +800,10 @@ QCoro::Task<void> domain_government::on_office_holder_died(const office *office,
 		if (this->domain == game::get()->get_player_country()) {
 			const portrait *interior_minister_portrait = this->get_interior_minister_portrait();
 
-			if (office->is_ruler()) {
-				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
+			if (game::get()->get_current_combat() != nullptr) {
+				engine_interface::get()->add_combat_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has bravely died in battle!", string::lowered(office->get_name()), office_holder->get_full_name()));
 			} else {
-				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_game_data()->get_full_name()));
+				engine_interface::get()->add_notification(std::format("{} Died", office_holder->get_game_data()->get_full_name()), interior_minister_portrait, std::format("Our {}, {}, has died!", string::lowered(office->get_name()), office_holder->get_full_name()));
 			}
 		}
 

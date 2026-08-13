@@ -96,12 +96,17 @@ void domain_military::clear_leaders()
 
 QCoro::Task<void> domain_military::on_leader_died(const character *leader)
 {
-	if (this->domain == game::get()->get_player_country()) {
+	//do not notify if it is an officer holder who is a military leader who died, since the office holder death is already notified on its own
+	if (this->domain == game::get()->get_player_country() && leader->get_game_data()->get_office() == nullptr) {
 		const portrait *war_minister_portrait = this->domain->get_government()->get_war_minister_portrait();
 
 		const std::string_view leader_type_name = leader->get_leader_type_name();
 
-		engine_interface::get()->add_notification(std::format("{} Died", leader_type_name), war_minister_portrait, std::format("{}, after a distinguished career in our service, the {} {} has sadly passed away.", this->get_game_data()->get_form_of_address(), string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
+		if (game::get()->get_current_combat() != nullptr) {
+			engine_interface::get()->add_combat_notification(std::format("{} Died", leader_type_name), war_minister_portrait, std::format("{}, the {} {} has bravely died in battle!.", this->get_game_data()->get_form_of_address(), string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
+		} else {
+			engine_interface::get()->add_notification(std::format("{} Died", leader_type_name), war_minister_portrait, std::format("{}, after a distinguished career in our service, the {} {} has sadly passed away.", this->get_game_data()->get_form_of_address(), string::lowered(leader_type_name), leader->get_game_data()->get_full_name()));
+		}
 	}
 
 	co_await leader->get_game_data()->get_military_unit()->disband(false);
