@@ -1,0 +1,8 @@
+matara = {
+	name = "Matara"
+	world = earth
+	geocoordinate = { 39.424722222222 14.674722222222 }
+	type = holding
+	holding_type = castle
+	province = gash_barka #Debub
+}

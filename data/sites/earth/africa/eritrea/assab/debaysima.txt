@@ -1,0 +1,8 @@
+debaysima = {
+	name = "Debaysima"
+	world = earth
+	geocoordinate = { 42.3411 12.6989 }
+	type = holding
+	holding_type = castle
+	province = assab
+}

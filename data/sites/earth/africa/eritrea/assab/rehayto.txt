@@ -1,0 +1,8 @@
+rehayto = {
+	name = "Rehayto"
+	world = earth
+	geocoordinate = { 43.08416667 12.72694444 } #Rahayta
+	type = holding
+	holding_type = guild
+	province = assab
+}

@@ -1,0 +1,8 @@
+agurto = {
+	name = "Agurto"
+	world = earth
+	geocoordinate = { 42.7 12.9 }
+	type = holding
+	holding_type = castle
+	province = assab
+}

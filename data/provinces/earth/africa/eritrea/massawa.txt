@@ -1,7 +1,8 @@
-debubawi_keyih_bahri = {
-	name = "Debubawi Keyih Bahri"
-	color = { 223 10 128 }
-	default_provincial_capital = assab
+massawa = {
+	name = "Massawa"
+	color = { 127 195 199 }
+	terrain = mountains
+	default_provincial_capital = massawa
 	regions = {
 		eritrea
 	}

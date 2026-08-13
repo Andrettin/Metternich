@@ -1,0 +1,8 @@
+manda = {
+	name = "Manda"
+	world = earth
+	geocoordinate = { 42.333333333333 12.633333333333 } #Manda-Inakir
+	type = holding
+	holding_type = temple
+	province = assab
+}

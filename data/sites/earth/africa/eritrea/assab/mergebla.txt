@@ -1,0 +1,8 @@
+mergebla = {
+	name = "Mergebla"
+	world = earth
+	geocoordinate = { 42.741 12.904 }
+	type = holding
+	holding_type = castle
+	province = assab
+}

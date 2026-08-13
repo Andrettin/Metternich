@@ -1,0 +1,8 @@
+adulis = {
+	name = "Adulis"
+	world = earth
+	geocoordinate = { 39.660555555555554 15.26361111111111 }
+	type = holding
+	holding_type = guild
+	province = massawa
+}

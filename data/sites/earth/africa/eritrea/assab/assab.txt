@@ -3,4 +3,6 @@ assab = {
 	world = earth
 	geocoordinate = { 42.72999100620 13.01001853330 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	province = assab
 }

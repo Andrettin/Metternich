@@ -1,0 +1,8 @@
+sembel = {
+	name = "Sembel"
+	world = earth
+	geocoordinate = { 38.888647222222225 15.306858333333333 }
+	type = holding
+	holding_type = castle
+	province = gash_barka #Maekel
+}

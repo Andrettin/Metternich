@@ -1,0 +1,8 @@
+qohaito = {
+	name = "Qohaito"
+	world = earth
+	geocoordinate = { 39.424 14.866 }
+	type = holding
+	holding_type = guild
+	province = gash_barka #Debub
+}

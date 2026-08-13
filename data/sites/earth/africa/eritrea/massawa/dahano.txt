@@ -1,0 +1,8 @@
+dahano = {
+	name = "Dahano"
+	world = earth
+	geocoordinate = { 39.45 15.533333333333 } #Hergigo
+	type = holding
+	holding_type = temple
+	province = massawa
+}

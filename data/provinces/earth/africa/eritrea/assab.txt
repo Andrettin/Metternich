@@ -1,7 +1,8 @@
-semenawi_keyih_bahri = {
-	name = "Semenawi Keyih Bahri"
-	color = { 205 15 34 }
-	default_provincial_capital = massawa
+assab = {
+	name = "Assab"
+	color = { 127 72 214 }
+	terrain = plains
+	default_provincial_capital = assab
 	regions = {
 		eritrea
 	}
