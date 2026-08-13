@@ -297,6 +297,7 @@ Item {
 								anchors.right: parent.right
 								anchors.rightMargin: 8 * scale_factor
 								source: "image://icon/war" //FIXME: should be a steering wheel instead
+								visible: province.water_zone
 							}
 							
 							MouseArea {
