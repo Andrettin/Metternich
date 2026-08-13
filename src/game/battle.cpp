@@ -567,6 +567,13 @@ std::string battle::get_tile_text(const QPoint &tile_pos) const
 		const std::string &type_name = unit->get_type()->get_name();
 		const std::string &unit_name = unit->get_name();
 		text += " " + (!unit_name.empty() ? (unit_name + " (" + type_name + ")") : type_name);
+
+		static constexpr size_t stats_string_padding = 64;
+		if (text.size() < stats_string_padding) {
+			text += std::string(stats_string_padding - text.size(), ' ');
+		}
+
+		text += unit->get_stats_string();
 	}
 
 	return text;

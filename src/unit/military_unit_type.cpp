@@ -206,8 +206,6 @@ QVariantList military_unit_type::get_stats_for_domain_qvariant_list(const domain
 		}
 	}
 
-	std::string str;
-
 	std::map<std::string, std::string> stat_value_strings;
 	for (const military_unit_stat stat : used_stats) {
 		stat_value_strings[std::string(get_military_unit_stat_name(stat))] = this->get_display_stat_for_domain(stat, domain).to_string();

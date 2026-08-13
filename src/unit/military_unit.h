@@ -40,6 +40,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
 	Q_PROPERTY(int morale READ get_morale NOTIFY morale_changed)
+	Q_PROPERTY(QString stats_string READ get_stats_qstring NOTIFY stats_changed)
 
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
@@ -248,6 +249,9 @@ public:
 
 	int get_score() const;
 
+	std::string get_stats_string() const;
+	QString get_stats_qstring() const;
+
 signals:
 	void name_changed();
 	void type_changed();
@@ -258,6 +262,7 @@ signals:
 	void hit_points_changed();
 	void max_hit_points_changed();
 	void morale_changed();
+	void stats_changed();
 
 private:
 	std::string name;

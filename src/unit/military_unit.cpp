@@ -449,6 +449,8 @@ void military_unit::set_stat(const military_unit_stat stat, const centesimal_int
 	if (this->get_country() != nullptr) {
 		this->get_country()->get_game_data()->change_military_score(this->get_score());
 	}
+
+	emit stats_changed();
 }
 
 centesimal_int military_unit::get_effective_stat(const military_unit_stat stat) const
@@ -693,6 +695,33 @@ int military_unit::get_score() const
 	}
 
 	return score;
+}
+
+std::string military_unit::get_stats_string() const
+{
+	std::string str;
+
+	str += std::format("{}/{} {}", this->get_hit_points(), this->get_max_hit_points(), get_military_unit_stat_short_name(military_unit_stat::hit_points));
+
+	for (const auto &[stat, stat_value] : this->stats) {
+		if (stat == military_unit_stat::hit_points) {
+			//already written
+			continue;
+		}
+
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("{} {}", stat_value.to_int(), get_military_unit_stat_short_name(stat));
+	}
+
+	return str;
+}
+
+QString military_unit::get_stats_qstring() const
+{
+	return QString::fromStdString(this->get_stats_string());
 }
 
 }
