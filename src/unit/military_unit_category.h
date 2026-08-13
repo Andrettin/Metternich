@@ -21,11 +21,11 @@ enum class military_unit_category {
 	general,
 	light_warship,
 	heavy_warship,
-	medium_herd_animal,
-	large_herd_animal,
-	huge_herd_animal,
-	medium_predator,
-	large_predator
+	medium_herd_animals,
+	large_herd_animals,
+	huge_herd_animals,
+	medium_predators,
+	large_predators
 };
 
 inline std::string_view get_military_unit_category_name(const military_unit_category category)
@@ -65,16 +65,16 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			return "Light Warship";
 		case military_unit_category::heavy_warship:
 			return "Heavy Warship";
-		case military_unit_category::medium_herd_animal:
-			return "Medium Herd Animal";
-		case military_unit_category::large_herd_animal:
-			return "Large Herd Animal";
-		case military_unit_category::huge_herd_animal:
-			return "Huge Herd Animal";
-		case military_unit_category::medium_predator:
-			return "Medium Predator";
-		case military_unit_category::large_predator:
-			return "Large Predator";
+		case military_unit_category::medium_herd_animals:
+			return "Medium Herd Animals";
+		case military_unit_category::large_herd_animals:
+			return "Large Herd Animals";
+		case military_unit_category::huge_herd_animals:
+			return "Huge Herd Animals";
+		case military_unit_category::medium_predators:
+			return "Medium Predators";
+		case military_unit_category::large_predators:
+			return "Large Predators";
 		default:
 			break;
 	}
@@ -85,11 +85,11 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 inline bool is_animal_military_unit_category(const military_unit_category category)
 {
 	switch (category) {
-		case military_unit_category::medium_herd_animal:
-		case military_unit_category::large_herd_animal:
-		case military_unit_category::huge_herd_animal:
-		case military_unit_category::medium_predator:
-		case military_unit_category::large_predator:
+		case military_unit_category::medium_herd_animals:
+		case military_unit_category::large_herd_animals:
+		case military_unit_category::huge_herd_animals:
+		case military_unit_category::medium_predators:
+		case military_unit_category::large_predators:
 			return true;
 		default:
 			return false;

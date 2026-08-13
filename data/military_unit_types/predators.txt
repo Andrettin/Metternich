@@ -1,0 +1,16 @@
+wolves = {
+	name = "Wolves"
+	unit_class = wolves
+	culture = wolf
+	icon = lion
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 2
+		range = 1
+	}
+#	commodity_costs = {
+#		wolves = 100
+#	}
+}

@@ -1,0 +1,5 @@
+wolves = {
+	name = "Wolves"
+	domain = land
+	category = medium_predators
+}
