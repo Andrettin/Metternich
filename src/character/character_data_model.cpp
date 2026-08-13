@@ -153,6 +153,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 	}
 
 	this->character = character;
@@ -179,6 +180,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
+		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
 	}
 
 	emit character_changed();
