@@ -306,7 +306,7 @@ QCoro::Task<void> combat::start_coro()
 	emit finished();
 
 	if (this->scope != game::get()->get_player_country()) {
-		this->on_ended();
+		co_await this->on_ended_coro();
 	}
 }
 

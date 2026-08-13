@@ -123,8 +123,7 @@ public:
 	void notify_result();
 	void process_result();
 
-	[[nodiscard]]
-	QCoro::Task<void> on_ended_coro();
+	[[nodiscard]] QCoro::Task<void> on_ended_coro();
 
 	Q_INVOKABLE QCoro::QmlTask on_ended()
 	{

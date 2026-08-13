@@ -199,14 +199,13 @@ QCoro::Task<void> battle::start_coro()
 	this->result.attacker_victory = this->defending_army->get_military_units().empty();
 
 	this->get_promise()->addResult(this->result.attacker_victory);
-	this->get_promise()->finish();
 
 	this->notify_result();
 
 	emit finished();
 
 	if (this->scope != game::get()->get_player_country()) {
-		this->on_ended();
+		co_await this->on_ended_coro();
 	}
 }
 
@@ -537,12 +536,14 @@ void battle::process_result()
 	}
 }
 
-[[nodiscard]]
 QCoro::Task<void> battle::on_ended_coro()
 {
 	this->process_result();
 
 	this->clear();
+
+	this->get_promise()->finish();
+
 	co_return;
 }
 
