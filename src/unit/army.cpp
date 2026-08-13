@@ -20,6 +20,7 @@
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -64,8 +65,11 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 
 army::~army()
 {
-	assert_throw(this->get_military_units().empty());
-	assert_throw(std::holds_alternative<std::monostate>(this->target));
+	if (!this->get_military_units().empty()) {
+		log::log_error(std::format("Destroying army with {} military units (expected 0).", this->get_military_units().size()));
+	}
+
+	assert_log(std::holds_alternative<std::monostate>(this->target));
 }
 
 void army::clear()
