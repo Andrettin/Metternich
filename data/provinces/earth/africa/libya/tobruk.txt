@@ -13,6 +13,10 @@ tobruk = {
 			phenotype = elephant #phiomia
 			culture = elephant
 			religion = kemetic
+			
+			military_units = {
+				elephants = 1
+			}
 		}
 		
 		526 = {
@@ -20,6 +24,10 @@ tobruk = {
 			culture = egyptian
 			religion = orthodox
 			phenotype = none
+			
+			military_units = {
+				elephants = 0
+			}
 		}
 		
 		1360 = {

@@ -810,55 +810,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 			co_await site->get_game_data()->check_employment();
 		}
 
-		for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
-			try {
-				const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
-
-				if (!historical_military_unit_history->is_active()) {
-					continue;
-				}
-
-				const province *province = historical_military_unit_history->get_province();
-
-				assert_throw(province != nullptr);
-
-				if (!province->get_game_data()->is_on_map()) {
-					continue;
-				}
-
-				const domain *domain = historical_military_unit->get_domain();
-				if (domain != nullptr && !domain->get_game_data()->is_alive()) {
-					continue;
-				}
-
-				if (domain == nullptr) {
-					domain = province->get_game_data()->get_owner();
-				}
-
-				assert_throw(domain != nullptr);
-
-				domain_game_data *domain_game_data = domain->get_game_data();
-				domain_military *domain_military = domain->get_military();
-
-				assert_throw(domain_game_data->is_alive());
-
-				const military_unit_type *type = historical_military_unit->get_type();
-				assert_throw(type != nullptr);
-
-				if (type->get_required_technology() != nullptr) {
-					co_await province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
-				}
-
-				const phenotype *phenotype = historical_military_unit->get_phenotype();
-
-				for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
-					const bool created = co_await domain_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
-					assert_throw(created);
-				}
-			} catch (...) {
-				std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical military unit \"{}\".", historical_military_unit->get_identifier())));
-			}
-		}
+		co_await this->apply_military_units();
 
 		for (const historical_transporter *historical_transporter : historical_transporter::get_all()) {
 			const historical_transporter_history *historical_transporter_history = historical_transporter->get_history();
@@ -1834,6 +1786,78 @@ QCoro::Task<void> game::apply_character_history(const QDate &start_date)
 		co_await character_game_data->apply_history(start_date);
 		if (character_game_data->is_dead()) {
 			character->get_history()->calculate_heir();
+		}
+	}
+}
+
+QCoro::Task<void> game::apply_military_units()
+{
+	for (const historical_military_unit *historical_military_unit : historical_military_unit::get_all()) {
+		try {
+			const historical_military_unit_history *historical_military_unit_history = historical_military_unit->get_history();
+
+			if (!historical_military_unit_history->is_active()) {
+				continue;
+			}
+
+			const province *province = historical_military_unit_history->get_province();
+
+			assert_throw(province != nullptr);
+
+			if (!province->get_game_data()->is_on_map()) {
+				continue;
+			}
+
+			const domain *domain = historical_military_unit->get_domain();
+			if (domain != nullptr && !domain->get_game_data()->is_alive()) {
+				continue;
+			}
+
+			if (domain == nullptr) {
+				domain = province->get_game_data()->get_owner();
+			}
+
+			assert_throw(domain != nullptr);
+
+			domain_game_data *domain_game_data = domain->get_game_data();
+			domain_military *domain_military = domain->get_military();
+
+			assert_throw(domain_game_data->is_alive());
+
+			const military_unit_type *type = historical_military_unit->get_type();
+			assert_throw(type != nullptr);
+
+			if (type->get_required_technology() != nullptr) {
+				co_await province->get_game_data()->add_technology_with_prerequisites(type->get_required_technology());
+			}
+
+			const phenotype *phenotype = historical_military_unit->get_phenotype();
+
+			for (int i = 0; i < historical_military_unit->get_quantity(); ++i) {
+				const bool created = co_await domain_military->create_military_unit(type, province, phenotype, historical_military_unit_history->get_promotions());
+				assert_throw(created);
+			}
+		} catch (...) {
+			std::throw_with_nested(std::runtime_error(std::format("Failed to apply historical military unit \"{}\".", historical_military_unit->get_identifier())));
+		}
+	}
+
+	for (const province *province : map::get()->get_provinces()) {
+		for (const auto &[military_unit_type, military_unit_quantity] : province->get_history()->get_military_units()) {
+			const domain *domain = province->get_game_data()->get_owner();
+			assert_throw(domain != nullptr);
+			assert_throw(domain->get_game_data()->is_alive());
+
+			if (military_unit_type->get_required_technology() != nullptr) {
+				co_await province->get_game_data()->add_technology_with_prerequisites(military_unit_type->get_required_technology());
+			}
+
+			domain_military *domain_military = domain->get_military();
+
+			for (int i = 0; i < military_unit_quantity; ++i) {
+				const bool created = co_await domain_military->create_military_unit(military_unit_type, province, nullptr, {});
+				assert_throw(created);
+			}
 		}
 	}
 }

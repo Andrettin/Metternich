@@ -4,6 +4,7 @@
 #include "database/data_entry_history.h"
 #include "population/population_group_map.h"
 #include "species/phenotype_container.h"
+#include "unit/military_unit_type_container.h"
 #include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
@@ -197,6 +198,11 @@ public:
 		std::erase(this->technologies, technology);
 	}
 
+	const military_unit_type_map<int> &get_military_units() const
+	{
+		return this->military_units;
+	}
+
 private:
 	const metternich::province *province = nullptr;
 	const domain *owner = nullptr;
@@ -212,6 +218,7 @@ private:
 	population_group_map<int64_t> lower_bound_population_groups;
 	decimillesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
+	military_unit_type_map<int> military_units;
 };
 
 }

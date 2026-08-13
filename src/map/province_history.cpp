@@ -11,9 +11,9 @@
 #include "map/site_history.h"
 #include "population/population_type.h"
 #include "species/phenotype.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/decimal_int.h"
-#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -86,6 +86,19 @@ void province_history::process_gsml_scope(const gsml_data &scope, const QDate &d
 				this->population_groups.erase(key);
 			} else {
 				this->population_groups[key] = population;
+			}
+		});
+	} else if (tag == "military_units") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const military_unit_type *military_unit_type = military_unit_type::get(key);
+			const int quantity = std::stoi(value);
+
+			if (quantity == 0) {
+				this->military_units.erase(military_unit_type);
+			} else {
+				this->military_units[military_unit_type] = quantity;
 			}
 		});
 	} else {

@@ -143,6 +143,8 @@ public:
 	[[nodiscard]] QCoro::Task<int64_t> apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_character_history(const QDate &start_date);
 
+	[[nodiscard]] QCoro::Task<void> apply_military_units();
+
 	QCoro::Task<void> on_setup_finished();
 
 	Q_INVOKABLE QCoro::QmlTask do_turn()
