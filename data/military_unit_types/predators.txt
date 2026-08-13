@@ -1,6 +1,6 @@
 bears = { #brown or grizzly bear
 	name = "Bears"
-	unit_class = bears
+	unit_class = large_predators
 	culture = bear
 	icon = lion
 	stats = {
@@ -15,9 +15,41 @@ bears = { #brown or grizzly bear
 #	}
 }
 
+coyotes = {
+	name = "Coyotes"
+	unit_class = small_predators
+	icon = lion
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 1
+		range = 1
+	}
+#	commodity_costs = {
+#		coyotes = 200
+#	}
+}
+
+jackals = {
+	name = "Jackals"
+	unit_class = small_predators
+	icon = lion
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 3
+		melee = 1
+		range = 1
+	}
+#	commodity_costs = {
+#		jackals = 200
+#	}
+}
+
 lions = {
 	name = "Lions"
-	unit_class = lions
+	unit_class = large_predators
 	culture = lion
 	icon = lion
 	stats = {
@@ -32,9 +64,25 @@ lions = {
 #	}
 }
 
+tigers = {
+	name = "Tigers"
+	unit_class = large_predators
+	icon = lion
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 3
+		melee = 4
+		range = 1
+	}
+#	commodity_costs = {
+#		tigers = 100
+#	}
+}
+
 wolves = {
 	name = "Wolves"
-	unit_class = wolves
+	unit_class = medium_predators
 	culture = wolf
 	icon = lion
 	stats = {

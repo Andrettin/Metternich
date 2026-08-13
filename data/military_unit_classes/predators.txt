@@ -1,17 +1,17 @@
-bears = {
-	name = "Bears"
+small_predators = {
+	name = "Small Predators"
 	domain = land
-	category = large_predators
+	category = small_predators
 }
 
-lions = {
-	name = "Lions"
-	domain = land
-	category = large_predators
-}
-
-wolves = {
-	name = "Wolves"
+medium_predators = {
+	name = "Medium Predators"
 	domain = land
 	category = medium_predators
+}
+
+large_predators = {
+	name = "Large Predators"
+	domain = land
+	category = large_predators
 }

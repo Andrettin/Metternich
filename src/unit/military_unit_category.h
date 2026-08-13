@@ -24,6 +24,7 @@ enum class military_unit_category {
 	medium_herd_animals,
 	large_herd_animals,
 	huge_herd_animals,
+	small_predators,
 	medium_predators,
 	large_predators
 };
@@ -71,6 +72,8 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			return "Large Herd Animals";
 		case military_unit_category::huge_herd_animals:
 			return "Huge Herd Animals";
+		case military_unit_category::small_predators:
+			return "Small Predators";
 		case military_unit_category::medium_predators:
 			return "Medium Predators";
 		case military_unit_category::large_predators:
@@ -88,6 +91,7 @@ inline bool is_animal_military_unit_category(const military_unit_category catego
 		case military_unit_category::medium_herd_animals:
 		case military_unit_category::large_herd_animals:
 		case military_unit_category::huge_herd_animals:
+		case military_unit_category::small_predators:
 		case military_unit_category::medium_predators:
 		case military_unit_category::large_predators:
 			return true;

@@ -1,11 +1,11 @@
-cattle = {
-	name = "Cattle"
+medium_herd_animals = {
+	name = "Medium Herd Animals"
 	domain = land
 	category = medium_herd_animals
 }
 
-elephants = {
-	name = "Elephants"
+huge_herd_animals = {
+	name = "Huge Herd Animals"
 	domain = land
 	category = huge_herd_animals
 }

@@ -1,6 +1,22 @@
+antelopes = {
+	name = "Antelopes"
+	unit_class = medium_herd_animals
+	icon = deer
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 2
+		melee = 2
+		range = 1
+	}
+#	commodity_costs = {
+#		antelopes = 200
+#	}
+}
+
 cattle = {
 	name = "Cattle"
-	unit_class = cattle
+	unit_class = medium_herd_animals
 	icon = cow
 	stats = {
 		hit_points = 2
@@ -14,9 +30,25 @@ cattle = {
 #	}
 }
 
+deer = {
+	name = "Deer"
+	unit_class = medium_herd_animals
+	icon = deer
+	stats = {
+		hit_points = 2
+		movement = 3
+		defense = 2
+		melee = 2
+		range = 1
+	}
+#	commodity_costs = {
+#		deer = 200
+#	}
+}
+
 elephants = {
 	name = "Elephants"
-	unit_class = elephants
+	unit_class = huge_herd_animals
 	culture = elephant
 	icon = cow
 	stats = {
@@ -28,5 +60,21 @@ elephants = {
 	}
 #	commodity_costs = {
 #		elephants = 100
+#	}
+}
+
+mammoths = {
+	name = "Mammoths"
+	unit_class = huge_herd_animals
+	icon = cow
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 4
+		melee = 4
+		range = 1
+	}
+#	commodity_costs = {
+#		mammoths = 100
 #	}
 }
