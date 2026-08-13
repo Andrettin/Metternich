@@ -20,7 +20,12 @@ enum class military_unit_category {
 	combat_engineers,
 	general,
 	light_warship,
-	heavy_warship
+	heavy_warship,
+	medium_herd_animal,
+	large_herd_animal,
+	huge_herd_animal,
+	medium_predator,
+	large_predator
 };
 
 inline std::string_view get_military_unit_category_name(const military_unit_category category)
@@ -60,11 +65,35 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			return "Light Warship";
 		case military_unit_category::heavy_warship:
 			return "Heavy Warship";
+		case military_unit_category::medium_herd_animal:
+			return "Medium Herd Animal";
+		case military_unit_category::large_herd_animal:
+			return "Large Herd Animal";
+		case military_unit_category::huge_herd_animal:
+			return "Huge Herd Animal";
+		case military_unit_category::medium_predator:
+			return "Medium Predator";
+		case military_unit_category::large_predator:
+			return "Large Predator";
 		default:
 			break;
 	}
 
 	throw std::runtime_error(std::format("Invalid military unit category: \"{}\".", std::to_string(static_cast<int>(category))));
+}
+
+inline bool is_animal_military_unit_category(const military_unit_category category)
+{
+	switch (category) {
+		case military_unit_category::medium_herd_animal:
+		case military_unit_category::large_herd_animal:
+		case military_unit_category::huge_herd_animal:
+		case military_unit_category::medium_predator:
+		case military_unit_category::large_predator:
+			return true;
+		default:
+			return false;
+	}
 }
 
 inline bool is_ship_military_unit_category(const military_unit_category category)

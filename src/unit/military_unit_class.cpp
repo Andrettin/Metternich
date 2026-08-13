@@ -39,7 +39,7 @@ void military_unit_class::check() const
 
 bool military_unit_class::is_animal() const
 {
-	return this->animal;
+	return is_animal_military_unit_category(this->get_category());
 }
 
 bool military_unit_class::is_ship() const
