@@ -1,0 +1,21 @@
+lair = {
+	name = "Lair"
+	building_class = lair
+	portrait = fort
+	icon = lion
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+	}
+	conditions = {
+		scripted_condition = is_lair
+	}
+	domain_modifier = {
+		stability = 1
+	}
+	free_on_start_conditions = {
+		#free for animal domains
+	}
+}

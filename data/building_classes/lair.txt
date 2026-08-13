@@ -1,0 +1,4 @@
+lair = {
+	name = "Lair"
+	slot_type = keep
+}
