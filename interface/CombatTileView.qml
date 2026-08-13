@@ -180,6 +180,7 @@ Item {
 			
 			status_text = text
 			saved_status_text = text
+			middle_status_text = tile_middle_text
 			metternich.set_current_cursor(tile_cursor)
 		}
 		
@@ -188,6 +189,7 @@ Item {
 			if (status_text === saved_status_text) {
 				status_text = ""
 				saved_status_text = ""
+				middle_status_text = ""
 			}
 		}
 	}

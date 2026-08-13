@@ -134,6 +134,7 @@ public:
 	virtual battle_tile &get_tile(const QPoint &tile_pos) override;
 	virtual const battle_tile &get_tile(const QPoint &tile_pos) const override;
 	virtual std::string get_tile_text(const QPoint &tile_pos) const override;
+	virtual std::string get_tile_middle_text(const QPoint &tile_pos) const override;
 	virtual combat_unit_info_base *get_tile_unit(const QPoint &tile_pos) const override;
 
 	virtual bool is_attacker_defeated() const override;

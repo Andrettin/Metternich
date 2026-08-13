@@ -208,6 +208,7 @@ public:
 	virtual combat_tile_base &get_tile(const QPoint &tile_pos) = 0;
 	virtual const combat_tile_base &get_tile(const QPoint &tile_pos) const = 0;
 	virtual std::string get_tile_text(const QPoint &tile_pos) const;
+	virtual std::string get_tile_middle_text(const QPoint &tile_pos) const;
 	virtual combat_unit_info_base *get_tile_unit(const QPoint &tile_pos) const = 0;
 	bool is_tile_attacker_escape(const QPoint &tile_pos) const;
 	bool is_tile_defender_escape(const QPoint &tile_pos) const;

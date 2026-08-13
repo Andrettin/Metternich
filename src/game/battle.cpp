@@ -556,7 +556,6 @@ const battle_tile &battle::get_tile(const QPoint &tile_pos) const
 	return this->tiles.at(point::to_index(tile_pos, this->get_map_width()));
 }
 
-
 std::string battle::get_tile_text(const QPoint &tile_pos) const
 {
 	std::string text = combat_base::get_tile_text(tile_pos);
@@ -567,16 +566,20 @@ std::string battle::get_tile_text(const QPoint &tile_pos) const
 		const std::string &type_name = unit->get_type()->get_name();
 		const std::string &unit_name = unit->get_name();
 		text += " " + (!unit_name.empty() ? (unit_name + " (" + type_name + ")") : type_name);
-
-		static constexpr size_t stats_string_padding = 64;
-		if (text.size() < stats_string_padding) {
-			text += std::string(stats_string_padding - text.size(), ' ');
-		}
-
-		text += unit->get_stats_string();
 	}
 
 	return text;
+}
+
+std::string battle::get_tile_middle_text(const QPoint &tile_pos) const
+{
+	const battle_tile &tile = this->get_tile(tile_pos);
+	if (tile.unit != nullptr) {
+		const military_unit *unit = tile.unit;
+		return unit->get_stats_string();
+	}
+
+	return "";
 }
 
 combat_unit_info_base *battle::get_tile_unit(const QPoint &tile_pos) const

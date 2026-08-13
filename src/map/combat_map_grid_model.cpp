@@ -97,6 +97,8 @@ QVariant combat_map_grid_model::data(const QModelIndex &index, const int role) c
 				return QVariant::fromValue(tile.terrain);
 			case role::tile_text:
 				return QVariant::fromValue(QString::fromStdString(combat->get_tile_text(tile_pos)));
+			case role::tile_middle_text:
+				return QVariant::fromValue(QString::fromStdString(combat->get_tile_middle_text(tile_pos)));
 			case role::tile_cursor:
 				if (combat->get_current_unit() != nullptr && combat->get_current_unit()->is_player_unit()) {
 					if (combat->can_current_unit_target_ally_at(tile_pos)) {
@@ -126,7 +128,8 @@ void combat_map_grid_model::on_tile_unit_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::tile_text)
+		static_cast<int>(role::tile_text),
+		static_cast<int>(role::tile_middle_text)
 	});
 }
 
@@ -134,7 +137,8 @@ void combat_map_grid_model::on_tile_object_changed(const QPoint &tile_pos)
 {
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
-		static_cast<int>(role::tile_text)
+		static_cast<int>(role::tile_text),
+		static_cast<int>(role::tile_middle_text)
 	});
 }
 

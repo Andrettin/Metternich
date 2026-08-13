@@ -57,6 +57,13 @@ std::string combat_base::get_tile_text(const QPoint &tile_pos) const
 	return std::format("({}, {})", tile_pos.x(), tile_pos.y());
 }
 
+std::string combat_base::get_tile_middle_text(const QPoint &tile_pos) const
+{
+	Q_UNUSED(tile_pos);
+
+	return "";
+}
+
 QCoro::Task<QPoint> combat_base::get_target()
 {
 	this->target_promise = std::make_unique<QPromise<QPoint>>();

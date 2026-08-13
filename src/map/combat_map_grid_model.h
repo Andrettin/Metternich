@@ -19,6 +19,7 @@ public:
 		overlay_image_sources,
 		terrain,
 		tile_text,
+		tile_middle_text,
 		tile_cursor,
 		movable_to,
 		retreatable_at,
@@ -60,6 +61,7 @@ public:
 		role_names.insert(static_cast<int>(role::overlay_image_sources), "overlay_image_sources");
 		role_names.insert(static_cast<int>(role::terrain), "terrain");
 		role_names.insert(static_cast<int>(role::tile_text), "tile_text");
+		role_names.insert(static_cast<int>(role::tile_middle_text), "tile_middle_text");
 		role_names.insert(static_cast<int>(role::tile_cursor), "tile_cursor");
 		role_names.insert(static_cast<int>(role::movable_to), "movable_to");
 		role_names.insert(static_cast<int>(role::retreatable_at), "retreatable_at");
