@@ -7,6 +7,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/attack_result.h"
+#include "game/battle.h"
 #include "item/item_type.h"
 #include "religion/divine_domain.h"
 #include "script/context.h"
@@ -16,6 +17,7 @@
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -36,6 +38,12 @@ void spell::process_gsml_property(const gsml_property &property)
 
 	if (key == "price") {
 		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+	} else if (key == "range") {
+		if (value == "touch") {
+			this->range = character_defines::get()->get_minimum_character_range();
+		} else {
+			this->range = string::to_length(value);
+		}
 	} else {
 		data_entry::process_gsml_property(property);
 	}
@@ -114,6 +122,17 @@ void spell::check() const
 	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
 	assert_throw(this->get_target_effects() != nullptr || this->get_battle_result() != attack_result::none);
 
+	switch (this->get_battle_target()) {
+		case spell_target::ally:
+		case spell_target::enemy:
+			if (this->get_range() == 0) {
+				throw std::runtime_error(std::format("Spell \"{}\" has an ally or enemy target, but no range.", this->get_identifier()));
+			}
+			break;
+		default:
+			break;
+	}
+
 	for (const character_class *character_class : this->get_character_classes()) {
 		if (character_class->is_divine_spellcaster() && this->get_divine_domains().empty()) {
 			log::log_error(std::format("Spell \"{}\" can be cast by a divine spellcasting class, but has no divine domains.", this->get_identifier()));
@@ -129,6 +148,15 @@ int spell::get_mana_cost(const character_class *character_class) const
 	}
 
 	return character_defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));
+}
+
+int spell::get_battle_range() const
+{
+	if (this->get_range() == 0) {
+		return 0;
+	}
+
+	return battle::length_to_battle_range(this->get_range()).to_int();
 }
 
 bool spell::is_available_for_character_class(const character_class *character_class) const

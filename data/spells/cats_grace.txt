@@ -4,7 +4,7 @@ cats_grace = {
 	icon = lion
 	price = 150gp
 	target = ally
-	range = 1
+	range = touch
 	sound = magic_holy
 	arcane_schools = {
 		alteration #transmutation

@@ -4,7 +4,7 @@ cure_minor_wounds = {
 	icon = wooden_cross
 	price = 125sp
 	target = ally
-	range = 1
+	range = touch
 	sound = heal
 	arcane_schools = {
 		conjuration #Conjuration: Healing
