@@ -135,17 +135,17 @@ public:
 
 	int get_score() const;
 
-	const metternich::sound *get_melee_attack_sound() const
+	const sound *get_melee_attack_sound() const
 	{
 		return this->melee_attack_sound;
 	}
 
-	const metternich::sound *get_ranged_attack_sound() const
+	const sound *get_ranged_attack_sound() const
 	{
 		return this->ranged_attack_sound;
 	}
 
-	const metternich::sound *get_death_sound() const
+	const sound *get_death_sound() const
 	{
 		return this->death_sound;
 	}

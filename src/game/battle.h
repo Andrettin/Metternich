@@ -87,6 +87,16 @@ public:
 	virtual spell_target get_spell_target(const spell *spell) const override;
 	virtual int get_spell_range(const spell *spell) const override;
 
+	void set_attacker_to_hit_modifier(const int modifier)
+	{
+		this->attacker_to_hit_modifier = modifier;
+	}
+
+	void set_defender_to_hit_modifier(const int modifier)
+	{
+		this->defender_to_hit_modifier = modifier;
+	}
+
 	void set_scope(const domain *scope)
 	{
 		this->scope = scope;
@@ -113,12 +123,12 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_round();
 
-	[[nodiscard]] QCoro::Task<void> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units);
+	[[nodiscard]] QCoro::Task<void> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	const military_unit *choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const;
 
 	[[nodiscard]]
-	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units);
+	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	[[nodiscard]]
 	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units);
@@ -152,6 +162,8 @@ public:
 private:
 	army *attacking_army = nullptr;
 	army *defending_army = nullptr;
+	int attacker_to_hit_modifier = 0;
+	int defender_to_hit_modifier = 0;
 	battle::result result;
 	const domain *scope = nullptr;
 	context ctx;

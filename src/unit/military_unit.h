@@ -20,6 +20,7 @@ class phenotype;
 class promotion;
 class province;
 class religion;
+class sound;
 enum class battle_resolution_type;
 enum class military_unit_category;
 enum class military_unit_domain;
@@ -212,7 +213,9 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_promotions();
 	[[nodiscard]] QCoro::Task<void> check_free_promotions();
 
-	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged, const bool moved) const;
+	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged, const bool moved, const int to_hit_modifier) const;
+	[[nodiscard]] QCoro::Task<void> attack_character(const metternich::character *target_character, const int to_hit_modifier) const;
+	bool check_to_hit(const metternich::character *target_character, const int to_hit_modifier) const;
 	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);
 	[[nodiscard]] QCoro::Task<void> die();
@@ -228,6 +231,10 @@ public:
 
 	std::string get_stats_string(const bool in_battle) const;
 	QString get_stats_qstring() const;
+
+	const sound *get_melee_attack_sound() const;
+	const sound *get_ranged_attack_sound() const;
+	const sound *get_death_sound() const;
 
 signals:
 	void name_changed();

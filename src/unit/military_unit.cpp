@@ -594,9 +594,15 @@ QCoro::Task<void> military_unit::check_free_promotions()
 	}
 }
 
-QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged, const bool moved) const
+QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged, const bool moved, const int to_hit_modifier) const
 {
 	assert_throw(target != nullptr);
+
+	if (this->get_character() != nullptr && target->get_character() != nullptr) {
+		//attack between characters
+		co_await this->attack_character(target->get_character(), to_hit_modifier);
+		co_return;
+	}
 
 	int attack = 0;
 	if (ranged) {
@@ -631,6 +637,38 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 			co_await target->die();
 			break;
 	}
+}
+
+QCoro::Task<void> military_unit::attack_character(const metternich::character *target_character, const int to_hit_modifier) const
+{
+	assert_throw(this->get_character() != nullptr);
+
+	const bool hit = this->check_to_hit(target_character, to_hit_modifier);
+
+	if (!hit) {
+		co_return;
+	}
+
+	//perform attack between characters
+	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice()) + this->get_character()->get_game_data()->get_damage_bonus();
+	co_await target_character->get_game_data()->change_health(-damage);
+}
+
+bool military_unit::check_to_hit(const metternich::character *target_character, const int to_hit_modifier) const
+{
+	assert_throw(this->get_character() != nullptr);
+
+	static constexpr dice to_hit_dice(1, 20);
+	const int to_hit = 20 - this->get_character()->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
+	const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
+
+	const int armor_class_bonus = target_character->get_game_data()->get_armor_class_bonus() + target_character->get_game_data()->get_species_armor_class_bonus(this->get_character()->get_species());
+	const int armor_class = 10 - armor_class_bonus;
+	if (to_hit_result > armor_class) {
+		return false;
+	}
+
+	return true;
 }
 
 QCoro::Task<void> military_unit::receive_damage(const int damage)
@@ -731,6 +769,29 @@ std::string military_unit::get_stats_string(const bool in_battle) const
 QString military_unit::get_stats_qstring() const
 {
 	return QString::fromStdString(this->get_stats_string(false));
+}
+
+const sound *military_unit::get_melee_attack_sound() const
+{
+	if (this->get_character() != nullptr && this->get_character()->get_game_data()->get_attack_sound() != nullptr) {
+		return this->get_character()->get_game_data()->get_attack_sound();
+	}
+
+	return this->get_type()->get_melee_attack_sound();
+}
+
+const sound *military_unit::get_ranged_attack_sound() const
+{
+	if (this->get_character() != nullptr && this->get_character()->get_game_data()->get_attack_sound() != nullptr) {
+		return this->get_character()->get_game_data()->get_attack_sound();
+	}
+
+	return this->get_type()->get_ranged_attack_sound();
+}
+
+const sound *military_unit::get_death_sound() const
+{
+	return this->get_type()->get_death_sound();
 }
 
 }

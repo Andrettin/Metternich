@@ -661,7 +661,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 		}
 	}
 
-	if (hit) {
+	if (!hit) {
 		co_return 0;
 	}
 

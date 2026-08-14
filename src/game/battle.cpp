@@ -233,7 +233,8 @@ QCoro::Task<void> battle::do_round()
 			break;
 		}
 
-		co_await this->do_unit_round(unit, killed_units);
+		const bool is_attacker = vector::contains(this->attacking_army->get_military_units(), unit);
+		co_await this->do_unit_round(unit, killed_units, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
 	}
 
 	if (this->get_current_unit() != nullptr) {
@@ -241,7 +242,7 @@ QCoro::Task<void> battle::do_round()
 	}
 }
 
-QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units)
+QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	bool attacked = false;
 	battle_unit_info *unit_info = this->get_unit_info(unit);
@@ -349,7 +350,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 		} else {
 			if (tile.unit != nullptr) {
 				if (distance <= unit_info->get_range() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
-					co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units);
+					co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units, to_hit_modifier);
 					attacked = true;
 				}
 			} else if (this->can_current_unit_move_to(target_pos)) {
@@ -395,7 +396,7 @@ const military_unit *battle::choose_enemy(const military_unit *unit, const std::
 	return vector::get_random(potential_enemies);
 }
 
-QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units)
+QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	const battle_unit_info *unit_info = this->get_unit_info(unit);
 	battle_unit_info *enemy_info = this->get_unit_info(enemy);
@@ -407,15 +408,15 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 	const bool moved = unit_info->get_remaining_movement() < unit->get_battle_movement();
 	const bool ranged = distance > 1;
 
-	const military_unit_type *enemy_unit_type = enemy->get_type();
+	const sound *enemy_death_sound = enemy->get_death_sound();
 
-	co_await unit->attack(enemy, ranged, moved);
+	co_await unit->attack(enemy, ranged, moved, to_hit_modifier);
 
 	if (this->scope == game::get()->get_player_domain()) {
-		if (!ranged && unit->get_type()->get_melee_attack_sound() != nullptr) {
-			co_await unit->get_type()->get_melee_attack_sound()->play_coro(std::chrono::milliseconds(100));
-		} else if (ranged && unit->get_type()->get_ranged_attack_sound() != nullptr) {
-			co_await unit->get_type()->get_ranged_attack_sound()->play_coro(std::chrono::milliseconds(100));
+		if (!ranged && unit->get_melee_attack_sound() != nullptr) {
+			co_await unit->get_melee_attack_sound()->play_coro(std::chrono::milliseconds(100));
+		} else if (ranged && unit->get_ranged_attack_sound() != nullptr) {
+			co_await unit->get_ranged_attack_sound()->play_coro(std::chrono::milliseconds(100));
 		}
 	}
 
@@ -425,8 +426,8 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 		this->remove_unit_info(enemy);
 
 		if (this->scope == game::get()->get_player_domain()) {
-			if (enemy_unit_type != nullptr && enemy_unit_type->get_death_sound() != nullptr) {
-				co_await enemy_unit_type->get_death_sound()->play_coro();
+			if (enemy_death_sound != nullptr) {
+				co_await enemy_death_sound->play_coro();
 			}
 		}
 	}
