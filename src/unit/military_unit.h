@@ -249,7 +249,7 @@ public:
 
 	int get_score() const;
 
-	std::string get_stats_string() const;
+	std::string get_stats_string(const bool in_battle) const;
 	QString get_stats_qstring() const;
 
 signals:

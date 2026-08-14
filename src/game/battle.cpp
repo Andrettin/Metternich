@@ -577,7 +577,7 @@ std::string battle::get_tile_middle_text(const QPoint &tile_pos) const
 	const battle_tile &tile = this->get_tile(tile_pos);
 	if (tile.unit != nullptr) {
 		const military_unit *unit = tile.unit;
-		return unit->get_stats_string();
+		return unit->get_stats_string(true);
 	}
 
 	return "";

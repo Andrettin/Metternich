@@ -698,7 +698,7 @@ int military_unit::get_score() const
 	return score;
 }
 
-std::string military_unit::get_stats_string() const
+std::string military_unit::get_stats_string(const bool in_battle) const
 {
 	std::string str;
 
@@ -714,7 +714,14 @@ std::string military_unit::get_stats_string() const
 			str += ", ";
 		}
 
-		str += std::format("{} {}", stat_value.to_int(), get_military_unit_stat_short_name(stat));
+		int stat_value_int = 0;
+		if (stat == military_unit_stat::movement && in_battle) {
+			stat_value_int = this->get_battle_movement();
+		} else {
+			stat_value_int = stat_value.to_int();
+		}
+
+		str += std::format("{} {}", stat_value_int, get_military_unit_stat_short_name(stat));
 	}
 
 	return str;
@@ -722,7 +729,7 @@ std::string military_unit::get_stats_string() const
 
 QString military_unit::get_stats_qstring() const
 {
-	return QString::fromStdString(this->get_stats_string());
+	return QString::fromStdString(this->get_stats_string(false));
 }
 
 }
