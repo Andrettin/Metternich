@@ -89,10 +89,12 @@ DialogBase {
 						
 						onEntered: {
 							status_text = unit_type.name
+							middle_status_text = unit.stats_string
 						}
 						
 						onExited: {
 							status_text = ""
+							middle_status_text = ""
 						}
 					}
 					
