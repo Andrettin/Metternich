@@ -194,7 +194,7 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 			const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();
 			office_title_names[tier][gender::none] = value;
 		} else {
-			const gender gender = enum_converter<archimedes::gender>::to_enum(key);
+			const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
 			office_title_names[domain_tier::none][gender] = value;
 		}
 	});
@@ -210,7 +210,7 @@ void government_type::process_office_title_name_scope(std::map<gender, std::stri
 	scope.for_each_property([&office_title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const gender gender = enum_converter<archimedes::gender>::to_enum(key);
+		const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
 		office_title_names[gender] = value;
 	});
 }

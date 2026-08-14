@@ -55,7 +55,7 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
-			const gender gender = enum_converter<archimedes::gender>::to_enum(tag);
+			const gender gender = magic_enum::enum_cast<archimedes::gender>(tag).value();
 
 			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});

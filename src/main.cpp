@@ -59,6 +59,7 @@
 #include "item/item.h"
 #include "item/item_slot.h"
 #include "language/grammatical_gender.h"
+#include "language/word_type.h"
 #include "map/combat_map_grid_model.h"
 #include "map/diplomatic_map_image_provider.h"
 #include "map/elevation_type.h"
@@ -176,9 +177,6 @@ int main(int argc, char **argv)
 
 		QQmlApplicationEngine engine;
 
-		enum_converter<gender>();
-		enum_converter<log_level>();
-
 		database_util::register_enum<affix_type>();
 		database_util::register_enum<attack_result>();
 		database_util::register_enum<battle_resolution_type>();
@@ -194,9 +192,11 @@ int main(int argc, char **argv)
 		database_util::register_enum<event_trigger>();
 		database_util::register_enum<food_type>();
 		database_util::register_enum<forestation_type>();
+		database_util::register_enum<gender>();
 		database_util::register_enum<geological_era>();
 		database_util::register_enum<grammatical_gender>();
 		database_util::register_enum<idea_type>();
+		database_util::register_enum<log_level>();
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
 		database_util::register_enum<moisture_type>();
@@ -210,6 +210,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<taxonomic_rank>();
 		database_util::register_enum<temperature_type>();
 		database_util::register_enum<transporter_category>();
+		database_util::register_enum<word_type>();
 
 		QCoro::Qml::registerTypes();
 

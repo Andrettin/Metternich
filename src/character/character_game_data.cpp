@@ -21,6 +21,7 @@
 #include "character/trait_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/ui_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
 #include "domain/domain_economy.h"
@@ -3049,7 +3050,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 		str += ")";
 	}
 
-	const QColor &number_color = domain_attribute_modifier < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+	const QColor &number_color = domain_attribute_modifier < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
 	str += ": " + string::colored(number::to_signed_string(domain_attribute_modifier), number_color);
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
