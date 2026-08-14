@@ -16,7 +16,6 @@ Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("sound/music.h")
 Q_MOC_INCLUDE("sound/sound.h")
-Q_MOC_INCLUDE("ui/cursor.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
 
@@ -32,7 +31,6 @@ class building_class;
 class character;
 class commodity;
 class commodity_unit;
-class cursor;
 class domain_skill;
 class icon;
 class music;
@@ -58,11 +56,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_OBJECT
 
 	Q_PROPERTY(archimedes::log_level min_log_level MEMBER min_log_level READ get_min_log_level NOTIFY changed)
-	Q_PROPERTY(QColor magic_item_text_color MEMBER magic_item_text_color READ get_magic_item_text_color NOTIFY changed)
-	Q_PROPERTY(metternich::cursor* default_cursor MEMBER default_cursor READ get_default_cursor NOTIFY changed)
-	Q_PROPERTY(metternich::cursor* ally_target_cursor MEMBER ally_target_cursor READ get_ally_target_cursor NOTIFY changed)
-	Q_PROPERTY(metternich::cursor* neutral_target_cursor MEMBER neutral_target_cursor READ get_neutral_target_cursor NOTIFY changed)
-	Q_PROPERTY(metternich::cursor* enemy_target_cursor MEMBER enemy_target_cursor READ get_enemy_target_cursor NOTIFY changed)
 	Q_PROPERTY(QSize map_block_size MEMBER map_block_size READ get_map_block_size NOTIFY changed)
 	Q_PROPERTY(QSize tile_size MEMBER tile_size READ get_tile_size NOTIFY changed)
 	Q_PROPERTY(QSize scaled_tile_size READ get_scaled_tile_size NOTIFY scaled_tile_size_changed)
@@ -128,6 +121,11 @@ public:
 	defines();
 	~defines();
 
+	virtual std::string_view get_file_name() const override
+	{
+		return "defines.txt";
+	}
+
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
@@ -136,31 +134,6 @@ public:
 	log_level get_min_log_level() const
 	{
 		return this->min_log_level;
-	}
-
-	const QColor &get_magic_item_text_color() const
-	{
-		return this->magic_item_text_color;
-	}
-
-	cursor *get_default_cursor() const
-	{
-		return this->default_cursor;
-	}
-
-	cursor *get_ally_target_cursor() const
-	{
-		return this->ally_target_cursor;
-	}
-
-	cursor *get_neutral_target_cursor() const
-	{
-		return this->neutral_target_cursor;
-	}
-
-	cursor *get_enemy_target_cursor() const
-	{
-		return this->enemy_target_cursor;
 	}
 
 	const QSize &get_map_block_size() const
@@ -631,11 +604,6 @@ signals:
 
 private:
 	log_level min_log_level;
-	QColor magic_item_text_color;
-	cursor *default_cursor = nullptr;
-	cursor *ally_target_cursor = nullptr;
-	cursor *neutral_target_cursor = nullptr;
-	cursor *enemy_target_cursor = nullptr;
 	QSize map_block_size = QSize(256, 256);
 	QSize tile_size = QSize(64, 64);
 	decimillesimal_int default_minimap_tile_scale = decimillesimal_int(1);

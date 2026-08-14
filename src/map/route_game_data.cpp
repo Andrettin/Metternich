@@ -3,6 +3,7 @@
 #include "map/route_game_data.h"
 
 #include "database/defines.h"
+#include "database/ui_defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "game/game.h"
@@ -206,7 +207,7 @@ QString route_game_data::get_site_modifier_string() const
 	if (this->route->get_output_commodity() != nullptr) {
 		const centesimal_int output = this->get_output();
 		const std::string number_str = "+" + this->route->get_output_commodity()->value_to_string(output.to_int(), false);
-		const QColor &number_color = defines::get()->get_green_text_color();
+		const QColor &number_color = ui_defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str, number_color);
 		str += std::format("{} Output: {}", this->route->get_output_commodity()->get_name(), colored_number_str);
 	}

@@ -17,6 +17,7 @@
 #include "database/database_enum_util.h"
 #include "database/defines.h"
 #include "database/preferences.h"
+#include "database/ui_defines.h"
 #include "domain/consulate.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
@@ -128,7 +129,7 @@ static QCoro::Task<void> initialize()
 
 		database::get()->initialize();
 
-		co_await cursor::set_current_cursor(defines::get()->get_default_cursor());
+		co_await cursor::set_current_cursor(ui_defines::get()->get_default_cursor());
 
 		engine_interface::get()->set_running(true);
 	} catch (...) {
@@ -170,7 +171,8 @@ int main(int argc, char **argv)
 
 		QImageReader::setAllocationLimit(1024);
 
-		database::get()->set_defines(defines::get());
+		database::get()->add_defines(defines::get());
+		database::get()->add_defines(ui_defines::get());
 
 		QQmlApplicationEngine engine;
 

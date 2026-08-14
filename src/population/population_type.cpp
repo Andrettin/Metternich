@@ -199,7 +199,7 @@ QString population_type::get_domain_modifier_string(const metternich::domain *do
 
 	/*
 	if (this->get_output_commodity() != nullptr) {
-		str += std::format("{}: {}", this->get_output_commodity()->get_name(), string::colored(number::to_signed_string(population_type_count * this->get_output_value()), defines::get()->get_green_text_color()));
+		str += std::format("{}: {}", this->get_output_commodity()->get_name(), string::colored(number::to_signed_string(population_type_count * this->get_output_value()), ui_defines::get()->get_green_text_color()));
 	}
 
 	if (this->get_country_modifier() != nullptr) {

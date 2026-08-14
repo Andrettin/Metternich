@@ -4,7 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "database/defines.h"
+#include "database/ui_defines.h"
 #include "item/affix_type.h"
 #include "item/enchantment.h"
 #include "item/item_class.h"
@@ -226,7 +226,7 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	}
 
 	if (enchantment != nullptr) {
-		return string::colored(name, defines::get()->get_magic_item_text_color());
+		return string::colored(name, ui_defines::get()->get_magic_item_text_color());
 	} else {
 		return name;
 	}
@@ -324,7 +324,7 @@ QString item::get_effects_string(const character *character) const
 		if (reason.empty()) {
 			reason = std::format("cannot {}", this->get_slot() != nullptr ? "equip" : this->get_type()->get_item_class()->get_consume_verb());
 		}
-		str += " " + string::colored(std::format("({})", reason), defines::get()->get_red_text_color());
+		str += " " + string::colored(std::format("({})", reason), ui_defines::get()->get_red_text_color());
 	}
 
 	return QString::fromStdString(str);

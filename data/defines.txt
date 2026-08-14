@@ -1,14 +1,5 @@
 min_log_level = trace
 
-green_text_color = { 0 159 3 }
-red_text_color = { 255 50 50 }
-magic_item_text_color = { 65 105 225 }
-
-default_cursor = teutonic_gauntlet
-ally_target_cursor = green_crosshair
-neutral_target_cursor = yellow_crosshair
-enemy_target_cursor = red_crosshair
-
 map_block_size = { 256 256 }
 tile_size = { 64 64 }
 default_minimap_tile_scale = 0.25

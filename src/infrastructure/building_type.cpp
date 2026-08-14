@@ -5,6 +5,7 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/ui_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
@@ -477,7 +478,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 			str += separator;
 		}
 
-		const QColor &number_color = this->get_holding_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const QColor &number_color = this->get_holding_level() < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
 		str += std::format("Holding Level: {}", string::colored(this->get_holding_level().to_signed_string(), number_color));
 	}
 
@@ -486,7 +487,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 			str += separator;
 		}
 
-		const QColor &number_color = this->get_fortification_level() < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const QColor &number_color = this->get_fortification_level() < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
 		str += std::format("Fortification Level: {}", string::colored(this->get_fortification_level().to_signed_string(), number_color));
 	}
 
@@ -519,7 +520,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 		}
 
 		const std::string number_str = number::to_signed_string(bonus);
-		const QColor &number_color = bonus < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const QColor &number_color = bonus < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str, number_color);
 
 		site_modifier_str += base_string + colored_number_str;
@@ -569,7 +570,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 			str += separator;
 		}
 
-		const QColor &number_color = defines::get()->get_green_text_color();
+		const QColor &number_color = ui_defines::get()->get_green_text_color();
 		str += std::format("Population Capacity: {}", string::colored(number::to_signed_string(population_capacity), number_color));
 	}
 

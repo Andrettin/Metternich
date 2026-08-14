@@ -439,6 +439,7 @@ set(database_HDRS
 	src/database/data_entry_container.h
 	src/database/defines.h
 	src/database/preferences.h
+	src/database/ui_defines.h
 )
 source_group(database FILES ${database_HDRS})
 

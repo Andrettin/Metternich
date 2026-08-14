@@ -2,12 +2,11 @@
 
 #include "unit/promotion.h"
 
-#include "database/defines.h"
+#include "database/ui_defines.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_stat.h"
-#include "util/assert_util.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 
@@ -80,7 +79,7 @@ QString promotion::get_modifier_string() const
 		}
 
 		const std::string number_str = number::to_signed_string(bonus);
-		const QColor &number_color = bonus < 0 ? defines::get()->get_red_text_color() : defines::get()->get_green_text_color();
+		const QColor &number_color = bonus < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str + (is_percent_military_unit_stat(stat) ? "%" : ""), number_color);
 
 		str += std::format("{}: {}", get_military_unit_stat_name(stat), colored_number_str);

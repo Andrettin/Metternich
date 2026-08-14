@@ -10,6 +10,7 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "database/ui_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
@@ -643,7 +644,7 @@ std::string site_game_data::get_display_text() const
 			text += " ";
 			if (!engine_interface::get()->get_selected_military_units().empty()) {
 				const int max_appropriate_dungeon_level = party::get_max_appropriate_dungeon_level(army::get_characters(engine_interface::get()->get_selected_military_units()));
-				text += this->get_dungeon()->get_level() > max_appropriate_dungeon_level ? string::colored(dungeon_str, defines::get()->get_red_text_color()) : dungeon_str;
+				text += this->get_dungeon()->get_level() > max_appropriate_dungeon_level ? string::colored(dungeon_str, ui_defines::get()->get_red_text_color()) : dungeon_str;
 			} else {
 				text += dungeon_str;
 			}
