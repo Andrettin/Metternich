@@ -10,6 +10,7 @@
 #include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "database/population_defines.h"
 #include "database/ui_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
@@ -2212,7 +2213,7 @@ const population_class *site_game_data::get_default_population_class() const
 		return this->get_owner()->get_game_data()->get_default_population_class();
 	}
 
-	return defines::get()->get_default_population_class();
+	return population_defines::get()->get_default_population_class();
 }
 
 const population_type *site_game_data::get_default_population_type() const

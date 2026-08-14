@@ -16,7 +16,6 @@
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
 #include "religion/divine_rank.h"
-#include "script/factor.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -73,12 +72,6 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->battle_defense_per_armor_class[armor_class] = defense;
 		});
-	} else if (tag == "promotion_chance") {
-		this->promotion_chance = std::make_unique<factor<population_unit>>();
-		this->promotion_chance->process_gsml_data(scope);
-	} else if (tag == "demotion_chance") {
-		this->demotion_chance = std::make_unique<factor<population_unit>>();
-		this->demotion_chance->process_gsml_data(scope);
 	} else if (tag == "settlement_commodity_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());

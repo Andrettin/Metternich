@@ -16,6 +16,7 @@
 #include "database/database.h"
 #include "database/database_enum_util.h"
 #include "database/defines.h"
+#include "database/population_defines.h"
 #include "database/preferences.h"
 #include "database/ui_defines.h"
 #include "domain/consulate.h"
@@ -173,6 +174,7 @@ int main(int argc, char **argv)
 		QImageReader::setAllocationLimit(1024);
 
 		database::get()->add_defines(defines::get());
+		database::get()->add_defines(population_defines::get());
 		database::get()->add_defines(ui_defines::get());
 
 		QQmlApplicationEngine engine;

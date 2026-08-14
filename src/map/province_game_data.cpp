@@ -6,6 +6,7 @@
 #include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/population_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
@@ -491,9 +492,9 @@ void province_game_data::do_population_literacy_change()
 		}
 	}
 
-	const decimillesimal_int educator_percent = decimillesimal_int::min(decimillesimal_int(educator_size) * 100 / this->get_population()->get_size(), defines::get()->get_max_literacy_educator_percent() + defines::get()->get_base_literacy_educator_percent());
+	const decimillesimal_int educator_percent = decimillesimal_int::min(decimillesimal_int(educator_size) * 100 / this->get_population()->get_size(), population_defines::get()->get_max_literacy_educator_percent() + population_defines::get()->get_base_literacy_educator_percent());
 
-	const decimillesimal_int monthly_literacy_change_rate = (educator_percent - defines::get()->get_base_literacy_educator_percent()) * defines::get()->get_base_monthly_literacy_change_rate() / (defines::get()->get_max_literacy_educator_percent() - defines::get()->get_base_literacy_educator_percent());
+	const decimillesimal_int monthly_literacy_change_rate = (educator_percent - population_defines::get()->get_base_literacy_educator_percent()) * population_defines::get()->get_base_monthly_literacy_change_rate() / (population_defines::get()->get_max_literacy_educator_percent() - population_defines::get()->get_base_literacy_educator_percent());
 
 	const decimillesimal_int literacy_change_rate = monthly_literacy_change_rate * game::get()->get_current_months_per_turn() / 100;
 

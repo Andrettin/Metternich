@@ -66,6 +66,7 @@ set_source_files_properties(${culture_SRCS} PROPERTIES UNITY_GROUP "culture")
 set(database_SRCS
 	src/database/data_entry_container.cpp
 	src/database/defines.cpp
+	src/database/population_defines.cpp
 	src/database/preferences.cpp
 )
 source_group(database FILES ${database_SRCS})
@@ -438,6 +439,7 @@ source_group(culture FILES ${culture_HDRS})
 set(database_HDRS
 	src/database/data_entry_container.h
 	src/database/defines.h
+	src/database/population_defines.h
 	src/database/preferences.h
 	src/database/ui_defines.h
 )

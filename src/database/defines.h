@@ -13,7 +13,6 @@ Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("economy/commodity_unit.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
-Q_MOC_INCLUDE("population/population_class.h")
 Q_MOC_INCLUDE("sound/music.h")
 Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -35,8 +34,6 @@ class domain_skill;
 class icon;
 class music;
 class office;
-class population_class;
-class population_unit;
 class portrait;
 class sound;
 class terrain_type;
@@ -44,9 +41,6 @@ enum class bloodline_strength_category;
 enum class diplomacy_state;
 enum class divine_rank;
 enum class event_trigger;
-
-template <typename scope_type>
-class factor;
 
 template <typename scope_type>
 class modifier;
@@ -69,14 +63,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
-	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
-	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
-	Q_PROPERTY(int population_growth_threshold MEMBER population_growth_threshold READ get_population_growth_threshold NOTIFY changed)
-	Q_PROPERTY(qint64 base_population_needs_size MEMBER base_population_needs_size READ get_base_population_needs_size NOTIFY changed)
-	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
-	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_literacy_change_rate MEMBER base_monthly_literacy_change_rate READ get_base_monthly_literacy_change_rate NOTIFY changed)
-	Q_PROPERTY(archimedes::decimillesimal_int base_literacy_educator_percent MEMBER base_literacy_educator_percent READ get_base_literacy_educator_percent NOTIFY changed)
-	Q_PROPERTY(archimedes::decimillesimal_int max_literacy_educator_percent MEMBER max_literacy_educator_percent READ get_max_literacy_educator_percent NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
@@ -116,8 +102,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::music* main_menu_music MEMBER main_menu_music READ get_main_menu_music NOTIFY changed)
 
 public:
-	using singleton<defines>::get;
-
 	defines();
 	~defines();
 
@@ -263,56 +247,6 @@ public:
 	const terrain_type *get_default_space_terrain() const
 	{
 		return this->default_space_terrain;
-	}
-
-	const population_class *get_default_population_class() const
-	{
-		return this->default_population_class;
-	}
-
-	const population_class *get_default_tribal_population_class() const
-	{
-		return this->default_tribal_population_class;
-	}
-
-	int get_population_growth_threshold() const
-	{
-		return this->population_growth_threshold;
-	}
-
-	int64_t get_base_population_needs_size() const
-	{
-		return this->base_population_needs_size;
-	}
-
-	const decimillesimal_int &get_base_monthly_promotion_rate() const
-	{
-		return this->base_monthly_promotion_rate;
-	}
-
-	const decimillesimal_int &get_base_monthly_literacy_change_rate() const
-	{
-		return this->base_monthly_literacy_change_rate;
-	}
-
-	const decimillesimal_int &get_base_literacy_educator_percent() const
-	{
-		return this->base_literacy_educator_percent;
-	}
-
-	const decimillesimal_int &get_max_literacy_educator_percent() const
-	{
-		return this->max_literacy_educator_percent;
-	}
-
-	const factor<population_unit> *get_promotion_chance() const
-	{
-		return this->promotion_chance.get();
-	}
-
-	const factor<population_unit> *get_demotion_chance() const
-	{
-		return this->demotion_chance.get();
 	}
 
 	const commodity_map<int> &get_settlement_commodity_bonuses() const
@@ -622,16 +556,6 @@ private:
 	const terrain_type *default_province_terrain = nullptr;
 	const terrain_type *default_water_zone_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
-	population_class *default_population_class = nullptr;
-	population_class *default_tribal_population_class = nullptr;
-	int population_growth_threshold = 100;
-	int64_t base_population_needs_size = 0;
-	decimillesimal_int base_monthly_promotion_rate;
-	decimillesimal_int base_monthly_literacy_change_rate;
-	decimillesimal_int base_literacy_educator_percent;
-	decimillesimal_int max_literacy_educator_percent;
-	std::unique_ptr<factor<population_unit>> promotion_chance;
-	std::unique_ptr<factor<population_unit>> demotion_chance;
 	commodity_map<int> settlement_commodity_bonuses;
 	commodity_map<int> river_settlement_commodity_bonuses;
 	const commodity *wealth_commodity = nullptr;

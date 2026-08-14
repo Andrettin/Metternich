@@ -3,7 +3,7 @@
 #include "population/population_unit.h"
 
 #include "culture/culture.h"
-#include "database/defines.h"
+#include "database/population_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
@@ -98,14 +98,14 @@ QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
 	assert_throw(this->get_country()->get_game_data()->get_population()->get_size() > 0);
 
-	decimillesimal_int promotion_rate = defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
+	decimillesimal_int promotion_rate = population_defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
 
 	if (is_demotion) {
-		const factor<population_unit> *demotion_chance = defines::get()->get_demotion_chance();
+		const factor<population_unit> *demotion_chance = population_defines::get()->get_demotion_chance();
 		const decimillesimal_int demotion_chance_result = demotion_chance->calculate(this);
 		promotion_rate *= demotion_chance_result;
 	} else {
-		const factor<population_unit> *promotion_chance = defines::get()->get_promotion_chance();
+		const factor<population_unit> *promotion_chance = population_defines::get()->get_promotion_chance();
 		const decimillesimal_int promotion_chance_result = promotion_chance->calculate(this);
 		promotion_rate *= promotion_chance_result;
 	}
@@ -414,7 +414,7 @@ int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &nee
 
 		decimillesimal_int fractional_commodity_need = base_commodity_need * game::get()->get_current_months_per_turn();
 		fractional_commodity_need *= this->get_size();
-		fractional_commodity_need /= defines::get()->get_base_population_needs_size();
+		fractional_commodity_need /= population_defines::get()->get_base_population_needs_size();
 
 		static constexpr int64_t needs_modifier = 80;
 		fractional_commodity_need *= needs_modifier;

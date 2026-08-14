@@ -8,6 +8,7 @@
 #include "character/monster_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/population_defines.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
@@ -747,7 +748,7 @@ QCoro::Task<void> domain_game_data::do_population_growth()
 		}
 		this->do_food_consumption(food_consumption);
 
-		while (this->get_population_growth() >= defines::get()->get_population_growth_threshold()) {
+		while (this->get_population_growth() >= population_defines::get()->get_population_growth_threshold()) {
 			co_await this->grow_population();
 		}
 
@@ -2483,9 +2484,9 @@ void domain_game_data::change_domain_power(const int change)
 const population_class *domain_game_data::get_default_population_class() const
 {
 	if (this->is_tribal() || this->is_clade()) {
-		return defines::get()->get_default_tribal_population_class();
+		return population_defines::get()->get_default_tribal_population_class();
 	} else {
-		return defines::get()->get_default_population_class();
+		return population_defines::get()->get_default_population_class();
 	}
 }
 
@@ -2572,7 +2573,7 @@ QCoro::Task<void> domain_game_data::grow_population()
 	const int64_t population_size = 100;
 	co_await site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0, true);
 
-	this->change_population_growth(-defines::get()->get_population_growth_threshold());
+	this->change_population_growth(-population_defines::get()->get_population_growth_threshold());
 }
 
 QCoro::Task<void> domain_game_data::decrease_population(const bool change_population_growth)
