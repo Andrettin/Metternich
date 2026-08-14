@@ -12,6 +12,7 @@ namespace metternich {
 
 class domain;
 class event;
+class military_unit;
 class population_unit;
 class province;
 struct context;
@@ -39,6 +40,7 @@ public:
 
 extern template class effect<const character>;
 extern template class effect<const domain>;
+extern template class effect<military_unit>;
 extern template class effect<population_unit>;
 extern template class effect<const province>;
 extern template class effect<const site>;

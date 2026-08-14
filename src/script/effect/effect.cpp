@@ -60,6 +60,7 @@
 #include "script/effect/technologies_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
+#include "unit/military_unit.h"
 #include "util/assert_util.h"
 
 namespace metternich {
@@ -271,7 +272,7 @@ const domain *effect<scope_type>::get_scope_domain(const scope_type *scope)
 		return scope->get_game_data()->get_domain();
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		return scope;
-	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
 		return scope->get_country();
 	} else if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		return scope->get_game_data()->get_owner();
@@ -293,6 +294,7 @@ const province *effect<scope_type>::get_scope_province(const scope_type *scope)
 
 template class effect<const character>;
 template class effect<const domain>;
+template class effect<military_unit>;
 template class effect<population_unit>;
 template class effect<const province>;
 template class effect<const site>;

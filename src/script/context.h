@@ -23,7 +23,8 @@ template <bool read_only>
 struct context_base
 {
 	using army_ptr = std::conditional_t<read_only, const army *, army *>;
-	using military_unit_ptr = std::conditional_t<read_only, const military_unit *, military_unit *>;
+	using military_unit_t = std::conditional_t<read_only, const military_unit, military_unit>;
+	using military_unit_ptr = military_unit_t *;
 	using party_ptr = std::conditional_t<read_only, std::shared_ptr<const party>, std::shared_ptr<party>>;
 	using population_unit_type = std::conditional_t<read_only, const population_unit, population_unit>;
 	using population_unit_ptr = population_unit_type *;
@@ -48,6 +49,8 @@ struct context_base
 			return this->saved_character_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
 			return this->saved_domain_scopes;
+		} else if constexpr (std::is_same_v<scope_type, military_unit_t>) {
+			return this->saved_military_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
 			return this->saved_population_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
@@ -64,6 +67,8 @@ struct context_base
 			return this->saved_character_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const domain>) {
 			return this->saved_domain_scopes;
+		} else if constexpr (std::is_same_v<scope_type, military_unit_t>) {
+			return this->saved_military_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
 			return this->saved_population_unit_scopes;
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
@@ -118,6 +123,7 @@ struct context_base
 	scope_variant_type previous_scope = std::monostate();
 	std::map<std::string, const character *> saved_character_scopes;
 	std::map<std::string, const domain *> saved_domain_scopes;
+	std::map<std::string, military_unit_ptr> saved_military_unit_scopes;
 	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
 	std::map<std::string, const province *> saved_province_scopes;
 	std::map<std::string, const site *> saved_site_scopes;
@@ -191,6 +197,9 @@ public:
 		this->dungeon_area = ctx.dungeon_area;
 		this->in_combat = ctx.in_combat;
 
+		for (const auto &[str, military_unit] : ctx.saved_military_unit_scopes) {
+			this->saved_military_unit_scopes[str] = military_unit;
+		}
 		for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
 			this->saved_population_unit_scopes[str] = population_unit;
 		}

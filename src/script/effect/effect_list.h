@@ -9,6 +9,7 @@ namespace metternich {
 
 class character;
 class domain;
+class military_unit;
 class population_unit;
 class province;
 class site;
@@ -46,6 +47,7 @@ private:
 
 extern template class effect_list<const character>;
 extern template class effect_list<const domain>;
+extern template class effect_list<military_unit>;
 extern template class effect_list<population_unit>;
 extern template class effect_list<const province>;
 extern template class effect_list<const site>;

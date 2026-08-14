@@ -11,6 +11,7 @@ namespace metternich {
 
 class character;
 class domain;
+class military_unit;
 class population_unit;
 class province;
 class site;
@@ -47,6 +48,7 @@ private:
 
 extern template class factor<character>;
 extern template class factor<domain>;
+extern template class factor<military_unit>;
 extern template class factor<population_unit>;
 extern template class factor<province>;
 extern template class factor<site>;

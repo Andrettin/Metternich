@@ -111,6 +111,7 @@ void effect_list<scope_type>::add_effects(std::unique_ptr<effect_list<scope_type
 
 template class effect_list<const character>;
 template class effect_list<const domain>;
+template class effect_list<military_unit>;
 template class effect_list<population_unit>;
 template class effect_list<const province>;
 template class effect_list<const site>;

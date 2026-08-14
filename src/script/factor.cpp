@@ -108,6 +108,7 @@ decimillesimal_int factor<scope_type>::calculate(const scope_type *scope) const
 
 template class factor<character>;
 template class factor<domain>;
+template class factor<military_unit>;
 template class factor<population_unit>;
 template class factor<province>;
 template class factor<site>;
