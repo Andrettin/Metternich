@@ -14,12 +14,12 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
+#include "game/attack_result.h"
+#include "game/battle_resolution_table.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/province_map_data.h"
-#include "map/terrain_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "ui/icon.h"
@@ -594,31 +594,43 @@ QCoro::Task<void> military_unit::check_free_promotions()
 	}
 }
 
-QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged)
+QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged, const bool moved) const
 {
 	assert_throw(target != nullptr);
 
-	const metternich::province *province = target->get_province();
-	const terrain_type *terrain = nullptr;
-	if (province != nullptr && province->get_map_data()->get_terrain() != nullptr) {
-		terrain = province->get_map_data()->get_terrain();
-	}
-
-	centesimal_int attack;
+	int attack = 0;
 	if (ranged) {
-		attack = this->get_effective_stat(military_unit_stat::missile);
+		attack = this->get_effective_stat(military_unit_stat::missile).to_int();
+	} else if (moved && this->get_effective_stat(military_unit_stat::charge).to_int() > 0) {
+		attack = this->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
-		attack = this->get_effective_stat(military_unit_stat::melee);
+		attack = this->get_effective_stat(military_unit_stat::melee).to_int();
+		if (target->get_type()->is_cavalry()) {
+			attack += this->get_effective_stat(military_unit_stat::melee_vs_mounted).to_int();
+		}
 	}
 
-	centesimal_int defense = target->get_effective_stat(military_unit_stat::defense);
+	int defense = target->get_effective_stat(military_unit_stat::defense).to_int();
+	if (this->get_type()->is_cavalry()) {
+		defense += target->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
+	}
 
-	centesimal_int damage = attack * 2 - defense;
-	damage /= 2;
+	const std::unique_ptr<battle_resolution_table> &battle_resolution_table = vector::get_random(defines::get()->get_battle_resolution_tables());
 
-	damage = centesimal_int::max(damage, 1);
+	const attack_result result = battle_resolution_table->get_result(this->get_battle_resolution_type(), target->get_battle_resolution_type(), attack - defense);
 
-	co_await target->receive_damage(damage.to_int());
+	switch (result) {
+		case attack_result::miss:
+		case attack_result::fall_back:
+			break;
+		case attack_result::hit:
+		case attack_result::rout:
+			co_await target->receive_damage(1);
+			break;
+		case attack_result::destroy:
+			co_await target->die();
+			break;
+	}
 }
 
 QCoro::Task<void> military_unit::receive_damage(const int damage)

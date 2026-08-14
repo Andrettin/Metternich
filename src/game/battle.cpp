@@ -11,7 +11,6 @@
 #include "domain/domain_government.h"
 #include "engine_interface.h"
 #include "game/attack_result.h"
-#include "game/battle_resolution_table.h"
 #include "game/game.h"
 #include "map/site.h"
 #include "map/terrain_type.h"
@@ -408,41 +407,9 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 	const bool moved = unit_info->get_remaining_movement() < unit->get_battle_movement();
 	const bool ranged = distance > 1;
 
-	int attack = 0;
-	if (ranged) {
-		attack = unit->get_effective_stat(military_unit_stat::missile).to_int();
-	} else if (moved && unit->get_effective_stat(military_unit_stat::charge).to_int() > 0) {
-		attack = unit->get_effective_stat(military_unit_stat::charge).to_int();
-	} else {
-		attack = unit->get_effective_stat(military_unit_stat::melee).to_int();
-		if (enemy->get_type()->is_cavalry()) {
-			attack += unit->get_effective_stat(military_unit_stat::melee_vs_mounted).to_int();
-		}
-	}
-
-	int defense = enemy->get_effective_stat(military_unit_stat::defense).to_int();
-	if (unit->get_type()->is_cavalry()) {
-		defense += enemy->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
-	}
-
-	const std::unique_ptr<battle_resolution_table> &battle_resolution_table = vector::get_random(defines::get()->get_battle_resolution_tables());
-
-	const attack_result result = battle_resolution_table->get_result(unit->get_battle_resolution_type(), enemy->get_battle_resolution_type(), attack - defense);
-
 	const military_unit_type *enemy_unit_type = enemy->get_type();
 
-	switch (result) {
-		case attack_result::miss:
-		case attack_result::fall_back:
-			break;
-		case attack_result::hit:
-		case attack_result::rout:
-			co_await enemy->receive_damage(1);
-			break;
-		case attack_result::destroy:
-			co_await enemy->die();
-			break;
-	}
+	co_await unit->attack(enemy, ranged, moved);
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (!ranged && unit->get_type()->get_melee_attack_sound() != nullptr) {

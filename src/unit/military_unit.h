@@ -212,7 +212,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_promotions();
 	[[nodiscard]] QCoro::Task<void> check_free_promotions();
 
-	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged);
+	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged, const bool moved) const;
 	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);
 	[[nodiscard]] QCoro::Task<void> die();
