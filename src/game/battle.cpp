@@ -437,10 +437,10 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 			break;
 		case attack_result::hit:
 		case attack_result::rout:
-			co_await enemy_info->receive_damage(1);
+			co_await enemy->receive_damage(1);
 			break;
 		case attack_result::destroy:
-			co_await enemy_info->die();
+			co_await enemy->die();
 			break;
 	}
 
@@ -471,7 +471,6 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 	assert_throw(unit->get_character()->get_game_data()->can_cast_spell(spell));
 
 	const army *target_army = target->get_army();
-	battle_unit_info *target_info = this->get_unit_info(target);
 
 	if (spell->get_battle_result() != attack_result::none) {
 		const military_unit_type *target_unit_type = target->get_type();
@@ -482,10 +481,10 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 				break;
 			case attack_result::hit:
 			case attack_result::rout:
-				co_await target_info->receive_damage(1);
+				co_await target->receive_damage(1);
 				break;
 			case attack_result::destroy:
-				co_await target_info->die();
+				co_await target->die();
 				break;
 		}
 
@@ -686,7 +685,7 @@ battle_tile::battle_tile(const terrain_type *base_terrain, const terrain_type *t
 {
 }
 
-battle_unit_info::battle_unit_info(military_unit *unit, const bool defender)
+battle_unit_info::battle_unit_info(const military_unit *unit, const bool defender)
 	: combat_unit_info_base(defender), unit(unit)
 {
 	connect(unit, &military_unit::icon_changed, this, &battle_unit_info::icon_changed);
@@ -720,21 +719,6 @@ int battle_unit_info::get_max_hit_points() const
 	} else {
 		return this->get_unit()->get_max_hit_points();
 	}
-}
-
-QCoro::Task<void> battle_unit_info::receive_damage(const int damage)
-{
-	if (this->get_character() != nullptr) {
-		const int health_damage = damage * character_defines::get()->get_battle_hit_point_rate();
-		co_await this->get_character()->get_game_data()->change_health(-health_damage);
-	} else {
-		co_await this->get_unit()->change_hit_points(-damage);
-	}
-}
-
-QCoro::Task<void> battle_unit_info::die()
-{
-	co_await this->get_unit()->change_hit_points(-this->get_unit()->get_hit_points());
 }
 
 int battle_unit_info::get_range() const

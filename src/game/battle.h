@@ -39,14 +39,9 @@ class battle_unit_info final : public combat_unit_info_base
 	Q_PROPERTY(const metternich::military_unit* unit READ get_unit CONSTANT)
 
 public:
-	explicit battle_unit_info(military_unit *unit, const bool defender);
+	explicit battle_unit_info(const military_unit *unit, const bool defender);
 
 	const military_unit *get_unit() const
-	{
-		return this->unit;
-	}
-
-	military_unit *get_unit()
 	{
 		return this->unit;
 	}
@@ -54,8 +49,6 @@ public:
 	virtual const icon *get_icon() const override;
 	virtual int get_hit_points() const override;
 	virtual int get_max_hit_points() const override;
-	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
-	[[nodiscard]] QCoro::Task<void> die();
 	virtual int get_range() const override;
 	virtual const character *get_character() const override;
 	virtual bool is_player_unit() const override;
@@ -66,7 +59,7 @@ signals:
 	void remaining_movement_changed();
 
 private:
-	military_unit *unit = nullptr;
+	const military_unit *unit = nullptr;
 };
 
 class battle final : public combat_base

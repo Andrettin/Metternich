@@ -3,6 +3,7 @@
 #include "unit/military_unit.h"
 
 #include "character/character.h"
+#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
@@ -92,7 +93,6 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	assert_throw(this->get_type() != nullptr);
 
 	this->max_hit_points = type->get_stat(military_unit_stat::hit_points).to_int();
-	this->set_morale(this->get_hit_points());
 
 	for (const auto &[stat, value] : type->get_stats()) {
 		this->set_stat(stat, value);
@@ -115,12 +115,6 @@ QCoro::Task<void> military_unit::do_turn()
 		if (missing_hit_points > 0) {
 			//recover unit HP if it is not moving
 			co_await this->change_hit_points(std::min(this->get_hit_point_recovery_per_turn(), missing_hit_points));
-		}
-
-		const int missing_morale = this->get_hit_points() - this->get_morale();
-		assert_throw(missing_morale >= 0);
-		if (missing_morale > 0) {
-			this->change_morale(std::min(this->get_morale_recovery_per_turn(), missing_morale));
 		}
 	}
 }
@@ -401,10 +395,6 @@ QCoro::Task<void> military_unit::set_hit_points(const int hit_points)
 
 	assert_throw(this->get_hit_points() <= this->get_max_hit_points());
 
-	if (this->get_morale() > this->get_hit_points()) {
-		this->set_morale(this->get_hit_points());
-	}
-
 	if (this->get_hit_points() <= 0) {
 		co_await this->disband(true);
 	} else {
@@ -415,11 +405,6 @@ QCoro::Task<void> military_unit::set_hit_points(const int hit_points)
 int military_unit::get_hit_point_recovery_per_turn() const
 {
 	return military_unit::hit_point_recovery_per_turn;
-}
-
-int military_unit::get_morale_recovery_per_turn() const
-{
-	return military_unit::morale_recovery_per_turn;
 }
 
 QCoro::Task<void> military_unit::fully_recover()
@@ -633,21 +618,20 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 
 	damage = centesimal_int::max(damage, 1);
 
-	co_await target->receive_damage(damage.to_int(), 0);
+	co_await target->receive_damage(damage.to_int());
 }
 
-QCoro::Task<void> military_unit::receive_damage(const int damage, const int morale_damage_modifier)
+QCoro::Task<void> military_unit::receive_damage(const int damage)
 {
-	co_await this->change_hit_points(-damage);
-
-	int morale_damage = damage;
-	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100;
-
-	this->change_morale(-morale_damage);
+	if (this->get_character() != nullptr) {
+		const int health_damage = damage * character_defines::get()->get_battle_hit_point_rate();
+		co_await this->get_character()->get_game_data()->change_health(-health_damage);
+	} else {
+		co_await this->change_hit_points(-damage);
+	}
 }
 
-[[nodiscard]] QCoro::Task<void> military_unit::heal(const int healing)
+QCoro::Task<void> military_unit::heal(const int healing)
 {
 	const int missing_hit_points = this->get_max_hit_points() - this->get_hit_points();
 
@@ -656,6 +640,11 @@ QCoro::Task<void> military_unit::receive_damage(const int damage, const int mora
 	}
 
 	co_await this->change_hit_points(std::min(healing, missing_hit_points));
+}
+
+QCoro::Task<void> military_unit::die()
+{
+	co_await this->change_hit_points(-this->get_hit_points());
 }
 
 QCoro::Task<void> military_unit::disband(const bool dead)

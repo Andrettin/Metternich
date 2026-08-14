@@ -112,25 +112,6 @@ public:
 		this->set_max_hit_points(this->get_max_hit_points() + change);
 	}
 
-	int get_morale() const
-	{
-		return this->morale;
-	}
-
-	void set_morale(const int morale)
-	{
-		if (morale == this->get_morale()) {
-			return;
-		}
-
-		this->morale = morale;
-	}
-
-	void change_morale(const int change)
-	{
-		this->set_morale(this->get_morale() + change);
-	}
-
 	const centesimal_int &get_stat(const transporter_stat stat) const
 	{
 		const auto find_iterator = this->stats.find(stat);
@@ -164,7 +145,7 @@ public:
 
 	int get_cargo() const;
 
-	void receive_damage(const int damage, const int morale_damage_modifier);
+	void receive_damage(const int damage);
 	void heal(const int healing);
 
 	void disband(const bool dead);
@@ -184,7 +165,6 @@ private:
 	const metternich::phenotype *phenotype = nullptr;
 	int hit_points = 0;
 	int max_hit_points = 0;
-	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 	std::map<transporter_stat, centesimal_int> stats;
 };
 

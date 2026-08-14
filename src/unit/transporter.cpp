@@ -11,7 +11,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "ui/icon.h"
-#include "unit/military_unit.h" //for the hit point and morale recovery constants
+#include "unit/military_unit.h" //for the hit point recovery constant
 #include "unit/transporter_class.h"
 #include "unit/transporter_stat.h"
 #include "unit/transporter_type.h"
@@ -30,7 +30,6 @@ transporter::transporter(const transporter_type *type, const metternich::domain 
 
 	this->max_hit_points = type->get_hit_points();
 	this->set_hit_points(this->get_max_hit_points());
-	this->set_morale(this->get_hit_points());
 
 	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
 		const transporter_stat stat = static_cast<transporter_stat>(i);
@@ -50,12 +49,6 @@ void transporter::do_turn()
 	if (missing_hit_points > 0) {
 		//recover unit HP if it is not moving
 		this->change_hit_points(std::min(military_unit::hit_point_recovery_per_turn, missing_hit_points));
-	}
-
-	const int missing_morale = this->get_hit_points() - this->get_morale();
-	assert_throw(missing_morale >= 0);
-	if (missing_morale > 0) {
-		this->change_morale(std::min(military_unit::morale_recovery_per_turn, missing_morale));
 	}
 }
 
@@ -144,10 +137,6 @@ void transporter::set_hit_points(const int hit_points)
 
 	assert_throw(this->get_hit_points() <= this->get_max_hit_points());
 
-	if (this->get_morale() > this->get_hit_points()) {
-		this->set_morale(this->get_hit_points());
-	}
-
 	if (this->get_hit_points() <= 0) {
 		this->disband(true);
 	}
@@ -163,15 +152,9 @@ int transporter::get_cargo() const
 	return this->get_type()->get_cargo();
 }
 
-void transporter::receive_damage(const int damage, const int morale_damage_modifier)
+void transporter::receive_damage(const int damage)
 {
 	this->change_hit_points(-damage);
-
-	int morale_damage = damage;
-	morale_damage *= 100 + morale_damage_modifier;
-	morale_damage /= 100 + this->get_discipline();
-
-	this->change_morale(-morale_damage);
 }
 
 void transporter::heal(const int healing)

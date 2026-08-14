@@ -39,12 +39,10 @@ class military_unit final : public QObject
 	Q_PROPERTY(QVariantList promotions READ get_promotions_qvariant_list NOTIFY promotions_changed)
 	Q_PROPERTY(int hit_points READ get_hit_points NOTIFY hit_points_changed)
 	Q_PROPERTY(int max_hit_points READ get_max_hit_points NOTIFY max_hit_points_changed)
-	Q_PROPERTY(int morale READ get_morale NOTIFY morale_changed)
 	Q_PROPERTY(QString stats_string READ get_stats_qstring NOTIFY stats_changed)
 
 public:
 	static constexpr int hit_point_recovery_per_turn = 10;
-	static constexpr int morale_recovery_per_turn = 20;
 
 	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type);
 	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
@@ -170,29 +168,7 @@ public:
 		co_await this->set_max_hit_points(this->get_max_hit_points() + change);
 	}
 
-	int get_morale() const
-	{
-		return this->morale;
-	}
-
-	void set_morale(const int morale)
-	{
-		if (morale == this->get_morale()) {
-			return;
-		}
-
-		this->morale = morale;
-
-		emit morale_changed();
-	}
-
-	void change_morale(const int change)
-	{
-		this->set_morale(this->get_morale() + change);
-	}
-
 	int get_hit_point_recovery_per_turn() const;
-	int get_morale_recovery_per_turn() const;
 
 	[[nodiscard]] QCoro::Task<void> fully_recover();
 
@@ -237,8 +213,9 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_free_promotions();
 
 	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged);
-	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage, const int morale_damage_modifier);
+	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);
+	[[nodiscard]] QCoro::Task<void> die();
 
 	[[nodiscard]] QCoro::Task<void> disband(const bool dead);
 
@@ -261,7 +238,6 @@ signals:
 	void promotions_changed();
 	void hit_points_changed();
 	void max_hit_points_changed();
-	void morale_changed();
 	void stats_changed();
 
 private:
@@ -274,7 +250,6 @@ private:
 	metternich::army *army = nullptr; //the army to which the unit belongs
 	int hit_points = 0;
 	int max_hit_points = 0;
-	int morale = 0; //morale is never higher than the amount of hit points; when morale reaches zero, the unit flees in combat
 	metternich::battle_resolution_type battle_resolution_type{};
 	std::map<military_unit_stat, centesimal_int> stats;
 	std::vector<const promotion *> promotions;
