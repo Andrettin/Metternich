@@ -6,6 +6,13 @@
 
 Q_MOC_INCLUDE("unit/military_unit.h")
 
+namespace archimedes {
+	template <int N>
+	class fractional_int;
+
+	using centesimal_int = fractional_int<2>;
+}
+
 namespace metternich {
 
 class army;
@@ -71,6 +78,9 @@ public:
 	{
 		bool attacker_victory = false;
 	};
+
+	static centesimal_int length_to_battle_tile_length(const int length);
+	static centesimal_int length_to_battle_range(const int length);
 
 	explicit battle(army *attacking_army, army *defending_army, const QSize &map_size);
 	~battle();

@@ -32,6 +32,16 @@
 
 namespace metternich {
 
+centesimal_int battle::length_to_battle_tile_length(const int length)
+{
+	return centesimal_int(length) * defines::get()->get_battle_map_scale() / defines::get()->get_battle_tile_length();
+}
+
+centesimal_int battle::length_to_battle_range(const int length)
+{
+	return centesimal_int::max(battle::length_to_battle_tile_length(length), 1);
+}
+
 battle::battle(army *attacking_army, army *defending_army, const QSize &map_size)
 	: attacking_army(attacking_army), defending_army(defending_army)
 {

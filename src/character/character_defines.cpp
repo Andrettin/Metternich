@@ -24,7 +24,9 @@ void character_defines::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "battle_movement_rate") {
+	if (key == "minimum_character_range") {
+		this->minimum_character_range = string::to_length(value);
+	} else if (key == "battle_movement_rate") {
 		this->battle_movement_rate = string::to_length(value);
 	} else {
 		defines_base::process_gsml_property(property);

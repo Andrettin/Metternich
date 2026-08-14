@@ -33,6 +33,7 @@
 #include "domain/government_type.h"
 #include "domain/office.h"
 #include "engine_interface.h"
+#include "game/battle.h"
 #include "game/character_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -2288,6 +2289,11 @@ void character_game_data::change_damage_bonus(const int change)
 	this->set_damage_bonus(this->get_damage_bonus() + change);
 }
 
+int character_game_data::get_effective_range() const
+{
+	return std::max(this->get_range(), character_defines::get()->get_minimum_character_range());
+}
+
 void character_game_data::set_range(const int range)
 {
 	if (range == this->get_range()) {
@@ -2302,6 +2308,10 @@ void character_game_data::set_range(const int range)
 		this->change_challenge_rating(1);
 	} else if (range <= 1 && old_range > 1) {
 		this->change_challenge_rating(-1);
+	}
+
+	if (this->get_military_unit() != nullptr) {
+		this->update_military_unit_stats();
 	}
 
 	if (game::get()->is_running()) {
@@ -3152,6 +3162,7 @@ void character_game_data::update_military_unit_stats()
 
 	military_unit->set_stat(military_unit_stat::defense, centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
 	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
+	military_unit->set_stat(military_unit_stat::range, battle::length_to_battle_range(this->get_effective_range()));
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const

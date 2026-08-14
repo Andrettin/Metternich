@@ -34,6 +34,11 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
+	int get_minimum_character_range() const
+	{
+		return this->minimum_character_range;
+	}
+
 	int get_craft_recovery_per_day() const
 	{
 		return this->craft_recovery_per_day;
@@ -105,6 +110,7 @@ signals:
 	void changed();
 
 private:
+	int minimum_character_range = 0;
 	int craft_recovery_per_day = 0;
 	int battle_hit_point_rate = 0; //character health per military unit hit point
 	int battle_movement_rate = 0; //movement in battle per character movement point, in feet

@@ -7,6 +7,7 @@
 #include "domain/domain.h"
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
+#include "game/battle.h"
 #include "game/battle_resolution_type.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"
@@ -18,6 +19,8 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/string_conversion_util.h"
+#include "util/string_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -31,7 +34,14 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 	if (tag == "stats") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const military_unit_stat stat = magic_enum::enum_cast<military_unit_stat>(property.get_key()).value();
-			const centesimal_int stat_value(property.get_value());
+			centesimal_int stat_value;
+			if (stat == military_unit_stat::range && !string::is_number(property.get_value())) {
+				const int range = string::to_length(property.get_value());
+				stat_value = battle::length_to_battle_range(range);
+			} else {
+				stat_value = centesimal_int(property.get_value());
+			}
+
 			this->stats[stat] = stat_value;
 		});
 	} else if (tag == "battle_resolution_types") {

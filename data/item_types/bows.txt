@@ -7,7 +7,7 @@ short_bow = {
 	two_handed = true
 	required_technology = short_bow
 	modifier = {
-		range = 4
+		range = 50yd
 	}
 }
 
@@ -20,7 +20,7 @@ long_bow = {
 	two_handed = true
 	required_technology = long_bow
 	modifier = {
-		range = 6
+		range = 70yd
 	}
 }
 
@@ -33,7 +33,7 @@ composite_short_bow = {
 	two_handed = true
 	required_technology = composite_bow
 	modifier = {
-		range = 4
+		range = 50yd
 	}
 }
 
@@ -46,7 +46,7 @@ composite_long_bow = {
 	two_handed = true
 	required_technology = composite_bow
 	modifier = {
-		range = 5
+		range = 60yd
 	}
 }
 
@@ -59,7 +59,7 @@ light_crossbow = {
 	two_handed = true
 	required_technology = light_crossbow
 	modifier = {
-		range = 5
+		range = 60yd
 	}
 }
 
@@ -72,6 +72,6 @@ heavy_crossbow = {
 	two_handed = true
 	required_technology = heavy_crossbow
 	modifier = {
-		range = 7
+		range = 80yd
 	}
 }

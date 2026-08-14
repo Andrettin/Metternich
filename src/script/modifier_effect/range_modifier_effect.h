@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "script/modifier_effect/modifier_effect.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -10,8 +11,9 @@ class range_modifier_effect final : public modifier_effect<const character>
 {
 public:
 	explicit range_modifier_effect(const std::string &value)
-		: modifier_effect<const character>(value)
+		: modifier_effect<const character>()
 	{
+		this->value = centesimal_int(string::to_length(value));
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -30,6 +32,14 @@ public:
 		Q_UNUSED(scope);
 
 		return "Range";
+	}
+
+	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	{
+		Q_UNUSED(ignore_decimals);
+
+		const centesimal_int value = this->get_multiplied_value(multiplier);
+		return std::format("{}{}", value >= 0 ? "+" : "0", string::from_length(value.to_int(), false));
 	}
 };
 

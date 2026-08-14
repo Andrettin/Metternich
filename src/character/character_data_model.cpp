@@ -26,10 +26,9 @@
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
-#include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -589,7 +588,7 @@ void character_data_model::update_range_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->range_row->value = std::to_string(character_game_data->get_range());
+	this->range_row->value = string::from_length(character_game_data->get_effective_range(), false);
 
 	this->on_top_row_changed(this->range_row);
 }

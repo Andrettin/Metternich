@@ -526,6 +526,7 @@ public:
 		return this->range;
 	}
 
+	int get_effective_range() const;
 	void set_range(const int range);
 	void change_range(const int change);
 
@@ -1085,7 +1086,7 @@ private:
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
 	int damage_bonus = 0;
-	int range = 1;
+	int range = 0; //in feet
 	int movement = 0;
 	int initiative_bonus = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
