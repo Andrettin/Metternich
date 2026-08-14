@@ -441,7 +441,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 	const army *target_army = target->get_army();
 
 	if (spell->get_battle_result() != attack_result::none) {
-		const military_unit_type *target_unit_type = target->get_type();
+		const sound *target_death_sound = target->get_death_sound();
 
 		switch (spell->get_battle_result()) {
 			case attack_result::miss:
@@ -470,8 +470,8 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 			this->remove_unit_info(target);
 
 			if (this->scope == game::get()->get_player_domain()) {
-				if (target_unit_type != nullptr && target_unit_type->get_death_sound() != nullptr) {
-					co_await target_unit_type->get_death_sound()->play_coro();
+				if (target_death_sound != nullptr) {
+					co_await target_death_sound->play_coro();
 				}
 			}
 		}
