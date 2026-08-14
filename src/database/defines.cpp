@@ -68,6 +68,13 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->months_per_turn_from_year[threshold_year] = months_per_turn;
 		});
+	} else if (tag == "battle_defense_per_armor_class") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int armor_class = std::stoi(property.get_key());
+			const int defense = std::stoi(property.get_value());
+
+			this->battle_defense_per_armor_class[armor_class] = defense;
+		});
 	} else if (tag == "promotion_chance") {
 		this->promotion_chance = std::make_unique<factor<population_unit>>();
 		this->promotion_chance->process_gsml_data(scope);
@@ -293,6 +300,22 @@ int defines::get_scaled_tile_width() const
 int defines::get_scaled_tile_height() const
 {
 	return (this->get_tile_height() * preferences::get()->get_scale_factor()).to_int();
+}
+
+int defines::get_battle_defense_for_armor_class(const int armor_class) const
+{
+	const auto find_iterator = this->battle_defense_per_armor_class.find(armor_class);
+	if (find_iterator != this->battle_defense_per_armor_class.end()) {
+		return find_iterator->second;
+	}
+
+	//use the last value if no specific one was found (if the armor class is greater than the armor class for the last value)
+	const auto last_iterator = this->battle_defense_per_armor_class.rbegin();
+	if (armor_class > last_iterator->first) {
+		return last_iterator->second;
+	}
+
+	return 0;
 }
 
 int defines::get_bloodline_strength_category_weight(const bloodline_strength_category category) const

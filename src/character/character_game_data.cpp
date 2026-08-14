@@ -2200,6 +2200,10 @@ void character_game_data::set_armor_class_bonus(const int bonus)
 		this->change_challenge_rating(-1);
 	}
 
+	if (this->get_military_unit() != nullptr) {
+		this->update_military_unit_stats();
+	}
+
 	if (game::get()->is_running()) {
 		emit armor_class_bonus_changed();
 	}
@@ -3141,9 +3145,11 @@ QCoro::Task<void> character_game_data::update_military_unit_hit_points()
 
 void character_game_data::update_military_unit_stats()
 {
-	assert_throw(this->get_military_unit() != nullptr);
+	metternich::military_unit *military_unit = this->get_military_unit();
+	assert_throw(military_unit != nullptr);
 
-	this->get_military_unit()->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
+	military_unit->set_stat(military_unit_stat::defense, centesimal_int(defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
+	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const

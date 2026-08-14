@@ -259,6 +259,8 @@ public:
 		return this->battle_hit_point_rate;
 	}
 
+	int get_battle_defense_for_armor_class(const int armor_class) const;
+
 	const terrain_type *get_default_base_terrain() const
 	{
 		return this->default_base_terrain;
@@ -639,6 +641,7 @@ private:
 	int battle_tile_length = 0; //the length of each side of a battle tile, in feet
 	int battle_movement_rate = 0; //movement in battle per character movement point, in feet
 	int battle_hit_point_rate = 0; //character health per military unit hit point
+	std::map<int, int> battle_defense_per_armor_class; //military unit defense per character armor class
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_province_terrain = nullptr;
