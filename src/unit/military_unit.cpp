@@ -22,6 +22,7 @@
 #include "map/province_game_data.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "species/phenotype.h"
 #include "ui/icon.h"
 #include "unit/army.h"
 #include "unit/military_unit_domain.h"
@@ -270,6 +271,15 @@ const metternich::religion *military_unit::get_religion() const
 	}
 
 	return nullptr;
+}
+
+const species *military_unit::get_species() const
+{
+	if (this->get_phenotype() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_phenotype()->get_species();
 }
 
 QCoro::Task<void> military_unit::set_province(const metternich::province *province)
@@ -617,6 +627,14 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 	}
 
 	int defense = target->get_effective_stat(military_unit_stat::defense).to_int();
+	if (target->get_character() != nullptr) {
+		//if the target is a character, derive their defense from their armor class during the attack, so that armor class bonuses against specific species can be applied
+		int armor_class = target->get_character()->get_game_data()->get_armor_class_bonus();
+		if (this->get_species() != nullptr) {
+			armor_class += target->get_character()->get_game_data()->get_species_armor_class_bonus(this->get_species());
+		}
+		defense = character_defines::get()->get_battle_defense_for_armor_class(armor_class);
+	}
 	if (this->get_type()->is_cavalry()) {
 		defense += target->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
 	}

@@ -21,6 +21,7 @@ class promotion;
 class province;
 class religion;
 class sound;
+class species;
 enum class battle_resolution_type;
 enum class military_unit_category;
 enum class military_unit_domain;
@@ -102,6 +103,8 @@ public:
 	{
 		return this->phenotype;
 	}
+
+	const species *get_species() const;
 
 	const metternich::character *get_character() const
 	{
