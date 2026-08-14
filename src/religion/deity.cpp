@@ -4,12 +4,12 @@
 
 #include "character/character.h"
 #include "character/character_class.h"
+#include "character/character_defines.h"
 #include "character/mythic_path.h"
 #include "character/trait.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/data_entry_container.h"
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "domain/idea_type.h"
@@ -62,7 +62,7 @@ void deity::process_gsml_property(const gsml_property &property)
 	if (key == "divine_rank") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		const divine_rank rank = magic_enum::enum_cast<divine_rank>(value).value();
-		this->divine_level = defines::get()->get_divine_rank_level(rank);
+		this->divine_level = character_defines::get()->get_divine_rank_level(rank);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -177,7 +177,7 @@ const std::string &deity::get_cultural_name(const culture_base *culture) const
 
 divine_rank deity::get_divine_rank() const
 {
-	return defines::get()->get_divine_level_rank(this->get_divine_level());
+	return character_defines::get()->get_divine_level_rank(this->get_divine_level());
 }
 
 std::string_view deity::get_divine_rank_name() const

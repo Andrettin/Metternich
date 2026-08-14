@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/character_attribute_type.h"
 #include "character/character_data_model.h"
+#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "character/dynasty.h"
 #include "character/family_tree_model.h"
@@ -16,9 +17,7 @@
 #include "database/database.h"
 #include "database/database_enum_util.h"
 #include "database/defines.h"
-#include "database/population_defines.h"
 #include "database/preferences.h"
-#include "database/ui_defines.h"
 #include "domain/consulate.h"
 #include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
@@ -78,6 +77,7 @@
 #include "map/temperature_type.h"
 #include "map/tile_image_provider.h"
 #include "population/population.h"
+#include "population/population_defines.h"
 #include "population/population_strata.h"
 #include "population/population_type.h"
 #include "script/scripted_character_modifier.h"
@@ -94,6 +94,7 @@
 #include "ui/interface_image_provider.h"
 #include "ui/portrait.h"
 #include "ui/portrait_image_provider.h"
+#include "ui/ui_defines.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_domain.h"
@@ -174,6 +175,7 @@ int main(int argc, char **argv)
 		QImageReader::setAllocationLimit(1024);
 
 		database::get()->add_defines(defines::get());
+		database::get()->add_defines(character_defines::get());
 		database::get()->add_defines(population_defines::get());
 		database::get()->add_defines(ui_defines::get());
 

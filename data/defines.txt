@@ -25,26 +25,6 @@ combat_round_duration = 6s
 battle_round_duration = 5min
 battle_tile_length = 60yd #the length of each side of a battle tile
 battle_map_scale = 2 #the scale multiplier applied to the battle map (not graphical scaling!)
-battle_movement_rate = 10yd #movement in battle per character movement point
-battle_hit_point_rate = 90 #character health per military unit hit point
-battle_defense_per_armor_class = {
-	0 = 1
-	1 = 2
-	2 = 2
-	3 = 3
-	4 = 3
-	5 = 4
-	6 = 4
-	7 = 4
-	8 = 4
-	9 = 5
-	10 = 5
-	11 = 6
-	12 = 6
-	13 = 7
-	14 = 7
-	15 = 8
-}
 
 settlement_commodity_bonuses = {
 }
@@ -125,9 +105,6 @@ domain_maintenance_cost_per_domain_size = {
 	76 = 30 #gb
 }
 
-max_character_normal_level = 20 #used for calculating character level based on level percentages
-craft_recovery_per_day = 100
-ruler_reputation_dice = 1d20+15
 ruler_office = ruler
 heir_office = heir
 foreign_minister_office = chancellor
@@ -136,150 +113,6 @@ war_minister_office = marshal
 foreign_minister_portrait = metternich
 interior_minister_portrait = jp_morgan
 war_minister_portrait = otto_von_bismarck
-
-experience_per_level = {
-	1 = 0
-	2 = 2000
-	3 = 5000
-	4 = 9000
-	5 = 15000
-	6 = 23000
-	7 = 35000
-	8 = 51000
-	9 = 75000
-	10 = 105000
-	11 = 155000
-	12 = 220000
-	13 = 315000
-	14 = 445000
-	15 = 635000
-	16 = 890000
-	17 = 1300000
-	18 = 1800000
-	19 = 2550000
-	20 = 3600000
-}
-
-experience_award_per_challenge_rating = {
-	0 = 7
-	1 = 15
-	2 = 35
-	3 = 65
-	4 = 120
-	5 = 175
-	6 = 270
-	7 = 420
-	8 = 650
-	9 = 975
-	10 = 1400
-	11 = 2000
-	12 = 2000
-	13 = 3000
-}
-
-bloodline_strength_category_weights = {
-	tainted = 25
-	minor = 40
-	major = 30
-	great = 5
-}
-
-bloodline_strength_per_category = {
-	tainted = 4d4
-	minor = 5d6
-	major = 8d6
-	great = 8d8
-}
-
-divine_rank_levels = {
-	quasi_deity = 0
-	demigod = 1
-	lesser_deity = 6
-	intermediate_deity = 11
-	greater_deity = 16
-	overdeity = 21
-}
-
-divine_rank_modifiers = {
-	1 = {
-		trait_of_type = divine_trait
-		trait_of_type = divine_trait
-	}
-	2 = {
-		trait_of_type = divine_trait
-	}
-	3 = {
-		trait_of_type = divine_trait
-	}
-	4 = {
-		trait_of_type = divine_trait
-	}
-	5 = {
-		trait_of_type = divine_trait
-	}
-	6 = {
-		trait_of_type = divine_trait
-		trait_of_type = divine_trait
-	}
-	7 = {
-		trait_of_type = divine_trait
-	}
-	8 = {
-		trait_of_type = divine_trait
-	}
-	9 = {
-		trait_of_type = divine_trait
-	}
-	10 = {
-		trait_of_type = divine_trait
-	}
-	11 = {
-		trait_of_type = divine_trait
-		trait_of_type = divine_trait
-	}
-	12 = {
-		trait_of_type = divine_trait
-	}
-	13 = {
-		trait_of_type = divine_trait
-	}
-	14 = {
-		trait_of_type = divine_trait
-	}
-	15 = {
-		trait_of_type = divine_trait
-	}
-	16 = {
-		trait_of_type = divine_trait
-		trait_of_type = divine_trait
-		trait_of_type = divine_trait
-	}
-	17 = {
-		trait_of_type = divine_trait
-	}
-	18 = {
-		trait_of_type = divine_trait
-	}
-	19 = {
-		trait_of_type = divine_trait
-	}
-	20 = {
-		trait_of_type = divine_trait
-	}
-}
-
-mana_cost_per_spell_level = {
-	0 = 1
-	1 = 8
-	2 = 12
-	3 = 20
-	4 = 30
-	5 = 44
-	6 = 60
-	7 = 80
-	8 = 100
-	9 = 120
-}
 
 map_blank_color = { 221 216 181 }
 country_border_color = { 0 0 0 }

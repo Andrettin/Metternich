@@ -3,6 +3,7 @@
 #include "game/battle.h"
 
 #include "character/character.h"
+#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
@@ -11,13 +12,9 @@
 #include "engine_interface.h"
 #include "game/attack_result.h"
 #include "game/battle_resolution_table.h"
-#include "game/domain_event.h"
-#include "game/event_trigger.h"
 #include "game/game.h"
 #include "map/site.h"
-#include "map/site_game_data.h"
 #include "map/terrain_type.h"
-#include "script/effect/effect_list.h"
 #include "sound/sound.h"
 #include "spell/spell.h"
 #include "spell/spell_target.h"
@@ -27,14 +24,9 @@
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
-#include "util/dice.h"
 #include "util/map_util.h"
-#include "util/number_util.h"
-#include "util/point_container.h"
 #include "util/point_util.h"
-#include "util/random.h"
 #include "util/size_util.h"
-#include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -723,7 +715,7 @@ int battle_unit_info::get_max_hit_points() const
 QCoro::Task<void> battle_unit_info::receive_damage(const int damage)
 {
 	if (this->get_character() != nullptr) {
-		const int health_damage = damage * defines::get()->get_battle_hit_point_rate();
+		const int health_damage = damage * character_defines::get()->get_battle_hit_point_rate();
 		co_await this->get_character()->get_game_data()->change_health(-health_damage);
 	} else {
 		co_await this->get_unit()->change_hit_points(-damage);

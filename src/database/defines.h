@@ -27,7 +27,6 @@ namespace metternich {
 
 class battle_resolution_table;
 class building_class;
-class character;
 class commodity;
 class commodity_unit;
 class domain_skill;
@@ -37,13 +36,8 @@ class office;
 class portrait;
 class sound;
 class terrain_type;
-enum class bloodline_strength_category;
 enum class diplomacy_state;
-enum class divine_rank;
 enum class event_trigger;
-
-template <typename scope_type>
-class modifier;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -57,7 +51,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn READ get_default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(int battle_map_scale MEMBER battle_map_scale READ get_battle_map_scale NOTIFY changed)
-	Q_PROPERTY(int battle_hit_point_rate MEMBER battle_hit_point_rate READ get_battle_hit_point_rate NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
@@ -73,9 +66,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::commodity* advisor_commodity MEMBER advisor_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tariff_icon MEMBER tariff_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* treasure_fleet_icon MEMBER treasure_fleet_icon NOTIFY changed)
-	Q_PROPERTY(int max_character_normal_level MEMBER max_character_normal_level READ get_max_character_normal_level NOTIFY changed)
-	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
-	Q_PROPERTY(archimedes::dice ruler_reputation_dice MEMBER ruler_reputation_dice READ get_ruler_reputation_dice NOTIFY changed)
 	Q_PROPERTY(const metternich::office* ruler_office MEMBER ruler_office READ get_ruler_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* heir_office MEMBER heir_office READ get_heir_office NOTIFY changed)
 	Q_PROPERTY(const metternich::office* foreign_minister_office MEMBER foreign_minister_office READ get_foreign_minister_office NOTIFY changed)
@@ -212,18 +202,6 @@ public:
 		return this->battle_map_scale;
 	}
 
-	int get_battle_movement_rate() const
-	{
-		return this->battle_movement_rate;
-	}
-
-	int get_battle_hit_point_rate() const
-	{
-		return this->battle_hit_point_rate;
-	}
-
-	int get_battle_defense_for_armor_class(const int armor_class) const;
-
 	const terrain_type *get_default_base_terrain() const
 	{
 		return this->default_base_terrain;
@@ -308,21 +286,6 @@ public:
 	{
 		return this->treasure_fleet_icon;
 	}
-
-	int get_max_character_normal_level() const
-	{
-		return this->max_character_normal_level;
-	}
-	
-	int get_craft_recovery_per_day() const
-	{
-		return this->craft_recovery_per_day;
-	}
-	
-	const dice &get_ruler_reputation_dice() const
-	{
-		return this->ruler_reputation_dice;
-	}
 	
 	const office *get_ruler_office() const
 	{
@@ -363,46 +326,6 @@ public:
 	{
 		return this->war_minister_portrait;
 	}
-
-	int64_t get_experience_for_level(const int level) const
-	{
-		const auto find_iterator = this->experience_per_level.find(level);
-		if (find_iterator != this->experience_per_level.end()) {
-			return find_iterator->second;
-		}
-
-		if (level <= 0) {
-			throw std::runtime_error(std::format("No experience total is given for level {}.", level));
-		}
-
-		const int64_t previous_level_experience = this->get_experience_for_level(level - 1);
-		return (previous_level_experience - this->get_experience_for_level(level - 2)) * 2 + previous_level_experience;
-	}
-
-	int64_t get_experience_award_for_challenge_rating(const int challenge_rating) const
-	{
-		const auto find_iterator = this->experience_award_per_challenge_rating.find(challenge_rating);
-		if (find_iterator != this->experience_award_per_challenge_rating.end()) {
-			return find_iterator->second;
-		}
-
-		if (challenge_rating <= 0) {
-			throw std::runtime_error(std::format("No experience award is given for challenge rating {}.", challenge_rating));
-		}
-
-		const int64_t previous_experience_award = this->get_experience_award_for_challenge_rating(challenge_rating - 1);
-		return previous_experience_award + 1000;
-	}
-
-	int get_bloodline_strength_category_weight(const bloodline_strength_category category) const;
-	const std::vector<bloodline_strength_category> &get_weighted_bloodline_strength_categories() const;
-	const dice &get_bloodline_strength_for_category(const bloodline_strength_category category) const;
-
-	int get_divine_rank_level(const divine_rank rank) const;
-	divine_rank get_divine_level_rank(const int divine_level) const;
-	const metternich::modifier<const character> *get_divine_rank_modifier(const int divine_rank) const;
-
-	int get_mana_cost_for_spell_level(const int level) const;
 
 	const QColor &get_map_blank_color() const
 	{
@@ -548,9 +471,6 @@ private:
 	std::chrono::seconds battle_round_duration;
 	int battle_tile_length = 0; //the length of each side of a battle tile, in feet
 	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
-	int battle_movement_rate = 0; //movement in battle per character movement point, in feet
-	int battle_hit_point_rate = 0; //character health per military unit hit point
-	std::map<int, int> battle_defense_per_armor_class; //military unit defense per character armor class
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_province_terrain = nullptr;
@@ -568,9 +488,6 @@ private:
 	const commodity *advisor_commodity = nullptr;
 	const icon *tariff_icon = nullptr;
 	const icon *treasure_fleet_icon = nullptr;
-	int max_character_normal_level = 0;
-	int craft_recovery_per_day = 0;
-	dice ruler_reputation_dice;
 	const office *ruler_office = nullptr;
 	const office *heir_office = nullptr;
 	const office *foreign_minister_office = nullptr;
@@ -579,14 +496,6 @@ private:
 	const portrait *foreign_minister_portrait = nullptr;
 	const portrait *interior_minister_portrait = nullptr;
 	const portrait *war_minister_portrait = nullptr;
-	std::map<int, int64_t> experience_per_level;
-	std::map<int, int64_t> experience_award_per_challenge_rating;
-	std::map<bloodline_strength_category, int> bloodline_strength_category_weights;
-	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;
-	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;
-	std::map<divine_rank, int> divine_rank_levels;
-	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
-	std::map<int, int> mana_cost_per_spell_level;
 	QColor map_blank_color;
 	QColor country_border_color;
 	QColor selected_country_color;

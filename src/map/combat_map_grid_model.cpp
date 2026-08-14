@@ -3,11 +3,11 @@
 #include "map/combat_map_grid_model.h"
 
 #include "character/character.h"
-#include "database/ui_defines.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "map/terrain_type.h"
 #include "ui/cursor.h"
+#include "ui/ui_defines.h"
 #include "util/exception_util.h"
 #include "util/point_util.h"
 

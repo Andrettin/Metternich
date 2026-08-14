@@ -6,6 +6,7 @@
 #include "character/bloodline_strength_category.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "character/character_history.h"
 #include "character/character_reference.h"
@@ -15,7 +16,6 @@
 #include "character/starting_age_category.h"
 #include "character/trait.h"
 #include "culture/culture.h"
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "game/game.h"
 #include "item/item_type.h"
@@ -265,9 +265,9 @@ void character::process_gsml_property(const gsml_property &property)
 		assert_throw(this->get_mythic_path() != nullptr);
 		this->mythic_tier = this->get_mythic_path()->get_rank_tier(value);
 	} else if (key == "level_ratio") {
-		assert_throw(defines::get()->get_max_character_normal_level() > 0);
+		assert_throw(character_defines::get()->get_max_character_normal_level() > 0);
 		const auto [numerator, denominator] = string::to_numerator_and_denominator(value);
-		this->level = std::max(this->level, defines::get()->get_max_character_normal_level() * numerator / denominator);
+		this->level = std::max(this->level, character_defines::get()->get_max_character_normal_level() * numerator / denominator);
 	} else {
 		character_base::process_gsml_property(property);
 	}
@@ -698,12 +698,12 @@ void character::initialize_bloodline()
 	if (this->get_bloodline() != nullptr) {
 		if (this->get_bloodline_strength() == 0) {
 			if (this->bloodline_strength_category == bloodline_strength_category::none) {
-				this->bloodline_strength_category = vector::get_random(defines::get()->get_weighted_bloodline_strength_categories());
+				this->bloodline_strength_category = vector::get_random(character_defines::get()->get_weighted_bloodline_strength_categories());
 			}
 
 			assert_throw(this->bloodline_strength_category != bloodline_strength_category::none);
 
-			this->bloodline_strength = random::get()->roll_dice(defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
+			this->bloodline_strength = random::get()->roll_dice(character_defines::get()->get_bloodline_strength_for_category(this->bloodline_strength_category));
 		}
 	}
 }

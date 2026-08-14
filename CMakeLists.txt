@@ -32,6 +32,7 @@ set(character_SRCS
 	src/character/character_class_container.cpp
 	src/character/character_container.cpp
 	src/character/character_data_model.cpp
+	src/character/character_defines.cpp
 	src/character/character_game_data.cpp
 	src/character/character_history.cpp
 	src/character/character_reference.cpp
@@ -66,7 +67,6 @@ set_source_files_properties(${culture_SRCS} PROPERTIES UNITY_GROUP "culture")
 set(database_SRCS
 	src/database/data_entry_container.cpp
 	src/database/defines.cpp
-	src/database/population_defines.cpp
 	src/database/preferences.cpp
 )
 source_group(database FILES ${database_SRCS})
@@ -220,6 +220,7 @@ set(population_SRCS
 	src/population/population.cpp
 	src/population/population_class.cpp
 	src/population/population_class_container.cpp
+	src/population/population_defines.cpp
 	src/population/population_group_map.cpp
 	src/population/population_type.cpp
 	src/population/population_type_container.cpp
@@ -403,6 +404,7 @@ set(character_HDRS
 	src/character/character_class_container.h
 	src/character/character_container.h
 	src/character/character_data_model.h
+	src/character/character_defines.h
 	src/character/character_game_data.h
 	src/character/character_history.h
 	src/character/character_modifier_type.h
@@ -439,9 +441,7 @@ source_group(culture FILES ${culture_HDRS})
 set(database_HDRS
 	src/database/data_entry_container.h
 	src/database/defines.h
-	src/database/population_defines.h
 	src/database/preferences.h
-	src/database/ui_defines.h
 )
 source_group(database FILES ${database_HDRS})
 
@@ -615,6 +615,7 @@ set(population_HDRS
 	src/population/population.h
 	src/population/population_class.h
 	src/population/population_class_container.h
+	src/population/population_defines.h
 	src/population/population_group_map.h
 	src/population/population_type.h
 	src/population/population_type_container.h
@@ -980,6 +981,7 @@ set(ui_HDRS
 	src/ui/portrait.h
 	src/ui/portrait_container.h
 	src/ui/portrait_image_provider.h
+	src/ui/ui_defines.h
 )
 source_group(ui FILES ${ui_HDRS})
 

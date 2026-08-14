@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "database/population_defines.h"
+#include "population/population_defines.h"
 
 #include "script/factor.h"
 

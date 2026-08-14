@@ -2,9 +2,9 @@
 
 #include "unit/promotion.h"
 
-#include "database/ui_defines.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "ui/ui_defines.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_stat.h"
 #include "util/number_util.h"

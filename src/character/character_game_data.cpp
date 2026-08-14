@@ -7,6 +7,7 @@
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/character_defines.h"
 #include "character/character_history.h"
 #include "character/character_modifier_type.h"
 #include "character/domain_skill.h"
@@ -21,7 +22,6 @@
 #include "character/trait_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
-#include "database/ui_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
 #include "domain/domain_economy.h"
@@ -64,6 +64,7 @@
 #include "technology/technology_category.h"
 #include "ui/icon.h"
 #include "ui/portrait.h"
+#include "ui/ui_defines.h"
 #include "unit/civilian_unit.h"
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit.h"
@@ -589,7 +590,7 @@ QCoro::Task<void> character_game_data::do_crafting()
 
 	if (this->get_craft() < this->get_max_craft()) {
 		const int64_t turn_days = game::get()->get_days_until_next_turn();
-		const int recovered_craft = static_cast<int>(std::max<int64_t>(this->get_max_craft(), defines::get()->get_craft_recovery_per_day() * turn_days));
+		const int recovered_craft = static_cast<int>(std::max<int64_t>(this->get_max_craft(), character_defines::get()->get_craft_recovery_per_day() * turn_days));
 		this->change_craft(recovered_craft);
 	}
 
@@ -1704,7 +1705,7 @@ int64_t character_game_data::get_experience_award() const
 		return this->character->get_monster_type()->get_experience_award();
 	}
 
-	return defines::get()->get_experience_award_for_challenge_rating(this->get_challenge_rating());
+	return character_defines::get()->get_experience_award_for_challenge_rating(this->get_challenge_rating());
 }
 
 void character_game_data::change_caster_level(const int change)
@@ -1758,7 +1759,7 @@ QCoro::Task<void> character_game_data::on_divine_rank_gained(const int affected_
 
 	assert_throw(affected_rank >= 1);
 
-	const modifier<const metternich::character> *rank_modifier = defines::get()->get_divine_rank_modifier(affected_rank);
+	const modifier<const metternich::character> *rank_modifier = character_defines::get()->get_divine_rank_modifier(affected_rank);
 	if (rank_modifier != nullptr) {
 		co_await rank_modifier->apply(this->character, multiplier);
 	}
@@ -3138,9 +3139,9 @@ QCoro::Task<void> character_game_data::update_military_unit_hit_points()
 {
 	assert_throw(this->get_military_unit() != nullptr);
 
-	const int max_hp = std::max(this->get_max_health() / defines::get()->get_battle_hit_point_rate(), 1);
+	const int max_hp = std::max(this->get_max_health() / character_defines::get()->get_battle_hit_point_rate(), 1);
 	co_await this->get_military_unit()->set_max_hit_points(max_hp);
-	co_await this->get_military_unit()->set_hit_points(std::max(this->get_health() / defines::get()->get_battle_hit_point_rate(), 1));
+	co_await this->get_military_unit()->set_hit_points(std::max(this->get_health() / character_defines::get()->get_battle_hit_point_rate(), 1));
 	this->get_military_unit()->set_stat(military_unit_stat::hit_points, centesimal_int(max_hp));
 }
 
@@ -3149,8 +3150,8 @@ void character_game_data::update_military_unit_stats()
 	metternich::military_unit *military_unit = this->get_military_unit();
 	assert_throw(military_unit != nullptr);
 
-	military_unit->set_stat(military_unit_stat::defense, centesimal_int(defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
-	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
+	military_unit->set_stat(military_unit_stat::defense, centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
+	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const
@@ -4088,7 +4089,7 @@ void character_game_data::add_ruled_domain(const metternich::domain *domain)
 {
 	if (this->get_ruled_domains().empty()) {
 		//if this is the first time that the character has become a ruler, add generated ruler reputation for the character
-		const int result = random::get()->roll_dice(defines::get()->get_ruler_reputation_dice());
+		const int result = random::get()->roll_dice(character_defines::get()->get_ruler_reputation_dice());
 		this->change_reputation(result);
 	}
 

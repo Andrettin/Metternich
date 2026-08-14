@@ -3,13 +3,13 @@
 #include "character/character_class.h"
 
 #include "character/character_attribute.h"
+#include "character/character_defines.h"
 #include "character/domain_skill.h"
 #include "character/level_bonus_table.h"
 #include "character/saving_throw_type.h"
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
-#include "database/defines.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
@@ -265,7 +265,7 @@ int64_t character_class::get_experience_for_level(const int level) const
 		return this->get_base_class()->get_experience_for_level(level);
 	}
 
-	return defines::get()->get_experience_for_level(level);
+	return character_defines::get()->get_experience_for_level(level);
 }
 
 const std::variant<int, dice> &character_class::get_health_bonus_for_level(const int level) const

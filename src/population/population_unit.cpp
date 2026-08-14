@@ -3,7 +3,6 @@
 #include "population/population_unit.h"
 
 #include "culture/culture.h"
-#include "database/population_defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
@@ -15,6 +14,7 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "population/population.h"
+#include "population/population_defines.h"
 #include "population/population_type.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
@@ -25,7 +25,6 @@
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/vector_util.h"
-#include "util/vector_random_util.h"
 
 namespace metternich {
 

@@ -3,6 +3,7 @@
 #include "spell/spell.h"
 
 #include "character/character_class.h"
+#include "character/character_defines.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/attack_result.h"
@@ -127,7 +128,7 @@ int spell::get_mana_cost(const character_class *character_class) const
 		return this->mana_cost;
 	}
 
-	return defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));
+	return character_defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));
 }
 
 bool spell::is_available_for_character_class(const character_class *character_class) const

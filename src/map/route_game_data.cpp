@@ -3,7 +3,6 @@
 #include "map/route_game_data.h"
 
 #include "database/defines.h"
-#include "database/ui_defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "game/game.h"
@@ -15,6 +14,7 @@
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "script/condition/and_condition.h"
+#include "ui/ui_defines.h"
 #include "util/assert_util.h"
 #include "util/point_util.h"
 #include "util/string_conversion_util.h"
