@@ -69,6 +69,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(archimedes::decimillesimal_int default_minimap_tile_scale MEMBER default_minimap_tile_scale READ get_default_minimap_tile_scale NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn READ get_default_months_per_turn NOTIFY changed)
+	Q_PROPERTY(int battle_map_scale MEMBER battle_map_scale READ get_battle_map_scale NOTIFY changed)
 	Q_PROPERTY(int battle_hit_point_rate MEMBER battle_hit_point_rate READ get_battle_hit_point_rate NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
@@ -247,6 +248,11 @@ public:
 	int get_battle_tile_length() const
 	{
 		return this->battle_tile_length;
+	}
+
+	int get_battle_map_scale() const
+	{
+		return this->battle_map_scale;
 	}
 
 	int get_battle_movement_rate() const
@@ -639,6 +645,7 @@ private:
 	std::chrono::seconds combat_round_duration;
 	std::chrono::seconds battle_round_duration;
 	int battle_tile_length = 0; //the length of each side of a battle tile, in feet
+	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
 	int battle_movement_rate = 0; //movement in battle per character movement point, in feet
 	int battle_hit_point_rate = 0; //character health per military unit hit point
 	std::map<int, int> battle_defense_per_armor_class; //military unit defense per character armor class
