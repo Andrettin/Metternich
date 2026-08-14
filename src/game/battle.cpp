@@ -39,7 +39,7 @@ centesimal_int battle::length_to_battle_tile_length(const int length)
 
 centesimal_int battle::length_to_battle_range(const int length)
 {
-	return centesimal_int::max(battle::length_to_battle_tile_length(length), 1);
+	return centesimal_int::max(centesimal_int(battle::length_to_battle_tile_length(length).to_rounded_int()), 1);
 }
 
 battle::battle(army *attacking_army, army *defending_army, const QSize &map_size)
