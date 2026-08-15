@@ -17,12 +17,13 @@ Text {
 		anchors.verticalCenterOffset: shadow_offset
 		width: parent.width
 		height: parent.height
-		text: colored_text(parent.text, shadow_color)
+		text: parent.text
 		color: shadow_color
 		font: parent.font
 		wrapMode: parent.wrapMode
 		horizontalAlignment: parent.horizontalAlignment
 		verticalAlignment: parent.verticalAlignment
+		textFormat: parent.textFormat
 		z: -1 //draw below parent
 	}
 }

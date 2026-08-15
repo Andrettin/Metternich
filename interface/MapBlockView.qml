@@ -406,6 +406,7 @@ Item {
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
 					width: province_label_column.width > 0 ? province_label_column.width : contentWidth
+					textFormat: Text.PlainText //needs to be plain text, so that it won't block the mouse areas underneath (probably because rich text can have links)
 				}
 			}
 		}
