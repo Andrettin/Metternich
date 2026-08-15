@@ -59,53 +59,25 @@ Rectangle {
 		
 		IconButton {
 			id: show_sites_button
-			icon_identifier: "flag"
-			highlighted: province_map.show_site_mode === ProvinceMap.SiteMode.Show
-			
-			onClicked: {
-				if (province_map.show_site_mode === ProvinceMap.SiteMode.Show) {
-					province_map.show_site_mode = ProvinceMap.SiteMode.Hide
-					status_text = "Show Province Sites"
-				} else {
-					province_map.show_site_mode = ProvinceMap.SiteMode.Show
-					status_text = "Hide Province Sites"
-				}
-			}
-			
-			onHoveredChanged: {
-				if (hovered) {
-					if (province_map.show_site_mode === ProvinceMap.SiteMode.Show) {
-						status_text = "Hide Province Sites"
-					} else {
-						status_text = "Show Province Sites"
-					}
-				} else {
-					status_text = ""
-				}
-			}
-		}
-		
-		IconButton {
-			id: show_site_locations_button
 			icon_identifier: "settlement"
-			highlighted: province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations
+			highlighted: province_map.show_sites
 			
 			onClicked: {
-				if (province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations) {
-					province_map.show_site_mode = ProvinceMap.SiteMode.Hide
-					status_text = "Show Site Locations"
+				province_map.show_sites = !province_map.show_sites
+				
+				if (province_map.show_sites) {
+					status_text = "Hide Sites"
 				} else {
-					province_map.show_site_mode = ProvinceMap.SiteMode.ShowLocations
-					status_text = "Hide Site Locations"
+					status_text = "Show Sites"
 				}
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					if (province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations) {
-						status_text = "Hide Site Locations"
+					if (province_map.show_sites) {
+						status_text = "Hide Sites"
 					} else {
-						status_text = "Show Site Locations"
+						status_text = "Show Sites"
 					}
 				} else {
 					status_text = ""

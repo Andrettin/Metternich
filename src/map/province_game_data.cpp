@@ -66,6 +66,7 @@
 #include "util/container_util.h"
 #include "util/dice.h"
 #include "util/map_util.h"
+#include "util/point_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -1464,21 +1465,62 @@ void province_game_data::calculate_text_rect()
 {
 	this->text_rect = QRect();
 
-	const QPoint center_pos = this->get_center_tile_pos();
-
 	const map *map = map::get();
 
-	assert_throw(map->get_tile(center_pos)->get_province() == this->province);
+	std::vector<QPoint> start_positions;
+	start_positions.reserve(this->province->get_map_data()->get_sites().size() * 8 + 1);
+	start_positions.push_back(this->get_center_tile_pos());
+	for (const site *site : this->province->get_map_data()->get_sites()) {
+		point::for_each_cardinally_adjacent(site->get_map_data()->get_tile_pos(), [&start_positions](const QPoint &adjacent_pos) {
+			start_positions.push_back(adjacent_pos);
+		});
+	}
 
-	this->text_rect = QRect(center_pos, QSize(1, 1));
+	std::vector<QRect> potential_text_rects;
+	potential_text_rects.reserve(start_positions.size());
+	for (const QPoint &tile_pos : start_positions) {
+		if (!map->contains(tile_pos)) {
+			continue;
+		}
+
+		const tile *tile = map->get_tile(tile_pos);
+		if (tile->get_site() != nullptr || tile->get_province() != this->province) {
+			continue;
+		}
+
+		QRect text_rect = this->calculate_text_rect_for_pos(tile_pos);
+
+		if (!potential_text_rects.empty()) {
+			const QRect &previous_text_rect = potential_text_rects.back();
+			const int text_rect_area = text_rect.width() * text_rect.height();
+			const int previous_text_rect_area = previous_text_rect.width() * previous_text_rect.height();
+			if (text_rect_area > previous_text_rect_area) {
+				potential_text_rects.clear();
+			} else if (text_rect_area < previous_text_rect_area) {
+				continue;
+			}
+		}
+		potential_text_rects.push_back(std::move(text_rect));
+	}
+
+	this->text_rect = vector::get_random(potential_text_rects);
+
+	emit text_rect_changed();
+}
+
+QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) const
+{
+	const map *map = map::get();
+
+	QRect text_rect = QRect(center_pos, QSize(1, 1));
 
 	bool changed = true;
 	while (changed) {
 		changed = false;
 
 		bool can_expand_left = true;
-		const int left_x = this->text_rect.left() - 1;
-		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+		const int left_x = text_rect.left() - 1;
+		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
 			const QPoint adjacent_pos(left_x, y);
 
 			if (!this->get_territory_rect().contains(adjacent_pos)) {
@@ -1492,15 +1534,20 @@ void province_game_data::calculate_text_rect()
 				can_expand_left = false;
 				break;
 			}
+
+			if (adjacent_tile->get_site() != nullptr) {
+				can_expand_left = false;
+				break;
+			}
 		}
 		if (can_expand_left) {
-			this->text_rect.setLeft(left_x);
+			text_rect.setLeft(left_x);
 			changed = true;
 		}
 
 		bool can_expand_right = true;
-		const int right_x = this->text_rect.right() + 1;
-		for (int y = this->text_rect.top(); y <= this->text_rect.bottom(); ++y) {
+		const int right_x = text_rect.right() + 1;
+		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
 			const QPoint adjacent_pos(right_x, y);
 
 			if (!this->get_territory_rect().contains(adjacent_pos)) {
@@ -1514,15 +1561,20 @@ void province_game_data::calculate_text_rect()
 				can_expand_right = false;
 				break;
 			}
+
+			if (adjacent_tile->get_site() != nullptr) {
+				can_expand_right = false;
+				break;
+			}
 		}
 		if (can_expand_right) {
-			this->text_rect.setRight(right_x);
+			text_rect.setRight(right_x);
 			changed = true;
 		}
 
 		bool can_expand_up = true;
-		const int up_y = this->text_rect.top() - 1;
-		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+		const int up_y = text_rect.top() - 1;
+		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
 			const QPoint adjacent_pos(x, up_y);
 
 			if (!this->get_territory_rect().contains(adjacent_pos)) {
@@ -1536,15 +1588,20 @@ void province_game_data::calculate_text_rect()
 				can_expand_up = false;
 				break;
 			}
+
+			if (adjacent_tile->get_site() != nullptr) {
+				can_expand_up = false;
+				break;
+			}
 		}
 		if (can_expand_up) {
-			this->text_rect.setTop(up_y);
+			text_rect.setTop(up_y);
 			changed = true;
 		}
 
 		bool can_expand_down = true;
-		const int down_y = this->text_rect.bottom() + 1;
-		for (int x = this->text_rect.left(); x <= this->text_rect.right(); ++x) {
+		const int down_y = text_rect.bottom() + 1;
+		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
 			const QPoint adjacent_pos(x, down_y);
 
 			if (!this->get_territory_rect().contains(adjacent_pos)) {
@@ -1558,14 +1615,19 @@ void province_game_data::calculate_text_rect()
 				can_expand_down = false;
 				break;
 			}
+
+			if (adjacent_tile->get_site() != nullptr) {
+				can_expand_down = false;
+				break;
+			}
 		}
 		if (can_expand_down) {
-			this->text_rect.setBottom(down_y);
+			text_rect.setBottom(down_y);
 			changed = true;
 		}
 	}
 
-	emit text_rect_changed();
+	return text_rect;
 }
 
 void province_game_data::change_settlement_count(const int change)

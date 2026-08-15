@@ -30,7 +30,7 @@ Item {
 				
 				readonly property var province: model.modelData
 				readonly property var province_polygon_path: province ? province.map_data.polygon_path : ""
-				readonly property var selected: selected_province === province && (selected_garrison === false || province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations)
+				readonly property var selected: selected_province === province && selected_garrison === false
 				readonly property var interactive: selected_civilian_unit !== null && !selected_civilian_unit.busy && selected_civilian_unit_interactive_provinces.includes(province)
 				property int change_count: 0
 				
@@ -176,6 +176,80 @@ Item {
 	}
 	
 	Repeater {
+		model: sites
+		
+		Item {
+			id: site_icon_area
+			x: -scaled_map_block_start_x + (site ? Math.min(Math.max(site.game_data.tile_pos.x * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(width / 2), 0), province_map.contentWidth - width) : 0)
+			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
+			width: site_icon.width + 4 * scale_factor
+			height: site_icon.height + 4 * scale_factor
+			visible: province_map.show_sites && (site.settlement || dungeon !== null)
+			
+			readonly property var site: model.modelData
+			readonly property var tile_pos: site ? site.map_data.tile_pos : null
+			readonly property var holding_type: site ? site.game_data.holding_type : null
+			readonly property var dungeon: site ? site.game_data.dungeon : null
+			readonly property bool selected: site === selected_site
+			
+			Rectangle {
+				id: site_domain_color_circle
+				width: site_icon_area.width
+				height: site_icon_area.height
+				radius: width / 2
+				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
+				visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
+			}
+			
+			Image {
+				id: site_icon
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
+			}
+			
+			MouseArea {
+				anchors.fill: parent
+				hoverEnabled: true
+				
+				onClicked: {
+					metternich.defines.click_sound.play()
+					selected_civilian_unit = null
+					selected_province = null
+					selected_garrison = false
+					if (selected_site === site) {
+						selected_site = null
+					} else {
+						selected_site = site
+					}
+				}
+				
+				onContainsMouseChanged: {
+					var text = site.game_data.display_text
+					
+					if (containsMouse) {
+						hovered_site = site
+						status_text = text
+						hovered_icon_map_block_index = map_block_index
+					} else {
+						if (hovered_icon_map_block_index === map_block_index) {
+							if (status_text === text) {
+								status_text = ""
+							}
+							
+							if (hovered_site === site) {
+								hovered_site = null
+							}
+							
+							hovered_icon_map_block_index = -1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	Repeater {
 		model: provinces
 		
 		Item {
@@ -193,7 +267,6 @@ Item {
 			Column {
 				id: province_label_column
 				spacing: 2 * scale_factor
-				visible: province_map.show_site_mode !== ProvinceMap.SiteMode.ShowLocations
 				
 				Row {
 					anchors.horizontalCenter: province_label_column.horizontalCenter
@@ -333,157 +406,6 @@ Item {
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
 					width: province_label_column.width > 0 ? province_label_column.width : contentWidth
-				}
-				
-				Grid {
-					anchors.horizontalCenter: province_label_column.horizontalCenter
-					spacing: 1 * scale_factor
-					columns: 3
-					visible: province_map.show_site_mode === ProvinceMap.SiteMode.Show
-					
-					Repeater {
-						model: province ? province.game_data.visible_sites : []
-						
-						Item {
-							id: site_icon_area
-							width: site_icon.width + 4 * scale_factor
-							height: site_icon.height + 4 * scale_factor
-							
-							readonly property var site: model.modelData
-							readonly property var holding_type: site ? site.game_data.holding_type : null
-							readonly property var dungeon: site ? site.game_data.dungeon : null
-							readonly property bool selected: site === selected_site
-							
-							Rectangle {
-								id: site_domain_color_circle
-								width: site_icon_area.width
-								height: site_icon_area.height
-								radius: width / 2
-								color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
-								visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
-							}
-							
-							Image {
-								id: site_icon
-								anchors.verticalCenter: parent.verticalCenter
-								anchors.horizontalCenter: parent.horizontalCenter
-								source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
-							}
-							
-							MouseArea {
-								anchors.fill: parent
-								hoverEnabled: true
-								
-								onClicked: {
-									metternich.defines.click_sound.play()
-									selected_civilian_unit = null
-									selected_province = null
-									selected_garrison = false
-									if (selected_site === site) {
-										selected_site = null
-									} else {
-										selected_site = site
-									}
-								}
-								
-								onContainsMouseChanged: {
-									var text = site.game_data.display_text
-									
-									if (containsMouse) {
-										hovered_site = site
-										status_text = text
-										hovered_icon_map_block_index = map_block_index
-									} else {
-										if (hovered_icon_map_block_index === map_block_index) {
-											if (status_text === text) {
-												status_text = ""
-											}
-											
-											if (hovered_site === site) {
-												hovered_site = null
-											}
-											
-											hovered_icon_map_block_index = -1
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	Repeater {
-		model: sites
-		
-		Item {
-			id: site_icon_area
-			x: -scaled_map_block_start_x + (site ? Math.min(Math.max(site.game_data.tile_pos.x * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(width / 2), 0), province_map.contentWidth - width) : 0)
-			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
-			width: site_icon.width + 4 * scale_factor
-			height: site_icon.height + 4 * scale_factor
-			visible: province_map.show_site_mode === ProvinceMap.SiteMode.ShowLocations && (site.settlement || dungeon !== null)
-			
-			readonly property var site: model.modelData
-			readonly property var tile_pos: site ? site.map_data.tile_pos : null
-			readonly property var holding_type: site ? site.game_data.holding_type : null
-			readonly property var dungeon: site ? site.game_data.dungeon : null
-			readonly property bool selected: site === selected_site
-			
-			Rectangle {
-				id: site_domain_color_circle
-				width: site_icon_area.width
-				height: site_icon_area.height
-				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
-				visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
-			}
-			
-			Image {
-				id: site_icon
-				anchors.verticalCenter: parent.verticalCenter
-				anchors.horizontalCenter: parent.horizontalCenter
-				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
-			}
-			
-			MouseArea {
-				anchors.fill: parent
-				hoverEnabled: true
-				
-				onClicked: {
-					metternich.defines.click_sound.play()
-					selected_civilian_unit = null
-					selected_province = null
-					selected_garrison = false
-					if (selected_site === site) {
-						selected_site = null
-					} else {
-						selected_site = site
-					}
-				}
-				
-				onContainsMouseChanged: {
-					var text = site.game_data.display_text
-					
-					if (containsMouse) {
-						hovered_site = site
-						status_text = text
-						hovered_icon_map_block_index = map_block_index
-					} else {
-						if (hovered_icon_map_block_index === map_block_index) {
-							if (status_text === text) {
-								status_text = ""
-							}
-							
-							if (hovered_site === site) {
-								hovered_site = null
-							}
-							
-							hovered_icon_map_block_index = -1
-						}
-					}
 				}
 			}
 		}

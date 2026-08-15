@@ -28,14 +28,8 @@ TableView {
 		CulturalSociety
 	}
 	
-	enum SiteMode {
-		Show,
-		ShowLocations,
-		Hide
-	}
-	
 	property int mode: ProvinceMap.Mode.Political
-	property int show_site_mode: ProvinceMap.SiteMode.Show
+	property bool show_sites: true
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_domain ? metternich.game.player_domain : null)
 	property var hovered_site: null
 	property int hovered_icon_map_block_index: -1
