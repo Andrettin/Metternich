@@ -11,6 +11,7 @@ egypt = {
 	core_provinces = {
 		cairo
 		alexandria
+		arish
 		aydhab
 		bilbays
 		damietta
@@ -21,7 +22,6 @@ egypt = {
 		qena
 		qusair
 		rosetta
-		sinai
 		suez
 		syene
 		tinnis

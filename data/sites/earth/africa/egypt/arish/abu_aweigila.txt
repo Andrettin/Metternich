@@ -1,0 +1,8 @@
+abu_aweigila = {
+	name = "Abu-Aweigila"
+	world = earth
+	geocoordinate = { 34.1167 30.8333 } #Abu 'Uwayqilah
+	type = holding
+	holding_type = castle
+	province = arish
+}

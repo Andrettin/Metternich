@@ -1,0 +1,8 @@
+zuwayid = {
+	name = "Zuwayid"
+	world = earth
+	geocoordinate = { 34.11055556 31.21194444 } #Sheikh Zuweid
+	type = holding
+	holding_type = castle
+	province = arish
+}

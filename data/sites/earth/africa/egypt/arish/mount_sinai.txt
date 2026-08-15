@@ -4,5 +4,5 @@ mount_sinai = {
 	geocoordinate = { 33.9752 28.5384 }
 	type = resource
 	resource = mount_sinai
-	province = sinai
+	province = arish
 }

@@ -1,0 +1,8 @@
+kharruba = {
+	name = "Kharruba"
+	world = earth
+	geocoordinate = { 33.97059 31.18378 } #El-Kharruba
+	type = holding
+	holding_type = guild
+	province = arish
+}
