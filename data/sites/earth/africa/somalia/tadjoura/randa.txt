@@ -1,0 +1,8 @@
+randa = {
+	name = "Randa"
+	world = earth
+	geocoordinate = { 42.660555555556 11.846944444444 } #Randa, Djibouti
+	type = holding
+	holding_type = castle
+	province = tadjoura
+}

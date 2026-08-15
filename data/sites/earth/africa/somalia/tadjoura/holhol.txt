@@ -1,0 +1,8 @@
+holhol = {
+	name = "Holhol"
+	world = earth
+	geocoordinate = { 42.929166666667 11.310277777778 }
+	type = holding
+	holding_type = castle
+	province = tadjoura
+}

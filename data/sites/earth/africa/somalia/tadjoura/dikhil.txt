@@ -1,0 +1,8 @@
+dikhil = {
+	name = "Dikhil"
+	world = earth
+	geocoordinate = { 42.372001 11.104002 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = tadjoura
+}

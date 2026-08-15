@@ -13,7 +13,7 @@ near_eastern = {
 		explored_regions += greece
 		explored_provinces += persian_gulf
 		explored_provinces += red_sea
-		explored_provinces += djibouti
+		explored_provinces += tadjoura
 		explored_provinces += somaliland
 		
 		1815 = {

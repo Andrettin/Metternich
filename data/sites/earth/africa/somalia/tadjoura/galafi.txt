@@ -1,0 +1,8 @@
+galafi = {
+	name = "Galafi"
+	world = earth
+	geocoordinate = { 41.836111111111 11.715833333333 }
+	type = holding
+	holding_type = castle
+	province = tadjoura
+}

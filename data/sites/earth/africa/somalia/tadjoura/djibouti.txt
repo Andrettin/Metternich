@@ -3,5 +3,6 @@ djibouti = {
 	world = earth
 	geocoordinate = { 43.14800166710 11.59501446430 } #from Natural Earth
 	type = holding
-	province = djibouti
+	holding_type = guild
+	province = tadjoura
 }

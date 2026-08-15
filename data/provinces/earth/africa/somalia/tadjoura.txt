@@ -1,7 +1,8 @@
-djibouti = {
-	name = "Djibouti"
-	color = { 135 64 144 }
-	default_provincial_capital = djibouti
+tadjoura = {
+	name = "Tadjoura"
+	color = { 84 192 221 }
+	terrain = plains
+	default_provincial_capital = tadjoura
 	regions = {
 		africa
 	}

@@ -1,0 +1,8 @@
+obock = {
+	name = "Obock"
+	world = earth
+	geocoordinate = { 43.285564 11.973441 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = tadjoura
+}

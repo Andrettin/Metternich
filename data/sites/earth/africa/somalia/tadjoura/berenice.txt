@@ -1,0 +1,8 @@
+berenice = {
+	name = "Berenice"
+	world = earth
+	geocoordinate = { 43.31861111111111 12.464166666666667 } #Berenice Epideires
+	type = holding
+	holding_type = guild
+	province = tadjoura
+}
