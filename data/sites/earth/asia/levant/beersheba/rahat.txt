@@ -1,0 +1,8 @@
+rahat = {
+	name = "Rahat"
+	world = earth
+	geocoordinate = { 34.754444444444 31.3925 }
+	type = holding
+	holding_type = castle
+	province = beersheba #Hadarom
+}

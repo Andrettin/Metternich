@@ -1,0 +1,8 @@
+debir = {
+	name = "Debir"
+	world = earth
+	geocoordinate = { 35.01666667 31.43333333 } #Rabud
+	type = holding
+	holding_type = castle
+	province = jerusalem #West Bank
+}

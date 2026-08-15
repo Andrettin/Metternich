@@ -1,6 +1,7 @@
-hadarom = {
-	name = "Hadarom"
-	color = { 210 162 55 }
+beersheba = {
+	name = "Beersheba"
+	color = { 168 207 217 }
+	terrain = hills
 	default_provincial_capital = beersheba
 	regions = {
 		asia

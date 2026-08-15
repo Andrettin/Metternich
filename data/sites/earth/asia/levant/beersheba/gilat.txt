@@ -1,0 +1,8 @@
+gilat = {
+	name = "Gilat"
+	world = earth
+	geocoordinate = { 34.649997222222 31.328497222222 }
+	type = holding
+	holding_type = castle
+	province = beersheba #Hadarom
+}

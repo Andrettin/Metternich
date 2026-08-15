@@ -1,0 +1,8 @@
+estemon = {
+	name = "Estemon"
+	world = earth
+	geocoordinate = { 35.067282 31.40039 } #Eshtemoa
+	type = holding
+	holding_type = guild
+	province = jerusalem #West Bank
+}

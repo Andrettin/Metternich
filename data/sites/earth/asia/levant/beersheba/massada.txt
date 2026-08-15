@@ -1,0 +1,8 @@
+massada = {
+	name = "Massada"
+	world = earth
+	geocoordinate = { 35.353888888889 31.315555555556 } #Masada
+	type = holding
+	holding_type = temple
+	province = beersheba #Hadarom
+}

@@ -7,6 +7,6 @@ judah = {
 	default_government_type = monarchy
 	default_capital = jerusalem
 	core_provinces = {
-		hadarom
+		beersheba
 	}
 }

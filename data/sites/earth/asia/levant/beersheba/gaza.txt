@@ -5,7 +5,10 @@ gaza = {
 	type = resource
 	#resource = fish #Source: https://maps.lib.utexas.edu/maps/middle_east_and_asia/natural_resources.jpg
 	resource = grain
-	province = hadarom
+	province = beersheba #Gaza
+	features = {
+		prime_grain_land
+	}
 	
 	history = {
 		-1450 = {

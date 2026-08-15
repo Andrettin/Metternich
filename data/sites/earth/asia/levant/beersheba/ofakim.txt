@@ -1,0 +1,8 @@
+ofakim = {
+	name = "Ofakim"
+	world = earth
+	geocoordinate = { 34.616666666667 31.283333333333 }
+	type = holding
+	holding_type = castle
+	province = beersheba #Hadarom
+}
