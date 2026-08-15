@@ -3,7 +3,7 @@ shocking_grasp = {
 	level = 1
 	icon = research
 	price = 25gp
-	target = enemy
+	target = enemy_character
 	range = touch
 	casting_time_initiative_modifier = 1
 	to_hit_check = true
@@ -14,7 +14,7 @@ shocking_grasp = {
 	character_classes = {
 		mage
 	}
-	target_effects = {
+	target_character_effects = {
 		damage = {
 			value = 1d8
 			value_per_caster_level = 1

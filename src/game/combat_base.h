@@ -202,7 +202,6 @@ public:
 
 	virtual QVariantList get_unit_infos_qvariant_list() const = 0;
 	virtual int get_max_range_of_units() const = 0;
-	virtual spell_target get_spell_target(const spell *spell) const = 0;
 	virtual int get_spell_range(const spell *spell) const = 0;
 
 	virtual combat_tile_base &get_tile(const QPoint &tile_pos) = 0;

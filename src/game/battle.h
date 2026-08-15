@@ -84,7 +84,6 @@ public:
 	}
 
 	virtual int get_max_range_of_units() const override;
-	virtual spell_target get_spell_target(const spell *spell) const override;
 	virtual int get_spell_range(const spell *spell) const override;
 
 	void set_attacker_to_hit_modifier(const int modifier)
@@ -131,7 +130,7 @@ public:
 	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	[[nodiscard]]
-	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units);
+	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	void notify_result();
 	void process_result();

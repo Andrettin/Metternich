@@ -3,7 +3,7 @@ cure_minor_wounds = {
 	level = 0
 	icon = wooden_cross
 	price = 125sp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = heal
 	arcane_schools = {
@@ -13,7 +13,7 @@ cure_minor_wounds = {
 		cleric = 0
 		druid = 0
 	}
-	target_effects = {
+	target_character_effects = {
 		healing = 1
 	}
 }

@@ -3,7 +3,7 @@ bears_endurance = {
 	level = 2
 	icon = lion
 	price = 150gp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = magic_holy
 	arcane_schools = {
@@ -16,7 +16,7 @@ bears_endurance = {
 		ranger = 2
 		#sorcerer = 2
 	}
-	target_effects = {
+	target_character_effects = {
 		status_effect = bears_endurance
 	}
 }

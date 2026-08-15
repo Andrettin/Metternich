@@ -3,7 +3,7 @@ cause_light_wounds = {
 	level = 1
 	icon = skull
 	price = 25gp
-	target = enemy
+	target = enemy_character
 	range = touch
 	casting_time_initiative_modifier = 5
 	to_hit_check = true
@@ -17,7 +17,7 @@ cause_light_wounds = {
 	character_classes = {
 		cleric
 	}
-	target_effects = {
+	target_character_effects = {
 		damage = 1d8
 	}
 }

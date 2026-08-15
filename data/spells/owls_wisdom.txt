@@ -3,7 +3,7 @@ owls_wisdom = {
 	level = 2
 	icon = university
 	price = 150gp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = magic_holy
 	arcane_schools = {
@@ -20,7 +20,7 @@ owls_wisdom = {
 	material_components = {
 		owl_feather = 3 #could also be owl droppings
 	}
-	target_effects = {
+	target_character_effects = {
 		status_effect = owls_wisdom
 	}
 }

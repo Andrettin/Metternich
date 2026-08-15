@@ -3,7 +3,7 @@ bulls_strength = {
 	level = 2
 	icon = labor
 	price = 150gp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = magic_holy
 	arcane_schools = {
@@ -22,7 +22,7 @@ bulls_strength = {
 	material_components = {
 		ox_hair = 3 #should be bull hairs instead; alternatively could also be bull dung
 	}
-	target_effects = {
+	target_character_effects = {
 		status_effect = bulls_strength
 	}
 }

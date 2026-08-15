@@ -89,10 +89,14 @@ void spell::process_gsml_scope(const gsml_data &scope)
 				this->material_components.push_back(item_type);
 			}
 		});
-	} else if (tag == "target_effects") {
+	} else if (tag == "target_character_effects") {
 		auto effects = std::make_unique<effect_list<const character>>();
 		effects->process_gsml_data(scope);
-		this->target_effects = std::move(effects);
+		this->target_character_effects = std::move(effects);
+	} else if (tag == "target_military_unit_effects") {
+		auto effects = std::make_unique<effect_list<military_unit>>();
+		effects->process_gsml_data(scope);
+		this->target_military_unit_effects = std::move(effects);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -119,18 +123,28 @@ void spell::check() const
 		throw std::runtime_error(std::format("Spell \"{}\" has no price.", this->get_identifier()));
 	}
 
-	assert_throw(this->get_target() != spell_target::none || this->get_battle_target() != spell_target::none);
-	assert_throw(this->get_target_effects() != nullptr || this->get_battle_result() != attack_result::none);
+	assert_throw(this->get_target() != spell_target::none);
+	assert_throw(this->get_target_character_effects() != nullptr || this->get_target_military_unit_effects() != nullptr || this->get_battle_result() != attack_result::none);
 
-	switch (this->get_battle_target()) {
+	switch (this->get_target()) {
 		case spell_target::ally:
+		case spell_target::ally_character:
 		case spell_target::enemy:
+		case spell_target::enemy_character:
 			if (this->get_range() == 0) {
 				throw std::runtime_error(std::format("Spell \"{}\" has an ally or enemy target, but no range.", this->get_identifier()));
 			}
 			break;
 		default:
 			break;
+	}
+
+	if ((this->get_target() == spell_target::ally || this->get_target() == spell_target::enemy) && this->get_battle_result() == attack_result::none && this->get_target_military_unit_effects() == nullptr) {
+		throw std::runtime_error(std::format("Spell \"{}\" has a military unit target, but no target military unit effects.", this->get_identifier()));
+	}
+
+	if ((this->get_target() == spell_target::ally_character || this->get_target() == spell_target::enemy_character) && this->get_target_character_effects() == nullptr) {
+		throw std::runtime_error(std::format("Spell \"{}\" has a character target, but no target character effects.", this->get_identifier()));
 	}
 
 	for (const character_class *character_class : this->get_character_classes()) {
@@ -181,7 +195,7 @@ bool spell::is_combat_spell() const
 
 bool spell::is_battle_spell() const
 {
-	return this->get_battle_target() != spell_target::none;
+	return this->get_target() != spell_target::none;
 }
 
 QString spell::get_combat_effects_string(const metternich::character *caster) const
@@ -189,14 +203,26 @@ QString spell::get_combat_effects_string(const metternich::character *caster) co
 	read_only_context ctx;
 	ctx.source_scope = caster;
 
-	std::string str = std::format("Target: {}, Range: {}, Target Effect: {}", get_spell_target_name(this->get_target()), this->get_range(), this->get_target_effects()->get_effects_single_line_string(nullptr, ctx));
+	std::string str = std::format("Target: {}, Range: {}, Target Effect: {}", get_spell_target_name(this->get_target()), this->get_range(), this->get_target_character_effects()->get_effects_single_line_string(nullptr, ctx));
 
 	return QString::fromStdString(str);
 }
 
-QString spell::get_battle_effects_string() const
+QString spell::get_battle_effects_string(const metternich::character *caster) const
 {
-	std::string str = std::format("Target: {}, Range: {}, Effect: {}", get_spell_target_name(this->get_battle_target()), this->get_battle_range(), get_attack_result_name(this->get_battle_result()));
+	read_only_context ctx;
+	ctx.source_scope = caster;
+
+	std::string effects_str;
+	if (this->get_battle_result() != attack_result::none) {
+		effects_str = get_attack_result_name(this->get_battle_result());
+	} else if (this->get_target_military_unit_effects() != nullptr) {
+		effects_str = this->get_target_military_unit_effects()->get_effects_single_line_string(nullptr, ctx);
+	} else if (this->get_target_character_effects() != nullptr) {
+		effects_str = this->get_target_character_effects()->get_effects_single_line_string(nullptr, ctx);
+	}
+
+	std::string str = std::format("Target: {}, Range: {}, Effect: {}", get_spell_target_name(this->get_target()), this->get_battle_range(), effects_str);
 
 	return QString::fromStdString(str);
 }

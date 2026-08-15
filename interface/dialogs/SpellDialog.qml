@@ -92,7 +92,7 @@ DialogBase {
 								if (mode === SpellDialog.Mode.Combat) {
 									right_status_text = spell.get_combat_effects_string(caster)
 								} else if (mode === SpellDialog.Mode.Battle) {
-									right_status_text = spell.get_battle_effects_string()
+									right_status_text = spell.get_battle_effects_string(caster)
 								}
 							} else {
 								status_text = ""

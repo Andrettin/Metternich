@@ -3,7 +3,7 @@ cure_light_wounds = {
 	level = 1
 	icon = wooden_cross
 	price = 25gp
-	target = ally
+	target = ally_character
 	range = touch
 	casting_time_initiative_modifier = 5
 	sound = heal
@@ -18,7 +18,7 @@ cure_light_wounds = {
 		druid
 		paladin
 	}
-	target_effects = {
+	target_character_effects = {
 		healing = 1d8
 	}
 }

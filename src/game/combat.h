@@ -192,7 +192,6 @@ public:
 	~combat();
 
 	virtual int get_max_range_of_units() const override;
-	virtual spell_target get_spell_target(const spell *spell) const override;
 	virtual int get_spell_range(const spell *spell) const override;
 
 	void set_surprise(const bool surprise)

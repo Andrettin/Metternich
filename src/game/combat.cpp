@@ -75,11 +75,6 @@ int combat::get_max_range_of_units() const
 	return max_range;
 }
 
-spell_target combat::get_spell_target(const spell *spell) const
-{
-	return spell->get_target();
-}
-
 int combat::get_spell_range(const spell *spell) const
 {
 	return spell->get_range();
@@ -696,11 +691,11 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 		co_return 0;
 	}
 
-	if (spell->get_target_effects() != nullptr) {
+	if (spell->get_target_character_effects() != nullptr) {
 		context ctx = this->ctx;
 		ctx.root_scope = target;
 		ctx.source_scope = caster;
-		co_await spell->get_target_effects()->do_effects(target, ctx);
+		co_await spell->get_target_character_effects()->do_effects(target, ctx);
 	}
 
 	if (target->get_game_data()->is_dead()) {

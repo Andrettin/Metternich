@@ -3,7 +3,7 @@ cats_grace = {
 	level = 2
 	icon = lion
 	price = 150gp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = magic_holy
 	arcane_schools = {
@@ -19,7 +19,7 @@ cats_grace = {
 	material_components = {
 		cat_fur
 	}
-	target_effects = {
+	target_character_effects = {
 		status_effect = cats_grace
 	}
 }

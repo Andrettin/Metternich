@@ -3,7 +3,7 @@ arcane_missile = {
 	level = 1
 	icon = research
 	price = 25gp
-	target = enemy
+	target = enemy_character
 	range = 60yd #FIXME: should add +10 yards of range per caster level
 	casting_time_initiative_modifier = 1
 	sound = magic_missile
@@ -13,7 +13,7 @@ arcane_missile = {
 	character_classes = {
 		mage
 	}
-	target_effects = {
+	target_character_effects = {
 		damage = {
 			value = 1d4+1
 			caster_level_values = {

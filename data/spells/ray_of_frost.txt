@@ -3,7 +3,7 @@ ray_of_frost = {
 	level = 0
 	icon = research
 	price = 125sp
-	target = enemy
+	target = enemy_character
 	range = 25ft #should increase by 5 feet for each 2 caster levels
 	to_hit_check = true
 	sound = magic_missile
@@ -18,7 +18,7 @@ ray_of_frost = {
 		mage = 0
 		#sorcerer = 0
 	}
-	target_effects = {
+	target_character_effects = {
 		damage = 1d3 #cold damage
 	}
 }

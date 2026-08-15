@@ -15,6 +15,7 @@ class character_class;
 class divine_domain;
 class icon;
 class item_type;
+class military_unit;
 class sound;
 class technology;
 enum class attack_result;
@@ -30,7 +31,6 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::spell_target target MEMBER target READ get_target NOTIFY changed)
-	Q_PROPERTY(metternich::spell_target battle_target MEMBER battle_target READ get_battle_target NOTIFY changed)
 	Q_PROPERTY(int mana_cost MEMBER mana_cost NOTIFY changed)
 	Q_PROPERTY(int casting_time_initiative_modifier MEMBER casting_time_initiative_modifier READ get_casting_time_initiative_modifier NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
@@ -70,11 +70,6 @@ public:
 	spell_target get_target() const
 	{
 		return this->target;
-	}
-
-	spell_target get_battle_target() const
-	{
-		return this->battle_target;
 	}
 
 	Q_INVOKABLE int get_mana_cost(const metternich::character_class *character_class) const;
@@ -132,13 +127,18 @@ public:
 	bool is_combat_spell() const;
 	bool is_battle_spell() const;
 
-	const effect_list<const character> *get_target_effects() const
+	const effect_list<const character> *get_target_character_effects() const
 	{
-		return this->target_effects.get();
+		return this->target_character_effects.get();
+	}
+
+	const effect_list<military_unit> *get_target_military_unit_effects() const
+	{
+		return this->target_military_unit_effects.get();
 	}
 
 	Q_INVOKABLE QString get_combat_effects_string(const metternich::character *caster) const;
-	Q_INVOKABLE QString get_battle_effects_string() const;
+	Q_INVOKABLE QString get_battle_effects_string(const metternich::character *caster) const;
 
 	const metternich::sound *get_sound() const
 	{
@@ -153,7 +153,6 @@ private:
 	metternich::icon *icon = nullptr;
 	int64_t price = 0;
 	spell_target target{};
-	spell_target battle_target{};
 	int mana_cost = 0;
 	int range = 0; //in feet
 	int casting_time_initiative_modifier = 0;
@@ -165,7 +164,8 @@ private:
 	std::vector<const character_class *> character_classes;
 	character_class_map<int> character_class_levels;
 	std::vector<const item_type *> material_components;
-	std::unique_ptr<const effect_list<const character>> target_effects;
+	std::unique_ptr<const effect_list<const character>> target_character_effects;
+	std::unique_ptr<const effect_list<military_unit>> target_military_unit_effects;
 	const metternich::sound *sound = nullptr;
 };
 

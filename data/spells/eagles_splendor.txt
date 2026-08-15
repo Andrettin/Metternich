@@ -3,7 +3,7 @@ eagles_splendor = {
 	level = 2
 	icon = research
 	price = 150gp
-	target = ally
+	target = ally_character
 	range = touch
 	sound = magic_holy
 	arcane_schools = {
@@ -19,7 +19,7 @@ eagles_splendor = {
 	material_components = {
 		eagle_feather = 3 #could also be eagle droppings
 	}
-	target_effects = {
+	target_character_effects = {
 		status_effect = eagles_splendor
 	}
 }
