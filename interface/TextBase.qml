@@ -17,7 +17,7 @@ Text {
 		anchors.verticalCenterOffset: shadow_offset
 		width: parent.width
 		height: parent.height
-		text: parent.text
+		text: textFormat == Text.PlainText ? parent.text : colored_text(parent.text, shadow_color)
 		color: shadow_color
 		font: parent.font
 		wrapMode: parent.wrapMode
