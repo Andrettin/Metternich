@@ -1467,11 +1467,22 @@ void province_game_data::calculate_text_rect()
 
 	const map *map = map::get();
 
+	const province_map_data *province_map_data = this->province->get_map_data();
+
 	std::vector<QPoint> start_positions;
-	start_positions.reserve(this->province->get_map_data()->get_sites().size() * 8 + 1);
+	start_positions.reserve(province_map_data->get_sites().size() * 4 + 1);
 	start_positions.push_back(this->get_center_tile_pos());
-	for (const site *site : this->province->get_map_data()->get_sites()) {
-		point::for_each_cardinally_adjacent(site->get_map_data()->get_tile_pos(), [&start_positions](const QPoint &adjacent_pos) {
+	for (const site *site : province_map_data->get_sites()) {
+		point::for_each_cardinally_adjacent(site->get_map_data()->get_tile_pos(), [this, &start_positions, map](const QPoint &adjacent_pos) {
+			if (!map->contains(adjacent_pos)) {
+				return;
+			}
+
+			const tile *tile = map->get_tile(adjacent_pos);
+			if (tile->get_site() != nullptr || tile->get_province() != this->province) {
+				return;
+			}
+
 			start_positions.push_back(adjacent_pos);
 		});
 	}
@@ -1479,15 +1490,6 @@ void province_game_data::calculate_text_rect()
 	std::vector<QRect> potential_text_rects;
 	potential_text_rects.reserve(start_positions.size());
 	for (const QPoint &tile_pos : start_positions) {
-		if (!map->contains(tile_pos)) {
-			continue;
-		}
-
-		const tile *tile = map->get_tile(tile_pos);
-		if (tile->get_site() != nullptr || tile->get_province() != this->province) {
-			continue;
-		}
-
 		QRect text_rect = this->calculate_text_rect_for_pos(tile_pos);
 
 		if (!potential_text_rects.empty()) {
