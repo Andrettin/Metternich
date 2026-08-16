@@ -43,6 +43,7 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: right_bar.left
+		enabled: map_view.activeFocus
 	}
 		
 	RightBar {
