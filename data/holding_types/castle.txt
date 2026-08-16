@@ -1,7 +1,7 @@
 castle = {
 	name = "Castle"
 	icon = non_aggression_pact
-	portrait = aristocratic_palace
+	portrait = fort
 	image_filepath = "tiles/settlements/town.png"
 	domain_skill = order
 	resource = true
