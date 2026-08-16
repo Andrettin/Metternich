@@ -1,0 +1,12 @@
+caesarea = {
+	name = "Caesarea" #also known as Masaka
+	world = earth
+	geocoordinate = { 35.49001948930 38.73495993960 } #from Natural Earth
+	type = holding
+	holding_type = temple #or guild
+	province = caesarea
+	cultural_names = {
+		greek = "Kaisereia"
+		turkish = "Kayseri"
+	}
+}

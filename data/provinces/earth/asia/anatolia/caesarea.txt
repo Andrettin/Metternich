@@ -1,7 +1,12 @@
-kayseri = {
-	name = "Kayseri"
-	color = { 218 129 14 }
-	default_provincial_capital = kayseri
+caesarea = {
+	name = "Caesarea"
+	color = { 84 81 196 }
+	terrain = mountains
+	default_provincial_capital = caesarea
+	cultural_names = {
+		greek = "Kaisereia"
+		turkish = "Kayseri"
+	}
 	regions = {
 		anatolia
 	}

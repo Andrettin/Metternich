@@ -8,6 +8,6 @@ mushki = {
 	default_capital = sivas
 	core_provinces = {
 		sivas
-		kayseri
+		caesarea
 	}
 }

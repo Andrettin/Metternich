@@ -8,7 +8,7 @@ cilicia = {
 	default_capital = tarsus
 	core_provinces = {
 		mersin
+		caesarea
 		karaman
-		kayseri
 	}
 }

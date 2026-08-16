@@ -1,0 +1,8 @@
+sariz = {
+	name = "Sariz"
+	world = earth
+	geocoordinate = { 36.500555555556 38.479166666667 }
+	type = holding
+	holding_type = castle
+	province = caesarea
+}
