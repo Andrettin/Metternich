@@ -65,6 +65,7 @@ void preferences::save() const
 	data.add_property("scale_factor", this->get_scale_factor().to_string());
 	data.add_property("sound_effects_enabled", string::from_bool(this->are_sound_effects_enabled()));
 	data.add_property("music_enabled", string::from_bool(this->is_music_enabled()));
+	data.add_property("scaling_algorithm_enabled", string::from_bool(this->is_scaling_algorithm_enabled()));
 
 	data.add_child("game_rules", this->get_game_rules()->to_gsml_data());
 
@@ -125,6 +126,17 @@ void preferences::set_music_enabled(const bool enabled)
 	}
 
 	emit music_enabled_changed();
+}
+
+void preferences::set_scaling_algorithm_enabled(const bool enabled)
+{
+	if (enabled == this->is_scaling_algorithm_enabled()) {
+		return;
+	}
+
+	this->scaling_algorithm_enabled = enabled;
+
+	emit scaling_algorithm_enabled_changed();
 }
 
 }

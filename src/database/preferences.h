@@ -23,6 +23,7 @@ class preferences final : public QObject, public singleton<preferences>
 	Q_PROPERTY(QString scale_factor_string READ get_scale_factor_qstring WRITE set_scale_factor_qstring NOTIFY scale_factor_changed)
 	Q_PROPERTY(bool sound_effects_enabled READ are_sound_effects_enabled WRITE set_sound_effects_enabled NOTIFY sound_effects_enabled_changed)
 	Q_PROPERTY(bool music_enabled READ is_music_enabled WRITE set_music_enabled NOTIFY music_enabled_changed)
+	Q_PROPERTY(bool scaling_algorithm_enabled READ is_scaling_algorithm_enabled WRITE set_scaling_algorithm_enabled NOTIFY scaling_algorithm_enabled_changed)
 	Q_PROPERTY(metternich::game_rules* game_rules READ get_game_rules CONSTANT)
 
 public:
@@ -76,6 +77,13 @@ public:
 
 	void set_music_enabled(const bool enabled);
 
+	bool is_scaling_algorithm_enabled() const
+	{
+		return this->scaling_algorithm_enabled;
+	}
+
+	void set_scaling_algorithm_enabled(const bool enabled);
+
 	game_rules *get_game_rules()
 	{
 		return this->game_rules.get();
@@ -90,11 +98,13 @@ signals:
 	void scale_factor_changed();
 	void sound_effects_enabled_changed();
 	void music_enabled_changed();
+	void scaling_algorithm_enabled_changed();
 
 private:
 	centesimal_int scale_factor = centesimal_int(2);
 	bool sound_effects_enabled = true;
 	bool music_enabled = true;
+	bool scaling_algorithm_enabled = true;
 	qunique_ptr<game_rules> game_rules;
 };
 

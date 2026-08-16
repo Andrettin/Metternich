@@ -18,6 +18,10 @@ interface_image_provider::interface_image_provider()
 	QObject::connect(preferences::get(), &preferences::scale_factor_changed, [this]() {
 		this->clear_images();
 	});
+
+	QObject::connect(preferences::get(), &preferences::scaling_algorithm_enabled_changed, [this]() {
+		this->clear_images();
+	});
 }
 
 QCoro::Task<void> interface_image_provider::load_image(const std::string id)
@@ -41,11 +45,13 @@ QCoro::Task<void> interface_image_provider::load_image(const std::string id)
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 	centesimal_int image_scale_factor(1);
 
-	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
+	if (preferences::get()->is_scaling_algorithm_enabled()) {
+		const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
 
-	if (!scale_suffix_result.first.empty()) {
-		filepath = scale_suffix_result.first;
-		image_scale_factor = scale_suffix_result.second;
+		if (!scale_suffix_result.first.empty()) {
+			filepath = scale_suffix_result.first;
+			image_scale_factor = scale_suffix_result.second;
+		}
 	}
 
 	QImage image(path::to_qstring(filepath));
@@ -55,10 +61,15 @@ QCoro::Task<void> interface_image_provider::load_image(const std::string id)
 		static constexpr QSize frame_size(32, 32);
 
 		if (image_scale_factor != scale_factor) {
-			co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
-				image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, frame_size * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-					xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-				});
+			const bool scaling_algorithm_enabled = preferences::get()->is_scaling_algorithm_enabled();
+			co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor, scaling_algorithm_enabled]() {
+				if (scaling_algorithm_enabled) {
+					image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, frame_size * image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+						xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+					});
+				} else {
+					image = image.scaled(image.size() * scale_factor);
+				}
 			});
 
 			const QSize scaled_frame_size = frame_size * preferences::get()->get_scale_factor();
@@ -75,10 +86,15 @@ QCoro::Task<void> interface_image_provider::load_image(const std::string id)
 		}
 	} else {
 		if (image_scale_factor != scale_factor) {
-			co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor]() {
-				image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-					xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
-				});
+			const bool scaling_algorithm_enabled = preferences::get()->is_scaling_algorithm_enabled();
+			co_await QtConcurrent::run([this, &image, &scale_factor, &image_scale_factor, scaling_algorithm_enabled]() {
+				if (scaling_algorithm_enabled) {
+					image = image::scale<QImage::Format_ARGB32>(image, scale_factor / image_scale_factor, [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+						xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+					});
+				} else {
+					image = image.scaled(image.size() * scale_factor);
+				}
 			});
 		}
 

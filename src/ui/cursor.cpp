@@ -85,23 +85,32 @@ QCoro::Task<void> cursor::load_image()
 	const centesimal_int &scale_factor = preferences::get()->get_scale_factor();
 	std::filesystem::path filepath = this->get_filepath();
 
-	const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
-
 	centesimal_int image_scale_factor(1);
 
-	if (!scale_suffix_result.first.empty()) {
-		filepath = scale_suffix_result.first;
-		image_scale_factor = scale_suffix_result.second;
+	if (preferences::get()->is_scaling_algorithm_enabled()) {
+		const std::pair<std::filesystem::path, centesimal_int> scale_suffix_result = image::get_scale_suffixed_filepath(filepath, scale_factor);
+
+		if (!scale_suffix_result.first.empty()) {
+			filepath = scale_suffix_result.first;
+			image_scale_factor = scale_suffix_result.second;
+		}
 	}
 
 	QImage cursor_image = QImage(path::to_qstring(filepath));
 	assert_throw(!cursor_image.isNull());
 
-	co_await QtConcurrent::run([this, &cursor_image, &scale_factor, &image_scale_factor]() {
-		cursor_image = image::scale<QImage::Format_ARGB32>(cursor_image, scale_factor / image_scale_factor, cursor_image.size(), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
-			xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	if (image_scale_factor != scale_factor) {
+		const bool scaling_algorithm_enabled = preferences::get()->is_scaling_algorithm_enabled();
+		co_await QtConcurrent::run([this, &cursor_image, &scale_factor, &image_scale_factor, scaling_algorithm_enabled]() {
+			if (scaling_algorithm_enabled) {
+				cursor_image = image::scale<QImage::Format_ARGB32>(cursor_image, scale_factor / image_scale_factor, cursor_image.size(), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+					xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+				});
+			} else {
+				cursor_image = cursor_image.scaled(cursor_image.size() * scale_factor);
+			}
 		});
-	});
+	}
 
 	this->image = std::move(cursor_image);
 }

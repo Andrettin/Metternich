@@ -49,6 +49,20 @@ MenuBase {
 			}
 			
 		}
+		
+		CustomCheckBox {
+			id: scaling_algorithm_enabled_checkbox
+			text: qsTr("Scaling Algorithm Enabled")
+			checked: metternich.preferences.scaling_algorithm_enabled
+			checkable: true
+			onCheckedChanged: {
+				if (metternich.preferences.scaling_algorithm_enabled !== checked) {
+					metternich.preferences.scaling_algorithm_enabled = checked
+					options_changed = true
+				}
+			}
+			
+		}
 	}
 	
 	TextButton {
