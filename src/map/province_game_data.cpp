@@ -1514,116 +1514,125 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 
 	QRect text_rect = QRect(center_pos, QSize(1, 1));
 
+	bool can_expand_left = true;
+	bool can_expand_right = true;
+	bool can_expand_up = true;
+	bool can_expand_down = true;
+
 	bool changed = true;
 	while (changed) {
 		changed = false;
 
-		bool can_expand_left = true;
-		const int left_x = text_rect.left() - 1;
-		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
-			const QPoint adjacent_pos(left_x, y);
-
-			if (!this->get_territory_rect().contains(adjacent_pos)) {
-				can_expand_left = false;
-				break;
-			}
-
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_province() != this->province) {
-				can_expand_left = false;
-				break;
-			}
-
-			if (adjacent_tile->get_site() != nullptr) {
-				can_expand_left = false;
-				break;
-			}
-		}
 		if (can_expand_left) {
-			text_rect.setLeft(left_x);
-			changed = true;
+			const int left_x = text_rect.left() - 1;
+			for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
+				const QPoint adjacent_pos(left_x, y);
+
+				if (!this->get_territory_rect().contains(adjacent_pos)) {
+					can_expand_left = false;
+					break;
+				}
+
+				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+				if (adjacent_tile->get_province() != this->province) {
+					can_expand_left = false;
+					break;
+				}
+
+				if (adjacent_tile->get_site() != nullptr) {
+					can_expand_left = false;
+					break;
+				}
+			}
+			if (can_expand_left) {
+				text_rect.setLeft(left_x);
+				changed = true;
+			}
 		}
 
-		bool can_expand_right = true;
-		const int right_x = text_rect.right() + 1;
-		for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
-			const QPoint adjacent_pos(right_x, y);
-
-			if (!this->get_territory_rect().contains(adjacent_pos)) {
-				can_expand_right = false;
-				break;
-			}
-
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_province() != this->province) {
-				can_expand_right = false;
-				break;
-			}
-
-			if (adjacent_tile->get_site() != nullptr) {
-				can_expand_right = false;
-				break;
-			}
-		}
 		if (can_expand_right) {
-			text_rect.setRight(right_x);
-			changed = true;
+			const int right_x = text_rect.right() + 1;
+			for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
+				const QPoint adjacent_pos(right_x, y);
+
+				if (!this->get_territory_rect().contains(adjacent_pos)) {
+					can_expand_right = false;
+					break;
+				}
+
+				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+				if (adjacent_tile->get_province() != this->province) {
+					can_expand_right = false;
+					break;
+				}
+
+				if (adjacent_tile->get_site() != nullptr) {
+					can_expand_right = false;
+					break;
+				}
+			}
+			if (can_expand_right) {
+				text_rect.setRight(right_x);
+				changed = true;
+			}
 		}
 
-		bool can_expand_up = true;
-		const int up_y = text_rect.top() - 1;
-		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
-			const QPoint adjacent_pos(x, up_y);
-
-			if (!this->get_territory_rect().contains(adjacent_pos)) {
-				can_expand_up = false;
-				break;
-			}
-
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_province() != this->province) {
-				can_expand_up = false;
-				break;
-			}
-
-			if (adjacent_tile->get_site() != nullptr) {
-				can_expand_up = false;
-				break;
-			}
-		}
 		if (can_expand_up) {
-			text_rect.setTop(up_y);
-			changed = true;
+			const int up_y = text_rect.top() - 1;
+			for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
+				const QPoint adjacent_pos(x, up_y);
+
+				if (!this->get_territory_rect().contains(adjacent_pos)) {
+					can_expand_up = false;
+					break;
+				}
+
+				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+				if (adjacent_tile->get_province() != this->province) {
+					can_expand_up = false;
+					break;
+				}
+
+				if (adjacent_tile->get_site() != nullptr) {
+					can_expand_up = false;
+					break;
+				}
+			}
+			if (can_expand_up) {
+				text_rect.setTop(up_y);
+				changed = true;
+			}
 		}
 
-		bool can_expand_down = true;
-		const int down_y = text_rect.bottom() + 1;
-		for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
-			const QPoint adjacent_pos(x, down_y);
-
-			if (!this->get_territory_rect().contains(adjacent_pos)) {
-				can_expand_down = false;
-				break;
-			}
-
-			const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-			if (adjacent_tile->get_province() != this->province) {
-				can_expand_down = false;
-				break;
-			}
-
-			if (adjacent_tile->get_site() != nullptr) {
-				can_expand_down = false;
-				break;
-			}
-		}
 		if (can_expand_down) {
-			text_rect.setBottom(down_y);
-			changed = true;
+			const int down_y = text_rect.bottom() + 1;
+			for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
+				const QPoint adjacent_pos(x, down_y);
+
+				if (!this->get_territory_rect().contains(adjacent_pos)) {
+					can_expand_down = false;
+					break;
+				}
+
+				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
+
+				if (adjacent_tile->get_province() != this->province) {
+					can_expand_down = false;
+					break;
+				}
+
+				if (adjacent_tile->get_site() != nullptr) {
+					can_expand_down = false;
+					break;
+				}
+			}
+			if (can_expand_down) {
+				text_rect.setBottom(down_y);
+				changed = true;
+			}
 		}
 	}
 
