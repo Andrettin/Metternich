@@ -52,6 +52,13 @@ QCoro::Task<void> cursor::set_current_cursor(cursor *cursor)
 
 cursor::cursor(const std::string &identifier) : data_entry(identifier)
 {
+	QObject::connect(preferences::get(), &preferences::scale_factor_changed, [this]() -> QCoro::Task<void> {
+		co_await this->load_image();
+	});
+
+	QObject::connect(preferences::get(), &preferences::scaling_algorithm_enabled_changed, [this]() -> QCoro::Task<void> {
+		co_await this->load_image();
+	});
 }
 
 
