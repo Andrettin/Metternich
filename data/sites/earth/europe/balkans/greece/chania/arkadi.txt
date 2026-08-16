@@ -1,0 +1,8 @@
+arkadi = {
+	name = "Arkadi"
+	world = earth
+	geocoordinate = { 24.56666667 35.35 }
+	type = holding
+	holding_type = castle
+	province = chania #Rethymno
+}

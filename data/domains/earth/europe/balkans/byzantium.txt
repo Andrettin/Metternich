@@ -20,13 +20,14 @@ byzantium = {
 		boeotia
 		central_macedonia
 		cephalonia
+		chania
 		corfu
 		corinth
-		crete
 		east_macedonia
 		eastern_rumelia
 		epirus
 		euboea
+		heraklion
 		methone
 		monemvasia
 		naxos

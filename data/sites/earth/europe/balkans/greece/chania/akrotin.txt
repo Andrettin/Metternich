@@ -1,0 +1,8 @@
+akrotin = {
+	name = "Akrotin"
+	world = earth
+	geocoordinate = { 24.13333333 35.53333333 } #Akrotiri, Crete
+	type = holding
+	holding_type = castle
+	province = chania
+}

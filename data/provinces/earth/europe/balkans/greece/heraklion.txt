@@ -1,7 +1,11 @@
-crete = {
-	name = "Crete"
-	color = { 93 56 165 }
-	default_provincial_capital = knossos
+heraklion = {
+	name = "Heraklion"
+	color = { 0 162 40 }
+	terrain = mountains
+	default_provincial_capital = heraklion
+	cultural_names = {
+		arabic = "Chandax"
+	}
 	regions = {
 		greece
 	}
@@ -14,12 +18,16 @@ crete = {
 		}
 		
 		-750 = {
-			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = greek #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 		}
 		
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			religion = orthodox
+		}
+		
+		1189 = {
+			trade_zone = morosini
 		}
 		
 		1212 = {

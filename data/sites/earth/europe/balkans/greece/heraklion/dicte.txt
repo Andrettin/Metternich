@@ -2,6 +2,7 @@ dicte = {
 	name = "Dicte"
 	world = earth
 	geocoordinate = { 25.5 35.116667 }
+	province = heraklion #Lasithi
 	
 	history = {
 		-1450 = {

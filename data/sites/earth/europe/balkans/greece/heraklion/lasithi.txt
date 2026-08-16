@@ -1,0 +1,8 @@
+lasithi = {
+	name = "Lasithi"
+	world = earth
+	geocoordinate = { 25.466394 35.181175 } #Lasithi Plateau
+	type = holding
+	holding_type = guild
+	province = heraklion #Lasithi
+}

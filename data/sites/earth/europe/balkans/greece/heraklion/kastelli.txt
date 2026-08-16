@@ -1,0 +1,8 @@
+kastelli = {
+	name = "Kastelli"
+	world = earth
+	geocoordinate = { 25.33777778 35.20888889 }
+	type = holding
+	holding_type = castle
+	province = heraklion
+}

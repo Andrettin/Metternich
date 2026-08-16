@@ -1,0 +1,8 @@
+sitia = {
+	name = "Sitia"
+	world = earth
+	geocoordinate = { 26.098551 35.200421 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = heraklion #Lasithi
+}

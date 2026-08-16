@@ -2,6 +2,7 @@ itanus = {
 	name = "Itanus"
 	world = earth
 	geocoordinate = { 26.263 35.2638 }
+	province = heraklion #Lasithi
 	
 	history = {
 		-1450 = {

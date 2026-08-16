@@ -56,6 +56,16 @@ central_europe = {
 	}
 }
 
+earth_center = {
+	name = "Earth (Center)"
+	size = { 16384 8192 }
+	world = earth
+	main_map_template = earth
+	map_start_pos = { 0 768 }
+	minimap_tile_scale = 0.125
+	diplomatic_map_tile_scale = 0.5
+}
+
 europe = {
 	name = "Europe"
 	size = { 2816 2816 }
@@ -72,16 +82,6 @@ europe = {
 		satakunta
 		teheran
 	}
-}
-
-earth_center = {
-	name = "Earth (Center)"
-	size = { 16384 8192 }
-	world = earth
-	main_map_template = earth
-	map_start_pos = { 0 768 }
-	minimap_tile_scale = 0.125
-	diplomatic_map_tile_scale = 0.5
 }
 
 south_america = {

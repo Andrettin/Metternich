@@ -1,0 +1,8 @@
+ierapetra = {
+	name = "Ierapetra"
+	world = earth
+	geocoordinate = { 25.736 35.0106 }
+	type = holding
+	holding_type = castle
+	province = heraklion #Lasithi
+}

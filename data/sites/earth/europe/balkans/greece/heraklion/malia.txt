@@ -1,0 +1,8 @@
+malia = {
+	name = "Malia"
+	world = earth
+	geocoordinate = { 25.4625 35.283611111111 }
+	type = holding
+	holding_type = castle
+	province = heraklion
+}

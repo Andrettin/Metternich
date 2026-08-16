@@ -15,7 +15,7 @@ aetolia = {
 		}
 		
 		-750 = {
-			owner = greece #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
+			culture = greek #Greek territory in the 750-625 BC period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 		}
 		
 		-700 = {

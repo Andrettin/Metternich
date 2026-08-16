@@ -1,0 +1,8 @@
+matala = {
+	name = "Matala"
+	world = earth
+	geocoordinate = { 24.749722222222 34.993055555556 }
+	type = holding
+	holding_type = temple
+	province = heraklion
+}

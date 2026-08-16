@@ -29,9 +29,9 @@ eastern_rome = {
 		bursa
 		central_macedonia
 		cephalonia
+		chania
 		corfu
 		corinth
-		crete
 		cyrenaica
 		denizli
 		dobruja
@@ -41,6 +41,7 @@ eastern_rome = {
 		eskisehir
 		euboea
 		germiyan
+		heraklion
 		karasi
 		kastamonu
 		kharibta

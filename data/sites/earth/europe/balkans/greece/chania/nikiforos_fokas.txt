@@ -1,0 +1,8 @@
+nikiforos_fokas = {
+	name = "Nikiforos Fokas"
+	world = earth
+	geocoordinate = { 24.4 35.3 }
+	type = holding
+	holding_type = castle
+	province = chania #Rethymno
+}

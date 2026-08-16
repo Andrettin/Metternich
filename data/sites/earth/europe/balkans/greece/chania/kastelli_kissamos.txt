@@ -1,0 +1,8 @@
+kastelli_kissamos = {
+	name = "Kastelli-Kissamos"
+	world = earth
+	geocoordinate = { 23.6543 35.4947 } #Kissamos
+	type = holding
+	holding_type = castle
+	province = chania
+}

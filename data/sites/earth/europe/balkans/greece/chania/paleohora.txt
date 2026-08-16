@@ -1,0 +1,8 @@
+paleohora = {
+	name = "Paleohora"
+	world = earth
+	geocoordinate = { 23.68245 35.23052 } #Palaiochora
+	type = holding
+	holding_type = castle
+	province = chania
+}

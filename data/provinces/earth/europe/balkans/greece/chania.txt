@@ -1,8 +1,8 @@
-cephalonia = {
-	name = "Cephalonia"
-	color = { 90 46 254 }
+chania = {
+	name = "Chania"
+	color = { 168 159 167 }
 	terrain = mountains
-	default_provincial_capital = cephalonia
+	default_provincial_capital = chania
 	regions = {
 		greece
 	}
@@ -23,12 +23,20 @@ cephalonia = {
 			religion = orthodox
 		}
 		
+		1129 = {
+			trade_zone = morosini
+		}
+		
+		1212 = {
+			owner = venice #became a Venetian possession in 1212; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
 		1360 = {
-			owner = cephalonia #part of the County of Cephalonia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			owner = venice #Venetian possession in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1740 = {
-			owner = venice #Venetian possession c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
 		}
 	}
 }

@@ -2,7 +2,9 @@ chania = {
 	name = "Chania"
 	world = earth
 	geocoordinate = { 24.01557775750 35.51221091620 } #from Natural Earth
-	province = crete
+	type = holding
+	holding_type = castle #or guild
+	province = chania
 	cultural_names = {
 		italian = "Canea" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 	}
