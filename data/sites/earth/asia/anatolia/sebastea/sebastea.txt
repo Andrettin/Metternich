@@ -1,0 +1,11 @@
+sebastea = {
+	name = "Sebastea"
+	world = earth
+	geocoordinate = { 37.03498978550 39.74541505840 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = sebastea
+	cultural_names = {
+		turkish = "Sivas"
+	}
+}

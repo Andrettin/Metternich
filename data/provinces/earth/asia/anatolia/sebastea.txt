@@ -1,7 +1,7 @@
-sivas = {
-	name = "Sivas"
+sebastea = {
+	name = "Sebastea"
 	color = { 156 149 44 }
-	default_provincial_capital = sivas
+	default_provincial_capital = sebastea
 	regions = {
 		anatolia
 	}

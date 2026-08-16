@@ -1,0 +1,8 @@
+charsianon = {
+	name = "Charsianon"
+	world = earth
+	geocoordinate = { 35.83722222222222 39.74027777777778 } #Muşalikalesi
+	type = holding
+	holding_type = castle
+	province = charsianon #Yozgat
+}

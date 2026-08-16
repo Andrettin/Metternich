@@ -4,7 +4,7 @@ hattusa = {
 	geocoordinate = { 34.615277777778 40.019722222222 }
 	type = holding
 	holding_type = royal_palace #royal capital of the Hittites
-	province = corum
+	province = charsianon #Çorum
 	
 	history = {
 		-1650 = {

@@ -1,7 +1,8 @@
-corum = {
-	name = "Corum" #"Çorum"
-	color = { 37 188 33 }
-	default_provincial_capital = corum
+charsianon = {
+	name = "Charsianon"
+	color = { 169 51 67 }
+	terrain = mountains
+	default_provincial_capital = charsianon
 	regions = {
 		anatolia
 	}

@@ -8,8 +8,8 @@ persian_royal_highway = {
 		germiyan
 		eskisehir
 		ancyra
-		corum
-		sivas
+		charsianon
+		sebastea
 		malatya
 		amida
 		sinjar
