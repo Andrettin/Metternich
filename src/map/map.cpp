@@ -261,27 +261,45 @@ QCoro::Task<void> map::process_border_tiles()
 		QFuture<void> future = QtConcurrent::run([this, province, province_map_data]() {
 			for (const QPoint &tile_pos : province_map_data->get_tiles()) {
 				bool is_border_tile = false;
+				bool is_northwest_border_tile = false;
 
-				point::for_each_adjacent(tile_pos, [this, &tile_pos, province, province_map_data, &is_border_tile](const QPoint &adjacent_pos) {
-					if (!this->contains(adjacent_pos)) {
-						is_border_tile = true;
-						return;
-					}
-
-					const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
-					const metternich::province *adjacent_province = adjacent_tile->get_province();
-
-					if (province != adjacent_province) {
-						if (adjacent_province != nullptr && !vector::contains(province_map_data->get_neighbor_provinces(), adjacent_province)) {
-							province_map_data->add_neighbor_province(adjacent_province);
+				for (int x_offset = -1; x_offset <= 1; ++x_offset) {
+					for (int y_offset = -1; y_offset <= 1; ++y_offset) {
+						if (x_offset == 0 && y_offset == 0) {
+							continue;
 						}
 
-						is_border_tile = true;
+						const QPoint adjacent_pos(tile_pos.x() + x_offset, tile_pos.y() + y_offset);
+						if (!this->contains(adjacent_pos)) {
+							is_border_tile = true;
+							if (x_offset == -1 && y_offset == -1) {
+								is_northwest_border_tile = true;
+							}
+							continue;
+						}
+
+						const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+						const metternich::province *adjacent_province = adjacent_tile->get_province();
+
+						if (province != adjacent_province) {
+							if (adjacent_province != nullptr && !vector::contains(province_map_data->get_neighbor_provinces(), adjacent_province)) {
+								province_map_data->add_neighbor_province(adjacent_province);
+							}
+
+							is_border_tile = true;
+							if (x_offset == -1 && y_offset == -1) {
+								is_northwest_border_tile = true;
+							}
+						}
 					}
-				});
+				}
 
 				if (is_border_tile) {
 					province_map_data->process_border_tile(tile_pos);
+				}
+
+				if (is_northwest_border_tile) {
+					province_map_data->add_northwest_border_tiles(tile_pos);
 				}
 			}
 		});

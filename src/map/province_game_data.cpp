@@ -1470,8 +1470,8 @@ void province_game_data::calculate_text_rect()
 	const province_map_data *province_map_data = this->province->get_map_data();
 
 	std::vector<QPoint> start_positions;
-	start_positions.reserve(province_map_data->get_sites().size() * 4 + 1);
-	start_positions.push_back(this->get_center_tile_pos());
+	start_positions.reserve(province_map_data->get_northwest_border_tiles().size() + (province_map_data->get_sites().size() * 4));
+	start_positions = province_map_data->get_northwest_border_tiles();
 	for (const site *site : province_map_data->get_sites()) {
 		point::for_each_cardinally_adjacent(site->get_map_data()->get_tile_pos(), [this, &start_positions, map](const QPoint &adjacent_pos) {
 			if (!map->contains(adjacent_pos)) {

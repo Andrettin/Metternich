@@ -92,6 +92,16 @@ public:
 	void process_site_tile(const QPoint &tile_pos);
 	void process_border_tile(const QPoint &tile_pos);
 
+	const std::vector<QPoint> &get_northwest_border_tiles() const
+	{
+		return this->northwest_border_tiles;
+	}
+
+	void add_northwest_border_tiles(const QPoint &tile_pos)
+	{
+		this->northwest_border_tiles.push_back(tile_pos);
+	}
+
 	const std::vector<QPoint> &get_resource_tiles() const
 	{
 		return this->resource_tiles;
@@ -137,6 +147,7 @@ private:
 	std::vector<const metternich::province *> neighbor_provinces;
 	std::vector<const metternich::province *> nearby_provinces; //neighbor provinces plus land provinces connected by a water zone
 	std::vector<QPoint> tiles;
+	std::vector<QPoint> northwest_border_tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
 	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
