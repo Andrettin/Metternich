@@ -165,7 +165,7 @@ bool combat_base::can_current_unit_target_ally_at(const QPoint &tile_pos) const
 		return false;
 	}
 
-	if (this->get_current_spell()->get_target() == spell_target::ally_character && tile_unit->get_character() == nullptr) {
+	if (this->get_current_spell() != nullptr && this->get_current_spell()->get_target() == spell_target::ally_character && tile_unit->get_character() == nullptr) {
 		return false;
 	}
 
@@ -199,7 +199,7 @@ bool combat_base::can_current_unit_target_enemy_at(const QPoint &tile_pos) const
 		return false;
 	}
 
-	if (this->get_current_spell()->get_target() == spell_target::enemy_character && tile_unit->get_character() == nullptr) {
+	if (this->get_current_spell() != nullptr && this->get_current_spell()->get_target() == spell_target::enemy_character && tile_unit->get_character() == nullptr) {
 		return false;
 	}
 
