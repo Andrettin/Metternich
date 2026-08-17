@@ -219,7 +219,12 @@ QCoro::Task<void> domain_economy::do_production()
 				continue;
 			}
 
-			this->change_stored_commodity(commodity, output.to_int());
+			if (commodity->is_wealth()) {
+				this->add_tributable_commodity(commodity, output.to_int64(), income_transaction_type::treasure_fleet);
+				this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, output.to_int64(), nullptr, 0, this->domain);
+			} else {
+				this->change_stored_commodity(commodity, output.to_int64());
+			}
 		}
 
 		//recover manpower
