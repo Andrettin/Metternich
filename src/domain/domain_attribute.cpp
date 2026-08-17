@@ -45,4 +45,17 @@ void domain_attribute::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void domain_attribute::check() const
+{
+	if (this->get_check_dice().is_null()) {
+		throw std::runtime_error(std::format("Domain attribute \"{}\" has no check dice.", this->get_identifier()));
+	}
+
+	if (this->get_check_dice().get_count() != 1) {
+		throw std::runtime_error(std::format("Domain attribute \"{}\" has check dice with a dice count different than 1.", this->get_identifier()));
+	}
+
+	named_data_entry::check();
+}
+
 }

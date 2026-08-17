@@ -2333,7 +2333,7 @@ QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribut
 
 bool domain_game_data::do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output) const
 {
-	static constexpr dice check_dice(1, 20);
+	const dice &check_dice = attribute->get_check_dice();
 
 	const int roll_result = random::get()->roll_dice(check_dice);
 
@@ -2359,7 +2359,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 {
 	assert_throw(attribute != nullptr);
 
-	static constexpr dice check_dice(1, 20);
+	const dice &check_dice = attribute->get_check_dice();
 
 	int chance = this->get_attribute_value(attribute);
 	chance += roll_modifier + this->get_attribute_check_control_modifier() - this->get_effective_unrest();

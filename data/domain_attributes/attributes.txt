@@ -1,12 +1,15 @@
 economy = {
 	name = "Economy"
+	check_dice = 1d20
 	taxable = true
 }
 
 loyalty = {
 	name = "Loyalty"
+	check_dice = 1d20
 }
 
 stability = {
 	name = "Stability"
+	check_dice = 1d20
 }
