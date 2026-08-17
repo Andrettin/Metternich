@@ -240,6 +240,8 @@ public:
 
 	bool produces_commodity(const commodity *commodity) const;
 
+	void update_attribute_taxation();
+
 	const commodity_map<int64_t> &get_min_commodity_storages() const
 	{
 		return this->min_commodity_storages;
@@ -699,6 +701,7 @@ private:
 	commodity_map<int64_t> commodity_storage_capacities;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
+	int64_t attribute_taxation = 0;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity
 	commodity_map<int64_t> max_commodity_storages; //if storage is above this, export the commodity
 	commodity_map<int64_t> bids;

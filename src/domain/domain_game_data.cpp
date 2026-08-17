@@ -600,33 +600,6 @@ void domain_game_data::collect_wealth()
 
 		holding_site->get_game_data()->collect_income();
 	}
-
-	//collect income from attributes
-	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
-		if (!attribute->is_taxable()) {
-			continue;
-		}
-
-		int result = 0;
-		const bool success = this->do_attribute_check(attribute, 0, &result);
-		if (!success) {
-			continue;
-		}
-
-		result += attribute_value;
-		result -= this->get_effective_unrest();
-		result /= 3;
-
-		if (result <= 0) {
-			continue;
-		}
-
-		const commodity *wealth_commodity = defines::get()->get_wealth_commodity();
-		const int64_t attribute_income = result * defines::get()->get_domain_income_unit_value();
-
-		this->get_economy()->add_tributable_commodity(wealth_commodity, attribute_income, income_transaction_type::tribute);
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, attribute_income, nullptr, 0, this->domain);
-	}
 }
 
 QCoro::Task<void> domain_game_data::pay_maintenance()
@@ -2326,6 +2299,10 @@ QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribut
 		}
 	}
 
+	if (attribute->is_taxable()) {
+		this->get_economy()->update_attribute_taxation();
+	}
+
 	if (game::get()->is_running()) {
 		emit attribute_values_changed();
 	}
@@ -2430,6 +2407,9 @@ void domain_game_data::set_unrest(const int unrest)
 
 	this->unrest = unrest;
 
+	//unrest can affect attribute taxation
+	this->get_economy()->update_attribute_taxation();
+
 	emit unrest_changed();
 }
 
@@ -2483,6 +2463,9 @@ void domain_game_data::change_domain_size(const int change)
 	this->domain_size += change;
 
 	this->change_consumption(change);
+
+	//domain size can affect attribute taxation (via the attribute check control modifier)
+	this->get_economy()->update_attribute_taxation();
 
 	if (game::get()->is_running()) {
 		emit domain_size_changed();
@@ -4384,15 +4367,6 @@ int64_t domain_game_data::get_max_income() const
 		}
 
 		max_income += holding_site->get_game_data()->get_max_income();
-	}
-
-	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
-		if (!attribute->is_taxable()) {
-			continue;
-		}
-
-		const int max_result = (20 + attribute_value - this->get_effective_unrest()) / 3;
-		max_income += max_result * defines::get()->get_domain_income_unit_value();
 	}
 
 	return max_income;

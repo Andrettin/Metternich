@@ -6,6 +6,7 @@
 #include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
+#include "domain/domain_attribute.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -812,6 +813,39 @@ bool domain_economy::produces_commodity(const commodity *commodity) const
 	}
 
 	return false;
+}
+
+void domain_economy::update_attribute_taxation()
+{
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->attribute_taxation));
+
+	//update wealth income from attributes
+	this->attribute_taxation = 0;
+
+	for (const auto &[attribute, attribute_value] : this->get_game_data()->get_attribute_values()) {
+		if (!attribute->is_taxable()) {
+			continue;
+		}
+
+		const dice &check_dice = attribute->get_check_dice();
+
+		int64_t average_result = ((check_dice.get_count() * check_dice.get_sides()) + check_dice.get_count()) * defines::get()->get_domain_income_unit_value() / 2;
+
+		average_result += attribute_value * defines::get()->get_domain_income_unit_value();
+		average_result -= this->get_game_data()->get_effective_unrest() * defines::get()->get_domain_income_unit_value();
+		average_result /= 3;
+
+		average_result *= this->get_game_data()->get_attribute_check_chance(attribute, 0);
+		average_result /= 100;
+
+		if (average_result < 0) {
+			continue;
+		}
+
+		this->attribute_taxation += average_result;
+	}
+
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->attribute_taxation));
 }
 
 QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const
