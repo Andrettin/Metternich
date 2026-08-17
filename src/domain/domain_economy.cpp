@@ -75,6 +75,8 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 
 	if (key == "storage_capacity") {
 		this->storage_capacity = std::stoll(value);
+	} else if (key == "attribute_taxation") {
+		this->attribute_taxation = std::stoll(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
 	}
@@ -130,6 +132,7 @@ gsml_data domain_economy::to_gsml_data() const
 	gsml_data data("economy");
 
 	data.add_property("storage_capacity", std::to_string(this->get_storage_capacity()));
+	data.add_property("attribute_taxation", std::to_string(this->attribute_taxation));
 
 	if (!this->get_stored_commodities().empty()) {
 		gsml_data stored_commodities_data("stored_commodities");
@@ -829,7 +832,7 @@ void domain_economy::update_attribute_taxation()
 
 		const dice &check_dice = attribute->get_check_dice();
 
-		int64_t average_result = ((check_dice.get_count() * check_dice.get_sides()) + check_dice.get_count()) * defines::get()->get_domain_income_unit_value() / 2;
+		int64_t average_result = check_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 		average_result += attribute_value * defines::get()->get_domain_income_unit_value();
 		average_result -= this->get_game_data()->get_effective_unrest() * defines::get()->get_domain_income_unit_value();

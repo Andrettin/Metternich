@@ -124,7 +124,6 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
-	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this->get_military(), &domain_military::military_units_changed, this, &domain_game_data::maintenance_cost_changed);
 }
@@ -590,15 +589,6 @@ void domain_game_data::collect_wealth()
 	//collect taxes from provinces
 	for (const province *province : this->get_provinces()) {
 		province->get_game_data()->collect_taxes();
-	}
-
-	//collect income from holdings
-	for (const site *holding_site : this->get_sites()) {
-		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
-			continue;
-		}
-
-		holding_site->get_game_data()->collect_income();
 	}
 }
 
@@ -4342,14 +4332,6 @@ int64_t domain_game_data::get_min_income() const
 		min_income += province->get_game_data()->get_min_income();
 	}
 
-	for (const site *holding_site : this->get_sites()) {
-		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
-			continue;
-		}
-
-		min_income += holding_site->get_game_data()->get_min_income();
-	}
-
 	return min_income;
 }
 
@@ -4359,14 +4341,6 @@ int64_t domain_game_data::get_max_income() const
 
 	for (const province *province : this->get_provinces()) {
 		max_income += province->get_game_data()->get_max_income();
-	}
-
-	for (const site *holding_site : this->get_sites()) {
-		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
-			continue;
-		}
-
-		max_income += holding_site->get_game_data()->get_max_income();
 	}
 
 	return max_income;

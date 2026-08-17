@@ -976,8 +976,7 @@ void province_game_data::set_level(const int level)
 		}
 
 		holding_site->get_game_data()->change_population_capacity(this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
-
-		emit holding_site->get_game_data()->income_changed();
+		holding_site->get_game_data()->update_holding_level_income();
 	}
 
 	if (game::get()->is_running()) {

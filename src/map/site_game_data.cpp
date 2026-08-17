@@ -102,6 +102,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->dungeon = dungeon::get(value);
 	} else if (key == "population_capacity") {
 		this->population_capacity = std::stoi(value);
+	} else if (key == "holding_level_income") {
+		this->holding_level_income = std::stoll(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid site game data property: \"{}\".", key));
 	}
@@ -223,6 +225,8 @@ gsml_data site_game_data::to_gsml_data() const
 	if (this->get_dungeon() != nullptr) {
 		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
+
+	data.add_property("holding_level_income", std::to_string(holding_level_income));
 
 	if (!this->get_features().empty()) {
 		gsml_data features_data("features");
@@ -376,8 +380,6 @@ QCoro::Task<void> site_game_data::initialize()
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
 
-	connect(this, &site_game_data::holding_level_changed, this, &site_game_data::income_changed);
-
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
 		co_await resource->get_modifier()->apply(this->site);
 	}
@@ -413,32 +415,6 @@ QCoro::Task<void> site_game_data::do_events()
 	}
 
 	co_await site_event::check_events_for_scope(this->site, event_trigger::per_turn_pulse);
-}
-
-void site_game_data::collect_income()
-{
-	assert_throw(this->site->is_settlement());
-	assert_throw(this->is_built());
-	assert_throw(this->get_owner() != nullptr);
-
-	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
-		return;
-	}
-
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
-
-	if (income_dice.is_null()) {
-		return;
-	}
-
-	const int64_t income = random::get()->roll_dice(income_dice) * defines::get()->get_domain_income_unit_value();
-	if (income < 0) {
-		//ignore negative results
-		return;
-	}
-
-	this->get_owner()->get_economy()->add_tributable_commodity(defines::get()->get_wealth_commodity(), income, income_transaction_type::tribute);
-	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::holding_income, income, nullptr, 0, this->get_owner());
 }
 
 void site_game_data::check_item_slots()
@@ -1047,6 +1023,8 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 		this->get_owner()->get_game_data()->change_score((this->get_holding_level() * 100).to_int());
 		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level().to_int());
 	}
+	
+	this->update_holding_level_income();
 
 	for (const route *route : this->site->get_routes()) {
 		if (route->get_game_data()->is_active()) {
@@ -2666,42 +2644,41 @@ int site_game_data::get_total_commodity_throughput_modifier(const commodity *com
 	return throughput_modifier;
 }
 
-int64_t site_game_data::get_min_income() const
+void site_game_data::update_holding_level_income()
 {
 	assert_throw(this->site->is_settlement());
-	assert_throw(this->is_built());
+
+	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->holding_level_income));
+
+	//update income from the holding's level
+	this->holding_level_income = 0;
+
+	if (!this->is_built()) {
+		return;
+	}
+
 	assert_throw(this->get_owner() != nullptr);
 
-	if (this->get_holding_level().to_int() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
-		return 0;
+	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+		return;
 	}
 
 	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
-		return 0;
+		return;
 	}
 
-	return std::max(0ll, income_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
-}
+	const int64_t average_result = income_dice.get_average(defines::get()->get_domain_income_unit_value());
 
-int64_t site_game_data::get_max_income() const
-{
-	assert_throw(this->site->is_settlement());
-	assert_throw(this->is_built());
-	assert_throw(this->get_owner() != nullptr);
-
-	if (this->get_holding_level().to_int() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
-		return 0;
+	if (average_result < 0) {
+		//ignore negative results
+		return;
 	}
 
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
+	this->holding_level_income = average_result;
 
-	if (income_dice.is_null()) {
-		return 0;
-	}
-
-	return income_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
+	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->holding_level_income));
 }
 
 bool site_game_data::can_be_visited_by(const metternich::domain *domain) const
