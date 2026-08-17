@@ -154,6 +154,8 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->consumption = std::stoi(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
+	} else if (key == "domain_size") {
+		this->domain_size = std::stoi(value);
 	} else if (key == "domain_power") {
 		this->domain_power = std::stoi(value);
 	} else if (key == "max_current_constructions") {
@@ -249,6 +251,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_property("holding_count", std::to_string(this->get_holding_count()));
 	data.add_property("consumption", std::to_string(this->get_consumption()));
 	data.add_property("unrest", std::to_string(this->get_unrest()));
+	data.add_property("domain_size", std::to_string(this->get_domain_size()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
 
 	if (this->max_current_constructions != 0) {
@@ -1510,6 +1513,7 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 	}
 
 	this->change_score(province_game_data->get_level() * 100 * multiplier);
+	this->change_domain_size(1 * multiplier);
 	this->change_domain_power(province_game_data->get_level() * multiplier);
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
@@ -1813,6 +1817,8 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 			}
 		}
 	}
+
+	this->change_domain_size(change);
 
 	if (game::get()->is_running()) {
 		emit holding_count_changed();
@@ -2371,7 +2377,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 
 int domain_game_data::get_attribute_check_control_modifier() const
 {
-	const int domain_size = this->get_holding_count();
+	const int domain_size = this->get_domain_size();
 	return -domain_size;
 }
 
@@ -2466,6 +2472,21 @@ void domain_game_data::change_military_score(const int change)
 	this->military_score += change;
 
 	this->change_score(change);
+}
+
+void domain_game_data::change_domain_size(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->domain_size += change;
+
+	this->change_consumption(change);
+
+	if (game::get()->is_running()) {
+		emit domain_size_changed();
+	}
 }
 
 void domain_game_data::change_domain_power(const int change)
@@ -4379,7 +4400,7 @@ int64_t domain_game_data::get_max_income() const
 
 int64_t domain_game_data::get_domain_maintenance_cost() const
 {
-	const int domain_size = this->get_province_count() + this->get_holding_count();
+	const int domain_size = this->get_domain_size();
 	assert_throw(domain_size > 0);
 
 	return defines::get()->get_domain_maintenance_cost_for_domain_size(domain_size);

@@ -133,6 +133,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int unrest READ get_effective_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
+	Q_PROPERTY(int domain_size READ get_domain_size NOTIFY domain_size_changed)
 	Q_PROPERTY(int domain_power READ get_domain_power NOTIFY domain_power_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
@@ -571,6 +572,13 @@ public:
 		this->rank = rank;
 		emit rank_changed();
 	}
+
+	int get_domain_size() const
+	{
+		return this->domain_size;
+	}
+
+	void change_domain_size(const int change);
 
 	int get_domain_power() const
 	{
@@ -1080,6 +1088,7 @@ signals:
 	void score_changed();
 	void score_rank_changed();
 	void rank_changed();
+	void domain_size_changed();
 	void domain_power_changed();
 	void population_units_changed();
 	void population_growth_changed();
@@ -1134,6 +1143,7 @@ private:
 	int score_rank = 0;
 	int economic_score = 0;
 	int military_score = 0;
+	int domain_size = 0; //number of provinces and holdings owned by the domain
 	int domain_power = 0;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
