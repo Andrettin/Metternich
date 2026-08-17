@@ -257,12 +257,10 @@ Rectangle {
 				+ ("\nProvince Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
 				+ (population_visible ? ("\nPopulation: " + number_string(selected_province.game_data.population.size)) : "")
-				+ (taxation_income_string.length > 0 ? ("\nTaxation Income: " + taxation_income_string) : "")
+				+ (selected_province.game_data.province_level_taxation > 0 ? ("\nTaxation Income: " + metternich.defines.wealth_commodity.value_to_qstring(selected_province.game_data.province_level_taxation)) : "")
 			) : ""
 		)
 		visible: selected_province && !selected_garrison && !viewing_population
-		
-		readonly property string taxation_income_string: selected_province ? get_income_range_string(selected_province.game_data.min_income, selected_province.game_data.max_income) : ""
 	}
 	
 	SmallText {

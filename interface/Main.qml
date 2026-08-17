@@ -337,17 +337,6 @@ ApplicationWindow {
 		dialog.open()
 	}
 	
-	function get_income_range_string(min_income, max_income) {
-		if (max_income == 0 || metternich.defines.wealth_commodity === null) {
-			return ""
-		}
-		
-		var income_unit = metternich.defines.wealth_commodity.get_unit(max_income)
-		var income_unit_value = metternich.defines.wealth_commodity.get_unit_value(income_unit)
-		
-		return number_string(Math.floor(min_income / income_unit_value)) + "-" + number_string(Math.floor(max_income / income_unit_value)) + " " + income_unit.suffix
-	}
-	
 	function object_list_to_array(object_list) {
 		var object_array = []
 		

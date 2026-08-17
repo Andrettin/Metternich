@@ -226,7 +226,7 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
 
-	data.add_property("holding_level_income", std::to_string(holding_level_income));
+	data.add_property("holding_level_income", std::to_string(this->holding_level_income));
 
 	if (!this->get_features().empty()) {
 		gsml_data features_data("features");

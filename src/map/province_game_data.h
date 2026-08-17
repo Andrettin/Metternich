@@ -86,8 +86,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(QVariantList recruitable_military_unit_categories READ get_recruitable_military_unit_categories_qvariant_list NOTIFY owner_changed)
 	Q_PROPERTY(QVariantList military_unit_recruitment_counts READ get_military_unit_recruitment_counts_qvariant_list NOTIFY military_unit_recruitment_counts_changed)
 	Q_PROPERTY(QVariantList civilian_units READ get_civilian_units_qvariant_list NOTIFY civilian_units_changed)
-	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
-	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
+	Q_PROPERTY(qint64 province_level_taxation READ get_province_level_taxation NOTIFY province_level_taxation_changed)
 
 public:
 	explicit province_game_data(const metternich::province *province);
@@ -103,7 +102,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> do_turn();
 	[[nodiscard]] QCoro::Task<void> do_events();
 	void do_ai_turn();
-	void collect_taxes();
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();
 	[[nodiscard]] QCoro::Task<void> do_construction();
 	void do_population_literacy_change();
@@ -622,6 +620,13 @@ public:
 		this->set_commodity_bonus_for_tile_threshold(commodity, threshold, this->get_commodity_bonus_for_tile_threshold(commodity, threshold) + value);
 	}
 
+	int64_t get_province_level_taxation() const
+	{
+		return this->province_level_taxation;
+	}
+
+	void update_province_level_taxation();
+
 	int get_trade_efficiency_modifier() const
 	{
 		return this->trade_efficiency_modifier;
@@ -666,9 +671,6 @@ public:
 
 	bool can_produce_commodity(const commodity *commodity) const;
 
-	int64_t get_min_income() const;
-	int64_t get_max_income() const;
-
 	province_game_data &operator =(const province_game_data &other) = delete;
 
 signals:
@@ -697,7 +699,7 @@ signals:
 	void entering_armies_changed();
 	void military_unit_recruitment_counts_changed();
 	void civilian_units_changed();
-	void income_changed();
+	void province_level_taxation_changed();
 
 private:
 	const metternich::province *province = nullptr;
@@ -735,6 +737,7 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
+	int64_t province_level_taxation = 0; //taxation from the province level
 	int trade_efficiency_modifier = 0;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;
 	int movement_cost_modifier = 0;

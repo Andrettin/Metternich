@@ -122,7 +122,6 @@ domain_game_data::domain_game_data(metternich::domain *domain)
 
 	this->country_population = make_qunique<metternich::population>();
 
-	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::income_changed);
 	connect(this, &domain_game_data::provinces_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this, &domain_game_data::sites_changed, this, &domain_game_data::maintenance_cost_changed);
 	connect(this->get_military(), &domain_military::military_units_changed, this, &domain_game_data::maintenance_cost_changed);
@@ -470,7 +469,6 @@ QCoro::Task<void> domain_game_data::do_turn()
 		if (game::get()->is_last_turn_of_quarter()) {
 			this->collect_regency();
 			co_await this->get_economy()->do_production();
-			this->collect_wealth();
 			co_await this->pay_maintenance();
 		}
 
@@ -582,14 +580,6 @@ void domain_game_data::collect_regency()
 	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_reputation());
 
 	this->get_economy()->add_tributable_commodity(defines::get()->get_regency_commodity(), collected_regency, income_transaction_type::tribute);
-}
-
-void domain_game_data::collect_wealth()
-{
-	//collect taxes from provinces
-	for (const province *province : this->get_provinces()) {
-		province->get_game_data()->collect_taxes();
-	}
 }
 
 QCoro::Task<void> domain_game_data::pay_maintenance()
@@ -1478,6 +1468,8 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 	this->change_score(province_game_data->get_level() * 100 * multiplier);
 	this->change_domain_size(1 * multiplier);
 	this->change_domain_power(province_game_data->get_level() * multiplier);
+
+	this->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(province_game_data->get_province_level_taxation()) * multiplier);
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->get_economy()->change_resource_count(resource, count * multiplier);
@@ -4322,28 +4314,6 @@ QCoro::Task<void> domain_game_data::set_free_building_class_count(const building
 			co_await site->get_game_data()->check_free_buildings();
 		}
 	}
-}
-
-int64_t domain_game_data::get_min_income() const
-{
-	int64_t min_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int64();
-
-	for (const province *province : this->get_provinces()) {
-		min_income += province->get_game_data()->get_min_income();
-	}
-
-	return min_income;
-}
-
-int64_t domain_game_data::get_max_income() const
-{
-	int64_t max_income = this->get_economy()->get_commodity_output(defines::get()->get_wealth_commodity()).to_int64();
-
-	for (const province *province : this->get_provinces()) {
-		max_income += province->get_game_data()->get_max_income();
-	}
-
-	return max_income;
 }
 
 int64_t domain_game_data::get_domain_maintenance_cost() const

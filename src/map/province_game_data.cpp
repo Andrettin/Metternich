@@ -86,8 +86,6 @@ province_game_data::province_game_data(const metternich::province *province)
 
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
 	connect(this, &province_game_data::dungeon_sites_changed, this, &province_game_data::visible_sites_changed);
-
-	connect(this, &province_game_data::level_changed, this, &province_game_data::income_changed);
 }
 
 province_game_data::~province_game_data()
@@ -125,6 +123,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->pathway_construction_progress = decimillesimal_int(value);
 	} else if (key == "total_holding_level") {
 		this->total_holding_level = centesimal_int(value);
+	} else if (key == "province_level_taxation") {
+		this->province_level_taxation = std::stoll(value);
 	} else if (key == "trade_efficiency_modifier") {
 		this->trade_efficiency_modifier = std::stoi(value);
 	} else if (key == "movement_cost_modifier") {
@@ -233,6 +233,8 @@ gsml_data province_game_data::to_gsml_data() const
 	if (this->get_total_holding_level() != 0) {
 		data.add_property("total_holding_level", this->get_total_holding_level().to_string());
 	}
+
+	data.add_property("province_level_taxation", std::to_string(this->province_level_taxation));
 
 	if (this->get_trade_efficiency_modifier() != 0) {
 		data.add_property("trade_efficiency_modifier", std::to_string(this->get_trade_efficiency_modifier()));
@@ -403,21 +405,6 @@ void province_game_data::do_ai_turn()
 			break;
 		}
 	}
-}
-
-void province_game_data::collect_taxes()
-{
-	assert_throw(this->get_owner() != nullptr);
-
-	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	const int64_t taxation = random::get()->roll_dice(taxation_dice) * defines::get()->get_domain_income_unit_value();
-	if (taxation < 0) {
-		//ignore negative results
-		return;
-	}
-
-	this->get_owner()->get_economy()->add_tributable_commodity(defines::get()->get_wealth_commodity(), taxation, income_transaction_type::tribute);
-	this->get_owner()->get_turn_data()->add_income_transaction(income_transaction_type::taxation, taxation, nullptr, 0, this->get_owner());
 }
 
 QCoro::Task<void> province_game_data::do_military_unit_recruitment()
@@ -970,6 +957,8 @@ void province_game_data::set_level(const int level)
 		this->get_owner()->get_game_data()->change_domain_power(this->get_level());
 	}
 
+	this->update_province_level_taxation();
+
 	for (const site *holding_site : this->get_settlement_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
@@ -981,10 +970,6 @@ void province_game_data::set_level(const int level)
 
 	if (game::get()->is_running()) {
 		emit level_changed();
-
-		if (this->get_owner() != nullptr) {
-			emit this->get_owner()->get_game_data()->income_changed();
-		}
 	}
 }
 
@@ -2516,6 +2501,35 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 	}
 }
 
+void province_game_data::update_province_level_taxation()
+{
+	if (this->get_owner() == nullptr) {
+		return;
+	}
+
+	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->province_level_taxation));
+
+	//update taxation from the province level
+	this->province_level_taxation = 0;
+
+
+	assert_throw(this->get_owner() != nullptr);
+
+	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
+	const int64_t average_result = taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
+
+	if (average_result < 0) {
+		//ignore negative results
+		return;
+	}
+
+	this->province_level_taxation = average_result;
+
+	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->province_level_taxation));
+
+	emit province_level_taxation_changed();
+}
+
 void province_game_data::set_trade_efficiency_modifier(const int value)
 {
 	if (value == this->get_trade_efficiency_modifier()) {
@@ -2552,18 +2566,6 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	}
 
 	return false;
-}
-
-int64_t province_game_data::get_min_income() const
-{
-	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	return std::max(0ll, taxation_dice.get_minimum_result() * defines::get()->get_domain_income_unit_value());
-}
-
-int64_t province_game_data::get_max_income() const
-{
-	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
-	return taxation_dice.get_maximum_result() * defines::get()->get_domain_income_unit_value();
 }
 
 }

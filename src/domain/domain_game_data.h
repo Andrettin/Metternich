@@ -151,8 +151,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
-	Q_PROPERTY(int min_income READ get_min_income NOTIFY income_changed)
-	Q_PROPERTY(int max_income READ get_max_income NOTIFY income_changed)
 	Q_PROPERTY(qint64 maintenance_cost READ get_maintenance_cost NOTIFY maintenance_cost_changed)
 
 public:
@@ -176,7 +174,6 @@ public:
 	QCoro::Task<void> do_turn();
 
 	void collect_regency();
-	void collect_wealth();
 	[[nodiscard]] QCoro::Task<void> pay_maintenance();
 	void check_item_slots();
 	void do_civilian_unit_recruitment();
@@ -1035,8 +1032,6 @@ public:
 		co_await this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
 	}
 
-	int64_t get_min_income() const;
-	int64_t get_max_income() const;
 	int64_t get_domain_maintenance_cost() const;
 	int64_t get_maintenance_cost() const;
 
@@ -1108,7 +1103,6 @@ signals:
 	void prospected_tiles_changed();
 	void journal_entries_changed();
 	void journal_entry_completed(const journal_entry *journal_entry);
-	void income_changed();
 	void maintenance_cost_changed();
 
 private:
