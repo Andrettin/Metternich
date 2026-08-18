@@ -272,7 +272,7 @@ Rectangle {
 			selected_site_game_data ? (
 				(selected_site.game_data.owner !== null ? ("Domain: " + selected_site.game_data.owner.game_data.name) : "")
 				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.game_data.name) : "")
-				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level) : "")
+				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level + " (" + selected_site.holding_type.domain_skill.name + " " + selected_site_game_data.weighted_holding_level_percent + "%)") : "")
 				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
