@@ -94,6 +94,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_type = holding_type::get(value);
 	} else if (key == "holding_level") {
 		this->holding_level = centesimal_int(value);
+	} else if (key == "weighted_holding_level") {
+		this->weighted_holding_level = centesimal_int(value);
 	} else if (key == "fortification_level") {
 		this->fortification_level = centesimal_int(value);
 	} else if (key == "holding_type_name") {
@@ -216,6 +218,10 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_holding_level() != 0) {
 		data.add_property("holding_level", this->get_holding_level().to_string());
+	}
+
+	if (this->get_weighted_holding_level() != 0) {
+		data.add_property("weighted_holding_level", this->get_weighted_holding_level().to_string());
 	}
 
 	if (this->get_fortification_level() != 0) {
@@ -1023,8 +1029,8 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 		this->get_owner()->get_game_data()->change_score((this->get_holding_level() * 100).to_int());
 		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level().to_int());
 	}
-	
-	this->update_holding_level_income();
+
+	this->update_weighted_holding_level();
 
 	for (const route *route : this->site->get_routes()) {
 		if (route->get_game_data()->is_active()) {
@@ -1110,6 +1116,53 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 
 	if (level != this->get_holding_level().to_int()) {
 		log::log_error(std::format("Failed to set holding level {} from buildings for site \"{}\".", level, this->site->get_identifier()));
+	}
+}
+
+int site_game_data::get_weighted_holding_level_percent() const
+{
+	const int province_level = this->get_province()->get_game_data()->get_level();
+	if (province_level == 0) {
+		return 0;
+	}
+
+	return (this->get_weighted_holding_level() * 100 / province_level).to_int();
+}
+
+void site_game_data::set_weighted_holding_level(const centesimal_int &level)
+{
+	province_game_data *province_game_data = this->get_province()->get_game_data();
+
+	assert_throw(this->site->is_settlement());
+	assert_throw(level <= province_game_data->get_max_level());
+
+	if (level == this->get_weighted_holding_level()) {
+		return;
+	}
+
+	this->weighted_holding_level = level;
+
+	this->update_holding_level_income();
+
+	if (game::get()->is_running()) {
+		emit weighted_holding_level_changed();
+	}
+}
+
+void site_game_data::update_weighted_holding_level()
+{
+	if (this->get_holding_type() == nullptr || this->get_holding_level() == 0) {
+		this->set_weighted_holding_level(centesimal_int(0));
+		return;
+	}
+
+	const int province_level = this->get_province()->get_game_data()->get_level();
+	const centesimal_int province_domain_skill_total_holding_level = this->get_province()->get_game_data()->get_domain_skill_total_holding_level(this->get_holding_type()->get_domain_skill());
+
+	if (province_domain_skill_total_holding_level <= province_level) {
+		this->set_weighted_holding_level(this->get_holding_level());
+	} else {
+		this->set_weighted_holding_level(this->get_holding_level() * province_level / province_domain_skill_total_holding_level);
 	}
 }
 
@@ -2659,11 +2712,11 @@ void site_game_data::update_holding_level_income()
 
 	assert_throw(this->get_owner() != nullptr);
 
-	if (this->get_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+	if (this->get_weighted_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
 		return;
 	}
 
-	const dice &income_dice = this->get_holding_type()->get_income(this->get_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
+	const dice &income_dice = this->get_holding_type()->get_income(this->get_weighted_holding_level().to_int(), this->get_province()->get_game_data()->get_level());
 
 	if (income_dice.is_null()) {
 		return;

@@ -965,6 +965,7 @@ void province_game_data::set_level(const int level)
 		}
 
 		holding_site->get_game_data()->change_population_capacity(this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		holding_site->get_game_data()->update_weighted_holding_level();
 		holding_site->get_game_data()->update_holding_level_income();
 	}
 
@@ -1736,6 +1737,19 @@ void province_game_data::change_domain_skill_total_holding_level(const domain_sk
 
 	if (new_value == 0) {
 		this->domain_skill_total_holding_levels.erase(domain_skill);
+	}
+
+
+	for (const site *holding_site : this->get_settlement_sites()) {
+		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (holding_site->get_game_data()->get_holding_type()->get_domain_skill() != domain_skill) {
+			continue;
+		}
+
+		holding_site->get_game_data()->update_weighted_holding_level();
 	}
 }
 

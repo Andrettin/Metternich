@@ -67,6 +67,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(QString holding_level READ get_holding_level_qstring NOTIFY holding_level_changed)
+	Q_PROPERTY(int weighted_holding_level_percent READ get_weighted_holding_level_percent NOTIFY holding_level_changed)
 	Q_PROPERTY(QString fortification_level READ get_fortification_level_qstring NOTIFY fortification_level_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
@@ -202,6 +203,15 @@ public:
 
 	centesimal_int get_building_holding_level_change(const building_type *building) const;
 	[[nodiscard]] QCoro::Task<void> set_holding_level_from_buildings(const int level);
+
+	const centesimal_int &get_weighted_holding_level() const
+	{
+		return this->weighted_holding_level;
+	}
+
+	int get_weighted_holding_level_percent() const;
+	void set_weighted_holding_level(const centesimal_int &level);
+	void update_weighted_holding_level();
 
 	const centesimal_int &get_fortification_level() const
 	{
@@ -669,6 +679,7 @@ signals:
 	void religion_changed();
 	void holding_type_changed();
 	void holding_level_changed();
+	void weighted_holding_level_changed();
 	void fortification_level_changed();
 	void holding_type_name_changed();
 	void dungeon_changed();
@@ -689,6 +700,7 @@ private:
 	const metternich::religion *religion = nullptr;
 	const metternich::holding_type *holding_type = nullptr;
 	centesimal_int holding_level;
+	centesimal_int weighted_holding_level; //share of the holding levels available for the holding's province for the holding's domain skill
 	centesimal_int fortification_level;
 	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
