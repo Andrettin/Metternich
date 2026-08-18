@@ -1,0 +1,8 @@
+terpe = {
+	name = "Terpe"
+	world = earth
+	geocoordinate = { 33.163889 37.438889 } #Derbe
+	type = holding
+	holding_type = castle
+	province = iconium #Karaman
+}

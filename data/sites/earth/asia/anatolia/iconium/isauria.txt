@@ -1,0 +1,8 @@
+isauria = {
+	name = "Isauria"
+	world = earth
+	geocoordinate = { 32.24503 37.190126 } #Isaura Palaea
+	type = holding
+	holding_type = castle
+	province = iconium
+}

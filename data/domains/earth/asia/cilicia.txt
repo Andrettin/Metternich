@@ -9,6 +9,6 @@ cilicia = {
 	core_provinces = {
 		mersin
 		caesarea
-		karaman
+		iconium
 	}
 }

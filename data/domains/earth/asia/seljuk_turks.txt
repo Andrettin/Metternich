@@ -6,9 +6,9 @@ seljuk_turks = {
 	default_religion = sunni
 	default_tier = duchy
 	default_government_type = tribal_despotism
-	default_capital = karaman #Konya
+	default_capital = iconium #Konya
 	core_provinces = {
-		karaman
+		iconium
 		afyonkarahisar
 		attaleia
 		aydin

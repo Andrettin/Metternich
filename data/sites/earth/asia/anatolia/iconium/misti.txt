@@ -4,5 +4,5 @@ misti = {
 	geocoordinate = { 34.848959 38.171594 } #Misthi
 	type = holding
 	holding_type = guild
-	province = karaman #Niğde
+	province = iconium #Niğde
 }

@@ -4,5 +4,5 @@ zoropassos = {
 	geocoordinate = { 34.61972222222222 38.74305555555556 } #Gülşehir
 	type = holding
 	holding_type = castle
-	province = karaman #Nevsehir
+	province = iconium #Nevsehir
 }

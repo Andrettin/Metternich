@@ -4,5 +4,5 @@ venessa = {
 	geocoordinate = { 34.846666666667 38.715 } #Avanos
 	type = holding
 	holding_type = castle
-	province = karaman #Nevsehir
+	province = iconium #Nevsehir
 }

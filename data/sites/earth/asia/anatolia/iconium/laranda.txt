@@ -1,0 +1,17 @@
+laranda = {
+	name = "Laranda"
+	world = earth
+	geocoordinate = { 33.21501623410 37.18154054670 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = iconium #Karaman
+	cultural_names = {
+		turkish = "Karaman"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

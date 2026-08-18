@@ -1,0 +1,8 @@
+amblada = {
+	name = "Amblada"
+	world = earth
+	geocoordinate = { 31.737947 37.520983 }
+	type = holding
+	holding_type = castle
+	province = iconium
+}

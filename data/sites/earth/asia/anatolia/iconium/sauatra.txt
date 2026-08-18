@@ -1,0 +1,8 @@
+sauatra = {
+	name = "Sauatra"
+	world = earth
+	geocoordinate = { 33.134068 37.959034 } #Savatra
+	type = holding
+	holding_type = castle
+	province = iconium
+}

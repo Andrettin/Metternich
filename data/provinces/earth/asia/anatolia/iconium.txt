@@ -1,7 +1,12 @@
-karaman = {
-	name = "Karaman"
-	color = { 70 0 137 }
-	default_provincial_capital = karaman
+iconium = {
+	name = "Iconium"
+	color = { 168 147 207 }
+	terrain = desert
+	default_provincial_capital = iconium
+	cultural_names = {
+		greek = "Ikonion"
+		turkish = "Karaman"
+	}
 	regions = {
 		anatolia
 	}
