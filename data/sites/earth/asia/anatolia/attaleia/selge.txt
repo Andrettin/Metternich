@@ -4,5 +4,5 @@ selge = {
 	geocoordinate = { 31.127926 37.228321 }
 	type = holding
 	holding_type = castle
-	province = attaleia
+	province = attaleia #Manavgat
 }

@@ -4,5 +4,5 @@ halicarnassus = {
 	geocoordinate = { 27.41724 37.035173 }
 	type = holding
 	holding_type = mausoleum #or castle
-	province = lycia
+	province = aydin #Mugla
 }

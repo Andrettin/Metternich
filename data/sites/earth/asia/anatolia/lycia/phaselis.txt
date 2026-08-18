@@ -4,5 +4,5 @@ phaselis = {
 	geocoordinate = { 30.549049 36.522806 }
 	type = holding
 	holding_type = castle
-	province = attaleia
+	province = lycia #Kemer
 }

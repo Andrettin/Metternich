@@ -4,5 +4,5 @@ limyra = {
 	geocoordinate = { 30.170238 36.341965 }
 	type = holding
 	holding_type = castle
-	province = attaleia
+	province = lycia #Finike
 }

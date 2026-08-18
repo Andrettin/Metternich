@@ -4,5 +4,5 @@ mylasa = {
 	geocoordinate = { 27.783333333333 37.316666666667 } #Milas
 	type = holding
 	holding_type = guild
-	province = lycia
+	province = aydin #Mugla
 }

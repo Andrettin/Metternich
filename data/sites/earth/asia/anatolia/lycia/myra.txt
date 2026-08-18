@@ -4,5 +4,5 @@ myra = {
 	geocoordinate = { 29.993638 36.250801 }
 	type = holding
 	holding_type = temple
-	province = attaleia
+	province = lycia #Demre
 }

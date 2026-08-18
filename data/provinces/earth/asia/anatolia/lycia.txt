@@ -1,8 +1,8 @@
-lycia = {
+lycia = { #the districts of Fethiye, Seydikemer, Kaş, Demre, Elmali, Finike, Kumluca and Kemer
 	name = "Lycia"
 	color = { 84 111 201 }
 	terrain = mountains
-	default_provincial_capital = halicarnassus
+	default_provincial_capital = patara
 	regions = {
 		anatolia
 	}
@@ -27,10 +27,6 @@ lycia = {
 			owner = seljuk_turks #territory of the Seljuk Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = turkish
 			religion = sunni
-		}
-		
-		1740 = {
-			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
 		}
 		
 		1815 = {
