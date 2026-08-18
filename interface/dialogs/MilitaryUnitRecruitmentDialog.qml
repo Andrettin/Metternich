@@ -186,7 +186,7 @@ DialogBase {
 						visible: military_unit_type !== null
 						
 						readonly property var military_unit_category: model.modelData
-						readonly property var military_unit_type: domain_game_data.military.get_best_military_unit_category_type(military_unit_category)
+						readonly property var military_unit_type: domain_game_data ? domain_game_data.military.get_best_military_unit_category_type(military_unit_category) : null
 						readonly property int military_unit_recruitment_count: military_unit_type !== null && selected_province.game_data.military_unit_recruitment_counts.length > 0 ? selected_province.game_data.get_military_unit_recruitment_count(military_unit_type) : 0
 						
 						IconButton {

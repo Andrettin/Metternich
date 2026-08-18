@@ -132,38 +132,40 @@ TableView {
 	}
 	
 	function get_map_mode_color(mode, province, change_count) {
-		switch (mode) {
-			case ProvinceMap.Mode.Political:
-				return province.game_data.map_color
-			case ProvinceMap.Mode.Terrain:
-				return province.map_data.terrain.color
-			case ProvinceMap.Mode.Cultural:
-				if (province.game_data.culture !== null) {
-					return province.game_data.culture.color
-				}
-				break
-			case ProvinceMap.Mode.Religious:
-				if (province.game_data.religion !== null) {
-					return province.game_data.religion.color
-				}
-				break
-			case ProvinceMap.Mode.Technology:
-				return province.game_data.technology_map_color
-			case ProvinceMap.Mode.TradeZone:
-				if (province.game_data.trade_zone_domain !== null) {
-					return province.game_data.trade_zone_domain.color
-				}
-				break
-			case ProvinceMap.Mode.Temple:
-				if (province.game_data.temple_domain !== null) {
-					return province.game_data.temple_domain.color
-				}
-				break
-			case ProvinceMap.Mode.CulturalSociety:
-				if (province.game_data.cultural_society_domain !== null) {
-					return province.game_data.cultural_society_domain.color
-				}
-				break
+		if (province !== null) {
+			switch (mode) {
+				case ProvinceMap.Mode.Political:
+					return province.game_data.map_color
+				case ProvinceMap.Mode.Terrain:
+					return province.map_data.terrain.color
+				case ProvinceMap.Mode.Cultural:
+					if (province.game_data.culture !== null) {
+						return province.game_data.culture.color
+					}
+					break
+				case ProvinceMap.Mode.Religious:
+					if (province.game_data.religion !== null) {
+						return province.game_data.religion.color
+					}
+					break
+				case ProvinceMap.Mode.Technology:
+					return province.game_data.technology_map_color
+				case ProvinceMap.Mode.TradeZone:
+					if (province.game_data.trade_zone_domain !== null) {
+						return province.game_data.trade_zone_domain.color
+					}
+					break
+				case ProvinceMap.Mode.Temple:
+					if (province.game_data.temple_domain !== null) {
+						return province.game_data.temple_domain.color
+					}
+					break
+				case ProvinceMap.Mode.CulturalSociety:
+					if (province.game_data.cultural_society_domain !== null) {
+						return province.game_data.cultural_society_domain.color
+					}
+					break
+			}
 		}
 		
 		if (province.water_zone) {
