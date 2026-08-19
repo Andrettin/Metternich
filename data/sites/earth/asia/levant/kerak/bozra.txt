@@ -1,0 +1,8 @@
+bozra = {
+	name = "Bozra"
+	world = earth
+	geocoordinate = { 35.603919 30.745843 } #Bozrah
+	type = holding
+	holding_type = castle
+	province = kerak #Tafilah
+}

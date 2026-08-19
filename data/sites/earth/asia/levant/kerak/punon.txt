@@ -1,0 +1,8 @@
+punon = {
+	name = "Punon"
+	world = earth
+	geocoordinate = { 35.493647 30.62775 } #Khirbat Faynan
+	type = holding
+	holding_type = castle
+	province = kerak #Tafilah
+}

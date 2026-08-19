@@ -4,5 +4,5 @@ dhiban = {
 	geocoordinate = { 35.783333333333 31.5 }
 	type = holding
 	holding_type = guild
-	province = moab #Madaba
+	province = kerak #Madaba
 }

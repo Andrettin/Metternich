@@ -1,0 +1,8 @@
+zaimona = {
+	name = "Zaimona"
+	world = earth
+	geocoordinate = { 35.37339 30.81217 } #Wadi es-Salamani/Ain es-Salamani/Zalmonah
+	type = holding
+	holding_type = castle
+	province = kerak
+}

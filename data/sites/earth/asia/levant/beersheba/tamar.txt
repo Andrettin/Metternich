@@ -1,0 +1,8 @@
+tamar = {
+	name = "Tamar"
+	world = earth
+	geocoordinate = { 35.2458 30.8088 } #Ir Ovot
+	type = holding
+	holding_type = temple
+	province = beersheba
+}

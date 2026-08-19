@@ -1,0 +1,8 @@
+zoar = {
+	name = "Zoar"
+	world = earth
+	geocoordinate = { 35.5025 31.046944444444 } #Zoara
+	type = holding
+	holding_type = castle
+	province = kerak
+}
