@@ -17,6 +17,7 @@
 #include "character/trait.h"
 #include "culture/culture.h"
 #include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "game/game.h"
 #include "item/item_type.h"
 #include "language/name_generator.h"
@@ -761,7 +762,7 @@ std::string character::get_full_name(const metternich::domain *regnal_domain, co
 		full_name += number::to_roman_numeral(regnal_number.value());
 
 		if (regnal_domain != nullptr) {
-			full_name += std::string(" of ") + (regnal_domain->has_definite_article() ? "the " : "") + regnal_domain->get_name();
+			full_name += std::string(" of ") + (regnal_domain->has_definite_article() ? "the " : "") + (regnal_domain->get_game_data()->is_alive() ? regnal_domain->get_game_data()->get_name() : regnal_domain->get_cultural_name(this->get_culture()));
 		}
 	} else if (!this->get_surname().empty()) {
 		if (this->is_surname_first()) {
