@@ -39,6 +39,7 @@
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
+#include "economy/province_taxation_type.h"
 #include "engine_interface.h"
 #include "game/attack_result.h"
 #include "game/battle_resolution_type.h"
@@ -206,6 +207,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<moisture_type>();
 		database_util::register_enum<population_strata>();
 		database_util::register_enum<profession_profitability>();
+		database_util::register_enum<province_taxation_type>();
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();
 		database_util::register_enum<starting_age_category>();

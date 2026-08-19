@@ -18,6 +18,7 @@
 #include "economy/employment_type.h"
 #include "economy/expense_transaction_type.h"
 #include "economy/income_transaction_type.h"
+#include "economy/province_taxation_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/map.h"
@@ -42,7 +43,7 @@
 namespace metternich {
 
 domain_economy::domain_economy(const metternich::domain *domain, const domain_game_data *game_data)
-	: domain(domain)
+	: domain(domain), province_taxation_type(province_taxation_type::no_taxation)
 {
 	connect(game_data, &domain_game_data::provinces_changed, this, &domain_economy::resource_counts_changed);
 	connect(game_data->get_diplomacy(), &domain_diplomacy::diplomacy_states_changed, this, &domain_economy::vassal_resource_counts_changed);
@@ -75,6 +76,8 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 
 	if (key == "storage_capacity") {
 		this->storage_capacity = std::stoll(value);
+	} else if (key == "province_taxation_type") {
+		this->province_taxation_type = magic_enum::enum_cast<metternich::province_taxation_type>(value).value();
 	} else if (key == "attribute_taxation") {
 		this->attribute_taxation = std::stoll(value);
 	} else {
@@ -132,6 +135,7 @@ gsml_data domain_economy::to_gsml_data() const
 	gsml_data data("economy");
 
 	data.add_property("storage_capacity", std::to_string(this->get_storage_capacity()));
+	data.add_property("province_taxation_type", std::string(magic_enum::enum_name(this->get_province_taxation_type())));
 	data.add_property("attribute_taxation", std::to_string(this->attribute_taxation));
 
 	if (!this->get_stored_commodities().empty()) {
@@ -816,6 +820,22 @@ bool domain_economy::produces_commodity(const commodity *commodity) const
 	}
 
 	return false;
+}
+
+
+void domain_economy::set_province_taxation_type(const metternich::province_taxation_type province_taxation_type)
+{
+	assert_throw(province_taxation_type != province_taxation_type::none);
+
+	if (province_taxation_type == this->get_province_taxation_type()) {
+		return;
+	}
+
+	this->province_taxation_type = province_taxation_type;
+
+	for (const province *province : this->get_game_data()->get_provinces()) {
+		province->get_game_data()->update_province_level_taxation();
+	}
 }
 
 void domain_economy::update_attribute_taxation()

@@ -64,33 +64,47 @@ province_population_per_level = {
 	10 = 100000
 }
 
-province_taxation_per_level = { #light taxation
-	0 = 0d0
-	1 = 1d3-2
-	2 = 1d3-1
-	3 = 1d3
-	4 = 1d4
-	5 = 1d4+1
-	6 = 1d6+1
-	7 = 1d8+1
-	8 = 1d10+1
-	9 = 1d12+1
-	10 = 2d8
+province_taxation_per_level = {
+	light_taxation = {
+		0 = 0d0
+		1 = 1d3-2
+		2 = 1d3-1
+		3 = 1d3
+		4 = 1d4
+		5 = 1d4+1
+		6 = 1d6+1
+		7 = 1d8+1
+		8 = 1d10+1
+		9 = 1d12+1
+		10 = 2d8
+	}
+	moderate_taxation = {
+		0 = 0d0
+		1 = 1d3-1
+		2 = 1d3
+		3 = 1d4
+		4 = 1d4+1
+		5 = 1d6+1
+		6 = 1d8+1
+		7 = 1d10+1
+		8 = 1d12+1
+		9 = 2d8
+		10 = 2d8+2
+	}
+	heavy_taxation = {
+		0 = 1d3-2
+		1 = 1d3
+		2 = 1d4
+		3 = 1d4+1
+		4 = 1d6+1
+		5 = 1d8+1
+		6 = 1d10+1
+		7 = 1d12+1
+		8 = 2d8
+		9 = 2d8+2
+		10 = 2d10+2
+	}
 }
-
-#province_taxation_per_level = { #moderate taxation
-#	0 = 0d0
-#	1 = 1d3-1
-#	2 = 1d3
-#	3 = 1d4
-#	4 = 1d4+1
-#	5 = 1d6+1
-#	6 = 1d8+1
-#	7 = 1d10+1
-#	8 = 1d12+1
-#	9 = 2d8
-#	10 = 2d8+2
-#}
 
 domain_maintenance_cost_per_domain_size = {
 	1 = 0 #gb

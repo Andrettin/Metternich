@@ -6,6 +6,7 @@
 #include "domain/succession_gender_type.h"
 #include "domain/succession_type.h"
 #include "economy/commodity.h"
+#include "economy/province_taxation_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
@@ -69,8 +70,8 @@ void law::check() const
 		throw std::runtime_error(std::format("Law \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_modifier() == nullptr && this->get_succession_type() == succession_type::none && this->get_succession_gender_type() == succession_gender_type::none) {
-		throw std::runtime_error(std::format("Law \"{}\" has no modifier, and does not affect succession.", this->get_identifier()));
+	if (this->get_modifier() == nullptr && this->get_succession_type() == succession_type::none && this->get_succession_gender_type() == succession_gender_type::none && this->get_province_taxation_type() == province_taxation_type::none) {
+		throw std::runtime_error(std::format("Law \"{}\" has no modifier, and does not affect succession or province taxation.", this->get_identifier()));
 	}
 
 	if (this->get_conditions() != nullptr) {
@@ -105,6 +106,14 @@ QString law::get_modifier_string(const metternich::domain *domain) const
 		}
 
 		str += std::format("{} Succession", get_succession_gender_type_name(this->get_succession_gender_type()));
+	}
+
+	if (this->get_province_taxation_type() != province_taxation_type::none) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::string(get_province_taxation_type_name(this->get_province_taxation_type()));
 	}
 
 	return QString::fromStdString(str);

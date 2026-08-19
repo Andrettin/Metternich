@@ -13,6 +13,7 @@ namespace metternich {
 class domain;
 class law_group;
 class technology;
+enum class province_taxation_type;
 enum class succession_gender_type;
 enum class succession_type;
 
@@ -28,6 +29,7 @@ class law final : public named_data_entry, public data_type<law>
 
 	Q_PROPERTY(metternich::law_group * group MEMBER group NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(metternich::province_taxation_type province_taxation_type MEMBER province_taxation_type READ get_province_taxation_type NOTIFY changed)
 	Q_PROPERTY(metternich::succession_type succession_type MEMBER succession_type READ get_succession_type NOTIFY changed)
 	Q_PROPERTY(metternich::succession_gender_type succession_gender_type MEMBER succession_gender_type READ get_succession_gender_type NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -53,6 +55,11 @@ public:
 	const icon *get_icon() const
 	{
 		return this->icon;
+	}
+
+	province_taxation_type get_province_taxation_type() const
+	{
+		return this->province_taxation_type;
 	}
 
 	succession_type get_succession_type() const
@@ -95,6 +102,7 @@ signals:
 private:
 	law_group *group = nullptr;
 	const icon *icon = nullptr;
+	metternich::province_taxation_type province_taxation_type {};
 	metternich::succession_type succession_type {};
 	metternich::succession_gender_type succession_gender_type {};
 	technology *required_technology = nullptr;

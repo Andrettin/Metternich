@@ -16,6 +16,7 @@ class domain;
 class domain_game_data;
 enum class income_transaction_type;
 enum class population_strata;
+enum class province_taxation_type;
 
 class domain_economy final : public QObject
 {
@@ -239,6 +240,13 @@ public:
 	int get_food_output() const;
 
 	bool produces_commodity(const commodity *commodity) const;
+
+	province_taxation_type get_province_taxation_type() const
+	{
+		return this->province_taxation_type;
+	}
+
+	void set_province_taxation_type(const province_taxation_type province_taxation_type);
 
 	void update_attribute_taxation();
 
@@ -701,6 +709,7 @@ private:
 	commodity_map<int64_t> commodity_storage_capacities;
 	commodity_map<centesimal_int> commodity_inputs;
 	commodity_map<centesimal_int> commodity_outputs;
+	metternich::province_taxation_type province_taxation_type {};
 	int64_t attribute_taxation = 0;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity
 	commodity_map<int64_t> max_commodity_storages; //if storage is above this, export the commodity

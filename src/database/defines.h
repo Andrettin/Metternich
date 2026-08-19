@@ -38,6 +38,7 @@ class sound;
 class terrain_type;
 enum class diplomacy_state;
 enum class event_trigger;
+enum class province_taxation_type;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -425,7 +426,7 @@ public:
 
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
-	const dice &get_province_taxation_for_level(const int level) const;
+	const dice &get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const;
 	int64_t get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
 	const std::vector<std::unique_ptr<battle_resolution_table>> &get_battle_resolution_tables() const
@@ -514,7 +515,7 @@ private:
 	const commodity_unit *domain_income_unit = nullptr;
 	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<int, int> province_population_per_level;
-	std::map<int, dice> province_taxation_per_level;
+	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, int64_t> domain_maintenance_cost_per_domain_size;
 	std::vector<std::unique_ptr<battle_resolution_table>> battle_resolution_tables;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;

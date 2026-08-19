@@ -6,6 +6,7 @@
 #include "database/preferences.h"
 #include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
+#include "economy/province_taxation_type.h"
 #include "game/battle_resolution_table.h"
 #include "game/character_event.h"
 #include "game/domain_event.h"
@@ -102,11 +103,15 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			this->province_population_per_level[level] = population;
 		});
 	} else if (tag == "province_taxation_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			dice dice(property.get_value());
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const province_taxation_type taxation_type = magic_enum::enum_cast<province_taxation_type>(child_scope.get_tag()).value();
 
-			this->province_taxation_per_level[level] = std::move(dice);
+			child_scope.for_each_property([this, taxation_type](const gsml_property &property) {
+				const int level = std::stoi(property.get_key());
+				dice dice(property.get_value());
+
+				this->province_taxation_per_level[taxation_type][level] = std::move(dice);
+			});
 		});
 	} else if (tag == "domain_maintenance_cost_per_domain_size") {
 		assert_throw(this->get_wealth_commodity() != nullptr);
@@ -295,11 +300,30 @@ int defines::get_province_level_for_population(const int population) const
 	return best_province_level;
 }
 
-const dice &defines::get_province_taxation_for_level(const int level) const
+const dice &defines::get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const
 {
-	const auto find_iterator = this->province_taxation_per_level.find(level);
+	static constexpr dice null_dice;
+
+	if (taxation_type == province_taxation_type::no_taxation) {
+		return null_dice;
+	}
+
+	const auto find_iterator = this->province_taxation_per_level.find(taxation_type);
 	assert_throw(find_iterator != this->province_taxation_per_level.end());
-	return find_iterator->second;
+
+	const auto sub_find_iterator = find_iterator->second.find(level);
+	if (sub_find_iterator != find_iterator->second.end()) {
+		return sub_find_iterator->second;
+	}
+
+	//if the level is higher than the highest provided level for taxation, use that for the largest level
+	const auto last_iterator = find_iterator->second.rbegin();
+	if (level > last_iterator->first) {
+		return last_iterator->second;
+	}
+
+	assert_throw(false);
+	return null_dice;
 }
 
 int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) const

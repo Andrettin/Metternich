@@ -28,7 +28,7 @@ inline std::string_view get_succession_gender_type_name(const succession_gender_
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid succession gender type: {}", static_cast<int>(succession_gender_type)));
+	throw std::runtime_error(std::format("Invalid succession gender type: {}", std::to_underlying(succession_gender_type)));
 }
 
 }

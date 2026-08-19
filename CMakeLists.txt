@@ -493,6 +493,7 @@ set(economy_HDRS
 	src/economy/food_type.h
 	src/economy/income_transaction.h
 	src/economy/income_transaction_type.h
+	src/economy/province_taxation_type.h
 	src/economy/resource.h
 	src/economy/resource_container.h
 	src/economy/transaction.h

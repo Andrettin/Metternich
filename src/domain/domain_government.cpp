@@ -17,6 +17,7 @@
 #include "domain/office.h"
 #include "domain/succession_gender_type.h"
 #include "domain/succession_type.h"
+#include "economy/province_taxation_type.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
@@ -150,6 +151,10 @@ QCoro::Task<void> domain_government::set_law(const law_group *law_group, const l
 
 		if (law->get_succession_gender_type() != succession_gender_type::none) {
 			co_await this->set_succession_gender_type(law->get_succession_gender_type());
+		}
+
+		if (law->get_province_taxation_type() != province_taxation_type::none) {
+			this->get_game_data()->get_economy()->set_province_taxation_type(law->get_province_taxation_type());
 		}
 	}
 

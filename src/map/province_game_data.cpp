@@ -2526,10 +2526,9 @@ void province_game_data::update_province_level_taxation()
 	//update taxation from the province level
 	this->province_level_taxation = 0;
 
-
 	assert_throw(this->get_owner() != nullptr);
 
-	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_level());
+	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_owner()->get_economy()->get_province_taxation_type(), this->get_level());
 	const int64_t average_result = taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 	if (average_result < 0) {

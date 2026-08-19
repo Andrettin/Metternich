@@ -2,6 +2,7 @@ no_taxation = {
 	name = "No Taxation"
 	group = taxation
 	icon = chest
+	province_taxation_type = no_taxation
 	commodity_costs = {
 		wealth = 1gb
 	}
@@ -14,6 +15,7 @@ light_taxation = {
 	name = "Light Taxation"
 	group = taxation
 	icon = chest
+	province_taxation_type = light_taxation
 	commodity_costs = {
 		wealth = 1gb
 	}
@@ -28,6 +30,7 @@ moderate_taxation = {
 	name = "Moderate Taxation"
 	group = taxation
 	icon = chest
+	province_taxation_type = moderate_taxation
 	commodity_costs = {
 		wealth = 1gb
 	}
@@ -42,6 +45,7 @@ heavy_taxation = {
 	name = "Heavy Taxation"
 	group = taxation
 	icon = chest
+	province_taxation_type = heavy_taxation
 	commodity_costs = {
 		wealth = 1gb
 	}
@@ -56,6 +60,7 @@ overwhelming_taxation = {
 	name = "Overwhelming Taxation"
 	group = taxation
 	icon = chest
+	province_taxation_type = heavy_taxation
 	commodity_costs = {
 		wealth = 1gb
 	}
