@@ -1,0 +1,36 @@
+aegialeus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 264.
+	name = "Aegialeus"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	home_site = argos #son of Inachus, god of the main river of Argos
+	gender = male
+	father = inachus
+	mother = melia
+}
+
+io = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 264-265.
+	name = "Io"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	home_site = argos #daughter of Inachus, god of the main river of Argos
+	gender = female
+	father = inachus
+	mother = melia
+	
+	#in other versions of the myth, she was the daughter of Iasus or Piren instead, both of whom were descendants of Inachus
+	#married the Egyptian king, Telegonus
+	#identified by the Greeks with the Egyptian goddess Isis
+}
+
+phoroneus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 264.
+	name = "Phoroneus"
+	character_class = aristocrat
+	culture = greek
+	religion = hellenic
+	home_site = argos #son of Inachus, god of the main river of Argos
+	gender = male
+	father = inachus
+	mother = melia
+}

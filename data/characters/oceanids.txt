@@ -1,3 +1,15 @@
+melia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 263-264, 308.
+	name = "Melia"
+	monster_type = nymph
+	culture = fey
+	religion = hellenic
+	gender = female
+	father = oceanus #Oceanid
+	mother = tethys #Oceanid
+	
+	#wife of the river god Inachus
+}
+
 pleione = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 338, 403.
 	name = "Pleione"
 	monster_type = nymph

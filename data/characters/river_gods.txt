@@ -1,0 +1,22 @@
+inachus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 263-264.
+	name = "Inachus"
+	monster_type = triton #river god
+	culture = aquan
+	religion = hellenic
+	home_site = argos #Argive river god
+	gender = male
+	father = oceanus
+	mother = tethys
+	
+	#god of the main river of Argos
+}
+
+nile = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 310.
+	name = "Nile"
+	monster_type = triton #river god
+	culture = aquan
+	religion = kemetic
+	gender = male
+	father = oceanus #river god
+	mother = tethys #river god
+}

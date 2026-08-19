@@ -8,6 +8,21 @@ perseus = {
 	start_date = -1550 #possible year of the foundation of Mycenae
 }
 
+lelex = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 289.
+	name = "Lelex"
+	species = human
+	character_class = aristocrat
+	rank = lord #king
+	culture = greek
+	religion = hellenic
+	home_site = megara
+	gender = male
+	father = poseidon
+	mother = libya
+	
+	#born in Egypt, he left that country to become king of Megara
+}
+
 ceyx = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 122, 400.
 	name = "Ceyx"
 	species = human

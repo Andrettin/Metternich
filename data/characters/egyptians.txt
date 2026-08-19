@@ -9,6 +9,71 @@ narmer_of_egypt = {
 	start_date = -3100 #unified Lower and Upper Egypt c. 3100 BC; Source: "History of the World Map by Map", 2023, pp. 32-33.
 }
 
+epaphus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 177.
+	name = "Epaphus"
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic
+	home_site = memphis
+	gender = male
+	father = zeus
+	mother = io
+	
+	#identified by the Greeks with the Egyptian bull-god Apis
+	#succeeded his step-father Telegonus as king of Egypt
+	#married Memphis, the daughter of the river god Nile, and named the city of Memphis after her
+}
+
+memphis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 310.
+	name = "Memphis"
+	character_class = aristocrat
+	culture = egyptian
+	religion = kemetic
+	home_site = memphis
+	gender = female
+	father = nile
+	
+	#married to Epaphus, with the city of Memphis being named after her
+}
+
+libya = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 289.
+	name = "Libya"
+	character_class = aristocrat
+	culture = egyptian
+	religion = kemetic
+	gender = female
+	father = epaphus
+	mother = memphis
+	
+	#gave her name to the country of Libya
+	#mother of Belus and Agenor
+}
+
+lysianassa = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 177.
+	name = "Lysianassa"
+	character_class = aristocrat
+	culture = egyptian
+	religion = kemetic
+	gender = female
+	father = epaphus
+	mother = memphis
+}
+
+busiris = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 102.
+	name = "Busiris"
+	character_class = aristocrat
+	rank = lord #king
+	culture = egyptian
+	religion = kemetic
+	gender = male
+	father = poseidon
+	mother = lysianassa
+	
+	#king of Egypt
+	#killed by Heracles
+}
+
 ahmose_of_egypt = {
 	name = "Ahmose" #also known as Ahmose of Thebes
 	character_class = aristocrat
