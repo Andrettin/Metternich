@@ -3,4 +3,5 @@ zarqa = {
 	world = earth
 	geocoordinate = { 36.10000809610 32.06999208480 } #from Natural Earth
 	type = holding
+	province = zarqa
 }

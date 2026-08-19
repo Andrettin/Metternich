@@ -1,0 +1,8 @@
+salt = {
+	name = "Salt"
+	world = earth
+	geocoordinate = { 35.727214 32.039193 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = ammon #Balqa
+}

@@ -1,0 +1,8 @@
+deir_alla = {
+	name = "Deir Alla"
+	world = earth
+	geocoordinate = { 35.60305556 32.18888889 }
+	type = holding
+	holding_type = temple
+	province = ammon #Balqa
+}

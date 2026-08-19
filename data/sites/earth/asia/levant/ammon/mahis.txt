@@ -1,0 +1,8 @@
+mahis = {
+	name = "Mahis"
+	world = earth
+	geocoordinate = { 35.766666666667 31.983333333333 }
+	type = holding
+	holding_type = temple
+	province = ammon #Balqa
+}
