@@ -18,6 +18,7 @@ seljuk_turks = {
 		kastamonu
 		lycia
 		mersin
+		mikissos
 		samsun
 		sardis
 		sebastea

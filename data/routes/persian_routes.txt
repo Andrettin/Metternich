@@ -8,6 +8,7 @@ persian_royal_highway = {
 		germiyan
 		eskisehir
 		ancyra
+		mikissos
 		charsianon
 		sebastea
 		malatya

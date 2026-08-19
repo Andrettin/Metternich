@@ -1,0 +1,8 @@
+carissa = {
+	name = "Carissa"
+	world = earth
+	geocoordinate = { 35.140618 40.527786 }
+	type = holding
+	holding_type = castle
+	province = charsianon #Çorum
+}

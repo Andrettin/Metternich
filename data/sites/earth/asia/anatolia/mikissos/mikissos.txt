@@ -1,0 +1,11 @@
+mikissos = {
+	name = "Mikissos"
+	world = earth
+	geocoordinate = { 34.171003 39.141999 } #from Natural Earth (Kirsehir)
+	type = holding
+	holding_type = castle
+	province = mikissos
+	cultural_names = {
+		turkish = "Kirsehir"
+	}
+}

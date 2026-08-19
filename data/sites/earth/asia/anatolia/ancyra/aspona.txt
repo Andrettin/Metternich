@@ -1,0 +1,8 @@
+aspona = {
+	name = "Aspona"
+	world = earth
+	geocoordinate = { 33.2901191 39.3102281 }
+	type = holding
+	holding_type = guild
+	province = ancyra
+}

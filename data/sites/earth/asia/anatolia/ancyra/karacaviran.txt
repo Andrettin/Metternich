@@ -1,0 +1,8 @@
+karacaviran = {
+	name = "Karacaviran"
+	world = earth
+	geocoordinate = { 33.26028 40.84101 }
+	type = holding
+	holding_type = castle
+	province = ancyra #Çankiri
+}

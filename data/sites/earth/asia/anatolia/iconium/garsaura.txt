@@ -1,0 +1,8 @@
+garsaura = {
+	name = "Garsaura"
+	world = earth
+	geocoordinate = { 34.0297 38.3686 } #Aksaray
+	type = holding
+	holding_type = castle
+	province = iconium #Aksaray
+}

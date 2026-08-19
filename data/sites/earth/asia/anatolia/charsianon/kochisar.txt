@@ -1,0 +1,8 @@
+kochisar = {
+	name = "Kochisar"
+	world = earth
+	geocoordinate = { 34.950833333333335 40.10888888888889 }
+	type = holding
+	holding_type = castle
+	province = charsianon #Alaca, Çorum
+}

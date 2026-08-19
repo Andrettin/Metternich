@@ -1,0 +1,34 @@
+mikissos = { #Kirsehir and Kinkkale
+	name = "Mikissos"
+	color = { 84 126 76 }
+	terrain = mountains
+	default_provincial_capital = mikissos
+	cultural_names = {
+		turkish = "Kirsehir"
+	}
+	regions = {
+		anatolia
+	}
+	
+	history = {
+		-1650 = {
+			owner = hittite_empire #part of the Hittite Kingdom in the 1650-1590 BC period; Source: "Civilizations Map by Map", 2026, p. 50.
+			culture = hittite
+			religion = cybelene
+		}
+		
+		1360 = {
+			owner = seljuk_turks #territory of the Seljuk Turks in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			culture = turkish
+			religion = sunni
+		}
+		
+		1740 = {
+			owner = ottoman_empire #part of the Ottoman Empire c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+		
+		1815 = {
+			culture = turkish #Source: "The British Dominions Year Book 1918", 1918, Map 3.
+		}
+	}
+}

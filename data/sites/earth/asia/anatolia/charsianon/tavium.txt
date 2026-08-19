@@ -1,0 +1,8 @@
+tavium = {
+	name = "Tavium" #also known as Tavia
+	world = earth
+	geocoordinate = { 34.516565 39.858454 }
+	type = holding
+	holding_type = temple
+	province = charsianon #Yozgat
+}
