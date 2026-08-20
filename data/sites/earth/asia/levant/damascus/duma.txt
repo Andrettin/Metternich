@@ -1,0 +1,8 @@
+duma = {
+	name = "Duma"
+	world = earth
+	geocoordinate = { 36.399990 33.583336 } #from Natural Earth (Douma)
+	type = holding
+	holding_type = castle
+	province = damascus
+}

@@ -1,8 +1,11 @@
 hodonin = {
 	name = "Hodonin" #"Hodonín"
 	color = { 4 156 85 }
-	terrain = forest
+	terrain = plains
 	default_provincial_capital = hodonin
+	features = {
+		fertile
+	}
 	regions = {
 		moravia
 	}

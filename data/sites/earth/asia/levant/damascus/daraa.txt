@@ -1,0 +1,8 @@
+daraa = {
+	name = "Daraa"
+	world = earth
+	geocoordinate = { 36.105004 32.625000 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = damascus #Daraa
+}

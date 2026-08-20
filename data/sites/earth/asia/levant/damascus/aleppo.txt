@@ -1,0 +1,22 @@
+aleppo = {
+	name = "Aleppo"
+	world = earth
+	geocoordinate = { 37.17002030310 36.22997072250 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = damascus #Aleppo
+	features = {
+		crossroads #important market or fair
+	}
+	
+	history = {
+		high_middle_ages = {
+			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+			buildings += market
+		}
+		
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

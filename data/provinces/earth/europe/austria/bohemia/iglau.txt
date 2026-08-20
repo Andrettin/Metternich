@@ -1,6 +1,6 @@
 iglau = {
 	name = "Iglau"
-	color = { 180 133 66 }
+	color = { 88 132 81 }
 	terrain = hills
 	default_provincial_capital = iglau
 	cultural_names = {

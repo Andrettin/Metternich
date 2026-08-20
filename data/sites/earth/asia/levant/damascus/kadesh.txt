@@ -2,7 +2,7 @@ kadesh = {
 	name = "Kadesh"
 	world = earth
 	geocoordinate = { 36.5196 34.55781 }
-	province = syria
+	province = damascus #Homs
 	
 	history = {
 		-1450 = {

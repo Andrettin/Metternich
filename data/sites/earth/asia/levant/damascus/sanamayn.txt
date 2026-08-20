@@ -1,0 +1,8 @@
+sanamayn = {
+	name = "Sanamayn" #Al-Sanamayn
+	world = earth
+	geocoordinate = { 36.184166666667 33.071111111111 }
+	type = holding
+	holding_type = castle
+	province = damascus #Daraa
+}

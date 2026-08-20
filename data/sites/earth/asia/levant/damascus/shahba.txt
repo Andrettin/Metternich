@@ -1,0 +1,8 @@
+shahba = {
+	name = "Shahba"
+	world = earth
+	geocoordinate = { 36.62944444 32.85388889 }
+	type = holding
+	holding_type = castle
+	province = damascus #Suwayda
+}

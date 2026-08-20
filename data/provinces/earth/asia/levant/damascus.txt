@@ -1,6 +1,6 @@
-syria = {
-	name = "Syria"
-	color = { 67 141 108 }
+damascus = {
+	name = "Damascus"
+	color = { 126 54 64 }
 	default_provincial_capital = damascus
 	regions = {
 		asia

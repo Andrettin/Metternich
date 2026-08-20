@@ -1,8 +1,8 @@
-raqqa = {
-	name = "Raqqa"
+latakia = {
+	name = "Latakia"
 	world = earth
-	geocoordinate = { 39.01998490270 35.93037660630 } #from Natural Earth
-	province = syria
+	geocoordinate = { 35.77997595090 35.53998699850 } #from Natural Earth
+	province = damascus #Latakia
 	
 	history = {
 		1360 = {

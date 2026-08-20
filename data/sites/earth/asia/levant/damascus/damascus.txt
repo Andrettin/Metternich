@@ -3,7 +3,8 @@ damascus = {
 	world = earth
 	geocoordinate = { 36.29999588900 33.50003399560 } #from Natural Earth
 	type = holding
-	holding_type = guild 
+	holding_type = guild
+	province = damascus
 	features = {
 		crossroads #important market or fair
 		#holy_site

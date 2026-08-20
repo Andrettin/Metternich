@@ -2,7 +2,7 @@ hamath = {
 	name = "Hamath"
 	world = earth
 	geocoordinate = { 36.72999548210 35.15034669910 } #from Natural Earth
-	province = syria
+	province = damascus #Hamah
 	cultural_names = {
 		arabic = "Hamah"
 	}

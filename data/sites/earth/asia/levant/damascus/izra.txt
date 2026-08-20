@@ -1,0 +1,8 @@
+izra = {
+	name = "Izra"
+	world = earth
+	geocoordinate = { 36.254444444444 32.870555555556 }
+	type = holding
+	holding_type = castle
+	province = damascus #Daraa
+}

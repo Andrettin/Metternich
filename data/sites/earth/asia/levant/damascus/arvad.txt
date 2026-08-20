@@ -4,7 +4,7 @@ arvad = {
 	geocoordinate = { 35.858333333333 34.856111111111 }
 	type = resource
 	resource = cotton #cloth
-	province = syria
+	province = damascus #Tartus
 	cultural_names = {
 		arabic = "Arwad"
 	}

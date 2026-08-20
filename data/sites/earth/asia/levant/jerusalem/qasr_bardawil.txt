@@ -1,0 +1,8 @@
+qasr_bardawil = {
+	name = "Qasr Bardawil"
+	world = earth
+	geocoordinate = { 35.742381 32.819786 }
+	type = holding
+	holding_type = castle
+	province = jerusalem #Hazafon
+}
