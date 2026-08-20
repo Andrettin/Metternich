@@ -20,4 +20,8 @@ major_river = {
 	modifier = {
 		max_level = 1
 	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
+	}
 }
