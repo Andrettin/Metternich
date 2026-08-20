@@ -38,7 +38,7 @@ public:
 			return;
 		}
 
-		scope->get_economy()->change_settlement_commodity_bonus(this->commodity, (this->value * multiplier));
+		scope->get_economy()->change_settlement_commodity_bonus(this->commodity, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override

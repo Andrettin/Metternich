@@ -27,7 +27,7 @@ public:
 			co_return;
 		}
 
-		co_await scope->get_game_data()->change_population_type_modifier_multiplier(this->population_type, this->value * multiplier / 100);
+		co_await scope->get_game_data()->change_population_type_modifier_multiplier(this->population_type, centesimal_int(this->value * multiplier / 100));
 	}
 
 	virtual std::string get_base_string(scope_type *scope) const override
