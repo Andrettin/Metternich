@@ -2,6 +2,9 @@ andalusia = {
 	name = "Andalusia"
 	color = { 128 16 32 }
 	default_provincial_capital = seville
+	features = {
+		rock_of_gibraltar
+	}
 	regions = {
 		southern_iberia
 		spain

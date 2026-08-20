@@ -1,0 +1,23 @@
+mount_sinai = {
+	name = "Mount Sinai"
+	icon = mountains
+	domain_modifier = {
+		scripted_modifier_effect = landmark
+	}
+}
+
+mount_thera = {
+	name = "Mount Thera"
+	icon = mountains
+	domain_modifier = {
+		scripted_modifier_effect = landmark
+	}
+}
+
+rock_of_gibraltar = {
+	name = "Rock of Gibraltar"
+	icon = mountains
+	domain_modifier = {
+		scripted_modifier_effect = landmark
+	}
+}

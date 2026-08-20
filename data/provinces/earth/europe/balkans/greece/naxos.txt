@@ -3,6 +3,9 @@ naxos = {
 	color = { 168 174 42 }
 	terrain = mountains
 	default_provincial_capital = naxos
+	features = {
+		mount_thera
+	}
 	regions = {
 		greece
 	}

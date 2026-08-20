@@ -1,3 +1,7 @@
+landmark = {
+	loyalty = 1
+}
+
 resource = {
 	economy = 1
 }

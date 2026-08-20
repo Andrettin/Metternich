@@ -99,38 +99,6 @@ mount_kailash = {
 	}
 }
 
-mount_sinai = {
-	name = "Mount Sinai"
-	icon = mountains
-	tiny_icon = alliance
-	natural_wonder = true
-	terrain_types = {
-		mountains
-	}
-	site_types = {
-		resource
-	}
-	modifier = {
-		piety_bonus = 8
-	}
-}
-
-mount_thera = {
-	name = "Mount Thera"
-	icon = mountains
-	tiny_icon = alliance
-	natural_wonder = true
-	terrain_types = {
-		mountains
-	}
-	site_types = {
-		resource
-	}
-	modifier = {
-		research_bonus = 5
-	}
-}
-
 mount_tlaloc = {
 	name = "Mount Tlaloc"
 	icon = mountains
@@ -163,24 +131,6 @@ old_faithful = {
 	modifier = {
 		research_bonus = 2
 		amenities_bonus = 3
-	}
-}
-
-rock_of_gibraltar = {
-	name = "Rock of Gibraltar"
-	icon = mountains
-	tiny_icon = alliance
-	natural_wonder = true
-	coastal = true
-	terrain_types = {
-		mountains
-	}
-	site_types = {
-		resource
-	}
-	modifier = {
-		fish_bonus = 2
-		trade_bonus = 5
 	}
 }
 

@@ -3,6 +3,9 @@ arish = {
 	color = { 84 18 221 }
 	terrain = hills
 	default_provincial_capital = arish
+	features = {
+		mount_sinai
+	}
 	regions = {
 		egypt
 	}
