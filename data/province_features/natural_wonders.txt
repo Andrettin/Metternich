@@ -1,3 +1,19 @@
+mount_ararat = {
+	name = "Mount Ararat"
+	icon = mountains
+	domain_modifier = {
+		scripted_modifier_effect = landmark
+	}
+}
+
+mount_olympus = {
+	name = "Mount Olympus"
+	icon = mountains
+	domain_modifier = {
+		scripted_modifier_effect = landmark
+	}
+}
+
 mount_sinai = {
 	name = "Mount Sinai"
 	icon = mountains

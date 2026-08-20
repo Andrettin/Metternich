@@ -1,7 +1,7 @@
 leitmeritz = {
 	name = "Leitmeritz"
 	world = earth
-	#geocoordinate = { 14.131899491403 50.53355947692 }
+	geocoordinate = { 14.131899491403 50.53355947692 }
 	cultural_names = {
 		czech = "Litomerice" #"Litoměřice"
 	}

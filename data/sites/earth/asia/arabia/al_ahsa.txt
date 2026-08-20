@@ -1,7 +1,7 @@
 al_ahsa = {
 	name = "Al-Ahsa"
 	world = earth
-	#geocoordinate = { 49.621944 25.429444 }
+	geocoordinate = { 49.621944 25.429444 }
 	type = resource
 	resource = grain
 	province = riyadh

@@ -1,7 +1,7 @@
 eridu = {
 	name = "Eridu"
 	world = earth
-	#geocoordinate = { 45.99583 30.81583 }
+	geocoordinate = { 45.99583 30.81583 }
 	
 	history = {
 		-1450 = {

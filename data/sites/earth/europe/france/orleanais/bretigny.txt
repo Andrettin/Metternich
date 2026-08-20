@@ -1,7 +1,7 @@
 bretigny = { #the Bretigny in Eure-et-Loir
 	name = "Bretigny"
 	world = earth
-	#geocoordinate = { 1.57116111 48.42085833 }
+	geocoordinate = { 1.57116111 48.42085833 }
 	province = orleanais
 	
 	history = {

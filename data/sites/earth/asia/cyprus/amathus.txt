@@ -1,7 +1,7 @@
 amathus = {
 	name = "Amathus"
 	world = earth
-	#geocoordinate = { 33.1419 34.7125 }
+	geocoordinate = { 33.1419 34.7125 }
 	province = cyprus
 	
 	history = {

@@ -1,7 +1,7 @@
 kutha = {
 	name = "Kutha"
 	world = earth
-	#geocoordinate = { 44.61286111 32.76002778 }
+	geocoordinate = { 44.61286111 32.76002778 }
 	
 	history = {
 		-1450 = {

@@ -1,7 +1,7 @@
 borsippa = {
 	name = "Borsippa"
 	world = earth
-	#geocoordinate = { 44.341688888889 32.391997222222 }
+	geocoordinate = { 44.341688888889 32.391997222222 }
 	
 	history = {
 		-1450 = {

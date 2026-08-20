@@ -1,7 +1,7 @@
 bunzlau = {
 	name = "Bunzlau"
 	world = earth
-	#geocoordinate = { 14.6672 50.1894 }
+	geocoordinate = { 14.6672 50.1894 }
 	cultural_names = {
 		czech = "Stara Boleslav" #"Stará Boleslav"
 	}

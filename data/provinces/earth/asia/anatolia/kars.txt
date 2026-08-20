@@ -2,6 +2,9 @@ kars = {
 	name = "Kars"
 	color = { 53 113 51 }
 	default_provincial_capital = kars
+	features = {
+		mount_ararat #in Igdir
+	}
 	regions = {
 		anatolia
 	}

@@ -1,7 +1,7 @@
 netolitz = {
 	name = "Netolitz"
 	world = earth
-	#geocoordinate = { 14.197010553654 49.049384935494 }
+	geocoordinate = { 14.197010553654 49.049384935494 }
 	cultural_names = {
 		czech = "Netolice"
 	}

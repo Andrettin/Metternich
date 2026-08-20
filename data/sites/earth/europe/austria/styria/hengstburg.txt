@@ -1,7 +1,7 @@
 hengstburg = {
 	name = "Hengstburg" #also known as Hengistburg
 	world = earth
-	#geocoordinate = { 15.450277777778 46.868611111111 } #Hengsberg
+	geocoordinate = { 15.450277777778 46.868611111111 } #Hengsberg
 	
 	history = {
 		919 = {

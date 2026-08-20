@@ -2,6 +2,5 @@ mount_ararat = {
 	name = "Mount Ararat"
 	world = earth
 	geocoordinate = { 44.299937371 39.700079657 } #from Natural Earth
-	type = resource
-	resource = mount_ararat
+	province = kars #Igdir
 }

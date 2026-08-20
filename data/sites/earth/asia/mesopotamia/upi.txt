@@ -1,7 +1,7 @@
 upi = {
 	name = "Upi"
 	world = earth
-	#geocoordinate = { 44.6991 33.1815 }
+	geocoordinate = { 44.6991 33.1815 }
 	cultural_names = {
 		greek = "Opis"
 	}

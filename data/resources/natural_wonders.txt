@@ -46,24 +46,6 @@ krakatoa = {
 	}
 }
 
-mount_ararat = {
-	name = "Mount Ararat"
-	icon = mountains
-	tiny_icon = alliance
-	natural_wonder = true
-	required_game_rule = culture_commodity
-	terrain_types = {
-		mountains
-	}
-	site_types = {
-		resource
-	}
-	modifier = {
-		trade_bonus = 1
-		culture_bonus = 5
-	}
-}
-
 mount_fuji = {
 	name = "Mount Fuji"
 	icon = mountains
