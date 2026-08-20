@@ -8,7 +8,7 @@ coal_deposit = {
 		high_mountains
 	}
 	domain_modifier = {
-		economy = 1
+		scripted_modifier_effect = resource
 	}
 	weight_factor = {
 		base_value = 1
@@ -24,7 +24,7 @@ gold_deposit = {
 		high_mountains
 	}
 	domain_modifier = {
-		economy = 1
+		scripted_modifier_effect = resource
 	}
 	weight_factor = {
 		base_value = 5
@@ -41,7 +41,7 @@ iron_deposit = {
 		high_mountains
 	}
 	domain_modifier = {
-		economy = 1
+		scripted_modifier_effect = resource
 	}
 	weight_factor = {
 		base_value = 10
@@ -58,7 +58,7 @@ silver_deposit = {
 		high_mountains
 	}
 	domain_modifier = {
-		economy = 1
+		scripted_modifier_effect = resource
 	}
 	weight_factor = {
 		base_value = 5 #same as gold
@@ -70,6 +70,6 @@ sulfur_deposit = {
 	icon = spices_yellow
 	resource = true
 	domain_modifier = {
-		economy = 1
+		scripted_modifier_effect = resource
 	}
 }
