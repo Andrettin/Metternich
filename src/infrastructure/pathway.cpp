@@ -66,6 +66,10 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);
 		this->modifier = std::move(modifier);
+	} else if (tag == "domain_modifier") {
+		auto modifier = std::make_unique<metternich::modifier<const domain>>();
+		modifier->process_gsml_data(scope);
+		this->domain_modifier = std::move(modifier);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -215,6 +219,14 @@ QString pathway::get_modifier_string(const province *province, const bool single
 
 	if (this->get_modifier() != nullptr) {
 		str = single_line ? this->get_modifier()->get_single_line_string(province) : this->get_modifier()->get_string(province);
+	}
+
+	if (this->get_domain_modifier() != nullptr && province->get_game_data()->get_owner() != nullptr) {
+		if (!str.empty()) {
+			str += single_line ? ", " : "\n";
+		}
+
+		str = single_line ? this->get_domain_modifier()->get_single_line_string(province->get_game_data()->get_owner()) : this->get_domain_modifier()->get_string(province->get_game_data()->get_owner());
 	}
 
 	return QString::fromStdString(str);

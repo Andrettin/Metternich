@@ -15,4 +15,8 @@ road = {
 		max_level = 1
 		movement_cost_modifier = -50 #halves movement cost
 	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
+	}
 }

@@ -45,6 +45,7 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/holding_type.h"
+#include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item.h"
 #include "map/map.h"
@@ -1472,6 +1473,10 @@ QCoro::Task<void> domain_game_data::on_province_gained(const province *province,
 	this->change_domain_power(province_game_data->get_level() * multiplier);
 
 	this->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(province_game_data->get_province_level_taxation()) * multiplier);
+	
+	if (province_game_data->get_pathway() != nullptr && province_game_data->get_pathway()->get_domain_modifier() != nullptr) {
+		co_await province_game_data->get_pathway()->get_domain_modifier()->apply(this->domain, multiplier);
+	}
 
 	for (const province_feature *feature : province_game_data->get_features()) {
 		if (feature->get_domain_modifier() != nullptr) {

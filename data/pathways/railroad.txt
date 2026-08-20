@@ -17,6 +17,10 @@ experimental_railroad = {
 		resource_output_modifier = 16
 		industrial_throughput_modifier = 16
 	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
+	}
 }
 
 early_railroad = {
@@ -37,6 +41,10 @@ early_railroad = {
 		movement_cost_modifier = -60
 		resource_output_modifier = 32
 		industrial_throughput_modifier = 32
+	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
 	}
 }
 
@@ -59,6 +67,10 @@ iron_railroad = {
 		resource_output_modifier = 48
 		industrial_throughput_modifier = 48
 	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
+	}
 }
 
 steel_railroad = {
@@ -77,5 +89,9 @@ steel_railroad = {
 		movement_cost_modifier = -70
 		resource_output_modifier = 64
 		industrial_throughput_modifier = 64
+	}
+	domain_modifier = {
+		economy = 0.25
+		stability = 0.125
 	}
 }

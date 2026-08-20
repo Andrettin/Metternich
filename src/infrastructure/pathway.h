@@ -14,6 +14,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class domain;
 class icon;
 class province;
 class technology;
@@ -101,6 +102,11 @@ public:
 		return this->modifier.get();
 	}
 
+	const metternich::modifier<const domain> *get_domain_modifier() const
+	{
+		return this->domain_modifier.get();
+	}
+
 	bool is_buildable_in_province(const province *province) const;
 
 	Q_INVOKABLE QString get_modifier_string(const metternich::province *province, const bool single_line) const;
@@ -120,6 +126,7 @@ private:
 	int64_t wealth_cost = 0;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
+	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
 };
 
 }

@@ -1213,14 +1213,26 @@ QCoro::Task<void> province_game_data::set_pathway(const metternich::pathway *pat
 		co_return;
 	}
 
-	if (this->get_pathway() != nullptr && this->get_pathway()->get_modifier() != nullptr) {
-		co_await this->get_pathway()->get_modifier()->remove(this->province);
+	if (this->get_pathway() != nullptr) {
+		if (this->get_pathway()->get_modifier() != nullptr) {
+			co_await this->get_pathway()->get_modifier()->remove(this->province);
+		}
+
+		if (this->get_pathway()->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
+			co_await this->get_pathway()->get_domain_modifier()->remove(this->get_owner());
+		}
 	}
 
 	this->pathway = pathway;
 
-	if (this->get_pathway() != nullptr && this->get_pathway()->get_modifier() != nullptr) {
-		co_await this->get_pathway()->get_modifier()->apply(this->province);
+	if (this->get_pathway() != nullptr) {
+		if (this->get_pathway() != nullptr && this->get_pathway()->get_modifier() != nullptr) {
+			co_await this->get_pathway()->get_modifier()->apply(this->province);
+		}
+
+		if (this->get_pathway()->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
+			co_await this->get_pathway()->get_domain_modifier()->apply(this->get_owner());
+		}
 	}
 
 	if (game::get()->is_running()) {
