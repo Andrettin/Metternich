@@ -2009,8 +2009,8 @@ QCoro::Task<void> province_game_data::on_population_type_size_changed(const popu
 		const int64_t old_population_type_size = new_population_type_size - change;
 		const centesimal_int population_type_modifier_multiplier = this->get_population_type_modifier_multiplier(population_type);
 
-		const centesimal_int old_multiplier = centesimal_int::min(centesimal_int(old_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, population_type->get_max_modifier_multiplier());
-		const centesimal_int new_multiplier = centesimal_int::min(centesimal_int(new_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, population_type->get_max_modifier_multiplier());
+		const decimillesimal_int old_multiplier = decimillesimal_int::min(decimillesimal_int(old_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, decimillesimal_int(population_type->get_max_modifier_multiplier()));
+		const decimillesimal_int new_multiplier = decimillesimal_int::min(decimillesimal_int(new_population_type_size) / population_type->get_base_modifier_population_size() * population_type_modifier_multiplier, decimillesimal_int(population_type->get_max_modifier_multiplier()));
 
 		co_await population_type->get_province_modifier()->apply(this->province,  -old_multiplier);
 		co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);
@@ -2036,8 +2036,8 @@ QCoro::Task<void> province_game_data::set_population_type_modifier_multiplier(co
 
 	const int64_t population_type_size = this->get_population()->get_type_size(population_type);
 
-	const centesimal_int old_multiplier = centesimal_int::min(centesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * old_value, population_type->get_max_modifier_multiplier());
-	const centesimal_int new_multiplier = centesimal_int::min(centesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * value, population_type->get_max_modifier_multiplier());
+	const decimillesimal_int old_multiplier = decimillesimal_int::min(decimillesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * old_value, decimillesimal_int(population_type->get_max_modifier_multiplier()));
+	const decimillesimal_int new_multiplier = decimillesimal_int::min(decimillesimal_int(population_type_size) / population_type->get_base_modifier_population_size() * value, decimillesimal_int(population_type->get_max_modifier_multiplier()));
 
 	co_await population_type->get_province_modifier()->apply(this->province, -old_multiplier);
 	co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);

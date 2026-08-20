@@ -1631,7 +1631,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 
 		for (const auto &[employment_type, employment_size] : site->get_game_data()->get_employment_sizes()) {
 			if (employment_type->get_domain_modifier() != nullptr) {
-				co_await employment_type->get_domain_modifier()->apply(this->domain, (centesimal_int(employment_size) / employment_type->get_base_employment_size()) * multiplier);
+				co_await employment_type->get_domain_modifier()->apply(this->domain, (decimillesimal_int(employment_size) / employment_type->get_base_employment_size()) * multiplier);
 			}
 		}
 	}
@@ -1774,7 +1774,7 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 
 	for (const auto &[building, count] : this->settlement_building_counts) {
 		if (building->get_weighted_domain_modifier() != nullptr) {
-			co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-count) / old_holding_count);
+			co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(-count) / old_holding_count);
 		}
 	}
 
@@ -1782,7 +1782,7 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 		for (const auto &[building, count] : this->settlement_building_counts) {
 			if (building->get_weighted_domain_modifier() != nullptr) {
 				//reapply the settlement building's weighted country modifier with the updated settlement count
-				co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
+				co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 			}
 		}
 	}
@@ -2738,8 +2738,8 @@ QCoro::Task<void> domain_game_data::change_settlement_building_count(const build
 
 	if (building->get_weighted_domain_modifier() != nullptr && this->get_holding_count() != 0) {
 		//reapply the settlement building's weighted country modifier with the updated count
-		co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(-old_count) / this->get_holding_count());
-		co_await building->get_weighted_domain_modifier()->apply(this->domain, centesimal_int(count) / this->get_holding_count());
+		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(-old_count) / this->get_holding_count());
+		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 	}
 
 	if (building->get_domain_modifier() != nullptr) {

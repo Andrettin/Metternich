@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_attribute_value(this->attribute);
+		return scope->get_game_data()->get_attribute_value(this->attribute).to_int();
 	}
 
 	virtual std::string get_value_name() const override

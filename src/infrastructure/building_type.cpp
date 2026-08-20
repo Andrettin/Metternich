@@ -557,7 +557,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 		}
 
 		const domain_game_data *domain_game_data = domain->get_game_data();
-		const centesimal_int multiplier = centesimal_int(1) / domain_game_data->get_holding_count();
+		const decimillesimal_int multiplier = decimillesimal_int(1) / domain_game_data->get_holding_count();
 		str += single_line ? this->get_weighted_domain_modifier()->get_single_line_string(domain, multiplier.to_int())  : this->get_weighted_domain_modifier()->get_string(domain, multiplier, 0, false);
 	}
 

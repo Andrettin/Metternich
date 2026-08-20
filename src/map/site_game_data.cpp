@@ -2303,11 +2303,11 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 
 	if (old_size > 0) {
 		if (employment_type->get_modifier() != nullptr) {
-			co_await employment_type->get_modifier()->apply(this->site, -(centesimal_int(old_size) / employment_type->get_base_employment_size()));
+			co_await employment_type->get_modifier()->apply(this->site, -(decimillesimal_int(old_size) / employment_type->get_base_employment_size()));
 		}
 
 		if (employment_type->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
-			co_await employment_type->get_domain_modifier()->apply(this->get_owner(), -(centesimal_int(old_size) / employment_type->get_base_employment_size()));
+			co_await employment_type->get_domain_modifier()->apply(this->get_owner(), -(decimillesimal_int(old_size) / employment_type->get_base_employment_size()));
 		}
 	}
 
@@ -2329,11 +2329,11 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 
 	if (size > 0) {
 		if (employment_type->get_modifier() != nullptr) {
-			co_await employment_type->get_modifier()->apply(this->site, centesimal_int(size) / employment_type->get_base_employment_size());
+			co_await employment_type->get_modifier()->apply(this->site, decimillesimal_int(size) / employment_type->get_base_employment_size());
 		}
 
 		if (employment_type->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
-			co_await employment_type->get_domain_modifier()->apply(this->get_owner(), centesimal_int(size) / employment_type->get_base_employment_size());
+			co_await employment_type->get_domain_modifier()->apply(this->get_owner(), decimillesimal_int(size) / employment_type->get_base_employment_size());
 		}
 	}
 

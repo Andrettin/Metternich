@@ -3098,7 +3098,7 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 
 	const int attribute_modifier = this->get_office_domain_attribute_modifier(office, nullptr, nullptr);
 	if (office->is_ruler()) {
-		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), attribute_modifier * multiplier);
+		co_await domain->get_game_data()->change_attribute_value(domain->get_game_data()->get_government_type()->get_primary_domain_attribute(), decimillesimal_int(attribute_modifier * multiplier));
 
 		//apply domain skill effects to research
 		static const decimillesimal_int base_monthly_research_per_technology_category = decimillesimal_int(4);
@@ -3114,7 +3114,7 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 			domain->get_technology()->change_technology_category_monthly_research(technology_category, category_monthly_research.to_int64() * multiplier);
 		}
 	} else {
-		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), attribute_modifier * multiplier);
+		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), decimillesimal_int(attribute_modifier * multiplier));
 	}
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
