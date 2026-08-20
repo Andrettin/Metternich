@@ -9,7 +9,7 @@ steppe = {
 		plains
 	}
 	province_modifier = {
-		max_level = 3
+		max_level = 6
 	}
 	subtiles = { 17 20 23 }
 	adjacency_subtiles = {

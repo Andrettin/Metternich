@@ -14,7 +14,7 @@ hills = {
 		forest
 	}
 	province_modifier = {
-		max_level = 8
+		max_level = 9
 	}
 	tiles = { 129 132 135 138 141 }
 	adjacency_tiles = {

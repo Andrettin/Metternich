@@ -13,7 +13,7 @@ mountains = {
 		forest
 	}
 	province_modifier = {
-		max_level = 3
+		max_level = 5
 	}
 	tiles = { 129 }
 	adjacency_tiles = {

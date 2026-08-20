@@ -11,7 +11,7 @@ savannah = {
 		plains
 	}
 	province_modifier = {
-		max_level = 8
+		max_level = 10 #as plains
 	}
 	subtiles = { 17 20 23 }
 	adjacency_subtiles = {
