@@ -33,10 +33,12 @@ public:
 		return "Gain technologies acquired by 2 known countries";
 	}
 
-	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override
 	{
 		Q_UNUSED(multiplier);
+		Q_UNUSED(indent);
 		Q_UNUSED(ignore_decimals);
+		Q_UNUSED(separator);
 
 		return this->get_base_string(scope);
 	}

@@ -37,9 +37,11 @@ public:
 		return "Health";
 	}
 
-	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override
 	{
+		Q_UNUSED(indent);
 		Q_UNUSED(ignore_decimals);
+		Q_UNUSED(separator);
 
 		return std::format("{}: {}{}", this->get_base_string(scope), multiplier > 0 ? "+" : "-", this->hit_dice.to_display_string());
 	}

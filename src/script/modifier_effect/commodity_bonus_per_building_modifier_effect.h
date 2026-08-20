@@ -44,13 +44,13 @@ public:
 		return std::format("{} per {}", this->commodity->get_name(), this->building->get_name());
 	}
 
-	virtual std::string get_string(const scope_type *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const scope_type *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override
 	{
 		if (scope->get_game_data()->get_culture()->get_building_class_type(this->building->get_building_class()) != this->building && scope->get_game_data()->get_settlement_building_count(this->building) == 0) {
 			return std::string();
 		}
 
-		return modifier_effect<scope_type>::get_string(scope, multiplier, ignore_decimals);
+		return modifier_effect<scope_type>::get_string(scope, multiplier, indent, ignore_decimals, separator);
 	}
 
 	virtual bool is_hidden(const scope_type *scope) const override

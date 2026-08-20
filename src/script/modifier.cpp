@@ -74,7 +74,7 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const deci
 			str += std::string(indent, '\t');
 		}
 
-		str += modifier_effect->get_string(scope, multiplier, ignore_decimals);
+		str += modifier_effect->get_string(scope, multiplier, indent, ignore_decimals, separator);
 	}
 	return str;
 }

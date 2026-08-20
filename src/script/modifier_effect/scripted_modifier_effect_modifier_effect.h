@@ -46,9 +46,9 @@ public:
 		return {};
 	}
 
-	virtual std::string get_string(const scope_type *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const scope_type *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override
 	{
-		return this->scripted_modifier_effect->get_modifier().get_string(scope, multiplier, 0, ignore_decimals, ", ");
+		return this->scripted_modifier_effect->get_modifier().get_string(scope, multiplier, indent, ignore_decimals, separator);
 	}
 
 private:
