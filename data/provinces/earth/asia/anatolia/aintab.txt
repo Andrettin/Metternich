@@ -1,7 +1,11 @@
-gaziantep = {
-	name = "Gaziantep"
-	color = { 252 159 0 }
-	default_provincial_capital = gaziantep
+aintab = {
+	name = "Aintab"
+	color = { 168 72 67 }
+	terrain = mountains
+	default_provincial_capital = aintab
+	cultural_names = {
+		turkish = "Gaziantep"
+	}
 	regions = {
 		anatolia
 	}

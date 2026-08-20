@@ -1,0 +1,8 @@
+ravendan = {
+	name = "Ravendan"
+	world = earth
+	geocoordinate = { 37.0725 36.8775 } #Belenözü
+	type = holding
+	holding_type = castle
+	province = aintab #Kilis
+}

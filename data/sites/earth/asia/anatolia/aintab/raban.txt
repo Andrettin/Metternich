@@ -1,0 +1,8 @@
+raban = {
+	name = "Raban"
+	world = earth
+	geocoordinate = { 37.692777777778 37.424722222222 } #Araban
+	type = holding
+	holding_type = castle
+	province = aintab
+}

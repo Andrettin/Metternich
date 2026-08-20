@@ -1,0 +1,8 @@
+hromgla = {
+	name = "Hromgla"
+	world = earth
+	geocoordinate = { 37.837916666667 37.270777777778 } #Rumkale
+	type = holding
+	holding_type = castle
+	province = aintab
+}

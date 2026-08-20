@@ -1,0 +1,8 @@
+kyrrhos = {
+	name = "Kyrrhos"
+	world = earth
+	geocoordinate = { 36.948956 36.734662 } #Cyrrhus
+	type = holding
+	holding_type = temple
+	province = damascus #Aleppo
+}

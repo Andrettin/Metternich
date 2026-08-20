@@ -1,6 +1,7 @@
 damascus = {
 	name = "Damascus"
 	color = { 126 54 64 }
+	terrain = desert
 	default_provincial_capital = damascus
 	regions = {
 		asia

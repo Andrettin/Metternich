@@ -2,9 +2,7 @@ carchemish = {
 	name = "Carchemish"
 	world = earth
 	geocoordinate = { 37.9983 36.83452 }
-	type = resource
-	resource = grain
-	province = gaziantep
+	province = aintab
 	cultural_names = {
 		turkish = "Karkamis" #"Karkamış"
 	}

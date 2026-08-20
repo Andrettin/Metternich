@@ -1,0 +1,8 @@
+duluk = {
+	name = "Duluk"
+	world = earth
+	geocoordinate = { 37.359985 37.153671 } #Dülük
+	type = holding
+	holding_type = castle
+	province = aintab
+}
