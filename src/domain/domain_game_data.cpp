@@ -172,7 +172,7 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "attributes") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = decimillesimal_int(attribute_property.get_value());
 		});
 	} else if (tag == "site_attributes") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
@@ -261,7 +261,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
 		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+			attributes_data.add_property(attribute->get_identifier(), value.to_string());
 		}
 		data.add_child(std::move(attributes_data));
 	}
@@ -2260,34 +2260,40 @@ std::vector<const metternich::domain *> domain_game_data::get_neighbor_countries
 
 QVariantList domain_game_data::get_attribute_values_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_attribute_values());
+	data_entry_map<domain_attribute, int> attribute_values_int_map;
+	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
+		attribute_values_int_map[attribute] = attribute_value.to_int();
+	}
+
+	return archimedes::map::to_qvariant_list(attribute_values_int_map);
 }
 
-QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribute *attribute, const int change)
+QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribute *attribute, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		co_return;
 	}
 
-	const int old_value = this->get_attribute_value(attribute);
+	const decimillesimal_int old_value = this->get_attribute_value(attribute);
 
-	const int new_value = (this->attribute_values[attribute] += change);
+	const decimillesimal_int new_value = (this->attribute_values[attribute] += change);
 
 	if (new_value == 0) {
 		this->attribute_values.erase(attribute);
 	}
 
-	this->change_score(change * 10);
+	const int int_change = new_value.to_int() - old_value.to_int();
+	this->change_score(int_change * 10);
 
 	if (change > 0) {
-		for (int i = old_value + 1; i <= new_value; ++i) {
+		for (int i = old_value.to_int() + 1; i <= new_value.to_int(); ++i) {
 			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->apply(this->domain);
 			}
 		}
 	} else {
-		for (int i = old_value; i > new_value; --i) {
+		for (int i = old_value.to_int(); i > new_value.to_int(); --i) {
 			const modifier<const metternich::domain> *value_modifier = attribute->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->remove(this->domain);
@@ -2322,7 +2328,7 @@ bool domain_game_data::do_attribute_check(const domain_attribute *attribute, con
 		return true;
 	}
 
-	const int attribute_value = this->get_attribute_value(attribute);
+	const int attribute_value = this->get_attribute_value(attribute).to_int();
 	const int modified_attribute_value = attribute_value + roll_modifier + this->get_attribute_check_control_modifier() - this->get_effective_unrest();
 
 	return roll_result <= modified_attribute_value;
@@ -2334,7 +2340,7 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 
 	const dice &check_dice = attribute->get_check_dice();
 
-	int chance = this->get_attribute_value(attribute);
+	int chance = this->get_attribute_value(attribute).to_int();
 	chance += roll_modifier + this->get_attribute_check_control_modifier() - this->get_effective_unrest();
 
 	if (check_dice.get_sides() != 100) {

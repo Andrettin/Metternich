@@ -854,7 +854,7 @@ void domain_economy::update_attribute_taxation()
 
 		int64_t average_result = check_dice.get_average(defines::get()->get_domain_income_unit_value());
 
-		average_result += attribute_value * defines::get()->get_domain_income_unit_value();
+		average_result += attribute_value.to_int() * defines::get()->get_domain_income_unit_value();
 		average_result -= this->get_game_data()->get_effective_unrest() * defines::get()->get_domain_income_unit_value();
 		average_result /= 3;
 

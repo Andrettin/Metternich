@@ -11,6 +11,7 @@
 #include "species/phenotype_container.h"
 #include "unit/transporter_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 #include "util/point_container.h"
 #include "util/qunique_ptr.h"
 
@@ -449,24 +450,25 @@ public:
 
 	std::vector<const metternich::domain *> get_neighbor_countries() const;
 
-	const data_entry_map<domain_attribute, int> &get_attribute_values() const
+	const data_entry_map<domain_attribute, decimillesimal_int> &get_attribute_values() const
 	{
 		return this->attribute_values;
 	}
 
 	QVariantList get_attribute_values_qvariant_list() const;
 
-	int get_attribute_value(const domain_attribute *attribute) const
+	const decimillesimal_int &get_attribute_value(const domain_attribute *attribute) const
 	{
 		const auto find_iterator = this->attribute_values.find(attribute);
 		if (find_iterator != this->attribute_values.end()) {
 			return find_iterator->second;
 		}
 
-		return 0;
+		static constexpr decimillesimal_int zero;
+		return zero;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_attribute_value(const domain_attribute *attribute, const int change);
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const domain_attribute *attribute, const decimillesimal_int &change);
 	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output = nullptr) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_control_modifier() const;
@@ -1128,7 +1130,7 @@ private:
 	QRect main_realm_contiguous_territory_rect;
 	QRect realm_text_rect;
 	terrain_type_map<int> tile_terrain_counts;
-	data_entry_map<domain_attribute, int> attribute_values;
+	data_entry_map<domain_attribute, decimillesimal_int> attribute_values;
 	data_entry_map<site_attribute, int> site_attribute_values;
 	int consumption = 0;
 	int unrest = 0;
