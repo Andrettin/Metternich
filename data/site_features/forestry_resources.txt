@@ -8,6 +8,9 @@ prime_timber = {
 	#modifier = {
 	#	lumber_throughput_modifier = 100 #bonus to sawmill production
 	#}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 25
 	}

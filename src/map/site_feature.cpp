@@ -3,6 +3,8 @@
 #include "map/site_feature.h"
 
 #include "infrastructure/holding_type.h"
+#include "map/site.h"
+#include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -33,6 +35,9 @@ void site_feature::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<metternich::modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
 	} else if (tag == "weight_factor") {
 		this->weight_factor = std::make_unique<factor<site>>();
 		this->weight_factor->process_gsml_data(scope);
@@ -52,11 +57,21 @@ void site_feature::check() const
 
 QString site_feature::get_modifier_string(const metternich::site *site) const
 {
-	if (this->get_modifier() == nullptr) {
-		return QString();
+	std::string str;
+
+	if (this->get_modifier() != nullptr) {
+		str = this->get_modifier()->get_single_line_string(site);
 	}
 
-	return QString::fromStdString(this->get_modifier()->get_single_line_string(site, 1));
+	if (this->get_domain_modifier() != nullptr && site->get_game_data()->get_owner() != nullptr) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += this->get_domain_modifier()->get_single_line_string(site->get_game_data()->get_owner());
+	}
+
+	return QString::fromStdString(str);
 }
 
 }

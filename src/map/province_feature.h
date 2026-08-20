@@ -7,6 +7,7 @@ Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
+class domain;
 class icon;
 class province;
 class terrain_type;
@@ -49,6 +50,11 @@ public:
 		return this->modifier.get();
 	}
 
+	const modifier<const domain> *get_domain_modifier() const
+	{
+		return this->domain_modifier.get();
+	}
+
 	Q_INVOKABLE QString get_modifier_string(const metternich::province *province) const;
 
 signals:
@@ -58,6 +64,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	std::vector<const terrain_type *> terrain_types;
 	std::unique_ptr<metternich::modifier<const province>> modifier;
+	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
 };
 
 }

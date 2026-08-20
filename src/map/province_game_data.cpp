@@ -1391,6 +1391,10 @@ QCoro::Task<void> province_game_data::add_feature(const province_feature *featur
 		co_await feature->get_modifier()->apply(this->province);
 	}
 
+	if (feature->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
+		co_await feature->get_domain_modifier()->apply(this->get_owner());
+	}
+
 	if (game::get()->is_running()) {
 		emit features_changed();
 	}
@@ -1404,6 +1408,10 @@ QCoro::Task<void> province_game_data::remove_feature(const province_feature *fea
 
 	if (feature->get_modifier() != nullptr) {
 		co_await feature->get_modifier()->remove(this->province);
+	}
+
+	if (feature->get_domain_modifier() != nullptr && this->get_owner() != nullptr) {
+		co_await feature->get_domain_modifier()->remove(this->get_owner());
 	}
 
 	if (game::get()->is_running()) {

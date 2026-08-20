@@ -306,7 +306,7 @@ public:
 	QVariantList get_provinces_qvariant_list() const;
 	[[nodiscard]] QCoro::Task<void> add_province(const province *province);
 	[[nodiscard]] QCoro::Task<void> remove_province(const province *province);
-	void on_province_gained(const province *province, const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_province_gained(const province *province, const int multiplier);
 
 	int get_province_count() const
 	{

@@ -49,11 +49,13 @@
 #include "item/item.h"
 #include "map/map.h"
 #include "map/province.h"
+#include "map/province_feature.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
+#include "map/site_feature.h"
 #include "map/site_game_data.h"
 #include "map/site_map_data.h"
 #include "map/terrain_type.h"
@@ -1312,7 +1314,7 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 
 	this->provinces.push_back(province);
 
-	this->on_province_gained(province, 1);
+	co_await this->on_province_gained(province, 1);
 
 	const province_game_data *province_game_data = province->get_game_data();
 
@@ -1386,7 +1388,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		co_await this->choose_capital();
 	}
 
-	this->on_province_gained(province, -1);
+	co_await this->on_province_gained(province, -1);
 
 	const province_game_data *province_game_data = province->get_game_data();
 
@@ -1457,7 +1459,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 	}
 }
 
-void domain_game_data::on_province_gained(const province *province, const int multiplier)
+QCoro::Task<void> domain_game_data::on_province_gained(const province *province, const int multiplier)
 {
 	province_game_data *province_game_data = province->get_game_data();
 
@@ -1470,6 +1472,12 @@ void domain_game_data::on_province_gained(const province *province, const int mu
 	this->change_domain_power(province_game_data->get_level() * multiplier);
 
 	this->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(province_game_data->get_province_level_taxation()) * multiplier);
+
+	for (const province_feature *feature : province_game_data->get_features()) {
+		if (feature->get_domain_modifier() != nullptr) {
+			co_await feature->get_domain_modifier()->apply(this->domain, multiplier);
+		}
+	}
 
 	for (const auto &[resource, count] : province_game_data->get_resource_counts()) {
 		this->get_economy()->change_resource_count(resource, count * multiplier);
@@ -1601,6 +1609,12 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
 			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);
+		}
+
+		for (const site_feature *feature : site_game_data->get_features()) {
+			if (feature->get_domain_modifier() != nullptr) {
+				co_await feature->get_domain_modifier()->apply(this->domain, multiplier);
+			}
 		}
 
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {

@@ -7,6 +7,9 @@ prime_cattle_land = {
 		savannah
 		steppe
 	}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 30
 		
@@ -21,6 +24,9 @@ prime_cotton_land = {
 	name = "Prime Cotton Land"
 	icon = cotton
 	resource = true
+	domain_modifier = {
+		economy = 1
+	}
 	#weight_factor = {
 	#	base_value = 20
 	#	
@@ -43,6 +49,9 @@ prime_grain_land = {
 	terrain_types = {
 		plains
 		savannah
+	}
+	domain_modifier = {
+		economy = 1
 	}
 	weight_factor = {
 		base_value = 35
@@ -77,6 +86,9 @@ prime_sheep_land = {
 	terrain_types = {
 		hills
 	}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 30
 		
@@ -102,6 +114,9 @@ prime_sugar_land = {
 	name = "Prime Sugar Land"
 	icon = sugar_cane
 	resource = true
+	domain_modifier = {
+		economy = 1
+	}
 }
 
 prime_tobacco_land = {
@@ -110,6 +125,9 @@ prime_tobacco_land = {
 	resource = true
 	terrain_types = {
 		plains
+	}
+	domain_modifier = {
+		economy = 1
 	}
 	weight_factor = {
 		base_value = 15

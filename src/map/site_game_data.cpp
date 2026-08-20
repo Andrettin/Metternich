@@ -1358,6 +1358,10 @@ QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 		co_await feature->get_modifier()->apply(this->site);
 	}
 
+	if (feature->get_domain_modifier() != nullptr && this->get_owner() != nullptr && this->is_built()) {
+		co_await feature->get_domain_modifier()->apply(this->get_owner());
+	}
+
 	this->get_province()->get_game_data()->change_site_feature_count(feature, 1);
 
 	if (game::get()->is_running()) {
@@ -1373,6 +1377,10 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 
 	if (feature->get_modifier() != nullptr) {
 		co_await feature->get_modifier()->remove(this->site);
+	}
+
+	if (feature->get_domain_modifier() != nullptr && this->get_owner() != nullptr && this->is_built()) {
+		co_await feature->get_domain_modifier()->remove(this->get_owner());
 	}
 
 	this->get_province()->get_game_data()->change_site_feature_count(feature, -1);
@@ -1933,6 +1941,12 @@ QCoro::Task<void> site_game_data::on_settlement_built(const int multiplier)
 
 	if (this->get_owner() != nullptr) {
 		co_await this->get_owner()->get_game_data()->change_holding_count(multiplier);
+
+		for (const site_feature *feature : this->get_features()) {
+			if (feature->get_domain_modifier() != nullptr) {
+				co_await feature->get_domain_modifier()->apply(this->get_owner(), multiplier);
+			}
+		}
 
 		for (const auto &[attribute, value] : this->get_owner()->get_game_data()->get_site_attribute_values()) {
 			co_await this->change_attribute_value(attribute, value * multiplier);

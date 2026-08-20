@@ -7,6 +7,9 @@ coal_deposit = {
 		mountains
 		high_mountains
 	}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 1
 	}
@@ -19,6 +22,9 @@ gold_deposit = {
 	terrain_types = {
 		mountains
 		high_mountains
+	}
+	domain_modifier = {
+		economy = 1
 	}
 	weight_factor = {
 		base_value = 5
@@ -34,6 +40,9 @@ iron_deposit = {
 		mountains
 		high_mountains
 	}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 10
 	}
@@ -48,6 +57,9 @@ silver_deposit = {
 		mountains
 		high_mountains
 	}
+	domain_modifier = {
+		economy = 1
+	}
 	weight_factor = {
 		base_value = 5 #same as gold
 	}
@@ -57,4 +69,7 @@ sulfur_deposit = {
 	name = "Sulfur Deposit"
 	icon = spices_yellow
 	resource = true
+	domain_modifier = {
+		economy = 1
+	}
 }
