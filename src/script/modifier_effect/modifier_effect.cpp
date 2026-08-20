@@ -67,6 +67,7 @@
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/reputation_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
+#include "script/modifier_effect/scripted_modifier_effect_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
 #include "script/modifier_effect/saving_throw_modifier_effect.h"
 #include "script/modifier_effect/site_attribute_modifier_effect.h"
@@ -319,6 +320,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		if (site_attribute::try_get(key) != nullptr) {
 			return std::make_unique<site_attribute_modifier_effect<scope_type>>(site_attribute::get(key), value);
 		}
+	}
+
+	if (key == "scripted_modifier_effect") {
+		return std::make_unique<scripted_modifier_effect_modifier_effect<scope_type>>(value);
 	}
 
 	throw std::runtime_error(std::format("Invalid property modifier effect: \"{}\".", key));

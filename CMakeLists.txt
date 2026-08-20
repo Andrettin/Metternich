@@ -916,6 +916,8 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/reputation_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
 	src/script/modifier_effect/saving_throw_modifier_effect.h
+	src/script/modifier_effect/scripted_modifier_effect.h
+	src/script/modifier_effect/scripted_modifier_effect_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
 	src/script/modifier_effect/site_attribute_modifier_effect.h
 	src/script/modifier_effect/skill_modifier_effect.h
