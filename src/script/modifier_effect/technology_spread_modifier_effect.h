@@ -30,13 +30,13 @@ public:
 		if (key == "category") {
 			this->category = technology_category::get(value);
 		} else if (key == "value") {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const province *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const province *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (this->category != nullptr) {
 			scope->get_game_data()->change_technology_category_spread_modifier(this->category, (this->value * multiplier).to_int());

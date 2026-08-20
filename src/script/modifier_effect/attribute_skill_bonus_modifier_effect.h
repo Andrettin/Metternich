@@ -27,13 +27,13 @@ public:
 		if (key == "attribute") {
 			this->attribute = character_attribute::get(value);
 		} else if (key == "bonus") {
-			this->value = centesimal_int(std::stoi(value));
+			this->value = decimillesimal_int(std::stoi(value));
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		assert_throw(this->attribute != nullptr);
 

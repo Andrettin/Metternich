@@ -20,7 +20,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_game_data()->change_to_hit_bonus((this->value * multiplier).to_int());
 	}

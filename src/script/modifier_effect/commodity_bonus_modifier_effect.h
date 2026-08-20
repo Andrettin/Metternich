@@ -13,7 +13,7 @@ public:
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
 		: commodity(commodity)
 	{
-		this->value = centesimal_int(this->commodity->string_to_value(value));
+		this->value = decimillesimal_int(this->commodity->string_to_value(value));
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -22,13 +22,13 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const site *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
 		}
 
-		scope->get_game_data()->change_base_commodity_output(this->commodity, this->value * multiplier);
+		scope->get_game_data()->change_base_commodity_output(this->commodity, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const site *scope) const override
@@ -42,11 +42,11 @@ public:
 		}
 	}
 
-	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_number_string(const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(ignore_decimals);
 
-		const centesimal_int value = this->get_multiplied_value(multiplier);
+		const decimillesimal_int value = this->get_multiplied_value(multiplier);
 		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value.to_int64(), false);
 	}
 

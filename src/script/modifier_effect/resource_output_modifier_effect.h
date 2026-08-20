@@ -20,14 +20,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		for (const commodity *commodity : commodity::get_all()) {
 			if (commodity->get_type() == commodity_type::resource && !commodity->is_abstract()) {
 				if constexpr (std::is_same_v<scope_type, const domain>) {
-					scope->get_economy()->change_commodity_output_modifier(commodity, this->value * multiplier);
+					scope->get_economy()->change_commodity_output_modifier(commodity, centesimal_int(this->value * multiplier));
 				} else {
-					scope->get_game_data()->change_commodity_output_modifier(commodity, this->value * multiplier);
+					scope->get_game_data()->change_commodity_output_modifier(commodity, centesimal_int(this->value * multiplier));
 				}
 			}
 		}

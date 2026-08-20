@@ -21,7 +21,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (multiplier > 0) {
 			co_await scope->get_game_data()->apply_hit_dice(this->hit_dice);
@@ -37,7 +37,7 @@ public:
 		return "Health";
 	}
 
-	virtual std::string get_string(const character *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(ignore_decimals);
 

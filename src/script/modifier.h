@@ -7,7 +7,7 @@ namespace archimedes {
 	template <int N>
 	class fractional_int;
 
-	using centesimal_int = fractional_int<2>;
+	using decimillesimal_int = fractional_int<4>;
 }
 
 namespace metternich {
@@ -33,10 +33,10 @@ public:
 	void process_gsml_scope(const gsml_data &scope);
 	void process_gsml_data(const gsml_data &data);
 
-	[[nodiscard]] QCoro::Task<void> apply(scope_type *scope, const centesimal_int &multiplier) const;
+	[[nodiscard]] QCoro::Task<void> apply(scope_type *scope, const decimillesimal_int &multiplier) const;
 	[[nodiscard]] QCoro::Task<void> apply(scope_type *scope, const int multiplier = 1) const;
 	[[nodiscard]] QCoro::Task<void> remove(scope_type *scope, const int multiplier = 1) const;
-	std::string get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent = 0, const bool ignore_decimals = true, const std::string &separator = "\n") const;
+	std::string get_string(const scope_type *scope, const decimillesimal_int &multiplier, const size_t indent = 0, const bool ignore_decimals = true, const std::string &separator = "\n") const;
 	std::string get_string(const scope_type *scope, const int multiplier = 1, const size_t indent = 0, const std::string &separator = "\n") const;
 	std::string get_single_line_string(const scope_type *scope, const int multiplier = 1) const;
 

@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		magic_enum::enum_for_each<population_strata>([this, scope, &multiplier](const population_strata strata) {
 			scope->get_economy()->change_population_strata_tax_rate(strata, (this->value * multiplier).to_int());

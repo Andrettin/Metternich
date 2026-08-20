@@ -21,7 +21,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		assert_throw(this->skill != nullptr);
 

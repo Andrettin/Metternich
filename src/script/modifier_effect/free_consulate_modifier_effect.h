@@ -13,7 +13,7 @@ public:
 	explicit free_consulate_modifier_effect(const std::string &value)
 	{
 		this->consulate = consulate::get(value);
-		this->value = centesimal_int(1);
+		this->value = decimillesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_diplomacy()->change_free_consulate_count(this->consulate, (this->value * multiplier).to_int());
 	}
@@ -34,7 +34,7 @@ public:
 		return std::format("Free {} with every known country", this->consulate->get_name());
 	}
 
-	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

@@ -21,13 +21,13 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
 		}
 
-		scope->get_economy()->change_capital_commodity_bonus(this->commodity, this->value * multiplier);
+		scope->get_economy()->change_capital_commodity_bonus(this->commodity, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override

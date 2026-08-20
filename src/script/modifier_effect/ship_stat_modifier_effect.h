@@ -27,17 +27,17 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		for (const military_unit_type *military_unit_type : military_unit_type::get_all()) {
 			if (military_unit_type->is_ship()) {
-				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->military_unit_stat, this->value * multiplier);
+				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->military_unit_stat, centesimal_int(this->value * multiplier));
 			}
 		}
 
 		for (const transporter_type *transporter_type : transporter_type::get_all()) {
 			if (transporter_type->is_ship()) {
-				scope->get_game_data()->change_transporter_type_stat_modifier(transporter_type, this->transporter_stat, this->value * multiplier);
+				scope->get_game_data()->change_transporter_type_stat_modifier(transporter_type, this->transporter_stat, centesimal_int(this->value * multiplier));
 			}
 		}
 	}

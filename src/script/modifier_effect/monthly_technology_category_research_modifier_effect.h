@@ -26,13 +26,13 @@ public:
 		if (key == "category") {
 			this->category = technology_category::get(value);
 		} else if (key == "value") {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_technology()->change_technology_category_monthly_research(this->category, (this->value * multiplier).to_int64());
 	}

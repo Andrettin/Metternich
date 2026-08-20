@@ -13,7 +13,7 @@ public:
 	explicit range_modifier_effect(const std::string &value)
 		: modifier_effect<const character>()
 	{
-		this->value = centesimal_int(string::to_length(value));
+		this->value = decimillesimal_int(string::to_length(value));
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_game_data()->change_range((this->value * multiplier).to_int());
 	}
@@ -34,11 +34,11 @@ public:
 		return "Range";
 	}
 
-	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_number_string(const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(ignore_decimals);
 
-		const centesimal_int value = this->get_multiplied_value(multiplier);
+		const decimillesimal_int value = this->get_multiplied_value(multiplier);
 		return std::format("{}{}", value >= 0 ? "+" : "0", string::from_length(value.to_int(), false));
 	}
 };

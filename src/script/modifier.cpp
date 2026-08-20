@@ -38,7 +38,7 @@ void modifier<scope_type>::process_gsml_data(const gsml_data &data)
 }
 
 template <typename scope_type>
-QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const centesimal_int &multiplier) const
+QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const decimillesimal_int &multiplier) const
 {
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
 		co_await modifier_effect->apply_coro(scope, multiplier);
@@ -48,17 +48,17 @@ QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const centesima
 template <typename scope_type>
 QCoro::Task<void> modifier<scope_type>::apply(scope_type *scope, const int multiplier) const
 {
-	co_await this->apply(scope, centesimal_int(multiplier));
+	co_await this->apply(scope, decimillesimal_int(multiplier));
 }
 
 template <typename scope_type>
 QCoro::Task<void> modifier<scope_type>::remove(scope_type *scope, const int multiplier) const
 {
-	co_await this->apply(scope, centesimal_int(-multiplier));
+	co_await this->apply(scope, decimillesimal_int(-multiplier));
 }
 
 template <typename scope_type>
-std::string modifier<scope_type>::get_string(const scope_type *scope, const centesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const
+std::string modifier<scope_type>::get_string(const scope_type *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const
 {
 	std::string str;
 	for (const std::unique_ptr<modifier_effect<scope_type>> &modifier_effect : this->modifier_effects) {
@@ -82,7 +82,7 @@ std::string modifier<scope_type>::get_string(const scope_type *scope, const cent
 template <typename scope_type>
 std::string modifier<scope_type>::get_string(const scope_type *scope, const int multiplier, const size_t indent, const std::string &separator) const
 {
-	return this->get_string(scope, centesimal_int(multiplier), indent, true, separator);
+	return this->get_string(scope, decimillesimal_int(multiplier), indent, true, separator);
 }
 
 template <typename scope_type>

@@ -34,20 +34,20 @@ public:
 		} else if (key == "subcategory") {
 			this->subcategory = technology_subcategory::get(value);
 		} else if (key == "value") {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (this->subcategory != nullptr) {
-			scope->get_technology()->change_technology_subcategory_cost_modifier(this->subcategory, this->value * multiplier);
+			scope->get_technology()->change_technology_subcategory_cost_modifier(this->subcategory, centesimal_int(this->value * multiplier));
 		} else if (this->category != nullptr) {
-			scope->get_technology()->change_technology_category_cost_modifier(this->category, this->value * multiplier);
+			scope->get_technology()->change_technology_category_cost_modifier(this->category, centesimal_int(this->value * multiplier));
 		} else {
-			scope->get_technology()->change_technology_cost_modifier(this->value * multiplier);
+			scope->get_technology()->change_technology_cost_modifier(centesimal_int(this->value * multiplier));
 		}
 	}
 
@@ -69,7 +69,7 @@ public:
 		return true;
 	}
 
-	virtual bool is_negative(const centesimal_int &multiplier) const override
+	virtual bool is_negative(const decimillesimal_int &multiplier) const override
 	{
 		return (this->value * multiplier) > 0;
 	}

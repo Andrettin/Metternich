@@ -25,13 +25,13 @@ public:
 		if (key == "strata") {
 			this->strata = magic_enum::enum_cast<population_strata>(value).value();
 		} else if (key == "rate") {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_economy()->change_population_strata_tax_rate(this->strata, (this->value * multiplier).to_int());
 	}

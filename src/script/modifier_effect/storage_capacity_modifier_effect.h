@@ -30,13 +30,13 @@ public:
 		if (key == "commodity") {
 			this->commodity = commodity::get(value);
 		} else if (key == "capacity") {
-			this->value = centesimal_int(std::stoi(value));
+			this->value = decimillesimal_int(std::stoi(value));
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (this->commodity != nullptr) {
 			co_await scope->get_economy()->change_commodity_storage_capacity(this->commodity, (this->value * multiplier).to_int64());

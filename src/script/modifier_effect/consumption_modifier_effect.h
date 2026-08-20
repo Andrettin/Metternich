@@ -19,7 +19,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_game_data()->change_consumption((this->value * multiplier).to_int());
 	}
@@ -31,7 +31,7 @@ public:
 		return "Consumption";
 	}
 
-	virtual bool is_negative(const centesimal_int &multiplier) const override
+	virtual bool is_negative(const decimillesimal_int &multiplier) const override
 	{
 		return (this->value * multiplier) > 0;
 	}

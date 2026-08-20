@@ -20,7 +20,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_technology()->change_max_current_researches((this->value * multiplier).to_int());
 	}

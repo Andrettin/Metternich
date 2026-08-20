@@ -17,7 +17,7 @@ public:
 		: commodity(commodity)
 	{
 		this->threshold = std::stoi(value);
-		this->value = centesimal_int(1);
+		this->value = decimillesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -26,7 +26,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;

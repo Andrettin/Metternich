@@ -20,9 +20,9 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const site *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const site *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_fortification_level(this->value * multiplier);
+		scope->get_game_data()->change_fortification_level(centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const site *scope) const override

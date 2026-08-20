@@ -26,7 +26,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (this->type == nullptr) {
 			for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {

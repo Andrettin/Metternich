@@ -28,13 +28,13 @@ public:
 		if (key == "employment_type") {
 			this->employment_type = employment_type::get(value);
 		} else if (key == "modifier") {
-			this->value = centesimal_int(std::stoi(value));
+			this->value = decimillesimal_int(std::stoi(value));
 		} else {
 			modifier_effect<scope_type>::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		assert_throw(this->employment_type != nullptr);
 

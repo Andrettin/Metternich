@@ -21,9 +21,9 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
-		co_await scope->get_game_data()->change_attribute_value(this->attribute, decimillesimal_int(this->value * multiplier));
+		co_await scope->get_game_data()->change_attribute_value(this->attribute, this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override

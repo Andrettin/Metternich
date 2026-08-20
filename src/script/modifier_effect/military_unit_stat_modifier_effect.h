@@ -55,13 +55,13 @@ public:
 		if (key == "stat") {
 			this->stat = magic_enum::enum_cast<military_unit_stat>(value).value();
 		} else if (key == "value") {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			modifier_effect<scope_type>::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (this->domain != military_unit_domain::none) {
 			std::vector<const military_unit_type *> types = military_unit_type::get_all_const();
@@ -81,22 +81,22 @@ public:
 			this->apply_to_types(scope, { this->type }, multiplier);
 		} else {
 			if constexpr (std::is_same_v<scope_type, const character>) {
-				scope->get_game_data()->change_commanded_military_unit_stat_modifier(this->stat, this->value * multiplier);
+				scope->get_game_data()->change_commanded_military_unit_stat_modifier(this->stat, centesimal_int(this->value * multiplier));
 			} else if constexpr (std::is_same_v<scope_type, military_unit>) {
-				scope->change_stat(this->stat, this->value * multiplier);
+				scope->change_stat(this->stat, centesimal_int(this->value * multiplier));
 			} else {
 				assert_throw(false);
 			}
 		}
 	}
 
-	void apply_to_types(scope_type *scope, const std::vector<const military_unit_type *> &types, const centesimal_int &multiplier) const
+	void apply_to_types(scope_type *scope, const std::vector<const military_unit_type *> &types, const decimillesimal_int &multiplier) const
 	{
 		for (const military_unit_type *military_unit_type : types) {
 			if constexpr (std::is_same_v<scope_type, const character>) {
-				scope->get_game_data()->change_commanded_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
+				scope->get_game_data()->change_commanded_military_unit_type_stat_modifier(military_unit_type, this->stat, centesimal_int(this->value * multiplier));
 			} else if constexpr (std::is_same_v<scope_type, const metternich::domain>) {
-				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, this->value * multiplier);
+				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, centesimal_int(this->value * multiplier));
 			} else {
 				assert_throw(false);
 			}

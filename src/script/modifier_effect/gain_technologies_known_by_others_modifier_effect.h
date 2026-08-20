@@ -12,7 +12,7 @@ class gain_technologies_known_by_others_modifier_effect final : public modifier_
 public:
 	explicit gain_technologies_known_by_others_modifier_effect(const std::string &value)
 	{
-		this->value = centesimal_int(static_cast<int>(string::to_bool(value)));
+		this->value = decimillesimal_int(static_cast<int>(string::to_bool(value)));
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -21,7 +21,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		co_await scope->get_technology()->change_gain_technologies_known_by_others_count((this->value * multiplier).to_int());
 	}
@@ -33,7 +33,7 @@ public:
 		return "Gain technologies acquired by 2 known countries";
 	}
 
-	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

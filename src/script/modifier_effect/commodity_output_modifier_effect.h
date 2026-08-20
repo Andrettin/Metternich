@@ -24,16 +24,16 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;
 		}
 
 		if constexpr (std::is_same_v<scope_type, const domain>) {
-			scope->get_economy()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
+			scope->get_economy()->change_commodity_output_modifier(this->commodity, centesimal_int(this->value * multiplier));
 		} else {
-			scope->get_game_data()->change_commodity_output_modifier(this->commodity, this->value * multiplier);
+			scope->get_game_data()->change_commodity_output_modifier(this->commodity, centesimal_int(this->value * multiplier));
 		}
 	}
 

@@ -20,7 +20,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const province *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const province *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_game_data()->change_max_level((this->value * multiplier).to_int());
 	}

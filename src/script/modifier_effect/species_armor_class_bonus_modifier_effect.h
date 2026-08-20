@@ -28,20 +28,20 @@ public:
 		if (key == "species") {
 			this->species = species::get(value);
 		} else if (key == "bonus") {
-			this->value = centesimal_int(std::stoi(value));
+			this->value = decimillesimal_int(std::stoi(value));
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	virtual void apply(const character *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		assert_throw(this->species != nullptr);
 
 		this->apply_to_species(scope, { this->species }, multiplier);
 	}
 
-	void apply_to_species(const character *scope, const std::vector<const species *> &species_list, const centesimal_int &multiplier) const
+	void apply_to_species(const character *scope, const std::vector<const species *> &species_list, const decimillesimal_int &multiplier) const
 	{
 		for (const metternich::species *species : species_list) {
 			scope->get_game_data()->change_species_armor_class_bonus(species, (this->value * multiplier).to_int());

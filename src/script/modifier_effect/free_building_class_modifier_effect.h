@@ -16,7 +16,7 @@ public:
 	explicit free_building_class_modifier_effect(const std::string &value)
 	{
 		this->building_class = building_class::get(value);
-		this->value = centesimal_int(1);
+		this->value = decimillesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -25,7 +25,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		co_await scope->get_game_data()->change_free_building_class_count(this->building_class, (this->value * multiplier).to_int());
 	}
@@ -37,7 +37,7 @@ public:
 		return std::format("Free Building: {}", building ? building->get_name() : this->building_class->get_name());
 	}
 
-	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

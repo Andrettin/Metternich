@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->commodity->is_enabled()) {
 			return;

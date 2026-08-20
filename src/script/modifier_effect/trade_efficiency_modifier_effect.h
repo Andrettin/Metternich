@@ -18,7 +18,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const scope_type *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if constexpr (std::is_same_v<scope_type, const domain>) {
 			scope->get_economy()->change_trade_efficiency_modifier((this->value * multiplier).to_int());

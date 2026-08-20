@@ -25,11 +25,11 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		for (const transporter_type *transporter_type : transporter_type::get_all()) {
 			if (transporter_type->is_ship()) {
-				scope->get_game_data()->change_transporter_type_stat_modifier(transporter_type, this->stat, this->value * multiplier);
+				scope->get_game_data()->change_transporter_type_stat_modifier(transporter_type, this->stat, centesimal_int(this->value * multiplier));
 			}
 		}
 	}

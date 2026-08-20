@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		assert_throw(this->skill != nullptr);
 
@@ -38,7 +38,7 @@ public:
 		return std::format("{} Training", this->skill->get_name());
 	}
 
-	virtual std::string get_string(const character *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);

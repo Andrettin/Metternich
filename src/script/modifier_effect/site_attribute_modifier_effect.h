@@ -17,7 +17,7 @@ public:
 		: modifier_effect<scope_type>(value), attribute(attribute)
 	{
 		if (string::is_number(value)) {
-			this->value = centesimal_int(value);
+			this->value = decimillesimal_int(value);
 		} else {
 			this->value_dice = dice(value);
 		}
@@ -29,7 +29,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const scope_type *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if constexpr (std::is_same_v<scope_type, const site>) {
 			if (!this->value_dice.is_null()) {
@@ -57,7 +57,7 @@ public:
 		return this->attribute->get_name();
 	}
 
-	virtual std::string get_number_string(const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_number_string(const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		if (!this->value_dice.is_null()) {
 			return (multiplier > 0 ? "+" : "-") + this->value_dice.to_display_string();
@@ -66,7 +66,7 @@ public:
 		}
 	}
 
-	virtual bool is_negative(const centesimal_int &multiplier) const override
+	virtual bool is_negative(const decimillesimal_int &multiplier) const override
 	{
 		if (!this->value_dice.is_null()) {
 			return multiplier < 0;

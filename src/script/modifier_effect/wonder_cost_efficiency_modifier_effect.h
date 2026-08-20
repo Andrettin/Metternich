@@ -19,7 +19,7 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const domain *scope, const centesimal_int &multiplier) const override
+	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		scope->get_game_data()->change_wonder_cost_efficiency_modifier((this->value * multiplier).to_int());
 	}

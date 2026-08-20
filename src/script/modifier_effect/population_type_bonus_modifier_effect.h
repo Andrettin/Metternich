@@ -21,7 +21,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(scope_type *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(scope_type *scope, const decimillesimal_int &multiplier) const override
 	{
 		if (!this->population_type->is_enabled()) {
 			co_return;

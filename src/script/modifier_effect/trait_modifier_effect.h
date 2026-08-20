@@ -15,7 +15,7 @@ public:
 	explicit trait_modifier_effect(const std::string &value)
 	{
 		this->trait = trait::get(value);
-		this->value = centesimal_int(1);
+		this->value = decimillesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -32,13 +32,13 @@ public:
 		if (key == "trait") {
 			this->trait = trait::get(value);
 		} else if (key == "count") {
-			this->value = centesimal_int(std::stoi(value));
+			this->value = decimillesimal_int(std::stoi(value));
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
 		co_await scope->get_game_data()->change_trait_count(this->trait, (this->value * multiplier).to_int());
 	}
@@ -50,7 +50,7 @@ public:
 		return "Trait";
 	}
 
-	virtual std::string get_string(const character *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(ignore_decimals);
 

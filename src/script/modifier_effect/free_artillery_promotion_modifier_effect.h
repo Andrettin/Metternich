@@ -13,7 +13,7 @@ public:
 	explicit free_artillery_promotion_modifier_effect(const std::string &value)
 	{
 		this->promotion = promotion::get(value);
-		this->value = centesimal_int(1);
+		this->value = decimillesimal_int(1);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -22,7 +22,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const centesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
 		co_await scope->get_military()->change_free_artillery_promotion_count(this->promotion, (this->value * multiplier).to_int());
 	}
@@ -34,7 +34,7 @@ public:
 		return std::format("Free Artillery Promotion: {}", this->promotion->get_name());
 	}
 
-	virtual std::string get_string(const domain *scope, const centesimal_int &multiplier, const bool ignore_decimals) const override
+	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const bool ignore_decimals) const override
 	{
 		Q_UNUSED(multiplier);
 		Q_UNUSED(ignore_decimals);
