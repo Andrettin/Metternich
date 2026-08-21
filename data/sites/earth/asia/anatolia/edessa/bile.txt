@@ -1,0 +1,8 @@
+bile = {
+	name = "Bile"
+	world = earth
+	geocoordinate = { 37.976944444444 37.025 } #Birecik
+	type = holding
+	holding_type = temple
+	province = edessa
+}

@@ -1,0 +1,8 @@
+kaisun = {
+	name = "Kaisun"
+	world = earth
+	geocoordinate = { 37.8554771 37.5605016 } #Çakırhüyük
+	type = holding
+	holding_type = castle
+	province = melitene #Adiyaman
+}

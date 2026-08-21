@@ -5,4 +5,7 @@ duluk = {
 	type = holding
 	holding_type = castle
 	province = aintab
+	cultural_names = {
+		latin = "Tulupe" #name during the Crusades
+	}
 }

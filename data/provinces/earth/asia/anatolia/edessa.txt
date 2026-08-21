@@ -1,7 +1,12 @@
-sanliurfa = {
-	name = "Sanliurfa"
-	color = { 74 134 46 }
-	default_provincial_capital = sanliurfa
+edessa = {
+	name = "Edessa"
+	color = { 168 180 177 }
+	terrain = mountains
+	default_provincial_capital = edessa
+	cultural_names = {
+		arabic = "Ruha"
+		turkish = "Sanliurfa"
+	}
 	regions = {
 		anatolia
 	}

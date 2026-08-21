@@ -3,6 +3,9 @@ samosata = {
 	world = earth
 	geocoordinate = { 38.4825 37.579166666667 } #Samsat
 	type = holding
-	holding_type = guild
+	holding_type = guild #or castle
 	province = melitene #Adiyaman
+	cultural_names = {
+		turkish = "Samsat"
+	}
 }

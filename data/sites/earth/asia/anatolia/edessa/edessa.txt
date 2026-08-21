@@ -1,0 +1,18 @@
+edessa = {
+	name = "Edessa"
+	world = earth
+	geocoordinate = { 38.79498571650 37.16999086410 } #from Natural Earth (Sanliurfa)
+	type = holding
+	holding_type = castle #or guild
+	province = edessa
+	cultural_names = {
+		arabic = "Ruha"
+		turkish = "Sanliurfa" #also known as Urfa
+	}
+	
+	history = {
+		1360 = {
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

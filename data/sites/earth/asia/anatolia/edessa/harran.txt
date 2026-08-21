@@ -1,0 +1,8 @@
+harran = {
+	name = "Harran"
+	world = earth
+	geocoordinate = { 39.028865 36.866351 }
+	type = holding
+	holding_type = castle
+	province = edessa
+}

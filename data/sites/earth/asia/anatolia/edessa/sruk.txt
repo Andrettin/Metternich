@@ -1,0 +1,8 @@
+sruk = {
+	name = "Sruk"
+	world = earth
+	geocoordinate = { 38.42444444444445 36.975 } #Suruç
+	type = holding
+	holding_type = guild
+	province = edessa
+}
