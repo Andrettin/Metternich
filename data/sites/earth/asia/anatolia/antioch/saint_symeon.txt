@@ -1,0 +1,8 @@
+saint_symeon = {
+	name = "Saint Symeon"
+	world = earth
+	geocoordinate = { 35.933300 36.117058 } #from Natural Earth (Samandağ)
+	type = holding
+	holding_type = castle
+	province = antioch
+}

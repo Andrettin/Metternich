@@ -1,0 +1,8 @@
+hazart = {
+	name = "Hazart"
+	world = earth
+	geocoordinate = { 37.044085 36.588786 } #from Natural Earth (Azaz)
+	type = holding
+	holding_type = castle
+	province = damascus #Aleppo
+}

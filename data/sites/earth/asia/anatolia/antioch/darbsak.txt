@@ -1,0 +1,8 @@
+darbsak = {
+	name = "Darbsak"
+	world = earth
+	geocoordinate = { 36.3655 36.532 } #Trapessac
+	type = holding
+	holding_type = castle
+	province = antioch
+}

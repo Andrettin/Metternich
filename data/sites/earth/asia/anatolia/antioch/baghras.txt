@@ -1,0 +1,8 @@
+baghras = {
+	name = "Baghras"
+	world = earth
+	geocoordinate = { 36.225 36.426944444444445 } #Bagras
+	type = holding
+	holding_type = castle
+	province = antioch
+}

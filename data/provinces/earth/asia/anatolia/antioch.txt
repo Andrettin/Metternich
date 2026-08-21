@@ -1,7 +1,11 @@
-hatay = {
-	name = "Hatay"
-	color = { 155 157 17 }
+antioch = {
+	name = "Antioch"
+	color = { 168 162 82 }
+	terrain = plains
 	default_provincial_capital = antioch
+	cultural_names = {
+		turkish = "Hatay"
+	}
 	regions = {
 		anatolia
 	}
