@@ -151,6 +151,13 @@ public:
 
 	const dice &get_income(const int level, const int province_level) const;
 
+	bool can_tax() const
+	{
+		return !this->taxation_per_level_difference_and_income.empty();
+	}
+
+	const dice &get_taxation(const int level_difference, const int income) const;
+
 	const and_condition<site> *get_conditions() const
 	{
 		return this->conditions.get();
@@ -198,6 +205,7 @@ private:
 	int level = 0;
 	std::vector<const population_class *> population_classes;
 	std::map<int, std::map<int, dice>> income_per_level_and_province_level;
+	std::map<int, std::map<int, dice>> taxation_per_level_difference_and_income;
 	std::unique_ptr<const and_condition<site>> conditions;
 	std::unique_ptr<const and_condition<site>> build_conditions;
 	std::unique_ptr<modifier<const site>> modifier;

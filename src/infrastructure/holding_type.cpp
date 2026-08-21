@@ -86,6 +86,19 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 				this->income_per_level_and_province_level[level][province_level] = dice(value);
 			});
 		});
+	} else if (tag == "taxation_per_level_difference_and_income") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int level_difference = std::stoi(child_tag);
+
+			child_scope.for_each_property([this, level_difference](const gsml_property &property) {
+				const std::string &key = property.get_key();
+				const std::string &value = property.get_value();
+				const int income = std::stoi(key);
+
+				this->taxation_per_level_difference_and_income[level_difference][income] = dice(value);
+			});
+		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
@@ -191,6 +204,30 @@ const dice &holding_type::get_income(const int level, const int province_level) 
 	auto sub_find_iterator = find_iterator->second.upper_bound(province_level);
 	if (sub_find_iterator == find_iterator->second.begin()) {
 		throw std::runtime_error(std::format("Could not find income for holding type \"{}\" for holding level {} and province level {}.", this->get_identifier(), level, province_level));
+	}
+	--sub_find_iterator;
+
+	return sub_find_iterator->second;
+}
+
+const dice &holding_type::get_taxation(const int level_difference, const int income) const
+{
+	assert_throw(this->can_tax());
+	assert_throw(income > 0);
+
+	auto find_iterator = this->taxation_per_level_difference_and_income.find(level_difference);
+	if (find_iterator == this->taxation_per_level_difference_and_income.end()) {
+		if (level_difference < this->taxation_per_level_difference_and_income.begin()->first) {
+			find_iterator = this->taxation_per_level_difference_and_income.begin();
+		} else if (level_difference > this->taxation_per_level_difference_and_income.rbegin()->first) {
+			find_iterator = this->taxation_per_level_difference_and_income.end();
+			--find_iterator;
+		}
+	}
+
+	auto sub_find_iterator = find_iterator->second.upper_bound(income);
+	if (sub_find_iterator == find_iterator->second.begin()) {
+		throw std::runtime_error(std::format("Could not find taxation for holding type \"{}\" for level difference {} and income {}.", this->get_identifier(), level_difference, income));
 	}
 	--sub_find_iterator;
 

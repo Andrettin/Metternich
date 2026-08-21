@@ -183,6 +183,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "taxes_by_holding") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->taxes_by_holding[site::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
 			this->homed_characters.push_back(game::get()->get_character(value));
@@ -340,6 +344,14 @@ gsml_data site_game_data::to_gsml_data() const
 			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
 		}
 		data.add_child(std::move(commodity_throughput_modifiers_data));
+	}
+
+	if (!this->taxes_by_holding.empty()) {
+		gsml_data taxes_by_holding_data("taxes_by_holding");
+		for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+			taxes_by_holding_data.add_property(taxing_holding->get_identifier(), std::to_string(taxes));
+		}
+		data.add_child(std::move(taxes_by_holding_data));
 	}
 
 	if (!this->get_homed_characters().empty()) {
@@ -877,6 +889,16 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		}
 	}
 
+	if ((old_holding_type != nullptr && old_holding_type->can_tax()) || (holding_type != nullptr && holding_type->can_tax())) {
+		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
+			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
+				continue;
+			}
+
+			other_holding->get_game_data()->update_holding_level_income();
+		}
+	}
+
 	co_await this->check_building_conditions();
 
 	if (this->get_holding_type() != nullptr) {
@@ -1143,6 +1165,16 @@ void site_game_data::set_weighted_holding_level(const centesimal_int &level)
 	this->weighted_holding_level = level;
 
 	this->update_holding_level_income();
+
+	if (this->get_holding_type() != nullptr && this->get_holding_type()->can_tax()) {
+		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
+			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
+				continue;
+			}
+
+			other_holding->get_game_data()->update_holding_level_income();
+		}
+	}
 
 	if (game::get()->is_running()) {
 		emit weighted_holding_level_changed();
@@ -2717,8 +2749,13 @@ void site_game_data::update_holding_level_income()
 
 	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->holding_level_income));
 
+	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-taxes));
+	}
+
 	//update income from the holding's level
 	this->holding_level_income = 0;
+	this->taxes_by_holding.clear();
 
 	if (!this->is_built()) {
 		return;
@@ -2743,9 +2780,41 @@ void site_game_data::update_holding_level_income()
 		return;
 	}
 
-	this->holding_level_income = average_result;
+	const int64_t income = average_result;
+	const int income_in_domain_units = static_cast<int>(income / defines::get()->get_domain_income_unit_value());
+	int64_t taxed_income = income;
+
+	if (income_in_domain_units > 0) {
+		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
+			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
+				continue;
+			}
+
+			const metternich::holding_type *other_holding_type = other_holding->get_game_data()->get_holding_type();
+			if (!other_holding_type->can_tax()) {
+				continue;
+			}
+
+			const dice &other_holding_taxation_dice = other_holding_type->get_taxation((other_holding->get_game_data()->get_weighted_holding_level() - this->get_weighted_holding_level()).to_int(), income_in_domain_units);
+
+			const int64_t other_holding_taxation = other_holding_taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
+
+			if (other_holding_taxation <= 0) {
+				continue;
+			}
+
+			this->taxes_by_holding[other_holding] = other_holding_taxation;
+			taxed_income -= other_holding_taxation;
+		}
+	}
+
+	this->holding_level_income = std::max(taxed_income, 0ll);
 
 	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->holding_level_income));
+
+	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(taxes));
+	}
 }
 
 bool site_game_data::can_be_visited_by(const metternich::domain *domain) const

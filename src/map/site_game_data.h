@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
+#include "map/site_container.h"
 #include "script/scripted_modifier_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -726,6 +727,7 @@ private:
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
 	int64_t holding_level_income = 0; //income from the holding's level
+	site_map<int64_t> taxes_by_holding; //taxes paid to different holdings in the same province
 	std::vector<army *> visiting_armies; //armies visiting this site
 	std::vector<const character *> homed_characters;
 };
