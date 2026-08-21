@@ -6,6 +6,11 @@ alexandria = {
 	features = {
 		major_river #Nile River
 	}
+	resource_counts = {
+		prime_cotton_land = 3
+		#prime_fruit_land = 2
+		prime_grain_land = 4
+	}
 	regions = {
 		egypt
 	}

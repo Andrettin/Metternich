@@ -3,6 +3,11 @@ suez = {
 	color = { 44 54 3 }
 	terrain = desert
 	default_provincial_capital = suez
+	resource_counts = {
+		prime_cotton_land = 1
+		#prime_fruit_land = 6
+		prime_grain_land = 2
+	}
 	regions = {
 		egypt
 	}

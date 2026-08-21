@@ -6,6 +6,11 @@ cairo = {
 	features = {
 		major_river #Nile River
 	}
+	resource_counts = {
+		prime_cotton_land = 1
+		#prime_fruit_land = 4
+		prime_grain_land = 3
+	}
 	regions = {
 		egypt
 	}
