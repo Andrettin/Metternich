@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
 #include "economy/resource_container.h"
+#include "map/site_container.h"
 #include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "technology/technology_container.h"
@@ -626,6 +627,7 @@ public:
 	}
 
 	void update_province_level_taxation();
+	int64_t process_taxable_target_income(const int64_t income, const int target_level, site_map<int64_t> &taxes_by_holding) const;
 
 	int get_trade_efficiency_modifier() const
 	{
@@ -738,6 +740,7 @@ private:
 	commodity_map<int> commodity_throughput_modifiers;
 	commodity_map<std::map<int, int>> commodity_bonuses_for_tile_thresholds;
 	int64_t province_level_taxation = 0; //taxation from the province level
+	site_map<int64_t> taxes_by_holding; //taxes paid to different holdings in the province
 	int trade_efficiency_modifier = 0;
 	data_entry_map<technology_category, int> technology_category_spread_modifiers;
 	int movement_cost_modifier = 0;

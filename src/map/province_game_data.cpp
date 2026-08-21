@@ -171,6 +171,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "taxes_by_holding") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->taxes_by_holding[site::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else if (tag == "technology_category_spread_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->technology_category_spread_modifiers[technology_category::get(property.get_key())] = std::stoi(property.get_value());
@@ -306,6 +310,14 @@ gsml_data province_game_data::to_gsml_data() const
 			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
 		}
 		data.add_child(std::move(commodity_throughput_modifiers_data));
+	}
+
+	if (!this->taxes_by_holding.empty()) {
+		gsml_data taxes_by_holding_data("taxes_by_holding");
+		for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+			taxes_by_holding_data.add_property(taxing_holding->get_identifier(), std::to_string(taxes));
+		}
+		data.add_child(std::move(taxes_by_holding_data));
 	}
 
 	if (!this->technology_category_spread_modifiers.empty()) {
@@ -2543,8 +2555,13 @@ void province_game_data::update_province_level_taxation()
 
 	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->province_level_taxation));
 
+	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-taxes));
+	}
+
 	//update taxation from the province level
 	this->province_level_taxation = 0;
+	this->taxes_by_holding.clear();
 
 	assert_throw(this->get_owner() != nullptr);
 
@@ -2553,14 +2570,61 @@ void province_game_data::update_province_level_taxation()
 
 	if (average_result < 0) {
 		//ignore negative results
+		emit province_level_taxation_changed();
 		return;
 	}
 
-	this->province_level_taxation = average_result;
+	const int64_t income = average_result;
+	const int64_t taxed_income = this->process_taxable_target_income(income, this->get_level(), this->taxes_by_holding);
+
+	this->province_level_taxation = taxed_income;
 
 	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->province_level_taxation));
 
+	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(taxes));
+	}
+
 	emit province_level_taxation_changed();
+}
+
+int64_t province_game_data::process_taxable_target_income(const int64_t income, const int target_level, site_map<int64_t> &taxes_by_holding) const
+{
+	const int income_in_domain_units = static_cast<int>(income / defines::get()->get_domain_income_unit_value());
+
+	if (income_in_domain_units <= 0) {
+		return income;
+	}
+
+	int64_t taxed_income = income;
+
+	if (income_in_domain_units > 0) {
+		for (const metternich::site *holding : this->get_settlement_sites()) {
+			if (!holding->get_game_data()->is_built()) {
+				continue;
+			}
+
+			const metternich::holding_type *holding_type = holding->get_game_data()->get_holding_type();
+			if (!holding_type->can_tax()) {
+				continue;
+			}
+
+			const dice &holding_taxation_dice = holding_type->get_taxation(holding->get_game_data()->get_weighted_holding_level().to_int() - target_level, income_in_domain_units);
+
+			const int64_t holding_taxation = holding_taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
+
+			if (holding_taxation <= 0) {
+				continue;
+			}
+
+			taxes_by_holding[holding] = holding_taxation;
+			taxed_income -= holding_taxation;
+		}
+	}
+
+	taxed_income = std::max(taxed_income, 0ll);
+
+	return taxed_income;
 }
 
 void province_game_data::set_trade_efficiency_modifier(const int value)

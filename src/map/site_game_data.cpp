@@ -890,6 +890,8 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	}
 
 	if ((old_holding_type != nullptr && old_holding_type->can_tax()) || (holding_type != nullptr && holding_type->can_tax())) {
+		this->get_province()->get_game_data()->update_province_level_taxation();
+
 		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
 			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
 				continue;
@@ -1167,6 +1169,8 @@ void site_game_data::set_weighted_holding_level(const centesimal_int &level)
 	this->update_holding_level_income();
 
 	if (this->get_holding_type() != nullptr && this->get_holding_type()->can_tax()) {
+		this->get_province()->get_game_data()->update_province_level_taxation();
+
 		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
 			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
 				continue;
@@ -2781,34 +2785,9 @@ void site_game_data::update_holding_level_income()
 	}
 
 	const int64_t income = average_result;
-	const int income_in_domain_units = static_cast<int>(income / defines::get()->get_domain_income_unit_value());
-	int64_t taxed_income = income;
+	const int64_t taxed_income = this->get_province()->get_game_data()->process_taxable_target_income(income, this->get_weighted_holding_level().to_int(), this->taxes_by_holding);
 
-	if (income_in_domain_units > 0) {
-		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
-			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
-				continue;
-			}
-
-			const metternich::holding_type *other_holding_type = other_holding->get_game_data()->get_holding_type();
-			if (!other_holding_type->can_tax()) {
-				continue;
-			}
-
-			const dice &other_holding_taxation_dice = other_holding_type->get_taxation((other_holding->get_game_data()->get_weighted_holding_level() - this->get_weighted_holding_level()).to_int(), income_in_domain_units);
-
-			const int64_t other_holding_taxation = other_holding_taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
-
-			if (other_holding_taxation <= 0) {
-				continue;
-			}
-
-			this->taxes_by_holding[other_holding] = other_holding_taxation;
-			taxed_income -= other_holding_taxation;
-		}
-	}
-
-	this->holding_level_income = std::max(taxed_income, 0ll);
+	this->holding_level_income = taxed_income;
 
 	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->holding_level_income));
 
