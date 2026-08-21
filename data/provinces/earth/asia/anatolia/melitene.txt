@@ -1,7 +1,11 @@
-malatya = {
-	name = "Malatya"
-	color = { 193 5 165 }
-	default_provincial_capital = malatya
+melitene = {
+	name = "Melitene"
+	color = { 84 204 181 }
+	terrain = mountains
+	default_provincial_capital = melitene
+	cultural_names = {
+		turkish = "Malatya"
+	}
 	regions = {
 		anatolia
 	}

@@ -11,7 +11,7 @@ persian_royal_highway = {
 		mikissos
 		charsianon
 		sebastea
-		malatya
+		melitene
 		amida
 		sinjar
 		kermanshah

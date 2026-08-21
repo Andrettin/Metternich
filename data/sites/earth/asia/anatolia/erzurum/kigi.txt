@@ -1,0 +1,8 @@
+kigi = {
+	name = "Kigi"
+	world = earth
+	geocoordinate = { 40.35 39.308888888889 } #Kiğı
+	type = holding
+	holding_type = castle
+	province = erzurum #Bingöl
+}

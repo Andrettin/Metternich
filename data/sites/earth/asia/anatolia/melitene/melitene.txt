@@ -1,0 +1,11 @@
+melitene = {
+	name = "Melitene"
+	world = earth
+	geocoordinate = { 38.30002884800 38.37043438620 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = melitene
+	cultural_names = {
+		turkish = "Malatya"
+	}
+}

@@ -1,0 +1,8 @@
+arguvan = {
+	name = "Arguvan"
+	world = earth
+	geocoordinate = { 38.26444444444444 38.782222222222224 }
+	type = holding
+	holding_type = castle
+	province = melitene
+}

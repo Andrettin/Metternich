@@ -1,0 +1,8 @@
+arca = {
+	name = "Arca"
+	world = earth
+	geocoordinate = { 37.974166666667 38.344166666667 } #Akçadağ
+	type = holding
+	holding_type = temple
+	province = melitene
+}

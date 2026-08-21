@@ -1,0 +1,8 @@
+yedisu = {
+	name = "Yedisu"
+	world = earth
+	geocoordinate = { 40.545277777778 39.433888888889 }
+	type = holding
+	holding_type = castle
+	province = erzurum #Bingöl
+}

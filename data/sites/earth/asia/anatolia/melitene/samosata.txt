@@ -1,0 +1,8 @@
+samosata = {
+	name = "Samosata"
+	world = earth
+	geocoordinate = { 38.4825 37.579166666667 } #Samsat
+	type = holding
+	holding_type = guild
+	province = melitene #Adiyaman
+}
