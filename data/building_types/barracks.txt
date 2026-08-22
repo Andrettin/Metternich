@@ -90,7 +90,7 @@ medium_barracks = {
 	portrait = fort
 	icon = crossed_sabers
 	base_building = small_barracks
-	wealth_cost = 30000gp
+	wealth_cost = 6gb
 	required_technology = medium_castle
 	free_on_start_extra_technology = 3
 	holding_types = {
@@ -118,7 +118,7 @@ medium_barracks = {
 		general
 	}
 	modifier = {
-		law = 1
+		scripted_modifier_effect = barracks
 		employment_capacity = {
 			employment_type = heavy_infantry
 			capacity = 115
@@ -129,7 +129,7 @@ medium_barracks = {
 		}
 	}
 	domain_modifier = {
-		unrest = -1
+		scripted_modifier_effect = barracks
 	}
 }
 
@@ -165,7 +165,7 @@ large_barracks = {
 		general
 	}
 	modifier = {
-		law = 1
+		scripted_modifier_effect = barracks
 		employment_capacity = {
 			employment_type = heavy_infantry
 			capacity = 165
@@ -176,7 +176,7 @@ large_barracks = {
 		}
 	}
 	domain_modifier = {
-		unrest = -1
+		scripted_modifier_effect = barracks
 	}
 }
 
@@ -212,7 +212,7 @@ great_barracks = {
 		general
 	}
 	modifier = {
-		law = 1
+		scripted_modifier_effect = barracks
 		employment_capacity = {
 			employment_type = heavy_infantry
 			capacity = 225
@@ -223,7 +223,7 @@ great_barracks = {
 		}
 	}
 	domain_modifier = {
-		unrest = -1
+		scripted_modifier_effect = barracks
 	}
 }
 
@@ -259,7 +259,7 @@ royal_barracks = {
 		general
 	}
 	modifier = {
-		law = 1
+		scripted_modifier_effect = barracks
 		employment_capacity = {
 			employment_type = heavy_infantry
 			capacity = 290
@@ -270,45 +270,7 @@ royal_barracks = {
 		}
 	}
 	domain_modifier = {
-		unrest = -1
-	}
-}
-
-barracks = {
-	name = "Barracks"
-	building_class = barracks
-	portrait = fort
-	icon = crossed_sabers
-	wealth_cost = 6gb
-	holding_types = {
-		city
-	}
-	builder_civilian_unit_types = {
-		ruler
-		marshal
-		engineer
-	}
-	recruited_military_unit_categories = {
-		mace_infantry
-		spear_infantry
-		blade_infantry
-		light_infantry
-		regular_infantry
-		heavy_infantry
-		bowmen
-		light_cavalry
-		heavy_cavalry
-		spear_cavalry
-		light_artillery
-		heavy_artillery
-		combat_engineers
-		general
-	}
-	modifier = {
-		law = 1
-	}
-	domain_modifier = {
-		unrest = -1
+		scripted_modifier_effect = barracks
 	}
 }
 
@@ -317,18 +279,17 @@ garrison = {
 	building_class = garrison
 	portrait = fort
 	icon = crossed_sabers
-	base_building = barracks
-	wealth_cost = 22gb
+	wealth_cost = 28gb
 	holding_types = {
-		city
+		castle
+	}
+	required_buildings = {
+		medium_barracks
 	}
 	builder_civilian_unit_types = {
 		ruler
 		marshal
 		engineer
-	}
-	modifier = {
-		law = 1
 	}
 	domain_modifier = {
 		loyalty = 2

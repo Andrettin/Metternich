@@ -1,0 +1,3 @@
+barracks = {
+	unrest = -1
+}

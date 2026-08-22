@@ -7,7 +7,7 @@ military_academy = {
 		castle
 	}
 	required_buildings = {
-		barracks
+		medium_barracks
 		garrison
 	}
 	builder_civilian_unit_types = {
@@ -29,8 +29,5 @@ military_academy = {
 		loyalty = 2
 		stability = 1
 		#fame = 1
-	}
-	free_on_start_conditions = {
-		has_building_class = university
 	}
 }
