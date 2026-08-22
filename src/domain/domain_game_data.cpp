@@ -1747,7 +1747,7 @@ QCoro::Task<void> domain_game_data::choose_capital()
 				continue;
 			}
 
-			if (best_capital->get_game_data()->get_holding_type()->get_level() >= site_game_data->get_holding_type()->get_level()) {
+			if (best_capital->get_game_data()->get_holding_level() >= site_game_data->get_holding_level()) {
 				continue;
 			}
 		}

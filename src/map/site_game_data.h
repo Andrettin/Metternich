@@ -181,13 +181,9 @@ public:
 		return this->holding_type;
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> set_holding_type(const metternich::holding_type *holding_type);
+	[[nodiscard]] QCoro::Task<void> set_holding_type(const metternich::holding_type *holding_type);
 
-	[[nodiscard]]
-	QCoro::Task<void> check_holding_type();
-
-	std::vector<const metternich::holding_type *> get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const;
+	[[nodiscard]] QCoro::Task<void> check_holding_type();
 
 	const centesimal_int &get_holding_level() const
 	{

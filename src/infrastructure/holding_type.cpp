@@ -62,12 +62,6 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 
 			this->tier_levels[key] = std::stoi(value);
 		});
-	} else if (tag == "base_holding_types") {
-		for (const std::string &value : values) {
-			holding_type *holding_type = holding_type::get(value);
-			this->base_holding_types.push_back(holding_type);
-			holding_type->upgraded_holding_types.push_back(this);
-		}
 	} else if (tag == "population_classes") {
 		for (const std::string &value : values) {
 			const population_class *population_class = population_class::get(value);
@@ -121,8 +115,6 @@ void holding_type::initialize()
 		co_await tile_image_provider::get()->load_image("settlement/" + this->get_identifier() + "/0");
 	});
 
-	this->calculate_level();
-
 	named_data_entry::initialize();
 }
 
@@ -144,10 +136,6 @@ void holding_type::check() const
 		log::log_error(std::format("Holding type \"{}\" has no domain skill.", this->get_identifier()));
 	}
 
-	if (vector::contains(this->get_base_holding_types(), this)) {
-		throw std::runtime_error(std::format("Holding type \"{}\" is an upgrade of itself.", this->get_identifier()));
-	}
-
 	if (this->get_conditions() != nullptr) {
 		this->get_conditions()->check_validity();
 	}
@@ -164,23 +152,6 @@ void holding_type::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
-}
-
-void holding_type::calculate_level()
-{
-	if (this->get_level() != 0) {
-		return;
-	}
-
-	if (!this->get_base_holding_types().empty()) {
-		for (const holding_type *base_holding_type : this->get_base_holding_types()) {
-			const_cast<holding_type *>(base_holding_type)->calculate_level();
-
-			this->level = std::max(this->level, base_holding_type->get_level() + 1);
-		}
-	} else {
-		this->level = 1;
-	}
 }
 
 bool holding_type::can_have_population_type(const population_type *population_type) const

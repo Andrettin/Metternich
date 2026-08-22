@@ -846,6 +846,8 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	this->holding_type = holding_type;
 
 	if (this->get_holding_type() != nullptr) {
+		assert_throw(this->get_holding_type() == this->site->get_holding_type());
+
 		this->change_population_capacity(this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
 	}
 
@@ -937,59 +939,7 @@ QCoro::Task<void> site_game_data::check_holding_type()
 		co_return;
 	}
 
-	const std::vector<const metternich::holding_type *> potential_holding_types = this->get_best_holding_types(this->get_holding_type()->get_base_holding_types());
-
-	assert_throw(!potential_holding_types.empty());
-	co_await this->set_holding_type(vector::get_random(potential_holding_types));
-}
-
-std::vector<const metternich::holding_type *> site_game_data::get_best_holding_types(const std::vector<const metternich::holding_type *> &holding_types) const
-{
-	std::vector<const metternich::holding_type *> potential_holding_types;
-
-	int best_preserved_building_count = 0;
-
-	for (const metternich::holding_type *base_holding_type : holding_types) {
-		if (base_holding_type->get_conditions() != nullptr && !base_holding_type->get_conditions()->check(this->site, read_only_context(this->site))) {
-			continue;
-		}
-
-		int preserved_building_count = 0;
-		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-			if (building_slot->get_building() == nullptr) {
-				continue;
-			}
-
-			if (vector::contains(building_slot->get_building()->get_holding_types(), base_holding_type)) {
-				++preserved_building_count;
-			}
-		}
-
-		if (preserved_building_count < best_preserved_building_count) {
-			continue;
-		} else if (preserved_building_count > best_preserved_building_count) {
-			potential_holding_types.clear();
-			best_preserved_building_count = preserved_building_count;
-		}
-
-		potential_holding_types.push_back(base_holding_type);
-	}
-
-	if (potential_holding_types.empty()) {
-		std::vector<const metternich::holding_type *> base_holding_types;
-
-		for (const metternich::holding_type *holding_type : holding_types) {
-			for (const metternich::holding_type *base_holding_type : holding_type->get_base_holding_types()) {
-				if (!vector::contains(base_holding_types, base_holding_type)) {
-					base_holding_types.push_back(base_holding_type);
-				}
-			}
-		}
-
-		return this->get_best_holding_types(base_holding_types);
-	}
-
-	return potential_holding_types;
+	co_await this->set_holding_type(nullptr);
 }
 
 QString site_game_data::get_holding_level_qstring() const

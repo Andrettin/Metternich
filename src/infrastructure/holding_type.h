@@ -125,23 +125,6 @@ public:
 		throw std::runtime_error(std::format("Invalid tier for holding type \"{}\": \"{}\".", this->get_identifier(), tier));
 	}
 
-	const std::vector<const holding_type *> &get_base_holding_types() const
-	{
-		return this->base_holding_types;
-	}
-
-	const std::vector<const holding_type *> &get_upgraded_holding_types() const
-	{
-		return this->upgraded_holding_types;
-	}
-
-	int get_level() const
-	{
-		return this->level;
-	}
-
-	void calculate_level();
-
 	const std::vector<const population_class *> &get_population_classes() const
 	{
 		return this->population_classes;
@@ -200,9 +183,6 @@ private:
 	commodity_map<int64_t> fortification_level_commodity_costs;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
-	std::vector<const holding_type *> base_holding_types;
-	std::vector<const holding_type *> upgraded_holding_types;
-	int level = 0;
 	std::vector<const population_class *> population_classes;
 	std::map<int, std::map<int, dice>> income_per_level_and_province_level;
 	std::map<int, std::map<int, dice>> taxation_per_level_difference_and_income;
