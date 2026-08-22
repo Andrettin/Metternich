@@ -3,6 +3,12 @@ attica = {
 	color = { 84 168 41 }
 	terrain = plains
 	default_provincial_capital = athens
+	resource_counts = {
+		gold_deposit = 1
+		#prime_fruit_land = 1
+		prime_grain_land = 2
+		prime_sheep_land = 2
+	}
 	regions = {
 		greece
 	}
