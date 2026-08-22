@@ -618,6 +618,7 @@ set(population_HDRS
 	src/population/population_class_container.h
 	src/population/population_defines.h
 	src/population/population_group_map.h
+	src/population/population_strata.h
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h
