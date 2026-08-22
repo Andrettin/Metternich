@@ -23,18 +23,18 @@ farmers = {
 		south_asian = slaves_medium_small
 		african = slaves_dark_small
 	}
-	life_needs = {
-		cattle = 0.75da
-		grain = 2.5tn
-		wool = 1cwt
+	life_need_weights = {
+		cattle = 1.5
+		grain = 5.5
+		wool = 0.7
 	}
-	everyday_needs = {
-		coal = 1tn
-		furniture = 1.1tn
-		fertilizer = 0.5tn
+	everyday_need_weights = {
+		coal = 2.3
+		furniture = 5.39
+		fertilizer = 5
 	}
-	luxury_needs = {
-		furniture = 3tn
-		tobacco = 0.95tn
+	luxury_need_weights = {
+		furniture = 14.7
+		tobacco = 1.045
 	}
 }

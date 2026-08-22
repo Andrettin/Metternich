@@ -19,6 +19,7 @@
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
@@ -69,27 +70,33 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
-	} else if (tag == "life_needs") {
+	} else if (tag == "life_need_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const commodity *commodity = commodity::get(key);
-			this->life_needs[commodity] = commodity->string_to_fractional_value(value);
+			this->life_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
 		});
-	} else if (tag == "everyday_needs") {
+
+		this->total_life_need_weight = archimedes::map::get_total_value(this->get_life_need_weights());
+	} else if (tag == "everyday_need_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const commodity *commodity = commodity::get(key);
-			this->everyday_needs[commodity] = commodity->string_to_fractional_value(value);
+			this->everyday_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
 		});
-	} else if (tag == "luxury_needs") {
+
+		this->total_everyday_need_weight = archimedes::map::get_total_value(this->get_everyday_need_weights());
+	} else if (tag == "luxury_need_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const commodity *commodity = commodity::get(key);
-			this->luxury_needs[commodity] = commodity->string_to_fractional_value(value);
+			this->luxury_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
 		});
+
+		this->total_luxury_need_weight = archimedes::map::get_total_value(this->get_luxury_need_weights());
 	} else if (tag == "promotion_factors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -166,19 +173,19 @@ void population_type::check() const
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_life_needs()) {
+	for (const auto &[commodity, need] : this->get_life_need_weights()) {
 		if (!commodity->is_tradeable()) {
 			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_everyday_needs()) {
+	for (const auto &[commodity, need] : this->get_everyday_need_weights()) {
 		if (!commodity->is_tradeable()) {
 			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_luxury_needs()) {
+	for (const auto &[commodity, need] : this->get_luxury_need_weights()) {
 		if (!commodity->is_tradeable()) {
 			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}

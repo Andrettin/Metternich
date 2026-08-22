@@ -11,13 +11,13 @@ capitalists = {
 	province_modifier = {
 		industrial_output_modifier = 10
 	}
-	life_needs = {
-		cattle = 0.75da
-		grain = 2.5tn
-		wool = 1cwt
+	life_need_weights = {
+		cattle = 1.5
+		grain = 5.5
+		wool = 0.7
 	}
-	everyday_needs = {
-		coal = 20tn
-		tobacco = 20tn
+	everyday_need_weights = {
+		coal = 46
+		tobacco = 22
 	}
 }

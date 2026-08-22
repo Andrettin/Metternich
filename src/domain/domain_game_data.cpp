@@ -600,6 +600,8 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, domain_consumption_cost, nullptr, 0, this->domain);
 
+		this->get_economy()->set_paid_consumption_wealth(domain_consumption_cost);
+
 		//FIXME: increase unrest if the domain cannot pay for its consumption
 	}
 

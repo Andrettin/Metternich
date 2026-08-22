@@ -190,7 +190,7 @@ public:
 
 	Q_INVOKABLE QString get_units_tooltip() const;
 
-	int64_t wealth_value_to_value(const int64_t wealth_value) const;
+	int64_t wealth_value_to_value(const int64_t wealth_value, const bool ignore_rounding_errors = false) const;
 
 signals:
 	void changed();
