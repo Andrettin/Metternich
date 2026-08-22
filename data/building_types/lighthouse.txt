@@ -4,7 +4,7 @@ lighthouse = {
 	portrait = dock
 	icon = anchor
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = additional_buildings

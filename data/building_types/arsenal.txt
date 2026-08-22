@@ -4,7 +4,7 @@ armory = {
 	portrait = factory
 	icon = tools
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -30,7 +30,7 @@ magazine = {
 	icon = tools
 	base_building = armory
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -56,7 +56,7 @@ arsenal = {
 	icon = tools
 	base_building = magazine
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {

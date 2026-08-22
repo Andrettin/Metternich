@@ -4,7 +4,7 @@ lead_smelter = {
 	portrait = factory
 	icon = iron
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = lead_commodity

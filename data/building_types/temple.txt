@@ -6,7 +6,6 @@ shrine = {
 	holding_level = 1
 	holding_types = {
 		temple
-		city
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -36,7 +35,6 @@ temple = {
 	required_technology = basilican_structures
 	holding_types = {
 		temple
-		city
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -67,7 +65,6 @@ large_temple = {
 	required_technology = brickwork_structures
 	holding_types = {
 		temple
-		city
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -99,7 +96,6 @@ cathedral = {
 	required_technology = romanesque_vaulting
 	holding_types = {
 		temple
-		city
 	}
 	builder_civilian_unit_types = {
 		ruler

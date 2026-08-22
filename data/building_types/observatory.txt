@@ -6,17 +6,12 @@ observatory = {
 	wealth_cost = 12gb
 	required_technology = astronomy
 	holding_types = {
-		city
-		guild
-		magic_source
+		university
 	}
 	builder_civilian_unit_types = {
 		ruler
 		magister
 		engineer
-	}
-	conditions = {
-		feature = academic
 	}
 	modifier = {
 		lore = 2

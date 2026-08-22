@@ -4,7 +4,7 @@ mercury_refinery = {
 	portrait = factory
 	icon = iron
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = mercury_commodity

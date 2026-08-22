@@ -4,7 +4,7 @@ tailors_house = {
 	portrait = factory
 	icon = clothing
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -29,7 +29,7 @@ tailors_shop = {
 	icon = clothing
 	base_building = tailors_house
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -54,7 +54,7 @@ clothing_factory = {
 	icon = clothing
 	base_building = tailors_shop
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {

@@ -5,7 +5,7 @@ sugar_refinery = {
 	icon = refined_sugar
 	required_technology = renaissance
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {

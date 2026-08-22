@@ -4,7 +4,7 @@ fur_trading_post = {
 	portrait = trading_post
 	icon = furs
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = trade_commodity

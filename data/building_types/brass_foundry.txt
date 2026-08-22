@@ -4,7 +4,7 @@ brass_foundry = {
 	portrait = factory
 	icon = bronze
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {

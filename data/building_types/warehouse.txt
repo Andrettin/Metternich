@@ -6,7 +6,6 @@ warehouse = {
 	free_in_capital = true
 	wealth_cost = 8gb
 	holding_types = {
-		city
 		castle
 		guild
 		magic_source

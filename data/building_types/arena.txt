@@ -4,7 +4,7 @@ arena = {
 	portrait = fort
 	icon = architecture
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		game_rule = additional_buildings

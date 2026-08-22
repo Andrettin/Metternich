@@ -4,7 +4,7 @@ tobacconists_house = {
 	portrait = factory
 	icon = tobacco
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -23,7 +23,7 @@ tobacconists_shop = {
 	icon = tobacco
 	base_building = tobacconists_house
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
@@ -42,7 +42,7 @@ cigar_factory = {
 	icon = tobacco
 	base_building = tobacconists_shop
 	holding_types = {
-		city
+		guild
 	}
 	conditions = {
 		province = {
