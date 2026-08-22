@@ -16,3 +16,27 @@ greece = {
 		}
 	}
 }
+
+crete = {
+	superregions = {
+		greece
+	}
+	
+	resource_counts = {
+		#prime_fruit_land = 1
+		prime_grain_land = 3
+		prime_timber = 2
+	}
+}
+
+peloponnese = { #also known as Morea
+	superregions = {
+		greece
+	}
+	
+	resource_counts = {
+		#prime_fruit_land = 3
+		prime_grain_land = 4
+		prime_sheep_land = 2
+	}
+}

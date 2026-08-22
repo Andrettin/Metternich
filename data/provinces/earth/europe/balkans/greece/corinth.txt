@@ -4,7 +4,7 @@ corinth = {
 	terrain = hills
 	default_provincial_capital = corinth
 	regions = {
-		greece
+		peloponnese
 	}
 	
 	history = {

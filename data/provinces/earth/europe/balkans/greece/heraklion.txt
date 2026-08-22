@@ -7,7 +7,7 @@ heraklion = {
 		arabic = "Chandax"
 	}
 	regions = {
-		greece
+		crete
 	}
 	
 	history = {

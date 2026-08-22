@@ -4,7 +4,7 @@ methone = {
 	terrain = hills
 	default_provincial_capital = methoni
 	regions = {
-		greece
+		peloponnese
 	}
 	
 	history = {

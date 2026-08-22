@@ -4,7 +4,7 @@ monemvasia = {
 	terrain = hills
 	default_provincial_capital = sparta
 	regions = {
-		greece
+		peloponnese
 	}
 	
 	history = {

@@ -4,7 +4,7 @@ chania = {
 	terrain = mountains
 	default_provincial_capital = chania
 	regions = {
-		greece
+		crete
 	}
 	
 	history = {

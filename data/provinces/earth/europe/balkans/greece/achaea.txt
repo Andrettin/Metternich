@@ -4,7 +4,7 @@ achaea = {
 	terrain = mountains
 	default_provincial_capital = vostitza
 	regions = {
-		greece
+		peloponnese
 	}
 	
 	history = {
