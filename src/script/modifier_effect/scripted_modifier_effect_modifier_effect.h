@@ -23,6 +23,8 @@ public:
 			this->scripted_modifier_effect = military_unit_scripted_modifier_effect::get(modifier_effect_identifier);
 		} else if constexpr (std::is_same_v<scope_type, const province>) {
 			this->scripted_modifier_effect = province_scripted_modifier_effect::get(modifier_effect_identifier);
+		} else if constexpr (std::is_same_v<scope_type, const site>) {
+			this->scripted_modifier_effect = site_scripted_modifier_effect::get(modifier_effect_identifier);
 		} else {
 			assert_throw(false);
 		}
