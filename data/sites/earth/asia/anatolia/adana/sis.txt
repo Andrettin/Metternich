@@ -1,0 +1,8 @@
+sis = {
+	name = "Sis"
+	world = earth
+	geocoordinate = { 35.8103 37.4444 }
+	type = holding
+	holding_type = castle
+	province = adana
+}

@@ -10,12 +10,11 @@ limoges = {
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1789 = {
 			buildings += courthouse #Prévôt des maréchaux existent in Limoges in 1789; Source: William R. Shepherd, "Historical Atlas", 1911, p. 147.
-			holding_type = city
 		}
 		
 		1836 = {

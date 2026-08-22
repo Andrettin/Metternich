@@ -3,10 +3,12 @@ adana = {
 	world = earth
 	geocoordinate = { 35.32000402700 36.99498862610 } #from Natural Earth
 	type = holding
+	holding_type = castle
+	province = adana
 	
 	history = {
 		1481 = {
-			holding_type = town #existed in the 1481-1683 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 124.
+			developed = true #existed in the 1481-1683 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 124.
 		}
 	}
 }

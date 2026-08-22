@@ -11,17 +11,15 @@ oviedo = {
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1580 = {
 			#buildings += university #University founded in Oviedo in 1580; Source: "The Cambridge Modern History Atlas", 1912, p. 9.
-			holding_type = city
 		}
 		
 		1608 = {
 			#buildings -= university #University abolished in Oviedo in 1608; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = town
 		}
 	}
 }

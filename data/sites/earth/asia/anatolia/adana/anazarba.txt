@@ -1,0 +1,8 @@
+anazarba = {
+	name = "Anazarba"
+	world = earth
+	geocoordinate = { 35.898549 37.256404 } #Anazarbus
+	type = holding
+	holding_type = temple
+	province = adana
+}

@@ -1,0 +1,8 @@
+mopsuestia = {
+	name = "Mopsuestia" #also known as Mamistra
+	world = earth
+	geocoordinate = { 35.625744 36.958843 }
+	type = holding
+	holding_type = guild #or castle
+	province = adana
+}

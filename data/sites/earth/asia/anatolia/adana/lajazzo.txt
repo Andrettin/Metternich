@@ -1,0 +1,8 @@
+lajazzo = {
+	name = "Lajazzo"
+	world = earth
+	geocoordinate = { 35.79222222222222 36.76777777777778 } #Yumurtalık
+	type = holding
+	holding_type = castle
+	province = adana
+}

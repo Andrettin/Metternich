@@ -3,7 +3,6 @@ mexico_city = {
 	world = earth
 	geocoordinate = { -99.13098820170 19.44244244280 } #from Natural Earth
 	type = holding
-	#resource = grain #Corn and beans; Source: Map No. 503497 of the Perry-Castañeda Library Map Collection, 1978.
 	cultural_names = {
 		aztec = "Tenochtitlan"
 	}
@@ -18,12 +17,10 @@ mexico_city = {
 		
 		1539 = {
 			buildings += printing_press #printing press founded in Mexico City in 1539; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
-			holding_type = town
 		}
 		
 		1551 = {
 			#buildings += university #University founded in Mexico City in 1551; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			holding_type = city
 		}
 	}
 }

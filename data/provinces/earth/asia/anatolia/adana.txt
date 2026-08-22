@@ -1,7 +1,11 @@
-ramadan = {
-	name = "Ramadan"
-	color = { 180 178 61 }
+adana = {
+	name = "Adana"
+	color = { 84 156 81 }
+	terrain = hills
 	default_provincial_capital = adana
+	cultural_names = {
+		turkish = "Ramadan"
+	}
 	regions = {
 		anatolia
 	}

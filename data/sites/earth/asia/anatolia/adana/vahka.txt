@@ -1,0 +1,8 @@
+vahka = {
+	name = "Vahka"
+	world = earth
+	geocoordinate = { 35.9125 37.815 } #Feke
+	type = holding
+	holding_type = castle
+	province = adana
+}

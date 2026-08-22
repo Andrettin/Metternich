@@ -7,7 +7,7 @@ lesser_armenia = {
 	default_government_type = monarchy
 	default_capital = lykandos
 	core_provinces = {
-		ramadan
+		adana
 		lykandos
 	}
 }

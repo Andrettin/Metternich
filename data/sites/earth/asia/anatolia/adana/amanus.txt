@@ -4,5 +4,5 @@ amanus = {
 	geocoordinate = { 36.55638889 37.18388889 } #Amanian Gate
 	type = holding
 	holding_type = castle
-	province = ramadan #Osmaniye
+	province = adana #Osmaniye
 }

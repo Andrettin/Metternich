@@ -11,17 +11,15 @@ pamplona = {
 	
 	history = {
 		1360 = {
-			holding_type = town #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1628 = {
 			#buildings += university #Major university founded in Pamplona in 1628; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = city
 		}
 		
 		1725 = {
 			#buildings -= university #Major university abolished in Pamplona in 1725; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
-			holding_type = town
 		}
 	}
 }
