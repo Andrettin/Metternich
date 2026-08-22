@@ -4,7 +4,6 @@ mercury_refinery = {
 	portrait = factory
 	icon = iron
 	holding_types = {
-		town
 		city
 	}
 	conditions = {

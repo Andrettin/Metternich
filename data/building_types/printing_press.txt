@@ -6,8 +6,6 @@ printing_press = {
 	required_technology = printing_press
 	holding_types = {
 		guild
-		town
-		city
 	}
 	conditions = {
 		game_rule = additional_buildings
@@ -31,7 +29,6 @@ newspaper = {
 	required_technology = printing_press
 	holding_types = {
 		guild
-		city
 	}
 	conditions = {
 		game_rule = additional_buildings

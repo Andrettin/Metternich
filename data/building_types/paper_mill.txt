@@ -4,7 +4,6 @@ paper_mill = {
 	portrait = factory
 	icon = paper
 	holding_types = {
-		town
 		city
 	}
 	conditions = {

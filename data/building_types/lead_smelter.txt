@@ -4,7 +4,6 @@ lead_smelter = {
 	portrait = factory
 	icon = iron
 	holding_types = {
-		town
 		city
 	}
 	conditions = {

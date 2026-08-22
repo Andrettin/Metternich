@@ -7,8 +7,6 @@ artifact = {
 	holding_types = {
 		castle
 		temple
-		town
-		city
 	}
 	conditions = {
 		game_rule = additional_buildings

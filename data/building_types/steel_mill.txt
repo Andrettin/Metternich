@@ -5,7 +5,6 @@ steel_mill = {
 	icon = steel
 	#required_technology = crucible_process
 	holding_types = {
-		town
 		city
 	}
 	conditions = {

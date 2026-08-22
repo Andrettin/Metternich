@@ -4,7 +4,6 @@ furriers_house = {
 	portrait = factory
 	icon = fur_hats
 	holding_types = {
-		town
 		city
 	}
 	conditions = {
@@ -25,7 +24,6 @@ furriers_shop = {
 	icon = fur_hats
 	base_building = furriers_house
 	holding_types = {
-		town
 		city
 	}
 	conditions = {
@@ -46,7 +44,6 @@ fur_factory = {
 	icon = fur_hats
 	base_building = furriers_shop
 	holding_types = {
-		town
 		city
 	}
 	conditions = {

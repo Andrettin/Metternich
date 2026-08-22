@@ -4,7 +4,6 @@ weavers_house = {
 	portrait = factory
 	icon = fabric
 	holding_types = {
-		town
 		city
 		guild
 	}
@@ -32,7 +31,6 @@ weavers_shop = {
 	icon = fabric
 	base_building = weavers_house
 	holding_types = {
-		town
 		city
 		guild
 	}
@@ -60,7 +58,6 @@ textile_mill = {
 	icon = fabric
 	base_building = weavers_shop
 	holding_types = {
-		town
 		city
 		guild
 	}
