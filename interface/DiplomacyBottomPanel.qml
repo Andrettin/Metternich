@@ -319,8 +319,8 @@ Rectangle {
 		visible: ruler_portrait.visible && selected_country && selected_country.game_data.historical_rulers.length > 1
 		
 		onClicked: {
-			politics_view_mode = PoliticsView.Mode.DomainHistory
-			menu_stack.push("PoliticsView.qml", {
+			domestic_view_mode = DomesticView.Mode.DomainHistory
+			menu_stack.push("DomesticView.qml", {
 				country: selected_country,
 				show_buttons: false
 			})

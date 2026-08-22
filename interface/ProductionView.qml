@@ -5,7 +5,7 @@ import "./dialogs"
 Item {
 	id: production_view
 	
-	readonly property var domain: politics_view.country
+	readonly property var domain: domestic_view.country
 	readonly property var domain_game_data: domain ? domain.game_data : null
 	readonly property var domain_economy: domain_game_data ? domain_game_data.economy : null
 	

@@ -33,10 +33,10 @@ Rectangle {
 		IconButton {
 			id: court_button
 			icon_identifier: "aristocrat_small"
-			highlighted: politics_view_mode === PoliticsView.Mode.Court
+			highlighted: domestic_view_mode === DomesticView.Mode.Court
 			
 			onClicked: {
-				politics_view_mode = PoliticsView.Mode.Court
+				domestic_view_mode = DomesticView.Mode.Court
 			}
 			
 			onHoveredChanged: {
@@ -51,10 +51,10 @@ Rectangle {
 		IconButton {
 			id: government_button
 			icon_identifier: "flag"
-			highlighted: politics_view_mode === PoliticsView.Mode.Government
+			highlighted: domestic_view_mode === DomesticView.Mode.Government
 			
 			onClicked: {
-				politics_view_mode = PoliticsView.Mode.Government
+				domestic_view_mode = DomesticView.Mode.Government
 			}
 			
 			onHoveredChanged: {
@@ -69,11 +69,11 @@ Rectangle {
 		IconButton {
 			id: religion_button
 			icon_identifier: "wooden_cross"
-			highlighted: politics_view_mode === PoliticsView.Mode.Religion
+			highlighted: domestic_view_mode === DomesticView.Mode.Religion
 			visible: false
 			
 			onClicked: {
-				politics_view_mode = PoliticsView.Mode.Religion
+				domestic_view_mode = DomesticView.Mode.Religion
 			}
 			
 			onHoveredChanged: {
@@ -88,10 +88,10 @@ Rectangle {
 		IconButton {
 			id: production_button
 			icon_identifier: "cog"
-			highlighted: politics_view_mode === PoliticsView.Mode.Production
+			highlighted: domestic_view_mode === DomesticView.Mode.Production
 			
 			onClicked: {
-				politics_view_mode = PoliticsView.Mode.Production
+				domestic_view_mode = DomesticView.Mode.Production
 			}
 			
 			onHoveredChanged: {
@@ -104,12 +104,30 @@ Rectangle {
 		}
 		
 		IconButton {
-			id: domain_history_button
-			icon_identifier: "painting"
-			highlighted: politics_view_mode === PoliticsView.Mode.DomainHistory
+			id: balance_book_button
+			icon_identifier: "chest"
+			highlighted: domestic_view_mode === DomesticView.Mode.BalanceBook
 			
 			onClicked: {
-				politics_view_mode = PoliticsView.Mode.DomainHistory
+				domestic_view_mode = DomesticView.Mode.BalanceBook
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "View Balance Book"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		IconButton {
+			id: domain_history_button
+			icon_identifier: "painting"
+			highlighted: domestic_view_mode === DomesticView.Mode.DomainHistory
+			
+			onClicked: {
+				domestic_view_mode = DomesticView.Mode.DomainHistory
 			}
 			
 			onHoveredChanged: {

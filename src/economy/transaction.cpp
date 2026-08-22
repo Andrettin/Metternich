@@ -2,10 +2,10 @@
 
 #include "economy/transaction.h"
 
+#include "database/defines.h"
 #include "economy/commodity.h"
 #include "population/population_type.h"
 #include "util/assert_util.h"
-#include "util/number_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -25,7 +25,7 @@ const std::string &transaction::get_object_name() const
 
 QString transaction::get_name() const
 {
-	return QString::fromStdString(std::format("{} ${}", this->get_object_name(), number::to_formatted_string(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : 1))));
+	return QString::fromStdString(std::format("{} ({})", this->get_object_name(), defines::get()->get_wealth_commodity()->value_to_string(std::max(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : 1), 1ll), false)));
 }
 
 const icon *transaction::get_icon() const

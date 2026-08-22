@@ -26,7 +26,7 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.topMargin: 16 * scale_factor
 		spacing: 8 * scale_factor
-		visible: politics_view_mode === PoliticsView.Mode.Court
+		visible: domestic_view_mode === DomesticView.Mode.Court
 		
 		Repeater {
 			model: metternich.get_decisions("court")
@@ -76,7 +76,7 @@ Rectangle {
 		IconButton {
 			id: inventory_button
 			icon_identifier: "sack_3"
-			visible: politics_view_mode === PoliticsView.Mode.Court
+			visible: domestic_view_mode === DomesticView.Mode.Court
 			
 			onClicked: {
 				inventory_dialog.character = metternich.game.player_character

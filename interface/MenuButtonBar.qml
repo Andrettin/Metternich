@@ -45,7 +45,7 @@ Rectangle {
 			icon_identifier: "bell"
 			
 			onReleased: {
-				menu_stack.push("PoliticsView.qml", {
+				menu_stack.push("DomesticView.qml", {
 					country: metternich.game.player_domain
 				})
 			}

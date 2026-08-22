@@ -3,18 +3,20 @@ import QtQuick.Controls
 import "./dialogs"
 
 Item {
-	id: politics_view
+	id: domestic_view
 	
 	enum Mode {
 		Court,
 		Government,
 		Religion,
 		Production,
+		BalanceBook,
 		DomainHistory
 	}
 	
 	property var country: null
 	readonly property var country_game_data: country ? country.game_data : null
+	readonly property var domain_turn_data: country ? country.turn_data : null
 	readonly property var ruler: country_game_data ? country_game_data.government.ruler : null
 	property string status_text: ""
 	property string middle_status_text: ""
@@ -36,7 +38,7 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.Court
+		visible: domestic_view_mode === DomesticView.Mode.Court
 	}
 	
 	GovernmentView {
@@ -45,7 +47,7 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.Government
+		visible: domestic_view_mode === DomesticView.Mode.Government
 	}
 	
 	ReligionView {
@@ -54,7 +56,7 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.Religion
+		visible: domestic_view_mode === DomesticView.Mode.Religion
 	}
 	
 	ProductionView {
@@ -63,7 +65,16 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.Production
+		visible: domestic_view_mode === DomesticView.Mode.Production
+	}
+	
+	BalanceBookView {
+		id: balance_book_view
+		anchors.top: top_bar.bottom
+		anchors.bottom: status_bar.top
+		anchors.left: infopanel.right
+		anchors.right: button_panel.left
+		visible: domestic_view_mode === DomesticView.Mode.BalanceBook
 	}
 	
 	DomainHistoryView {
@@ -72,15 +83,15 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		visible: politics_view_mode === PoliticsView.Mode.DomainHistory
+		visible: domestic_view_mode === DomesticView.Mode.DomainHistory
 	}
 	
-	PoliticsButtonPanel {
+	DomesticButtonPanel {
 		id: button_panel
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		show_buttons: politics_view.show_buttons
+		show_buttons: domestic_view.show_buttons
 	}
 	
 	CourtInfoPanel {
