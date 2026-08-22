@@ -170,6 +170,25 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 	return employment_size.to_int64();
 }
 
+int64_t employment_type::get_employment_size_for_output(const int64_t output) const
+{
+	assert_throw(this->get_base_employment_size() > 0);
+	assert_throw(this->get_monthly_output_value() > 0);
+
+	decimillesimal_int employment_size = decimillesimal_int(output);
+
+	employment_size *= this->get_base_employment_size();
+	employment_size /= this->get_monthly_output_value();
+
+	return employment_size.to_int64();
+}
+
+int64_t employment_type::get_employment_size_for_wealth_output(const int64_t wealth_output) const
+{
+	const int64_t monthly_output_value = this->get_output_commodity()->wealth_value_to_value(wealth_output);
+	return this->get_employment_size_for_output(monthly_output_value);
+}
+
 bool employment_type::is_available_for_site(const site *site) const
 {
 	if (this->get_required_technology() != nullptr && !site->get_game_data()->get_province()->get_game_data()->has_technology(this->get_required_technology())) {

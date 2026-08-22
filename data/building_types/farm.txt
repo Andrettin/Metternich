@@ -32,11 +32,8 @@ cattle_ranch = {
 	modifier = {
 		employment_capacity = {
 			employment_type = cattle_ranching
-			capacity = 40000
+			quarterly_wealth_output_value = 3gb
 		}
-	}
-	domain_modifier = {
-		consumption = -2
 	}
 	free_on_start_conditions = {
 	}
@@ -71,11 +68,8 @@ grain_farm = {
 	modifier = {
 		employment_capacity = {
 			employment_type = grain_farming
-			capacity = 40000
+			quarterly_wealth_output_value = 3gb
 		}
-	}
-	domain_modifier = {
-		consumption = -2
 	}
 	free_on_start_conditions = {
 	}
@@ -110,11 +104,8 @@ sheep_ranch = {
 	modifier = {
 		employment_capacity = {
 			employment_type = sheep_ranching
-			capacity = 40000
+			quarterly_wealth_output_value = 3gb
 		}
-	}
-	domain_modifier = {
-		consumption = -2
 	}
 	free_on_start_conditions = {
 	}
@@ -149,11 +140,8 @@ tobacco_plantation = {
 	modifier = {
 		employment_capacity = {
 			employment_type = tobacco_planting
-			capacity = 40000
+			quarterly_wealth_output_value = 3gb
 		}
-	}
-	domain_modifier = {
-		consumption = -2
 	}
 	free_on_start_conditions = {
 	}

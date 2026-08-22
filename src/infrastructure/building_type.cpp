@@ -9,6 +9,7 @@
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
+#include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/holding_type.h"
@@ -37,7 +38,9 @@ namespace metternich {
 
 const std::set<std::string> building_type::database_dependencies = {
 	//so that commodity units are present
-	commodity::class_identifier
+	commodity::class_identifier,
+	//so that employment types are defined for employment type modifiers
+	employment_type::class_identifier
 };
 
 commodity_map<int64_t> building_type::commodity_weights_to_costs(const int64_t wealth_cost, const commodity_map<int> &commodity_cost_weights)

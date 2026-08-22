@@ -63,6 +63,9 @@ public:
 		return this->monthly_output_value;
 	}
 
+	int64_t get_employment_size_for_output(const int64_t output) const;
+	int64_t get_employment_size_for_wealth_output(const int64_t wealth_output) const;
+
 	int64_t get_base_employment_size() const
 	{
 		return this->base_employment_size;

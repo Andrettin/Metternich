@@ -20,11 +20,11 @@ sawmill = {
 	modifier = {
 		employment_capacity = {
 			employment_type = lumberjacking
-			capacity = 40000
+			quarterly_wealth_output_value = 2gb
 		}
 	}
 	domain_modifier = {
-		stability = 1
+		stability = 2
 	}
 	free_on_start_conditions = {
 	}

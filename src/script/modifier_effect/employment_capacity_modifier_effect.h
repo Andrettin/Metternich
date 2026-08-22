@@ -28,6 +28,15 @@ public:
 			this->employment_type = employment_type::get(value);
 		} else if (key == "capacity") {
 			this->value = decimillesimal_int(std::stoi(value));
+		} else if (key == "monthly_wealth_output_value") {
+			assert_throw(this->employment_type != nullptr);
+			const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
+			this->value = decimillesimal_int(this->employment_type->get_employment_size_for_wealth_output(monthly_wealth_output_value));
+		} else if (key == "quarterly_wealth_output_value") {
+			assert_throw(this->employment_type != nullptr);
+			const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
+			this->value = decimillesimal_int(this->employment_type->get_employment_size_for_wealth_output(monthly_wealth_output_value));
+			this->value /= 3; //divide by the 3 months in a quarter
 		} else {
 			modifier_effect::process_gsml_property(property);
 		}
@@ -37,7 +46,7 @@ public:
 	{
 		assert_throw(this->employment_type != nullptr);
 
-		scope->get_game_data()->change_base_employment_capacity(this->employment_type, (this->value * multiplier).to_int());
+		scope->get_game_data()->change_base_employment_capacity(this->employment_type, (this->value * multiplier).to_int64());
 	}
 
 	virtual std::string get_base_string(const site *scope) const override
