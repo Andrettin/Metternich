@@ -25,7 +25,9 @@ const std::string &transaction::get_object_name() const
 
 QString transaction::get_name() const
 {
-	return QString::fromStdString(std::format("{} ({})", this->get_object_name(), defines::get()->get_wealth_commodity()->value_to_string(std::max(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : 1), 1ll), false)));
+	const int64_t amount_per_unit = std::max(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : 1), 1ll);
+
+	return QString::fromStdString(std::format("{} ({})", this->get_object_name(), defines::get()->get_wealth_commodity()->value_to_string(amount_per_unit, false)));
 }
 
 const icon *transaction::get_icon() const
