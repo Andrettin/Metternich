@@ -1,0 +1,8 @@
+cebrene = {
+	name = "Cebrene"
+	world = earth
+	geocoordinate = { 26.563032 39.741803 }
+	type = holding
+	holding_type = castle
+	province = abydos
+}

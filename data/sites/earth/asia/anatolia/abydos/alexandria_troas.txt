@@ -1,0 +1,8 @@
+alexandria_troas = {
+	name = "Alexandria Troas"
+	world = earth
+	geocoordinate = { 26.152555 39.76128 }
+	type = holding
+	holding_type = guild
+	province = abydos
+}

@@ -1,8 +1,10 @@
-troad = {
-	name = "Troad"
-	color = { 131 135 138 }
-	default_provincial_capital = troy
+abydos = {
+	name = "Abydos"
+	color = { 168 102 72 }
+	terrain = hills
+	default_provincial_capital = abydos_anatolia
 	cultural_names = {
+		anatolian = "Troad"
 		turkish = "Canakkale" #"Çanakkale"
 	}
 	regions = {
@@ -23,6 +25,10 @@ troad = {
 		526 = {
 			owner = eastern_rome #part of the East Roman Empire in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 			religion = orthodox
+		}
+		
+		1205 = {
+			trade_zone = dandolo
 		}
 		
 		1360 = {

@@ -1,0 +1,8 @@
+allianoi = {
+	name = "Allianoi"
+	world = earth
+	geocoordinate = { 27.305574 39.234846 }
+	type = holding
+	holding_type = castle
+	province = smyrna
+}

@@ -1,0 +1,8 @@
+abydos_anatolia = {
+	name = "Abydos"
+	world = earth
+	geocoordinate = { 26.406964 40.196017 }
+	type = holding
+	holding_type = castle
+	province = abydos
+}

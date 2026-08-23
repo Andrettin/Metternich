@@ -1,0 +1,17 @@
+pigai = {
+	name = "Pigai"
+	world = earth
+	geocoordinate = { 27.24222 40.22806 }
+	type = holding
+	holding_type = castle
+	province = abydos
+	cultural_names = {
+		turkish = "Biga"
+	}
+	
+	history = {
+		1360 = {
+			developed = true #Biga existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+	}
+}

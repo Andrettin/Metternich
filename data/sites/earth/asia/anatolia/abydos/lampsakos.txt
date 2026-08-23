@@ -1,0 +1,8 @@
+lampsakos = {
+	name = "Lampsakos"
+	world = earth
+	geocoordinate = { 26.699162 40.346685 } #Lampsacus
+	type = holding
+	holding_type = temple
+	province = abydos
+}

@@ -16,12 +16,12 @@ ottoman_empire = {
 	}
 	core_provinces = {
 		thrace
+		abydos
 		ancyra
 		bursa
 		eskisehir
 		germiyan
 		karasi
-		troad
 	}
 	
 	history = {

@@ -1,0 +1,8 @@
+aegae = {
+	name = "Aegae"
+	world = earth
+	geocoordinate = { 27.174421 38.820323 } #Aigai
+	type = holding
+	holding_type = castle
+	province = sardis
+}

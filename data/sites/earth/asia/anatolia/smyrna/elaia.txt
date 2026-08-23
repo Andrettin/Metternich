@@ -1,0 +1,8 @@
+elaia = {
+	name = "Elaia"
+	world = earth
+	geocoordinate = { 27.055256 38.941644 } #Elaea
+	type = holding
+	holding_type = castle
+	province = smyrna
+}
