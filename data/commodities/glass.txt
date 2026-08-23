@@ -4,6 +4,7 @@ glass = {
 	icon = glass
 	industrial = true
 	base_price = 100 #1gp
+	required_technology = glassblowing
 	storage_unit = tn
 	units = {
 		1 = lb

@@ -15,6 +15,11 @@ bureau = {
 		treasurer
 		engineer
 	}
+	conditions = {
+		not = {
+			scripted_condition = is_lair
+		}
+	}
 	modifier = {
 		corruption = 1
 		law = 1
