@@ -48,6 +48,16 @@ DialogBase {
 		}
 		
 		TextButton {
+			id: world_map_screenshot_button
+			text: "Map Screenshot"
+			width: 128 * scale_factor
+			onClicked: {
+				metternich.map.save_screenshot()
+				dialog.close()
+			}
+		}
+		
+		TextButton {
 			id: exit_game_button
 			text: "Exit Game"
 			width: 128 * scale_factor
@@ -55,16 +65,6 @@ DialogBase {
 				menu_stack.pop()
 				metternich.game.stop()
 				window.close()
-			}
-		}
-		
-		TextButton {
-			id: world_map_screenshot_button
-			text: "Map Screenshot"
-			width: 128 * scale_factor
-			onClicked: {
-				metternich.map.save_screenshot()
-				dialog.close()
 			}
 		}
 		
