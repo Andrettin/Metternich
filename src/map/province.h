@@ -40,6 +40,7 @@ class province final : public named_data_entry, public data_type<province>
 	Q_PROPERTY(bool sea MEMBER sea READ is_sea NOTIFY changed)
 	Q_PROPERTY(bool bay MEMBER bay READ is_bay NOTIFY changed)
 	Q_PROPERTY(bool lake MEMBER lake READ is_lake NOTIFY changed)
+	Q_PROPERTY(bool river MEMBER river READ is_river NOTIFY changed)
 	Q_PROPERTY(bool water_zone READ is_water_zone NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* terrain MEMBER terrain READ get_terrain NOTIFY changed)
 	Q_PROPERTY(metternich::site* default_provincial_capital MEMBER default_provincial_capital NOTIFY changed)
@@ -178,9 +179,14 @@ public:
 		return this->lake;
 	}
 
+	bool is_river() const
+	{
+		return this->river;
+	}
+
 	bool is_water_zone() const
 	{
-		return this->is_sea() || this->is_bay() || this->is_lake();
+		return this->is_sea() || this->is_bay() || this->is_lake() || this->is_river();
 	}
 
 	const terrain_type *get_terrain() const
@@ -305,6 +311,7 @@ private:
 	bool sea = false;
 	bool bay = false;
 	bool lake = false;
+	bool river = false;
 	const terrain_type *terrain = nullptr;
 	site *default_provincial_capital = nullptr;
 	site *primary_star = nullptr;

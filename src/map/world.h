@@ -48,7 +48,6 @@ public:
 	}
 
 	void set_province_image_filepath(const std::filesystem::path &filepath);
-	Q_INVOKABLE void write_province_image(const double min_geoshape_width, const double max_geoshape_width);
 	province_geodata_map_type parse_provinces_geojson_folder() const;
 
 private:

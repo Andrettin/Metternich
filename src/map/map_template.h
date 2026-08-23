@@ -153,8 +153,6 @@ public:
 		return this->map_start_pos;
 	}
 
-	Q_INVOKABLE void write_terrain_image();
-
 	const std::filesystem::path &get_province_image_filepath() const
 	{
 		return this->province_image_filepath;

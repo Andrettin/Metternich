@@ -224,137 +224,6 @@ geocoordinate map_template::get_pos_geocoordinate(const QPoint &pos) const
 	return this->map_projection->point_to_geocoordinate(pos, this->get_georectangle(), this->get_size(), this->geocoordinate_x_offset);
 }
 
-void map_template::write_terrain_image()
-{
-	assert_throw(this->get_world() != nullptr);
-
-	terrain_geodata_map terrain_geodata_map = this->get_world()->parse_terrain_geojson_folder();
-
-	color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
-
-	for (auto &[terrain_variant, geoshapes] : terrain_geodata_map) {
-		QColor color;
-
-		if (std::holds_alternative<const terrain_feature *>(terrain_variant)) {
-			const terrain_feature *terrain_feature = std::get<const metternich::terrain_feature *>(terrain_variant);
-
-			if (terrain_feature->is_river()) {
-				continue;
-			}
-
-			if (terrain_feature->is_hidden()) {
-				continue;
-			}
-
-			color = terrain_feature->get_terrain_type()->get_color();
-		} else {
-			const terrain_type *terrain_type = std::get<const metternich::terrain_type *>(terrain_variant);
-			color = terrain_type->get_color();
-			assert_throw(color.isValid());
-		}
-
-		if (!color.isValid()) {
-			throw std::runtime_error("Terrain variant has no valid color.");
-		}
-
-		vector::merge(geodata_map[color], std::move(geoshapes));
-	}
-
-	assert_throw(this->map_projection != nullptr);
-
-	this->map_projection->validate_area(this->get_georectangle(), this->get_size());
-
-	QImage base_image = QImage(this->get_size(), QImage::Format_RGBA8888);
-	base_image.fill(Qt::transparent);
-
-	QImage province_image;
-
-	if (!this->get_province_image_filepath().empty()) {
-		//write water zones
-		province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
-
-		assert_throw(province_image.size() == base_image.size());
-
-		for (int x = 0; x < province_image.width(); ++x) {
-			for (int y = 0; y < province_image.height(); ++y) {
-				const QColor province_color = province_image.pixelColor(x, y);
-
-				if (province_color.alpha() == 0) {
-					//ignore transparent pixels
-					continue;
-				}
-
-				if (base_image.pixelColor(x, y).alpha() != 0) {
-					//ignore already-written pixels
-					continue;
-				}
-
-				const province *province = province::get_by_color(province_color);
-
-				if (!province->is_water_zone()) {
-					continue;
-				}
-
-				const terrain_type *terrain = defines::get()->get_default_water_zone_terrain();
-				assert_throw(terrain != nullptr);
-
-				const QColor terrain_color = terrain->get_color();
-
-				assert_throw(terrain_color.isValid());
-
-				base_image.setPixelColor(x, y, terrain_color);
-			}
-		}
-	}
-
-	//write terrain geoshapes
-	std::filesystem::path output_filepath = "terrain.png";
-
-	geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
-
-	if (!this->get_province_image_filepath().empty()) {
-		//write terrain based on provinces, for pixels without any terrain data set for them
-		QImage output_image(path::to_qstring(output_filepath));
-
-		assert_throw(!output_image.isNull());
-		assert_throw(province_image.size() == output_image.size());
-
-		for (int x = 0; x < province_image.width(); ++x) {
-			for (int y = 0; y < province_image.height(); ++y) {
-				const QColor province_color = province_image.pixelColor(x, y);
-
-				if (province_color.alpha() == 0) {
-					//ignore transparent pixels
-					continue;
-				}
-
-				if (output_image.pixelColor(x, y).alpha() != 0) {
-					//ignore already-written pixels
-					continue;
-				}
-
-				const province *province = province::get_by_color(province_color);
-
-				if (province->is_water_zone()) {
-					continue;
-				}
-
-				const terrain_type *terrain = defines::get()->get_default_province_terrain();
-
-				assert_throw(terrain != nullptr);
-
-				const QColor terrain_color = terrain->get_color();
-
-				assert_throw(terrain_color.isValid());
-
-				output_image.setPixelColor(x, y, terrain_color);
-			}
-		}
-
-		output_image.save(path::to_qstring(output_filepath));
-	}
-}
-
 void map_template::set_province_image_filepath(const std::filesystem::path &filepath)
 {
 	if (filepath == this->get_province_image_filepath()) {
@@ -371,26 +240,34 @@ void map_template::write_province_image()
 
 		province_geodata_map_type province_geodata_map = this->get_world()->parse_provinces_geojson_folder();
 
-		color_map<std::vector<std::unique_ptr<QGeoShape>>> geodata_map;
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> land_geodata_map;
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> water_zone_geodata_map;
+		color_map<std::vector<std::unique_ptr<QGeoShape>>> river_geodata_map;
 
 		for (auto &[province, geoshapes] : province_geodata_map) {
 			const QColor color = province->get_color();
 			if (!color.isValid()) {
-				throw std::runtime_error("Province \"" + province->get_identifier() + "\" has no valid color.");
+				throw std::runtime_error(std::format("Province \"{}\" has no valid color.", province->get_identifier()));
 			}
 
-			vector::merge(geodata_map[color], std::move(geoshapes));
+			if (province->is_river()) {
+				vector::merge(river_geodata_map[color], std::move(geoshapes));
+			} else if (province->is_water_zone()) {
+				vector::merge(water_zone_geodata_map[color], std::move(geoshapes));
+			} else {
+				vector::merge(land_geodata_map[color], std::move(geoshapes));
+			}
 		}
 
 		assert_throw(this->map_projection != nullptr);
 
 		this->map_projection->validate_area(this->get_georectangle(), this->get_size());
 
-		QImage base_image;
+		QImage image;
 
 		if (!this->get_province_image_filepath().empty()) {
-			base_image = QImage(path::to_qstring(this->get_province_image_filepath()));
-			assert_throw(!base_image.isNull());
+			image = QImage(path::to_qstring(this->get_province_image_filepath()));
+			assert_throw(!image.isNull());
 		}
 
 		std::filesystem::path output_filepath = this->get_province_image_filepath();
@@ -401,7 +278,18 @@ void map_template::write_province_image()
 		QElapsedTimer elapsed_timer;
 		elapsed_timer.start();
 
-		geoshape::write_image(output_filepath, geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, base_image, this->geocoordinate_x_offset);
+		//write water zones, then rivers, and finally land provinces
+		if (!water_zone_geodata_map.empty()) {
+			geoshape::write_image(image, output_filepath, water_zone_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+		}
+		if (!river_geodata_map.empty()) {
+			geoshape::write_image(image, output_filepath, river_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+		}
+		if (!land_geodata_map.empty()) {
+			geoshape::write_image(image, output_filepath, land_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+		}
+
+		image.save(path::to_qstring(output_filepath));
 
 		const std::chrono::milliseconds elapsed_ms(elapsed_timer.elapsed());
 		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms).count(), (elapsed_ms.count() / 1000) % 60));
