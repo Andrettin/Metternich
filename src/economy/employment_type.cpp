@@ -37,12 +37,21 @@ void employment_type::process_gsml_property(const gsml_property &property)
 	} else if (key == "monthly_output_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
-		this->monthly_output_value = this->get_output_commodity()->string_to_value(value);
+		this->quarterly_output_value = this->get_output_commodity()->string_to_value(value) * 3;
+	} else if (key == "quarterly_output_value") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		assert_throw(this->get_output_commodity() != nullptr);
+		this->quarterly_output_value = this->get_output_commodity()->string_to_value(value);
 	} else if (key == "monthly_wealth_output_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
 		const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
-		this->monthly_output_value = this->get_output_commodity()->wealth_value_to_value(monthly_wealth_output_value);
+		this->quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(monthly_wealth_output_value) * 3;
+	} else if (key == "quarterly_wealth_output_value") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		assert_throw(this->get_output_commodity() != nullptr);
+		const int64_t quarterly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
+		this->quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(quarterly_wealth_output_value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -149,7 +158,7 @@ int64_t employment_type::get_input_for_employment_size(const commodity *commodit
 	input *= 100 + throughput_modifier;
 	input /= 100;
 
-	input *= game::get()->get_current_months_per_turn();
+	input *= game::get()->get_current_quarters_per_turn();
 
 	return std::max(input.to_ceil_int64(), 1ll);
 }
@@ -159,7 +168,7 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 	assert_throw(this->get_input_commodities().contains(commodity));
 
 	decimillesimal_int employment_size = decimillesimal_int(input);
-	employment_size /= game::get()->get_current_months_per_turn();
+	employment_size /= game::get()->get_current_quarters_per_turn();
 
 	employment_size *= 100;
 	employment_size /= 100 + throughput_modifier;
@@ -173,20 +182,20 @@ int64_t employment_type::get_employment_size_for_input(const commodity *commodit
 int64_t employment_type::get_employment_size_for_output(const int64_t output) const
 {
 	assert_throw(this->get_base_employment_size() > 0);
-	assert_throw(this->get_monthly_output_value() > 0);
+	assert_throw(this->get_quarterly_output_value() > 0);
 
 	decimillesimal_int employment_size = decimillesimal_int(output);
 
 	employment_size *= this->get_base_employment_size();
-	employment_size /= this->get_monthly_output_value();
+	employment_size /= this->get_quarterly_output_value();
 
 	return employment_size.to_int64();
 }
 
 int64_t employment_type::get_employment_size_for_wealth_output(const int64_t wealth_output) const
 {
-	const int64_t monthly_output_value = this->get_output_commodity()->wealth_value_to_value(wealth_output);
-	return this->get_employment_size_for_output(monthly_output_value);
+	const int64_t quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(wealth_output);
+	return this->get_employment_size_for_output(quarterly_output_value);
 }
 
 bool employment_type::is_available_for_site(const site *site) const

@@ -2104,6 +2104,11 @@ int game::get_current_months_per_turn() const
 	return defines::get()->get_months_per_turn(this->get_year());
 }
 
+int game::get_current_quarters_per_turn() const
+{
+	return this->get_current_months_per_turn() / 3;
+}
+
 QDate game::get_next_date() const
 {
 	return this->get_date().addMonths(this->get_current_months_per_turn());

@@ -2651,7 +2651,7 @@ void site_game_data::calculate_commodity_outputs()
 
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
-		int64_t output = employment_type->get_monthly_output_value() * game::get()->get_current_months_per_turn();
+		int64_t output = employment_type->get_quarterly_output_value() * game::get()->get_current_quarters_per_turn();
 		output *= employment_size;
 		output /= employment_type->get_base_employment_size();
 		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];

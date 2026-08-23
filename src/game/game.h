@@ -166,6 +166,7 @@ public:
 	}
 
 	int get_current_months_per_turn() const;
+	int get_current_quarters_per_turn() const;
 	QDate get_next_date() const;
 	int64_t get_days_until_next_turn() const;
 	bool is_last_turn_of_year() const;

@@ -187,9 +187,9 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 			co_return;
 		}
 
-		const decimillesimal_int monthly_chance = yearly_chance / 12;
-		mtth = decimillesimal_int(100) / monthly_chance;
-		mtth /= game::get()->get_current_months_per_turn();
+		const decimillesimal_int quarterly_chance = yearly_chance / 4;
+		mtth = decimillesimal_int(100) / quarterly_chance;
+		mtth /= game::get()->get_current_quarters_per_turn();
 	} else {
 		assert_throw(false);
 	}

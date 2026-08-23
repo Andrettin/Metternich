@@ -21,7 +21,7 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::commodity *output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
-	Q_PROPERTY(qint64 monthly_output_value MEMBER monthly_output_value READ get_monthly_output_value NOTIFY changed)
+	Q_PROPERTY(qint64 quarterly_output_value MEMBER quarterly_output_value READ get_quarterly_output_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_employment_size MEMBER base_employment_size READ get_base_employment_size NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
@@ -58,9 +58,9 @@ public:
 		return this->output_commodity;
 	}
 
-	int64_t get_monthly_output_value() const
+	int64_t get_quarterly_output_value() const
 	{
-		return this->monthly_output_value;
+		return this->quarterly_output_value;
 	}
 
 	int64_t get_employment_size_for_output(const int64_t output) const;
@@ -97,7 +97,7 @@ private:
 	int64_t input_wealth_value = 0;
 	commodity_map<int> input_commodity_weights;
 	const commodity *output_commodity = nullptr;
-	int64_t monthly_output_value = 0;
+	int64_t quarterly_output_value = 0;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output
 	technology *required_technology = nullptr;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
