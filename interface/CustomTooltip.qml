@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 ToolTip {
 	id: tooltip
-	z: 100
+	z: 1000
 	delay: 1000
 	palette.toolTipText: "white"
 	font.family: berenika_font.name
