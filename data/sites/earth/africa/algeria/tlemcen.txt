@@ -2,9 +2,10 @@ tlemcen = {
 	name = "Tlemcen"
 	world = earth
 	geocoordinate = { -1.32000756978 34.89041424460 } #from Natural Earth
-	type = resource
-	resource = iron_ore
 	province = oran
+	features = {
+		iron_deposit
+	}
 	
 	history = {
 		1360 = {

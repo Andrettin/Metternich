@@ -5,4 +5,7 @@ gafsa = {
 	type = holding
 	holding_type = castle
 	province = gafsa
+	features = {
+		prime_sheep_land
+	}
 }

@@ -1,8 +1,11 @@
 kosseir = {
-	name = "Kosseir"
+	name = "Kosseir" #also known as Qusayr
 	world = earth
 	geocoordinate = { 34.275997222222 26.109072222222 } #El-Quseir
 	type = holding
 	holding_type = castle
 	province = qusair
+	features = {
+		prime_grain_land
+	}
 }

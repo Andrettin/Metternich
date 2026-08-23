@@ -1,8 +1,11 @@
 qena = {
-	name = "Qena"
+	name = "Qena" #also known as Qina
 	world = earth
 	geocoordinate = { 32.720008 26.150457 } #from Natural Earth
 	type = holding
 	holding_type = castle
 	province = qena
+	features = {
+		prime_cotton_land
+	}
 }

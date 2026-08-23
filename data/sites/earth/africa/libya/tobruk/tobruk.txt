@@ -5,4 +5,7 @@ tobruk = {
 	type = holding
 	holding_type = castle
 	province = tobruk
+	features = {
+		prime_grain_land
+	}
 }

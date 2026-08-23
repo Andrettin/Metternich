@@ -5,4 +5,7 @@ marsa_alam = {
 	type = holding
 	holding_type = castle
 	province = aydhab
+	features = {
+		prime_grain_land
+	}
 }

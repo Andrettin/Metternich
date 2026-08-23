@@ -5,4 +5,7 @@ constantine = {
 	type = holding
 	holding_type = castle
 	province = constantine
+	features = {
+		iron_deposit
+	}
 }

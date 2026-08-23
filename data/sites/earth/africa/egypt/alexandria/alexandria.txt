@@ -12,6 +12,7 @@ alexandria = {
 	features = {
 		crossroads #important market or fair
 		#holy_site
+		prime_cotton_land
 	}
 	
 	history = {
