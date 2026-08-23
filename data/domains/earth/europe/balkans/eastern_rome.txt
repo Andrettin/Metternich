@@ -36,7 +36,6 @@ eastern_rome = {
 		cyrenaica
 		denizli
 		dobruja
-		east_macedonia
 		eastern_rumelia
 		epirus
 		eskisehir
@@ -48,6 +47,7 @@ eastern_rome = {
 		kharibta
 		kosovo
 		lycia
+		maroneia
 		methone
 		monemvasia
 		montenegro

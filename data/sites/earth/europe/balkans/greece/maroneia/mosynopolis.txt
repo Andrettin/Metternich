@@ -1,0 +1,8 @@
+mosynopolis = {
+	name = "Mosynopolis"
+	world = earth
+	geocoordinate = { 25.32527778 41.12861111 }
+	type = holding
+	holding_type = temple
+	province = maroneia
+}

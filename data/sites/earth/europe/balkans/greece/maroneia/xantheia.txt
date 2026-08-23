@@ -1,0 +1,8 @@
+xantheia = {
+	name = "Xantheia"
+	world = earth
+	geocoordinate = { 24.883587 41.141790 } #from Natural Earth (Xanthi)
+	type = holding
+	holding_type = castle
+	province = maroneia
+}

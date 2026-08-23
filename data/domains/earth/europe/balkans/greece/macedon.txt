@@ -9,7 +9,7 @@ macedon = {
 	default_capital = thessalonica
 	core_provinces = {
 		central_macedonia
+		maroneia
 		west_macedonia
-		east_macedonia
 	}
 }

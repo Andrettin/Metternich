@@ -1,0 +1,8 @@
+maroneia = {
+	name = "Maroneia"
+	world = earth
+	geocoordinate = { 25.516666666667 40.9 }
+	type = holding
+	holding_type = guild
+	province = maroneia
+}

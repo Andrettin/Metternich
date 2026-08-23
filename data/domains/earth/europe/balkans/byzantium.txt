@@ -23,11 +23,11 @@ byzantium = {
 		chania
 		corfu
 		corinth
-		east_macedonia
 		eastern_rumelia
 		epirus
 		euboea
 		heraklion
+		maroneia
 		methone
 		monemvasia
 		naxos
