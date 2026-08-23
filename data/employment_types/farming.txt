@@ -24,7 +24,7 @@ sheep_ranching = {
 	name = "Sheep Ranching"
 	output_commodity = wool
 	monthly_wealth_output_value = 462gp
-	base_employment_size = 6000
+	base_employment_size = 600
 	employee_types = {
 		farmers
 		slaves
