@@ -1,8 +1,8 @@
-giza = {
-	name = "Giza"
-	color = { 0 57 0 }
+faiyum = {
+	name = "Faiyum"
+	color = { 44 39 128 }
 	terrain = desert
-	default_provincial_capital = giza
+	default_provincial_capital = faiyum
 	features = {
 		major_river #Nile River
 	}
@@ -11,20 +11,22 @@ giza = {
 	}
 	
 	history = {
+		-41000000 = {
+			owner = elephants #Lake Moeris was inhabited by Moeritherium in the 41-34 mya period; Source: Hazel Richardson, "Dinosaurs and Other Prehistoric Life", 2021, pp. 164-165.
+			phenotype = elephant #moeritherium
+			culture = elephant
+			religion = kemetic
+		}
+		
 		-2700 = {
 			owner = egypt #part of Egypt in the 2700-2180 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
 			culture = egyptian
 			religion = kemetic
+			phenotype = none
 		}
 		
 		-1450 = {
 			owner = egypt #part of Egypt c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
-		}
-		
-		1360 = {
-			owner = egypt #part of the Mameluke Sultanates in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			culture = arabic
-			religion = sunni
 		}
 	}
 }
