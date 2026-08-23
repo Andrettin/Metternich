@@ -354,7 +354,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 		const int64_t population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
 
 		const int64_t population_unit_paid_consumption_wealth = this->paid_consumption_wealth * population_unit_weighted_size / weighted_population_size;
-		this->change_wealth(population_unit_paid_consumption_wealth);
+		population_unit->change_wealth(population_unit_paid_consumption_wealth);
 
 		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains, remaining_demands);
 	}
