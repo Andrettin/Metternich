@@ -199,6 +199,8 @@ public:
 		emit minimap_tile_scale_changed();
 	}
 
+	Q_INVOKABLE void save_screenshot() const;
+
 signals:
 	void size_changed();
 	void tile_prospection_changed(const QPoint &tile_pos);

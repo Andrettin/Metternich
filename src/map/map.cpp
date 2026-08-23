@@ -2,6 +2,7 @@
 
 #include "map/map.h"
 
+#include "database/database.h"
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/domain.h"
@@ -25,6 +26,7 @@
 #include "util/exception_util.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
+#include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
@@ -844,6 +846,29 @@ void map::update_minimap_rect(const QRect &tile_rect)
 			this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_unexplored_terrain()->get_color());
 		}
 	}
+}
+
+void map::save_screenshot() const
+{
+	database::ensure_path_exists(database::get_documents_screenshots_path());
+
+	std::string filename = "screenshot_0.png";
+	std::filesystem::path filepath = database::get_documents_screenshots_path() / filename;
+
+	int index = 0;
+	while (std::filesystem::exists(filepath)) {
+		++index;
+		filename = std::format("screenshot_{}.png", index);
+		filepath = database::get_documents_screenshots_path() / filename;
+	}
+
+	QImage image = this->get_minimap_image();
+
+	image = image::scale<QImage::Format_ARGB32>(image, preferences::get()->get_scale_factor(), [](const size_t factor, const uint32_t *src, uint32_t *tgt, const int src_width, const int src_height) {
+		xbrz::scale(factor, src, tgt, src_width, src_height, xbrz::ColorFormat::ARGB);
+	});
+
+	image.save(path::to_qstring(filepath));
 }
 
 }

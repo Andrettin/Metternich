@@ -59,6 +59,16 @@ DialogBase {
 		}
 		
 		TextButton {
+			id: world_map_screenshot_button
+			text: "Map Screenshot"
+			width: 128 * scale_factor
+			onClicked: {
+				metternich.map.save_screenshot()
+				dialog.close()
+			}
+		}
+		
+		TextButton {
 			id: cancel_button
 			text: "Cancel"
 			width: 128 * scale_factor
