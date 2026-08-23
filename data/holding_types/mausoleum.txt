@@ -5,10 +5,8 @@ mausoleum = {
 	image_filepath = "tiles/settlements/town.png"
 	cultural = true
 	domain_skill = culture
-	level_commodity_costs = {
-		wealth = 1gb
-	}
 	level_commodity_costs_per_level = {
+		wealth = 1gb
 		regency = 1
 	}
 	fortification_level_commodity_costs = {

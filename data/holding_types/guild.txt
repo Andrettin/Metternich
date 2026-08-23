@@ -6,10 +6,8 @@ guild = {
 	economic = true
 	domain_skill = trade
 	resource = true
-	level_commodity_costs = {
-		wealth = 1gb
-	}
 	level_commodity_costs_per_level = {
+		wealth = 1gb
 		regency = 1
 	}
 	fortification_level_commodity_costs = {
