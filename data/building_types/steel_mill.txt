@@ -8,6 +8,7 @@ steel_mill = {
 		guild
 	}
 	conditions = {
+		game_rule = additional_buildings
 		province = {
 			or = {
 				capital = true
