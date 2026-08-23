@@ -5,4 +5,13 @@ qift = {
 	type = holding
 	holding_type = temple
 	province = qena
+	cultural_names = {
+		egyptian = "Gebtu" #Source: "History of the World Map by Map", 2023, pp. 36-37.
+	}
+	
+	history = {
+		-2700 = {
+			developed = true #existed in the 2700-1786 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+		}
+	}
 }

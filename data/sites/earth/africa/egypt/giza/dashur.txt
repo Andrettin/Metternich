@@ -1,8 +1,14 @@
-dashur = {
-	name = "Dashur"
+dahshur = {
+	name = "Dahshur" #also known as Dashur
 	world = earth
-	geocoordinate = { 31.233333333333 29.8 } #Dahshur
+	geocoordinate = { 31.233333333333 29.8 }
 	type = holding
 	holding_type = guild
 	province = giza
+	
+	history = {
+		-2700 = {
+			developed = true #existed in the 2700-1786 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+		}
+	}
 }

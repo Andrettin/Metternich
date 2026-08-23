@@ -5,4 +5,10 @@ faiyum = {
 	type = holding
 	holding_type = castle
 	province = faiyum
+	
+	history = {
+		-2700 = {
+			developed = true #existed in the 2700-1786 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+		}
+	}
 }

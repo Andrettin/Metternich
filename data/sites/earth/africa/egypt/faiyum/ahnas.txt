@@ -1,8 +1,0 @@
-ahnas = {
-	name = "Ahnas"
-	world = earth
-	geocoordinate = { 30.934444 29.085556 } #Herakleopolis Magna
-	type = holding
-	holding_type = guild
-	province = faiyum #Beni Suef
-}
