@@ -23,7 +23,7 @@ bureaucrats = {
 		wool = 0.7
 	}
 	everyday_need_weights = {
-		furniture = 19.6
+		lumber = 19.6 #furniture
 		glass = 2.9
 		coal = 2.3
 		tobacco = 3.3

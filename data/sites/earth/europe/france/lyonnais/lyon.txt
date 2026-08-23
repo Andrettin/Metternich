@@ -13,7 +13,7 @@ lyon = {
 	features = {
 		academic #historical university
 		crossroads #important market or fair
-		furniture
+		#furniture
 		prime_grain_land
 	}
 	

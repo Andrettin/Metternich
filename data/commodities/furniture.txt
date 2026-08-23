@@ -5,6 +5,7 @@ furniture = {
 	industrial = true
 	base_price = 490 #49sp, 490% of the price of lumber
 	storage_unit = tn
+	required_game_rule = additional_commodities
 	units = {
 		1 = lb
 		2000 = tn

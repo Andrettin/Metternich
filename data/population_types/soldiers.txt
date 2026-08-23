@@ -24,10 +24,10 @@ soldiers = {
 	}
 	everyday_need_weights = {
 		coal = 2.3
-		furniture = 4.9
+		lumber = 4.9 #furniture
 	}
 	luxury_need_weights = {
-		furniture = 14.7
+		lumber = 14.7 #furniture
 		tobacco = 1.045
 	}
 }

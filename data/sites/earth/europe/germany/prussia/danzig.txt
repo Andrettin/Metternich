@@ -9,7 +9,7 @@ danzig = {
 		roman = "Gedania"
 	}
 	features = {
-		furniture
+		#furniture
 	}
 	
 	history = {

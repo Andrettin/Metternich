@@ -12,7 +12,7 @@ artisans = {
 	}
 	everyday_need_weights = {
 		coal = 2.3
-		furniture = 19.6
+		lumber = 19.6 #furniture
 		glass = 2.9
 		tobacco = 3.3
 	}
