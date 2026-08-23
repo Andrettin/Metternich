@@ -15,6 +15,9 @@ cattle_ranch = {
 	}
 	conditions = {
 		feature = prime_cattle_land
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -51,6 +54,9 @@ grain_farm = {
 	}
 	conditions = {
 		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -87,6 +93,9 @@ sheep_ranch = {
 	}
 	conditions = {
 		feature = prime_sheep_land
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_costs = {
 		wealth = 2gb
@@ -123,6 +132,9 @@ tobacco_plantation = {
 	}
 	conditions = {
 		feature = prime_tobacco_land
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	commodity_costs = {
 		wealth = 2gb

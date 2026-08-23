@@ -16,6 +16,9 @@ granary = {
 	}
 	conditions = {
 		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
 	}
 	domain_modifier = {
 		loyalty = 1
