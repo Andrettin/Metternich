@@ -2090,7 +2090,8 @@ void game::do_trade()
 
 	for (const auto &[commodity, value] : remaining_demands) {
 		//change the price according to the extra quantity bid/offered
-		const int64_t change = number::sign(value);
+		//change by 10ths of the base price
+		const int64_t change = number::sign(value) * std::max(commodity->get_base_price() / 10, 1ll);
 
 		if (change == 0) {
 			continue;
