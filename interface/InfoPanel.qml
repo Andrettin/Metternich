@@ -630,7 +630,7 @@ Rectangle {
 		IconButton {
 			id: recruit_military_units_button
 			icon_identifier: "musket"
-			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_domain
+			visible: !selected_garrison && selected_province !== null && selected_province.game_data.owner == metternich.game.player_domain && !viewing_population
 			
 			onReleased: {
 				military_unit_recruiment_dialog.open()
