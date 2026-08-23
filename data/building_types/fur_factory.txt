@@ -7,6 +7,7 @@ furriers_house = {
 		guild
 	}
 	conditions = {
+		game_rule = additional_buildings
 		province = {
 			or = {
 				capital = true
@@ -27,6 +28,7 @@ furriers_shop = {
 		guild
 	}
 	conditions = {
+		game_rule = additional_buildings
 		province = {
 			or = {
 				capital = true
@@ -47,6 +49,7 @@ fur_factory = {
 		guild
 	}
 	conditions = {
+		game_rule = additional_buildings
 		province = {
 			or = {
 				capital = true

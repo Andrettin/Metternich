@@ -7,6 +7,7 @@ brass_foundry = {
 		guild
 	}
 	conditions = {
+		game_rule = additional_buildings
 		province = {
 			or = {
 				capital = true
