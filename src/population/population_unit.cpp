@@ -392,7 +392,7 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::purchase_needs(const int64_t consumption_wealth, const std::vector<const metternich::domain *> &trade_domains)
+void population_unit::purchase_needs(const int64_t consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
 {
 	const int total_need_weight = this->get_type()->get_total_life_need_weight() + this->get_type()->get_total_everyday_need_weight() + this->get_type()->get_total_luxury_need_weight();
 
@@ -400,12 +400,12 @@ void population_unit::purchase_needs(const int64_t consumption_wealth, const std
 		return;
 	}
 
-	this->set_fulfilled_life_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_life_need_weight() / total_need_weight, this->get_type()->get_life_need_weights(), this->get_type()->get_total_life_need_weight(), trade_domains));
-	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_everyday_need_weight() / total_need_weight, this->get_type()->get_everyday_need_weights(), this->get_type()->get_total_everyday_need_weight(), trade_domains));
-	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), this->get_type()->get_total_luxury_need_weight(), trade_domains));
+	this->set_fulfilled_life_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_life_need_weight() / total_need_weight, this->get_type()->get_life_need_weights(), this->get_type()->get_total_life_need_weight(), trade_domains, remaining_demands));
+	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_everyday_need_weight() / total_need_weight, this->get_type()->get_everyday_need_weights(), this->get_type()->get_total_everyday_need_weight(), trade_domains, remaining_demands));
+	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), this->get_type()->get_total_luxury_need_weight(), trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const int64_t consumption_wealth, const commodity_map<int> &need_weights, const int total_need_weight, const std::vector<const metternich::domain *> &trade_domains)
+int population_unit::purchase_needs(const int64_t consumption_wealth, const commodity_map<int> &need_weights, const int total_need_weight, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
 {
 	int fulfilled_percent = 0;
 	int commodity_count = 0;
@@ -458,6 +458,10 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 		}
 
 		fulfilled_percent += static_cast<int>(fulfilled_commodity_need * 100 / commodity_need);
+
+		if (fulfilled_commodity_need < affordable_commodity_need) {
+			remaining_demands[commodity] += affordable_commodity_need - fulfilled_commodity_need;
+		}
 	}
 
 	if (commodity_count == 0) {

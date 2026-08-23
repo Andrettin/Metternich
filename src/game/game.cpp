@@ -2067,8 +2067,10 @@ void game::do_trade()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
+	commodity_map<int64_t> remaining_demands;
+
 	for (const domain *domain : trade_domains) {
-		domain->get_economy()->do_population_needs_purchasing();
+		domain->get_economy()->do_population_needs_purchasing(remaining_demands);
 	}
 
 	for (const domain *domain : trade_domains) {
@@ -2076,7 +2078,6 @@ void game::do_trade()
 	}
 
 	//change commodity prices based on whether there were unfulfilled bids/offers
-	commodity_map<int64_t> remaining_demands;
 	for (const domain *domain : trade_domains) {
 		for (const auto &[commodity, bid] : domain->get_economy()->get_bids()) {
 			remaining_demands[commodity] += bid;
@@ -2089,7 +2090,7 @@ void game::do_trade()
 
 	for (const auto &[commodity, value] : remaining_demands) {
 		//change the price according to the extra quantity bid/offered
-		const int64_t change = number::sqrt(std::abs(value)) * number::sign(value);
+		const int64_t change = number::sign(value);
 
 		if (change == 0) {
 			continue;
@@ -2306,13 +2307,11 @@ void game::set_player_domain(const domain *domain)
 
 int64_t game::get_price(const commodity *commodity) const
 {
-	/*
 	const auto find_iterator = this->prices.find(commodity);
 
 	if (find_iterator != this->prices.end()) {
 		return find_iterator->second;
 	}
-	*/
 
 	return commodity->get_base_price();
 }

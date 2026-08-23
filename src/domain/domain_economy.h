@@ -51,7 +51,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_production();
 	void do_trade();
-	void do_population_needs_purchasing();
+	void do_population_needs_purchasing(commodity_map<int64_t> &remaining_demands);
 
 	const resource_map<int> &get_resource_counts() const
 	{

@@ -325,7 +325,7 @@ void domain_economy::do_trade()
 	}
 }
 
-void domain_economy::do_population_needs_purchasing()
+void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &remaining_demands)
 {
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
@@ -356,7 +356,7 @@ void domain_economy::do_population_needs_purchasing()
 		const int64_t population_unit_paid_consumption_wealth = this->paid_consumption_wealth * population_unit_weighted_size / weighted_population_size;
 		this->change_wealth(population_unit_paid_consumption_wealth);
 
-		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains);
+		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains, remaining_demands);
 	}
 }
 
