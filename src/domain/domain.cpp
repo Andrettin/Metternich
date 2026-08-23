@@ -474,6 +474,20 @@ bool domain::is_derived_cultural_domain_of(const culture *culture) const
 	return false;
 }
 
+bool domain::has_definite_article(const culture *culture, const government_type *government_type, const domain_tier tier) const
+{
+	if (this->definite_article) {
+		return true;
+	}
+
+	const std::string &short_name = this->get_short_name(culture, government_type, tier);
+	if (!short_name.empty()) {
+		return true;
+	}
+
+	return false;
+}
+
 std::vector<const province *> domain::get_core_provinces_for_tier(const domain_tier tier) const
 {
 	std::vector<const province *> core_provinces;

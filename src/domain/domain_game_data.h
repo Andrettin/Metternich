@@ -253,6 +253,8 @@ public:
 		return QString::fromStdString(this->get_form_of_address());
 	}
 
+	bool has_definite_article() const;
+
 	const std::string &get_flag() const;
 
 	QString get_flag_qstring() const

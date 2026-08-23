@@ -1054,6 +1054,11 @@ const std::string &domain_game_data::get_form_of_address() const
 	return this->get_government_type()->get_form_of_address(this->get_tier(), this->get_government()->get_ruler()->get_gender());
 }
 
+bool domain_game_data::has_definite_article() const
+{
+	return this->domain->has_definite_article(this->get_culture(), this->get_government_type(), this->get_tier());
+}
+
 const std::string &domain_game_data::get_flag() const
 {
 	for (const auto &[conditional_flag, conditions] : this->domain->get_conditional_flags()) {
