@@ -3,6 +3,7 @@ light_infantry = {
 	base_employment_size = 1
 	employee_types = {
 		soldiers
+		tribesmen
 	}
 	domain_modifier = {
 		storage_capacity = {
@@ -17,6 +18,7 @@ heavy_infantry = {
 	base_employment_size = 1
 	employee_types = {
 		soldiers
+		tribesmen
 	}
 	domain_modifier = {
 		storage_capacity = {
@@ -31,6 +33,7 @@ light_cavalry = {
 	base_employment_size = 1
 	employee_types = {
 		soldiers
+		tribesmen
 	}
 	domain_modifier = {
 		storage_capacity = {
@@ -45,6 +48,7 @@ heavy_cavalry = {
 	base_employment_size = 1
 	employee_types = {
 		soldiers
+		tribesmen
 	}
 	domain_modifier = {
 		storage_capacity = {
@@ -75,6 +79,7 @@ archery = {
 	required_technology = short_bow
 	employee_types = {
 		soldiers
+		tribesmen
 	}
 	domain_modifier = {
 		storage_capacity = {

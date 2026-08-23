@@ -5,6 +5,7 @@ lumberjacking = {
 	base_employment_size = 10
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }

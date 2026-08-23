@@ -5,6 +5,7 @@ coal_mining = {
 	base_employment_size = 10
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }
@@ -16,6 +17,7 @@ gold_mining = {
 	base_employment_size = 10000
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }
@@ -27,6 +29,7 @@ iron_mining = {
 	base_employment_size = 10
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }
@@ -38,6 +41,7 @@ silver_mining = {
 	base_employment_size = 1000
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }
@@ -49,6 +53,7 @@ sulfur_mining = {
 	base_employment_size = 1000
 	employee_types = {
 		laborers
+		tribesmen
 		slaves
 	}
 }

@@ -5,6 +5,7 @@ cattle_ranching = {
 	base_employment_size = 10000
 	employee_types = {
 		farmers
+		tribesmen
 		slaves
 	}
 }
@@ -16,6 +17,7 @@ grain_farming = {
 	base_employment_size = 1
 	employee_types = {
 		farmers
+		tribesmen
 		slaves
 	}
 }
@@ -27,6 +29,7 @@ sheep_ranching = {
 	base_employment_size = 600
 	employee_types = {
 		farmers
+		tribesmen
 		slaves
 	}
 }
@@ -38,6 +41,7 @@ tobacco_planting = {
 	base_employment_size = 10
 	employee_types = {
 		farmers
+		tribesmen
 		slaves
 	}
 }
