@@ -52,7 +52,7 @@ Item {
 							hoverEnabled: true
 							
 							onEntered: {
-								status_text = commodity.name
+								status_text = commodity.name + " (" + metternich.defines.wealth_commodity.value_to_qstring(metternich.game.get_price(commodity)) + " per " + (commodity.get_unit(1) !== null ? commodity.get_unit(1).suffix : "unit") + ")"
 								if (output > 0) {
 									middle_status_text = "Output: " + commodity.value_to_qstring(output)
 								}
