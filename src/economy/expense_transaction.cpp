@@ -49,7 +49,7 @@ QString expense_transaction::get_description() const
 
 	switch (this->get_type()) {
 		case expense_transaction_type::purchase:
-			str = std::format("Bought {} {} from {}{} for {}", number::to_formatted_string(this->get_object_quantity()), this->get_object_name(), this->get_country()->get_game_data()->has_definite_article() ? "the " : "", this->get_country()->get_game_data()->get_name(), amount_str);
+			str = std::format("Bought {} {} from {}{} for {}", std::get<const commodity *>(this->get_object())->value_to_string(this->get_object_quantity(), false), this->get_object_name(), this->get_country()->get_game_data()->has_definite_article() ? "the " : "", this->get_country()->get_game_data()->get_name(), amount_str);
 			break;
 		case expense_transaction_type::consumption:
 			str = std::format("Paid {} in consumption", amount_str);
