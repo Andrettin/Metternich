@@ -523,6 +523,8 @@ public:
 		return std::max(this->get_unrest(), 0);
 	}
 
+	void change_province_loyalty(const int change);
+
 	int get_score() const
 	{
 		return this->score;

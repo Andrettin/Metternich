@@ -52,6 +52,7 @@
 #include "map/province.h"
 #include "map/province_feature.h"
 #include "map/province_game_data.h"
+#include "map/province_loyalty_level.h"
 #include "map/province_map_data.h"
 #include "map/region.h"
 #include "map/site.h"
@@ -594,15 +595,21 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->domain);
 	}
 
-	const int64_t domain_consumption_cost = std::min<int64_t>(std::max(this->get_consumption(), 0) * defines::get()->get_domain_income_unit_value(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
-	if (domain_consumption_cost != 0) {
-		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_consumption_cost);
+	const int effective_consumption = std::max(this->get_consumption(), 0);
+	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
+	const int64_t paid_consumption_cost = std::min<int64_t>(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	if (paid_consumption_cost != 0) {
+		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -paid_consumption_cost);
 
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, domain_consumption_cost, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost, nullptr, 0, this->domain);
 
-		this->get_economy()->set_paid_consumption_wealth(domain_consumption_cost);
+		this->get_economy()->set_paid_consumption_wealth(paid_consumption_cost);
+	}
 
-		//FIXME: increase unrest if the domain cannot pay for its consumption
+	if (paid_consumption_cost < consumption_cost) {
+		//increase unrest if the domain cannot pay for its consumption
+		//increase unrest by decreasing province loyalty
+		this->change_province_loyalty(-2);
 	}
 
 	std::vector<military_unit *> military_units_to_disband;
@@ -2426,6 +2433,34 @@ void domain_game_data::set_unrest(const int unrest)
 	this->get_economy()->update_attribute_taxation();
 
 	emit unrest_changed();
+}
+
+void domain_game_data::change_province_loyalty(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	std::vector<const province *> provinces = this->get_provinces();
+	if (change >= 1) {
+		std::erase_if(provinces, [this](const province *province) {
+			return province->get_game_data()->get_province_loyalty() >= static_cast<int>(province_loyalty_level::loyal);
+		});
+	} else if (change <= -1) {
+		std::erase_if(provinces, [this](const province *province) {
+			return province->get_game_data()->get_province_loyalty() <= static_cast<int>(province_loyalty_level::rebellious);
+		});
+	}
+
+	const int abs_change = std::abs(change);
+	for (int i = 0; i < abs_change; ++i) {
+		if (provinces.empty()) {
+			return;
+		}
+
+		const province *chosen_province = vector::take_random(provinces);
+		chosen_province->get_game_data()->change_province_loyalty(number::sign(change));
+	}
 }
 
 void domain_game_data::change_score(const int change)
