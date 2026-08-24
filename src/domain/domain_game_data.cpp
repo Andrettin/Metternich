@@ -1478,6 +1478,7 @@ QCoro::Task<void> domain_game_data::on_province_gained(const province *province,
 	this->change_score(province_game_data->get_level() * 100 * multiplier);
 	this->change_domain_size(1 * multiplier);
 	this->change_domain_power(province_game_data->get_level() * multiplier);
+	this->change_unrest((static_cast<int>(province_loyalty_level::loyal) - province_game_data->get_province_loyalty()) * multiplier);
 
 	this->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(province_game_data->get_province_level_taxation()) * multiplier);
 	
