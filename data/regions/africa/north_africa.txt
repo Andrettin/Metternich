@@ -16,12 +16,6 @@ algeria = {
 	}
 }
 
-egypt = {
-	superregions = {
-		north_africa
-	}
-}
-
 libya = {
 	superregions = {
 		north_africa

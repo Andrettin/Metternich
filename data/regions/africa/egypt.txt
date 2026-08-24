@@ -1,0 +1,24 @@
+egypt = {
+	superregions = {
+		north_africa
+	}
+}
+
+egyptian_eastern_desert = {
+	superregions = {
+		egypt
+	}
+	resource_counts = {
+		#gem_deposit = 1
+		prime_cotton_land = 1
+	}
+}
+
+egyptian_western_desert = {
+	superregions = {
+		egypt
+	}
+	resource_counts = {
+		iron_deposit = 1
+	}
+}

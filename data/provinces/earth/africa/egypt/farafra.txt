@@ -4,7 +4,7 @@ farafra = {
 	terrain = desert
 	default_provincial_capital = farafra
 	regions = {
-		egypt
+		egyptian_western_desert
 	}
 	
 	history = {
