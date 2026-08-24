@@ -7,14 +7,4 @@ qara_qoyunlu = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = van
-	core_provinces = {
-		van
-		al_hasakah
-		amida
-		armenia
-		edessa
-		kars
-		nakhchivan
-		sinjar
-	}
 }

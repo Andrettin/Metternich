@@ -6,23 +6,4 @@ jalayirids = {
 	default_tier = kingdom
 	default_government_type = tribal_despotism
 	default_capital = baghdad
-	core_provinces = {
-		diyala
-		anbar
-		arrajan
-		babylon
-		chaldea
-		east_azarbaijan
-		elam
-		hamadan
-		karbala
-		kermanshah
-		kordestan
-		lorestan
-		najaf
-		saladin
-		sumer
-		teheran
-		west_azarbaijan
-	}
 }

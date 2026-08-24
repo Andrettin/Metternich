@@ -7,22 +7,4 @@ seljuk_turks = {
 	default_tier = duchy
 	default_government_type = tribal_despotism
 	default_capital = iconium #Konya
-	core_provinces = {
-		iconium
-		afyonkarahisar
-		attaleia
-		aydin
-		burdur
-		charsianon
-		denizli
-		kastamonu
-		lycia
-		mersin
-		mikissos
-		samsun
-		sardis
-		sebastea
-		sinope
-		smyrna
-	}
 }

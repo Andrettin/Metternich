@@ -14,15 +14,6 @@ ottoman_empire = {
 	short_names = {
 		tribe = "Ottoman Turks"
 	}
-	core_provinces = {
-		thrace
-		abydos
-		ancyra
-		bursa
-		eskisehir
-		germiyan
-		karasi
-	}
 	
 	history = {
 		#capital = bursa
