@@ -581,6 +581,7 @@ set(map_HDRS
 	src/map/province_feature.h
 	src/map/province_game_data.h
 	src/map/province_history.h
+	src/map/province_loyalty_level.h
 	src/map/province_map_data.h
 	src/map/province_map_mode.h
 	src/map/province_turn_data.h

@@ -256,7 +256,7 @@ Rectangle {
 				+ (selected_province.game_data.owner !== null && selected_province.game_data.owner.game_data.realm !== selected_province.game_data.owner ? ("\nRealm: " + selected_province.game_data.owner.game_data.realm.game_data.name) : "")
 				+ ("\nProvince Level: " + selected_province.game_data.level + "/" + selected_province.game_data.max_level)
 				+ ("\nTerrain: " + selected_province.map_data.terrain.name)
-				+ (selected_province.game_data.owner !== null ? ("\nProvince Loyalty: " + metternich.defines.get_province_loyalty_name_qstring(selected_province.game_data.province_loyalty)) : "")
+				+ (selected_province.game_data.owner !== null ? ("\nProvince Loyalty: " + selected_province.game_data.province_loyalty_name) : "")
 				+ (population_visible ? ("\nPopulation: " + number_string(selected_province.game_data.population.size)) : "")
 				+ (selected_province.game_data.province_level_taxation > 0 ? ("\nTaxation Income: " + metternich.defines.wealth_commodity.value_to_qstring(selected_province.game_data.province_level_taxation)) : "")
 			) : ""

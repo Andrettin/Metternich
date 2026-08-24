@@ -119,15 +119,6 @@ domain_maintenance_cost_per_domain_size = {
 	76 = 30 #gb
 }
 
-province_loyalty_names = {
-	0 = "Rebellious"
-	1 = "Hostile"
-	2 = "Unfavorable"
-	3 = "Aligned"
-	4 = "Cooperative"
-	5 = "Loyal"
-}
-
 ruler_office = ruler
 heir_office = heir
 foreign_minister_office = chancellor

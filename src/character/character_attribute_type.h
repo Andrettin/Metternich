@@ -18,7 +18,7 @@ inline std::string_view get_character_attribute_type_name(const character_attrib
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid character attribute type: {}", static_cast<int>(attribute_type)));
+	throw std::runtime_error(std::format("Invalid character attribute type: {}", std::to_underlying(attribute_type)));
 }
 
 }

@@ -74,6 +74,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::site* provincial_capital READ get_provincial_capital NOTIFY provincial_capital_changed)
 	Q_PROPERTY(QPoint center_tile_pos READ get_center_tile_pos CONSTANT)
 	Q_PROPERTY(int province_loyalty READ get_province_loyalty NOTIFY province_loyalty_changed)
+	Q_PROPERTY(QString province_loyalty_name READ get_province_loyalty_name NOTIFY province_loyalty_changed)
 	Q_PROPERTY(const metternich::pathway* pathway READ get_pathway NOTIFY pathway_changed)
 	Q_PROPERTY(const metternich::pathway* under_construction_pathway READ get_under_construction_pathway WRITE set_under_construction_pathway NOTIFY under_construction_pathway_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
@@ -91,8 +92,6 @@ class province_game_data final : public QObject
 	Q_PROPERTY(qint64 province_level_taxation READ get_province_level_taxation NOTIFY province_level_taxation_changed)
 
 public:
-	static constexpr int base_province_loyalty = 5;
-
 	explicit province_game_data(const metternich::province *province);
 	province_game_data(const province_game_data &other) = delete;
 	~province_game_data();
@@ -208,6 +207,8 @@ public:
 	{
 		this->set_province_loyalty(this->get_province_loyalty() + change);
 	}
+
+	QString get_province_loyalty_name() const;
 
 	const metternich::pathway *get_pathway() const
 	{
@@ -730,7 +731,7 @@ private:
 	int level = 0;
 	int max_level = 0;
 	const site *provincial_capital = nullptr;
-	int province_loyalty = province_game_data::base_province_loyalty;
+	int province_loyalty = 0;
 	const metternich::pathway *pathway = nullptr;
 	const metternich::pathway *under_construction_pathway = nullptr;
 	decimillesimal_int pathway_construction_progress;

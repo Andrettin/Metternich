@@ -30,6 +30,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_feature.h"
+#include "map/province_loyalty_level.h"
 #include "map/province_map_data.h"
 #include "map/province_map_mode.h"
 #include "map/route.h"
@@ -62,6 +63,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/dice.h"
+#include "util/exception_util.h"
 #include "util/map_util.h"
 #include "util/point_util.h"
 #include "util/vector_random_util.h"
@@ -83,6 +85,8 @@ province_game_data::province_game_data(const metternich::province *province)
 
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
 	connect(this, &province_game_data::dungeon_sites_changed, this, &province_game_data::visible_sites_changed);
+
+	this->province_loyalty = static_cast<int>(province_loyalty_level::loyal);
 }
 
 province_game_data::~province_game_data()
@@ -1224,6 +1228,9 @@ void province_game_data::set_province_loyalty(const int province_loyalty)
 		return;
 	}
 
+	assert_throw(province_loyalty >= static_cast<int>(province_loyalty_level::rebellious));
+	assert_throw(province_loyalty <= static_cast<int>(province_loyalty_level::loyal));
+
 	const int change = province_loyalty - this->get_province_loyalty();
 
 	this->province_loyalty = province_loyalty;
@@ -1235,6 +1242,15 @@ void province_game_data::set_province_loyalty(const int province_loyalty)
 
 	if (game::get()->is_running()) {
 		emit province_loyalty_changed();
+	}
+}
+
+QString province_game_data::get_province_loyalty_name() const
+{
+	try {
+		return QString::fromStdString(std::string(get_province_loyalty_level_name(static_cast<province_loyalty_level>(this->get_province_loyalty()))));
+	} catch (...) {
+		exception::report(std::current_exception());
 	}
 }
 
