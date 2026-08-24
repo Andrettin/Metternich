@@ -1,0 +1,8 @@
+mut = {
+	name = "Mut"
+	world = earth
+	geocoordinate = { 28.983333333333 25.4875 }
+	type = holding
+	holding_type = guild
+	province = farafra #Dakhla
+}

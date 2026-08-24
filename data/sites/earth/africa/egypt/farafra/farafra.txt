@@ -1,0 +1,8 @@
+farafra = {
+	name = "Farafra"
+	world = earth
+	geocoordinate = { 27.966551 27.067145 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = farafra
+}

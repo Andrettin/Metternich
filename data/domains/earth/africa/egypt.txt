@@ -16,6 +16,7 @@ egypt = {
 		bilbays
 		damietta
 		faiyum
+		farafra
 		giza
 		ikhmim
 		kharibta
