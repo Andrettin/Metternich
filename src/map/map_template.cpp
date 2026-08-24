@@ -278,15 +278,17 @@ void map_template::write_province_image()
 		QElapsedTimer elapsed_timer;
 		elapsed_timer.start();
 
+		static constexpr int pen_width = 6;
+
 		//write water zones, then rivers, and finally land provinces
 		if (!water_zone_geodata_map.empty()) {
-			geoshape::write_image(image, output_filepath, water_zone_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+			geoshape::write_image(image, output_filepath, water_zone_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset, pen_width);
 		}
 		if (!river_geodata_map.empty()) {
-			geoshape::write_image(image, output_filepath, river_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+			geoshape::write_image(image, output_filepath, river_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset, pen_width);
 		}
 		if (!land_geodata_map.empty()) {
-			geoshape::write_image(image, output_filepath, land_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset);
+			geoshape::write_image(image, output_filepath, land_geodata_map, this->get_georectangle(), this->get_size(), this->map_projection, this->geocoordinate_x_offset, pen_width);
 		}
 
 		image.save(path::to_qstring(output_filepath));
