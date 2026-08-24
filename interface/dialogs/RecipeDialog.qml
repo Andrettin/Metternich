@@ -18,7 +18,7 @@ DialogBase {
 		hoverEnabled: true
 		
 		onEntered: {
-			metternich.set_current_cursor(metternich.defines.default_cursor)
+			metternich.set_current_cursor(metternich.ui_defines.default_cursor)
 		}
 	}
 	

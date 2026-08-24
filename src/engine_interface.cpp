@@ -33,6 +33,7 @@
 #include "technology/technology_category.h"
 #include "time/era.h"
 #include "ui/cursor.h"
+#include "ui/ui_defines.h"
 #include "unit/army.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
@@ -63,9 +64,14 @@ double engine_interface::get_scale_factor() const
 	return preferences::get()->get_scale_factor().to_double();
 }
 
-defines *engine_interface::get_defines() const
+const defines *engine_interface::get_defines() const
 {
 	return defines::get();
+}
+
+const ui_defines *engine_interface::get_ui_defines() const
+{
+	return ui_defines::get();
 }
 
 game *engine_interface::get_game() const
