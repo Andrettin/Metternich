@@ -1,0 +1,8 @@
+nile_river = {
+	name = "Nile River"
+	color = { 1 21 225 }
+	river = true
+	regions = {
+		mediterranean_sea
+	}
+}
