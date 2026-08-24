@@ -18,14 +18,11 @@
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
 #include "economy/employment_type.h"
-#include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
-#include "infrastructure/building_slot.h"
-#include "infrastructure/building_type.h"
 #include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/pathway.h"
@@ -115,6 +112,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->max_level = std::stoi(value);
 	} else if (key == "provincial_capital") {
 		this->provincial_capital = site::get(value);
+	} else if (key == "province_loyalty") {
+		this->province_loyalty = std::stoi(value);
 	} else if (key == "pathway") {
 		this->pathway = pathway::get(value);
 	} else if (key == "under_construction_pathway") {
@@ -221,6 +220,8 @@ gsml_data province_game_data::to_gsml_data() const
 	if (this->get_provincial_capital() != nullptr) {
 		data.add_property("provincial_capital", this->get_provincial_capital()->get_identifier());
 	}
+
+	data.add_property("province_loyalty", std::to_string(this->get_province_loyalty()));
 
 	if (this->get_pathway() != nullptr) {
 		data.add_property("pathway", this->get_pathway()->get_identifier());
@@ -342,8 +343,6 @@ QCoro::Task<void> province_game_data::initialize()
 	if (this->is_coastal()) {
 		this->change_max_level(1);
 	}
-
-	//FIXME: add +1 max level to provinces with a major river
 
 	for (const province_feature *feature : this->province->get_features()) {
 		assert_throw(feature->get_terrain_types().empty() || vector::contains(feature->get_terrain_types(), this->get_terrain()));
@@ -1217,6 +1216,26 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 const QPoint &province_game_data::get_center_tile_pos() const
 {
 	return this->province->get_map_data()->get_center_tile_pos();
+}
+
+void province_game_data::set_province_loyalty(const int province_loyalty)
+{
+	if (province_loyalty == this->get_province_loyalty()) {
+		return;
+	}
+
+	const int change = province_loyalty - this->get_province_loyalty();
+
+	this->province_loyalty = province_loyalty;
+
+	if (this->get_owner() != nullptr) {
+		//increasing province loyalty decreases unrest
+		this->get_owner()->get_game_data()->change_unrest(-change);
+	}
+
+	if (game::get()->is_running()) {
+		emit province_loyalty_changed();
+	}
 }
 
 QCoro::Task<void> province_game_data::set_pathway(const metternich::pathway *pathway)

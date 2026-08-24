@@ -19,6 +19,7 @@
 #include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -121,6 +122,12 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int64_t cost = this->get_wealth_commodity()->string_to_value(property.get_value());
 
 			this->domain_maintenance_cost_per_domain_size[domain_size] = cost;
+		});
+	} else if (tag == "province_loyalty_names") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int province_loyalty = std::stoi(property.get_key());
+
+			this->province_loyalty_names[province_loyalty] = property.get_value();
 		});
 	} else if (tag == "battle_resolution_tables") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -336,6 +343,29 @@ int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_si
 	const auto find_iterator = this->domain_maintenance_cost_per_domain_size.upper_bound(domain_size);
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_domain_size.begin());
 	return std::prev(find_iterator)->second * this->get_domain_income_unit_value();
+}
+
+const std::string &defines::get_province_loyalty_name(const int province_loyalty) const
+{
+	const auto find_iterator = this->province_loyalty_names.find(province_loyalty);
+	if (find_iterator != province_loyalty_names.end()) {
+		return find_iterator->second;
+	}
+
+	//if the province loyalty is higher than the highest provided province loyalty with a name
+	const auto last_iterator = this->province_loyalty_names.rbegin();
+	if (province_loyalty > last_iterator->first) {
+		return last_iterator->second;
+	}
+
+	//if the province loyalty is lower than the lowest provided province loyalty with a name
+	const auto first_iterator = this->province_loyalty_names.begin();
+	if (province_loyalty > first_iterator->first) {
+		return first_iterator->second;
+	}
+
+	assert_throw(false);
+	return string::empty_str;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const
