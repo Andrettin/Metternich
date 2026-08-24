@@ -1251,6 +1251,7 @@ QString province_game_data::get_province_loyalty_name() const
 		return QString::fromStdString(std::string(get_province_loyalty_level_name(static_cast<province_loyalty_level>(this->get_province_loyalty()))));
 	} catch (...) {
 		exception::report(std::current_exception());
+		return QString();
 	}
 }
 
