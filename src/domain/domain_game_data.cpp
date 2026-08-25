@@ -2531,6 +2531,11 @@ QCoro::Task<void> domain_game_data::check_rebellions()
 			//FIXME: make the domain that is declaring independence be at war with this domain
 			//FIXME: add notification that a domain has declared independence
 		}
+
+		//restore loyalty to the maximum after rebellion
+		for (const province *province : rebellion_domain_provinces[rebellion_domain]) {
+			province->get_game_data()->set_province_loyalty(static_cast<int>(province_loyalty_level::loyal));
+		}
 	}
 }
 
