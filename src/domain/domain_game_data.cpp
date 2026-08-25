@@ -528,6 +528,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 
 		this->get_military()->clear_armies();
 
+		co_await this->check_rebellions();
+
 		co_await this->decrement_scripted_modifiers();
 
 		co_await this->check_journal_entries();
@@ -1169,7 +1171,7 @@ bool domain_game_data::is_culture_allowed(const metternich::culture *culture) co
 	}
 
 	if (!this->domain->get_core_provinces().empty() || !this->domain->get_core_holdings().empty()) {
-		if (this->has_domain_cores(this->domain)) {
+		if (this->has_domain_cores(this->domain, false)) {
 			//if a domain has cores, and it owns those cores, then any culture is allowed for it
 			return true;
 		}
@@ -2466,6 +2468,69 @@ void domain_game_data::change_province_loyalty(const int change)
 
 		const province *chosen_province = vector::take_random(provinces);
 		chosen_province->get_game_data()->change_province_loyalty(number::sign(change));
+	}
+}
+
+QCoro::Task<void> domain_game_data::check_rebellions()
+{
+	if (this->get_provinces().empty()) {
+		co_return;
+	}
+
+	//check if any rebellions can trigger
+	std::vector<const province *> rebellious_provinces = this->get_provinces();
+	std::erase_if(rebellious_provinces, [this](const province *province) {
+		return province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious);
+	});
+
+	//domains which can rebel against us
+	domain_map<std::vector<const province *>> rebellion_domain_provinces;
+
+	for (const province *province : rebellious_provinces) {
+		for (const metternich::domain *core_domain : province->get_core_domains()) {
+			if (!vector::contains(rebellion_domain_provinces[core_domain], province)) {
+				rebellion_domain_provinces[core_domain].push_back(province);
+			}
+		}
+
+		const metternich::domain *culture_primary_domain = province->get_game_data()->get_culture()->get_primary_domain();
+		if (culture_primary_domain != nullptr) {
+			if (!vector::contains(rebellion_domain_provinces[culture_primary_domain], province)) {
+				rebellion_domain_provinces[culture_primary_domain].push_back(province);
+			}
+		}
+	}
+
+	std::vector<const metternich::domain *> rebellion_domains = archimedes::map::get_keys(rebellion_domain_provinces);
+
+	while (!rebellion_domains.empty()) {
+		std::erase_if(rebellion_domains, [this](const metternich::domain *other_domain) {
+			if (other_domain == this->domain) {
+				return true;
+			}
+
+			if (!other_domain->get_game_data()->is_alive() && !this->can_release_domain(other_domain, true)) {
+				return true;
+			}
+
+			return false;
+		});
+
+		if (rebellion_domains.empty()) {
+			break;
+		}
+
+		const metternich::domain *rebellion_domain = vector::take_random(rebellion_domains);
+		if (rebellion_domain->get_game_data()->is_alive()) {
+			for (const province *province : rebellion_domain_provinces[rebellion_domain]) {
+				co_await province->get_game_data()->set_owner(rebellion_domain);
+			}
+			//FIXME: add notification that some of this domain's provinces have defected to another domain
+		} else {
+			co_await this->release_domain(rebellion_domain, true);
+			//FIXME: make the domain that is declaring independence be at war with this domain
+			//FIXME: add notification that a domain has declared independence
+		}
 	}
 }
 
@@ -4478,10 +4543,10 @@ bool domain_game_data::can_form_domain_by_territory(const metternich::domain *ot
 		return false;
 	}
 
-	return this->has_domain_cores(other);
+	return this->has_domain_cores(other, false);
 }
 
-bool domain_game_data::can_release_domain(const metternich::domain *other) const
+bool domain_game_data::can_release_domain(const metternich::domain *other, const bool count_only_rebellious_provinces) const
 {
 	if (vector::contains(game::get()->get_domains(), other)) {
 		return false;
@@ -4497,6 +4562,10 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 		}
 
 		for (const province *province : this->get_provinces()) {
+			if (count_only_rebellious_provinces && province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious)) {
+				continue;
+			}
+
 			if (vector::contains(other->get_cultures(), province->get_game_data()->get_culture())) {
 				//only count provinces with a majority of that culture, since they will be the ones getting released
 				for (const metternich::culture *culture : other->get_cultures()) {
@@ -4511,7 +4580,7 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 	}
 
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
-		if (!this->has_domain_cores(other)) {
+		if (!this->has_domain_cores(other, count_only_rebellious_provinces)) {
 			return false;
 		}
 
@@ -4538,7 +4607,7 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 	return false;
 }
 
-[[nodiscard]] QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *releasable_domain)
+QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *releasable_domain, const bool include_only_rebellious_provinces)
 {
 	for (const site *holding_site : releasable_domain->get_core_holdings()) {
 		if (holding_site->get_game_data()->get_owner() != this->domain) {
@@ -4557,6 +4626,10 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 			continue;
 		}
 
+		if (include_only_rebellious_provinces && province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious)) {
+			continue;
+		}
+
 		co_await province->get_game_data()->set_owner(releasable_domain);
 	}
 
@@ -4564,6 +4637,10 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 	if (!releasable_domain->get_cultures().empty()) {
 		const std::vector<const province *> provinces = this->get_provinces();
 		for (const province *province : provinces) {
+			if (include_only_rebellious_provinces && province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious)) {
+				continue;
+			}
+
 			if (!vector::contains(releasable_domain->get_cultures(), province->get_game_data()->get_culture())) {
 				continue;
 			}
@@ -4571,13 +4648,20 @@ bool domain_game_data::can_release_domain(const metternich::domain *other) const
 			co_await province->get_game_data()->set_owner(releasable_domain);
 		}
 	}
+
+	//FIXME: ensure the released domain has an appropriate government and ruler
+	//FIXME: move any characters which have their home site in the released domain to it?
 }
 
-bool domain_game_data::has_domain_cores(const metternich::domain *other) const
+bool domain_game_data::has_domain_cores(const metternich::domain *other, const bool count_only_rebellious_provinces) const
 {
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
 		for (const province *province : other->get_core_provinces()) {
 			if (province->get_game_data()->get_owner() != this->domain) {
+				return false;
+			}
+
+			if (count_only_rebellious_provinces && province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious)) {
 				return false;
 			}
 		}

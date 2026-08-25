@@ -1041,7 +1041,7 @@ QCoro::Task<void> game::apply_sites()
 
 		std::vector<const domain *> releasable_domains;
 		for (const domain *core_domain : site->get_core_domains()) {
-			if (!site_owner->get_game_data()->can_release_domain(core_domain)) {
+			if (!site_owner->get_game_data()->can_release_domain(core_domain, false)) {
 				continue;
 			}
 
@@ -1049,7 +1049,7 @@ QCoro::Task<void> game::apply_sites()
 		}
 
 		if (!releasable_domains.empty()) {
-			co_await site_owner->get_game_data()->release_domain(vector::get_random(releasable_domains));
+			co_await site_owner->get_game_data()->release_domain(vector::get_random(releasable_domains), false);
 		}
 	}
 
