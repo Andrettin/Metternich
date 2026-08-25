@@ -1967,7 +1967,9 @@ QCoro::Task<void> game::do_turn_coro()
 			old_offers[domain] = domain->get_economy()->get_offers();
 		}
 
-		for (const domain *domain : this->get_domains()) {
+		//copy the domain list before iterating, in case the turn passage creates a new domain (e.g. due to rebellion)
+		const std::vector<domain *> domains = this->get_domains();
+		for (const domain *domain : domains) {
 			co_await domain->get_game_data()->do_turn();
 
 			domain->get_economy()->prepare_bids();
