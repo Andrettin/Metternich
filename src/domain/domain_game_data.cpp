@@ -4654,7 +4654,11 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 		}
 	}
 
-	//FIXME: ensure the released domain has an appropriate government and ruler
+	//ensure the released domain has an appropriate government, culture and ruler
+	co_await releasable_domain->get_game_data()->check_government_type();
+	co_await releasable_domain->get_game_data()->check_culture();
+	co_await releasable_domain->get_government()->check_office_holder(defines::get()->get_ruler_office());
+
 	//FIXME: move any characters which have their home site in the released domain to it?
 }
 
