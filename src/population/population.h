@@ -39,6 +39,8 @@ public:
 
 	void change_size(const int64_t change);
 
+	int64_t get_weighted_size() const;
+
 	const population_type_map<int64_t> &get_type_sizes() const
 	{
 		return this->type_sizes;

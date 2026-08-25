@@ -5,6 +5,7 @@
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "game/game.h"
+#include "population/population_strata.h"
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "religion/religion.h"
@@ -49,6 +50,19 @@ void population::change_size(const int64_t change)
 	if (game::get()->is_running()) {
 		emit size_changed();
 	}
+}
+
+int64_t population::get_weighted_size() const
+{
+	int64_t weighted_population_size = 0;
+
+	for (const auto &[population_type, population_type_size] : this->get_type_sizes()) {
+		int64_t weighted_population_type_size = population_type_size;
+		weighted_population_type_size *= get_population_strata_income_weight(population_type->get_strata());
+		weighted_population_size += weighted_population_type_size;
+	}
+
+	return weighted_population_size;
 }
 
 QVariantList population::get_type_sizes_qvariant_list() const

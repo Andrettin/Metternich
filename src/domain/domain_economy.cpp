@@ -330,13 +330,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
 
-	int64_t weighted_population_size = 0;
-
-	for (const auto &[population_type, population_type_size] : this->get_game_data()->get_population()->get_type_sizes()) {
-		int64_t weighted_population_type_size = population_type_size;
-		weighted_population_type_size *= get_population_strata_income_weight(population_type->get_strata());
-		weighted_population_size += weighted_population_type_size;
-	}
+	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
 
 	if (weighted_population_size == 0) {
 		return;
@@ -349,12 +343,8 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 	}
 
 	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
-		const population_strata population_unit_strata = population_unit->get_type()->get_strata();
-		const int64_t population_unit_weighted_size = population_unit->get_size() * get_population_strata_income_weight(population_unit_strata);
+		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
 		const int64_t population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
-
-		const int64_t population_unit_paid_consumption_wealth = this->paid_consumption_wealth * population_unit_weighted_size / weighted_population_size;
-		population_unit->change_wealth(population_unit_paid_consumption_wealth);
 
 		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains, remaining_demands);
 	}
@@ -532,13 +522,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 
 int64_t domain_economy::add_population_wealth(const int64_t wealth)
 {
-	int64_t weighted_population_size = 0;
-
-	for (const auto &[population_type, population_type_size] : this->get_game_data()->get_population()->get_type_sizes()) {
-		int64_t weighted_population_type_size = population_type_size;
-		weighted_population_type_size *= get_population_strata_income_weight(population_type->get_strata());
-		weighted_population_size += weighted_population_type_size;
-	}
+	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
 
 	if (weighted_population_size == 0) {
 		return wealth;
@@ -548,7 +532,7 @@ int64_t domain_economy::add_population_wealth(const int64_t wealth)
 
 	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
 		const population_strata population_unit_strata = population_unit->get_type()->get_strata();
-		const int64_t population_unit_weighted_size = population_unit->get_size() * get_population_strata_income_weight(population_unit_strata);
+		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
 		const int64_t population_unit_income = wealth * population_unit_weighted_size / weighted_population_size;
 		const int64_t taxed_population_unit_income = population_unit_income * (100 - this->get_population_strata_tax_rate(population_unit_strata)) / 100;
 		population_unit->change_wealth(taxed_population_unit_income);

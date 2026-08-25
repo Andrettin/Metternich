@@ -122,6 +122,7 @@ public:
 		co_await this->set_size(this->get_size() + change, change_input_storage);
 	}
 
+	int64_t get_weighted_size() const;
 	int64_t get_literate_size() const;
 
 	const decimillesimal_int &get_literacy_rate() const

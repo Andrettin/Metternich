@@ -410,11 +410,6 @@ public:
 
 	void calculate_commodity_needs();
 	
-	void set_paid_consumption_wealth(const int64_t consumption_wealth)
-	{
-		this->paid_consumption_wealth = consumption_wealth;
-	}
-
 	int get_population_strata_tax_rate(const population_strata strata) const
 	{
 		const auto find_iterator = this->population_strata_tax_rates.find(strata);
@@ -721,7 +716,6 @@ private:
 	commodity_map<int64_t> bids;
 	commodity_map<int64_t> offers;
 	commodity_map<int> commodity_needs;
-	int64_t paid_consumption_wealth = 0;
 	std::map<population_strata, int> population_strata_tax_rates;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;

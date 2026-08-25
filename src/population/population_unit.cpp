@@ -15,6 +15,7 @@
 #include "map/site_game_data.h"
 #include "population/population.h"
 #include "population/population_defines.h"
+#include "population/population_strata.h"
 #include "population/population_type.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
@@ -338,6 +339,13 @@ void population_unit::set_site(const metternich::site *site)
 	}
 
 	emit size_changed();
+}
+
+int64_t population_unit::get_weighted_size() const
+{
+	const population_strata strata = this->get_type()->get_strata();
+	const int64_t weighted_size = this->get_size() * get_population_strata_income_weight(strata);
+	return weighted_size;
 }
 
 int64_t population_unit::get_literate_size() const
