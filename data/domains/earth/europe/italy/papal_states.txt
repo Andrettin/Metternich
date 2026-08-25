@@ -10,11 +10,4 @@ papal_states = {
 	default_capital = lateran
 	definite_article = true
 	short_name = true
-	core_provinces = {
-		latium
-		bologna
-		ferrara
-		ravenna
-		rimini
-	}
 }

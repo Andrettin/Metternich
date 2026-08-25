@@ -9,8 +9,4 @@ hanseatic_league = {
 	default_capital = lubeck
 	definite_article = true
 	short_name = true
-	core_provinces = {
-		holstein
-		hamburg
-	}
 }
