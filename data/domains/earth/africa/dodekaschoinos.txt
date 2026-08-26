@@ -1,0 +1,13 @@
+dodekaschoinos = {
+	name = "Dodekaschoinos"
+	type = polity
+	color = { 38 97 156 }
+	default_culture = egyptian
+	default_religion = kemetic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = syene #correct?
+	core_provinces = {
+		syene
+	}
+}
