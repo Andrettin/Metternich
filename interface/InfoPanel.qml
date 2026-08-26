@@ -277,7 +277,6 @@ Rectangle {
 				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
-				+ (selected_site_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_site_game_data.attribute_values)) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
 			) : ""
 		)
@@ -309,6 +308,61 @@ Rectangle {
 			return str
 		}
 	}
+	
+	Grid {
+		id: site_attribute_grid
+		anchors.top: site_info_text.bottom
+		anchors.topMargin: 4 * scale_factor
+		anchors.horizontalCenter: parent.horizontalCenter
+		columns: 6
+		columnSpacing: 4 * scale_factor
+		rowSpacing: 4 * scale_factor
+		verticalItemAlignment: Grid.AlignVCenter
+		visible: site_info_text.visible
+		
+		Repeater {
+			model: selected_site_game_data ? selected_site_game_data.attribute_values : []
+			
+			Item {
+				width: attribute_icon.width + (16 * scale_factor) + 4 * scale_factor
+				height: Math.max(attribute_icon.height, attribute_label.height)
+				
+				readonly property var attribute: model.modelData.key
+				readonly property int attribute_value: model.modelData.value
+			
+				Image {
+					id: attribute_icon
+					source: attribute ? ("image://icon/" + attribute.tiny_icon.identifier) : "image://empty/"
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+				}
+
+				SmallText {
+					id: attribute_label
+					text: attribute_value
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: attribute_icon.right
+					anchors.leftMargin: 4 * scale_factor
+				}
+
+				MouseArea {
+					anchors.top: attribute_icon.top
+					anchors.bottom: attribute_icon.bottom
+					anchors.left: attribute_icon.left
+					anchors.right: attribute_label.right
+					hoverEnabled: true
+					
+					onEntered: {
+						status_text = attribute.name
+					}
+					onExited: {
+						status_text = ""
+					}
+				}
+			}
+		}
+	}
+	
 	
 	CivilianUnitInfoArea {
 		id: civilian_unit_info_area

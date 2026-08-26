@@ -52,6 +52,15 @@ void site_attribute::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void site_attribute::check() const
+{
+	if (this->get_tiny_icon() == nullptr) {
+		throw std::runtime_error(std::format("Site attribute \"{}\" has no tiny icon.", this->get_identifier()));
+	}
+
+	named_data_entry::check();
+}
+
 bool site_attribute::affects_skill(const skill *skill) const
 {
 	return vector::contains(this->affected_skills, skill);

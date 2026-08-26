@@ -1,13 +1,16 @@
 corruption = {
 	name = "Corruption"
+	tiny_icon = dungeon
 }
 
 crime = {
 	name = "Crime"
+	tiny_icon = dungeon_door
 }
 
 law = {
 	name = "Law"
+	tiny_icon = law
 	affected_skills = {
 		law
 	}
@@ -15,6 +18,7 @@ law = {
 
 lore = {
 	name = "Lore"
+	tiny_icon = embassy
 	affected_skills = {
 		astrology
 		heraldry
@@ -24,6 +28,7 @@ lore = {
 
 productivity = {
 	name = "Productivity"
+	tiny_icon = trade_consulate
 	affected_skills = {
 		agriculture
 		armorer
@@ -38,6 +43,7 @@ productivity = {
 
 society = {
 	name = "Society"
+	tiny_icon = peace
 	affected_skills = {
 		disguise
 	}
