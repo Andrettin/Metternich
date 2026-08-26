@@ -295,15 +295,15 @@ MenuBase {
 		anchors.leftMargin: 4 * scale_factor
 		anchors.right: scenario_list.right
 		anchors.rightMargin: 4 * scale_factor
-		anchors.top: country_text_area.top
+		anchors.top: domain_text_area.top
 		wrapMode: Text.WordWrap
 	}
 	
 	Item {
 		id: domain_name_area
-		anchors.left: country_text_area.left
-		anchors.right: country_text_area.right
-		anchors.bottom: country_text_area.top
+		anchors.left: domain_text_area.left
+		anchors.right: domain_text_area.right
+		anchors.bottom: domain_text_area.top
 		anchors.bottomMargin: 6 * scale_factor
 		height: 26 * scale_factor
 		visible: selected_country !== null
@@ -327,7 +327,7 @@ MenuBase {
 	}
 	
 	Flickable {
-		id: country_text_area
+		id: domain_text_area
 		anchors.left: diplomatic_map.left
 		anchors.leftMargin: 4 * scale_factor
 		anchors.right: ruler_portrait.left
@@ -341,8 +341,8 @@ MenuBase {
 		clip: true
 		
 		SmallText {
-			id: country_text
-			width: country_text_area.width
+			id: domain_text
+			width: domain_text_area.width
 			wrapMode: Text.WordWrap
 			text: selected_country && selected_country_game_data && selected_country_population ? format_text(
 				selected_country.game_data.type_name
@@ -412,7 +412,7 @@ MenuBase {
 	
 	PortraitButton {
 		id: ruler_portrait
-		anchors.top: country_text_area.top
+		anchors.top: domain_text_area.top
 		anchors.right: population_type_chart.left
 		anchors.rightMargin: 32 * scale_factor
 		portrait_identifier: portrait ? portrait.identifier : ""

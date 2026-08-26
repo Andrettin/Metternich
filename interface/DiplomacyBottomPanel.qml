@@ -236,7 +236,7 @@ Rectangle {
 	
 	Item {
 		id: domain_name_area
-		anchors.left: country_text.left
+		anchors.left: domain_text_area.left
 		anchors.top: bottom_panel.top
 		anchors.topMargin: 16 * scale_factor
 		height: 26 * scale_factor
@@ -260,30 +260,41 @@ Rectangle {
 		}
 	}
 	
-	SmallText {
-		id: country_text
-		text: format_text(selected_country && selected_country_game_data && selected_country_population ? (
-			selected_country_game_data.type_name
-			+ (selected_country_game_data.diplomacy.overlord ? (
-				"\n" + selected_country_game_data.diplomacy.subject_type.name + " of " + selected_country_game_data.diplomacy.overlord.name
-			) : "")
-			+ "\n" + selected_country_game_data.title_name
-			+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
-			+ (selected_country_game_data.provinces.length > 0 ? ("\n" + number_string(selected_country_game_data.provinces.length) + " " + (selected_country_game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
-			+ "\n" + number_string(selected_country_game_data.holding_count) + " " + (selected_country_game_data.holding_count !== 1 ? "Holdings" : "Holding")
-			+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
-			+ ("\nDomain Power: " + number_string(selected_country_game_data.domain_power))
-			+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
-			+ (selected_country_game_data.consumption > 0 ? ("\nConsumption: " + number_string(selected_country_game_data.consumption)) : "")
-			+ (selected_country_game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country_game_data.unrest)) : "")
-			+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
-			//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
-			+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
-		) : "")
+	
+	Flickable {
+		id: domain_text_area
 		anchors.left: bottom_panel.left
 		anchors.leftMargin: 16 * scale_factor
 		anchors.top: domain_name_area.bottom
 		anchors.topMargin: 6 * scale_factor
+		anchors.bottom: parent.bottom
+		width: contentWidth
+		contentWidth: contentItem.childrenRect.width
+		contentHeight: contentItem.childrenRect.height
+		boundsBehavior: Flickable.StopAtBounds
+		clip: true
+		
+		SmallText {
+			id: domain_text
+			text: format_text(selected_country && selected_country_game_data && selected_country_population ? (
+				selected_country_game_data.type_name
+				+ (selected_country_game_data.diplomacy.overlord ? (
+					"\n" + selected_country_game_data.diplomacy.subject_type.name + " of " + selected_country_game_data.diplomacy.overlord.name
+				) : "")
+				+ "\n" + selected_country_game_data.title_name
+				+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
+				+ (selected_country_game_data.provinces.length > 0 ? ("\n" + number_string(selected_country_game_data.provinces.length) + " " + (selected_country_game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
+				+ "\n" + number_string(selected_country_game_data.holding_count) + " " + (selected_country_game_data.holding_count !== 1 ? "Holdings" : "Holding")
+				+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
+				+ ("\nDomain Power: " + number_string(selected_country_game_data.domain_power))
+				+ (selected_country_game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country_game_data.attribute_values)) : "")
+				+ (selected_country_game_data.consumption > 0 ? ("\nConsumption: " + number_string(selected_country_game_data.consumption)) : "")
+				+ (selected_country_game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country_game_data.unrest)) : "")
+				+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
+				//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
+				+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
+			) : "")
+		}
 	}
 	
 	SmallText {
@@ -296,8 +307,8 @@ Rectangle {
 	
 	CharacterPortraitButton {
 		id: ruler_portrait
-		anchors.top: country_text.top
-		anchors.left: country_text.left
+		anchors.top: domain_text_area.top
+		anchors.left: domain_text_area.left
 		anchors.leftMargin: 256 * scale_factor
 		character: selected_country_ruler
 			
