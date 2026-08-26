@@ -539,7 +539,7 @@ int64_t domain_economy::add_population_wealth(const int64_t wealth)
 		remaining_wealth -= taxed_population_unit_income;
 	}
 
-	assert_throw(remaining_wealth > 0);
+	assert_throw(remaining_wealth >= 0);
 
 	return remaining_wealth;
 }
