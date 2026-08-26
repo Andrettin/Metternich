@@ -448,7 +448,6 @@ source_group(database FILES ${database_HDRS})
 set(domain_HDRS
 	src/domain/consulate.h
 	src/domain/consulate_container.h
-	src/domain/country_type.h
 	src/domain/diplomacy_state.h
 	src/domain/domain.h
 	src/domain/domain_ai.h
@@ -465,6 +464,7 @@ set(domain_HDRS
 	src/domain/domain_tier.h
 	src/domain/domain_tier_data.h
 	src/domain/domain_turn_data.h
+	src/domain/domain_type.h
 	src/domain/government_group.h
 	src/domain/government_type.h
 	src/domain/government_type_container.h
@@ -692,7 +692,6 @@ set(script_condition_HDRS
 	src/script/condition/commodity_condition.h
 	src/script/condition/condition.h
 	src/script/condition/core_condition.h
-	src/script/condition/country_type_condition.h
 	src/script/condition/cultural_group_condition.h
 	src/script/condition/culture_condition.h
 	src/script/condition/discovered_province_condition.h
@@ -703,6 +702,7 @@ set(script_condition_HDRS
 	src/script/condition/domain_exists_condition.h
 	src/script/condition/domain_scope_condition.h
 	src/script/condition/domain_skill_condition.h
+	src/script/condition/domain_type_condition.h
 	src/script/condition/dungeon_area_condition.h
 	src/script/condition/dungeon_condition.h
 	src/script/condition/dynasty_condition.h

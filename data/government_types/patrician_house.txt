@@ -22,8 +22,8 @@ patrician_house = {
 	}
 	conditions = {
 		not = {
-			country_type = clade
-			country_type = tribe
+			domain_type = clade
+			domain_type = tribe
 			subject_type = colony
 		}
 	}

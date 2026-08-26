@@ -1,6 +1,6 @@
 is_lair = {
 	domain = {
-		country_type = clade
+		domain_type = clade
 	}
 }
 

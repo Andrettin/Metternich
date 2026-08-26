@@ -8,7 +8,6 @@
 #include "character/monster_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
-#include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
@@ -23,6 +22,7 @@
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/domain_turn_data.h"
+#include "domain/domain_type.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/idea.h"
@@ -1211,13 +1211,13 @@ const metternich::domain *domain_game_data::get_realm() const
 std::string domain_game_data::get_type_name() const
 {
 	switch (this->domain->get_type()) {
-		case country_type::polity:
+		case domain_type::polity:
 			if (this->get_rank() != nullptr) {
 				return this->get_rank()->get_name();
 			}
-		case country_type::clade:
-		case country_type::tribe:
-			return get_country_type_name(this->domain->get_type());
+		case domain_type::clade:
+		case domain_type::tribe:
+			return get_domain_type_name(this->domain->get_type());
 		default:
 			assert_throw(false);
 	}
@@ -1847,7 +1847,7 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
-	return this->domain->get_type() == country_type::polity;
+	return this->domain->get_type() == domain_type::polity;
 }
 
 QString domain_game_data::get_unplayable_reason() const
@@ -1864,7 +1864,7 @@ QString domain_game_data::get_unplayable_reason() const
 		return "You cannot play as a domain under anarchy";
 	}
 
-	if (this->domain->get_type() != country_type::polity) {
+	if (this->domain->get_type() != domain_type::polity) {
 		return "You cannot play as a non-polity domain";
 	}
 

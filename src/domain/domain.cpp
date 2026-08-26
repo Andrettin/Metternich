@@ -5,7 +5,6 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/database.h"
-#include "domain/country_type.h"
 #include "domain/domain_ai.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -13,6 +12,7 @@
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/domain_turn_data.h"
+#include "domain/domain_type.h"
 #include "domain/government_group.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
@@ -34,7 +34,7 @@
 namespace metternich {
 
 domain::domain(const std::string &identifier)
-	: named_data_entry(identifier), type(country_type::polity), default_tier(domain_tier::none), min_tier(domain_tier::none), max_tier(domain_tier::none)
+	: named_data_entry(identifier), type(domain_type::polity), default_tier(domain_tier::none), min_tier(domain_tier::none), max_tier(domain_tier::none)
 {
 }
 
@@ -279,12 +279,12 @@ void domain::reset_ai()
 
 bool domain::is_tribe() const
 {
-	return this->get_type() == country_type::tribe;
+	return this->get_type() == domain_type::tribe;
 }
 
 bool domain::is_clade() const
 {
-	return this->get_type() == country_type::clade;
+	return this->get_type() == domain_type::clade;
 }
 
 const QColor &domain::get_color() const
@@ -520,7 +520,7 @@ std::vector<const site *> domain::get_core_holdings_for_tier(const domain_tier t
 
 bool domain::can_declare_war() const
 {
-	return this->get_type() == country_type::polity;
+	return this->get_type() == domain_type::polity;
 }
 
 std::vector<const technology *> domain::get_available_technologies() const

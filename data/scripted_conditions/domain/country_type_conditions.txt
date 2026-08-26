@@ -6,7 +6,7 @@ is_civilized = {
 
 is_tribe = {
 	or = {
-		country_type = tribe
+		domain_type = tribe
 		government_group = tribe
 	}
 }

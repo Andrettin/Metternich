@@ -16,7 +16,7 @@ tribal_despotism = {
 	conditions = {
 		not = {
 			subject_type = colony
-			country_type = clade
+			domain_type = clade
 		}
 	}
 	ruler_character_classes = {

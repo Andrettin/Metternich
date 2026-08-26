@@ -18,8 +18,8 @@ colony = {
 	conditions = {
 		subject_type = colony
 		not = {
-			country_type = clade
-			country_type = tribe
+			domain_type = clade
+			domain_type = tribe
 		}
 	}
 	ruler_character_classes = {

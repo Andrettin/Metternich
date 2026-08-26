@@ -16,7 +16,7 @@ clade = {
 		overwhelming_taxation
 	}
 	conditions = {
-		country_type = clade
+		domain_type = clade
 	}
 	ruler_monster_types = {
 		african_elephant

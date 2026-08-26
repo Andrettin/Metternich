@@ -40,7 +40,6 @@
 #include "script/condition/commodity_condition.h"
 #include "script/condition/condition_base.ipp"
 #include "script/condition/core_condition.h"
-#include "script/condition/country_type_condition.h"
 #include "script/condition/cultural_group_condition.h"
 #include "script/condition/culture_condition.h"
 #include "script/condition/discovered_province_condition.h"
@@ -51,6 +50,7 @@
 #include "script/condition/domain_exists_condition.h"
 #include "script/condition/domain_scope_condition.h"
 #include "script/condition/domain_skill_condition.h"
+#include "script/condition/domain_type_condition.h"
 #include "script/condition/dungeon_area_condition.h"
 #include "script/condition/dungeon_condition.h"
 #include "script/condition/dynasty_condition.h"
@@ -196,12 +196,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<anarchy_condition>(value, condition_operator);
 		} else if (key == "available_food") {
 			return std::make_unique<available_food_condition>(value, condition_operator);
-		} else if (key == "country_type") {
-			return std::make_unique<country_type_condition>(value, condition_operator);
 		} else if (key == "discovered_province") {
 			return std::make_unique<discovered_province_condition>(value, condition_operator);
 		} else if (key == "discovered_region") {
 			return std::make_unique<discovered_region_condition>(value, condition_operator);
+		} else if (key == "domain_type") {
+			return std::make_unique<domain_type_condition>(value, condition_operator);
 		} else if (key == "government_group") {
 			return std::make_unique<government_group_condition>(value, condition_operator);
 		} else if (key == "government_type") {

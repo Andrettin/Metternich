@@ -19,7 +19,6 @@
 #include "database/defines.h"
 #include "database/preferences.h"
 #include "domain/consulate.h"
-#include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
@@ -27,6 +26,7 @@
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/domain_turn_data.h"
+#include "domain/domain_type.h"
 #include "domain/government_type.h"
 #include "domain/idea.h"
 #include "domain/idea_slot.h"
@@ -188,11 +188,11 @@ int main(int argc, char **argv)
 		database_util::register_enum<bloodline_strength_category>();
 		database_util::register_enum<character_attribute_type>();
 		database_util::register_enum<commodity_type>();
-		database_util::register_enum<country_type>();
 		database_util::register_enum<cultural_group_rank>();
 		database_util::register_enum<decision_type>();
 		database_util::register_enum<diplomacy_state>();
 		database_util::register_enum<domain_tier>();
+		database_util::register_enum<domain_type>();
 		database_util::register_enum<elevation_type>();
 		database_util::register_enum<event_trigger>();
 		database_util::register_enum<food_type>();

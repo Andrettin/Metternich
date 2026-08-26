@@ -39,8 +39,8 @@ class population_class;
 class province;
 class religion;
 class site;
-enum class country_type;
 enum class domain_tier;
+enum class domain_type;
 
 template <typename scope_type>
 class and_condition;
@@ -49,7 +49,7 @@ class domain final : public named_data_entry, public data_type<domain>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(metternich::country_type type MEMBER type READ get_type NOTIFY changed)
+	Q_PROPERTY(metternich::domain_type type MEMBER type READ get_type NOTIFY changed)
 	Q_PROPERTY(bool tribe READ is_tribe CONSTANT)
 	Q_PROPERTY(bool clade READ is_clade CONSTANT)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
@@ -127,7 +127,7 @@ public:
 		return this->ai.get();
 	}
 
-	country_type get_type() const
+	domain_type get_type() const
 	{
 		return this->type;
 	}
@@ -247,7 +247,7 @@ signals:
 	void ai_changed() const;
 
 private:
-	country_type type{};
+	domain_type type{};
 	QColor color;
 	std::string flag;
 	const archimedes::data_module *flag_module = nullptr;

@@ -14,7 +14,6 @@
 #include "database/gsml_parser.h"
 #include "database/gsml_property.h"
 #include "database/preferences.h"
-#include "domain/country_type.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"
 #include "domain/domain_ai.h"
@@ -1190,7 +1189,7 @@ QCoro::Task<void> game::apply_sites()
 	}
 
 	for (const domain *domain : this->get_domains()) {
-		if (domain->get_type() == country_type::clade) {
+		if (domain->is_clade()) {
 			continue;
 		}
 

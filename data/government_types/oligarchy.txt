@@ -19,8 +19,8 @@ oligarchy = {
 	}
 	conditions = {
 		not = {
-			country_type = clade
-			country_type = tribe
+			domain_type = clade
+			domain_type = tribe
 			subject_type = colony
 		}
 		province_count > 0
