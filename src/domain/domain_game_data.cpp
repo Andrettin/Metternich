@@ -2487,9 +2487,11 @@ QCoro::Task<void> domain_game_data::check_rebellions()
 	domain_map<std::vector<const province *>> rebellion_domain_provinces;
 
 	for (const province *province : rebellious_provinces) {
-		for (const metternich::domain *core_domain : province->get_core_domains()) {
-			if (!vector::contains(rebellion_domain_provinces[core_domain], province)) {
-				rebellion_domain_provinces[core_domain].push_back(province);
+		if (!this->domain->is_clade()) {
+			for (const metternich::domain *core_domain : province->get_core_domains()) {
+				if (!vector::contains(rebellion_domain_provinces[core_domain], province)) {
+					rebellion_domain_provinces[core_domain].push_back(province);
+				}
 			}
 		}
 
