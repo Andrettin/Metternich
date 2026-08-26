@@ -1,0 +1,8 @@
+amuda = {
+	name = "Amuda"
+	world = earth
+	geocoordinate = { 40.93 37.104166666667 } #Amoudah
+	type = holding
+	holding_type = castle
+	province = hasakah
+}

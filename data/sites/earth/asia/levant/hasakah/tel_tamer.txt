@@ -1,0 +1,8 @@
+tel_tamer = {
+	name = "Tel Tamer"
+	world = earth
+	geocoordinate = { 40.371388888889 36.660555555556 } #Tell Tamer
+	type = holding
+	holding_type = castle
+	province = hasakah
+}

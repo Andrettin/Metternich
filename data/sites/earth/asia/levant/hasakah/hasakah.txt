@@ -1,6 +1,8 @@
-al_hasakah = {
-	name = "Al-Hasakah"
+hasakah = {
+	name = "Hasakah"
 	world = earth
 	geocoordinate = { 40.75000850300 36.48328859360 } #from Natural Earth
 	type = holding
+	holding_type = castle
+	province = hasakah
 }

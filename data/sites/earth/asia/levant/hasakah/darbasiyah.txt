@@ -1,0 +1,8 @@
+darbasiyah = {
+	name = "Darbasiyah"
+	world = earth
+	geocoordinate = { 40.651944444444 37.072777777778 } #Al-Darbasiyah
+	type = holding
+	holding_type = castle
+	province = hasakah
+}

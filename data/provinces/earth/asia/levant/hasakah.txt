@@ -1,7 +1,8 @@
-al_hasakah = {
-	name = "Al-Hasakah"
-	color = { 158 170 74 }
-	default_provincial_capital = al_hasakah
+hasakah = {
+	name = "Hasakah"
+	color = { 126 177 49 }
+	terrain = desert
+	default_provincial_capital = hasakah
 	regions = {
 		asia
 		middle_east

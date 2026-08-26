@@ -1,0 +1,8 @@
+qamishhlo = {
+	name = "Qamishhlo"
+	world = earth
+	geocoordinate = { 41.229979 37.030025 } #from Natural Earth (Qamishli)
+	type = holding
+	holding_type = guild
+	province = hasakah
+}

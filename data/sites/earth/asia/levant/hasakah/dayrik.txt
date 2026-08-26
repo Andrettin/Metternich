@@ -1,0 +1,8 @@
+dayrik = {
+	name = "Dayrik"
+	world = earth
+	geocoordinate = { 42.133333333333 37.166666666667 } #Al-Malikiyah District
+	type = holding
+	holding_type = temple
+	province = hasakah
+}

@@ -1,0 +1,8 @@
+dakhiliyah = {
+	name = "Dakhiliyah"
+	world = earth
+	geocoordinate = { 40.91 36.36944444 }
+	type = holding
+	holding_type = castle
+	province = hasakah
+}

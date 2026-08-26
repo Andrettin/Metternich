@@ -10,9 +10,9 @@ assyria = {
 	default_capital = nineveh
 	core_provinces = {
 		sinjar
-		al_hasakah
 		amida
 		deir_ez_zor
+		hasakah
 		saladin
 	}
 	
