@@ -340,64 +340,71 @@ MenuBase {
 		boundsBehavior: Flickable.StopAtBounds
 		clip: true
 		
-		SmallText {
-			id: domain_text
+		Column {
+			spacing: 4 * scale_factor
 			width: domain_text_area.width
-			wrapMode: Text.WordWrap
-			text: selected_country && selected_country_game_data && selected_country_population ? format_text(
-				selected_country.game_data.type_name
-				+ (selected_country.game_data.diplomacy.overlord ? (
-					"\n" + selected_country.game_data.diplomacy.subject_type.name + " of " + (selected_country.game_data.diplomacy.overlord.definite_article ? "the " : "") + selected_country.game_data.diplomacy.overlord.name
-				) : "")
-				+ "\n" + selected_country.game_data.title_name
-				+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
-				+ (selected_country.game_data.provinces.length > 0 ? ("\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
-				+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count !== 1 ? "Holdings" : "Holding")
-				+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
-				+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))
-				+ (selected_country.game_data.attribute_values.length > 0 ? ("\n" + object_counts_to_string(selected_country.game_data.attribute_values)) : "")
-				+ (selected_country.game_data.consumption > 0 ? ("\nConsumption: " + number_string(selected_country.game_data.consumption)) : "")
-				+ (selected_country.game_data.unrest > 0 ? ("\nUnrest: " + number_string(selected_country.game_data.unrest)) : "")
-				+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
-				+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
-				+ get_subject_type_counts_string(selected_country.game_data.diplomacy.subject_type_counts)
-				+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
-			) : ""
 			
-			function get_subject_type_counts_string(subject_type_counts) {
-				var str = "";
+			SmallText {
+				id: domain_text
+				width: parent.width
+				wrapMode: Text.WordWrap
+				text: selected_country && selected_country_game_data && selected_country_population ? format_text(
+					selected_country.game_data.type_name
+					+ (selected_country.game_data.diplomacy.overlord ? (
+						"\n" + selected_country.game_data.diplomacy.subject_type.name + " of " + (selected_country.game_data.diplomacy.overlord.definite_article ? "the " : "") + selected_country.game_data.diplomacy.overlord.name
+					) : "")
+					+ "\n" + selected_country.game_data.title_name
+					+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
+					+ (selected_country.game_data.provinces.length > 0 ? ("\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
+					+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count !== 1 ? "Holdings" : "Holding")
+					+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
+					+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))
+					+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
+					+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
+					+ get_subject_type_counts_string(selected_country.game_data.diplomacy.subject_type_counts)
+					+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
+				) : ""
 				
-				for (const kv_pair of subject_type_counts) {
-					var subject_type = kv_pair.key
-					var count = kv_pair.value
-					str += "\n" + count + " " + (count > 1 ? get_plural_form(subject_type.name) : subject_type.name)
-				}
-				
-				return str
-			}
-			
-			function get_resource_counts_string(resource_counts) {
-				var str = "";
-				
-				var natural_wonder_count = 0
-				
-				for (const kv_pair of resource_counts) {
-					var resource = kv_pair.key
-					var count = kv_pair.value
+				function get_subject_type_counts_string(subject_type_counts) {
+					var str = "";
 					
-					if (resource.natural_wonder) {
-						natural_wonder_count += count
-						continue
+					for (const kv_pair of subject_type_counts) {
+						var subject_type = kv_pair.key
+						var count = kv_pair.value
+						str += "\n" + count + " " + (count > 1 ? get_plural_form(subject_type.name) : subject_type.name)
 					}
 					
-					str += "\n" + count + " " + (count > 1 && resource.plural_name.length > 0 ? resource.plural_name : resource.name)
+					return str
 				}
 				
-				if (natural_wonder_count > 0) {
-					str = "\n" + natural_wonder_count + " " + (natural_wonder_count > 1 ? "Natural Wonders" : "Natural Wonder") + str
+				function get_resource_counts_string(resource_counts) {
+					var str = "";
+					
+					var natural_wonder_count = 0
+					
+					for (const kv_pair of resource_counts) {
+						var resource = kv_pair.key
+						var count = kv_pair.value
+						
+						if (resource.natural_wonder) {
+							natural_wonder_count += count
+							continue
+						}
+						
+						str += "\n" + count + " " + (count > 1 && resource.plural_name.length > 0 ? resource.plural_name : resource.name)
+					}
+					
+					if (natural_wonder_count > 0) {
+						str = "\n" + natural_wonder_count + " " + (natural_wonder_count > 1 ? "Natural Wonders" : "Natural Wonder") + str
+					}
+					
+					return str
 				}
-				
-				return str
+			}
+			
+			DomainAttributeGrid {
+				id: domain_attribute_grid
+				domain: selected_country
 			}
 		}
 	}

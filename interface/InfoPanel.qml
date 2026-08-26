@@ -363,7 +363,6 @@ Rectangle {
 		}
 	}
 	
-	
 	CivilianUnitInfoArea {
 		id: civilian_unit_info_area
 		anchors.top: subtitle.bottom

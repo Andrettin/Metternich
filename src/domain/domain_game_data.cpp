@@ -2290,7 +2290,12 @@ QVariantList domain_game_data::get_attribute_values_qvariant_list() const
 {
 	data_entry_map<domain_attribute, int> attribute_values_int_map;
 	for (const auto &[attribute, attribute_value] : this->get_attribute_values()) {
-		attribute_values_int_map[attribute] = attribute_value.to_int();
+		const int attribute_value_int = attribute_value.to_int();
+		if (attribute_value_int == 0) {
+			continue;
+		}
+
+		attribute_values_int_map[attribute] = attribute_value_int;
 	}
 
 	return archimedes::map::to_qvariant_list(attribute_values_int_map);
@@ -2333,9 +2338,7 @@ QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribut
 		this->get_economy()->update_attribute_taxation();
 	}
 
-	if (game::get()->is_running()) {
-		emit attribute_values_changed();
-	}
+	emit attribute_values_changed();
 }
 
 bool domain_game_data::do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output) const

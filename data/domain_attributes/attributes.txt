@@ -1,15 +1,18 @@
 economy = {
 	name = "Economy"
+	tiny_icon = trade_consulate
 	check_dice = 1d20
 	taxable = true
 }
 
 loyalty = {
 	name = "Loyalty"
+	tiny_icon = alliance
 	check_dice = 1d20
 }
 
 stability = {
 	name = "Stability"
+	tiny_icon = alliance_ring
 	check_dice = 1d20
 }

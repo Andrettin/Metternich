@@ -47,6 +47,10 @@ void domain_attribute::process_gsml_scope(const gsml_data &scope)
 
 void domain_attribute::check() const
 {
+	if (this->get_tiny_icon() == nullptr) {
+		throw std::runtime_error(std::format("Domain attribute \"{}\" has no tiny icon.", this->get_identifier()));
+	}
+
 	if (this->get_check_dice().is_null()) {
 		throw std::runtime_error(std::format("Domain attribute \"{}\" has no check dice.", this->get_identifier()));
 	}

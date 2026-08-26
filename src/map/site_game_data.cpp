@@ -1447,9 +1447,7 @@ QCoro::Task<void> site_game_data::change_attribute_value(const site_attribute *a
 		}
 	}
 
-	if (game::get()->is_running()) {
-		emit attribute_values_changed();
-	}
+	emit attribute_values_changed();
 }
 
 QCoro::Task<void> site_game_data::add_attribute_roll_result(const site_attribute *attribute, const dice &dice, const int roll_result)
