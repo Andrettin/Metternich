@@ -77,7 +77,12 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 				const std::string &value = property.get_value();
 				const int province_level = std::stoi(key);
 
-				this->income_per_level_and_province_level[level][province_level] = dice(value);
+				dice dice(value);
+				if (dice.get_modifier() < 0) {
+					dice.set_min_value(0);
+				}
+
+				this->income_per_level_and_province_level[level][province_level] = std::move(dice);
 			});
 		});
 	} else if (tag == "taxation_per_level_difference_and_income") {
@@ -90,7 +95,12 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 				const std::string &value = property.get_value();
 				const int income = std::stoi(key);
 
-				this->taxation_per_level_difference_and_income[level_difference][income] = dice(value);
+				dice dice(value);
+				if (dice.get_modifier() < 0) {
+					dice.set_min_value(0);
+				}
+
+				this->taxation_per_level_difference_and_income[level_difference][income] = std::move(dice);
 			});
 		});
 	} else if (tag == "conditions") {

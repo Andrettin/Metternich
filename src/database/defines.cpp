@@ -110,6 +110,9 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			child_scope.for_each_property([this, taxation_type](const gsml_property &property) {
 				const int level = std::stoi(property.get_key());
 				dice dice(property.get_value());
+				if (dice.get_modifier() < 0) {
+					dice.set_min_value(0);
+				}
 
 				this->province_taxation_per_level[taxation_type][level] = std::move(dice);
 			});
