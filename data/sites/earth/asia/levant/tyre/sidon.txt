@@ -3,9 +3,8 @@ sidon = {
 	world = earth
 	geocoordinate = { 35.36878657910 33.56302756660 } #from Natural Earth
 	type = resource
-	#resource = fruit #citrus-producing area; Source: https://maps.lib.utexas.edu/maps/atlas_middle_east/lebanon_land.jpg
 	resource = fruit
-	province = lebanon
+	province = tyre #South Governorate
 	cultural_names = {
 		arabic = "Saida"
 	}

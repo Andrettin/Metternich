@@ -1,0 +1,8 @@
+boutron = {
+	name = "Boutron"
+	world = earth
+	geocoordinate = { 35.657598 34.251074 } #Batroun
+	type = holding
+	holding_type = temple
+	province = tripoli #North Governorate
+}

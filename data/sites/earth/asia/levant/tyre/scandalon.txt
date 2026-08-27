@@ -4,5 +4,5 @@ scandalon = {
 	geocoordinate = { 35.1639 33.1558 } #Scandelion Castle
 	type = holding
 	holding_type = castle
-	province = lebanon #South Governorate
+	province = tyre #South Governorate
 }

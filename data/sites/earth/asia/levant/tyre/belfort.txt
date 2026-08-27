@@ -4,5 +4,5 @@ belfort_lebanon = {
 	geocoordinate = { 35.532148 33.324715 } #Beaufort Castle, Lebanon
 	type = holding
 	holding_type = castle
-	province = lebanon #Nabatieh
+	province = tyre #Nabatieh
 }

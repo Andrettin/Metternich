@@ -1,0 +1,8 @@
+arqah = {
+	name = "Arqah"
+	world = earth
+	geocoordinate = { 36.04 34.52972222222222 } #Arqa
+	type = holding
+	holding_type = castle
+	province = tripoli #Akkar
+}

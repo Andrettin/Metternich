@@ -2,7 +2,7 @@ beirut = {
 	name = "Beirut"
 	world = earth
 	geocoordinate = { 35.50970821000 33.87197511700 } #from Natural Earth
-	province = lebanon
+	province = tyre #Beirut
 	
 	history = {
 		1360 = {

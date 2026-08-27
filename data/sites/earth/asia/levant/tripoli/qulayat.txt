@@ -1,0 +1,8 @@
+qulayat = {
+	name = "Qulayat"
+	world = earth
+	geocoordinate = { 35.714025 33.972435 } #Qleiat
+	type = holding
+	holding_type = castle
+	province = tripoli #Keserwan-Jbeil
+}

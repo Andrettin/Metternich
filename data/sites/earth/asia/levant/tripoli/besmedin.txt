@@ -1,0 +1,8 @@
+besmedin = {
+	name = "Besmedin"
+	world = earth
+	geocoordinate = { 35.79713611 34.32018333 } #Bishmizzine
+	type = holding
+	holding_type = castle
+	province = tripoli #North Governorate
+}

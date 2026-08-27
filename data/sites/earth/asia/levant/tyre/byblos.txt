@@ -2,11 +2,15 @@ byblos = {
 	name = "Byblos"
 	world = earth
 	geocoordinate = { 35.65 34.116666666667 }
-	type = resource
-	resource = fruit #fruit-producing area; Source: https://maps.lib.utexas.edu/maps/atlas_middle_east/lebanon_land.jpg
-	province = lebanon
+	type = holding
+	holding_type = guild
+	province = tyre #Keserwan-Jbeil
 	cultural_names = {
 		arabic = "Jubayl"
+		carthaginian = "Gebal"
+		phoenician = "Gebal"
+		roman = "Byblus"
+		western = "Gibelet"
 	}
 	
 	history = {

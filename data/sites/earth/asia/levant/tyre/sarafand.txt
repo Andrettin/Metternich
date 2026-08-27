@@ -4,5 +4,5 @@ sarafand = {
 	geocoordinate = { 35.29083333333333 33.45166666666667 }
 	type = holding
 	holding_type = guild
-	province = lebanon #South Governorate
+	province = tyre #South Governorate
 }

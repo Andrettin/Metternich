@@ -1,0 +1,8 @@
+nephin = {
+	name = "Nephin"
+	world = earth
+	geocoordinate = { 35.733333333333 34.35 } #Enfeh
+	type = holding
+	holding_type = castle
+	province = tripoli #North Governorate
+}

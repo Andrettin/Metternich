@@ -2,7 +2,9 @@ tripoli_levant = {
 	name = "Tripoli"
 	world = earth
 	geocoordinate = { 35.86999629590 34.42000368150 } #from Natural Earth
-	province = lebanon
+	type = holding
+	holding_type = castle
+	province = tripoli #North Governorate
 	
 	history = {
 		1360 = {
