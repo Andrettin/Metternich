@@ -539,6 +539,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		this->check_ideas();
 		co_await this->check_tier();
 		co_await this->check_culture();
+		co_await this->check_religion();
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
 	}
@@ -1196,6 +1197,48 @@ QCoro::Task<void> domain_game_data::set_religion(const metternich::religion *rel
 
 	if (game::get()->is_running()) {
 		emit religion_changed();
+	}
+}
+
+QCoro::Task<void> domain_game_data::check_religion()
+{
+	std::vector<const metternich::religion *> potential_religions;
+
+	if (this->get_government()->get_ruler() != nullptr) {
+		//use the ruler's religion for the domain
+		potential_religions = { this->get_government()->get_ruler()->get_religion() };
+	} else {
+		//get the allowed culture with most population
+		int64_t best_size = 0;
+
+		for (const auto &[religion, size] : this->get_population()->get_religion_sizes()) {
+			if (size < best_size) {
+				continue;
+			} else if (size > best_size) {
+				potential_religions.clear();
+				best_size = size;
+			}
+
+			potential_religions.push_back(religion);
+		}
+	}
+
+	if (potential_religions.empty()) {
+		co_return;
+	}
+
+	if (vector::contains(potential_religions, this->get_religion())) {
+		co_return;
+	}
+
+	const metternich::religion *chosen_religion = vector::get_random(potential_religions);
+
+	co_await this->set_religion(chosen_religion);
+
+	if (this->domain == game::get()->get_player_domain()) {
+		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
+
+		engine_interface::get()->add_notification("New State Religion", interior_minister_portrait, std::format("{}, the {} religion has taken hold of our institutions, becoming our new state religion!", this->get_form_of_address(), chosen_religion->get_name()));
 	}
 }
 
@@ -4659,9 +4702,10 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 		}
 	}
 
-	//ensure the released domain has an appropriate government, culture and ruler
+	//ensure the released domain has an appropriate government, culture, religion and ruler
 	co_await releasable_domain->get_game_data()->check_government_type();
 	co_await releasable_domain->get_game_data()->check_culture();
+	co_await releasable_domain->get_game_data()->check_religion();
 	co_await releasable_domain->get_government()->check_office_holder(defines::get()->get_ruler_office());
 
 	//FIXME: ensure the released domain has a religion that exists in the world when it is released

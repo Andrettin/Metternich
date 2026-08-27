@@ -277,6 +277,7 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> set_religion(const metternich::religion *religion);
+	[[nodiscard]] QCoro::Task<void> check_religion();
 
 	const metternich::domain *get_realm() const;
 

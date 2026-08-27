@@ -1879,6 +1879,7 @@ QCoro::Task<void> game::on_setup_finished()
 		co_await domain_game_data->check_government_type();
 		co_await domain_government->check_laws();
 		co_await domain_game_data->check_culture();
+		co_await domain_game_data->check_religion();
 
 		for (const office *office : office::get_all()) {
 			co_await domain_government->check_office_holder(office);
@@ -1887,6 +1888,7 @@ QCoro::Task<void> game::on_setup_finished()
 		domain_game_data->check_ideas();
 		co_await domain_game_data->check_tier();
 		co_await domain_game_data->check_culture();
+		co_await domain_game_data->check_religion();
 
 		for (const province *province : domain_game_data->get_provinces()) {
 			for (const site *site : province->get_game_data()->get_sites()) {
