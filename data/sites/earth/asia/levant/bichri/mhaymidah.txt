@@ -1,0 +1,8 @@
+mhaymidah = {
+	name = "Mhaymidah"
+	world = earth
+	geocoordinate = { 40.033 35.483 } #Muhaymidah
+	type = holding
+	holding_type = castle
+	province = bichri
+}

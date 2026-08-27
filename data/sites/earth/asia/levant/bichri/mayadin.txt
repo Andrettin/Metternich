@@ -1,0 +1,8 @@
+mayadin = {
+	name = "Mayadin"
+	world = earth
+	geocoordinate = { 40.453333333333 35.020833333333 }
+	type = holding
+	holding_type = guild
+	province = bichri
+}

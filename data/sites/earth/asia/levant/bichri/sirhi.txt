@@ -1,0 +1,8 @@
+sirhi = {
+	name = "Sirhi"
+	world = earth
+	geocoordinate = { 40.43 35.155833333333334 } #Circesium
+	type = holding
+	holding_type = castle
+	province = bichri
+}

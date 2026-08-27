@@ -1,0 +1,8 @@
+deir_al_zur = {
+	name = "Deir al-Zur"
+	world = earth
+	geocoordinate = { 40.12999466830 35.33038738920 } #from Natural Earth (Deir ez-Zor)
+	type = holding
+	holding_type = guild
+	province = bichri
+}

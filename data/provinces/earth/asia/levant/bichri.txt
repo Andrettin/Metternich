@@ -1,7 +1,8 @@
-deir_ez_zor = {
-	name = "Deir ez-Zor"
-	color = { 231 202 149 }
-	default_provincial_capital = deir_ez_zor
+bichri = {
+	name = "Bichri"
+	color = { 0 0 55 }
+	terrain = plains
+	default_provincial_capital = bichri
 	regions = {
 		asia
 		middle_east

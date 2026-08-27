@@ -11,7 +11,7 @@ assyria = {
 	core_provinces = {
 		sinjar
 		amida
-		deir_ez_zor
+		bichri
 		hasakah
 		saladin
 	}

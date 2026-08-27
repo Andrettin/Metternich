@@ -1,0 +1,8 @@
+bichri = {
+	name = "Bichri"
+	world = earth
+	geocoordinate = { 39.21888889 35.28972222 } #Jebel Bishri
+	type = holding
+	holding_type = castle
+	province = bichri
+}

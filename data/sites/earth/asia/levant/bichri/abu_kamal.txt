@@ -1,0 +1,8 @@
+abu_kamal = {
+	name = "Abu Kamal"
+	world = earth
+	geocoordinate = { 40.918629 34.450415 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bichri
+}

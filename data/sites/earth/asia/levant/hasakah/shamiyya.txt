@@ -1,0 +1,8 @@
+shamiyya = {
+	name = "Shamiyya"
+	world = earth
+	geocoordinate = { 40.44722222 36.57861111 } #Qaber Shamiyah
+	type = holding
+	holding_type = castle
+	province = hasakah
+}
