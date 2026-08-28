@@ -1859,6 +1859,10 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 	}
 
 	this->change_domain_size(change);
+	this->change_consumption(change);
+
+	//the holding count can affect attribute taxation (via the attribute check control modifier)
+	this->get_economy()->update_attribute_taxation();
 
 	if (game::get()->is_running()) {
 		emit holding_count_changed();
@@ -2430,8 +2434,8 @@ int domain_game_data::get_attribute_check_chance(const domain_attribute *attribu
 
 int domain_game_data::get_attribute_check_control_modifier() const
 {
-	const int domain_size = this->get_domain_size();
-	return -domain_size;
+	const int holding_count = this->get_holding_count();
+	return -holding_count;
 }
 
 QVariantList domain_game_data::get_site_attribute_values_qvariant_list() const
@@ -2635,11 +2639,6 @@ void domain_game_data::change_domain_size(const int change)
 	}
 
 	this->domain_size += change;
-
-	this->change_consumption(change);
-
-	//domain size can affect attribute taxation (via the attribute check control modifier)
-	this->get_economy()->update_attribute_taxation();
 
 	if (game::get()->is_running()) {
 		emit domain_size_changed();
