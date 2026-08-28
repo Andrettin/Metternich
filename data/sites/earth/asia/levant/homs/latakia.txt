@@ -4,7 +4,7 @@ latakia = {
 	geocoordinate = { 35.77997595090 35.53998699850 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = damascus #Latakia
+	province = homs #Latakia
 	
 	history = {
 		1360 = {

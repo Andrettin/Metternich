@@ -4,5 +4,5 @@ krak_des_chevaliers = {
 	geocoordinate = { 36.29472222222222 34.75694444444444 }
 	type = holding
 	holding_type = castle
-	province = damascus #Homs
+	province = homs
 }

@@ -1,0 +1,8 @@
+marmarita = {
+	name = "Marmarita"
+	world = earth
+	geocoordinate = { 36.25 34.783333333333 }
+	type = holding
+	holding_type = guild
+	province = homs
+}

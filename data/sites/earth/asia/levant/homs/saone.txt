@@ -4,5 +4,5 @@ saone = {
 	geocoordinate = { 36.057222 35.595833 } #Citadel of Salah Ed-Din
 	type = holding
 	holding_type = castle
-	province = damascus #Latakia
+	province = homs #Latakia
 }

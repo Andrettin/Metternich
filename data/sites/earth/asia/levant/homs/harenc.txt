@@ -4,5 +4,5 @@ harenc = {
 	geocoordinate = { 36.519208 36.207643 } #Harem
 	type = holding
 	holding_type = castle
-	province = damascus #Idlib
+	province = homs #Idlib
 }

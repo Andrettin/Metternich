@@ -1,0 +1,11 @@
+homs = {
+	name = "Homs"
+	world = earth
+	geocoordinate = { 36.718076 34.731905 } #from Natural Earth
+	type = holding
+	holding_type = castle #or guild
+	province = homs
+	cultural_names = {
+		greek = "Emesa"
+	}
+}

@@ -4,5 +4,5 @@ qadmus = {
 	geocoordinate = { 36.161111111111 35.101388888889 } #Al-Qadmus
 	type = holding
 	holding_type = castle
-	province = damascus #Tartus
+	province = homs #Tartus
 }

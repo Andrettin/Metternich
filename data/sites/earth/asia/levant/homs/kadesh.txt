@@ -1,0 +1,14 @@
+kadesh = {
+	name = "Kadesh" #also known as Qadesh
+	world = earth
+	geocoordinate = { 36.5196 34.55781 }
+	type = holding
+	holding_type = castle
+	province = homs
+	
+	history = {
+		-1450 = {
+			developed = true #Kadesh existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
+		}
+	}
+}

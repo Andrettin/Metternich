@@ -2,7 +2,7 @@ raqqa = {
 	name = "Raqqa"
 	world = earth
 	geocoordinate = { 39.01998490270 35.93037660630 } #from Natural Earth
-	province = damascus #Raqqa
+	province = homs #Raqqa
 	
 	history = {
 		1360 = {

@@ -1,0 +1,8 @@
+khazandar = {
+	name = "Khazandar"
+	world = earth
+	geocoordinate = { 36.71559 34.73678 } #Wadi al-Khaznadar
+	type = holding
+	holding_type = castle
+	province = homs
+}

@@ -1,0 +1,8 @@
+sadad = {
+	name = "Sadad"
+	world = earth
+	geocoordinate = { 36.924189 34.313456 }
+	type = holding
+	holding_type = temple
+	province = homs
+}

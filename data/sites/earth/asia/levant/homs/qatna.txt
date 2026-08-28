@@ -1,0 +1,8 @@
+qatna = {
+	name = "Qatna"
+	world = earth
+	geocoordinate = { 36.865833333333 34.835 }
+	type = holding
+	holding_type = castle
+	province = homs
+}

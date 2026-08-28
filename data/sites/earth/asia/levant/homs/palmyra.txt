@@ -4,8 +4,11 @@ palmyra = {
 	geocoordinate = { 38.28333736040 34.55040915840 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = damascus #Homs
+	province = homs
 	cultural_names = {
 		arabic = "Tadmur"
+	}
+	features = {
+		prime_grain_land
 	}
 }

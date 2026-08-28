@@ -1,0 +1,8 @@
+zweitina = {
+	name = "Zweitina"
+	world = earth
+	geocoordinate = { 36.248830555556 34.768761111111 }
+	type = holding
+	holding_type = temple
+	province = homs
+}
