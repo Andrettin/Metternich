@@ -1,0 +1,8 @@
+riyaq = {
+	name = "Riyaq"
+	world = earth
+	geocoordinate = { 36.009827777778 33.850494444444 } #Riyak
+	type = holding
+	holding_type = castle
+	province = baalbek #Beqaa
+}

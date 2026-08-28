@@ -1,0 +1,8 @@
+baalbek = {
+	name = "Baalbek"
+	world = earth
+	geocoordinate = { 36.200556 34.015363 }
+	type = holding
+	holding_type = castle
+	province = baalbek
+}

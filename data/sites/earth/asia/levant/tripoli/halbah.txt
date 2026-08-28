@@ -1,0 +1,8 @@
+halbah = {
+	name = "Halbah"
+	world = earth
+	geocoordinate = { 36.07972222222222 34.54277777777778 } #Halba
+	type = holding
+	holding_type = temple
+	province = tripoli #Akkar
+}

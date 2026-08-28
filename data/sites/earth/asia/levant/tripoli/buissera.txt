@@ -1,0 +1,8 @@
+buissera = {
+	name = "Buissera"
+	world = earth
+	geocoordinate = { 36.01231388888889 34.25120111111111 } #Bsharri
+	type = holding
+	holding_type = castle
+	province = tripoli #North Governorate
+}

@@ -1,0 +1,8 @@
+akkar = {
+	name = "Akkar"
+	world = earth
+	geocoordinate = { 36.07805556 34.55055556 } #Akkar District
+	type = holding
+	holding_type = guild
+	province = tripoli #Akkar
+}

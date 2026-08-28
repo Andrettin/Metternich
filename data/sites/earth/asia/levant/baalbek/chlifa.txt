@@ -1,0 +1,8 @@
+chlifa = {
+	name = "Chlifa"
+	world = earth
+	geocoordinate = { 36.10055555555556 34.084722222222226 }
+	type = holding
+	holding_type = castle
+	province = baalbek
+}

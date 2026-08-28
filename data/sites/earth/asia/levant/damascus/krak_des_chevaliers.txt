@@ -1,0 +1,8 @@
+krak_des_chevaliers = {
+	name = "Krak des Chevaliers"
+	world = earth
+	geocoordinate = { 36.29472222222222 34.75694444444444 }
+	type = holding
+	holding_type = castle
+	province = damascus #Homs
+}

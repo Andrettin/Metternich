@@ -1,0 +1,8 @@
+laboue = {
+	name = "Laboue"
+	world = earth
+	geocoordinate = { 36.352392 34.197317 } #Labweh
+	type = holding
+	holding_type = castle
+	province = baalbek
+}
