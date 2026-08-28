@@ -1118,7 +1118,7 @@ QCoro::Task<void> domain_game_data::check_culture()
 	if (this->get_government()->get_ruler() != nullptr && this->is_culture_allowed(this->get_government()->get_ruler()->get_culture())) {
 		//use the ruler's culture for the domain if it is allowed for it
 		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
-	} else {
+	} else if (!this->get_population()->get_culture_sizes().empty()) {
 		//get the allowed culture with most population
 		int64_t best_size = 0;
 
@@ -1135,6 +1135,21 @@ QCoro::Task<void> domain_game_data::check_culture()
 			}
 
 			potential_cultures.push_back(culture);
+		}
+	} else {
+		for (const site *holding_site : this->get_sites()) {
+			if (holding_site->get_game_data()->get_culture() == nullptr) {
+				continue;
+			}
+
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			const int weight = std::max(holding_site->get_game_data()->get_holding_level().to_int(), 1);
+			for (int i = 0; i < weight; ++i) {
+				potential_cultures.push_back(holding_site->get_game_data()->get_culture());
+			}
 		}
 	}
 
@@ -1207,7 +1222,7 @@ QCoro::Task<void> domain_game_data::check_religion()
 	if (this->get_government()->get_ruler() != nullptr) {
 		//use the ruler's religion for the domain
 		potential_religions = { this->get_government()->get_ruler()->get_religion() };
-	} else {
+	} else if (!this->get_population()->get_religion_sizes().empty()) {
 		//get the allowed culture with most population
 		int64_t best_size = 0;
 
@@ -1220,6 +1235,21 @@ QCoro::Task<void> domain_game_data::check_religion()
 			}
 
 			potential_religions.push_back(religion);
+		}
+	} else {
+		for (const site *holding_site : this->get_sites()) {
+			if (holding_site->get_game_data()->get_religion() == nullptr) {
+				continue;
+			}
+
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			const int weight = std::max(holding_site->get_game_data()->get_holding_level().to_int(), 1);
+			for (int i = 0; i < weight; ++i) {
+				potential_religions.push_back(holding_site->get_game_data()->get_religion());
+			}
 		}
 	}
 
