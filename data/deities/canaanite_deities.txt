@@ -21,7 +21,7 @@ anat = {
 	}
 	character = {
 		species = human
-		character_class = warrior
+		character_class = aristocrat
 		culture = phoenician
 		religion = canaanite
 		gender = female
@@ -54,7 +54,7 @@ asherah = {
 	}
 	character = {
 		species = human
-		character_class = warrior
+		character_class = aristocrat
 		culture = phoenician
 		religion = canaanite
 		gender = female
@@ -83,11 +83,68 @@ baal = {
 	}
 	character = {
 		species = human
-		character_class = warrior
+		character_class = aristocrat
 		culture = phoenician
 		religion = canaanite
 		gender = male
 		father = el
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+chemosh = {
+	name = "Chemosh" #also known as Baal-Maon
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		arabic
+		canaanite
+	}
+	cultural_names = {
+		arabian = "Athtar"
+	}
+	major_domains = {
+		travel
+		war
+		water
+	}
+	worshiper_conditions = {
+		or = {
+			culture = phoenician #Moabite
+			#farmer
+			religion = arabic #so that Arabic-religion characters can worship this deity
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+dagon = {
+	name = "Dagon"
+	pantheon = canaanite
+	divine_rank = intermediate_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		plant
+		war
+		water
+	}
+	worshiper_conditions = {
+		culture = phoenician #Philistine
+	}
+	character = {
+		monster_type = triton #half-man, half-fish god
+		culture = aquan
+		religion = canaanite
+		gender = male
 		contemporary_character = marduk #to give him a start date
 	}
 }
@@ -116,10 +173,98 @@ el = {
 	}
 	character = {
 		species = human
-		character_class = warrior
+		character_class = aristocrat
 		culture = phoenician
 		religion = canaanite
 		gender = male
+	}
+}
+
+kosharoth = {
+	name = "Kosharoth" #actually seven wise goddesses
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		animal
+		healing
+		knowledge
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = bard
+			character_class = cleric #so that this deity can have clerics
+			character_class = druid
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = female
+		contemporary_character = marduk #to give them a start date
+	}
+}
+
+kotar = {
+	name = "Kotar" #also known as Kotar-wa-Khasis
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		good
+		protection
+		strength
+	}
+	worshiper_conditions = {
+		or = {
+			#artisan
+			character_class = cleric #so that this deity can have clerics
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+melech = {
+	name = "Melech"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		death
+		evil
+		trickery
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric #so that this deity can have clerics
+			character_class = mage #necromancer
+			character_class = rogue #thief/assassin
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
 	}
 }
 
@@ -146,7 +291,7 @@ melkart = {
 	}
 	character = {
 		species = human
-		character_class = warrior
+		character_class = aristocrat
 		culture = phoenician
 		religion = canaanite
 		gender = male
