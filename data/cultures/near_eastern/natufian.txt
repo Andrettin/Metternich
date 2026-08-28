@@ -1,0 +1,9 @@
+natufian = {
+	name = "Natufian"
+	group = near_eastern
+	color = { 255 255 102 }
+	primary_domain = natuf
+	species = {
+		human
+	}
+}

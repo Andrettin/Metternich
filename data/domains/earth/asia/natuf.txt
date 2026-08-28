@@ -1,0 +1,13 @@
+natuf = {
+	name = "Natuf"
+	type = polity
+	color = { 255 255 102 }
+	default_culture = natufian
+	default_religion = canaanite
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = jericho
+	short_names = {
+		tribe = "Natufians"
+	}
+}

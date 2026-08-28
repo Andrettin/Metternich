@@ -5,4 +5,10 @@ jericho = {
 	type = holding
 	holding_type = castle
 	province = jerusalem #West Bank
+	
+	history = {
+		-10000 = {
+			developed = true #Jericho was inhabited from 10000 BC; Source: "History of the World Map by Map", 2023, pp. 26-27.
+		}
+	}
 }
