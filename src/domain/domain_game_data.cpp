@@ -1677,6 +1677,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 		co_await this->change_holding_count(1 * multiplier);
 		this->change_score((site_game_data->get_holding_level() * 100).to_int() * multiplier);
 		this->change_domain_power(site_game_data->get_holding_level().to_int() * multiplier);
+		this->change_consumption(defines::get()->get_consumption_for_holding_level(site_game_data->get_holding_level().to_int()) * multiplier);
 
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
 			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);
@@ -1859,7 +1860,6 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 	}
 
 	this->change_domain_size(change);
-	this->change_consumption(centesimal_int(change));
 
 	//the holding count can affect attribute taxation (via the attribute check control modifier)
 	this->get_economy()->update_attribute_taxation();

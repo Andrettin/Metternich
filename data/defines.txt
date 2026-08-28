@@ -119,6 +119,12 @@ domain_maintenance_cost_per_domain_size = {
 	76 = 30 #gb
 }
 
+consumption_per_holding_level = {
+	0 = 0.5 #hamlet/village
+	2 = 1 #town
+	4 = 2 #city
+}
+
 ruler_office = ruler
 heir_office = heir
 foreign_minister_office = chancellor
