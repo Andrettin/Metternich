@@ -1,0 +1,155 @@
+anat = {
+	name = "Anat"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		earth
+		#fertility
+		protection
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = bard #qedesha
+			character_class = druid
+			character_class = warrior
+			gender = female
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = phoenician
+		religion = canaanite
+		gender = female
+		father = el
+		mother = asherah
+	}
+}
+
+asherah = {
+	name = "Asherah" #also known as Astarte
+	pantheon = canaanite
+	divine_rank = intermediate_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		animal
+		#fertility
+		air #heaven
+		plant
+		water
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = bard #qedesha
+			character_class = cleric
+			character_class = mage #sorcerer
+			gender = female
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = phoenician
+		religion = canaanite
+		gender = female
+		contemporary_character = marduk #to give her a start date
+	}
+}
+
+baal = {
+	name = "Baal" #also known as Baal-Hadad
+	pantheon = canaanite
+	divine_rank = intermediate_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		air
+		strength
+		thunder
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			#sailor
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		father = el
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+el = {
+	name = "El"
+	pantheon = canaanite
+	divine_rank = greater_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		good
+		air #heaven
+		knowledge
+		law
+		protection
+		strength
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			#character_class = farmer
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = phoenician
+		religion = canaanite
+		gender = male
+	}
+}
+
+melkart = {
+	name = "Melkart" #also known as Baal-Melkart
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		fire
+		plant
+		protection
+		strength
+		sun
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			culture = carthaginian
+			culture = phoenician #Tyrian
+		}
+	}
+	character = {
+		species = human
+		character_class = warrior
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}

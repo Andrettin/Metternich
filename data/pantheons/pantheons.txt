@@ -6,6 +6,10 @@ aesir = {
 	name = "Aesir"
 }
 
+canaanite = {
+	name = "Canaanite"
+}
+
 eastern_european = {
 	name = "Eastern European"
 }
