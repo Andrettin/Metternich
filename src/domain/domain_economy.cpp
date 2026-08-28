@@ -336,7 +336,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 		return;
 	}
 
-	const int64_t consumption_wealth = std::max(this->get_game_data()->get_consumption(), 0) * defines::get()->get_domain_income_unit_value();
+	const int64_t consumption_wealth = std::max(this->get_game_data()->get_consumption_int(), 0) * defines::get()->get_domain_income_unit_value();
 
 	if (consumption_wealth == 0) {
 		return;

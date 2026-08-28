@@ -21,7 +21,7 @@ public:
 
 	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_consumption((this->value * multiplier).to_int());
+		scope->get_game_data()->change_consumption(centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override

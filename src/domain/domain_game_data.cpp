@@ -153,7 +153,7 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "holding_count") {
 		this->holding_count = std::stoi(value);
 	} else if (key == "consumption") {
-		this->consumption = std::stoi(value);
+		this->consumption = centesimal_int(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
 	} else if (key == "domain_size") {
@@ -251,7 +251,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 
 	data.add_property("holding_count", std::to_string(this->get_holding_count()));
-	data.add_property("consumption", std::to_string(this->get_consumption()));
+	data.add_property("consumption", this->get_consumption().to_string());
 	data.add_property("unrest", std::to_string(this->get_unrest()));
 	data.add_property("domain_size", std::to_string(this->get_domain_size()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
@@ -598,7 +598,7 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->domain);
 	}
 
-	const int effective_consumption = std::max(this->get_consumption(), 0);
+	const int effective_consumption = std::max(this->get_consumption_int(), 0);
 	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
 	const int64_t paid_consumption_cost = std::min<int64_t>(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
 	if (paid_consumption_cost != 0) {
@@ -1859,7 +1859,7 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 	}
 
 	this->change_domain_size(change);
-	this->change_consumption(change);
+	this->change_consumption(centesimal_int(change));
 
 	//the holding count can affect attribute taxation (via the attribute check control modifier)
 	this->get_economy()->update_attribute_taxation();
@@ -2468,7 +2468,7 @@ QCoro::Task<void> domain_game_data::change_site_attribute_value(const site_attri
 	}
 }
 
-void domain_game_data::set_consumption(const int consumption)
+void domain_game_data::set_consumption(const centesimal_int &consumption)
 {
 	if (consumption == this->get_consumption()) {
 		return;

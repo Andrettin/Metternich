@@ -130,7 +130,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList tile_terrain_counts READ get_tile_terrain_counts_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
 	Q_PROPERTY(QVariantList site_attribute_values READ get_site_attribute_values_qvariant_list NOTIFY site_attribute_values_changed)
-	Q_PROPERTY(int consumption READ get_consumption NOTIFY consumption_changed)
+	Q_PROPERTY(int consumption READ get_consumption_int NOTIFY consumption_changed)
 	Q_PROPERTY(int unrest READ get_effective_unrest NOTIFY unrest_changed)
 	Q_PROPERTY(int score READ get_score NOTIFY score_changed)
 	Q_PROPERTY(int score_rank READ get_score_rank NOTIFY score_rank_changed)
@@ -495,14 +495,19 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> change_site_attribute_value(const site_attribute *attribute, const int change);
 
-	int get_consumption() const
+	const centesimal_int &get_consumption() const
 	{
 		return this->consumption;
 	}
 
-	void set_consumption(const int consumption);
+	int get_consumption_int() const
+	{
+		return this->get_consumption().to_int();
+	}
 
-	void change_consumption(const int change)
+	void set_consumption(const centesimal_int &consumption);
+
+	void change_consumption(const centesimal_int &change)
 	{
 		this->set_consumption(this->get_consumption() + change);
 	}
@@ -1138,7 +1143,7 @@ private:
 	terrain_type_map<int> tile_terrain_counts;
 	data_entry_map<domain_attribute, decimillesimal_int> attribute_values;
 	data_entry_map<site_attribute, int> site_attribute_values;
-	int consumption = 0;
+	centesimal_int consumption;
 	int unrest = 0;
 	int score = 0;
 	const domain_rank *rank = nullptr;
