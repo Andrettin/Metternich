@@ -1,0 +1,8 @@
+mashgarah = {
+	name = "Mashgarah"
+	world = earth
+	geocoordinate = { 35.651666666667 33.528055555556 } #Machgara
+	type = holding
+	holding_type = castle
+	province = beirut #Beqaa
+}

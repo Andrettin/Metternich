@@ -1,0 +1,8 @@
+abu_al_hasan = {
+	name = "Abu-al-Hasan"
+	world = earth
+	geocoordinate = { 35.47688085176188 33.57348858542867 } #Qalaat Abou el-Hassan
+	type = holding
+	holding_type = castle
+	province = beirut #Mount Lebanon
+}

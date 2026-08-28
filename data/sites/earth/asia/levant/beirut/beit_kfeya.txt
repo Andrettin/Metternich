@@ -1,0 +1,8 @@
+beit_kfeya = {
+	name = "Beit Kfeya"
+	world = earth
+	geocoordinate = { 35.68333333333333 33.922222222222224 } #Bikfaya
+	type = holding
+	holding_type = castle
+	province = beirut #Mount Lebanon
+}

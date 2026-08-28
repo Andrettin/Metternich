@@ -1,0 +1,8 @@
+journie = {
+	name = "Journie"
+	world = earth
+	geocoordinate = { 35.615555555556 33.969722222222 } #Jounieh
+	type = holding
+	holding_type = guild
+	province = beirut #Keserwan-Jbeil
+}

@@ -9,6 +9,7 @@ phoenicia = {
 	default_capital = tyre
 	core_provinces = {
 		tyre
+		beirut
 		tripoli
 	}
 }

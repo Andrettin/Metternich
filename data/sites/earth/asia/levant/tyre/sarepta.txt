@@ -1,0 +1,8 @@
+sarepta = {
+	name = "Sarepta"
+	world = earth
+	geocoordinate = { 35.295833333333 33.4575 }
+	type = holding
+	holding_type = castle
+	province = tyre #South Governorate
+}
