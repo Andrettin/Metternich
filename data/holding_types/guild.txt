@@ -25,9 +25,9 @@ guild = {
 		
 		seaport = 4
 		
-		hamlet = 0
-		village = 1
-		town = 2
+		hamlet = 1
+		village = 2
+		town = 3
 		city = 4
 	}
 	population_classes = {

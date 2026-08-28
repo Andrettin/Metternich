@@ -11,6 +11,11 @@ tyre = {
 			developed = true #existed c. 1450 BC; Source: William R. Shepherd, "Historical Atlas", 1911, p. 4.
 		}
 		
+		395 = {
+			buildings += cathedral #Tyre was the seat of an archbishopric in 395; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 42-43.
+			tier = archbishopric
+		}
+		
 		1360 = {
 			#existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

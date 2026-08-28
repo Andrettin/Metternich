@@ -1,0 +1,14 @@
+antioch = {
+	name = "Antioch"
+	type = polity
+	color = { 142 63 129 }
+	default_culture = aramaic
+	default_religion = orthodox
+	min_tier = duchy
+	default_tier = kingdom #patriarchate
+	default_government_type = theocracy
+	default_capital = antioch
+	core_holdings = {
+		antioch
+	}
+}

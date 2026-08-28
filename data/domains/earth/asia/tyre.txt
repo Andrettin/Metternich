@@ -1,0 +1,13 @@
+tyre = {
+	name = "Tyre"
+	type = polity
+	color = { 245 245 200 }
+	default_culture = phoenician
+	default_religion = orthodox
+	default_tier = duchy #archbishopric
+	default_government_type = theocracy
+	default_capital = tyre
+	core_holdings = {
+		tyre
+	}
+}
