@@ -236,6 +236,10 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 				continue;
 			}
 
+			if (!this->get_game_data()->is_province_explored(nearby_province)) {
+				continue;
+			}
+
 			for (const technology *technology : nearby_province->get_game_data()->get_technologies()) {
 				if (!province->get_game_data()->can_gain_technology(technology)) {
 					continue;

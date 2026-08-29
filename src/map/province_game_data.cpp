@@ -720,6 +720,10 @@ void province_game_data::check_trade_zone_domain()
 		//if the province itself has no economic holdings, use those of neighboring provinces instead for this calculation
 
 		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			if (nearby_province->get_game_data()->get_owner() == nullptr || !nearby_province->get_game_data()->get_owner()->get_game_data()->is_province_explored(this->province)) {
+				continue;
+			}
+
 			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
@@ -757,6 +761,10 @@ void province_game_data::check_trade_zone_domain_for_province_and_neighbors()
 	this->check_trade_zone_domain();
 
 	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		if (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->is_province_explored(nearby_province)) {
+			continue;
+		}
+
 		nearby_province->get_game_data()->check_trade_zone_domain();
 	}
 }
@@ -809,6 +817,10 @@ void province_game_data::check_temple_domain()
 		//if the province itself has no religious holdings, use those of neighboring provinces instead for this calculation
 
 		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			if (nearby_province->get_game_data()->get_owner() == nullptr || !nearby_province->get_game_data()->get_owner()->get_game_data()->is_province_explored(this->province)) {
+				continue;
+			}
+
 			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
@@ -846,6 +858,10 @@ void province_game_data::check_temple_domain_for_province_and_neighbors()
 	this->check_temple_domain();
 
 	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		if (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->is_province_explored(nearby_province)) {
+			continue;
+		}
+
 		nearby_province->get_game_data()->check_temple_domain();
 	}
 }
@@ -898,6 +914,10 @@ void province_game_data::check_cultural_society_domain()
 		//if the province itself has no cultural holdings, use those of neighboring provinces instead for this calculation
 
 		for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+			if (nearby_province->get_game_data()->get_owner() == nullptr || !nearby_province->get_game_data()->get_owner()->get_game_data()->is_province_explored(this->province)) {
+				continue;
+			}
+
 			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
@@ -935,6 +955,10 @@ void province_game_data::check_cultural_society_domain_for_province_and_neighbor
 	this->check_cultural_society_domain();
 
 	for (const metternich::province *nearby_province : this->province->get_map_data()->get_nearby_provinces()) {
+		if (this->get_owner() == nullptr || !this->get_owner()->get_game_data()->is_province_explored(nearby_province)) {
+			continue;
+		}
+
 		nearby_province->get_game_data()->check_cultural_society_domain();
 	}
 }

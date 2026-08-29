@@ -150,6 +150,10 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_events_for_scope(con
 		if constexpr (std::is_same_v<scope_type, const province>) {
 			if (event->is_from_neighbor()) {
 				for (const province *nearby_province : scope->get_map_data()->get_nearby_provinces()) {
+					if (scope->get_game_data()->get_owner() != nullptr && !scope->get_game_data()->get_owner()->get_game_data()->is_province_explored(nearby_province)) {
+						continue;
+					}
+
 					read_only_context event_ctx(scope);
 					event_ctx.source_scope = nearby_province;
 					co_await scoped_event_base::check_mtth_event_for_scope(event, scope, event_ctx);
