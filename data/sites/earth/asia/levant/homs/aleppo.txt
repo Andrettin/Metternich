@@ -10,6 +10,10 @@ aleppo = {
 	}
 	
 	history = {
+		-2000 = {
+			developed = true #existed in the 2000 BC - 500 AD period; Source: "History of the World Map by Map", 2023, pp. 50-51.
+		}
+		
 		high_middle_ages = {
 			tier = market #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 			buildings += market
