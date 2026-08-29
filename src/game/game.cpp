@@ -1901,7 +1901,7 @@ QCoro::Task<void> game::on_setup_finished()
 
 		//decrease population if there's too much for the starting food output
 		/*
-		while ((domain_economy->get_food_output() - domain_game_data->get_net_food_consumption()) < 0) {
+		while (domain_economy->get_food_output() < 0) {
 			domain_game_data->decrease_population(false);
 		}
 		*/

@@ -86,8 +86,6 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
 public:
-	static constexpr int settlement_base_free_food_consumption = 1;
-
 	explicit site_game_data(const metternich::site *site);
 
 	void process_gsml_property(const gsml_property &property);
@@ -489,16 +487,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_employment();
 	[[nodiscard]] QCoro::Task<void> check_employment_capacities_overflow();
 
-	int get_free_food_consumption() const
-	{
-		return this->free_food_consumption;
-	}
-
-	void change_free_food_consumption(const int change)
-	{
-		this->free_food_consumption += change;
-	}
-
 	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
@@ -716,7 +704,6 @@ private:
 	data_entry_map<employment_type, int64_t> base_employment_capacities;
 	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	data_entry_map<employment_type, int64_t> employment_capacities;
-	int free_food_consumption = 0;
 	commodity_map<centesimal_int> base_commodity_outputs;
 	commodity_map<centesimal_int> commodity_outputs;
 	centesimal_int output_modifier;

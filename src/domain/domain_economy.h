@@ -145,8 +145,6 @@ public:
 	
 	int64_t add_population_wealth(const int64_t wealth);
 
-	int64_t get_stored_food() const;
-
 	int64_t get_storage_capacity() const
 	{
 		return this->storage_capacity;

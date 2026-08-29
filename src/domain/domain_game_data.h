@@ -181,7 +181,6 @@ public:
 	void do_transporter_recruitment();
 	[[nodiscard]] QCoro::Task<void> do_construction();
 	[[nodiscard]] QCoro::Task<void> do_population_growth();
-	void do_food_consumption(const int food_consumption);
 	[[nodiscard]] QCoro::Task<void> do_starvation();
 	void do_population_literacy_change();
 	[[nodiscard]] QCoro::Task<void> do_population_cultural_change();
@@ -643,19 +642,6 @@ public:
 	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
-
-	int get_food_consumption() const
-	{
-		return this->food_consumption;
-	}
-
-	void change_food_consumption(const int change)
-	{
-		this->food_consumption += change;
-	}
-
-	int get_net_food_consumption() const;
-	int64_t get_available_food() const;
 
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
@@ -1156,7 +1142,6 @@ private:
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
 	int population_growth = 0; //population growth counter
-	int food_consumption = 0;
 	building_type_map<int> settlement_building_counts;
 	int max_current_constructions = domain_game_data::base_max_current_constructions;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;

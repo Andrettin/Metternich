@@ -707,23 +707,10 @@ void domain_game_data::do_transporter_recruitment()
 QCoro::Task<void> domain_game_data::do_population_growth()
 {
 	try {
-		if (this->get_food_consumption() == 0) {
-			this->set_population_growth(0);
-			co_return;
-		}
-
-		const int64_t available_food = this->get_available_food();
-
-		int food_consumption = this->get_net_food_consumption();
-
+		/*
 		const int population_growth_change = static_cast<int>(available_food);
 		this->change_population_growth(population_growth_change);
-
-		if (population_growth_change > 0) {
-			//food consumed for population growth
-			food_consumption += population_growth_change;
-		}
-		this->do_food_consumption(food_consumption);
+		*/
 
 		while (this->get_population_growth() >= population_defines::get()->get_population_growth_threshold()) {
 			co_await this->grow_population();
@@ -737,27 +724,6 @@ QCoro::Task<void> domain_game_data::do_population_growth()
 	}
 }
 
-void domain_game_data::do_food_consumption(const int food_consumption)
-{
-	int64_t remaining_food_consumption = food_consumption;
-
-	//this is a copy because we may need to erase elements from the map in the subsequent code
-	const commodity_map<int64_t> stored_commodities = this->get_economy()->get_stored_commodities();
-
-	for (const auto &[commodity, quantity] : stored_commodities) {
-		if (commodity->is_food()) {
-			const int64_t consumed_food = std::min(remaining_food_consumption, quantity);
-			this->get_economy()->change_stored_commodity(commodity, -consumed_food);
-
-			remaining_food_consumption -= consumed_food;
-
-			if (remaining_food_consumption == 0) {
-				break;
-			}
-		}
-	}
-}
-
 QCoro::Task<void> domain_game_data::do_starvation()
 {
 	int starvation_count = 0;
@@ -766,11 +732,6 @@ QCoro::Task<void> domain_game_data::do_starvation()
 		//starvation
 		co_await this->decrease_population(true);
 		++starvation_count;
-
-		if (this->get_food_consumption() == 0) {
-			this->set_population_growth(0);
-			break;
-		}
 	}
 
 	if (starvation_count > 0 && this->domain == game::get()->get_player_domain()) {
@@ -2718,8 +2679,7 @@ void domain_game_data::remove_population_unit(population_unit *population_unit)
 void domain_game_data::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	Q_UNUSED(population_unit);
-
-	this->change_food_consumption(multiplier);
+	Q_UNUSED(multiplier);
 
 	/*
 	if (type->get_country_modifier() != nullptr) {
@@ -2871,32 +2831,6 @@ const icon *domain_game_data::get_population_type_small_icon(const population_ty
 	}
 
 	return best_icon;
-}
-
-int domain_game_data::get_net_food_consumption() const
-{
-	int food_consumption = this->get_food_consumption();
-
-	for (const province *province : this->get_provinces()) {
-		for (const site *site : province->get_game_data()->get_sites()) {
-			if (!site->get_game_data()->can_have_population()) {
-				continue;
-			}
-
-			if (!site->get_game_data()->is_built()) {
-				continue;
-			}
-
-			food_consumption -= site->get_game_data()->get_free_food_consumption();
-		}
-	}
-
-	return food_consumption;
-}
-
-int64_t domain_game_data::get_available_food() const
-{
-	return this->get_economy()->get_stored_food() - this->get_net_food_consumption();
 }
 
 bool domain_game_data::has_building(const building_type *building) const
@@ -4555,6 +4489,10 @@ int64_t domain_game_data::get_maintenance_cost() const
 			maintenance_cost += find_iterator->second;
 		}
 	}
+
+	const int effective_consumption = std::max(this->get_consumption_int(), 0);
+	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
+	maintenance_cost += consumption_cost;
 
 	return maintenance_cost;
 }

@@ -369,7 +369,6 @@ QCoro::Task<void> site_game_data::initialize()
 {
 	if (this->site->is_settlement()) {
 		this->initialize_building_slots();
-		this->free_food_consumption = site_game_data::settlement_base_free_food_consumption;
 	}
 
 	const resource *resource = this->get_resource();

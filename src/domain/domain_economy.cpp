@@ -544,19 +544,6 @@ int64_t domain_economy::add_population_wealth(const int64_t wealth)
 	return remaining_wealth;
 }
 
-int64_t domain_economy::get_stored_food() const
-{
-	int64_t stored_food = 0;
-
-	for (const auto &[commodity, quantity] : this->get_stored_commodities()) {
-		if (commodity->is_food()) {
-			stored_food += quantity;
-		}
-	}
-
-	return stored_food;
-}
-
 void domain_economy::set_storage_capacity(const int64_t capacity)
 {
 	if (capacity == this->get_storage_capacity()) {
