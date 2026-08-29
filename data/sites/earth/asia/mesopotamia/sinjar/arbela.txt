@@ -8,6 +8,9 @@ arbela = {
 	cultural_names = {
 		arabic = "Erbil"
 	}
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		-1450 = {

@@ -1,0 +1,14 @@
+mersa = {
+	name = "Mersa"
+	world = earth
+	geocoordinate = { 34.03638889 26.55722222 } #Mersa Gawasis
+	type = holding
+	holding_type = temple
+	province = qusair
+	
+	history = {
+		-2040 = {
+			buildings += temple #had a temple in the 2040-1786 BC period; Source: "History of the World Map by Map", 2023, pp. 36-37.
+		}
+	}
+}
