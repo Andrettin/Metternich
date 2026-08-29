@@ -1,0 +1,8 @@
+baqofah = {
+	name = "Baqofah"
+	world = earth
+	geocoordinate = { 43.130555555556 36.588888888889 }
+	type = holding
+	holding_type = castle
+	province = mosul #Tel Kaif District
+}

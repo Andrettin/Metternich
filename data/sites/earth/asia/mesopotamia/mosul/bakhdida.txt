@@ -1,0 +1,8 @@
+bakhdida = {
+	name = "Bakhdida"
+	world = earth
+	geocoordinate = { 43.3775 36.270833333333 }
+	type = holding
+	holding_type = guild
+	province = mosul #Hamdaniya
+}

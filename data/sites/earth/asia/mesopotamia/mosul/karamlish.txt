@@ -1,0 +1,8 @@
+karamlish = {
+	name = "Karamlish"
+	world = earth
+	geocoordinate = { 43.412777777778 36.303611111111 }
+	type = holding
+	holding_type = temple
+	province = mosul #Hamdaniya
+}

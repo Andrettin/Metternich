@@ -3,7 +3,7 @@
 	#world = earth
 	#type = holding
 	#holding_type = temple
-	#province = sinjar
+	#province = mosul
 	
 	#in the city of Nineveh, but which geocoordinate?
 #}

@@ -4,5 +4,5 @@ baaj = {
 	geocoordinate = { 41.715088 36.042437 } #Al-Ba'aj
 	type = holding
 	holding_type = castle
-	province = sinjar
+	province = sinjar #Al-Ba'aj
 }

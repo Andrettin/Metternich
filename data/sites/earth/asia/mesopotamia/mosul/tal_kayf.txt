@@ -4,5 +4,5 @@ tal_kayf = {
 	geocoordinate = { 43.12026 36.49109 } #Tel Keppe
 	type = holding
 	holding_type = castle
-	province = sinjar
+	province = mosul #Tel Kaif/Tel Keppe
 }

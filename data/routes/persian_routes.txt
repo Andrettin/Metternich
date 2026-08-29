@@ -13,7 +13,7 @@ persian_royal_highway = {
 		sebastea
 		melitene
 		amida
-		sinjar
+		mosul
 		kermanshah
 		elam
 		arrajan

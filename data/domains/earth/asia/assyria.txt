@@ -9,11 +9,12 @@ assyria = {
 	default_government_type = monarchy
 	default_capital = nineveh
 	core_provinces = {
-		sinjar
+		mosul
 		amida
 		bichri
 		hasakah
 		saladin
+		sinjar
 	}
 	
 	history = {

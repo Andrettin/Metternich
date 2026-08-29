@@ -1,0 +1,8 @@
+aqrah = {
+	name = "Aqrah"
+	world = earth
+	geocoordinate = { 43.894444444444 36.759722222222 } #Akre
+	type = holding
+	holding_type = castle
+	province = mosul #Akre District
+}

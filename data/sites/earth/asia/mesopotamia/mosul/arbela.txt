@@ -1,12 +1,13 @@
 arbela = {
-	name = "Arbela" #also known as Arbil
+	name = "Arbela"
 	world = earth
 	geocoordinate = { 44.00862097040 36.17904359850 } #from Natural Earth
-	type = resource
-	resource = sheep
-	province = sinjar #Erbil
+	type = holding
+	holding_type = temple
+	province = mosul #Erbil
 	cultural_names = {
-		arabic = "Erbil"
+		arabic = "Arbil"
+		#kurdish = "Erbil"
 	}
 	features = {
 		prime_sheep_land

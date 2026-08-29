@@ -1,0 +1,8 @@
+shekhan = {
+	name = "Shekhan"
+	world = earth
+	geocoordinate = { 43.351944444444 36.695833333333 } #Ain Sifni
+	type = holding
+	holding_type = castle
+	province = mosul #Shekhan District
+}
