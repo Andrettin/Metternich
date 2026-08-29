@@ -1891,7 +1891,7 @@ QCoro::Task<void> game::on_setup_finished()
 		co_await domain_game_data->check_religion();
 
 		for (const province *province : domain_game_data->get_provinces()) {
-			for (const site *site : province->get_game_data()->get_sites()) {
+			for (const site *site : province->get_game_data()->get_settlement_sites()) {
 				co_await site->get_game_data()->check_building_conditions();
 
 				//check employment here because it can affect the population type charts via equivalent population types for employment
