@@ -119,7 +119,7 @@ Rectangle {
 					readonly property int commodity_storage_capacity: domain && commodity && commodity.special_storage_capacity && commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
 					readonly property string commodity_status_text: commodity ? ((commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : commodity.name)
 						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
-						+ (is_wealth ? format_text("\t\tMaintenance Cost: " + commodity.value_to_qstring(maintenance_cost)) : "")
+						+ (is_wealth ? format_text("\t\tExpenses: " + commodity.value_to_qstring(maintenance_cost)) : "")
 						+ (commodity.special_storage_capacity ? format_text("\t\tMaximum: " + commodity.value_to_qstring(commodity_storage_capacity)) : "")
 						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")) : ""
 					
