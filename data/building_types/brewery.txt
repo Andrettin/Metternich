@@ -16,6 +16,9 @@ brewery = {
 		lumber = 64
 		iron = 20
 	}
+	modifier = {
+		base_population_capacity = 20
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1

@@ -37,6 +37,7 @@ cattle_ranch = {
 			employment_type = cattle_ranching
 			quarterly_wealth_output_value = 3gb
 		}
+		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -76,6 +77,7 @@ grain_farm = {
 			employment_type = grain_farming
 			quarterly_wealth_output_value = 3gb
 		}
+		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -115,6 +117,7 @@ sheep_ranch = {
 			employment_type = sheep_ranching
 			quarterly_wealth_output_value = 3gb
 		}
+		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -154,6 +157,7 @@ tobacco_plantation = {
 			employment_type = tobacco_planting
 			quarterly_wealth_output_value = 3gb
 		}
+		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}

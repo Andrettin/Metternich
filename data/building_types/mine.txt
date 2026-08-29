@@ -23,6 +23,7 @@ coal_mine = {
 			employment_type = coal_mining
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		scripted_modifier_effect = mine
@@ -55,6 +56,7 @@ gold_mine = {
 			employment_type = gold_mining
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		scripted_modifier_effect = mine
@@ -87,6 +89,7 @@ iron_mine = {
 			employment_type = iron_mining
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		scripted_modifier_effect = mine
@@ -119,6 +122,7 @@ silver_mine = {
 			employment_type = silver_mining
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		scripted_modifier_effect = mine
@@ -151,6 +155,7 @@ sulfur_mine = {
 			employment_type = sulfur_mining
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		scripted_modifier_effect = mine

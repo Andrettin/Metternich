@@ -10,6 +10,9 @@ lighthouse = {
 		game_rule = additional_buildings
 		coastal = true
 	}
+	modifier = {
+		base_population_capacity = 10
+	}
 	province_modifier = {
 		fish_bonus_for_tile_threshold = 1
 	}

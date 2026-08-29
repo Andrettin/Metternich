@@ -15,6 +15,9 @@ shrine = {
 	commodity_costs = {
 		wealth = 8gb
 	}
+	modifier = {
+		base_population_capacity = 10
+	}
 	domain_modifier = {
 		loyalty = 1
 		unrest = -1
@@ -43,6 +46,9 @@ temple = {
 	}
 	commodity_cost_weights = {
 		lumber = 64
+	}
+	modifier = {
+		base_population_capacity = 50
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -73,6 +79,9 @@ large_temple = {
 	}
 	commodity_cost_weights = {
 		lumber = 64 #as Temple
+	}
+	modifier = {
+		base_population_capacity = 50
 	}
 	domain_modifier = {
 		loyalty = 2
@@ -111,6 +120,7 @@ cathedral = {
 	}
 	modifier = {
 		law = 2
+		base_population_capacity = 100
 	}
 	domain_modifier = {
 		loyalty = 4
@@ -152,6 +162,7 @@ large_cathedral = {
 	}
 	modifier = {
 		law = 2
+		base_population_capacity = 100
 	}
 	domain_modifier = {
 		loyalty = 4
@@ -193,6 +204,7 @@ grand_cathedral = {
 	}
 	modifier = {
 		law = 2
+		base_population_capacity = 100
 	}
 	domain_modifier = {
 		loyalty = 4
@@ -233,6 +245,7 @@ monastery = {
 	modifier = {
 		law = 1
 		lore = 1
+		base_population_capacity = 50
 	}
 	domain_modifier = {
 		stability = 1

@@ -16,6 +16,9 @@ bardic_college = {
 	commodity_costs = {
 		wealth = 40gb
 	}
+	modifier = {
+		base_population_capacity = 50
+	}
 	domain_modifier = {
 		economy = 1
 		loyalty = 3

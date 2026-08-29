@@ -15,6 +15,9 @@ casters_tower = {
 	commodity_costs = {
 		wealth = 30gb
 	}
+	modifier = {
+		base_population_capacity = 10
+	}
 	domain_modifier = {
 		economy = 1
 		loyalty = 1

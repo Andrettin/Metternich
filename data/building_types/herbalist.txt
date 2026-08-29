@@ -18,6 +18,9 @@ herbalist = {
 	commodity_costs = {
 		wealth = 10gb
 	}
+	modifier = {
+		base_population_capacity = 10
+	}
 	domain_modifier = {
 		loyalty = 1
 		stability = 1

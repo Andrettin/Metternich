@@ -15,6 +15,7 @@ observatory = {
 	}
 	modifier = {
 		lore = 2
+		base_population_capacity = 10
 	}
 	domain_modifier = {
 		stability = 1

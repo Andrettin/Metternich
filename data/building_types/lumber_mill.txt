@@ -30,6 +30,7 @@ lumber_mill = {
 		#}
 		lumber_throughput_modifier = 50 #bonus to sawmill production
 		productivity = 1
+		base_population_capacity = 50
 	}
 	domain_modifier = {
 		economy = 1

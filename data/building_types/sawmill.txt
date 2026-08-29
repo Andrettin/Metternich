@@ -22,6 +22,7 @@ sawmill = {
 			employment_type = lumberjacking
 			quarterly_wealth_output_value = 2gb
 		}
+		base_population_capacity = 25
 	}
 	domain_modifier = {
 		stability = 2

@@ -15,6 +15,9 @@ orphanage = {
 		high_priest
 		engineer
 	}
+	modifier = {
+		base_population_capacity = 50
+	}
 	domain_modifier = {
 		stability = 1
 		unrest = -1

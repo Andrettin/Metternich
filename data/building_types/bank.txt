@@ -20,6 +20,9 @@ bank = {
 	commodity_costs = {
 		wealth = 28gb
 	}
+	modifier = {
+		base_population_capacity = 10
+	}
 	domain_modifier = {
 		economy = 4
 	}

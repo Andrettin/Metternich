@@ -14,6 +14,7 @@ shop = {
 	}
 	modifier = {
 		productivity = 1
+		base_population_capacity = 20
 	}
 	domain_modifier = {
 		economy = 1
@@ -42,6 +43,7 @@ market = {
 	}
 	modifier = {
 		productivity = 1
+		base_population_capacity = 100
 	}
 	domain_modifier = {
 		economy = 2

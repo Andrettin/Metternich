@@ -20,6 +20,7 @@ courthouse = {
 		corruption = -1
 		crime = -1
 		law = 2
+		base_population_capacity = 20
 	}
 	domain_modifier = {
 		loyalty = 2

@@ -22,6 +22,7 @@ academy = {
 		lore = 2
 		productivity = 1
 		society = 2
+		base_population_capacity = 100
 	}
 	domain_modifier = {
 		economy = 2
@@ -62,6 +63,7 @@ small_university = {
 		lore = 2
 		productivity = 1
 		society = 2
+		base_population_capacity = 100
 	}
 	province_modifier = {
 		technology_spread_modifier = 30
@@ -121,6 +123,7 @@ university = {
 		lore = 4
 		productivity = 1
 		society = 3
+		base_population_capacity = 200
 	}
 	province_modifier = {
 		technology_spread_modifier = 60
@@ -182,6 +185,7 @@ large_university = {
 		lore = 4
 		productivity = 1
 		society = 3
+		base_population_capacity = 200
 	}
 	province_modifier = {
 		technology_spread_modifier = 90

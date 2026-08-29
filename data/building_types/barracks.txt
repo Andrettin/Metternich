@@ -291,6 +291,9 @@ garrison = {
 		marshal
 		engineer
 	}
+	modifier = {
+		base_population_capacity = 200
+	}
 	domain_modifier = {
 		loyalty = 2
 		stability = 2

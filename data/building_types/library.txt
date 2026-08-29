@@ -15,6 +15,7 @@ library = {
 	}
 	modifier = {
 		lore = 1
+		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1
@@ -41,6 +42,7 @@ great_library = {
 	}
 	modifier = {
 		lore = 1
+		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1

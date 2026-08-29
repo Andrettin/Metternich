@@ -19,6 +19,7 @@ town_hall = {
 	}
 	modifier = {
 		law = 1
+		base_population_capacity = 50
 	}
 	domain_modifier = {
 		economy = 1
