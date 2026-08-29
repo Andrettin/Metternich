@@ -10,6 +10,7 @@
 #include "map/map_projection.h"
 #include "map/map_template.h"
 #include "map/province.h"
+#include "map/route.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
 #include "map/tile.h"
@@ -63,6 +64,40 @@ void province_map_data::on_map_created()
 				}
 
 				this->nearby_provinces.push_back(nearby_province);
+			}
+		}
+
+		//also add the closest land provinces connected by routes
+		for (const route *route : this->province->get_routes()) {
+			const auto path_province_iterator = std::find(route->get_path_provinces().begin(), route->get_path_provinces().end(), this->province);
+			assert_throw(path_province_iterator != route->get_path_provinces().end());
+
+			auto previous_path_province_iterator = path_province_iterator;
+			--previous_path_province_iterator;
+			while (previous_path_province_iterator >= route->get_path_provinces().begin()) {
+				const metternich::province *previous_path_province = *previous_path_province_iterator;
+				if (!previous_path_province->is_water_zone()) {
+					if (!vector::contains(this->nearby_provinces, previous_path_province)) {
+						this->nearby_provinces.push_back(previous_path_province);
+					}
+					break;
+				}
+
+				--previous_path_province_iterator;
+			}
+
+			auto next_path_province_iterator = path_province_iterator;
+			++next_path_province_iterator;
+			while (next_path_province_iterator != route->get_path_provinces().end()) {
+				const metternich::province *next_path_province = *next_path_province_iterator;
+				if (!next_path_province->is_water_zone()) {
+					if (!vector::contains(this->nearby_provinces, next_path_province)) {
+						this->nearby_provinces.push_back(next_path_province);
+					}
+					break;
+				}
+
+				++next_path_province_iterator;
 			}
 		}
 	}
