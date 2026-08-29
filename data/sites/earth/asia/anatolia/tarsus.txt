@@ -5,6 +5,10 @@ tarsus = {
 	type = holding
 	
 	history = {
+		-2000 = {
+			developed = true #existed in the 2000 BC - 500 AD period; Source: "History of the World Map by Map", 2023, pp. 50-51.
+		}
+		
 		1360 = {
 			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}

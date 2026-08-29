@@ -5,4 +5,10 @@ harran = {
 	type = holding
 	holding_type = castle
 	province = edessa
+	
+	history = {
+		-2000 = {
+			developed = true #existed in the 2000 BC - 500 AD period; Source: "History of the World Map by Map", 2023, pp. 50-51.
+		}
+	}
 }
