@@ -139,7 +139,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(metternich::population* country_population READ get_country_population CONSTANT)
-	Q_PROPERTY(int population_growth READ get_population_growth NOTIFY population_growth_changed)
 	Q_PROPERTY(int max_current_constructions READ get_max_current_constructions NOTIFY max_current_constructions_changed)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
@@ -181,7 +180,6 @@ public:
 	void do_transporter_recruitment();
 	[[nodiscard]] QCoro::Task<void> do_construction();
 	[[nodiscard]] QCoro::Task<void> do_population_growth();
-	[[nodiscard]] QCoro::Task<void> do_starvation();
 	void do_population_literacy_change();
 	[[nodiscard]] QCoro::Task<void> do_population_cultural_change();
 	[[nodiscard]] QCoro::Task<void> do_population_promotion();
@@ -624,22 +622,6 @@ public:
 	void on_population_unit_gained(const population_unit *population_unit, const int multiplier);
 
 	phenotype_map<int64_t> get_phenotype_weights() const;
-
-	int get_population_growth() const
-	{
-		return this->population_growth;
-	}
-
-	void set_population_growth(const int growth);
-
-	void change_population_growth(const int change)
-	{
-		this->set_population_growth(this->get_population_growth() + change);
-	}
-
-	[[nodiscard]] QCoro::Task<void> grow_population();
-	[[nodiscard]] QCoro::Task<void> decrease_population(const bool change_population_growth);
-	population_unit *choose_starvation_population_unit();
 
 	Q_INVOKABLE const icon *get_population_type_small_icon(const metternich::population_type *type) const;
 
@@ -1085,7 +1067,6 @@ signals:
 	void domain_size_changed();
 	void domain_power_changed();
 	void population_units_changed();
-	void population_growth_changed();
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
@@ -1141,7 +1122,6 @@ private:
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
-	int population_growth = 0; //population growth counter
 	building_type_map<int> settlement_building_counts;
 	int max_current_constructions = domain_game_data::base_max_current_constructions;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;

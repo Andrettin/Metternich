@@ -293,7 +293,6 @@ Rectangle {
 					+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
 					+ ("\nDomain Power: " + number_string(selected_country_game_data.domain_power))
 					+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
-					//+ "\nPopulation Growth: " + selected_country_game_data.population_growth + "/" + metternich.defines.population_growth_threshold
 					+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
 				) : "")
 			}

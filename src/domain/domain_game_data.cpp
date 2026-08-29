@@ -707,39 +707,15 @@ void domain_game_data::do_transporter_recruitment()
 QCoro::Task<void> domain_game_data::do_population_growth()
 {
 	try {
-		/*
-		const int population_growth_change = static_cast<int>(available_food);
-		this->change_population_growth(population_growth_change);
-		*/
+		for (const site *holding_site : this->get_sites()) {
+			if (!holding_site->get_game_data()->is_built()) {
+				continue;
+			}
 
-		while (this->get_population_growth() >= population_defines::get()->get_population_growth_threshold()) {
-			co_await this->grow_population();
-		}
-
-		if (this->get_population_growth() < 0) {
-			//co_await this->do_starvation();
+			co_await holding_site->get_game_data()->do_population_growth();
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for country \"{}\".", this->domain->get_identifier())));
-	}
-}
-
-QCoro::Task<void> domain_game_data::do_starvation()
-{
-	int starvation_count = 0;
-
-	while (this->get_population_growth() < 0) {
-		//starvation
-		co_await this->decrease_population(true);
-		++starvation_count;
-	}
-
-	if (starvation_count > 0 && this->domain == game::get()->get_player_domain()) {
-		const bool plural = starvation_count > 1;
-
-		const portrait *interior_minister_portrait = this->get_government()->get_interior_minister_portrait();
-
-		engine_interface::get()->add_notification("Starvation", interior_minister_portrait, std::format("{}, I regret to inform you that {} {} of our population {} starved to death.", this->get_form_of_address(), number::to_formatted_string(starvation_count), (plural ? "units" : "unit"), (plural ? "have" : "has")));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -2703,110 +2679,6 @@ phenotype_map<int64_t> domain_game_data::get_phenotype_weights() const
 	}
 
 	return phenotype_weights;
-}
-
-void domain_game_data::set_population_growth(const int growth)
-{
-	if (growth == this->get_population_growth()) {
-		return;
-	}
-
-	this->population_growth = growth;
-
-	if (game::get()->is_running()) {
-		emit population_growth_changed();
-	}
-}
-
-QCoro::Task<void> domain_game_data::grow_population()
-{
-	if (this->population_units.empty()) {
-		throw std::runtime_error("Tried to grow population in a country which has no pre-existing population.");
-	}
-
-	std::vector<population_unit *> potential_base_population_units = this->population_units;
-
-	assert_throw(!potential_base_population_units.empty());
-
-	const population_unit *population_unit = vector::get_random(potential_base_population_units);
-	const metternich::culture *culture = population_unit->get_culture();
-	const metternich::religion *religion = population_unit->get_religion();
-	const phenotype *phenotype = population_unit->get_phenotype();
-
-	const site *site = population_unit->get_site();
-
-	const population_type *population_type = culture->get_population_class_type(site->get_game_data()->get_default_population_class());
-
-	const int64_t population_size = 100;
-	co_await site->get_game_data()->change_population(population_type, culture, religion, phenotype, nullptr, population_size, population_unit->get_literacy_rate(), 0, true);
-
-	this->change_population_growth(-population_defines::get()->get_population_growth_threshold());
-}
-
-QCoro::Task<void> domain_game_data::decrease_population(const bool change_population_growth)
-{
-	//disband population unit, if possible
-	if (!this->population_units.empty()) {
-		population_unit *population_unit = this->choose_starvation_population_unit();
-		if (population_unit != nullptr) {
-			if (change_population_growth) {
-				this->change_population_growth(1);
-			}
-			co_await population_unit->get_site()->get_game_data()->pop_population_unit(population_unit, true);
-			co_return;
-		}
-	}
-
-	assert_throw(false);
-}
-
-population_unit *domain_game_data::choose_starvation_population_unit()
-{
-	std::vector<population_unit *> population_units;
-
-	bool found_non_food_producer = false;
-	bool found_producer = false;
-	int64_t lowest_output_value = std::numeric_limits<int>::max();
-	for (population_unit *population_unit : this->get_population_units()) {
-		if (population_unit->get_site()->is_settlement() && population_unit->get_site()->get_game_data()->get_population_unit_count() == 1) {
-			//do not remove a settlement's last population unit
-			continue;
-		}
-
-		const bool is_non_food_producer = !population_unit->is_food_producer();
-		if (found_non_food_producer && !is_non_food_producer) {
-			continue;
-		} else if (!found_non_food_producer && is_non_food_producer) {
-			found_non_food_producer = true;
-			population_units.clear();
-		}
-
-		const bool is_producer = population_unit->get_type()->get_output_commodity() != nullptr;
-		if (found_producer && !is_producer) {
-			continue;
-		} else if (!found_producer && is_producer) {
-			found_producer = true;
-			lowest_output_value = population_unit->get_type()->get_output_value();
-			population_units.clear();
-		}
-
-		if (population_unit->get_type()->get_output_commodity() != nullptr) {
-			if (population_unit->get_type()->get_output_value() > lowest_output_value) {
-				continue;
-			} else if (population_unit->get_type()->get_output_value() < lowest_output_value) {
-				lowest_output_value = population_unit->get_type()->get_output_value();
-				population_units.clear();
-			}
-		}
-
-		population_units.push_back(population_unit);
-	}
-
-	if (population_units.empty()) {
-		return nullptr;
-	}
-
-	return vector::get_random(population_units);
 }
 
 const icon *domain_game_data::get_population_type_small_icon(const population_type *type) const

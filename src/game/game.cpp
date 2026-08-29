@@ -1898,13 +1898,6 @@ QCoro::Task<void> game::on_setup_finished()
 				co_await site->get_game_data()->check_employment();
 			}
 		}
-
-		//decrease population if there's too much for the starting food output
-		/*
-		while (domain_economy->get_food_output() < 0) {
-			domain_game_data->decrease_population(false);
-		}
-		*/
 	}
 
 	co_await this->apply_free_on_start_buildings();

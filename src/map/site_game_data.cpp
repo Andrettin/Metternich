@@ -19,7 +19,6 @@
 #include "domain/government_type.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
-#include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/domain_event.h"
@@ -38,7 +37,6 @@
 #include "infrastructure/wonder.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"
-#include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -104,6 +102,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->dungeon = dungeon::get(value);
 	} else if (key == "population_capacity") {
 		this->population_capacity = std::stoi(value);
+	} else if (key == "quarterly_population_growth_rate") {
+		this->quarterly_population_growth_rate = decimillesimal_int(value);
 	} else if (key == "holding_level_income") {
 		this->holding_level_income = std::stoll(value);
 	} else {
@@ -282,6 +282,10 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
 	}
 
+	if (this->get_quarterly_population_growth_rate() != 0) {
+		data.add_property("quarterly_population_growth_rate", this->get_quarterly_population_growth_rate().to_string());
+	}
+
 	if (!this->get_employment_sizes().empty()) {
 		gsml_data employment_sizes_data("employment_sizes");
 		for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
@@ -367,6 +371,9 @@ gsml_data site_game_data::to_gsml_data() const
 
 QCoro::Task<void> site_game_data::initialize()
 {
+	//multiplying by 3 is not entirely accurate, but a good enough approximation
+	this->change_quarterly_population_growth_rate(population_defines::get()->get_base_monthly_population_growth_rate() * 3);
+
 	if (this->site->is_settlement()) {
 		this->initialize_building_slots();
 	}
@@ -2270,6 +2277,51 @@ int64_t site_game_data::get_available_population_capacity() const
 {
 	const int64_t available_capacity = this->get_population_capacity() - this->get_population()->get_size();
 	return std::max(0ll, available_capacity);
+}
+
+decimillesimal_int site_game_data::get_population_growth_rate() const
+{
+	//not entirely accurate, but a good enough approximation
+	return this->get_quarterly_population_growth_rate() * game::get()->get_current_quarters_per_turn();
+}
+
+void site_game_data::set_quarterly_population_growth_rate(const decimillesimal_int &population_growth_rate)
+{
+	if (population_growth_rate == this->get_quarterly_population_growth_rate()) {
+		return;
+	}
+
+	this->quarterly_population_growth_rate = population_growth_rate;
+
+	if (game::get()->is_running()) {
+		emit population_growth_rate_changed();
+	}
+}
+
+QCoro::Task<void> site_game_data::do_population_growth()
+{
+	const decimillesimal_int &population_growth_rate = this->get_population_growth_rate();
+	if (population_growth_rate == 0) {
+		co_return;
+	}
+
+	//copy the population units vector since it might be modified by population growth
+	std::vector<population_unit *> population_units;
+	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
+		population_units.push_back(population_unit.get());
+	}
+
+	for (population_unit *population_unit : population_units) {
+		int64_t population_growth_size = (population_unit->get_size() * (decimillesimal_int(100) + population_growth_rate) / 100).to_int64();
+		population_growth_size = std::max(population_growth_size, 1ll);
+		population_growth_size = std::min(population_growth_size, this->get_available_population_capacity());
+
+		if (population_growth_size == 0) {
+			continue;
+		}
+
+		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, population_growth_size, population_unit->get_literacy_rate(), 0, true);
+	}
 }
 
 QCoro::Task<void> site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage)

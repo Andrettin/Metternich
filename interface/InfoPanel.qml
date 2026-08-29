@@ -394,6 +394,7 @@ Rectangle {
 		text: population ? format_text(
 			"Population: " + number_string(population.size)
 			 + (selected_site !== null ? ("\nPopulation Capacity: " + number_string(selected_site_game_data.population_capacity)) : "")
+			 + (selected_site !== null && population.size > 0 ? ("\nPopulation Growth: " + selected_site_game_data.population_growth_rate + "%") : "")
 			 + "\nLiteracy: " + population.literacy_rate + "%"
 
 		) : ""
