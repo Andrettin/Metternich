@@ -1,8 +1,23 @@
 theocracy = {
 	name = "Theocracy"
 	religious = true
+	title_names = {
+		barony = "Temple"
+		county = "Theocracy"
+		duchy = "Theocracy"
+		kingdom = "Theocracy"
+		empire = "Theocracy"
+	}
 	office_title_names = {
 		ruler = {
+			barony = {
+				male = "Priest"
+				female = "Priestess"
+			}
+			county = {
+				male = "High Priest"
+				female = "High Priestess"
+			}
 			duchy = {
 				male = "High Priest"
 				female = "High Priestess"
