@@ -182,8 +182,8 @@ Item {
 			id: site_icon_area
 			x: -scaled_map_block_start_x + (site ? Math.min(Math.max(site.game_data.tile_pos.x * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(width / 2), 0), province_map.contentWidth - width) : 0)
 			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
-			width: site_icon.width + 4 * scale_factor
-			height: site_icon.height + 4 * scale_factor
+			width: site_icon.width + 2 * scale_factor
+			height: site_icon.height + 2 * scale_factor
 			visible: province_map.show_sites && site && (site.settlement || dungeon !== null)
 			
 			readonly property var site: model.modelData
