@@ -392,6 +392,30 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_type *get_default_population_type() const;
 
+	int64_t get_base_population_capacity() const
+	{
+		return this->base_population_capacity;
+	}
+
+	void set_base_population_capacity(const int64_t capacity);
+
+	void change_base_population_capacity(const int64_t change)
+	{
+		this->set_base_population_capacity(this->get_base_population_capacity() + change);
+	}
+
+	const centesimal_int &get_population_capacity_modifier() const
+	{
+		return this->population_capacity_modifier;
+	}
+
+	void set_population_capacity_modifier(const centesimal_int &modifier);
+
+	void change_population_capacity_modifier(const centesimal_int &change)
+	{
+		this->set_population_capacity_modifier(this->get_population_capacity_modifier() + change);
+	}
+
 	int64_t get_population_capacity() const
 	{
 		return this->population_capacity;
@@ -723,6 +747,8 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	int64_t base_population_capacity = 0;
+	centesimal_int population_capacity_modifier;
 	int64_t population_capacity = 0;
 	decimillesimal_int quarterly_population_growth_rate;
 	data_entry_map<employment_type, int64_t> employment_sizes;

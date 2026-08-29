@@ -8,6 +8,7 @@
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
 #include "script/modifier_effect/attribute_skill_bonus_modifier_effect.h"
+#include "script/modifier_effect/base_population_capacity_modifier_effect.h"
 #include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
@@ -61,6 +62,7 @@
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
+#include "script/modifier_effect/population_capacity_modifier_modifier_effect.h"
 #include "script/modifier_effect/population_strata_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
@@ -253,12 +255,16 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trade_efficiency_modifier_effect<scope_type>>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		if (key == "fortification_level") {
+		if (key == "base_population_capacity") {
+			return std::make_unique<base_population_capacity_modifier_effect>(value);
+		} else if (key == "fortification_level") {
 			return std::make_unique<fortification_level_modifier_effect>(value);
 		} else if (key == "holding_level") {
 			return std::make_unique<holding_level_modifier_effect>(value);
 		} else if (key == "population_capacity") {
 			return std::make_unique<population_capacity_modifier_effect>(value);
+		} else if (key == "population_capacity_modifier") {
+			return std::make_unique<population_capacity_modifier_modifier_effect>(value);
 		} else if (key.starts_with(monthly_prefix) && key.ends_with(bonus_suffix) && commodity::try_get(key.substr(monthly_prefix.size(), key.size() - monthly_prefix.size() - bonus_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(monthly_prefix.size(), key.size() - monthly_prefix.size() - bonus_suffix.size()));
 			return std::make_unique<monthly_commodity_bonus_modifier_effect>(commodity, value);

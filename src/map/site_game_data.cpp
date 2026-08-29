@@ -100,8 +100,12 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_type_name = value;
 	} else if (key == "dungeon") {
 		this->dungeon = dungeon::get(value);
+	} else if (key == "base_population_capacity") {
+		this->base_population_capacity = std::stoll(value);
+	} else if (key == "population_capacity_modifier") {
+		this->population_capacity_modifier = centesimal_int(value);
 	} else if (key == "population_capacity") {
-		this->population_capacity = std::stoi(value);
+		this->population_capacity = std::stoll(value);
 	} else if (key == "quarterly_population_growth_rate") {
 		this->quarterly_population_growth_rate = decimillesimal_int(value);
 	} else if (key == "holding_level_income") {
@@ -276,6 +280,14 @@ gsml_data site_game_data::to_gsml_data() const
 			building_slots_data.add_child(building_slot->to_gsml_data());
 		}
 		data.add_child(std::move(building_slots_data));
+	}
+
+	if (this->get_base_population_capacity() != 0) {
+		data.add_property("base_population_capacity", std::to_string(this->get_base_population_capacity()));
+	}
+
+	if (this->get_population_capacity_modifier() != 0) {
+		data.add_property("population_capacity_modifier", this->get_population_capacity_modifier().to_string());
 	}
 
 	if (this->get_population_capacity() != 0) {
@@ -2258,6 +2270,32 @@ const population_type *site_game_data::get_default_population_type() const
 {
 	assert_throw(this->get_culture() != nullptr);
 	return this->get_culture()->get_population_class_type(this->get_default_population_class());
+}
+
+void site_game_data::set_base_population_capacity(const int64_t capacity)
+{
+	if (capacity == this->get_base_population_capacity()) {
+		return;
+	}
+
+	this->change_population_capacity(-(this->get_base_population_capacity() * (centesimal_int(100) + this->get_population_capacity_modifier()) / 100).to_int64());
+
+	this->base_population_capacity = capacity;
+
+	this->change_population_capacity((this->get_base_population_capacity() * (centesimal_int(100) + this->get_population_capacity_modifier()) / 100).to_int64());
+}
+
+void site_game_data::set_population_capacity_modifier(const centesimal_int &modifier)
+{
+	if (modifier == this->get_population_capacity_modifier()) {
+		return;
+	}
+
+	this->change_population_capacity(-(this->get_base_population_capacity() * (centesimal_int(100) + this->get_population_capacity_modifier()) / 100).to_int64());
+
+	this->population_capacity_modifier = modifier;
+
+	this->change_population_capacity((this->get_base_population_capacity() * (centesimal_int(100) + this->get_population_capacity_modifier()) / 100).to_int64());
 }
 
 void site_game_data::set_population_capacity(const int64_t capacity)

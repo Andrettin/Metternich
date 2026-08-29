@@ -856,6 +856,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/armor_class_modifier_effect.h
 	src/script/modifier_effect/artillery_cost_modifier_effect.h
 	src/script/modifier_effect/attribute_skill_bonus_modifier_effect.h
+	src/script/modifier_effect/base_population_capacity_modifier_effect.h
 	src/script/modifier_effect/building_cost_efficiency_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h
@@ -910,6 +911,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_capacity_modifier_effect.h
+	src/script/modifier_effect/population_capacity_modifier_modifier_effect.h
 	src/script/modifier_effect/population_strata_tax_rate_modifier_effect.h
 	src/script/modifier_effect/population_tax_rate_modifier_effect.h
 	src/script/modifier_effect/population_type_bonus_modifier_effect.h
