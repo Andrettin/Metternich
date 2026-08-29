@@ -2,7 +2,6 @@ restoration_of_europe = {
 	name = "Restoration of Europe"
 	start_date = 1815.11.20
 	map_template = europe
-	hidden = true
 	default_domains = {
 		austria
 		france
@@ -16,6 +15,7 @@ german_confederation = {
 	name = "German Confederation"
 	start_date = 1815.11.20
 	map_template = central_europe
+	hidden = true
 	default_domains = {
 		austria
 		france
