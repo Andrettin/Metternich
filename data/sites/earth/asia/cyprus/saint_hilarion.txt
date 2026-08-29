@@ -1,0 +1,11 @@
+saint_hilarion = {
+	name = "Saint Hilarion"
+	world = earth
+	geocoordinate = { 33.28108333 35.31213889 } #Saint Hilarion Castle
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+	cultural_names = {
+		french = "Dieudamour"
+	}
+}

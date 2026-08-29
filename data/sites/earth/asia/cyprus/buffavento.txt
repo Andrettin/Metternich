@@ -1,0 +1,8 @@
+buffavento = {
+	name = "Buffavento"
+	world = earth
+	geocoordinate = { 33.41 35.2875 } #Buffavento Castle
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}

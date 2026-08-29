@@ -1,7 +1,8 @@
-cyprus = {
-	name = "Cyprus"
-	color = { 142 146 118 }
-	default_provincial_capital = nicosia
+limassol = {
+	name = "Limassol"
+	color = { 42 138 78 }
+	terrain = plains
+	default_provincial_capital = limassol
 	regions = {
 		asia
 		middle_east

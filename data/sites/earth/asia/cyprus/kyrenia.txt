@@ -1,0 +1,8 @@
+kyrenia = {
+	name = "Kyrenia"
+	world = earth
+	geocoordinate = { 33.333004 35.325999 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}

@@ -2,9 +2,11 @@ famagusta = {
 	name = "Famagusta"
 	world = earth
 	geocoordinate = { 33.95001013060 35.12502524720 } #from Natural Earth
-	province = cyprus
+	type = holding
+	holding_type = castle
+	province = famagusta
 	cultural_names = {
-		greek = Ammochostos
+		greek = "Ammochostos"
 	}
 	
 	history = {

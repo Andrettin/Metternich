@@ -1,0 +1,8 @@
+khirokitia = {
+	name = "Khirokitia"
+	world = earth
+	geocoordinate = { 33.343719444444 34.796725 }
+	type = holding
+	holding_type = castle
+	province = limassol #Larnaca
+}

@@ -1,0 +1,8 @@
+morphou = {
+	name = "Morphou"
+	world = earth
+	geocoordinate = { 32.99274853 35.19777737 }
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}

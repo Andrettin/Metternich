@@ -1,8 +1,10 @@
-amathus = {
-	name = "Amathus"
+citium = {
+	name = "Citium"
 	world = earth
-	geocoordinate = { 33.1419 34.7125 }
-	province = limassol
+	geocoordinate = { 33.629471 34.929597 } #Kition
+	type = holding
+	holding_type = temple
+	province = limassol #Larnaca
 	
 	history = {
 		-1450 = {

@@ -1,0 +1,8 @@
+limassol = {
+	name = "Limassol"
+	world = earth
+	geocoordinate = { 33.033322 34.675414 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = limassol
+}

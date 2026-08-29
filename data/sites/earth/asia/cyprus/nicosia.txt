@@ -1,8 +1,10 @@
 nicosia = {
-	name = "Nicosia"
+	name = "Nicosia" #also known as Nikosia
 	world = earth
 	geocoordinate = { 33.36663488640 35.16667645170 } #from Natural Earth
 	type = holding
+	holding_type = guild
+	province = limassol #Nicosia
 	
 	history = {
 		1360 = {

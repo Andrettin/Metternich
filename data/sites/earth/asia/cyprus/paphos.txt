@@ -1,0 +1,8 @@
+paphos = {
+	name = "Paphos"
+	world = earth
+	geocoordinate = { 32.422457 34.755915 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = limassol #Paphos
+}

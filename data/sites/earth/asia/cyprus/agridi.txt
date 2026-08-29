@@ -1,0 +1,8 @@
+agridi = {
+	name = "Agridi"
+	world = earth
+	geocoordinate = { 33.27698173 35.29493752 } #Agirda
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}

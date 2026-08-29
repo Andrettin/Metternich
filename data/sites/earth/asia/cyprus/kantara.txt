@@ -1,0 +1,8 @@
+kantara = {
+	name = "Kantara"
+	world = earth
+	geocoordinate = { 33.933333333333 35.366666666667 }
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}

@@ -1,0 +1,8 @@
+arsinoe = {
+	name = "Arsinoe" #"Arsinoë"
+	world = earth
+	geocoordinate = { 32.421841 35.034889 } #Arsinoe, Polis Chrysochous
+	type = holding
+	holding_type = temple
+	province = limassol #Paphos
+}

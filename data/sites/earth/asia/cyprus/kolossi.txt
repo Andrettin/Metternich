@@ -1,0 +1,8 @@
+kolossi = {
+	name = "Kolossi"
+	world = earth
+	geocoordinate = { 32.93387 34.67081 }
+	type = holding
+	holding_type = castle
+	province = limassol
+}

@@ -1,0 +1,8 @@
+peristerona = {
+	name = "Peristerona"
+	world = earth
+	geocoordinate = { 33.75918337 35.21572823 } #Peristerona Ammochostou
+	type = holding
+	holding_type = castle
+	province = famagusta #Northern Cyprus
+}
