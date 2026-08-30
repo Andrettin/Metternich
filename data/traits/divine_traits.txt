@@ -93,6 +93,44 @@ divine_skill_focus_weaponsmithing = {
 	}
 }
 
+divine_weapon_focus_bows = {
+	name = "Divine Weapon Focus: Bows"
+	icon = bow
+	types = {
+		divine_trait
+	}
+	gain_conditions = {
+		item = {
+			item_class = bow
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = bow
+			bonus = 4
+		}
+	}
+}
+
+divine_weapon_focus_heavy_blades = {
+	name = "Divine Weapon Focus: Heavy Blades"
+	icon = saber
+	types = {
+		divine_trait
+	}
+	gain_conditions = {
+		item = {
+			item_class = heavy_blade
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = heavy_blade
+			bonus = 4
+		}
+	}
+}
+
 extra_divine_domain_air = {
 	name = "Extra Divine Domain: Air"
 	icon = flag

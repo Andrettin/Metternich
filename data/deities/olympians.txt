@@ -40,6 +40,7 @@ apollo = {
 		charm
 	}
 	traits = {
+		divine_weapon_focus_bows
 		#extra_divine_domain_healing
 		extra_divine_domain_knowledge
 	}
@@ -49,6 +50,9 @@ apollo = {
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
+		starting_items = {
+			composite_long_bow
+		}
 	}
 }
 
@@ -105,6 +109,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 		divination
 	}
 	traits = {
+		divine_weapon_focus_bows
 		extra_divine_domain_sun
 	}
 	character = {
@@ -113,6 +118,10 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 		religion = hellenic
 		gender = female
 		father = zeus
+		starting_items = {
+			short_sword
+			composite_long_bow
+		}
 	}
 }
 
@@ -218,6 +227,9 @@ hades = {
 		protection
 		summoning
 	}
+	traits = {
+		divine_weapon_focus_heavy_blades
+	}
 	character = {
 		monster_type = trumpet_archon
 		culture = archon
@@ -225,6 +237,9 @@ hades = {
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		starting_items = {
+			bastard_sword
+		}
 	}
 }
 
