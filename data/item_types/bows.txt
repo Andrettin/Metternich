@@ -1,6 +1,6 @@
 short_bow = {
 	name = "Short Bow"
-	item_class = weapon
+	item_class = bow
 	icon = bow
 	price = 30gp
 	damage_dice = 1d8
@@ -13,7 +13,7 @@ short_bow = {
 
 long_bow = {
 	name = "Long Bow"
-	item_class = weapon
+	item_class = bow
 	icon = bow
 	price = 75gp
 	damage_dice = 1d8
@@ -26,7 +26,7 @@ long_bow = {
 
 composite_short_bow = {
 	name = "Composite Short Bow"
-	item_class = weapon
+	item_class = bow
 	icon = bow
 	price = 75gp
 	damage_dice = 1d8
@@ -39,7 +39,7 @@ composite_short_bow = {
 
 composite_long_bow = {
 	name = "Composite Long Bow"
-	item_class = weapon
+	item_class = bow
 	icon = bow
 	price = 100gp
 	damage_dice = 1d8
@@ -52,7 +52,7 @@ composite_long_bow = {
 
 light_crossbow = {
 	name = "Light Crossbow"
-	item_class = weapon
+	item_class = crossbow
 	icon = bow
 	price = 35gp
 	damage_dice = 1d4
@@ -65,7 +65,7 @@ light_crossbow = {
 
 heavy_crossbow = {
 	name = "Heavy Crossbow"
-	item_class = weapon
+	item_class = crossbow
 	icon = bow
 	price = 50gp
 	damage_dice = 1d4+1

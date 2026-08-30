@@ -1,3 +1,33 @@
+axe = {
+	name = "Axe"
+	slot = weapon
+}
+
+bow = {
+	name = "Bow"
+	slot = weapon
+}
+
+crossbow = {
+	name = "Crossbow"
+	slot = weapon
+}
+
+heavy_blade = {
+	name = "Heavy Blade"
+	slot = weapon
+}
+
+light_blade = {
+	name = "Light Blade"
+	slot = weapon
+}
+
+mace = {
+	name = "Mace"
+	slot = weapon
+}
+
 weapon = {
 	name = "Weapon"
 	slot = weapon

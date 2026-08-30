@@ -1,6 +1,15 @@
+dagger = {
+	name = "Dagger"
+	item_class = light_blade
+	icon = dagger
+	price = 2gp
+	damage_dice = 1d4
+	attack_sound = dagger
+}
+
 bastard_sword = {
 	name = "Bastard Sword"
-	item_class = weapon
+	item_class = heavy_blade
 	icon = saber
 	price = 25gp
 	damage_dice = 2d4
@@ -10,7 +19,7 @@ bastard_sword = {
 
 long_sword = {
 	name = "Long Sword"
-	item_class = weapon
+	item_class = heavy_blade
 	icon = saber
 	price = 15gp
 	damage_dice = 1d8
@@ -20,7 +29,7 @@ long_sword = {
 
 short_sword = {
 	name = "Short Sword"
-	item_class = weapon
+	item_class = light_blade
 	icon = saber
 	price = 10gp
 	damage_dice = 1d6
