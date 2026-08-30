@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return "Population Tax Rate";
+		return "Population Tax";
 	}
 
 	virtual bool is_percent() const override
