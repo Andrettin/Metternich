@@ -68,6 +68,10 @@ void item_type::initialize()
 {
 	this->damage_dice.set_min_value(0);
 
+	if (this->item_class != nullptr) {
+		this->item_class->add_item_type(this);
+	}
+
 	if (this->required_technology != nullptr) {
 		this->required_technology->add_enabled_item_type(this);
 	}

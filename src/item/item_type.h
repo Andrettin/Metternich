@@ -29,7 +29,7 @@ class item_type final : public named_data_entry, public data_type<item_type>
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::item_class* item_class MEMBER item_class READ get_item_class NOTIFY changed)
+	Q_PROPERTY(metternich::item_class* item_class MEMBER item_class NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(archimedes::dice damage_dice MEMBER damage_dice READ get_damage_dice NOTIFY changed)
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
@@ -128,7 +128,7 @@ signals:
 	void changed();
 
 private:
-	const metternich::item_class *item_class = nullptr;
+	metternich::item_class *item_class = nullptr;
 	const metternich::icon *icon = nullptr;
 	int64_t price = 0;
 	dice damage_dice;

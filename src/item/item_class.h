@@ -54,6 +54,16 @@ public:
 		return QString::fromStdString(this->get_consume_verb());
 	}
 
+	const std::vector<const item_type *> &get_item_types() const
+	{
+		return this->item_types;
+	}
+
+	void add_item_type(const item_type *item_type)
+	{
+		this->item_types.push_back(item_type);
+	}
+
 signals:
 	void changed();
 
@@ -61,6 +71,7 @@ private:
 	const item_slot *slot = nullptr;
 	bool consumable = false;
 	std::string consume_verb = "consume";
+	std::vector<const item_type *> item_types;
 };
 
 }

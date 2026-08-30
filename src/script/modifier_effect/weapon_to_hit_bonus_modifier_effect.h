@@ -2,10 +2,10 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "item/item_class.h"
 #include "item/item_type.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/assert_util.h"
-#include "util/string_util.h"
 
 namespace metternich {
 
@@ -27,6 +27,8 @@ public:
 
 		if (key == "weapon_type") {
 			this->weapon_type = item_type::get(value);
+		} else if (key == "weapon_class") {
+			this->weapon_class = item_class::get(value);
 		} else if (key == "bonus") {
 			this->value = decimillesimal_int(std::stoi(value));
 		} else {
@@ -36,9 +38,13 @@ public:
 
 	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
-		assert_throw(this->weapon_type != nullptr);
-
-		this->apply_to_weapon_types(scope, { this->weapon_type }, multiplier);
+		if (this->weapon_type != nullptr) {
+			this->apply_to_weapon_types(scope, { this->weapon_type }, multiplier);
+		} else if (this->weapon_class != nullptr) {
+			this->apply_to_weapon_types(scope, this->weapon_class->get_item_types(), multiplier);
+		} else {
+			assert_throw(false);
+		}
 	}
 
 	void apply_to_weapon_types(const character *scope, const std::vector<const item_type *> &weapon_types, const decimillesimal_int &multiplier) const
@@ -52,13 +58,20 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		assert_throw(this->weapon_type != nullptr);
+		if (this->weapon_type != nullptr) {
+			return std::format("{} To Hit Bonus", this->weapon_type->get_name());
+		} else if (this->weapon_class != nullptr) {
+			return std::format("{} To Hit Bonus", this->weapon_class->get_name());
+		} else {
+			assert_throw(false);
+		}
 
-		return std::format("{} To Hit Bonus", this->weapon_type->get_name());
+		return std::string();
 	}
 
 private:
 	const metternich::item_type *weapon_type = nullptr;
+	const metternich::item_class *weapon_class = nullptr;
 };
 
 }
