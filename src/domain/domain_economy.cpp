@@ -977,9 +977,9 @@ void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 
 void domain_economy::prepare_offers()
 {
-	for (const auto &[commodity, base_max_storage] : this->get_max_commodity_storages()) {
+	for (const auto &[commodity, stored_quantity] : this->get_stored_commodities()) {
+		const int64_t base_max_storage = this->get_max_commodity_storage(commodity);
 		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
-		const int64_t stored_quantity = this->get_stored_commodity(commodity);
 		if (stored_quantity > max_storage) {
 			const int64_t offered_quantity = stored_quantity - max_storage;
 			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity, max_storage));
