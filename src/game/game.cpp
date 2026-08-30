@@ -2322,6 +2322,14 @@ void game::set_price(const commodity *commodity, const int64_t value)
 	if (value < 1) {
 		this->set_price(commodity, 1);
 		return;
+	} else if (value < (commodity->get_base_price() * 22 / 100)) {
+		//the price cannot be lower than 22% of the base price
+		this->set_price(commodity, commodity->get_base_price() * 22 / 100);
+		return;
+	} else if (value > (commodity->get_base_price() * 5)) {
+		//the price cannot be higher than 5x the base price
+		this->set_price(commodity, commodity->get_base_price() * 5);
+		return;
 	}
 
 	if (value == commodity->get_base_price()) {
