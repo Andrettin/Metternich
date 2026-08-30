@@ -24,6 +24,13 @@ tn = {
 	suffix = "tn"
 }
 
+datn = {
+	name = "Decaton"
+	icon = sack_2
+	suffix = "datn"
+	displayed = false
+}
+
 ktn = {
 	name = "Kiloton"
 	icon = sack_2

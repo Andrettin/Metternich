@@ -5,10 +5,11 @@ grain = {
 	agricultural = true
 	food_type = starch
 	base_price = 1 #1cp, price of a pound of wheat
-	storage_unit = tn
+	storage_unit = datn
 	units = {
 		1 = lb
 		2000 = tn
+		20000 = datn
 		2000000 = ktn
 	}
 }
