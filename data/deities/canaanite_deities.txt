@@ -298,3 +298,175 @@ melkart = {
 		contemporary_character = marduk #to give him a start date
 	}
 }
+
+mot = {
+	name = "Mot"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		death
+		destruction
+		earth
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = mage #sorcerer
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+reshep = {
+	name = "Reshep"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		#pestilence
+		thunder
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = rogue #assassin
+			character_class = warrior
+			culture = aramaic #Syrian
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+shapash = {
+	name = "Shapash"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+		arabic
+	}
+	major_domains = {
+		knowledge
+		law
+		sun
+		travel
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric
+			character_class = warrior
+			#messenger
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = female
+		contemporary_character = marduk #to give her a start date
+	}
+}
+
+yam_nahar = {
+	name = "Yam-Nahar"
+	pantheon = canaanite
+	divine_rank = intermediate_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		chaos
+		evil
+		water
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric #so that this deity can have clerics
+			character_class = merchant #tradesman
+			#sailor
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+yarikh = {
+	name = "Yarikh"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		#desert
+		plant
+		war
+	}
+	worshiper_conditions = {
+		or = {
+			character_class = cleric #so that this deity can have clerics
+			character_class = druid
+			character_class = warrior
+		}
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
+
+zebub = {
+	name = "Zebub"
+	pantheon = canaanite
+	divine_rank = lesser_deity
+	religions = {
+		canaanite
+	}
+	major_domains = {
+		animal
+		fire
+		knowledge
+		#pestilence
+	}
+	worshiper_conditions = {
+		culture = phoenician #Ekronite
+	}
+	character = {
+		species = human
+		character_class = aristocrat
+		culture = phoenician
+		religion = canaanite
+		gender = male
+		contemporary_character = marduk #to give him a start date
+	}
+}
