@@ -21,7 +21,6 @@
 #include "economy/province_taxation_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
-#include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -35,6 +34,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/vector_util.h"
 
@@ -938,7 +938,9 @@ void domain_economy::prepare_bids()
 		const int64_t min_storage = domain_economy::get_storage_for_commodity(commodity, base_min_storage);
 		const int64_t stored_quantity = this->get_stored_commodity(commodity);
 		if (stored_quantity < min_storage) {
-			this->set_bid(commodity, min_storage - stored_quantity);
+			const int64_t bid_quantity = min_storage - stored_quantity;
+			log_trace(std::format("Domain \"{}\" is bidding for {} of the \"{}\" commodity, since the stored amount of {} is lower than the minimum storage of {}.", this->domain->get_identifier(), bid_quantity, commodity->get_identifier(), stored_quantity, min_storage));
+			this->set_bid(commodity, bid_quantity);
 		}
 	}
 }
@@ -979,7 +981,9 @@ void domain_economy::prepare_offers()
 		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
 		const int64_t stored_quantity = this->get_stored_commodity(commodity);
 		if (stored_quantity > max_storage) {
-			this->set_offer(commodity, stored_quantity - max_storage);
+			const int64_t offered_quantity = stored_quantity - max_storage;
+			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity, max_storage));
+			this->set_offer(commodity, offered_quantity);
 		}
 	}
 }

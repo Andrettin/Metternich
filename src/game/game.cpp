@@ -1976,6 +1976,9 @@ QCoro::Task<void> game::do_turn_coro()
 			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
 			co_await domain->get_game_data()->do_events();
 
+			domain->get_economy()->clear_bids();
+			domain->get_economy()->clear_offers();
+
 			//restore old bids and offers, if possible
 			for (const auto &[commodity, bid] : old_bids[domain]) {
 				domain->get_economy()->set_bid(commodity, bid);
