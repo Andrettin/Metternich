@@ -78,6 +78,22 @@ patient_practice = {
 	}
 }
 
+generous_teacher = {
+	name = "Generous Teacher"
+	icon = university
+	weight = 1
+	types = {
+		past_experience
+	}
+	gain_conditions = {
+		constitution < 15
+	}
+	modifier = {
+		constitution = 1
+		trait_of_type = proficiency
+	}
+}
+
 good_advisor = {
 	name = "Good Advisor"
 	icon = research
@@ -142,8 +158,32 @@ had_access_to_good_library = {
 	}
 	gain_conditions = {
 		intelligence < 15
+		home_site = {
+			province = {
+				scripted_condition = has_library
+			}
+		}
 	}
 	modifier = {
 		intelligence = 1
+	}
+}
+
+fundamental_insight = {
+	name = "Fundamental Insight"
+	icon = research
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		character_class = mage
+	}
+	gain_conditions = {
+		intelligence < 16
+	}
+	modifier = {
+		intelligence = 1
+		trait_of_type = proficiency
 	}
 }
