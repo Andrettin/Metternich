@@ -91,8 +91,8 @@ public:
 	void update_armor_class_rows();
 	void create_to_hit_bonus_rows();
 	void update_to_hit_bonus_rows();
-	void create_damage_row();
-	void update_damage_row();
+	void create_damage_rows();
+	void update_damage_rows();
 	void create_range_row();
 	void update_range_row();
 	void create_movement_row();

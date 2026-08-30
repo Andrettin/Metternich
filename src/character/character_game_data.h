@@ -511,6 +511,23 @@ public:
 	void set_to_hit_bonus(const int bonus);
 	void change_to_hit_bonus(const int change);
 
+	const data_entry_map<item_type, int> &get_weapon_to_hit_bonuses() const
+	{
+		return this->weapon_to_hit_bonuses;
+	}
+
+	int get_weapon_to_hit_bonus(const item_type *weapon_type) const
+	{
+		const auto find_iterator = this->weapon_to_hit_bonuses.find(weapon_type);
+		if (find_iterator != this->weapon_to_hit_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_weapon_to_hit_bonus(const item_type *weapon_type, const int change);
+
 	const dice &get_damage_dice() const;
 
 	int get_damage_bonus() const
@@ -520,6 +537,24 @@ public:
 
 	void set_damage_bonus(const int bonus);
 	void change_damage_bonus(const int change);
+
+	const data_entry_map<item_type, int> &get_weapon_damage_bonuses() const
+	{
+		return this->weapon_damage_bonuses;
+	}
+
+	int get_weapon_damage_bonus(const item_type *weapon_type) const
+	{
+		const auto find_iterator = this->weapon_damage_bonuses.find(weapon_type);
+		if (find_iterator != this->weapon_damage_bonuses.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
+
 	int get_max_damage() const;
 
 	int get_range() const
@@ -843,6 +878,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_item_equipped(const item *item, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
+	const item *get_weapon() const;
+
 	bool can_use_item(const metternich::item *item, std::string *reason) const;
 
 	Q_INVOKABLE bool can_use_item(const metternich::item *item) const
@@ -1032,7 +1069,9 @@ signals:
 	void armor_class_bonus_changed();
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
+	void weapon_to_hit_bonuses_changed();
 	void damage_bonus_changed();
+	void weapon_damage_bonuses_changed();
 	void range_changed();
 	void movement_changed();
 	void initiative_bonus_changed();
@@ -1086,7 +1125,9 @@ private:
 	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;
+	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
+	data_entry_map<item_type, int> weapon_damage_bonuses;
 	int range = 0; //in feet
 	int movement = 0;
 	int initiative_bonus = 0;

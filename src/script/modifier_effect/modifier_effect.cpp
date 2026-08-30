@@ -87,6 +87,8 @@
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/unrest_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
+#include "script/modifier_effect/weapon_damage_bonus_modifier_effect.h"
+#include "script/modifier_effect/weapon_to_hit_bonus_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -348,6 +350,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
 		} else if (tag == "trait_count") {
 			modifier_effect = std::make_unique<trait_modifier_effect>();
+		} else if (tag == "weapon_damage_bonus") {
+			modifier_effect = std::make_unique<weapon_damage_bonus_modifier_effect>();
+		} else if (tag == "weapon_to_hit_bonus") {
+			modifier_effect = std::make_unique<weapon_to_hit_bonus_modifier_effect>();
 		} else if (character_stat::try_get_stat(tag) != nullptr) {
 			modifier_effect = std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(tag));
 		}

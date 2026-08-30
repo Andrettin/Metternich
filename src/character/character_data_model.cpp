@@ -19,6 +19,7 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/game.h"
+#include "item/item_type.h"
 #include "religion/deity.h"
 #include "religion/divine_domain.h"
 #include "religion/pantheon.h"
@@ -142,7 +143,9 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
+		disconnect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
@@ -152,7 +155,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
-		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_rows);
 	}
 
 	this->character = character;
@@ -169,7 +172,9 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
-		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_row);
+		connect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
+		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
+		connect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
 		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
@@ -179,7 +184,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::traits_changed, this, &character_data_model::update_trait_rows);
 		connect(this->character->get_game_data(), &character_game_data::wealth_changed, this, &character_data_model::update_wealth_row);
-		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_row);
+		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_damage_rows);
 	}
 
 	emit character_changed();
@@ -319,7 +324,7 @@ void character_data_model::reset_model()
 
 		this->create_armor_class_rows();
 		this->create_to_hit_bonus_rows();
-		this->create_damage_row();
+		this->create_damage_rows();
 		this->create_range_row();
 		this->create_movement_row();
 		this->create_initiative_bonus_row();
@@ -523,7 +528,7 @@ void character_data_model::update_armor_class_rows()
 	this->clear_child_rows(this->armor_class_row);
 
 	for (const auto &[species, bonus] : character_game_data->get_species_armor_class_bonuses()) {
-		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), std::to_string(character_game_data->get_armor_class_bonus() + bonus), this->armor_class_row);
+		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), number::to_signed_string(bonus), this->armor_class_row);
 		this->armor_class_row->child_rows.push_back(std::move(row));
 	}
 
@@ -548,19 +553,28 @@ void character_data_model::update_to_hit_bonus_rows()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 	this->to_hit_bonus_row->value = number::to_signed_string(character_game_data->get_to_hit_bonus());
 
+	this->clear_child_rows(this->to_hit_bonus_row);
+
+	for (const auto &[weapon_type, bonus] : character_game_data->get_weapon_to_hit_bonuses()) {
+		auto row = std::make_unique<character_data_row>(weapon_type->get_name(), number::to_signed_string(bonus), this->to_hit_bonus_row);
+		this->to_hit_bonus_row->child_rows.push_back(std::move(row));
+	}
+
+	this->on_child_rows_inserted(this->to_hit_bonus_row);
+
 	this->on_top_row_changed(this->to_hit_bonus_row);
 }
 
-void character_data_model::create_damage_row()
+void character_data_model::create_damage_rows()
 {
 	auto row = std::make_unique<character_data_row>("Damage:");
 	this->damage_row = row.get();
 	this->top_rows.push_back(std::move(row));
 
-	this->update_damage_row();
+	this->update_damage_rows();
 }
 
-void character_data_model::update_damage_row()
+void character_data_model::update_damage_rows()
 {
 	assert_throw(this->damage_row != nullptr);
 
@@ -569,6 +583,15 @@ void character_data_model::update_damage_row()
 	dice damage_dice = character_game_data->get_damage_dice();
 	damage_dice.change_modifier(character_game_data->get_damage_bonus());
 	this->damage_row->value = damage_dice.to_display_string();
+
+	this->clear_child_rows(this->damage_row);
+
+	for (const auto &[weapon_type, bonus] : character_game_data->get_weapon_damage_bonuses()) {
+		auto row = std::make_unique<character_data_row>(weapon_type->get_name(), number::to_signed_string(bonus), this->damage_row);
+		this->damage_row->child_rows.push_back(std::move(row));
+	}
+
+	this->on_child_rows_inserted(this->damage_row);
 
 	this->on_top_row_changed(this->damage_row);
 }

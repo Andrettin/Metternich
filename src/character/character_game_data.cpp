@@ -215,6 +215,14 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "weapon_to_hit_bonuses") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->weapon_to_hit_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "weapon_damage_bonuses") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->weapon_damage_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "saving_throw_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->saving_throw_bonuses[saving_throw_type::get(property.get_key())] = std::stoi(property.get_value());
@@ -378,6 +386,22 @@ gsml_data character_game_data::to_gsml_data() const
 			species_armor_class_bonuses_data.add_property(species->get_identifier(), std::to_string(bonus));
 		}
 		data.add_child(std::move(species_armor_class_bonuses_data));
+	}
+
+	if (!this->weapon_to_hit_bonuses.empty()) {
+		gsml_data weapon_to_hit_bonuses_data("weapon_to_hit_bonuses");
+		for (const auto &[weapon_type, bonus] : this->weapon_to_hit_bonuses) {
+			weapon_to_hit_bonuses_data.add_property(weapon_type->get_identifier(), std::to_string(bonus));
+		}
+		data.add_child(std::move(weapon_to_hit_bonuses_data));
+	}
+
+	if (!this->weapon_damage_bonuses.empty()) {
+		gsml_data weapon_damage_bonuses_data("weapon_damage_bonuses");
+		for (const auto &[weapon_type, bonus] : this->weapon_damage_bonuses) {
+			weapon_damage_bonuses_data.add_property(weapon_type->get_identifier(), std::to_string(bonus));
+		}
+		data.add_child(std::move(weapon_damage_bonuses_data));
 	}
 
 	if (!this->saving_throw_bonuses.empty()) {
@@ -2256,15 +2280,33 @@ void character_game_data::change_to_hit_bonus(const int change)
 	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
 }
 
+void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_type, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->weapon_to_hit_bonuses[weapon_type] += change);
+
+	if (new_value == 0) {
+		this->weapon_to_hit_bonuses.erase(weapon_type);
+	}
+
+	const item *weapon = this->get_weapon();
+	if (weapon != nullptr && weapon->get_type() == weapon_type) {
+		this->change_to_hit_bonus(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit weapon_to_hit_bonuses_changed();
+	}
+}
+
 const dice &character_game_data::get_damage_dice() const
 {
-	for (const auto &[slot, items] : this->equipped_items) {
-		if (!slot->is_weapon()) {
-			continue;
-		}
-
-		assert_throw(!items.empty());
-		return items.at(0)->get_type()->get_damage_dice();
+	const item *weapon = this->get_weapon();
+	if (weapon != nullptr) {
+		return weapon->get_type()->get_damage_dice();
 	}
 
 	if (this->character->get_monster_type() != nullptr) {
@@ -2295,6 +2337,28 @@ void character_game_data::set_damage_bonus(const int bonus)
 void character_game_data::change_damage_bonus(const int change)
 {
 	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
+void character_game_data::change_weapon_damage_bonus(const item_type *weapon_type, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->weapon_damage_bonuses[weapon_type] += change);
+
+	if (new_value == 0) {
+		this->weapon_damage_bonuses.erase(weapon_type);
+	}
+
+	const item *weapon = this->get_weapon();
+	if (weapon != nullptr && weapon->get_type() == weapon_type) {
+		this->change_damage_bonus(change);
+	}
+
+	if (game::get()->is_running()) {
+		emit weapon_damage_bonuses_changed();
+	}
 }
 
 int character_game_data::get_max_damage() const
@@ -3902,6 +3966,9 @@ QCoro::Task<void> character_game_data::on_item_equipped(const item *item, const 
 	}
 
 	if (item->get_slot()->is_weapon()) {
+		this->change_to_hit_bonus(this->get_weapon_to_hit_bonus(item->get_type()) * multiplier);
+		this->change_damage_bonus(this->get_weapon_damage_bonus(item->get_type()) * multiplier);
+
 		if (this->get_military_unit() != nullptr) {
 			this->update_military_unit_stats();
 		}
@@ -3917,6 +3984,20 @@ QCoro::Task<void> character_game_data::on_item_equipped_with_enchantment(const e
 	for (const metternich::enchantment *subenchantment : enchantment->get_subenchantments()) {
 		co_await this->on_item_equipped_with_enchantment(subenchantment, multiplier);
 	}
+}
+
+const item *character_game_data::get_weapon() const
+{
+	for (const auto &[slot, items] : this->equipped_items) {
+		if (!slot->is_weapon()) {
+			continue;
+		}
+
+		assert_throw(!items.empty());
+		return items.at(0);
+	}
+
+	return nullptr;
 }
 
 bool character_game_data::can_use_item(const item *item, std::string *reason) const
@@ -4212,13 +4293,9 @@ QCoro::Task<void> character_game_data::ai_sell_items()
 
 const sound *character_game_data::get_attack_sound() const
 {
-	for (const auto &[slot, items] : this->equipped_items) {
-		if (!slot->is_weapon()) {
-			continue;
-		}
-
-		assert_throw(!items.empty());
-		return items.at(0)->get_type()->get_attack_sound();
+	const item *weapon = this->get_weapon();
+	if (weapon != nullptr) {
+		return weapon->get_type()->get_attack_sound();
 	}
 
 	return nullptr;

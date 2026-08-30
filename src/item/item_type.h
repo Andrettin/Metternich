@@ -51,7 +51,6 @@ public:
 			if (!item_type->is_weapon()) {
 				continue;
 			}
-
 			
 			weapon_types.push_back(item_type);
 		}
