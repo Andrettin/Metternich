@@ -54,6 +54,7 @@ class item final : public QObject
 	Q_PROPERTY(int quantity READ get_quantity NOTIFY quantity_changed)
 
 public:
+	static std::string create_name(const std::string &type_name, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	static int64_t get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 

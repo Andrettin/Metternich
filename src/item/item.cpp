@@ -195,9 +195,9 @@ gsml_data item::to_gsml_data() const
 	return data;
 }
 
-std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+std::string item::create_name(const std::string &type_name, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 {
-	std::string name = type->get_name();
+	std::string name = type_name;
 
 	if (material != nullptr) {
 		name = material->get_name() + " " + name;
@@ -230,6 +230,11 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	} else {
 		return name;
 	}
+}
+
+std::string item::create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+{
+	return item::create_name(type->get_name(), material, enchantment, spell, recipe);
 }
 
 int64_t item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
