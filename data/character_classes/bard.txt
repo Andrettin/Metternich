@@ -99,7 +99,7 @@ bard = {
 	}
 	level_modifiers = {
 		1 = {
-			#trait_of_type = past_experience
+			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
