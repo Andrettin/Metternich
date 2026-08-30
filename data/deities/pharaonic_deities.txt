@@ -42,6 +42,12 @@ bes = { #Source: Warren R. Dawson, "Pygmies and Dwarfs in Ancient Egypt", 1938, 
 		religion = kemetic
 		gender = male
 		birth_date = -4000
+		traits = {
+			#weapon_focus_light_blades
+		}
+		starting_items = {
+			short_sword
+		}
 	}
 	
 	#has a dwarf-like appearance

@@ -1,0 +1,135 @@
+weapon_focus_bows = {
+	name = "Weapon Focus: Bows"
+	icon = bow
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = bow
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = bow
+			bonus = 1
+		}
+	}
+}
+
+weapon_focus_heavy_blades = {
+	name = "Weapon Focus: Heavy Blades"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = heavy_blade
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = heavy_blade
+			bonus = 1
+		}
+	}
+}
+
+weapon_focus_light_blades = {
+	name = "Weapon Focus: Light Blades"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = light_blade
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = light_blade
+			bonus = 1
+		}
+	}
+}
+
+weapon_focus_maces = {
+	name = "Weapon Focus: Maces"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = mace
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = mace
+			bonus = 1
+		}
+	}
+}
+
+weapon_specialization_bows = {
+	name = "Weapon Specialization: Bows"
+	icon = bow
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		trait = weapon_focus_bows
+		character_class = warrior
+		level >= 4
+	}
+	gain_conditions = {
+		item = {
+			item_class = bow
+		}
+	}
+	modifier = {
+		weapon_damage_bonus = {
+			weapon_class = bow
+			bonus = 2
+		}
+	}
+}
+
+weapon_specialization_heavy_blades = {
+	name = "Weapon Specialization: Heavy Blades"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		trait = weapon_focus_heavy_blades
+		character_class = warrior
+		level >= 4
+	}
+	gain_conditions = {
+		item = {
+			item_class = heavy_blade
+		}
+	}
+	modifier = {
+		weapon_damage_bonus = {
+			weapon_class = heavy_blade
+			bonus = 2
+		}
+	}
+}

@@ -91,6 +91,10 @@ warrior = {
 			courageous = 3
 			cautious = -3
 			#trait_of_type = past_experience
+			#trait_of_type = weapon_proficiency
+			#trait_of_type = weapon_proficiency
+			#trait_of_type = weapon_proficiency
+			#trait_of_type = weapon_proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
 			trait_of_type = proficiency
@@ -98,6 +102,7 @@ warrior = {
 	}
 	recurring_level_modifiers = {
 		3 = {
+			#trait_of_type = weapon_proficiency
 			trait_of_type = proficiency
 		}
 	}

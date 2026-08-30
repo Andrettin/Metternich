@@ -2,6 +2,10 @@ proficiency = {
 	name = "Proficiency"
 }
 
+weapon_proficiency = {
+	name = "Weapon Proficiency"
+}
+
 epic_proficiency = {
 	name = "Epic Proficiency"
 	gain_conditions = {

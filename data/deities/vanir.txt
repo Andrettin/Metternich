@@ -54,6 +54,13 @@ freyja = { #Source: Peter Buchholz, "Perspectives for Historical Research in Ger
 		gender = female
 		father = njord
 		mother = nerthus #correct?
+		traits = {
+			#weapon_focus_heavy_blades
+			#weapon_specialization_heavy_blades
+		}
+		starting_items = {
+			long_sword
+		}
 	}
 	
 	#fertility goddess, and a goddess of love

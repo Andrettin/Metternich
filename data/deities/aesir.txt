@@ -90,6 +90,12 @@ heimdall = { #the horn Gjall belongs to him; identified with Rig (the progenitor
 		religion = asatru
 		gender = male
 		birth_date = -3000
+		traits = {
+			#weapon_focus_heavy_blades
+		}
+		starting_items = {
+			long_sword
+		}
 	}
 }
 
@@ -116,6 +122,12 @@ hel = { #Source: Anders Andrén, "Behind Heathendom: Archaeological Studies of O
 		religion = asatru
 		gender = female
 		father = loki
+		traits = {
+			#weapon_focus_heavy_blades
+		}
+		starting_items = {
+			long_sword
+		}
 	}
 	
 	#goddess of death who dwells in Niflheim
@@ -166,6 +178,12 @@ loki = { #son of two giants; attractive, mischief-making and ambivalent god; kno
 		religion = asatru
 		gender = male
 		birth_date = -3000
+		traits = {
+			#weapon_focus_light_blades
+		}
+		starting_items = {
+			dagger
+		}
 	}
 }
 
@@ -299,5 +317,12 @@ tyr = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 34-36, 251
 		religion = asatru
 		gender = male
 		father = odin
+		traits = {
+			#weapon_focus_heavy_blades
+			#weapon_specialization_heavy_blades
+		}
+		starting_items = {
+			long_sword
+		}
 	}
 }

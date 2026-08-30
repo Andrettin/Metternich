@@ -50,6 +50,10 @@ apollo = {
 		religion = hellenic
 		gender = male
 		father = zeus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 287-288.
+		traits = {
+			#weapon_focus_bows
+			#weapon_specialization_bows
+		}
 		starting_items = {
 			composite_long_bow
 		}
@@ -118,6 +122,9 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 		religion = hellenic
 		gender = female
 		father = zeus
+		traits = {
+			#weapon_focus_bows
+		}
 		starting_items = {
 			short_sword
 			composite_long_bow
@@ -237,6 +244,10 @@ hades = {
 		gender = male
 		father = cronus #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
 		mother = rhea #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 504.
+		traits = {
+			#weapon_focus_heavy_blades
+			#weapon_specialization_heavy_blades
+		}
 		starting_items = {
 			bastard_sword
 		}
