@@ -785,6 +785,7 @@ set(script_condition_HDRS
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
 	src/script/condition/tier_condition.h
+	src/script/condition/to_hit_bonus_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/year_condition.h

@@ -133,6 +133,7 @@
 #include "script/condition/technology_condition.h"
 #include "script/condition/terrain_condition.h"
 #include "script/condition/tier_condition.h"
+#include "script/condition/to_hit_bonus_condition.h"
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/year_condition.h"
@@ -183,6 +184,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 			return std::make_unique<skill_training_condition>(value, condition_operator);
 		} else if (key == "spell") {
 			return std::make_unique<spell_condition>(value, condition_operator);
+		} else if (key == "to_hit_bonus") {
+			return std::make_unique<to_hit_bonus_condition>(value, condition_operator);
 		} else if (key == "trait") {
 			return std::make_unique<trait_condition>(value, condition_operator);
 		}
