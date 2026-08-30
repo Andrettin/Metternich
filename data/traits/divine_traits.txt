@@ -131,6 +131,56 @@ divine_weapon_focus_heavy_blades = {
 	}
 }
 
+divine_weapon_specialization_bows = {
+	name = "Divine Weapon Specialization: Bows"
+	icon = bow
+	types = {
+		divine_trait
+	}
+	conditions = {
+		to_hit_bonus >= 20
+		trait = divine_weapon_focus_bows
+	}
+	gain_conditions = {
+		item = {
+			item_class = bow
+		}
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			weapon_damage_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+		}
+	}
+}
+
+divine_weapon_specialization_heavy_blades = {
+	name = "Divine Weapon Specialization: Heavy Blades"
+	icon = saber
+	types = {
+		divine_trait
+	}
+	conditions = {
+		to_hit_bonus >= 20
+		trait = divine_weapon_focus_heavy_blades
+	}
+	gain_conditions = {
+		item = {
+			item_class = heavy_blade
+		}
+	}
+	per_divine_rank_modifiers = {
+		1 = {
+			weapon_damage_bonus = {
+				weapon_class = heavy_blade
+				bonus = 1
+			}
+		}
+	}
+}
+
 extra_divine_domain_air = {
 	name = "Extra Divine Domain: Air"
 	icon = flag

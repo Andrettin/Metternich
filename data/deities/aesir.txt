@@ -83,6 +83,10 @@ heimdall = { #the horn Gjall belongs to him; identified with Rig (the progenitor
 		summoning
 		sun
 	}
+	traits = {
+		divine_weapon_focus_heavy_blades
+		#divine_weapon_specialization_heavy_blades
+	}
 	character = {
 		species = human
 		character_class = warrior
@@ -309,6 +313,10 @@ tyr = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 34-36, 251
 		guardian
 		healing
 		protection
+	}
+	traits = {
+		divine_weapon_focus_heavy_blades
+		#divine_weapon_specialization_heavy_blades
 	}
 	character = {
 		species = human

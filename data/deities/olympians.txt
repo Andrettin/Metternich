@@ -114,6 +114,7 @@ artemis = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp.
 	}
 	traits = {
 		divine_weapon_focus_bows
+		#divine_weapon_specialization_bows
 		extra_divine_domain_sun
 	}
 	character = {
@@ -236,6 +237,7 @@ hades = {
 	}
 	traits = {
 		divine_weapon_focus_heavy_blades
+		#divine_weapon_specialization_heavy_blades
 	}
 	character = {
 		monster_type = trumpet_archon
