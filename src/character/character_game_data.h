@@ -520,6 +520,7 @@ public:
 
 	void set_damage_bonus(const int bonus);
 	void change_damage_bonus(const int change);
+	int get_max_damage() const;
 
 	int get_range() const
 	{

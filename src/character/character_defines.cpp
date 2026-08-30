@@ -5,6 +5,7 @@
 #include "character/bloodline_strength_category.h"
 #include "religion/divine_rank.h"
 #include "script/modifier.h"
+#include "util/assert_util.h"
 #include "util/string_conversion_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -91,6 +92,34 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 
 			this->mana_cost_per_spell_level[level] = mana_cost;
 		});
+	} else if (tag == "battle_attack_conversion_points_per_to_hit_bonus") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int to_hit_bonus = std::stoi(property.get_key());
+			const int attack_conversion_points = std::stoi(property.get_value());
+
+			this->battle_attack_conversion_points_per_to_hit_bonus[to_hit_bonus] = attack_conversion_points;
+		});
+	} else if (tag == "battle_attack_conversion_points_per_max_damage") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int max_damage = std::stoi(property.get_key());
+			const int attack_conversion_points = std::stoi(property.get_value());
+
+			this->battle_attack_conversion_points_per_max_damage[max_damage] = attack_conversion_points;
+		});
+	} else if (tag == "battle_melee_per_attack_conversion_points") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int attack_conversion_points = std::stoi(property.get_key());
+			const int melee = std::stoi(property.get_value());
+
+			this->battle_melee_per_attack_conversion_points[attack_conversion_points] = melee;
+		});
+	} else if (tag == "battle_missile_per_attack_conversion_points") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const int attack_conversion_points = std::stoi(property.get_key());
+			const int missile = std::stoi(property.get_value());
+
+			this->battle_missile_per_attack_conversion_points[attack_conversion_points] = missile;
+		});
 	} else if (tag == "battle_defense_per_armor_class") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const int armor_class = std::stoi(property.get_key());
@@ -174,6 +203,53 @@ int character_defines::get_mana_cost_for_spell_level(const int level) const
 	}
 
 	throw std::runtime_error(std::format("No mana cost is given for spell level {}.", level));
+}
+
+int character_defines::get_battle_attack_conversion_points_for_to_hit_bonus(int to_hit_bonus) const
+{
+	to_hit_bonus = std::max(to_hit_bonus, 0);
+
+	const auto find_iterator = this->battle_attack_conversion_points_per_to_hit_bonus.find(to_hit_bonus);
+	if (find_iterator != this->battle_attack_conversion_points_per_to_hit_bonus.end()) {
+		return find_iterator->second;
+	}
+
+	//use the last value if no specific one was found (if the to hit bonus is greater than the to hit bonus for the last value)
+	const auto last_iterator = this->battle_attack_conversion_points_per_to_hit_bonus.rbegin();
+	if (to_hit_bonus > last_iterator->first) {
+		return last_iterator->second;
+	}
+
+	return 0;
+}
+
+int character_defines::get_battle_attack_conversion_points_for_max_damage(int max_damage) const
+{
+	max_damage = std::max(max_damage, 0);
+
+	const auto find_iterator = this->battle_attack_conversion_points_per_max_damage.upper_bound(max_damage);
+	assert_throw(find_iterator != this->battle_attack_conversion_points_per_max_damage.begin());
+	return std::prev(find_iterator)->second;
+}
+
+int character_defines::get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const
+{
+	int attack_conversion_points = this->get_battle_attack_conversion_points_for_to_hit_bonus(to_hit_bonus);
+	attack_conversion_points += this->get_battle_attack_conversion_points_for_max_damage(max_damage);
+
+	const auto find_iterator = this->battle_melee_per_attack_conversion_points.upper_bound(attack_conversion_points);
+	assert_throw(find_iterator != this->battle_melee_per_attack_conversion_points.begin());
+	return std::prev(find_iterator)->second;
+}
+
+int character_defines::get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const
+{
+	int attack_conversion_points = this->get_battle_attack_conversion_points_for_to_hit_bonus(to_hit_bonus);
+	attack_conversion_points += this->get_battle_attack_conversion_points_for_max_damage(max_damage);
+
+	const auto find_iterator = this->battle_missile_per_attack_conversion_points.upper_bound(attack_conversion_points);
+	assert_throw(find_iterator != this->battle_missile_per_attack_conversion_points.begin());
+	return std::prev(find_iterator)->second;
 }
 
 int character_defines::get_battle_defense_for_armor_class(const int armor_class) const

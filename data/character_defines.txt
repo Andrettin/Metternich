@@ -149,6 +149,70 @@ mana_cost_per_spell_level = {
 	9 = 120
 }
 
+battle_attack_conversion_points_per_to_hit_bonus = {
+	0 = 0
+	1 = 1
+	2 = 2
+	3 = 3
+	4 = 4
+	5 = 5
+	6 = 6
+	7 = 7
+	8 = 8
+	9 = 9
+	10 = 10
+	11 = 11
+	12 = 12
+	13 = 13
+	14 = 14
+	15 = 15
+	16 = 16
+	17 = 17
+	18 = 18
+	19 = 19
+}
+
+battle_attack_conversion_points_per_max_damage = {
+	0 = 0
+	3 = 1
+	4 = 2
+	5 = 3
+	6 = 4
+	7 = 5
+	9 = 6
+	10 = 7
+	11 = 8
+	13 = 9
+	17 = 10
+	22 = 11
+	29 = 12
+	37 = 13
+	46 = 14
+	55 = 15
+	64 = 16
+	73 = 17
+	81 = 18
+	101 = 19
+}
+
+battle_melee_per_attack_conversion_points = {
+	0 = 1
+	7 = 2
+	10 = 3
+	15 = 4
+	25 = 5
+	36 = 7
+}
+
+battle_missile_per_attack_conversion_points = {
+	0 = 1
+	7 = 2
+	10 = 4
+	15 = 5
+	25 = 5
+	36 = 7
+}
+
 battle_defense_per_armor_class = {
 	0 = 1
 	1 = 2

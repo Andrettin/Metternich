@@ -104,6 +104,10 @@ public:
 
 	int get_mana_cost_for_spell_level(const int level) const;
 
+	int get_battle_attack_conversion_points_for_to_hit_bonus(int to_hit_bonus) const;
+	int get_battle_attack_conversion_points_for_max_damage(int max_damage) const;
+	int get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const;
+	int get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const;
 	int get_battle_defense_for_armor_class(const int armor_class) const;
 
 signals:
@@ -124,6 +128,10 @@ private:
 	std::map<divine_rank, int> divine_rank_levels;
 	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
 	std::map<int, int> mana_cost_per_spell_level;
+	std::map<int, int> battle_attack_conversion_points_per_to_hit_bonus;
+	std::map<int, int> battle_attack_conversion_points_per_max_damage;
+	std::map<int, int> battle_melee_per_attack_conversion_points;
+	std::map<int, int> battle_missile_per_attack_conversion_points;
 	std::map<int, int> battle_defense_per_armor_class; //military unit defense per character armor class
 };
 

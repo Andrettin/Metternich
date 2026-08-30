@@ -2242,6 +2242,10 @@ void character_game_data::set_to_hit_bonus(const int bonus)
 
 	this->to_hit_bonus = bonus;
 
+	if (this->get_military_unit() != nullptr) {
+		this->update_military_unit_stats();
+	}
+
 	if (game::get()->is_running()) {
 		emit to_hit_bonus_changed();
 	}
@@ -2279,6 +2283,10 @@ void character_game_data::set_damage_bonus(const int bonus)
 
 	this->damage_bonus = bonus;
 
+	if (this->get_military_unit() != nullptr) {
+		this->update_military_unit_stats();
+	}
+
 	if (game::get()->is_running()) {
 		emit damage_bonus_changed();
 	}
@@ -2287,6 +2295,11 @@ void character_game_data::set_damage_bonus(const int bonus)
 void character_game_data::change_damage_bonus(const int change)
 {
 	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
+int character_game_data::get_max_damage() const
+{
+	return this->get_damage_dice().get_maximum_result() + this->get_damage_bonus();
 }
 
 int character_game_data::get_effective_range() const
@@ -3160,9 +3173,19 @@ void character_game_data::update_military_unit_stats()
 	metternich::military_unit *military_unit = this->get_military_unit();
 	assert_throw(military_unit != nullptr);
 
+	const centesimal_int battle_range = battle::length_to_battle_range(this->get_effective_range());
+	const bool ranged = battle_range.to_int() > 1;
+
+	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage())));
+	military_unit->set_stat(military_unit_stat::charge, centesimal_int(0));
+	if (ranged) {
+		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage())));
+	} else {
+		military_unit->set_stat(military_unit_stat::missile, centesimal_int(0));
+	}
 	military_unit->set_stat(military_unit_stat::defense, centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
 	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
-	military_unit->set_stat(military_unit_stat::range, battle::length_to_battle_range(this->get_effective_range()));
+	military_unit->set_stat(military_unit_stat::range, battle_range);
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const
@@ -3876,6 +3899,12 @@ QCoro::Task<void> character_game_data::on_item_equipped(const item *item, const 
 
 	if (item->get_enchantment() != nullptr) {
 		co_await this->on_item_equipped_with_enchantment(item->get_enchantment(), multiplier);
+	}
+
+	if (item->get_slot()->is_weapon()) {
+		if (this->get_military_unit() != nullptr) {
+			this->update_military_unit_stats();
+		}
 	}
 }
 
