@@ -18,6 +18,22 @@ complete_dedication = {
 	}
 }
 
+brutal_schedule = {
+	name = "Brutal Schedule"
+	icon = labor
+	weight = 1
+	types = {
+		past_experience
+	}
+	conditions = {
+		character_class = warrior
+	}
+	modifier = {
+		trait_of_type = proficiency
+		trait_of_type = proficiency
+	}
+}
+
 hard_training = {
 	name = "Hard Training"
 	icon = labor
