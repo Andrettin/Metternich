@@ -71,6 +71,7 @@
 #include "script/condition/has_terrain_condition.h"
 #include "script/condition/holding_level_condition.h"
 #include "script/condition/holding_type_condition.h"
+#include "script/condition/home_site_scope_condition.h"
 #include "script/condition/immortal_condition.h"
 #include "script/condition/independent_condition.h"
 #include "script/condition/infantry_condition.h"
@@ -437,6 +438,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	if constexpr (std::is_same_v<scope_type, character>) {
 		if (tag == "attribute_modifier") {
 			condition = std::make_unique<character_attribute_modifier_condition>(condition_operator);
+		} else if (tag == "home_site") {
+			condition = std::make_unique<home_site_scope_condition>(condition_operator);
 		} else if (tag == "item") {
 			condition = std::make_unique<item_condition<scope_type>>(condition_operator);
 		}

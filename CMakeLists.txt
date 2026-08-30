@@ -723,6 +723,7 @@ set(script_condition_HDRS
 	src/script/condition/has_terrain_condition.h
 	src/script/condition/holding_level_condition.h
 	src/script/condition/holding_type_condition.h
+	src/script/condition/home_site_scope_condition.h
 	src/script/condition/immortal_condition.h
 	src/script/condition/independent_condition.h
 	src/script/condition/infantry_condition.h
