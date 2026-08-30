@@ -675,6 +675,8 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	this->apply_bloodline(apply_history);
 	this->initialize_patron_deity();
 
+	co_await this->add_starting_items();
+
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
 		co_await this->set_level(std::min(level, character_class->get_max_level()));
@@ -721,7 +723,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
-	co_await this->add_starting_items();
 	this->add_starting_spells();
 
 	if (this->character->get_health() != 0) {
