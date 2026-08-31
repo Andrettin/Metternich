@@ -125,7 +125,7 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 	}
 
 	const centesimal_int holding_level_change = this->get_settlement()->get_game_data()->get_building_holding_level_change(building);
-	const centesimal_int fortification_level_change = this->get_settlement()->get_game_data()->get_building_fortification_level_change(building);
+	const std::map<construction_type, centesimal_int> construction_level_changes = this->get_settlement()->get_game_data()->get_building_construction_level_changes(building);
 
 	const building_type *old_building = this->get_building();
 
@@ -143,8 +143,10 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 		this->get_settlement()->get_game_data()->change_holding_level(holding_level_change);
 	}
 
-	if (fortification_level_change != 0) {
-		this->get_settlement()->get_game_data()->change_fortification_level(fortification_level_change);
+	for (const auto &[construction_type, construction_level_change] : construction_level_changes) {
+		assert_throw(construction_level_change != 0);
+
+		this->get_settlement()->get_game_data()->change_construction_level(construction_type, construction_level_change);
 	}
 
 	if (old_building == nullptr || this->get_building() == nullptr || old_building->get_item_creation_types() != this->get_building()->get_item_creation_types()) {
@@ -284,7 +286,7 @@ bool building_slot::can_gain_building(const building_type *building) const
 			return false;
 		}
 
-		if (building->get_fortification_level() < this->get_building()->get_fortification_level()) {
+		if (building->get_total_construction_level() < this->get_building()->get_total_construction_level()) {
 			return false;
 		}
 

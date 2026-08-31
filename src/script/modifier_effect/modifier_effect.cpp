@@ -24,6 +24,7 @@
 #include "script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
+#include "script/modifier_effect/construction_level_modifier_effect.h"
 #include "script/modifier_effect/consumption_modifier_effect.h"
 #include "script/modifier_effect/craft_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
@@ -32,7 +33,6 @@
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
 #include "script/modifier_effect/employment_capacity_modifier_effect.h"
 #include "script/modifier_effect/employment_capacity_modifier_modifier_effect.h"
-#include "script/modifier_effect/fortification_level_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -258,10 +258,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trade_efficiency_modifier_effect<scope_type>>(value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
+		static const std::string level_suffix = "_level";
+
 		if (key == "base_population_capacity") {
 			return std::make_unique<base_population_capacity_modifier_effect>(value);
-		} else if (key == "fortification_level") {
-			return std::make_unique<fortification_level_modifier_effect>(value);
 		} else if (key == "holding_level") {
 			return std::make_unique<holding_level_modifier_effect>(value);
 		} else if (key == "population_capacity") {
@@ -271,6 +271,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 		} else if (key.starts_with(monthly_prefix) && key.ends_with(bonus_suffix) && commodity::try_get(key.substr(monthly_prefix.size(), key.size() - monthly_prefix.size() - bonus_suffix.size())) != nullptr) {
 			const commodity *commodity = commodity::get(key.substr(monthly_prefix.size(), key.size() - monthly_prefix.size() - bonus_suffix.size()));
 			return std::make_unique<monthly_commodity_bonus_modifier_effect>(commodity, value);
+		} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
+			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
+			return std::make_unique<construction_level_modifier_effect>(construction_type, value);
 		} else if (key.ends_with(bonus_suffix)) {
 			const size_t commodity_identifier_size = key.size() - bonus_suffix.size();
 			const commodity *commodity = commodity::get(key.substr(0, commodity_identifier_size));

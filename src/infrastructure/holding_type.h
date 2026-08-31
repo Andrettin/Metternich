@@ -104,11 +104,6 @@ public:
 		return this->level_commodity_costs_per_level;
 	}
 
-	const commodity_map<int64_t> &get_fortification_level_commodity_costs() const
-	{
-		return this->fortification_level_commodity_costs;
-	}
-
 	const std::map<std::string, std::unique_ptr<const and_condition<site>>> &get_conditional_names() const
 	{
 		return this->conditional_names;
@@ -180,7 +175,6 @@ private:
 	bool resource = false;
 	commodity_map<int64_t> level_commodity_costs;
 	commodity_map<int64_t> level_commodity_costs_per_level;
-	commodity_map<int64_t> fortification_level_commodity_costs;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const population_class *> population_classes;

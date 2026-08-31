@@ -52,6 +52,7 @@ class site_attribute;
 class site_feature;
 class technology;
 class tile;
+enum class construction_type;
 
 class site_game_data final : public QObject
 {
@@ -70,7 +71,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(const metternich::holding_type* holding_type READ get_holding_type NOTIFY holding_type_changed)
 	Q_PROPERTY(QString holding_level READ get_holding_level_qstring NOTIFY holding_level_changed)
 	Q_PROPERTY(int weighted_holding_level_percent READ get_weighted_holding_level_percent NOTIFY holding_level_changed)
-	Q_PROPERTY(QString fortification_level READ get_fortification_level_qstring NOTIFY fortification_level_changed)
+	Q_PROPERTY(QVariantList construction_levels READ get_construction_levels_qvariant_list NOTIFY construction_levels_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
@@ -210,20 +211,33 @@ public:
 	void set_weighted_holding_level(const centesimal_int &level);
 	void update_weighted_holding_level();
 
-	const centesimal_int &get_fortification_level() const
+	const std::map<construction_type, centesimal_int> &get_construction_levels() const
 	{
-		return this->fortification_level;
+		return this->construction_levels;
 	}
 
-	QString get_fortification_level_qstring() const;
-	void set_fortification_level(const centesimal_int &level);
+	QVariantList get_construction_levels_qvariant_list() const;
 
-	void change_fortification_level(const centesimal_int &change)
+	const centesimal_int &get_construction_level(const construction_type construction_type) const
 	{
-		this->set_fortification_level(this->get_fortification_level() + change);
+		const auto find_iterator = this->construction_levels.find(construction_type);
+		if (find_iterator != this->construction_levels.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
 	}
 
-	centesimal_int get_building_fortification_level_change(const building_type *building) const;
+	void set_construction_level(const construction_type construction_type, const centesimal_int &level);
+
+	void change_construction_level(const construction_type construction_type, const centesimal_int &change)
+	{
+		this->set_construction_level(construction_type, this->get_construction_level(construction_type) + change);
+	}
+
+	std::map<construction_type, centesimal_int> get_building_construction_level_changes(const building_type *building) const;
+	centesimal_int get_building_construction_level_change(const construction_type construction_type, const building_type *building) const;
 
 	const std::string &get_holding_type_name() const
 	{
@@ -712,7 +726,7 @@ signals:
 	void holding_type_changed();
 	void holding_level_changed();
 	void weighted_holding_level_changed();
-	void fortification_level_changed();
+	void construction_levels_changed();
 	void holding_type_name_changed();
 	void dungeon_changed();
 	void portrait_changed();
@@ -734,7 +748,7 @@ private:
 	const metternich::holding_type *holding_type = nullptr;
 	centesimal_int holding_level;
 	centesimal_int weighted_holding_level; //share of the holding levels available for the holding's province for the holding's domain skill
-	centesimal_int fortification_level;
+	std::map<construction_type, centesimal_int> construction_levels;
 	std::string holding_type_name;
 	const metternich::dungeon *dungeon = nullptr;
 	data_entry_set<dungeon_area> explored_dungeon_areas;

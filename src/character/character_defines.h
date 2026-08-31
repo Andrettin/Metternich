@@ -126,7 +126,7 @@ private:
 	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;
 	std::map<bloodline_strength_category, dice> bloodline_strength_per_category;
 	std::map<divine_rank, int> divine_rank_levels;
-	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> divine_rank_modifiers;
+	std::map<int, std::unique_ptr<const modifier<const character>>> divine_rank_modifiers;
 	std::map<int, int> mana_cost_per_spell_level;
 	std::map<int, int> battle_attack_conversion_points_per_to_hit_bonus;
 	std::map<int, int> battle_attack_conversion_points_per_max_damage;

@@ -12,6 +12,8 @@
 #include "economy/employment_type.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
+#include "infrastructure/construction_type.h"
+#include "infrastructure/holding_defines.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_creation_type.h"
 #include "script/condition/and_condition.h"
@@ -73,6 +75,8 @@ void building_type::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
+	static const std::string level_suffix = "_level";
+
 	if (key == "build_duration") {
 		const std::chrono::seconds duration_seconds = string::to_duration(value);
 		this->build_duration = std::chrono::duration_cast<std::chrono::months>(duration_seconds);
@@ -81,6 +85,11 @@ void building_type::process_gsml_property(const gsml_property &property)
 		}
 	} else if (key == "wealth_cost") {
 		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
+	} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
+		const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
+		const centesimal_int construction_level(value);
+		this->construction_levels[construction_type] = construction_level;
+		this->total_construction_level += construction_level;
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -375,22 +384,26 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		}
 	}
 
-	if (this->get_fortification_level() > 0) {
+	for (const auto &[construction_type, construction_level] : this->get_construction_levels()) {
 		assert_throw(holding_type != nullptr);
-		const centesimal_int fortification_level_change = site->get_game_data()->get_building_fortification_level_change(this);
-		const centesimal_int total_fortification_level = site->get_game_data()->get_fortification_level() + fortification_level_change;
-		for (const auto &[commodity, level_cost] : holding_type->get_fortification_level_commodity_costs()) {
-			int fortification_cost = (level_cost * fortification_level_change).to_int();
-			if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
-				//double the cost if fortifying the provincial capital (i.e. fortifying the province itself)
-				fortification_cost *= 2;
+		const centesimal_int construction_level_change = site->get_game_data()->get_building_construction_level_change(construction_type, this);
+		const centesimal_int total_construction_level = site->get_game_data()->get_construction_level(construction_type) + construction_level_change;
+		for (const auto &[commodity, level_cost] : holding_defines::get()->get_construction_level_commodity_costs(construction_type)) {
+			int64_t construction_cost = (level_cost * construction_level_change).to_int64();
+
+			if (construction_type == construction_type::fortification) {
+				if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
+					//double the cost if fortifying the provincial capital (i.e. fortifying the province itself)
+					construction_cost *= 2;
+				}
+				if (total_construction_level > site->get_game_data()->get_holding_level()) {
+					//double the cost if fortifying beyond the holding level
+					construction_cost *= 2;
+				}
 			}
-			if (total_fortification_level > site->get_game_data()->get_holding_level()) {
-				//double the cost if fortifying beyond the holding level
-				fortification_cost *= 2;
-			}
-			fortification_cost = std::max(fortification_cost, 1);
-			costs[commodity] += fortification_cost;
+
+			construction_cost = std::max(construction_cost, 1ll);
+			costs[commodity] += construction_cost;
 		}
 	}
 
@@ -485,13 +498,13 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 		str += std::format("Holding Level: {}", string::colored(this->get_holding_level().to_signed_string(), number_color));
 	}
 
-	if (this->get_fortification_level() != 0) {
+	for (const auto &[construction_type, construction_level] : this->get_construction_levels()) {
 		if (!str.empty()) {
 			str += separator;
 		}
 
-		const QColor &number_color = this->get_fortification_level() < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
-		str += std::format("Fortification Level: {}", string::colored(this->get_fortification_level().to_signed_string(), number_color));
+		const QColor &number_color = construction_level < 0 ? ui_defines::get()->get_red_text_color() : ui_defines::get()->get_green_text_color();
+		str += std::format("{} Level: {}", get_construction_type_name(construction_type), string::colored(construction_level.to_signed_string(), number_color));
 	}
 
 	std::string site_modifier_str;

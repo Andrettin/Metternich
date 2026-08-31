@@ -274,7 +274,7 @@ Rectangle {
 				(selected_site.game_data.owner !== null ? ("Domain: " + selected_site.game_data.owner.game_data.name) : "")
 				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.game_data.name) : "")
 				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level + " (" + selected_site.holding_type.domain_skill.name + " " + selected_site_game_data.weighted_holding_level_percent + "%)") : "")
-				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nFortification Level: " + selected_site_game_data.fortification_level) : "")
+				+ ((selected_site.holding_type !== null && dungeon === null && selected_site_game_data.construction_levels.length > 0) ? ("\n" + get_construction_levels_string(selected_site_game_data.construction_levels)) : "")
 				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
@@ -284,6 +284,23 @@ Rectangle {
 		
 		readonly property var holding_type: selected_site_game_data ? selected_site_game_data.holding_type : null
 		readonly property var dungeon: selected_site_game_data ? selected_site_game_data.dungeon : null
+		
+		function get_construction_levels_string(construction_levels) {
+			var str = ""
+			
+			for (var kv_pair of construction_levels) {
+				var construction_type_name = kv_pair.key
+				var construction_level = kv_pair.value
+				
+				if (str.length > 0) {
+					str += "\n"
+				}
+				
+				str += construction_type_name + " Level: " + construction_level
+			}
+			
+			return str
+		}
 		
 		function get_commodity_outputs_string(commodity_outputs) {
 			var str = ""

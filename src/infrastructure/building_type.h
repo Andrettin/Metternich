@@ -28,6 +28,7 @@ class portrait;
 class province;
 class site;
 class technology;
+enum class construction_type;
 enum class military_unit_category;
 enum class transporter_category;
 
@@ -62,7 +63,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
-	Q_PROPERTY(archimedes::centesimal_int fortification_level MEMBER fortification_level READ get_fortification_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(int min_holding_level MEMBER min_holding_level READ get_min_holding_level NOTIFY changed)
@@ -191,9 +191,25 @@ public:
 		return this->holding_level;
 	}
 
-	const centesimal_int &get_fortification_level() const
+	const std::map<construction_type, centesimal_int> &get_construction_levels() const
 	{
-		return this->fortification_level;
+		return this->construction_levels;
+	}
+
+	const centesimal_int &get_construction_level(const construction_type construction_type) const
+	{
+		const auto find_iterator = this->construction_levels.find(construction_type);
+		if (find_iterator != this->construction_levels.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr centesimal_int zero;
+		return zero;
+	}
+
+	const centesimal_int &get_total_construction_level() const
+	{
+		return this->total_construction_level;
 	}
 
 	int64_t get_population_capacity_for_province_level(const int province_level, const centesimal_int &province_total_holding_level) const;
@@ -333,7 +349,8 @@ private:
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
 	centesimal_int holding_level;
-	centesimal_int fortification_level;
+	std::map<construction_type, centesimal_int> construction_levels;
+	centesimal_int total_construction_level;
 	building_type *base_building = nullptr;
 	std::vector<const building_type *> derived_buildings; //buildings which are based on this one
 	std::vector<const building_type *> required_buildings;

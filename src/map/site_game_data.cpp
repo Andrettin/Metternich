@@ -30,6 +30,7 @@
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/construction_type.h"
 #include "infrastructure/dungeon.h"
 #include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_defines.h"
@@ -72,6 +73,8 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
 
 site_game_data::site_game_data(const metternich::site *site) : site(site)
@@ -95,8 +98,6 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_level = centesimal_int(value);
 	} else if (key == "weighted_holding_level") {
 		this->weighted_holding_level = centesimal_int(value);
-	} else if (key == "fortification_level") {
-		this->fortification_level = centesimal_int(value);
 	} else if (key == "holding_type_name") {
 		this->holding_type_name = value;
 	} else if (key == "dungeon") {
@@ -127,6 +128,10 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 
 		tile *tile = map::get()->get_tile(tile_pos);
 		tile->set_site(this->site);
+	} else if (tag == "construction_levels") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->construction_levels[magic_enum::enum_cast<construction_type>(property.get_key()).value()] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "features") {
 		for (const std::string &value : values) {
 			this->features.insert(site_feature::get(value));
@@ -233,15 +238,19 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("weighted_holding_level", this->get_weighted_holding_level().to_string());
 	}
 
-	if (this->get_fortification_level() != 0) {
-		data.add_property("fortification_level", this->get_fortification_level().to_string());
-	}
-
 	if (this->get_dungeon() != nullptr) {
 		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
 
 	data.add_property("holding_level_income", std::to_string(this->holding_level_income));
+
+	if (!this->get_construction_levels().empty()) {
+		gsml_data construction_levels_data("construction_levels");
+		for (const auto &[construction_type, construction_level] : this->get_construction_levels()) {
+			construction_levels_data.add_property(std::string(magic_enum::enum_name(construction_type)), construction_level.to_string());
+		}
+		data.add_child(std::move(construction_levels_data));
+	}
 
 	if (!this->get_features().empty()) {
 		gsml_data features_data("features");
@@ -1173,27 +1182,65 @@ void site_game_data::update_weighted_holding_level()
 	}
 }
 
-QString site_game_data::get_fortification_level_qstring() const
+QVariantList site_game_data::get_construction_levels_qvariant_list() const
 {
-	return QString::fromStdString(number::to_formatted_string(this->get_fortification_level().to_int()));
+	std::map<QString, QString> construction_levels_by_name;
+	for (const auto &[construction_type, construction_level] : this->get_construction_levels()) {
+		const int construction_level_int = construction_level.to_int();
+		if (construction_level_int == 0) {
+			continue;
+		}
+
+		construction_levels_by_name[QString::fromStdString(std::string(get_construction_type_name(construction_type)))] = QString::fromStdString(number::to_formatted_string(construction_level_int));
+	}
+
+	return archimedes::map::to_qvariant_list(construction_levels_by_name);
 }
 
-void site_game_data::set_fortification_level(const centesimal_int &level)
+void site_game_data::set_construction_level(const construction_type construction_type, const centesimal_int &level)
 {
 	assert_throw(this->site->is_settlement());
 
-	if (level == this->get_fortification_level()) {
+	if (level == this->get_construction_level(construction_type)) {
 		return;
 	}
 
-	this->fortification_level = level;
+	if (level == 0) {
+		this->construction_levels.erase(construction_type);
+	} else {
+		this->construction_levels[construction_type] = level;
+	}
 
 	if (game::get()->is_running()) {
-		emit fortification_level_changed();
+		emit construction_levels_changed();
 	}
 }
 
-centesimal_int site_game_data::get_building_fortification_level_change(const building_type *building) const
+std::map<construction_type, centesimal_int> site_game_data::get_building_construction_level_changes(const building_type *building) const
+{
+	assert_throw(building != nullptr);
+
+	std::map<construction_type, centesimal_int> construction_level_changes;
+
+	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	if (building_slot == nullptr) {
+		return construction_level_changes;
+	}
+
+	if (building != nullptr) {
+		construction_level_changes = building->get_construction_levels();
+	}
+
+	if (building_slot->get_building() != nullptr) {
+		for (const auto &[construction_type, construction_level] : building_slot->get_building()->get_construction_levels()) {
+			construction_level_changes[construction_type] -= construction_level;
+		}
+	}
+
+	return construction_level_changes;
+}
+
+centesimal_int site_game_data::get_building_construction_level_change(const construction_type construction_type, const building_type *building) const
 {
 	assert_throw(building != nullptr);
 
@@ -1202,13 +1249,13 @@ centesimal_int site_game_data::get_building_fortification_level_change(const bui
 		return centesimal_int(0);
 	}
 
-	centesimal_int fortification_level_change = building != nullptr ? building->get_fortification_level() : centesimal_int(0);
+	centesimal_int construction_level_change = building != nullptr ? building->get_construction_level(construction_type) : centesimal_int(0);
 
 	if (building_slot->get_building() != nullptr) {
-		fortification_level_change -= building_slot->get_building()->get_fortification_level();
+		construction_level_change -= building_slot->get_building()->get_construction_level(construction_type);
 	}
 
-	return fortification_level_change;
+	return construction_level_change;
 }
 
 void site_game_data::update_holding_type_name()
@@ -1796,7 +1843,7 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 		}
 
 		if (building != nullptr) {
-			while (building->get_holding_level() < old_building->get_holding_level() || building->get_fortification_level() < old_building->get_fortification_level() || building->get_level() < building_level) {
+			while (building->get_holding_level() < old_building->get_holding_level() || building->get_total_construction_level() < old_building->get_total_construction_level() || building->get_level() < building_level) {
 				std::vector<const building_type *> potential_buildings;
 
 				for (const building_type *derived_building : building->get_derived_buildings()) {
@@ -1809,8 +1856,8 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 						continue;
 					}
 
-					//ignore buildings with higher fortification level than the target, but only if the holding level target is already fulfilled
-					if (derived_building->get_fortification_level() > old_building->get_fortification_level() && derived_building->get_holding_level() == old_building->get_holding_level()) {
+					//ignore buildings with higher total construction level than the target, but only if the holding level target is already fulfilled
+					if (derived_building->get_total_construction_level() > old_building->get_total_construction_level() && derived_building->get_holding_level() == old_building->get_holding_level()) {
 						continue;
 					}
 

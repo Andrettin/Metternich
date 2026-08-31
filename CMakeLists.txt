@@ -536,6 +536,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_slot_type_container.h
 	src/infrastructure/building_type.h
 	src/infrastructure/building_type_container.h
+	src/infrastructure/construction_type.h
 	src/infrastructure/dungeon.h
 	src/infrastructure/dungeon_area.h
 	src/infrastructure/holding_defines.h
@@ -876,6 +877,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h
+	src/script/modifier_effect/construction_level_modifier_effect.h
 	src/script/modifier_effect/consumption_modifier_effect.h
 	src/script/modifier_effect/craft_modifier_effect.h
 	src/script/modifier_effect/damage_bonus_modifier_effect.h
@@ -884,7 +886,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/domain_attribute_modifier_effect.h
 	src/script/modifier_effect/employment_capacity_modifier_effect.h
 	src/script/modifier_effect/employment_capacity_modifier_modifier_effect.h
-	src/script/modifier_effect/fortification_level_modifier_effect.h
 	src/script/modifier_effect/free_artillery_promotion_modifier_effect.h
 	src/script/modifier_effect/free_building_class_modifier_effect.h
 	src/script/modifier_effect/free_cavalry_promotion_modifier_effect.h
