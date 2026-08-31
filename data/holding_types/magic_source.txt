@@ -9,10 +9,6 @@ magic_source = {
 		wealth = 1gb
 		regency = 1
 	}
-	fortification_level_commodity_costs = {
-		wealth = 4gb
-		regency = 1
-	}
 	population_classes = {
 		slaves
 		untrained_workers

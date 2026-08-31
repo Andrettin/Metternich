@@ -9,10 +9,6 @@ castle = {
 		wealth = 1gb
 		regency = 1
 	}
-	fortification_level_commodity_costs = {
-		wealth = 4gb
-		regency = 1
-	}
 	conditional_names = {
 		"Lair" = {
 			scripted_condition = is_lair

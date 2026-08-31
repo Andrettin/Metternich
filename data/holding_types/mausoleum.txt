@@ -9,10 +9,6 @@ mausoleum = {
 		wealth = 1gb
 		regency = 1
 	}
-	fortification_level_commodity_costs = {
-		wealth = 4gb
-		regency = 1
-	}
 	conditional_names = {
 		"Mausoleum" = {
 			not = {
