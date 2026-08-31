@@ -126,7 +126,7 @@ static QCoro::Task<void> initialize()
 {
 	try {
 		co_await database::get()->load(true);
-		database::get()->load_defines();
+		database::get()->load_defines({});
 		co_await database::get()->load(false);
 
 		//load the preferences before initializing the database, so that is any initialization depends on the scale factor, it can work properly
