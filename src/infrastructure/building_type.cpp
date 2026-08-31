@@ -344,26 +344,20 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		assert_throw(holding_type != nullptr);
 		const centesimal_int holding_level_change = site->get_game_data()->get_building_holding_level_change(this);
 
-		for (int i = 0; i < holding_level_change.to_int(); ++i) {
-			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
-				costs[commodity] += centesimal_int(level_cost);
-			}
+		for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
+			costs[commodity] += level_cost * holding_level_change;
+		}
 
-			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
+		for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
+			for (int i = 0; i < holding_level_change.to_int(); ++i) {
 				const centesimal_int level_cost = (level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i));
 				costs[commodity] += level_cost;
 			}
-		}
 
-		if (holding_level_change.get_fractional_value() != 0) {
-			const centesimal_int holding_level_change_fraction = centesimal_int::from_value(holding_level_change.get_fractional_value());
+			if (holding_level_change.get_fractional_value() != 0) {
+				const centesimal_int holding_level_change_fraction = centesimal_int::from_value(holding_level_change.get_fractional_value());
 
-			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
-				costs[commodity] += (level_cost * holding_level_change_fraction);
-			}
-
-			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
-				const centesimal_int level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + holding_level_change);
+				const centesimal_int level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + holding_level_change.to_int());
 				costs[commodity] += (level_cost * holding_level_change_fraction);
 			}
 		}
@@ -391,6 +385,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		assert_throw(holding_type != nullptr);
 		const centesimal_int construction_level_change = site->get_game_data()->get_building_construction_level_change(construction_type, this);
 		const centesimal_int total_construction_level = site->get_game_data()->get_construction_level(construction_type) + construction_level_change;
+
 		for (const auto &[commodity, level_cost] : holding_defines::get()->get_construction_level_commodity_costs(construction_type)) {
 			centesimal_int construction_cost = (level_cost * construction_level_change);
 
@@ -406,6 +401,20 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 			}
 
 			costs[commodity] += construction_cost;
+		}
+
+		for (const auto &[commodity, level_cost_per_level] : holding_defines::get()->get_construction_level_commodity_costs_per_level(construction_type)) {
+			for (int i = 0; i < construction_level_change.to_int(); ++i) {
+				const centesimal_int construction_cost = (level_cost_per_level * (site->get_game_data()->get_construction_level(construction_type) + 1 + i));
+				costs[commodity] += construction_cost;
+			}
+
+			if (construction_level_change.get_fractional_value() != 0) {
+				const centesimal_int construction_level_change_fraction = centesimal_int::from_value(construction_level_change.get_fractional_value());
+
+				const centesimal_int construction_cost = level_cost_per_level * (site->get_game_data()->get_construction_level(construction_type) + 1 + construction_level_change.to_int());
+				costs[commodity] += (construction_cost * construction_level_change_fraction);
+			}
 		}
 	}
 

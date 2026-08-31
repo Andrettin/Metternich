@@ -38,12 +38,24 @@ public:
 		return empty_map;
 	}
 
+	const commodity_map<int64_t> &get_construction_level_commodity_costs_per_level(const construction_type construction_type) const
+	{
+		const auto find_iterator = this->construction_level_commodity_costs_per_level.find(construction_type);
+		if (find_iterator != this->construction_level_commodity_costs_per_level.end()) {
+			return find_iterator->second;
+		}
+
+		static const commodity_map<int64_t> empty_map;
+		return empty_map;
+	}
+
 signals:
 	void changed();
 
 private:
 	std::map<int, centesimal_int> consumption_per_holding_level;
 	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs;
+	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs_per_level;
 };
 
 }
