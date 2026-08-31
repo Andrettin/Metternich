@@ -333,7 +333,10 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 {
 	assert_throw(site != nullptr);
 
-	commodity_map<int64_t> costs = this->get_commodity_costs();
+	commodity_map<centesimal_int> costs;
+	for (const auto &[commodity, cost] : this->get_commodity_costs()) {
+		costs[commodity] = centesimal_int(cost);
+	}
 
 	const holding_type *holding_type = site->get_game_data()->get_holding_type();
 
@@ -343,11 +346,11 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 
 		for (int i = 0; i < holding_level_change.to_int(); ++i) {
 			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
-				costs[commodity] += level_cost;
+				costs[commodity] += centesimal_int(level_cost);
 			}
 
 			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
-				const int64_t level_cost = (level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i)).to_int64();
+				const centesimal_int level_cost = (level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + i));
 				costs[commodity] += level_cost;
 			}
 		}
@@ -356,12 +359,12 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 			const centesimal_int holding_level_change_fraction = centesimal_int::from_value(holding_level_change.get_fractional_value());
 
 			for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
-				costs[commodity] += (level_cost * holding_level_change_fraction).to_int();
+				costs[commodity] += (level_cost * holding_level_change_fraction);
 			}
 
 			for (const auto &[commodity, level_cost_per_level] : holding_type->get_level_commodity_costs_per_level()) {
-				const int64_t level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + holding_level_change).to_ceil_int64();
-				costs[commodity] += (level_cost * holding_level_change_fraction).to_int();
+				const centesimal_int level_cost = level_cost_per_level * (site->get_game_data()->get_holding_level() + 1 + holding_level_change);
+				costs[commodity] += (level_cost * holding_level_change_fraction);
 			}
 		}
 
@@ -377,7 +380,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 						if (commodity == defines::get()->get_wealth_commodity()) {
 							level_cost_per_level *= defines::get()->get_domain_income_unit_value();
 						}
-						costs[commodity] += level_cost_per_level * (province->get_game_data()->get_level() + 1 + i);
+						costs[commodity] += centesimal_int(level_cost_per_level * (province->get_game_data()->get_level() + 1 + i));
 					}
 				}
 			}
@@ -389,7 +392,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 		const centesimal_int construction_level_change = site->get_game_data()->get_building_construction_level_change(construction_type, this);
 		const centesimal_int total_construction_level = site->get_game_data()->get_construction_level(construction_type) + construction_level_change;
 		for (const auto &[commodity, level_cost] : holding_defines::get()->get_construction_level_commodity_costs(construction_type)) {
-			int64_t construction_cost = (level_cost * construction_level_change).to_int64();
+			centesimal_int construction_cost = (level_cost * construction_level_change);
 
 			if (construction_type == construction_type::fortification) {
 				if (site->get_game_data()->is_provincial_capital() && commodity == defines::get()->get_wealth_commodity()) {
@@ -402,16 +405,15 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 				}
 			}
 
-			construction_cost = std::max(construction_cost, 1ll);
 			costs[commodity] += construction_cost;
 		}
 	}
 
 	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty() && (!this->commodity_cost_weights.contains(defines::get()->get_wealth_commodity()) || this->commodity_cost_weights.size() > 1)) {
-		const commodity_map<int64_t> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
+		const commodity_map<int64_t> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second.to_ceil_int64(), this->commodity_cost_weights);
 
 		for (const auto &[weighted_commodity, weighted_cost] : weighted_commodity_costs) {
-			costs[weighted_commodity] += weighted_cost;
+			costs[weighted_commodity] += centesimal_int(weighted_cost);
 		}
 
 		costs.erase(defines::get()->get_wealth_commodity());
@@ -420,32 +422,31 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 	const domain *domain = site->get_game_data()->get_owner();
 	if (domain != nullptr) {
 		for (auto &[commodity, cost] : costs) {
-			if (cost > 0) {
-				if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
-					const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
-					if (cost_efficiency_modifier >= 0) {
-						cost *= 100;
-						cost /= 100 + cost_efficiency_modifier;
-					} else {
-						cost *= 100 + std::abs(cost_efficiency_modifier);
-						cost /= 100;
-					}
+			if (domain->get_game_data()->get_building_cost_efficiency_modifier() != 0) {
+				const int cost_efficiency_modifier = domain->get_game_data()->get_building_cost_efficiency_modifier() + domain->get_game_data()->get_building_class_cost_efficiency_modifier(this->get_building_class());
+				if (cost_efficiency_modifier >= 0) {
+					cost *= 100;
+					cost /= 100 + cost_efficiency_modifier;
+				} else {
+					cost *= 100 + std::abs(cost_efficiency_modifier);
+					cost /= 100;
 				}
-
-				cost = std::max(1ll, cost);
 			}
 		}
 	}
 
 	if (this->get_cost_factor() != nullptr) {
 		for (auto &[commodity, cost] : costs) {
-			cost = this->get_cost_factor()->calculate(site, decimillesimal_int(cost)).to_int();
-
-			cost = std::max(1ll, cost);
+			cost = centesimal_int(this->get_cost_factor()->calculate(site, decimillesimal_int(cost)));
 		}
 	}
 
-	return costs;
+	commodity_map<int64_t> costs_int64;
+	for (const auto &[commodity, cost] : costs) {
+		costs_int64[commodity] = std::max(cost.to_ceil_int64(), 1ll);
+	}
+
+	return costs_int64;
 }
 
 QString building_type::get_commodity_costs_string_for_site(const metternich::site *site, const bool single_line) const
