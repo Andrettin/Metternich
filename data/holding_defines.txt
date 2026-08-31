@@ -1,0 +1,5 @@
+consumption_per_holding_level = {
+	0 = 0.5 #hamlet/village
+	2 = 1 #town
+	4 = 2 #city
+}

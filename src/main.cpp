@@ -54,6 +54,7 @@
 #include "game/scenario.h"
 #include "game/scenario_model.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_defines.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/affix_type.h"
@@ -177,6 +178,7 @@ int main(int argc, char **argv)
 
 		database::get()->add_defines(defines::get());
 		database::get()->add_defines(character_defines::get());
+		database::get()->add_defines(holding_defines::get());
 		database::get()->add_defines(population_defines::get());
 		database::get()->add_defines(ui_defines::get());
 

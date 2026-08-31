@@ -19,7 +19,6 @@
 #include "util/log_util.h"
 #include "util/path_util.h"
 #include "util/string_conversion_util.h"
-#include "util/string_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -125,15 +124,6 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int64_t cost = this->get_wealth_commodity()->string_to_value(property.get_value());
 
 			this->domain_maintenance_cost_per_domain_size[domain_size] = cost;
-		});
-	} else if (tag == "consumption_per_holding_level") {
-		assert_throw(this->get_wealth_commodity() != nullptr);
-
-		scope.for_each_property([this](const gsml_property &property) {
-			const int holding_level = std::stoi(property.get_key());
-			const centesimal_int consumption(property.get_value());
-
-			this->consumption_per_holding_level[holding_level] = consumption;
 		});
 	} else if (tag == "battle_resolution_tables") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -349,13 +339,6 @@ int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_si
 	const auto find_iterator = this->domain_maintenance_cost_per_domain_size.upper_bound(domain_size);
 	assert_throw(find_iterator != this->domain_maintenance_cost_per_domain_size.begin());
 	return std::prev(find_iterator)->second * this->get_domain_income_unit_value();
-}
-
-const centesimal_int &defines::get_consumption_for_holding_level(const int holding_level) const
-{
-	const auto find_iterator = this->consumption_per_holding_level.upper_bound(holding_level);
-	assert_throw(find_iterator != this->consumption_per_holding_level.begin());
-	return std::prev(find_iterator)->second;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const

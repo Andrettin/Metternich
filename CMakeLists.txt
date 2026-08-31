@@ -148,6 +148,7 @@ set(infrastructure_SRCS
 	src/infrastructure/building_type_container.cpp
 	src/infrastructure/dungeon.cpp
 	src/infrastructure/dungeon_area.cpp
+	src/infrastructure/holding_defines.cpp
 	src/infrastructure/holding_type.cpp
 	src/infrastructure/pathway.cpp
 	src/infrastructure/pathway_container.cpp
@@ -537,6 +538,7 @@ set(infrastructure_HDRS
 	src/infrastructure/building_type_container.h
 	src/infrastructure/dungeon.h
 	src/infrastructure/dungeon_area.h
+	src/infrastructure/holding_defines.h
 	src/infrastructure/holding_type.h
 	src/infrastructure/pathway.h
 	src/infrastructure/pathway_container.h

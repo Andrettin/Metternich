@@ -44,6 +44,7 @@
 #include "infrastructure/building_item_slot.h"
 #include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
+#include "infrastructure/holding_defines.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
@@ -1644,7 +1645,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 		co_await this->change_holding_count(1 * multiplier);
 		this->change_score((site_game_data->get_holding_level() * 100).to_int() * multiplier);
 		this->change_domain_power(site_game_data->get_holding_level().to_int() * multiplier);
-		this->change_consumption(defines::get()->get_consumption_for_holding_level(site_game_data->get_holding_level().to_int()) * multiplier);
+		this->change_consumption(holding_defines::get()->get_consumption_for_holding_level(site_game_data->get_holding_level().to_int()) * multiplier);
 
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
 			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);
