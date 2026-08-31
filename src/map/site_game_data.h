@@ -229,11 +229,11 @@ public:
 		return zero;
 	}
 
-	void set_construction_level(const construction_type construction_type, const centesimal_int &level);
+	[[nodiscard]] QCoro::Task<void> set_construction_level(const construction_type construction_type, const centesimal_int &level);
 
-	void change_construction_level(const construction_type construction_type, const centesimal_int &change)
+	[[nodiscard]] QCoro::Task<void> change_construction_level(const construction_type construction_type, const centesimal_int &change)
 	{
-		this->set_construction_level(construction_type, this->get_construction_level(construction_type) + change);
+		co_await this->set_construction_level(construction_type, this->get_construction_level(construction_type) + change);
 	}
 
 	std::map<construction_type, centesimal_int> get_building_construction_level_changes(const building_type *building) const;

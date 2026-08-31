@@ -146,7 +146,7 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 	for (const auto &[construction_type, construction_level_change] : construction_level_changes) {
 		assert_throw(construction_level_change != 0);
 
-		this->get_settlement()->get_game_data()->change_construction_level(construction_type, construction_level_change);
+		co_await this->get_settlement()->get_game_data()->change_construction_level(construction_type, construction_level_change);
 	}
 
 	if (old_building == nullptr || this->get_building() == nullptr || old_building->get_item_creation_types() != this->get_building()->get_item_creation_types()) {

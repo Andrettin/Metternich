@@ -22,9 +22,9 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const site *scope, const decimillesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const site *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_construction_level(this->construction_type, centesimal_int(this->value * multiplier));
+		co_await scope->get_game_data()->change_construction_level(this->construction_type, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const site *scope) const override

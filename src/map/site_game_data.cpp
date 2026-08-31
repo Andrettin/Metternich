@@ -1197,18 +1197,33 @@ QVariantList site_game_data::get_construction_levels_qvariant_list() const
 	return archimedes::map::to_qvariant_list(construction_levels_by_name);
 }
 
-void site_game_data::set_construction_level(const construction_type construction_type, const centesimal_int &level)
+QCoro::Task<void> site_game_data::set_construction_level(const construction_type construction_type, const centesimal_int &level)
 {
 	assert_throw(this->site->is_settlement());
 
-	if (level == this->get_construction_level(construction_type)) {
-		return;
+	const centesimal_int old_level = this->get_construction_level(construction_type);
+	if (level == old_level) {
+		co_return;
+	}
+
+	if (this->get_owner() != nullptr) {
+		const modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, old_level.to_int());
+		if (domain_modifier != nullptr) {
+			co_await domain_modifier->apply(this->get_owner(), -1);
+		}
 	}
 
 	if (level == 0) {
 		this->construction_levels.erase(construction_type);
 	} else {
 		this->construction_levels[construction_type] = level;
+	}
+
+	if (this->get_owner() != nullptr) {
+		const modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, level.to_int());
+		if (domain_modifier != nullptr) {
+			co_await domain_modifier->apply(this->get_owner(), 1);
+		}
 	}
 
 	if (game::get()->is_running()) {

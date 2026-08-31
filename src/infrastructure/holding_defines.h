@@ -7,7 +7,12 @@
 
 namespace metternich {
 
+class domain;
 enum class construction_type;
+
+template <typename scope_type>
+class modifier;
+
 class holding_defines final : public defines_base, public singleton<holding_defines>
 {
 	Q_OBJECT
@@ -49,6 +54,19 @@ public:
 		return empty_map;
 	}
 
+	const modifier<const domain> *get_construction_level_domain_modifier(const construction_type construction_type, const int construction_level) const
+	{
+		const auto find_iterator = this->construction_level_domain_modifiers.find(construction_type);
+		if (find_iterator != this->construction_level_domain_modifiers.end()) {
+			const auto sub_find_iterator = find_iterator->second.find(construction_level);
+			if (sub_find_iterator != find_iterator->second.end()) {
+				return sub_find_iterator->second.get();
+			}
+		}
+
+		return nullptr;
+	}
+
 signals:
 	void changed();
 
@@ -56,6 +74,7 @@ private:
 	std::map<int, centesimal_int> consumption_per_holding_level;
 	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs;
 	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs_per_level;
+	std::map<construction_type, std::map<int, std::unique_ptr<const modifier<const domain>>>> construction_level_domain_modifiers;
 };
 
 }

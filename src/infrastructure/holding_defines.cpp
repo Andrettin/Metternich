@@ -4,6 +4,7 @@
 
 #include "economy/commodity.h"
 #include "infrastructure/construction_type.h"
+#include "script/modifier.h"
 #include "util/assert_util.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -55,6 +56,18 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 			child_scope.for_each_property([this, construction_type](const gsml_property &property) {
 				const commodity *commodity = commodity::get(property.get_key());
 				this->construction_level_commodity_costs_per_level[construction_type][commodity] = commodity->string_to_value(property.get_value());
+			});
+		});
+	} else if (tag == "construction_level_domain_modifiers") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(child_tag).value();
+
+			child_scope.for_each_child([this, construction_type](const gsml_data &grandchild_scope) {
+				const int construction_level = std::stoi(grandchild_scope.get_tag());
+				auto modifier = std::make_unique<metternich::modifier<const domain>>();
+				modifier->process_gsml_data(grandchild_scope);
+				this->construction_level_domain_modifiers[construction_type][construction_level] = std::move(modifier);
 			});
 		});
 	} else {

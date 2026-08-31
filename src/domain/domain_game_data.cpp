@@ -1647,6 +1647,13 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 		this->change_domain_power(site_game_data->get_holding_level().to_int() * multiplier);
 		this->change_consumption(holding_defines::get()->get_consumption_for_holding_level(site_game_data->get_holding_level().to_int()) * multiplier);
 
+		for (const auto &[construction_type, construction_level] : site_game_data->get_construction_levels()) {
+			const modifier<const metternich::domain> *construction_level_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, construction_level.to_int());
+			if (construction_level_modifier != nullptr) {
+				co_await construction_level_modifier->apply(this->domain, multiplier);
+			}
+		}
+
 		for (const auto &[attribute, value] : this->get_site_attribute_values()) {
 			co_await site->get_game_data()->change_attribute_value(attribute, value * multiplier);
 		}
