@@ -30,6 +30,12 @@ construction_level_commodity_costs_per_level = {
 	religious_academy = {
 		wealth = 3gb
 	}
+	prestige = {
+		wealth = 4gb
+	}
+	seafaring = {
+		wealth = 2gb
+	}
 }
 
 construction_level_domain_modifiers = {

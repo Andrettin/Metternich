@@ -5,6 +5,8 @@ namespace metternich {
 enum class construction_type {
 	none,
 	fortification,
+	seafaring,
+	prestige,
 	cultural_academy,
 	engineering_academy,
 	financial_academy,
@@ -18,6 +20,10 @@ inline std::string_view get_construction_type_name(const construction_type const
 	switch (construction_type) {
 		case construction_type::fortification:
 			return "Fortification";
+		case construction_type::seafaring:
+			return "Seafaring";
+		case construction_type::prestige:
+			return "Prestige";
 		case construction_type::cultural_academy:
 			return "Cultural Academy";
 		case construction_type::engineering_academy:
