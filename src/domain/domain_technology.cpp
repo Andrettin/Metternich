@@ -78,6 +78,10 @@ void domain_technology::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->current_research_progresses[technology::get(property.get_key())] = decimillesimal_int(property.get_value());
 		});
+	} else if (tag == "technology_category_quarterly_researches") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->technology_category_quarterly_researches[technology_category::get(property.get_key())] = std::stoll(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain technology scope: \"{}\".", tag));
 	}
@@ -109,6 +113,14 @@ gsml_data domain_technology::to_gsml_data() const
 			current_research_progresses_data.add_property(technology->get_identifier(), progress.to_string());
 		}
 		data.add_child(std::move(current_research_progresses_data));
+	}
+
+	if (!this->technology_category_quarterly_researches.empty()) {
+		gsml_data technology_category_quarterly_researches_data("technology_category_quarterly_researches");
+		for (const auto &[category, quarterly_research] : this->technology_category_quarterly_researches) {
+			technology_category_quarterly_researches_data.add_property(category->get_identifier(), std::to_string(quarterly_research));
+		}
+		data.add_child(std::move(technology_category_quarterly_researches_data));
 	}
 
 	return data;
