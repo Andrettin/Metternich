@@ -3,7 +3,7 @@ monastic_school = {
 	building_class = monastic_school
 	portrait = university
 	icon = wooden_cross
-	wealth_cost = 18000gp
+	religious_academy_level = 1
 	required_technology = monastic_school
 	free_on_start_extra_technology = 0.2
 	holding_types = {
@@ -27,12 +27,6 @@ monastic_school = {
 	province_modifier = {
 		technology_spread_modifier = 10
 	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = culture
-			value = 4
-		}
-	}
 }
 
 cathedral_school = {
@@ -40,10 +34,9 @@ cathedral_school = {
 	building_class = cathedral_school
 	portrait = university
 	icon = wooden_cross
+	religious_academy_level = 2
 	base_building = monastic_school
-	wealth_cost = 18000gp
 	required_technology = cathedral_school
-	build_duration = 547d
 	free_on_start_extra_technology = 0.2
 	holding_types = {
 		temple
@@ -65,11 +58,5 @@ cathedral_school = {
 	}
 	province_modifier = {
 		technology_spread_modifier = 30
-	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = culture
-			value = 8
-		}
 	}
 }

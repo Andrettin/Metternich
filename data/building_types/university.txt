@@ -4,6 +4,7 @@ academy = {
 	portrait = university
 	icon = university
 	holding_level = 1
+	cultural_academy_level = 1
 	wealth_cost = 52gb
 	required_technology = seven_liberal_arts
 	holding_types = {
@@ -43,8 +44,8 @@ small_university = {
 	portrait = university
 	icon = university
 	holding_level = 2
+	cultural_academy_level = 2
 	base_building = academy
-	wealth_cost = 90000gp
 	required_technology = university
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -71,10 +72,6 @@ small_university = {
 	domain_modifier = {
 		economy = 2
 		loyalty = 2
-		monthly_technology_category_research = {
-			category = industry
-			value = 5
-		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -92,6 +89,7 @@ university = {
 	icon = university
 	base_building = small_university
 	holding_level = 3
+	cultural_academy_level = 3
 	wealth_cost = 26gb
 	required_technology = university
 	free_on_start_extra_technology = 1.2
@@ -132,10 +130,6 @@ university = {
 		economy = 3
 		loyalty = 3
 		#fame = 1
-		monthly_technology_category_research = {
-			category = industry
-			value = 10
-		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -154,7 +148,7 @@ large_university = {
 	icon = university
 	base_building = university
 	holding_level = 4
-	wealth_cost = 120000gp
+	cultural_academy_level = 4
 	required_technology = academic_disciplines
 	free_on_start_extra_technology = 1.2
 	holding_types = {
@@ -194,10 +188,6 @@ large_university = {
 		economy = 3
 		loyalty = 3
 		#fame = 1
-		monthly_technology_category_research = {
-			category = industry
-			value = 15
-		}
 	}
 	item_creation_types = {
 		minor_scroll_or_wondrous_item
@@ -214,7 +204,7 @@ wing_of_diplomacy = {
 	building_class = wing_of_diplomacy
 	portrait = university
 	icon = treaty
-	wealth_cost = 47400gp
+	cultural_academy_level = 1
 	holding_types = {
 		university
 	}
@@ -223,12 +213,6 @@ wing_of_diplomacy = {
 		#chancellor
 		engineer
 	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = culture
-			value = 5
-		}
-	}
 }
 
 wing_of_finance = {
@@ -236,7 +220,7 @@ wing_of_finance = {
 	building_class = wing_of_finance
 	portrait = university
 	icon = chest
-	wealth_cost = 47400gp
+	financial_academy_level = 1
 	required_technology = double_entry_bookkeeping
 	holding_types = {
 		university
@@ -246,12 +230,6 @@ wing_of_finance = {
 		treasurer
 		engineer
 	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = commerce
-			value = 5
-		}
-	}
 }
 
 wing_of_secrets = {
@@ -259,7 +237,7 @@ wing_of_secrets = {
 	building_class = wing_of_secrets
 	portrait = university
 	icon = skull
-	wealth_cost = 47400gp
+	cultural_academy_level = 1
 	holding_types = {
 		university
 	}
@@ -268,12 +246,6 @@ wing_of_secrets = {
 		#spymaster
 		engineer
 	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = culture
-			value = 5
-		}
-	}
 }
 
 wing_of_strategy = {
@@ -281,7 +253,7 @@ wing_of_strategy = {
 	building_class = wing_of_strategy
 	portrait = university
 	icon = crossed_sabers
-	wealth_cost = 47400gp
+	military_academy_level = 1
 	required_technology = hierarchical_command
 	holding_types = {
 		university
@@ -291,12 +263,6 @@ wing_of_strategy = {
 		marshal
 		engineer
 	}
-	domain_modifier = {
-		monthly_technology_category_research = {
-			category = army
-			value = 5
-		}
-	}
 }
 
 wing_of_theology = {
@@ -304,7 +270,7 @@ wing_of_theology = {
 	building_class = wing_of_theology
 	portrait = university
 	icon = wooden_cross
-	wealth_cost = 47400gp
+	religious_academy_level = 1
 	holding_types = {
 		university
 	}

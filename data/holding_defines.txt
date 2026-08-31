@@ -12,5 +12,217 @@ construction_level_commodity_costs = {
 }
 
 construction_level_commodity_costs_per_level = {
+	cultural_academy = {
+		wealth = 3gb
+	}
+	engineering_academy = {
+		wealth = 3gb
+	}
+	financial_academy = {
+		wealth = 3gb
+	}
+	military_academy = {
+		wealth = 3gb
+	}
+	naval_academy = {
+		wealth = 3gb
+	}
+	religious_academy = {
+		wealth = 3gb
+	}
 }
 
+construction_level_domain_modifiers = {
+	cultural_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = culture
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = culture
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = culture
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = culture
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = culture
+				value = 5
+			}
+		}
+	}
+	engineering_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = industry
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = industry
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = industry
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = industry
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = industry
+				value = 5
+			}
+		}
+	}
+	financial_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = commerce
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = commerce
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = commerce
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = commerce
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = commerce
+				value = 5
+			}
+		}
+	}
+	military_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = army
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = army
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = army
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = army
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = army
+				value = 5
+			}
+		}
+	}
+	naval_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = navy
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = navy
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = navy
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = navy
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = navy
+				value = 5
+			}
+		}
+	}
+	religious_academy = {
+		1 = {
+			quarterly_technology_category_research = {
+				category = religion
+				value = 1
+			}
+		}
+		2 = {
+			quarterly_technology_category_research = {
+				category = religion
+				value = 2
+			}
+		}
+		3 = {
+			quarterly_technology_category_research = {
+				category = religion
+				value = 3
+			}
+		}
+		4 = {
+			quarterly_technology_category_research = {
+				category = religion
+				value = 4
+			}
+		}
+		5 = {
+			quarterly_technology_category_research = {
+				category = religion
+				value = 5
+			}
+		}
+	}
+}
