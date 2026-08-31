@@ -145,9 +145,9 @@ QCoro::Task<void> domain_technology::do_research()
 		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), 0);
 
 		data_entry_map<technology_category, decimillesimal_int> generated_research_per_category;
-		for (const auto &[category, category_monthly_research] : this->technology_category_monthly_researches) {
-			if (category_monthly_research > 0) {
-				generated_research_per_category[category] = decimillesimal_int(category_monthly_research) * game::get()->get_current_months_per_turn();
+		for (const auto &[category, category_quarterly_research] : this->technology_category_quarterly_researches) {
+			if (category_quarterly_research > 0) {
+				generated_research_per_category[category] = decimillesimal_int(category_quarterly_research) * game::get()->get_current_quarters_per_turn();
 			}
 		}
 
@@ -938,16 +938,16 @@ QCoro::Task<void> domain_technology::set_gain_technologies_known_by_others_count
 	}
 }
 
-void domain_technology::set_technology_category_monthly_research(const technology_category *category, const int64_t value)
+void domain_technology::set_technology_category_quarterly_research(const technology_category *category, const int64_t value)
 {
-	if (value == this->get_technology_category_monthly_research(category)) {
+	if (value == this->get_technology_category_quarterly_research(category)) {
 		return;
 	}
 
 	if (value == 0) {
-		this->technology_category_monthly_researches.erase(category);
+		this->technology_category_quarterly_researches.erase(category);
 	} else {
-		this->technology_category_monthly_researches[category] = value;
+		this->technology_category_quarterly_researches[category] = value;
 	}
 }
 

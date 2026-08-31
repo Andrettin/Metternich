@@ -7,14 +7,14 @@
 
 namespace metternich {
 
-class monthly_technology_category_research_modifier_effect final : public modifier_effect<const domain>
+class quarterly_technology_category_research_modifier_effect final : public modifier_effect<const domain>
 {
 public:
-	monthly_technology_category_research_modifier_effect() = default;
+	quarterly_technology_category_research_modifier_effect() = default;
 
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "monthly_technology_category_research";
+		static const std::string identifier = "quarterly_technology_category_research";
 		return identifier;
 	}
 
@@ -34,14 +34,14 @@ public:
 
 	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_technology()->change_technology_category_quarterly_research(this->category, (this->value * 3 * multiplier).to_int64());
+		scope->get_technology()->change_technology_category_quarterly_research(this->category, (this->value * multiplier).to_int64());
 	}
 
 	virtual std::string get_base_string(const domain *scope) const override
 	{
 		Q_UNUSED(scope);
 
-		return std::format("Monthly {} Research", this->category->get_name());
+		return std::format("Quarterly {} Research", this->category->get_name());
 	}
 
 private:

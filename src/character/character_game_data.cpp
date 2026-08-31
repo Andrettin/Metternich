@@ -3189,7 +3189,7 @@ QCoro::Task<void> character_game_data::apply_office_modifier(const metternich::d
 			decimillesimal_int category_monthly_research = base_monthly_research_per_technology_category;
 			category_monthly_research *= (main_research_domain_skill_value + category_domain_skill_value) * 4;
 
-			domain->get_technology()->change_technology_category_monthly_research(technology_category, category_monthly_research.to_int64() * multiplier);
+			domain->get_technology()->change_technology_category_quarterly_research(technology_category, (category_monthly_research * 3).to_int64() * multiplier);
 		}
 	} else {
 		co_await domain->get_game_data()->change_attribute_value(office->get_domain_attribute(), decimillesimal_int(attribute_modifier * multiplier));

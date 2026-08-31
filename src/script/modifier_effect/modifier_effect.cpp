@@ -66,6 +66,7 @@
 #include "script/modifier_effect/population_strata_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_tax_rate_modifier_effect.h"
 #include "script/modifier_effect/population_type_bonus_modifier_effect.h"
+#include "script/modifier_effect/quarterly_technology_category_research_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/reputation_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
@@ -368,6 +369,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<monthly_technology_category_research_modifier_effect>();
 		} else if (tag == "population_strata_tax_rate") {
 			modifier_effect = std::make_unique<population_strata_tax_rate_modifier_effect>();
+		} else if (tag == "quarterly_technology_category_research") {
+			modifier_effect = std::make_unique<quarterly_technology_category_research_modifier_effect>();
 		} else if (tag == "storage_capacity") {
 			modifier_effect = std::make_unique<storage_capacity_modifier_effect>();
 		} else if (tag == "technology_cost_modifier") {
