@@ -1,6 +1,7 @@
 thessaly = {
 	name = "Thessaly"
-	color = { 176 147 141 }
+	color = { 168 189 172 }
+	terrain = plains
 	default_provincial_capital = larissa
 	regions = {
 		greece

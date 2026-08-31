@@ -1,0 +1,8 @@
+neopetra = {
+	name = "Neopetra"
+	world = earth
+	geocoordinate = { 22.23944444 38.87222222 } #Ypati/Neopatras
+	type = holding
+	holding_type = guild
+	province = boeotia
+}

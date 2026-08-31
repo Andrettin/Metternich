@@ -1,0 +1,8 @@
+stagi = {
+	name = "Stagi"
+	world = earth
+	geocoordinate = { 21.626944444444 39.704444444444 } #Kalabaka
+	type = holding
+	holding_type = castle
+	province = thessaly
+}

@@ -1,0 +1,8 @@
+pharsalos = {
+	name = "Pharsalos"
+	world = earth
+	geocoordinate = { 22.38415 39.29595 } #Farsala
+	type = holding
+	holding_type = castle
+	province = thessaly
+}

@@ -1,0 +1,8 @@
+damasis = {
+	name = "Damasis"
+	world = earth
+	geocoordinate = { 22.1875 39.7125 } #Damasi
+	type = holding
+	holding_type = castle
+	province = thessaly
+}

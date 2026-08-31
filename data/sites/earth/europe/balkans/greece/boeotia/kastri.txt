@@ -1,5 +1,5 @@
-kastri = {
-	name = "Kastri"
+kastrinitsi = {
+	name = "Kastrinitsi"
 	world = earth
 	geocoordinate = { 22.5016871 38.4812634 } #Kastri, Phocis
 	type = holding

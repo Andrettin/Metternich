@@ -1,0 +1,8 @@
+kastri = {
+	name = "Kastri"
+	world = earth
+	geocoordinate = { 22.681388888889 39.625833333333 } #Kastri, Agia, Larissa
+	type = holding
+	holding_type = castle
+	province = thessaly
+}

@@ -1,0 +1,8 @@
+trikkala = {
+	name = "Trikkala"
+	world = earth
+	geocoordinate = { 21.768333333333 39.555 } #Trikala
+	type = holding
+	holding_type = castle
+	province = thessaly
+}
