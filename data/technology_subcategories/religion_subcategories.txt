@@ -1,0 +1,17 @@
+religious_flexibility = {
+	name = "Religious Flexibility"
+	category = religion
+	icon = wooden_cross
+}
+
+religious_stringency = {
+	name = "Religious Stringency"
+	category = religion
+	icon = silver_cross
+}
+
+spiritual_art = {
+	name = "Spiritual Art"
+	category = religion
+	icon = bronze_cross_detailed
+}

@@ -27,3 +27,9 @@ navy = {
 	icon = anchor
 	domain_skill = order
 }
+
+religion = {
+	name = "Religion"
+	icon = wooden_cross
+	domain_skill = faith
+}
