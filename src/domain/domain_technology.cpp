@@ -319,39 +319,6 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 	}
 }
 
-void domain_technology::do_population_research()
-{
-	//generate research points based on population
-
-	const population *domain_population = this->get_game_data()->get_population();
-
-	if (domain_population->get_size() == 0) {
-		return;
-	}
-	
-	const commodity *research_commodity = defines::get()->get_default_research_commodity();
-	assert_throw(research_commodity != nullptr);
-
-	decimillesimal_int daily_research = decimillesimal_int(defines::get()->get_daily_literacy_research()) * domain_population->get_literacy_rate() / 100;
-
-	for (const auto &[population_type, size] : domain_population->get_type_sizes()) {
-		if (population_type->get_daily_research() != 0) {
-			const decimillesimal_int population_type_percent = decimillesimal_int(size) * 100 / domain_population->get_size();
-			daily_research += population_type->get_daily_research() * decimillesimal_int::min(population_type_percent, population_type->get_max_research_population_percent()) / population_type->get_max_research_population_percent();
-		}
-	}
-
-	const centesimal_int research_output_modifier = this->get_game_data()->get_economy()->get_commodity_output_modifier(research_commodity);
-	if (research_output_modifier != 0) {
-		daily_research *= centesimal_int(100) + research_output_modifier;
-		daily_research /= 100;
-	}
-
-	const int64_t turn_days = game::get()->get_days_until_next_turn();
-	const int64_t generated_research = (daily_research * turn_days).to_int64();
-	this->get_game_data()->get_economy()->change_stored_commodity(research_commodity, generated_research);
-}
-
 const technology_set &domain_technology::get_technologies() const
 {
 	if (this->get_game_data()->get_capital_province() != nullptr) {

@@ -44,7 +44,6 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_research();
 	[[nodiscard]] QCoro::Task<void> do_technology_spread();
-	void do_population_research();
 
 	const technology_set &get_technologies() const;
 	QVariantList get_technologies_qvariant_list() const;

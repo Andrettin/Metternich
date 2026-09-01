@@ -2715,9 +2715,7 @@ QCoro::Task<void> character_game_data::change_domain_skill_value(const domain_sk
 		co_return;
 	}
 
-	//can affect the office modifier if this is the ruler, since the domain skill change can affect research
-	const bool affects_office_modifier = this->is_ruler();
-	co_await this->change_stat_value(domain_skill, change, true, affects_office_modifier);
+	co_await this->change_stat_value(domain_skill, change, true, false);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)

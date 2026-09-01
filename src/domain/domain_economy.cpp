@@ -248,8 +248,6 @@ QCoro::Task<void> domain_economy::do_production()
 			this->change_stored_commodity(commodity, recovery_per_turn);
 		}
 
-		this->get_game_data()->get_technology()->do_population_research();
-
 		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
 		for (const auto &[commodity, input] : commodity_inputs) {
 			if (!commodity->is_storable()) {
