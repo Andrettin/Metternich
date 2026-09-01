@@ -13,14 +13,14 @@ Item {
 		TechTree
 	}
 	
-	readonly property var country: metternich.game.player_domain
-	readonly property var country_game_data: country ? country.game_data : null
+	readonly property var domain: metternich.game.player_domain
+	readonly property var domain_game_data: domain ? domain.game_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	
-	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? country_game_data.technology.technologies : (technology_view_mode === TechnologyView.Mode.Available ? researchable_technologies : (technology_view_mode === TechnologyView.Mode.Future ? country_game_data.technology.future_technologies : country.available_technologies))
+	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? domain_game_data.technology.technologies : (technology_view_mode === TechnologyView.Mode.Available ? researchable_technologies : (technology_view_mode === TechnologyView.Mode.Future ? domain_game_data.technology.future_technologies : domain.available_technologies))
 	readonly property var category_technologies: get_category_technologies(technologies, technology_view_category, technology_view_subcategory)
-	readonly property var researchable_technologies: country_game_data.technology.researchable_technologies
+	readonly property var researchable_technologies: domain_game_data.technology.researchable_technologies
 	
 	TiledBackground {
 		anchors.top: top_bar.bottom
@@ -88,7 +88,7 @@ Item {
 					width: 224 * scale_factor + 6 * scale_factor
 					height: 32 * scale_factor + 6 * scale_factor
 					anchors.verticalCenter: parent.verticalCenter
-					visible: researchable_technologies.includes(technology) && (country_game_data.technology.current_researches.includes(technology) || country_game_data.technology.current_researches.length < country_game_data.technology.max_current_researches)
+					visible: researchable_technologies.includes(technology) && (domain_game_data.technology.current_researches.includes(technology) || domain_game_data.technology.current_researches.length < domain_game_data.technology.max_current_researches)
 					
 					contentItem: Item {
 						id: research_technology_button_item
@@ -103,7 +103,7 @@ Item {
 							anchors.horizontalCenter: research_technology_button_item.horizontalCenter
 							spacing: 4 * scale_factor
 							
-							readonly property bool researching: country_game_data.technology.current_researches.includes(technology)
+							readonly property bool researching: domain_game_data.technology.current_researches.includes(technology)
 							
 							SmallText {
 								anchors.verticalCenter: parent.verticalCenter
@@ -115,7 +115,7 @@ Item {
 							}
 							
 							Repeater {
-								model: technology.get_commodity_costs_for_domain_qvariant_list(country)
+								model: domain ? technology.get_commodity_costs_for_domain_qvariant_list(domain) : []
 								
 								Row {
 									id: commodity_cost_row
@@ -133,7 +133,7 @@ Item {
 									
 									SmallText {
 										id: cost_label
-										text: (researching ? (number_string(country_game_data.technology.get_current_research_progress_commodity_quantity(technology)) + "/") : "") + commodity.value_to_qstring(commodity_cost) + (researching ? (" (" + country_game_data.technology.get_current_research_progress_qstring(technology) + "%)") : "")
+										text: (researching ? (number_string(domain_game_data.technology.get_current_research_progress_commodity_quantity(technology)) + "/") : "") + commodity.value_to_qstring(commodity_cost) + (researching ? (" (" + domain_game_data.technology.get_current_research_progress_qstring(technology) + "%)") : "")
 										anchors.verticalCenter: commodity_icon.verticalCenter
 									}
 								}
@@ -142,13 +142,13 @@ Item {
 					}
 					
 					onClicked: {
-						if (country_game_data.technology.current_researches.includes(technology)) {
-							country_game_data.technology.remove_current_research(technology, true, true)
+						if (domain_game_data.technology.current_researches.includes(technology)) {
+							domain_game_data.technology.remove_current_research(technology, true, true)
 						} else {
-							if (country_game_data.technology.can_research_technology(technology)) {
-								country_game_data.technology.add_current_research(technology)
+							if (domain_game_data.technology.can_research_technology(technology)) {
+								domain_game_data.technology.add_current_research(technology)
 							} else {
-								add_notification("Costs", country_game_data.government.interior_minister_portrait, country_game_data.form_of_address + ", we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
+								add_notification("Costs", domain_game_data.government.interior_minister_portrait, domain_game_data.form_of_address + ", we unfortunately cannot afford the costs of researching the " + technology.name + " technology.", technology_view)
 							}
 						}
 					}
@@ -186,10 +186,10 @@ Item {
 		anchors.bottom: status_bar.top
 		anchors.left: infopanel.right
 		anchors.right: button_panel.left
-		entries: country.available_technologies
+		entries: domain.available_technologies
 		visible: technology_view_mode === TechnologyView.Mode.TechTree
 		delegate: TreePortraitButton {
-			highlighted: country_game_data.technology.has_technology(technology)
+			highlighted: domain_game_data.technology.has_technology(technology)
 			
 			readonly property var technology: model.modelData
 			
