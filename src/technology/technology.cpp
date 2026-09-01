@@ -226,10 +226,6 @@ void technology::initialize()
 	std::sort(this->enabled_pathways.begin(), this->enabled_pathways.end(), pathway_compare());
 	std::sort(this->enabled_river_crossing_pathways.begin(), this->enabled_river_crossing_pathways.end(), pathway_compare());
 
-	//if (this->get_level() == 0) {
-	//	this->level = this->get_total_prerequisite_depth() + 1;
-	//}
-
 	technology::max_level = std::max(technology::max_level, this->get_level());
 
 	if (this->get_level() > 0) {
