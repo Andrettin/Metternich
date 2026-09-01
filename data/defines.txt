@@ -35,7 +35,7 @@ wealth_commodity = wealth
 regency_commodity = regency
 piety_commodity = piety
 default_research_commodity = research
-research_cost_per_level = 1000 #research cost per technology level
+research_cost_per_level = 50 #research cost per technology level
 advisor_commodity = statesmanship
 
 tariff_icon = wealth
