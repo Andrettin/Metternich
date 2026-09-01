@@ -6,6 +6,10 @@ building_slot = {
 	filepath = "portraits/buildings/building_slot.png"
 }
 
+castle = {
+	filepath = "portraits/buildings/castle.png"
+}
+
 city = {
 	filepath = "portraits/buildings/city.png"
 }
@@ -28,6 +32,10 @@ hospital = {
 
 ruined_castle = {
 	filepath = "portraits/buildings/ruined_castle.png"
+}
+
+stable = {
+	filepath = "portraits/buildings/stable.png"
 }
 
 temple = {

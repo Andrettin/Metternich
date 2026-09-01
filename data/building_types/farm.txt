@@ -1,7 +1,7 @@
 cattle_ranch = {
 	name = "Cattle Ranch"
 	building_class = cattle_ranch
-	portrait = aristocratic_palace
+	portrait = stable
 	icon = cattle
 	holding_types = {
 		castle
@@ -46,7 +46,7 @@ cattle_ranch = {
 grain_farm = {
 	name = "Grain Farm"
 	building_class = grain_farm
-	portrait = aristocratic_palace
+	portrait = stable
 	icon = grain
 	holding_types = {
 		castle
@@ -86,7 +86,7 @@ grain_farm = {
 sheep_ranch = {
 	name = "Sheep Ranch"
 	building_class = sheep_ranch
-	portrait = aristocratic_palace
+	portrait = stable
 	icon = wool
 	holding_types = {
 		castle
@@ -126,7 +126,7 @@ sheep_ranch = {
 tobacco_plantation = {
 	name = "Tobacco Plantation"
 	building_class = tobacco_plantation
-	portrait = aristocratic_palace
+	portrait = stable
 	icon = tobacco
 	holding_types = {
 		castle

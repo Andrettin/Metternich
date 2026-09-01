@@ -1,7 +1,7 @@
 feudalism = {
 	name = "Feudalism"
 	subcategory = government
-	portrait = aristocratic_palace
+	portrait = castle
 	icon = crown_baronial
 	period = dark_age
 	discover_only_once = true
