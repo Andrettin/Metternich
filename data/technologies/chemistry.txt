@@ -1,0 +1,11 @@
+black_powder = {
+	name = "Black Powder"
+	subcategory = chemistry
+	portrait = engineering
+	icon = coal
+	period = renaissance_age
+	level = 1
+	prerequisites = {
+		natural_philosophy #to place it in the appropriate period
+	}
+}

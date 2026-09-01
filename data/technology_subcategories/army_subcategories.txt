@@ -22,6 +22,12 @@ crossbows = {
 	icon = bow
 }
 
+firearms = {
+	name = "Firearms"
+	category = army
+	icon = musket
+}
+
 fortification = {
 	name = "Fortification"
 	category = army

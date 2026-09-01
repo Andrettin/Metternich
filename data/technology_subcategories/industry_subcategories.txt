@@ -10,6 +10,12 @@ cattle_herding = {
 	icon = cattle
 }
 
+chemistry = {
+	name = "Chemistry"
+	category = industry
+	icon = spices_yellow
+}
+
 farming = {
 	name = "Farming"
 	category = industry

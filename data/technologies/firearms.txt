@@ -1,64 +1,89 @@
+arquebus = {
+	name = "Arquebus"
+	subcategory = firearms
+	portrait = engineering
+	icon = musket
+	period = gunpowder_age
+	level = 2
+	prerequisites = {
+		black_powder
+	}
+}
+
+musket = {
+	name = "Musket"
+	subcategory = firearms
+	portrait = engineering
+	icon = musket
+	period = absolutism_age
+	level = 3
+	prerequisites = {
+		arquebus
+	}
+}
+
 flintlock_rifle = {
 	name = "Flintlock Rifle"
-	subcategory = infantry
+	subcategory = firearms
 	portrait = engineering
 	icon = rifle
 	period = revolutionary_age
-	spread_from_neighbor = false
+	level = 4
 	prerequisites = {
+		musket
 		marksman_long_bow #earlier ranged weapon
 		arbalest #earlier ranged weapon
 		spanish_square #earlier military technology
 		manufactories #seems reasonable
 		enlightenment #to place it in the appropriate period
 	}
-	monthly_chance = {
-		base_value = 5
-		
-		#modifier = {
-		#	additive = true
-		#	factor = 2
-		#	technology = small_arms_production
-		#}
-		#modifier = {
-		#	additive = true
-		#	factor = 2
-		#	war = true
-		#	war_domains = {
-		#		technology = flintlock_rifle
-		#	}
-		#}
-	}
+	#monthly_chance = {
+	#	base_value = 5
+	#	
+	#	#modifier = {
+	#	#	additive = true
+	#	#	factor = 2
+	#	#	technology = small_arms_production
+	#	#}
+	#	#modifier = {
+	#	#	additive = true
+	#	#	factor = 2
+	#	#	war = true
+	#	#	war_domains = {
+	#	#		technology = flintlock_rifle
+	#	#	}
+	#	#}
+	#}
 }
 
 breech_loading_rifle = {
 	name = "Breech-Loading Rifle"
-	subcategory = infantry
+	subcategory = firearms
 	portrait = engineering
 	icon = rifle
 	period = napoleonic_age
-	spread_from_neighbor = false
+	level = 5
 	prerequisites = {
 		flintlock_rifle
 		industrialization #seems reasonable
 	}
-	monthly_chance = {
-		base_value = 5
-		
-		#modifier = {
-		#	additive = true
-		#	factor = 2
-		#	war = true
-		#	war_domains = {
-		#		technology = breech_loading_rifle
-		#	}
-		#}
-	}
+	#monthly_chance = {
+	#	base_value = 5
+	#	
+	#	#modifier = {
+	#	#	additive = true
+	#	#	factor = 2
+	#	#	war = true
+	#	#	war_domains = {
+	#	#		technology = breech_loading_rifle
+	#	#	}
+	#	#}
+	#}
 }
 
 machine_gun = {
 	name = "Machine Gun"
-	subcategory = infantry
+	subcategory = firearms
 	portrait = engineering
 	icon = rifle
 	period = steam_age
@@ -82,7 +107,7 @@ machine_gun = {
 
 bolt_action_rifle = {
 	name = "Bolt-Action Rifle"
-	subcategory = infantry
+	subcategory = firearms
 	portrait = engineering
 	icon = rifle
 	period = industrial_age
