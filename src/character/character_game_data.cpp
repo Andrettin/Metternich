@@ -159,6 +159,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->craft = std::stoi(value);
 	} else if (key == "max_craft") {
 		this->max_craft = std::stoi(value);
+	} else if (key == "base_armor_class_bonus") {
+		this->base_armor_class_bonus = std::stoi(value);
+	} else if (key == "natural_armor_class_bonus") {
+		this->natural_armor_class_bonus = std::stoi(value);
 	} else if (key == "armor_class_bonus") {
 		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
@@ -361,6 +365,8 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("max_mana", std::to_string(this->get_max_mana()));
 	data.add_property("craft", std::to_string(this->get_craft()));
 	data.add_property("max_craft", std::to_string(this->get_max_craft()));
+	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
+	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
 	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
@@ -2209,6 +2215,67 @@ void character_game_data::set_max_craft(const int max_craft, const bool increase
 void character_game_data::change_max_craft(const int change, const bool increase_craft)
 {
 	this->set_max_craft(this->get_max_craft() + change, increase_craft);
+}
+
+void character_game_data::set_base_armor_class_bonus(const int bonus)
+{
+	if (bonus == this->get_base_armor_class_bonus()) {
+		return;
+	}
+
+	this->apply_base_armor_class_bonus(-1);
+
+	this->base_armor_class_bonus = bonus;
+
+	this->apply_base_armor_class_bonus(1);
+
+	if (game::get()->is_running()) {
+		emit base_armor_class_bonus_changed();
+	}
+}
+
+void character_game_data::change_base_armor_class_bonus(const int change)
+{
+	this->set_base_armor_class_bonus(this->get_base_armor_class_bonus() + change);
+}
+
+void character_game_data::set_natural_armor_class_bonus(const int bonus)
+{
+	if (bonus == this->get_natural_armor_class_bonus()) {
+		return;
+	}
+
+	this->apply_base_armor_class_bonus(-1);
+
+	this->natural_armor_class_bonus = bonus;
+
+	this->apply_base_armor_class_bonus(1);
+
+	if (game::get()->is_running()) {
+		emit natural_armor_class_bonus_changed();
+	}
+}
+
+void character_game_data::change_natural_armor_class_bonus(const int change)
+{
+	this->set_natural_armor_class_bonus(this->get_natural_armor_class_bonus() + change);
+}
+
+void character_game_data::apply_base_armor_class_bonus(const int multiplier)
+{
+	//apply bonus from base armor and natural armor
+	int bonus = 0;
+
+	if (this->get_natural_armor_class_bonus() >= this->get_base_armor_class_bonus()) {
+		bonus = this->get_natural_armor_class_bonus();
+		if (this->get_base_armor_class_bonus() > 0) {
+			bonus += 1;
+		}
+	} else {
+		bonus = this->get_base_armor_class_bonus();
+	}
+
+	this->change_armor_class_bonus(bonus * multiplier);
 }
 
 void character_game_data::set_armor_class_bonus(const int bonus)

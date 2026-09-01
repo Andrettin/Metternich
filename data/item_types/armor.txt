@@ -12,7 +12,7 @@ leather_armor = {
 	price = 5gp
 	required_technology = soft_leather_armor
 	modifier = {
-		armor_class = 2
+		base_armor_class = 2
 	}
 }
 
@@ -23,7 +23,7 @@ chain_mail = {
 	price = 75gp
 	required_technology = chain_mail
 	modifier = {
-		armor_class = 5
+		base_armor_class = 5
 	}
 }
 
@@ -34,6 +34,6 @@ plate_mail = {
 	price = 600gp
 	required_technology = plate_mail
 	modifier = {
-		armor_class = 7
+		base_armor_class = 7
 	}
 }

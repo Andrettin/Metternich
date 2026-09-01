@@ -1,15 +1,3 @@
-armor_1 = {
-	name = "+1"
-	affix_type = suffix
-	price = 1000gp
-	item_types = {
-		shield
-	}
-	modifier = {
-		armor_class = 1
-	}
-}
-
 armor_2 = {
 	name = "+2"
 	affix_type = suffix
@@ -18,6 +6,18 @@ armor_2 = {
 		chain_mail
 	}
 	modifier = {
-		armor_class = 2
+		base_armor_class = 2
+	}
+}
+
+shield_1 = {
+	name = "+1"
+	affix_type = suffix
+	price = 1000gp
+	item_types = {
+		shield
+	}
+	modifier = {
+		armor_class = 1
 	}
 }

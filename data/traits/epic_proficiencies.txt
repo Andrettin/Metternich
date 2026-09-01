@@ -7,7 +7,7 @@ armor_skin = {
 		proficiency
 	}
 	modifier = {
-		armor_class = 2
+		natural_armor_class = 2
 	}
 }
 

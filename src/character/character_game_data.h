@@ -478,6 +478,23 @@ public:
 		this->set_mana(this->get_max_mana());
 	}
 
+	int get_base_armor_class_bonus() const
+	{
+		return this->base_armor_class_bonus;
+	}
+
+	void set_base_armor_class_bonus(const int bonus);
+	void change_base_armor_class_bonus(const int change);
+
+	int get_natural_armor_class_bonus() const
+	{
+		return this->natural_armor_class_bonus;
+	}
+
+	void set_natural_armor_class_bonus(const int bonus);
+	void change_natural_armor_class_bonus(const int change);
+	void apply_base_armor_class_bonus(const int multiplier);
+
 	int get_armor_class_bonus() const
 	{
 		return this->armor_class_bonus;
@@ -1066,6 +1083,8 @@ signals:
 	void max_mana_changed();
 	void craft_changed();
 	void max_craft_changed();
+	void base_armor_class_bonus_changed();
+	void natural_armor_class_bonus_changed();
 	void armor_class_bonus_changed();
 	void species_armor_class_bonuses_changed();
 	void to_hit_bonus_changed();
@@ -1122,6 +1141,8 @@ private:
 	int max_mana = 0;
 	int craft = 0;
 	int max_craft = 0;
+	int base_armor_class_bonus = 0; //armor class from body armor
+	int natural_armor_class_bonus = 0;
 	int armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
 	int to_hit_bonus = 0;

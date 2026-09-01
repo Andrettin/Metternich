@@ -8,6 +8,7 @@
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
 #include "script/modifier_effect/attribute_skill_bonus_modifier_effect.h"
+#include "script/modifier_effect/base_armor_class_modifier_effect.h"
 #include "script/modifier_effect/base_population_capacity_modifier_effect.h"
 #include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
@@ -60,6 +61,7 @@
 #include "script/modifier_effect/monthly_technology_category_research_modifier_effect.h"
 #include "script/modifier_effect/movement_cost_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
+#include "script/modifier_effect/natural_armor_class_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_modifier_effect.h"
@@ -108,6 +110,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "armor_class") {
 			return std::make_unique<armor_class_modifier_effect>(value);
+		} else if (key == "base_armor_class") {
+			return std::make_unique<base_armor_class_modifier_effect>(value);
 		} else if (key == "caster_level") {
 			return std::make_unique<caster_level_modifier_effect>(value);
 		} else if (key == "challenge_rating") {
@@ -124,6 +128,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<hit_dice_modifier_effect>(value);
 		} else if (key == "movement") {
 			return std::make_unique<movement_modifier_effect>(value);
+		} else if (key == "natural_armor_class") {
+			return std::make_unique<natural_armor_class_modifier_effect>(value);
 		} else if (key == "range") {
 			return std::make_unique<range_modifier_effect>(value);
 		} else if (key == "to_hit_bonus") {
