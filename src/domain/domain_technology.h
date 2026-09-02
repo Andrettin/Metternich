@@ -24,6 +24,7 @@ class domain_technology final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
+	Q_PROPERTY(QVariantList available_technologies READ get_available_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList researchable_technologies READ get_researchable_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList future_technologies READ get_future_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList current_researches READ get_current_researches_qvariant_list NOTIFY current_researches_changed)
@@ -62,9 +63,13 @@ public:
 	bool can_gain_technology(const technology *technology) const;
 	Q_INVOKABLE bool can_research_technology(const metternich::technology *technology) const;
 
+	std::vector<const technology *> get_available_technologies() const;
+	QVariantList get_available_technologies_qvariant_list() const;
+
 	std::vector<const technology *> get_researchable_technologies() const;
 	QVariantList get_researchable_technologies_qvariant_list() const;
 	Q_INVOKABLE bool is_technology_researchable(const metternich::technology *technology) const;
+	Q_INVOKABLE QString get_technology_discovery_chance_string(const metternich::technology *technology) const;
 
 	QVariantList get_future_technologies_qvariant_list() const;
 

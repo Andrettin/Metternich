@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/decimillesimal_int.h"
+
 namespace archimedes {
 	class gsml_data;
 }
@@ -141,6 +143,8 @@ public:
 	}
 
 	void set_yearly_chance(std::unique_ptr<metternich::factor<std::remove_const_t<scope_type>>>  &&yearly_chance);
+
+	std::optional<decimillesimal_int> calculate_mean_time_to_happen(const scope_type *scope) const;
 
 	virtual bool is_hidden() const = 0;
 	virtual bool fires_only_once() const = 0;

@@ -174,36 +174,9 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 		co_return;
 	}
 
-	decimillesimal_int mtth;
-	if (event->get_mean_time_to_happen() != nullptr) {
-		mtth = event->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
-	} else if (event->get_monthly_chance() != nullptr) {
-		const decimillesimal_int monthly_chance = event->get_monthly_chance()->calculate(scope);
-		if (monthly_chance <= 0) {
-			co_return;
-		}
-
-		mtth = decimillesimal_int(100) / monthly_chance;
-		mtth /= game::get()->get_current_months_per_turn();
-	} else if (event->get_yearly_chance() != nullptr) {
-		const decimillesimal_int yearly_chance = event->get_yearly_chance()->calculate(scope);
-		if (yearly_chance <= 0) {
-			co_return;
-		}
-
-		const decimillesimal_int quarterly_chance = yearly_chance / 4;
-		mtth = decimillesimal_int(100) / quarterly_chance;
-		mtth /= game::get()->get_current_quarters_per_turn();
-	} else {
-		assert_throw(false);
-	}
-
-	if constexpr (std::is_same_v<scope_type, const province>) {
-		const province_event *province_event = static_cast<const metternich::province_event *>(event);
-		if (province_event->get_spread_technology() != nullptr && scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category()) != 0) {
-			mtth *= 100;
-			mtth /= 100 + scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category());
-		}
+	const std::optional<decimillesimal_int> mtth = event->calculate_mean_time_to_happen(scope);
+	if (!mtth.has_value()) {
+		co_return;
 	}
 
 	bool should_fire = false;
@@ -211,7 +184,7 @@ QCoro::Task<void> scoped_event_base<scope_type>::check_mtth_event_for_scope(cons
 	if (mtth <= 1) {
 		should_fire = true;
 	} else {
-		const int64_t fire_chance = (decimillesimal_int(1) / mtth).get_value();
+		const int64_t fire_chance = (decimillesimal_int(1) / mtth.value()).get_value();
 		assert_throw(fire_chance > 0);
 		should_fire = random::get()->generate(10000) < fire_chance;
 	}
@@ -365,6 +338,45 @@ template <typename scope_type>
 void scoped_event_base<scope_type>::set_yearly_chance(std::unique_ptr<metternich::factor<std::remove_const_t<scope_type>>> &&yearly_chance)
 {
 	this->yearly_chance = std::move(yearly_chance);
+}
+
+template <typename scope_type>
+std::optional<decimillesimal_int> scoped_event_base<scope_type>::calculate_mean_time_to_happen(const scope_type *scope) const
+{
+	decimillesimal_int mtth;
+
+	if (this->get_mean_time_to_happen() != nullptr) {
+		mtth = this->get_mean_time_to_happen()->calculate(scope, game::get()->get_year());
+	} else if (this->get_monthly_chance() != nullptr) {
+		const decimillesimal_int monthly_chance = this->get_monthly_chance()->calculate(scope);
+		if (monthly_chance <= 0) {
+			return std::nullopt;
+		}
+
+		mtth = decimillesimal_int(100) / monthly_chance;
+		mtth /= game::get()->get_current_months_per_turn();
+	} else if (this->get_yearly_chance() != nullptr) {
+		const decimillesimal_int yearly_chance = this->get_yearly_chance()->calculate(scope);
+		if (yearly_chance <= 0) {
+			return std::nullopt;
+		}
+
+		const decimillesimal_int quarterly_chance = yearly_chance / 4;
+		mtth = decimillesimal_int(100) / quarterly_chance;
+		mtth /= game::get()->get_current_quarters_per_turn();
+	} else {
+		assert_throw(false);
+	}
+
+	if constexpr (std::is_same_v<scope_type, const province>) {
+		const province_event *province_event = static_cast<const metternich::province_event *>(this);
+		if (province_event->get_spread_technology() != nullptr && scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category()) != 0) {
+			mtth *= 100;
+			mtth /= 100 + scope->get_game_data()->get_technology_category_spread_modifier(province_event->get_spread_technology()->get_category());
+		}
+	}
+
+	return mtth;
 }
 
 template <typename scope_type>

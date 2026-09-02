@@ -18,9 +18,10 @@ Item {
 	property string status_text: ""
 	property string middle_status_text: ""
 	
-	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? domain_game_data.technology.technologies : (technology_view_mode === TechnologyView.Mode.Available ? researchable_technologies : (technology_view_mode === TechnologyView.Mode.Future ? domain_game_data.technology.future_technologies : domain.available_technologies))
+	readonly property var technologies: technology_view_mode === TechnologyView.Mode.Researched ? domain_game_data.technology.technologies : (technology_view_mode === TechnologyView.Mode.Available ? available_technologies : (technology_view_mode === TechnologyView.Mode.Future ? domain_game_data.technology.future_technologies : domain.available_technologies))
 	readonly property var category_technologies: get_category_technologies(technologies, technology_view_category, technology_view_subcategory)
 	readonly property var researchable_technologies: domain_game_data.technology.researchable_technologies
+	readonly property var available_technologies: domain_game_data.technology.available_technologies
 	
 	TiledBackground {
 		anchors.top: top_bar.bottom
@@ -152,6 +153,19 @@ Item {
 							}
 						}
 					}
+				}
+				
+				SmallText {
+					id: discovery_chance_label
+					width: 224 * scale_factor + 6 * scale_factor
+					height: 32 * scale_factor + 6 * scale_factor
+					anchors.verticalCenter: parent.verticalCenter
+					text: "Discovery Chance: " + discovery_chance_string
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					visible: !research_technology_button.visible && discovery_chance_string.length > 0
+					
+					readonly property string discovery_chance_string: domain_game_data.technology.get_technology_discovery_chance_string(technology)
 				}
 				
 				SmallText {

@@ -14,6 +14,7 @@
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/game.h"
+#include "game/province_event.h"
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -533,6 +534,36 @@ bool domain_technology::can_research_technology(const technology *technology) co
 	return true;
 }
 
+std::vector<const technology *> domain_technology::get_available_technologies() const
+{
+	std::vector<const technology *> available_technologies;
+
+	for (const technology *technology : this->domain->get_available_technologies()) {
+		if (technology->get_discovery_event() != nullptr) {
+			if (this->get_game_data()->get_capital_province() == nullptr) {
+				continue;
+			}
+
+			if (!technology->get_discovery_event()->can_fire(this->get_game_data()->get_capital_province(), read_only_context(this->get_game_data()->get_capital_province()))) {
+				continue;
+			}
+		} else if (!this->is_technology_researchable(technology)) {
+			continue;
+		}
+
+		available_technologies.push_back(technology);
+	}
+
+	std::sort(available_technologies.begin(), available_technologies.end(), technology_compare());
+
+	return available_technologies;
+}
+
+QVariantList domain_technology::get_available_technologies_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_available_technologies());
+}
+
 std::vector<const technology *> domain_technology::get_researchable_technologies() const
 {
 	std::vector<const technology *> researchable_technologies;
@@ -575,6 +606,35 @@ bool domain_technology::is_technology_researchable(const technology *technology)
 	}
 
 	return this->can_gain_technology(technology);
+}
+
+QString domain_technology::get_technology_discovery_chance_string(const metternich::technology *technology) const
+{
+	if (technology->get_discovery_event() == nullptr) {
+		return QString();
+	}
+
+	if (this->get_game_data()->get_capital_province() == nullptr) {
+		return QString();
+	}
+
+	if (!technology->get_discovery_event()->can_fire(this->get_game_data()->get_capital_province(), read_only_context(this->get_game_data()->get_capital_province()))) {
+		return QString();
+	}
+
+	const std::optional<decimillesimal_int> mtth = technology->get_discovery_event()->calculate_mean_time_to_happen(this->get_game_data()->get_capital_province());
+
+	decimillesimal_int discovery_chance;
+	if (!mtth.has_value()) {
+		discovery_chance = decimillesimal_int(0);
+	} else if (mtth.value() <= 1) {
+		discovery_chance = decimillesimal_int(100);
+	} else {
+		discovery_chance = decimillesimal_int(1) / mtth.value() * 100;
+	}
+
+	const std::string str = std::format("{}%", discovery_chance.to_string());
+	return QString::fromStdString(str);
 }
 
 QVariantList domain_technology::get_future_technologies_qvariant_list() const
