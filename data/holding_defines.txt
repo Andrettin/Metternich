@@ -38,197 +38,200 @@ construction_level_commodity_costs_per_level = {
 	}
 }
 
-construction_level_domain_modifiers = {
+construction_level_modifiers = {
 	cultural_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = culture
-				value = 1
+			employment_capacity = {
+				employment_type = cultural_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = culture
-				value = 2
+			employment_capacity = {
+				employment_type = cultural_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = culture
-				value = 3
+			employment_capacity = {
+				employment_type = cultural_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = culture
-				value = 4
+			employment_capacity = {
+				employment_type = cultural_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = culture
-				value = 5
+			employment_capacity = {
+				employment_type = cultural_researching
+				multiplier = 5
 			}
 		}
 	}
 	engineering_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = industry
-				value = 1
+			employment_capacity = {
+				employment_type = industrial_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = industry
-				value = 2
+			employment_capacity = {
+				employment_type = industrial_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = industry
-				value = 3
+			employment_capacity = {
+				employment_type = industrial_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = industry
-				value = 4
+			employment_capacity = {
+				employment_type = industrial_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = industry
-				value = 5
+			employment_capacity = {
+				employment_type = industrial_researching
+				multiplier = 5
 			}
 		}
 	}
 	financial_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = commerce
-				value = 1
+			employment_capacity = {
+				employment_type = commercial_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = commerce
-				value = 2
+			employment_capacity = {
+				employment_type = commercial_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = commerce
-				value = 3
+			employment_capacity = {
+				employment_type = commercial_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = commerce
-				value = 4
+			employment_capacity = {
+				employment_type = commercial_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = commerce
-				value = 5
+			employment_capacity = {
+				employment_type = commercial_researching
+				multiplier = 5
 			}
 		}
 	}
 	military_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = army
-				value = 1
+			employment_capacity = {
+				employment_type = military_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = army
-				value = 2
+			employment_capacity = {
+				employment_type = military_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = army
-				value = 3
+			employment_capacity = {
+				employment_type = military_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = army
-				value = 4
+			employment_capacity = {
+				employment_type = military_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = army
-				value = 5
+			employment_capacity = {
+				employment_type = military_researching
+				multiplier = 5
 			}
 		}
 	}
 	naval_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = navy
-				value = 1
+			employment_capacity = {
+				employment_type = naval_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = navy
-				value = 2
+			employment_capacity = {
+				employment_type = naval_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = navy
-				value = 3
+			employment_capacity = {
+				employment_type = naval_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = navy
-				value = 4
+			employment_capacity = {
+				employment_type = naval_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = navy
-				value = 5
+			employment_capacity = {
+				employment_type = naval_researching
+				multiplier = 5
 			}
 		}
 	}
 	religious_academy = {
 		1 = {
-			quarterly_technology_category_research = {
-				category = religion
-				value = 1
+			employment_capacity = {
+				employment_type = religious_researching
+				multiplier = 1
 			}
 		}
 		2 = {
-			quarterly_technology_category_research = {
-				category = religion
-				value = 2
+			employment_capacity = {
+				employment_type = religious_researching
+				multiplier = 2
 			}
 		}
 		3 = {
-			quarterly_technology_category_research = {
-				category = religion
-				value = 3
+			employment_capacity = {
+				employment_type = religious_researching
+				multiplier = 3
 			}
 		}
 		4 = {
-			quarterly_technology_category_research = {
-				category = religion
-				value = 4
+			employment_capacity = {
+				employment_type = religious_researching
+				multiplier = 4
 			}
 		}
 		5 = {
-			quarterly_technology_category_research = {
-				category = religion
-				value = 5
+			employment_capacity = {
+				employment_type = religious_researching
+				multiplier = 5
 			}
 		}
 	}
+}
+
+construction_level_domain_modifiers = {
 }

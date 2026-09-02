@@ -1,0 +1,83 @@
+commercial_researching = {
+	name = "Commercial Researching"
+	base_employment_size = 1000
+	employee_types = {
+		academics
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = commerce
+			value = 1
+		}
+	}
+}
+
+cultural_researching = {
+	name = "Cultural Researching"
+	base_employment_size = 1000
+	employee_types = {
+		academics
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = culture
+			value = 1
+		}
+	}
+}
+
+industrial_researching = {
+	name = "Industrial Researching"
+	base_employment_size = 1000
+	employee_types = {
+		academics
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = industry
+			value = 1
+		}
+	}
+}
+
+military_researching = {
+	name = "Military Researching"
+	base_employment_size = 1000
+	employee_types = {
+		officers
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = army
+			value = 1
+		}
+	}
+}
+
+naval_researching = {
+	name = "Naval Researching"
+	base_employment_size = 1000
+	employee_types = {
+		officers
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = navy
+			value = 1
+		}
+	}
+}
+
+religious_researching = {
+	name = "Religious Researching"
+	base_employment_size = 1000
+	employee_types = {
+		clergymen
+	}
+	domain_modifier = {
+		quarterly_technology_category_research = {
+			category = religion
+			value = 1
+		}
+	}
+}

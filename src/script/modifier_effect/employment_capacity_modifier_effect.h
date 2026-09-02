@@ -28,6 +28,11 @@ public:
 			this->employment_type = employment_type::get(value);
 		} else if (key == "capacity") {
 			this->value = decimillesimal_int(std::stoi(value));
+		} else if (key == "multiplier") {
+			assert_throw(this->employment_type != nullptr);
+			assert_throw(this->employment_type->get_base_employment_size() != 0);
+			const decimillesimal_int multiplier(value);
+			this->value = this->employment_type->get_base_employment_size() * multiplier;
 		} else if (key == "monthly_wealth_output_value") {
 			assert_throw(this->employment_type != nullptr);
 			const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
