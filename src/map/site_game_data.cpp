@@ -1207,7 +1207,12 @@ QCoro::Task<void> site_game_data::set_construction_level(const construction_type
 	}
 
 	if (this->get_owner() != nullptr) {
-		const modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, old_level.to_int());
+		const modifier<const metternich::site> *modifier = holding_defines::get()->get_construction_level_modifier(construction_type, old_level.to_int());
+		if (modifier != nullptr) {
+			co_await modifier->apply(this->site, -1);
+		}
+
+		const metternich::modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, old_level.to_int());
 		if (domain_modifier != nullptr) {
 			co_await domain_modifier->apply(this->get_owner(), -1);
 		}
@@ -1220,7 +1225,12 @@ QCoro::Task<void> site_game_data::set_construction_level(const construction_type
 	}
 
 	if (this->get_owner() != nullptr) {
-		const modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, level.to_int());
+		const modifier<const metternich::site> *modifier = holding_defines::get()->get_construction_level_modifier(construction_type, level.to_int());
+		if (modifier != nullptr) {
+			co_await modifier->apply(this->site, 1);
+		}
+
+		const metternich::modifier<const domain> *domain_modifier = holding_defines::get()->get_construction_level_domain_modifier(construction_type, level.to_int());
 		if (domain_modifier != nullptr) {
 			co_await domain_modifier->apply(this->get_owner(), 1);
 		}
