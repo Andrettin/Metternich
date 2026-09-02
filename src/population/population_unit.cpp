@@ -408,28 +408,38 @@ void population_unit::purchase_needs(const int64_t consumption_wealth, const std
 		return;
 	}
 
-	this->set_fulfilled_life_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_life_need_weight() / total_need_weight, this->get_type()->get_life_need_weights(), this->get_type()->get_total_life_need_weight(), trade_domains, remaining_demands));
-	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_everyday_need_weight() / total_need_weight, this->get_type()->get_everyday_need_weights(), this->get_type()->get_total_everyday_need_weight(), trade_domains, remaining_demands));
-	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), this->get_type()->get_total_luxury_need_weight(), trade_domains, remaining_demands));
+	this->set_fulfilled_life_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_life_need_weight() / total_need_weight, this->get_type()->get_life_need_weights(), trade_domains, remaining_demands));
+	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_everyday_need_weight() / total_need_weight, this->get_type()->get_everyday_need_weights(), trade_domains, remaining_demands));
+	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const int64_t consumption_wealth, const commodity_map<int> &need_weights, const int total_need_weight, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
+int population_unit::purchase_needs(const int64_t consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
 {
 	int fulfilled_percent = 0;
-	int commodity_count = 0;
+	int total_need_weight = 0;
 
 	for (const auto &[commodity, need_weight] : need_weights) {
 		if (!this->domain->get_economy()->get_available_commodities().contains(commodity)) {
 			continue;
 		}
 
-		++commodity_count;
+		total_need_weight += need_weight;
+	}
+
+	if (total_need_weight == 0) {
+		return 100;
+	}
+
+	for (const auto &[commodity, need_weight] : need_weights) {
+		if (!this->domain->get_economy()->get_available_commodities().contains(commodity)) {
+			continue;
+		}
 
 		const int64_t commodity_wealth_need = consumption_wealth * need_weight / total_need_weight;
 		const int64_t commodity_need = commodity->wealth_value_to_value(commodity_wealth_need, true);
 
 		if (commodity_need == 0) {
-			fulfilled_percent += 100;
+			fulfilled_percent += 100 * need_weight;
 			continue;
 		}
 
@@ -465,18 +475,14 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			}
 		}
 
-		fulfilled_percent += static_cast<int>(fulfilled_commodity_need * 100 / commodity_need);
+		fulfilled_percent += static_cast<int>(fulfilled_commodity_need * 100 / commodity_need) * need_weight;
 
 		if (fulfilled_commodity_need < affordable_commodity_need) {
 			remaining_demands[commodity] += affordable_commodity_need - fulfilled_commodity_need;
 		}
 	}
 
-	if (commodity_count == 0) {
-		return 100;
-	}
-
-	fulfilled_percent /= commodity_count;
+	fulfilled_percent /= total_need_weight;
 	return fulfilled_percent;
 }
 
