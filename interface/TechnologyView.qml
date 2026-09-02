@@ -168,6 +168,14 @@ Item {
 					readonly property string discovery_chance_string: domain_game_data.technology.get_technology_discovery_chance_string(technology)
 				}
 				
+				Item {
+					id: filler
+					width: 224 * scale_factor + 6 * scale_factor
+					height: 32 * scale_factor + 6 * scale_factor
+					anchors.verticalCenter: parent.verticalCenter
+					visible: !research_technology_button.visible && !discovery_chance_label.visible
+				}
+				
 				SmallText {
 					id: technology_effects_label
 					text: format_text(effects_string)
