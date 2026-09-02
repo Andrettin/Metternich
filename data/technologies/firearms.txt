@@ -7,6 +7,8 @@ arquebus = {
 	level = 2
 	prerequisites = {
 		black_powder
+		marksman_long_bow #earlier ranged weapon
+		arbalest #earlier ranged weapon
 	}
 }
 
@@ -31,8 +33,6 @@ flintlock_rifle = {
 	level = 4
 	prerequisites = {
 		musket
-		marksman_long_bow #earlier ranged weapon
-		arbalest #earlier ranged weapon
 		spanish_square #earlier military technology
 		manufactories #seems reasonable
 		enlightenment #to place it in the appropriate period

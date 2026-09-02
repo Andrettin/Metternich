@@ -8,6 +8,7 @@ spanish_square = {
 	prerequisites = {
 		unit_organization #earlier army doctrine technology
 		hierarchical_command #earlier army doctrine technology
+		black_powder #seems reasonable
 	}
 }
 
