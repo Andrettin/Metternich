@@ -212,12 +212,22 @@ laborers = {
 				province = {
 					bureaucrats >= 0.2
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 0.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -226,12 +236,22 @@ laborers = {
 				province = {
 					bureaucrats >= 0.6
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 0.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -240,12 +260,22 @@ laborers = {
 				province = {
 					bureaucrats >= 1
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 1.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -254,12 +284,22 @@ laborers = {
 				province = {
 					bureaucrats >= 1.4
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 1.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -268,12 +308,22 @@ laborers = {
 				province = {
 					bureaucrats >= 1.8
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -282,12 +332,22 @@ laborers = {
 				province = {
 					bureaucrats >= 2.2
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 2.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -296,12 +356,22 @@ laborers = {
 				province = {
 					bureaucrats >= 2.6
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 2.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -310,12 +380,22 @@ laborers = {
 				province = {
 					bureaucrats >= 3
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 3.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -324,12 +404,22 @@ laborers = {
 				province = {
 					bureaucrats >= 3.4
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					bureaucrats >= 3.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 			modifier = {
@@ -338,12 +428,22 @@ laborers = {
 				province = {
 					bureaucrats >= 3.8
 				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
 			}
 			modifier = {
 				factor = -100
 				additive = true
 				province = {
 					bureaucrats >= 4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
 				}
 			}
 		}
@@ -386,12 +486,22 @@ laborers = {
 				province = {
 					clergymen >= 0.4
 				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					clergymen >= 0.8
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
 				}
 			}
 			modifier = {
@@ -400,12 +510,22 @@ laborers = {
 				province = {
 					clergymen >= 1.2
 				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					clergymen >= 1.6
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
 				}
 			}
 			modifier = {
@@ -414,12 +534,22 @@ laborers = {
 				province = {
 					clergymen >= 2
 				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					clergymen >= 2.4
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
 				}
 			}
 			modifier = {
@@ -428,12 +558,22 @@ laborers = {
 				province = {
 					clergymen >= 2.8
 				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
 			}
 			modifier = {
 				factor = -2
 				additive = true
 				province = {
 					clergymen >= 3.2
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
 				}
 			}
 			modifier = {
@@ -442,12 +582,22 @@ laborers = {
 				province = {
 					clergymen >= 3.6
 				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
 			}
 			modifier = {
 				factor = -100
 				additive = true
 				province = {
 					clergymen >= 4
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
 				}
 			}
 		}
