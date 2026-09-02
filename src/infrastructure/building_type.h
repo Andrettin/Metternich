@@ -256,11 +256,6 @@ public:
 		return this->min_holding_level;
 	}
 
-	const std::chrono::months &get_build_duration() const
-	{
-		return this->build_duration;
-	}
-
 	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
@@ -356,7 +351,6 @@ private:
 	std::vector<const building_type *> required_buildings;
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
-	std::chrono::months build_duration{};
 	commodity_map<int64_t> commodity_costs;
 	int64_t wealth_cost = 0;
 	commodity_map<int> commodity_cost_weights;

@@ -77,13 +77,7 @@ void building_type::process_gsml_property(const gsml_property &property)
 
 	static const std::string level_suffix = "_level";
 
-	if (key == "build_duration") {
-		const std::chrono::seconds duration_seconds = string::to_duration(value);
-		this->build_duration = std::chrono::duration_cast<std::chrono::months>(duration_seconds);
-		if ((duration_seconds % std::chrono::months(1)).count() > 0) {
-			this->build_duration += std::chrono::months(1);
-		}
-	} else if (key == "wealth_cost") {
+	if (key == "wealth_cost") {
 		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
 		const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
