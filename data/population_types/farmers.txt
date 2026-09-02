@@ -37,4 +37,800 @@ farmers = {
 		lumber = 14.7 #furniture
 		tobacco = 1.045
 	}
+	promotion_factors = {
+		aristocrats = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					aristocrats >= 2
+				}
+			}
+			modifier = {
+				factor = 2
+				additive = true
+				literacy_rate < 50
+			}
+		}
+		artisans = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate < 10
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate < 20
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate < 30
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate < 40
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate < 50
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					clergymen >= 0.8
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					clergymen >= 1.6
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					clergymen >= 2.4
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					clergymen >= 3.2
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					bureaucrats >= 1
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					bureaucrats >= 2
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					bureaucrats >= 3
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					bureaucrats >= 4
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					bureaucrats >= 5
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					soldiers >= 1
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					soldiers >= 2
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					soldiers >= 3
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					soldiers >= 4
+				}
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				province = {
+					soldiers >= 5
+				}
+			}
+		}
+		bureaucrats = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 40
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 50
+			}
+			modifier = {
+				factor = 0.5
+				additive = true
+				literacy_rate >= 60
+			}
+			modifier = {
+				factor = 0.5
+				additive = true
+				literacy_rate >= 70
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 80
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 90
+			}
+			modifier = {
+				factor = 2
+				additive = true
+				literacy_rate >= 100
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 0.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 1.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 2.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.2
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.6
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					bureaucrats >= 3.8
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					bureaucrats >= 4
+				}
+				not = {
+					site = {
+						available_employment = bureaucrats
+					}
+				}
+			}
+		}
+		clergymen = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = 0.5
+				additive = true
+				literacy_rate >= 30
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 40
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 50
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 60
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 70
+			}
+			modifier = {
+				factor = 0.25
+				additive = true
+				literacy_rate >= 80
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 0.4
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 0.8
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 1.2
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 1.6
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2.4
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 2.8
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 3.2
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					clergymen >= 3.6
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					clergymen >= 4
+				}
+				not = {
+					site = {
+						available_employment = clergymen
+					}
+				}
+			}
+		}
+		craftsmen = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -5
+				additive = true
+				literacy_rate < 10
+			}
+			modifier = {
+				factor = -3
+				additive = true
+				literacy_rate < 15
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				literacy_rate < 20
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				literacy_rate < 25
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				literacy_rate < 30
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 30
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 40
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 50
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 60
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 70
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 80
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 90
+			}
+			modifier = {
+				factor = 1
+				additive = true
+				literacy_rate >= 100
+			}
+			modifier = {
+				factor = 10
+				additive = true
+				site = {
+					available_employment = craftsmen
+				}
+			}
+			modifier = {
+				factor = -40
+				additive = true
+				not = {
+					site = {
+						available_employment = craftsmen
+					}
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				not = {
+					site = {
+						available_employment = craftsmen
+					}
+				}
+			}
+		}
+		soldiers = {
+			base_value = 0.01
+			
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 0.5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 1
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 1.5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 2
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 2.5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 3
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 3.5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 4
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -2
+				additive = true
+				province = {
+					soldiers >= 4.5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+			modifier = {
+				factor = -100
+				additive = true
+				province = {
+					soldiers >= 5
+				}
+				not = {
+					site = {
+						available_employment = soldiers
+					}
+				}
+			}
+		}
+	}
 }
