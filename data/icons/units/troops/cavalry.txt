@@ -4,6 +4,9 @@ hussars = {
 
 knights = {
 	filepath = "icons/units/troops/knights.png"
+	character_conditions = {
+		species = centaur
+	}
 }
 
 cuirassiers = {

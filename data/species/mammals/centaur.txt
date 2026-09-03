@@ -3,6 +3,7 @@ centaur = {
 	supertaxon = mammalia
 	era = holocene
 	sapient = true
+	#size = large
 	adulthood_age = 40 #as dwarf
 	middle_age = 125
 	old_age = 188
@@ -12,5 +13,78 @@ centaur = {
 		intuitive = 3d6
 		self_taught = 5d6
 		trained = 7d6
+	}
+	class_skills = {
+		agriculture
+		#animal_lore
+		#animal_noise
+		armorer
+		artistic_ability
+		bowyer
+		#brewing
+		#drinking
+		#eating
+		fishing
+		hunting
+		leatherworking
+		#natural_fighting
+		#running
+		#set_snares
+		#survival_(forests)
+		#tracking
+		weaving
+		#winemaking
+	}
+	min_attribute_values = {
+		strength = 11
+		dexterity = 3
+		constitution = 11
+		intelligence = 3
+		wisdom = 4
+		charisma = 3
+	}
+	max_attribute_values = {
+		strength = 18
+		dexterity = 16
+		constitution = 18
+		intelligence = 16
+		wisdom = 18
+		charisma = 18
+	}
+	allowed_character_classes = {
+		bard
+		druid
+		mage
+		ranger
+		#shaman
+		warrior
+	}
+	character_class_level_limits = {
+		bard = 12
+		druid = 14
+		mage = 12
+		ranger = 10
+		#shaman = 7
+		warrior = 12
+	}
+	item_slots = {
+		weapon = 1
+		shield = 1
+		armor = 1
+		helmet = 1
+		amulet = 1
+		belt = 1
+		cloak = 1
+		gloves = 1
+		ring = 2
+	}
+	modifier = {
+		constitution = 1
+		wisdom = 1
+		dexterity = -2
+		hit_points = 4
+		natural_armor_class = 5
+		#two front hooves dealing 1d6 of damage per round in addition to the weapon attack
+		#if equipped with a lance, can charge for double damage (in which case the front hooves cannot be used to attack simultaneously)
 	}
 }

@@ -17,6 +17,7 @@ jp_morgan = {
 		gender = male
 		or = {
 			species = human
+			species = centaur
 			species = elf
 			species = half_elf
 			species = halfling
