@@ -1,35 +1,51 @@
 fine = {
 	name = "Fine"
+	max_dimension = 6in
 }
 
 diminutive = {
 	name = "Diminutive"
+	min_dimension = 6in
+	max_dimension = 1ft
 }
 
 tiny = {
 	name = "Tiny"
+	min_dimension = 1ft
+	max_dimension = 2ft
 }
 
 small = {
 	name = "Small"
+	min_dimension = 2ft
+	max_dimension = 4ft
 }
 
 medium = {
 	name = "Medium"
+	min_dimension = 4ft
+	max_dimension = 7ft
 }
 
 large = {
 	name = "Large"
+	min_dimension = 7ft
+	max_dimension = 12ft
 }
 
 huge = {
 	name = "Huge"
+	min_dimension = 12ft
+	max_dimension = 25ft
 }
 
 gargantuan = {
 	name = "Gargantuan"
+	min_dimension = 25ft
+	max_dimension = 64ft
 }
 
 colossal = {
 	name = "Colossal"
+	min_dimension = 64ft
 }

@@ -288,6 +288,7 @@ set_source_files_properties(${sound_SRCS} PROPERTIES UNITY_GROUP "sound")
 
 set(species_SRCS
 	src/species/creature_size.cpp
+	src/species/creature_size_container.cpp
 	src/species/phenotype.cpp
 	src/species/phenotype_container.cpp
 	src/species/species.cpp
@@ -961,6 +962,7 @@ source_group(sound FILES ${sound_HDRS})
 
 set(species_HDRS
 	src/species/creature_size.h
+	src/species/creature_size_container.h
 	src/species/geological_era.h
 	src/species/phenotype.h
 	src/species/phenotype_container.h

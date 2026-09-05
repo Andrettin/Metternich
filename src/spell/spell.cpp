@@ -45,7 +45,7 @@ void spell::process_gsml_property(const gsml_property &property)
 			this->range = string::to_length(value);
 		}
 	} else {
-		data_entry::process_gsml_property(property);
+		named_data_entry::process_gsml_property(property);
 	}
 }
 
@@ -98,7 +98,7 @@ void spell::process_gsml_scope(const gsml_data &scope)
 		effects->process_gsml_data(scope);
 		this->target_military_unit_effects = std::move(effects);
 	} else {
-		data_entry::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
 }
 
