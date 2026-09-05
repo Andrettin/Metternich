@@ -23,6 +23,7 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
+#include "species/species.h"
 #include "ui/icon.h"
 #include "unit/army.h"
 #include "unit/military_unit_domain.h"
@@ -280,6 +281,15 @@ const species *military_unit::get_species() const
 	}
 
 	return this->get_phenotype()->get_species();
+}
+
+const creature_size *military_unit::get_creature_size() const
+{
+	if (this->get_species() == nullptr) {
+		return nullptr;
+	}
+
+	return this->get_species()->get_creature_size();
 }
 
 QCoro::Task<void> military_unit::set_province(const metternich::province *province)
@@ -616,11 +626,19 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 
 	int attack = 0;
 	if (ranged) {
-		attack = this->get_effective_stat(military_unit_stat::missile).to_int();
+		if (target->get_character() != nullptr) {
+			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()));
+		} else {
+			attack = this->get_effective_stat(military_unit_stat::missile).to_int();
+		}
 	} else if (moved && this->get_effective_stat(military_unit_stat::charge).to_int() > 0) {
 		attack = this->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
-		attack = this->get_effective_stat(military_unit_stat::melee).to_int();
+		if (target->get_character() != nullptr) {
+			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()));
+		} else {
+			attack = this->get_effective_stat(military_unit_stat::melee).to_int();
+		}
 		if (target->get_type()->is_cavalry()) {
 			attack += this->get_effective_stat(military_unit_stat::melee_vs_mounted).to_int();
 		}
@@ -668,7 +686,7 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 	}
 
 	//perform attack between characters
-	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice()) + this->get_character()->get_game_data()->get_damage_bonus();
+	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice(target_character->get_species()->get_creature_size())) + this->get_character()->get_game_data()->get_damage_bonus();
 	co_await target_character->get_game_data()->change_health(-damage);
 }
 

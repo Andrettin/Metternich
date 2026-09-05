@@ -7,6 +7,7 @@
 #include "character/character_attribute.h"
 #include "character/character_attribute_type.h"
 #include "character/character_class.h"
+#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "character/domain_skill.h"
 #include "character/dynasty.h"
@@ -580,7 +581,7 @@ void character_data_model::update_damage_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	dice damage_dice = character_game_data->get_damage_dice();
+	dice damage_dice = character_game_data->get_damage_dice(character_defines::get()->get_default_creature_size());
 	damage_dice.change_modifier(character_game_data->get_damage_bonus());
 	this->damage_row->value = damage_dice.to_display_string();
 

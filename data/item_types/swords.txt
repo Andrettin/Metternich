@@ -22,9 +22,13 @@ long_sword = {
 	item_class = heavy_blade
 	icon = saber
 	price = 15gp
-	damage_dice = 1d8
 	required_technology = long_sword
 	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 1d8
+		medium = 1d8
+		large = 1d12
+	}
 }
 
 short_sword = {

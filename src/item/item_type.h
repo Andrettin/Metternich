@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "species/creature_size_container.h"
 #include "util/dice.h"
 
 Q_MOC_INCLUDE("item/item_class.h")
@@ -31,7 +32,6 @@ class item_type final : public named_data_entry, public data_type<item_type>
 
 	Q_PROPERTY(metternich::item_class* item_class MEMBER item_class NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(archimedes::dice damage_dice MEMBER damage_dice READ get_damage_dice NOTIFY changed)
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
 	Q_PROPERTY(bool stackable MEMBER stackable READ is_stackable NOTIFY changed)
 	Q_PROPERTY(bool spell_learnable MEMBER spell_learnable READ is_spell_learnable NOTIFY changed)
@@ -84,10 +84,7 @@ public:
 		return this->price;
 	}
 
-	const dice &get_damage_dice() const
-	{
-		return this->damage_dice;
-	}
+	const dice &get_damage_dice(const creature_size *target_size) const;
 
 	bool is_two_handed() const
 	{
@@ -131,7 +128,7 @@ private:
 	metternich::item_class *item_class = nullptr;
 	const metternich::icon *icon = nullptr;
 	int64_t price = 0;
-	dice damage_dice;
+	creature_size_map<dice> damage_dice_per_target_size;
 	bool two_handed = false;
 	bool stackable = false;
 	bool spell_learnable = false;

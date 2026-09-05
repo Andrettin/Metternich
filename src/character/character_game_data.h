@@ -31,6 +31,7 @@ class character;
 class character_attribute;
 class character_stat;
 class civilian_unit;
+class creature_size;
 class deity;
 class domain;
 class domain_skill;
@@ -545,7 +546,7 @@ public:
 
 	void change_weapon_to_hit_bonus(const item_type *weapon_type, const int change);
 
-	const dice &get_damage_dice() const;
+	const dice &get_damage_dice(const creature_size *target_size) const;
 
 	int get_damage_bonus() const
 	{
@@ -572,7 +573,7 @@ public:
 
 	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
 
-	int get_max_damage() const;
+	int get_max_damage(const creature_size *target_size) const;
 
 	int get_range() const
 	{

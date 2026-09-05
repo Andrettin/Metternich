@@ -2377,11 +2377,11 @@ void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_typ
 	}
 }
 
-const dice &character_game_data::get_damage_dice() const
+const dice &character_game_data::get_damage_dice(const creature_size *target_size) const
 {
 	const item *weapon = this->get_weapon();
 	if (weapon != nullptr) {
-		return weapon->get_type()->get_damage_dice();
+		return weapon->get_type()->get_damage_dice(target_size);
 	}
 
 	if (this->character->get_monster_type() != nullptr) {
@@ -2436,9 +2436,9 @@ void character_game_data::change_weapon_damage_bonus(const item_type *weapon_typ
 	}
 }
 
-int character_game_data::get_max_damage() const
+int character_game_data::get_max_damage(const creature_size *target_size) const
 {
-	return this->get_damage_dice().get_maximum_result() + this->get_damage_bonus();
+	return this->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus();
 }
 
 int character_game_data::get_effective_range() const
@@ -3299,10 +3299,10 @@ void character_game_data::update_military_unit_stats()
 	const centesimal_int battle_range = battle::length_to_battle_range(this->get_effective_range());
 	const bool ranged = battle_range.to_int() > 1;
 
-	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage())));
+	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size()))));
 	military_unit->set_stat(military_unit_stat::charge, centesimal_int(0));
 	if (ranged) {
-		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage())));
+		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size()))));
 	} else {
 		military_unit->set_stat(military_unit_stat::missile, centesimal_int(0));
 	}

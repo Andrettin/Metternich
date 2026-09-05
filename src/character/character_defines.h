@@ -4,9 +4,12 @@
 #include "util/dice.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("species/creature_size.h")
+
 namespace metternich {
 
 class character;
+class creature_size;
 enum class bloodline_strength_category;
 enum class divine_rank;
 
@@ -17,6 +20,7 @@ class character_defines final : public defines_base, public singleton<character_
 {
 	Q_OBJECT
 
+	Q_PROPERTY(const metternich::creature_size* default_creature_size MEMBER default_creature_size READ get_default_creature_size NOTIFY changed)
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
 	Q_PROPERTY(int battle_hit_point_rate MEMBER battle_hit_point_rate READ get_battle_hit_point_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::dice ruler_reputation_dice MEMBER ruler_reputation_dice READ get_ruler_reputation_dice NOTIFY changed)
@@ -37,6 +41,11 @@ public:
 	int get_minimum_character_range() const
 	{
 		return this->minimum_character_range;
+	}
+
+	const creature_size *get_default_creature_size() const
+	{
+		return this->default_creature_size;
 	}
 
 	int get_craft_recovery_per_day() const
@@ -115,6 +124,7 @@ signals:
 
 private:
 	int minimum_character_range = 0;
+	const creature_size *default_creature_size = nullptr;
 	int craft_recovery_per_day = 0;
 	int battle_hit_point_rate = 0; //character health per military unit hit point
 	int battle_movement_rate = 0; //movement in battle per character movement point, in inches

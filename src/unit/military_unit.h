@@ -11,6 +11,7 @@ namespace metternich {
 
 class army;
 class character;
+class creature_size;
 class cultural_group;
 class culture;
 class domain;
@@ -105,6 +106,7 @@ public:
 	}
 
 	const species *get_species() const;
+	const creature_size *get_creature_size() const;
 
 	const metternich::character *get_character() const
 	{

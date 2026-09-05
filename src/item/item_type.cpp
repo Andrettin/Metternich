@@ -2,6 +2,7 @@
 
 #include "item/item_type.h"
 
+#include "character/character_defines.h"
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "item/item_class.h"
@@ -9,7 +10,9 @@
 #include "item/item_slot.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
+#include "species/creature_size.h"
 #include "technology/technology.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -28,6 +31,9 @@ void item_type::process_gsml_property(const gsml_property &property)
 
 	if (key == "price") {
 		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+	} else if (key == "damage_dice") {
+		assert_throw(character_defines::get()->get_default_creature_size() != nullptr);
+		this->damage_dice_per_target_size[character_defines::get()->get_default_creature_size()] = dice(value);
 	} else {
 		data_entry::process_gsml_property(property);
 	}
@@ -38,7 +44,12 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "creation_site_conditions") {
+	if (tag == "damage_dice_per_target_size") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const creature_size *creature_size = creature_size::get(property.get_key());
+			this->damage_dice_per_target_size[creature_size] = dice(property.get_value());
+		});
+	} else if (tag == "creation_site_conditions") {
 		auto conditions = std::make_unique<and_condition<site>>();
 		conditions->process_gsml_data(scope);
 		this->creation_site_conditions = std::move(conditions);
@@ -66,7 +77,9 @@ void item_type::process_gsml_scope(const gsml_data &scope)
 
 void item_type::initialize()
 {
-	this->damage_dice.set_min_value(0);
+	for (auto &[target_size, damage_dice] : this->damage_dice_per_target_size) {
+		damage_dice.set_min_value(0);
+	}
 
 	if (this->item_class != nullptr) {
 		this->item_class->add_item_type(this);
@@ -93,7 +106,7 @@ void item_type::check() const
 		throw std::runtime_error(std::format("Item type \"{}\" has no price.", this->get_identifier()));
 	}
 
-	if (this->is_weapon() && this->get_damage_dice().is_null()) {
+	if (this->is_weapon() && this->damage_dice_per_target_size.empty()) {
 		throw std::runtime_error(std::format("Item type \"{}\" is a weapon, but has no damage dice.", this->get_identifier()));
 	}
 }
@@ -106,6 +119,33 @@ const item_slot *item_type::get_slot() const
 bool item_type::is_weapon() const
 {
 	return this->get_item_class()->is_weapon();
+}
+
+const dice &item_type::get_damage_dice(const creature_size *target_size) const
+{
+	assert_throw(!this->damage_dice_per_target_size.empty());
+
+	if (target_size == nullptr) {
+		target_size = character_defines::get()->get_default_creature_size();
+	}
+
+	const auto find_iterator = this->damage_dice_per_target_size.find(target_size);
+
+	if (find_iterator != this->damage_dice_per_target_size.end()) {
+		return find_iterator->second;
+	}
+
+	if (target_size->get_min_dimension() <= this->damage_dice_per_target_size.begin()->first->get_min_dimension()) {
+		return this->damage_dice_per_target_size.begin()->second;
+	}
+
+	if (target_size->get_max_dimension() >= this->damage_dice_per_target_size.rbegin()->first->get_max_dimension()) {
+		return this->damage_dice_per_target_size.rbegin()->second;
+	}
+
+	assert_throw(false);
+	static constexpr dice null_dice;
+	return null_dice;
 }
 
 }

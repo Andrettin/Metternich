@@ -660,7 +660,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 		co_return 0;
 	}
 
-	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
+	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice(enemy->get_species()->get_creature_size())) + character->get_game_data()->get_damage_bonus();
 	co_await enemy->get_game_data()->change_health(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {

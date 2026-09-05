@@ -1,4 +1,5 @@
 minimum_character_range = 5ft
+default_creature_size = medium
 craft_recovery_per_day = 100
 battle_hit_point_rate = 90 #character health per military unit hit point
 battle_movement_rate = 10yd #movement in battle per character movement point
