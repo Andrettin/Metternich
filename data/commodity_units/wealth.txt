@@ -28,3 +28,10 @@ gb = {
 	icon = gold
 	suffix = "gb"
 }
+
+£ = {
+	name = "Pound"
+	icon = silver
+	suffix = "£"
+	displayed = false
+}
