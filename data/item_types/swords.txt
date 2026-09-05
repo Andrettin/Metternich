@@ -3,8 +3,12 @@ dagger = {
 	item_class = light_blade
 	icon = dagger
 	price = 2gp
-	damage_dice = 1d4
 	attack_sound = dagger
+	damage_dice_per_target_size = {
+		small = 1d4
+		medium = 1d4
+		large = 1d3
+	}
 }
 
 bastard_sword = {
@@ -12,9 +16,13 @@ bastard_sword = {
 	item_class = heavy_blade
 	icon = saber
 	price = 25gp
-	damage_dice = 2d4
 	required_technology = bastard_sword
 	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 2d4
+		medium = 2d4
+		large = 2d8
+	}
 }
 
 long_sword = {
@@ -36,7 +44,11 @@ short_sword = {
 	item_class = light_blade
 	icon = saber
 	price = 10gp
-	damage_dice = 1d6
 	required_technology = short_sword
 	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 1d6
+		medium = 1d6
+		large = 1d8
+	}
 }

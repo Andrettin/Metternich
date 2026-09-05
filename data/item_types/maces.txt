@@ -3,8 +3,12 @@ club = {
 	item_class = mace
 	icon = saber
 	price = 1cp #0gp
-	damage_dice = 1d6
 	attack_sound = club
+	damage_dice_per_target_size = {
+		small = 1d6
+		medium = 1d6
+		large = 1d3
+	}
 }
 
 mace = {
@@ -12,9 +16,13 @@ mace = {
 	item_class = mace
 	icon = saber
 	price = 8gp
-	damage_dice = 1d6+1
 	required_technology = mace
 	attack_sound = mace
+	damage_dice_per_target_size = {
+		small = 1d6+1
+		medium = 1d6+1
+		large = 1d6
+	}
 }
 
 morning_star = {
@@ -22,9 +30,13 @@ morning_star = {
 	item_class = mace
 	icon = saber
 	price = 10gp
-	damage_dice = 2d4
 	required_technology = morning_star
 	attack_sound = mace
+	damage_dice_per_target_size = {
+		small = 2d4
+		medium = 2d4
+		large = 1d6+1
+	}
 }
 
 ogre_club = {
@@ -41,6 +53,10 @@ quarterstaff = {
 	item_class = mace
 	icon = saber
 	price = 1cp #0gp
-	damage_dice = 1d6
 	two_handed = true
+	damage_dice_per_target_size = {
+		small = 1d6
+		medium = 1d6
+		large = 1d6
+	}
 }

@@ -68,9 +68,13 @@ heavy_crossbow = {
 	item_class = crossbow
 	icon = bow
 	price = 50gp
-	damage_dice = 1d4+1
 	two_handed = true
 	required_technology = heavy_crossbow
+	damage_dice_per_target_size = {
+		small = 1d4+1
+		medium = 1d4+1
+		large = 1d6+1
+	}
 	modifier = {
 		range = 80yd
 	}

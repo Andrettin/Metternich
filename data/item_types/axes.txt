@@ -3,7 +3,11 @@ battle_axe = {
 	item_class = axe
 	icon = saber
 	price = 5gp
-	damage_dice = 1d8
 	required_technology = battle_axe
 	attack_sound = axe
+	damage_dice_per_target_size = {
+		small = 1d8
+		medium = 1d8
+		large = 1d8
+	}
 }
