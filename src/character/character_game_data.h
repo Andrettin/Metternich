@@ -1149,7 +1149,7 @@ private:
 	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
 	data_entry_map<item_type, int> weapon_damage_bonuses;
-	int range = 0; //in feet
+	int range = 0; //in inches
 	int movement = 0;
 	int initiative_bonus = 0;
 	data_entry_map<saving_throw_type, int> saving_throw_bonuses;

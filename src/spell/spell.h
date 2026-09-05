@@ -154,7 +154,7 @@ private:
 	int64_t price = 0;
 	spell_target target{};
 	int mana_cost = 0;
-	int range = 0; //in feet
+	int range = 0; //in inches
 	int casting_time_initiative_modifier = 0;
 	attack_result battle_result{};
 	bool to_hit_check = false;

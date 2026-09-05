@@ -117,7 +117,7 @@ private:
 	int minimum_character_range = 0;
 	int craft_recovery_per_day = 0;
 	int battle_hit_point_rate = 0; //character health per military unit hit point
-	int battle_movement_rate = 0; //movement in battle per character movement point, in feet
+	int battle_movement_rate = 0; //movement in battle per character movement point, in inches
 	dice ruler_reputation_dice;
 	int max_character_normal_level = 0;
 	std::map<int, int64_t> experience_per_level;

@@ -458,7 +458,7 @@ private:
 	std::map<int, int> months_per_turn_from_year;
 	std::chrono::seconds combat_round_duration;
 	std::chrono::seconds battle_round_duration;
-	int battle_tile_length = 0; //the length of each side of a battle tile, in feet
+	int battle_tile_length = 0; //the length of each side of a battle tile, in inches
 	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
