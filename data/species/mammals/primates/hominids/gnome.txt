@@ -1,6 +1,7 @@
 gnome = {
 	name = "Gnome"
 	supertaxon = homo
+	creature_size = small
 	era = holocene
 	sapient = true
 	adulthood_age = 40

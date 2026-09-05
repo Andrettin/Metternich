@@ -8,6 +8,7 @@
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
 #include "script/modifier.h"
+#include "species/creature_size.h"
 #include "species/geological_era.h"
 #include "species/phenotype.h"
 #include "species/taxon.h"
@@ -208,6 +209,10 @@ void species::check() const
 {
 	if (this->get_supertaxon() == nullptr) {
 		throw std::runtime_error(std::format("Species \"{}\" has no supertaxon.", this->get_identifier()));
+	}
+
+	if (this->get_creature_size() == nullptr) {
+		throw std::runtime_error(std::format("Species \"{}\" has no creature size.", this->get_identifier()));
 	}
 
 	if (this->get_era() == geological_era::none && !this->is_ethereal()) {

@@ -1,6 +1,7 @@
 goblin = {
 	name = "Goblin"
 	supertaxon = goblinoid
+	creature_size = small
 	era = holocene
 	sapient = true
 	adulthood_age = 12

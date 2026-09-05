@@ -5,10 +5,13 @@
 #include "database/data_type.h"
 #include "species/taxon_base.h"
 
+Q_MOC_INCLUDE("species/creature_size.h")
+
 namespace metternich {
 
 class character;
 class character_attribute;
+class creature_size;
 class culture;
 class phenotype;
 class skill;
@@ -26,6 +29,7 @@ class species final : public taxon_base, public data_type<species>
 
 	Q_PROPERTY(QString specific_name READ get_specific_name_qstring)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
+	Q_PROPERTY(const metternich::creature_size* creature_size MEMBER creature_size READ get_creature_size NOTIFY changed)
 	Q_PROPERTY(metternich::geological_era era MEMBER era READ get_era)
 	Q_PROPERTY(bool sapient MEMBER sapient READ is_sapient)
 	Q_PROPERTY(bool asexual MEMBER asexual READ is_asexual)
@@ -76,6 +80,11 @@ public:
 	const QColor &get_color() const
 	{
 		return this->color;
+	}
+
+	const metternich::creature_size *get_creature_size() const
+	{
+		return this->creature_size;
 	}
 
 	geological_era get_era() const
@@ -155,6 +164,7 @@ public:
 private:
 	std::string specific_name;
 	QColor color;
+	const metternich::creature_size *creature_size = nullptr;
 	geological_era era;
 	bool sapient = false;
 	bool asexual = false;

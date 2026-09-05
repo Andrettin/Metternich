@@ -1,6 +1,7 @@
 dwarf = {
 	name = "Dwarf"
 	supertaxon = homo
+	creature_size = medium
 	era = holocene
 	sapient = true
 	adulthood_age = 40

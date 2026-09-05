@@ -1,6 +1,7 @@
 hobgoblin = {
 	name = "Hobgoblin"
 	supertaxon = goblinoid
+	creature_size = medium
 	era = holocene
 	sapient = true
 	adulthood_age = 15

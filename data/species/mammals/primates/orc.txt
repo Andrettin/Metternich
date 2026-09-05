@@ -1,6 +1,7 @@
 orc = {
 	name = "Orc"
 	supertaxon = primates
+	creature_size = medium
 	era = holocene
 	sapient = true
 	adulthood_age = 12

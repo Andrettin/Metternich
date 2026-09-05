@@ -60,6 +60,7 @@
 #include "script/flag.h"
 #include "script/modifier.h"
 #include "script/scripted_character_modifier.h"
+#include "species/creature_size.h"
 #include "species/species.h"
 #include "spell/spell.h"
 #include "technology/technology_category.h"
@@ -663,6 +664,11 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	const species *species = this->character->get_species();
 	if (species->get_modifier() != nullptr) {
 		co_await species->get_modifier()->apply(this->character);
+	}
+
+	const creature_size *creature_size = species->get_creature_size();
+	if (creature_size->get_modifier() != nullptr) {
+		co_await creature_size->get_modifier()->apply(this->character, 1);
 	}
 
 	const culture *culture = this->character->get_culture();

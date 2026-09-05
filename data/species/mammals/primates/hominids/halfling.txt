@@ -1,6 +1,7 @@
 halfling = {
 	name = "Halfling"
 	supertaxon = homo
+	creature_size = small
 	era = holocene
 	sapient = true
 	adulthood_age = 20

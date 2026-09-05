@@ -1,0 +1,35 @@
+fine = {
+	name = "Fine"
+}
+
+diminutive = {
+	name = "Diminutive"
+}
+
+tiny = {
+	name = "Tiny"
+}
+
+small = {
+	name = "Small"
+}
+
+medium = {
+	name = "Medium"
+}
+
+large = {
+	name = "Large"
+}
+
+huge = {
+	name = "Huge"
+}
+
+gargantuan = {
+	name = "Gargantuan"
+}
+
+colossal = {
+	name = "Colossal"
+}
