@@ -3,4 +3,5 @@ troll = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
+	creature_size = large
 }

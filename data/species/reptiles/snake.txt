@@ -2,6 +2,7 @@ snake = {
 	name = "Snake"
 	supertaxon = reptilia
 	era = holocene
+	creature_size = medium #can also be large or small, depending on species
 	pre_evolutions = {
 		petrolacosaurus
 		thadeosaurus

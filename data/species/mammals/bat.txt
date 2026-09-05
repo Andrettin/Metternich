@@ -2,6 +2,7 @@ bat = {
 	name = "Bat"
 	supertaxon = mammalia
 	era = holocene
+	creature_size = tiny
 	pre_evolutions = {
 		leptictidium
 		zalambdalestes

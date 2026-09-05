@@ -3,4 +3,5 @@ frost_giant = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
+	creature_size = huge
 }

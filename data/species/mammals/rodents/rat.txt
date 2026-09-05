@@ -3,6 +3,7 @@ rat = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TS
 	supertaxon = rattus
 	specific_name = "norvegicus"
 	era = holocene
+	creature_size = tiny
 	pre_evolutions = {
 		megacricetodon #earlier rodent
 	}

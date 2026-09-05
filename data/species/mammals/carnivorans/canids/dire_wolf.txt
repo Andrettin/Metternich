@@ -2,6 +2,7 @@ dire_wolf = {
 	name = "Dire Wolf"
 	supertaxon = canidae
 	era = holocene
+	creature_size = large
 	pre_evolutions = {
 		osteoborus #earlier canid
 	}

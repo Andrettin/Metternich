@@ -3,4 +3,5 @@ nymph = {
 	supertaxon = fey
 	era = holocene
 	sapient = true
+	creature_size = medium
 }

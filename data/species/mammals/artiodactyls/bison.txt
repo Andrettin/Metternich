@@ -2,6 +2,7 @@ bison = {
 	name = "Bison"
 	supertaxon = artiodactyla
 	era = holocene
+	creature_size = large
 	pre_evolutions = {
 		ilingoceros
 	}

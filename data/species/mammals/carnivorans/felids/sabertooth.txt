@@ -1,6 +1,7 @@
 sabertooth = {
 	name = "Sabertooth"
 	supertaxon = felidae
+	creature_size = large
 	pre_evolutions = {
 		nimravus #earlier feliform
 		proailurus #earlier felid

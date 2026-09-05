@@ -3,4 +3,5 @@ air_elemental = {
 	supertaxon = auran
 	era = holocene
 	sapient = true
+	creature_size = large #can also be huge instead
 }

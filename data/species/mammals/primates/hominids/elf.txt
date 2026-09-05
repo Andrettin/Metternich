@@ -1,9 +1,9 @@
 elf = {
 	name = "Elf"
 	supertaxon = hominidae
-	creature_size = medium
 	era = holocene
 	sapient = true
+	creature_size = medium
 	adulthood_age = 110
 	middle_age = 175
 	old_age = 263

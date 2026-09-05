@@ -8,11 +8,11 @@
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
 #include "script/modifier.h"
-#include "species/creature_size.h"
 #include "species/geological_era.h"
 #include "species/phenotype.h"
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
+#include "util/log_util.h"
 
 #include <magic_enum/magic_enum_utility.hpp>
 
@@ -211,12 +211,12 @@ void species::check() const
 		throw std::runtime_error(std::format("Species \"{}\" has no supertaxon.", this->get_identifier()));
 	}
 
-	if (this->get_creature_size() == nullptr) {
-		throw std::runtime_error(std::format("Species \"{}\" has no creature size.", this->get_identifier()));
-	}
-
 	if (this->get_era() == geological_era::none && !this->is_ethereal()) {
 		//throw std::runtime_error("Non-ethereal species \"" + this->get_identifier() + "\" has no era.");
+	}
+
+	if (this->get_creature_size() == nullptr) {
+		log::log_error(std::format("Species \"{}\" has no creature size.", this->get_identifier()));
 	}
 
 	for (const species *pre_evolution : this->get_pre_evolutions()) {

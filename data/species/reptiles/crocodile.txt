@@ -2,6 +2,7 @@ crocodile = {
 	name = "Crocodile"
 	supertaxon = reptilia
 	era = holocene
+	creature_size = large
 	pre_evolutions = {
 		deinosuchus
 	}

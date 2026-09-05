@@ -3,6 +3,7 @@ minotaur = {
 	supertaxon = bovidae
 	era = holocene
 	sapient = true
+	creature_size = large
 	pre_evolutions = {
 		ilingoceros #shares a common ancestor with cows
 	}

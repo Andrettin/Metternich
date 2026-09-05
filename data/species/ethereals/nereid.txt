@@ -3,6 +3,7 @@ nereid = {
 	supertaxon = aquan
 	era = holocene
 	sapient = true
+	creature_size = medium
 	item_slots = {
 		weapon = 1
 		shield = 1

@@ -3,6 +3,7 @@ ogre = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
+	creature_size = large
 	item_slots = {
 		weapon = 1
 		shield = 1

@@ -3,6 +3,7 @@ trumpet_archon = {
 	supertaxon = archon
 	era = holocene
 	sapient = true
+	creature_size = large
 	class_skill_groups = { #as paladin
 		general
 		priest

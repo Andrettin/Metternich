@@ -2,9 +2,9 @@ human = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 	name = "Human"
 	supertaxon = homo
 	specific_name = "sapiens"
-	creature_size = medium
 	era = holocene
 	sapient = true
+	creature_size = medium
 	adulthood_age = 15
 	middle_age = 35
 	old_age = 53

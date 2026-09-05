@@ -3,6 +3,7 @@ kobold = {
 	supertaxon = draconid
 	era = holocene
 	sapient = true
+	creature_size = small
 	adulthood_age = 12
 	middle_age = 20
 	old_age = 30

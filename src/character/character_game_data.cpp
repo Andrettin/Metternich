@@ -667,6 +667,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	}
 
 	const creature_size *creature_size = species->get_creature_size();
+	assert_throw(creature_size != nullptr);
 	if (creature_size->get_modifier() != nullptr) {
 		co_await creature_size->get_modifier()->apply(this->character, 1);
 	}

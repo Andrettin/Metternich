@@ -3,6 +3,7 @@ cow = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TS
 	supertaxon = bos
 	specific_name = "taurus"
 	era = holocene
+	creature_size = large
 	#ecological_niche = grazer
 	pre_evolutions = {
 		ilingoceros #shares a common ancestor with the bison

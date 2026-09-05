@@ -3,6 +3,7 @@ lizardfolk = {
 	supertaxon = reptilia
 	era = holocene
 	sapient = true
+	creature_size = medium
 	adulthood_age = 15 #as Human
 	middle_age = 35
 	old_age = 53

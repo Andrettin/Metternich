@@ -3,6 +3,7 @@ horse = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 	supertaxon = equus
 	specific_name = "caballus"
 	era = holocene
+	creature_size = large
 	#ecological_niche = grazer
 	pre_evolutions = {
 		anchitherium #earlier equid

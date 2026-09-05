@@ -2,6 +2,7 @@ elephant = {
 	name = "Elephant"
 	supertaxon = proboscidea
 	era = holocene
+	creature_size = large
 	pre_evolutions = {
 		phiomia
 		moeritherium #earlier proboscid

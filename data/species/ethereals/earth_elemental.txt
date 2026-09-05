@@ -3,4 +3,5 @@ earth_elemental = {
 	supertaxon = terran
 	era = holocene
 	sapient = true
+	creature_size = large #can also be huge instead
 }

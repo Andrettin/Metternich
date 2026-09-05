@@ -3,6 +3,7 @@ lion = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=T
 	supertaxon = panthera
 	specific_name = "leo"
 	era = holocene
+	creature_size = medium
 	pre_evolutions = {
 		#earlier felines (the pantherinae originated from the felinae)
 		felis_attica

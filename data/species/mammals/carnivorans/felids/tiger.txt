@@ -3,6 +3,7 @@ tiger = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 	supertaxon = panthera
 	specific_name = "tigris"
 	era = holocene
+	creature_size = large
 	pre_evolutions = {
 		#earlier felines (the pantherinae originated from the felinae)
 		felis_attica

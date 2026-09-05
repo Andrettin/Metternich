@@ -2,6 +2,7 @@ brown_bear = {
 	name = "Brown Bear"
 	supertaxon = ursidae
 	era = holocene
+	creature_size = large
 	#ecological_niche = predator
 	pre_evolutions = {
 		amphicyon

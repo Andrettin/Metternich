@@ -1,6 +1,7 @@
 deinonychus = {
 	name = "Deinonychus"
 	supertaxon = reptilia
+	creature_size = large
 	pre_evolutions = {
 		dryosaurus
 		saltopus

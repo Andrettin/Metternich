@@ -3,6 +3,7 @@ tyrannosaurus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no
 	supertaxon = tyrannosaurus
 	specific_name = "rex"
 	era = cretaceous
+	creature_size = gargantuan
 	pre_evolutions = {
 		#should be ancestors to all Tyrannosauruses
 		allosaurus

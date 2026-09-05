@@ -29,11 +29,11 @@ class species final : public taxon_base, public data_type<species>
 
 	Q_PROPERTY(QString specific_name READ get_specific_name_qstring)
 	Q_PROPERTY(QColor color MEMBER color READ get_color NOTIFY changed)
-	Q_PROPERTY(const metternich::creature_size* creature_size MEMBER creature_size READ get_creature_size NOTIFY changed)
 	Q_PROPERTY(metternich::geological_era era MEMBER era READ get_era)
 	Q_PROPERTY(bool sapient MEMBER sapient READ is_sapient)
 	Q_PROPERTY(bool asexual MEMBER asexual READ is_asexual)
 	Q_PROPERTY(bool domestic MEMBER domestic READ is_domestic)
+	Q_PROPERTY(const metternich::creature_size* creature_size MEMBER creature_size READ get_creature_size NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "species";
@@ -82,11 +82,6 @@ public:
 		return this->color;
 	}
 
-	const metternich::creature_size *get_creature_size() const
-	{
-		return this->creature_size;
-	}
-
 	geological_era get_era() const
 	{
 		return this->era;
@@ -107,6 +102,11 @@ public:
 	bool is_domestic() const
 	{
 		return this->domestic;
+	}
+
+	const metternich::creature_size *get_creature_size() const
+	{
+		return this->creature_size;
 	}
 
 	const std::vector<const species *> &get_pre_evolutions() const
@@ -164,11 +164,11 @@ public:
 private:
 	std::string specific_name;
 	QColor color;
-	const metternich::creature_size *creature_size = nullptr;
 	geological_era era;
 	bool sapient = false;
 	bool asexual = false;
 	bool domestic = false;
+	const metternich::creature_size *creature_size = nullptr;
 	std::vector<const species *> pre_evolutions; //species from which this one can evolve
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;

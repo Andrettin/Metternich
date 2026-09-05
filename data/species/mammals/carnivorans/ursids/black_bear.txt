@@ -2,6 +2,7 @@ black_bear = {
 	name = "Black Bear"
 	supertaxon = ursidae
 	era = holocene
+	creature_size = medium
 	#ecological_niche = predator
 	pre_evolutions = {
 		amphicyon

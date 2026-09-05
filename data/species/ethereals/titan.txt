@@ -3,4 +3,5 @@ titan = {
 	supertaxon = abyssal
 	era = holocene
 	sapient = true
+	creature_size = gargantuan
 }

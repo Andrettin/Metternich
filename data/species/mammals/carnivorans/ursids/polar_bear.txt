@@ -2,6 +2,7 @@ polar_bear = {
 	name = "Polar Bear"
 	supertaxon = ursidae
 	era = holocene
+	creature_size = huge
 	#ecological_niche = predator
 	pre_evolutions = {
 		amphicyon

@@ -1,9 +1,9 @@
 half_elf = {
 	name = "Half-Elf"
 	supertaxon = hominidae
-	creature_size = medium
 	era = holocene
 	sapient = true
+	creature_size = medium
 	adulthood_age = 20
 	middle_age = 62
 	old_age = 93

@@ -2,6 +2,7 @@ frog = {
 	name = "Frog"
 	supertaxon = amphibia
 	era = holocene
+	creature_size = diminutive #as toad
 	pre_evolutions = {
 		peltobatrachus
 		platyhystrix
