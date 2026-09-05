@@ -84,6 +84,11 @@ public:
 		return this->price;
 	}
 
+	const creature_size_map<dice> &get_damage_dice_per_target_size() const
+	{
+		return this->damage_dice_per_target_size;
+	}
+
 	const dice &get_damage_dice(const creature_size *target_size) const;
 
 	bool is_two_handed() const

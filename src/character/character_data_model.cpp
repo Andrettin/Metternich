@@ -20,11 +20,13 @@
 #include "database/defines.h"
 #include "economy/commodity.h"
 #include "game/game.h"
+#include "item/item.h"
 #include "item/item_type.h"
 #include "religion/deity.h"
 #include "religion/divine_domain.h"
 #include "religion/pantheon.h"
 #include "religion/religion.h"
+#include "species/creature_size.h"
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
@@ -581,11 +583,31 @@ void character_data_model::update_damage_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	dice damage_dice = character_game_data->get_damage_dice(character_defines::get()->get_default_creature_size());
+	const dice base_damage_dice = character_game_data->get_damage_dice(character_defines::get()->get_default_creature_size());
+	dice damage_dice = base_damage_dice;
 	damage_dice.change_modifier(character_game_data->get_damage_bonus());
 	this->damage_row->value = damage_dice.to_display_string();
 
 	this->clear_child_rows(this->damage_row);
+
+	const item *weapon = character_game_data->get_weapon();
+	if (weapon != nullptr) {
+		for (const auto &[creature_size, base_creature_size_damage_dice] : weapon->get_type()->get_damage_dice_per_target_size()) {
+			if (creature_size == character_defines::get()->get_default_creature_size()) {
+				continue;
+			}
+
+			if (base_creature_size_damage_dice == base_damage_dice) {
+				continue;
+			}
+
+			dice creature_size_damage_dice = base_creature_size_damage_dice;
+			creature_size_damage_dice.change_modifier(character_game_data->get_damage_bonus());
+
+			auto row = std::make_unique<character_data_row>(std::format("Against {} Creatures:", creature_size->get_name()), creature_size_damage_dice.to_display_string(), this->damage_row);
+			this->damage_row->child_rows.push_back(std::move(row));
+		}
+	}
 
 	for (const auto &[weapon_type, bonus] : character_game_data->get_weapon_damage_bonuses()) {
 		auto row = std::make_unique<character_data_row>(weapon_type->get_name(), number::to_signed_string(bonus), this->damage_row);
