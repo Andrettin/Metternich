@@ -1,0 +1,9 @@
+protoceratops = {
+	name = "Protoceratops"
+	supertaxon = reptilia
+	pre_evolutions = {
+		dryosaurus
+		scelidosaurus
+		ticinosuchus
+	}
+}

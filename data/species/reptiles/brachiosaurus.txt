@@ -1,0 +1,8 @@
+brachiosaurus = {
+	name = "Brachiosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		saltopus
+		scelidosaurus
+	}
+}

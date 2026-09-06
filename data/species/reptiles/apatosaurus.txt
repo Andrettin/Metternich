@@ -1,0 +1,8 @@
+apatosaurus = {
+	name = "Apatosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		saltopus
+		ticinosuchus
+	}
+}

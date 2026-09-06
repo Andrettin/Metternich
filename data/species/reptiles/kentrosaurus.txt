@@ -1,0 +1,9 @@
+kentrosaurus = {
+	name = "Kentrosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		dryosaurus
+		saltopus
+		scelidosaurus
+	}
+}

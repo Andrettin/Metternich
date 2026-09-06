@@ -1,0 +1,10 @@
+scelidosaurus = {
+	name = "Scelidosaurus"
+	supertaxon = reptilia
+	pre_evolutions = {
+		edaphosaurus
+		petrolacosaurus
+		sphenacodon
+		thadeosaurus
+	}
+}

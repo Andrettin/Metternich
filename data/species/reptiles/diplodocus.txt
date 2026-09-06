@@ -1,0 +1,9 @@
+diplodocus = {
+	name = "Diplodocus"
+	supertaxon = reptilia
+	creature_size = gargantuan
+	pre_evolutions = {
+		apatosaurus
+		brachiosaurus
+	}
+}

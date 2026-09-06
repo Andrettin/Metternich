@@ -1,0 +1,10 @@
+stegosaurus = {
+	name = "Stegosaurus"
+	supertaxon = reptilia
+	creature_size = huge
+	pre_evolutions = {
+		dryosaurus
+		scelidosaurus
+		ticinosuchus
+	}
+}

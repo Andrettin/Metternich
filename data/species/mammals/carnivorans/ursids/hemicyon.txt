@@ -8,6 +8,7 @@ hemicyon = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombr
 		leptictidium
 		zalambdalestes
 	}
+	
 	#90 cm shoulder height
 	#inhabited Eurasia
 	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle

@@ -14,6 +14,7 @@ protictitherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes de
 		zalambdalestes
 		miacis
 	}
+	
 	#30 cm tall up to the shoulder
 	#lived in Eurasia
 	#a large proportion of its diet was carrion, but also hunted small prey like rodents and lagomorphs
