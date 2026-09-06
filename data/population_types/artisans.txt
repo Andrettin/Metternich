@@ -7,6 +7,7 @@ artisans = {
 	strata = middle
 	life_need_weights = {
 		cattle = 1.5
+		fruit = 1.8
 		grain = 5.5
 		wool = 0.7
 	}
