@@ -3,6 +3,8 @@ bandar_abbas = {
 	world = earth
 	geocoordinate = { 56.27213554360 27.20405978220 } #from Natural Earth
 	type = holding
-	#resource = fruit
 	province = hormozgan
+	features = {
+		prime_fruit_land
+	}
 }

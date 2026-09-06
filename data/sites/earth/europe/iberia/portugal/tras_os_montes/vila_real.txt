@@ -4,6 +4,8 @@ vila_real = {
 	geocoordinate = { -7.73700249014 41.29399814930 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = tras_os_montes
+	features = {
+		prime_fruit_land
+	}
 }

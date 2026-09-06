@@ -3,10 +3,10 @@ pamplona = {
 	world = earth
 	geocoordinate = { -1.64998742818 42.82000775050 } #from Natural Earth
 	type = holding
-	#resource = fruit
 	province = navarre
 	features = {
 		academic #historical university
+		prime_fruit_land
 	}
 	
 	history = {

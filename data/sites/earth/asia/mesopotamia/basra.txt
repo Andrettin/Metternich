@@ -3,8 +3,10 @@ basra = {
 	world = earth
 	geocoordinate = { 47.81355668010 30.51352378240 } #from Natural Earth
 	type = holding
-	#resource = fruit
 	province = chaldea
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

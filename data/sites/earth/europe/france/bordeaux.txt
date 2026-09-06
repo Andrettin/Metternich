@@ -4,7 +4,6 @@ bordeaux = {
 	geocoordinate = { -0.59501306294 44.85001304020 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = guyenne
 	cultural_names = {
 		frankish = "Burdegala"
@@ -15,6 +14,7 @@ bordeaux = {
 		academic #historical university
 		crossroads #important market or fair
 		#holy_site #historical cathedral
+		prime_fruit_land
 	}
 	
 	history = {

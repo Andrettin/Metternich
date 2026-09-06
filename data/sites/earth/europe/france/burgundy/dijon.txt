@@ -4,10 +4,12 @@ dijon = {
 	geocoordinate = { 5.03001826846 47.33040427560 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = burgundy
 	cultural_names = {
 		frankish = "Divio"
+	}
+	features = {
+		prime_fruit_land
 	}
 	
 	history = {

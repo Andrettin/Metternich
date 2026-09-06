@@ -83,6 +83,46 @@ grain_farm = {
 	}
 }
 
+orchard = {
+	name = "Orchard"
+	building_class = orchard
+	portrait = stable
+	icon = fruit
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_fruit_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fruit_farming
+			quarterly_wealth_output_value = 3gb
+		}
+		base_population_capacity = 100
+	}
+	free_on_start_conditions = {
+	}
+}
+
 sheep_ranch = {
 	name = "Sheep Ranch"
 	building_class = sheep_ranch

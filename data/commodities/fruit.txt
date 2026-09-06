@@ -4,6 +4,10 @@ fruit = {
 	icon = fruit
 	agricultural = true
 	food_type = fruit
-	base_price = 100
-	required_game_rule = additional_commodities
+	base_price = 30 #3sp, price of a pound of figs
+	storage_unit = tn
+	units = {
+		1 = lb
+		2000 = tn
+	}
 }

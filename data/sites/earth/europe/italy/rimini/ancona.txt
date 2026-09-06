@@ -4,8 +4,10 @@ ancona = {
 	geocoordinate = { 13.49994055040 43.60037355460 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = rimini #Ancona
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1815 = {

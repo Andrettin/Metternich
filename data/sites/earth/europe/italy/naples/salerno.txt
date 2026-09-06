@@ -4,10 +4,10 @@ salerno = {
 	geocoordinate = { 14.76994055040 40.68039674790 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = naples
 	features = {
 		academic #historical university
+		prime_fruit_land
 	}
 	
 	history = {

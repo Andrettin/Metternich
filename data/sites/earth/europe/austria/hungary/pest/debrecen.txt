@@ -4,8 +4,10 @@ debrecen = {
 	geocoordinate = { 21.63003861360 47.53046958320 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = pest
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1815 = {

@@ -4,6 +4,8 @@ viterbo = {
 	geocoordinate = { 12.104166666667 42.418611111111 }
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = latium
+	features = {
+		prime_fruit_land
+	}
 }

@@ -10,6 +10,18 @@ cattle_ranching = {
 	}
 }
 
+fruit_farming = {
+	name = "Fruit Farming"
+	output_commodity = fruit
+	monthly_wealth_output_value = 21sp
+	base_employment_size = 3
+	employee_types = {
+		farmers
+		tribesmen
+		slaves
+	}
+}
+
 grain_farming = {
 	name = "Grain Farming"
 	output_commodity = grain

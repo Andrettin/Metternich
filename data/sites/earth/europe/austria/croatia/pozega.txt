@@ -4,8 +4,10 @@ pozega = {
 	geocoordinate = { 17.674444444444 45.331388888889 }
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = slavonia
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1815 = {

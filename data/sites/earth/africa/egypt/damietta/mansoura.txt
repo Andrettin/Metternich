@@ -4,8 +4,10 @@ mansoura = {
 	geocoordinate = { 31.380038 31.050442 } #from Natural Earth (El Mansura)
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = damietta #Dakahlia
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

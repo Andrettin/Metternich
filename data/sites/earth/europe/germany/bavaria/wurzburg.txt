@@ -4,10 +4,10 @@ wurzburg = {
 	geocoordinate = { 9.95002803411 49.80043438630 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	#resource = fruit
 	province = franconia
 	features = {
 		academic #historical university
+		prime_fruit_land
 	}
 	
 	history = {

@@ -4,10 +4,10 @@ freiburg = {
 	geocoordinate = { 7.86994828149 48.00041505850 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = breisgau
 	features = {
 		academic #historical university
+		prime_fruit_land
 	}
 	
 	history = {

@@ -4,10 +4,10 @@ kairouan = {
 	geocoordinate = { 10.09999304060 35.68039186510 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = tunis
 	features = {
 		crossroads #important market or fair
+		prime_fruit_land
 	}
 	
 	history = {

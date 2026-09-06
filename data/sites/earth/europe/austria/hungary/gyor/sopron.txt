@@ -4,10 +4,12 @@ sopron = {
 	geocoordinate = { 16.583333333333 47.683333333333 }
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = gyor
 	cultural_names = {
 		german = "Odenburg" #"Ödenburg"; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+	}
+	features = {
+		prime_fruit_land
 	}
 	
 	history = {

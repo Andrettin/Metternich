@@ -3,6 +3,8 @@ karachi = {
 	world = earth
 	geocoordinate = { 66.99000891000 24.86999228820 } #from Natural Earth
 	type = holding
-	#resource = fruit
 	province = sindh
+	features = {
+		prime_fruit_land
+	}
 }

@@ -4,6 +4,8 @@ massawa = {
 	geocoordinate = { 39.45003617220 15.61011822400 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = massawa
+	features = {
+		prime_fruit_land
+	}
 }

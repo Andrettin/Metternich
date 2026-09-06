@@ -4,8 +4,10 @@ alessandria = {
 	geocoordinate = { 8.62 44.913330555556 }
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = piedmont
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1815 = {

@@ -4,13 +4,13 @@ fiume = {
 	geocoordinate = { 14.45001175810 45.32998374340 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	#resource = fruit
 	province = croatia
 	cultural_names = {
 		croatian = "Rijeka" #Source: Ivan Erceg, "Außenhandel der Nordadriatischen Seestädte als Faktor im Entstehen der kapitalistischen Beziehungen in Österreich im 18. und 19. Jahrhundert", 1968, p. 464.
 	}
 	features = {
 		cove #free port
+		prime_fruit_land
 	}
 	
 	history = {

@@ -42,6 +42,15 @@ prime_cotton_land = {
 	#}
 }
 
+prime_fruit_land = {
+	name = "Prime Fruit Land"
+	icon = fruit
+	resource = true
+	domain_modifier = {
+		scripted_modifier_effect = resource
+	}
+}
+
 prime_grain_land = {
 	name = "Prime Grain Land"
 	icon = grain

@@ -4,10 +4,12 @@ sidon = {
 	geocoordinate = { 35.36878657910 33.56302756660 } #from Natural Earth
 	type = holding
 	holding_type = temple
-	#resource = fruit
 	province = tyre #South Governorate
 	cultural_names = {
 		arabic = "Saida"
+	}
+	features = {
+		prime_fruit_land
 	}
 	
 	history = {

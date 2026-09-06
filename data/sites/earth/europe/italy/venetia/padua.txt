@@ -4,10 +4,10 @@ padua = {
 	geocoordinate = { 11.877777777778 45.406388888889 }
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = venetia
 	features = {
 		academic #historical university
+		prime_fruit_land
 	}
 	
 	history = {

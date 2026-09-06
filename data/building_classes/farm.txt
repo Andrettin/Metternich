@@ -8,6 +8,11 @@ grain_farm = {
 	slot_type = resource
 }
 
+orchard = {
+	name = "Orchard"
+	slot_type = resource
+}
+
 sheep_ranch = {
 	name = "Sheep Ranch"
 	slot_type = resource

@@ -4,6 +4,8 @@ arish = {
 	geocoordinate = { 33.80056188840 31.12488181460 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	#resource = fruit
 	province = arish
+	features = {
+		prime_fruit_land
+	}
 }

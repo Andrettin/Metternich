@@ -4,7 +4,6 @@ marseilles = {
 	geocoordinate = { 5.37501013044 43.28997906400 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	#resource = fruit
 	province = provence
 	cultural_names = {
 		frankish = "Massilia"
@@ -15,6 +14,7 @@ marseilles = {
 	features = {
 		crossroads #important market or fair
 		#holy_site #historical cathedral
+		prime_fruit_land
 	}
 	
 	history = {
