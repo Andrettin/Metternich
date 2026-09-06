@@ -25,6 +25,20 @@ bastard_sword = {
 	}
 }
 
+broad_sword = {
+	name = "Broad Sword"
+	item_class = heavy_blade
+	icon = saber
+	price = 10gp
+	required_technology = broad_sword
+	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 2d4
+		medium = 2d4
+		large = 1d6+1
+	}
+}
+
 long_sword = {
 	name = "Long Sword"
 	item_class = heavy_blade
@@ -50,5 +64,20 @@ short_sword = {
 		small = 1d6
 		medium = 1d6
 		large = 1d8
+	}
+}
+
+two_handed_sword = {
+	name = "Two-Handed Sword"
+	item_class = heavy_blade
+	icon = saber
+	price = 50gp
+	two_handed = true
+	required_technology = greatsword
+	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 1d10
+		medium = 1d10
+		large = 3d6
 	}
 }

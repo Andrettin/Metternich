@@ -1,0 +1,12 @@
+halberd = {
+	name = "Halberd"
+	item_class = polearm
+	icon = saber
+	price = 10gp
+	required_technology = polearm
+	damage_dice_per_target_size = {
+		small = 1d10
+		medium = 1d10
+		large = 2d6
+	}
+}

@@ -1,0 +1,11 @@
+spear = {
+	name = "Spear"
+	item_class = spear
+	icon = saber
+	price = 8sp
+	damage_dice_per_target_size = {
+		small = 1d6
+		medium = 1d6
+		large = 1d8
+	}
+}

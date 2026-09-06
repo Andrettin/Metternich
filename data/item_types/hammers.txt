@@ -1,0 +1,13 @@
+warhammer = {
+	name = "Warhammer"
+	item_class = hammer
+	icon = saber
+	price = 2gp
+	required_technology = warhammer
+	attack_sound = mace
+	damage_dice_per_target_size = {
+		small = 1d4+1
+		medium = 1d4+1
+		large = 1d4
+	}
+}

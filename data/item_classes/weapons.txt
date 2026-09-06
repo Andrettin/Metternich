@@ -13,6 +13,16 @@ crossbow = {
 	slot = weapon
 }
 
+firearm = {
+	name = "Firearm"
+	slot = weapon
+}
+
+hammer = {
+	name = "Hammer"
+	slot = weapon
+}
+
 heavy_blade = {
 	name = "Heavy Blade"
 	slot = weapon
@@ -25,6 +35,16 @@ light_blade = {
 
 mace = {
 	name = "Mace"
+	slot = weapon
+}
+
+polearm = {
+	name = "Polearm"
+	slot = weapon
+}
+
+spear = {
+	name = "Spear"
 	slot = weapon
 }
 

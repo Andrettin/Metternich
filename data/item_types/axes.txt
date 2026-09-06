@@ -11,3 +11,20 @@ battle_axe = {
 		large = 1d8
 	}
 }
+
+hand_axe = {
+	name = "Hand Axe"
+	item_class = axe
+	icon = saber
+	price = 1gp
+	required_technology = handaxe
+	attack_sound = axe
+	damage_dice_per_target_size = {
+		small = 1d6
+		medium = 1d6
+		large = 1d4
+	}
+	modifier = {
+		range = 10yd #can be thrown
+	}
+}
