@@ -334,8 +334,8 @@ void technology::check() const
 		throw std::runtime_error(std::format("Technology \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_level() == 0 && this->get_discovery_event() == nullptr) {
-		log::log_error(std::format("Technology \"{}\" has neither a level for research, nor a discovery event.", this->get_identifier()));
+	if (this->get_commodity_costs().empty() && this->get_discovery_event() == nullptr) {
+		log::log_error(std::format("Technology \"{}\" has neither commodity costs for research, nor a discovery event.", this->get_identifier()));
 	}
 
 	if (this->get_period() != nullptr) {

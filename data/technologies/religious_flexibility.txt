@@ -1,3 +1,17 @@
+mysticism = {
+	name = "Mysticism"
+	subcategory = religious_flexibility
+	portrait = temple
+	icon = wooden_cross
+	period = copper_age
+	prerequisites = {
+		ceremonial_burial
+	}
+	commodity_costs = {
+		research = 40
+	}
+}
+
 asceticism = {
 	name = "Asceticism"
 	subcategory = religious_flexibility
@@ -5,6 +19,7 @@ asceticism = {
 	icon = wooden_cross
 	period = classical_age
 	prerequisites = {
+		mysticism #earlier religious technology
 		road_building #to place it in the appropriate period
 	}
 	spread_conditions = {

@@ -1,3 +1,17 @@
+ceremonial_burial = {
+	name = "Ceremonial Burial"
+	subcategory = religious_stringency
+	portrait = temple
+	icon = wooden_cross
+	period = tool_age
+	prerequisites = {
+		poultry_domestication #to place it in the appropriate period
+	}
+	commodity_costs = {
+		research = 20
+	}
+}
+
 clerical_celibacy = {
 	name = "Clerical Celibacy"
 	subcategory = religious_stringency
@@ -5,6 +19,7 @@ clerical_celibacy = {
 	icon = wooden_cross
 	period = classical_age
 	prerequisites = {
+		ceremonial_burial #earlier religious technology
 		road_building #to place it in the appropriate period
 	}
 	spread_conditions = {

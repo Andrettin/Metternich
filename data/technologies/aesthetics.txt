@@ -1,3 +1,17 @@
+literature = {
+	name = "Literature"
+	subcategory = aesthetics
+	portrait = engineering
+	icon = book_red
+	period = iron_age
+	prerequisites = {
+		writing
+	}
+	commodity_costs = {
+		research = 100
+	}
+}
+
 sculptures = {
 	name = "Sculptures"
 	subcategory = aesthetics
@@ -238,6 +252,7 @@ vernacular_literature = {
 	icon = book_red
 	period = renaissance_age
 	prerequisites = {
+		literature #earlier literature-related technology
 		fashionable_clothes
 		romantic_poetry #earlier literature-related technology
 	}

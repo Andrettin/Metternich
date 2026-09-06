@@ -6,6 +6,7 @@ wind_wheel = {
 	period = feudal_age
 	prerequisites = {
 		large_ship_building
+		wheel #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

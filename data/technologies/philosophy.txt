@@ -6,6 +6,37 @@
 #	}
 #}
 
+mathematics = {
+	name = "Mathematics"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = bronze_age
+	#year = 1535 #cubic equations; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 206.
+	#year = 1545 #negative numbers; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 212.
+	prerequisites = {
+		alphabet
+		masonry
+	}
+	commodity_costs = {
+		research = 80
+	}
+}
+
+philosophy = {
+	name = "Philosophy"
+	subcategory = philosophy
+	portrait = engineering
+	icon = philosophy
+	period = iron_age
+	prerequisites = {
+		writing
+	}
+	commodity_costs = {
+		research = 60
+	}
+}
+
 aristotelian_logic = {
 	name = "Aristotelian Logic"
 	subcategory = philosophy
@@ -13,6 +44,7 @@ aristotelian_logic = {
 	icon = philosophy
 	period = classical_age
 	prerequisites = {
+		philosophy #earlier philosophy technology
 		road_building #to place it in the appropriate period
 	}
 	discovery_effects = {
@@ -268,6 +300,7 @@ astronomy = {
 	period = feudal_age
 	prerequisites = {
 		scholasticism
+		mathematics #seems reasonable
 	}
 	discovery_effects = {
 		domain = {

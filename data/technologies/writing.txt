@@ -1,12 +1,41 @@
+alphabet = {
+	name = "Alphabet"
+	subcategory = writing
+	portrait = engineering
+	icon = book_red
+	period = copper_age
+	prerequisites = {
+		handaxe #to place it in the appropriate period
+	}
+	commodity_costs = {
+		research = 50
+	}
+}
+
+writing = {
+	name = "Writing"
+	subcategory = writing
+	portrait = engineering
+	icon = book_red
+	period = bronze_age
+	prerequisites = {
+		alphabet
+	}
+	commodity_costs = {
+		research = 80
+	}
+}
+
 printing_press = {
 	name = "Printing Press"
-	subcategory = manufacturing
+	subcategory = writing
 	portrait = engineering
 	icon = book_red
 	period = gunpowder_age
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
+		writing #earlier writing technology
 		papermaking
 	}
 	domain_modifier = {

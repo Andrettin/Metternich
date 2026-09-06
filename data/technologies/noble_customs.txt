@@ -24,6 +24,7 @@ chronicle_writing = {
 	period = dark_age
 	prerequisites = {
 		divine_right
+		writing #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 250
@@ -278,6 +279,7 @@ romantic_poetry = {
 	period = feudal_age
 	prerequisites = {
 		chronicle_writing
+		literature #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

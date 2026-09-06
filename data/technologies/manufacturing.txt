@@ -1,3 +1,17 @@
+pottery = {
+	name = "Pottery"
+	subcategory = manufacturing
+	portrait = engineering
+	icon = glass
+	period = tool_age
+	prerequisites = {
+		poultry_domestication #to place it in the appropriate period
+	}
+	commodity_costs = {
+		research = 20
+	}
+}
+
 salt_refining = {
 	name = "Salt Refining"
 	subcategory = manufacturing
@@ -5,6 +19,7 @@ salt_refining = {
 	icon = salt
 	period = classical_age
 	prerequisites = {
+		pottery #earlier manufacturing technology
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

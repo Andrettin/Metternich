@@ -5,7 +5,7 @@ masonry = {
 	icon = architecture
 	period = bronze_age
 	prerequisites = {
-		stonepit
+		stonepit #seems reasonable
 	}
 	commodity_costs = {
 		research = 40

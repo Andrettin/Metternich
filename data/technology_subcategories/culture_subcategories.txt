@@ -33,3 +33,9 @@ popular_customs = {
 	category = culture
 	icon = music
 }
+
+writing = {
+	name = "Writing"
+	category = culture
+	icon = book_red
+}

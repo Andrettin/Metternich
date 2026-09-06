@@ -1,3 +1,17 @@
+warrior_code = {
+	name = "Warrior Code"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = bow
+	period = tool_age
+	prerequisites = {
+		poultry_domestication #to place it in the appropriate period
+	}
+	commodity_costs = {
+		research = 30
+	}
+}
+
 spanish_square = {
 	name = "Spanish Square"
 	subcategory = army_doctrine
