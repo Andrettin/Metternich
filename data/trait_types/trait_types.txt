@@ -47,6 +47,11 @@ past_experience = {
 	none_weight = 11
 }
 
+affliction = {
+	name = "Affliction"
+	none_weight = 80
+}
+
 engineering_specialization = {
 	name = "Engineering Specialization"
 }

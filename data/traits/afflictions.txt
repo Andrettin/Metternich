@@ -1,0 +1,33 @@
+out_of_shape = {
+	name = "Out of Shape"
+	icon = skull
+	weight = 1
+	types = {
+		affliction
+	}
+	gain_conditions = {
+		dexterity > 7
+		strength > 7
+	}
+	modifier = {
+		dexterity = -1
+		strength = -1
+	}
+}
+
+poor_mental_health = {
+	name = "Poor Mental Health"
+	icon = skull
+	weight = 1
+	types = {
+		affliction
+	}
+	gain_conditions = {
+		intelligence > 7
+		wisdom > 9
+	}
+	modifier = {
+		intelligence = -1
+		wisdom = -3
+	}
+}

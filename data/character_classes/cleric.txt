@@ -98,6 +98,7 @@ cleric = {
 			reverent = 3
 			dogmatic = 2
 			loyal = 1
+			trait_of_type = affliction
 			trait_of_type = past_experience
 			trait_of_type = proficiency
 			trait_of_type = proficiency
