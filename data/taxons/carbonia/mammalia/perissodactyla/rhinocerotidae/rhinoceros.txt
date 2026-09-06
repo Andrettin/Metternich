@@ -1,0 +1,5 @@
+rhinoceros = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=624934
+	name = "Rhinoceros"
+	rank = genus
+	supertaxon = rhinocerotidae
+}

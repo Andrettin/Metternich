@@ -1,0 +1,5 @@
+hispanotherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 18, 54-55.
+	name = "Hispanotherium"
+	rank = genus
+	supertaxon = rhinocerotidae
+}

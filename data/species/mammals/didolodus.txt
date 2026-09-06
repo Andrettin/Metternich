@@ -1,0 +1,8 @@
+didolodus = {
+	name = "Didolodus"
+	supertaxon = mammalia
+	pre_evolutions = {
+		chriacus
+		hyopsodus
+	}
+}

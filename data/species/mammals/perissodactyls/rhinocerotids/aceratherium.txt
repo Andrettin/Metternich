@@ -1,0 +1,14 @@
+aceratherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 54-55.
+	name = "Aceratherium" #Aceratherium incisivum
+	supertaxon = aceratherium
+	specific_name = "incisivum"
+	era = miocene
+	pre_evolutions = {
+		palaeotherium
+	}
+	
+	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle
+	#lived in Western Europe
+	#120cm shoulder height
+	#adapted to eat soft vegetals like bush leaves and fruits, but could also eat a larger range of vegetals according to the situation
+}

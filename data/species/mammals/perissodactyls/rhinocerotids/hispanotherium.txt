@@ -1,0 +1,16 @@
+hispanotherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 18, 54-55.
+	name = "Hispanotherium" #Madrilenian Hispanotherium
+	supertaxon = hispanotherium
+	specific_name = "matritense"
+	era = miocene #Middle and Upper Miocene
+	pre_evolutions = {
+		palaeotherium
+	}
+	
+	#this species lived in Miocene Madrid, which was mostly arid with a swampy lake in the middle
+	#dwelled in open environments which possessed few trees
+	#lived in Western Europe, Turkey and China
+	#100cm shoulder height
+	#its teeth were adapted to eat hard vegetable matter
+	#adapted to running and to open and dry spaces
+}

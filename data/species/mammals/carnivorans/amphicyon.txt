@@ -3,7 +3,7 @@ amphicyon = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del homb
 	supertaxon = amphicyon
 	specific_name = "major"
 	era = miocene #Amphicyon giganteus: Middle Miocene; Amphicyon major: Middle and Upper Miocene
-	creature_size = large
+	creature_size = medium
 	pre_evolutions = {
 		alphadon
 		leptictidium

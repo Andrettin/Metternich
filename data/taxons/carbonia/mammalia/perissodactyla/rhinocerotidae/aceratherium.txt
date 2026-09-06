@@ -1,0 +1,5 @@
+aceratherium = { #Source: Mauricio Antón and Jorge Morales, "Madrid antes del hombre", 2009, pp. 54-55.
+	name = "Aceratherium"
+	rank = genus
+	supertaxon = rhinocerotidae
+}

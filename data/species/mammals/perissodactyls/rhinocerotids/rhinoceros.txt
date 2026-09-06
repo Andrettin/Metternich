@@ -1,0 +1,11 @@
+rhinoceros = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=625005
+	name = "Rhinoceros" #Rhinoceros unicornis; One-Horned Rhinoceros
+	supertaxon = rhinoceros
+	specific_name = "unicornis"
+	era = holocene
+	creature_size = large
+	pre_evolutions = {
+		aceratherium #earlier rhinocerotid
+		hispanotherium #earlier rhinocerotid
+	}
+}
