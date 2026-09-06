@@ -6,7 +6,7 @@ scale_mail = {
 	period = bronze_age
 	prerequisites = {
 		soft_leather_armor #earlier armor technology
-		short_sword #to place it in the appropriate period
+		bronze_working
 	}
 	discovery_mean_time_to_happen = {
 		months = 125

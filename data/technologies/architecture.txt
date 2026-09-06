@@ -1,3 +1,17 @@
+masonry = {
+	name = "Masonry"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = bronze_age
+	prerequisites = {
+		stonepit
+	}
+	commodity_costs = {
+		research = 40
+	}
+}
+
 basilican_structures = {
 	name = "Basilican Structures"
 	subcategory = architecture
@@ -5,6 +19,7 @@ basilican_structures = {
 	icon = architecture
 	period = classical_age
 	prerequisites = {
+		masonry #earlier architecture technology
 		road_building #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {

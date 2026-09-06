@@ -3,9 +3,9 @@ stonepit = {
 	subcategory = mining
 	portrait = factory
 	icon = stone
-	period = classical_age
+	period = copper_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		handaxe #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 65
@@ -22,7 +22,7 @@ percussion_drilling = {
 	icon = cog
 	period = castle_age
 	prerequisites = {
-		stonepit #seems reasonable
+		stonepit #earlier mining technology
 		ironworks
 	}
 	discovery_mean_time_to_happen = {
@@ -40,7 +40,7 @@ black_coal = {
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
-		percussion_drilling #seems reasonable
+		percussion_drilling #earlier mining technology
 		water_wheel
 	}
 	discovery_conditions = {

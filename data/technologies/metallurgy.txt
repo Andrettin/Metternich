@@ -1,3 +1,31 @@
+bronze_working = {
+	name = "Bronze Working"
+	subcategory = metallurgy
+	portrait = factory
+	icon = bronze
+	period = copper_age
+	prerequisites = {
+		handaxe #to place it in the appropriate period
+	}
+	commodity_costs = {
+		research = 30
+	}
+}
+
+iron_working = {
+	name = "Iron Working"
+	subcategory = metallurgy
+	portrait = factory
+	icon = iron
+	period = bronze_age
+	prerequisites = {
+		bronze_working
+	}
+	commodity_costs = {
+		research = 60
+	}
+}
+
 charcoal = {
 	name = "Charcoal"
 	subcategory = metallurgy
@@ -5,7 +33,9 @@ charcoal = {
 	icon = coal
 	period = dark_age
 	prerequisites = {
+		iron_working #earlier metallurgy technology
 		stonepit
+		minor_merchant_houses #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 150

@@ -5,8 +5,8 @@ chained_leather_armor = {
 	icon = clothing
 	period = bronze_age
 	prerequisites = {
-		soft_leather_armor #seems reasonable
-		short_sword #to place it in the appropriate period
+		soft_leather_armor #earlier armor technology
+		bronze_working #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 100
@@ -25,6 +25,7 @@ light_chain_mail = {
 	prerequisites = {
 		chained_leather_armor
 		scale_mail
+		iron_working
 	}
 	discovery_mean_time_to_happen = {
 		months = 200

@@ -601,7 +601,7 @@ bool domain_technology::is_technology_researchable(const technology *technology)
 		return false;
 	}
 
-	if (technology->get_level() == 0) {
+	if (technology->get_commodity_costs().empty()) {
 		return false;
 	}
 

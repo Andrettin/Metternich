@@ -180,6 +180,7 @@ broad_sword = {
 	period = bronze_age
 	prerequisites = {
 		short_sword
+		bronze_working
 	}
 	discovery_mean_time_to_happen = {
 		months = 250
@@ -197,6 +198,7 @@ long_sword = {
 	period = iron_age
 	prerequisites = {
 		broad_sword
+		iron_working
 	}
 	discovery_mean_time_to_happen = {
 		months = 500
