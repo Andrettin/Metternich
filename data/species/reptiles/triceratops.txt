@@ -7,4 +7,12 @@ triceratops = {
 		protoceratops
 		stegosaurus
 	}
+	modifier = {
+		movement = 9
+		trait = great_fortitude
+		trait = toughness
+		trait = toughness
+		trait = toughness
+		trait = toughness
+	}
 }

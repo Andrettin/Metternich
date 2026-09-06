@@ -4,12 +4,19 @@ tyrannosaurus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no
 	specific_name = "rex"
 	era = cretaceous
 	creature_size = gargantuan
+	#description = "The mighty tyrannosaurus rex was a fierce predator. The goddess Gaia brought a few of them to Jotunheim, where they originated the first draconic creatures."
 	pre_evolutions = {
 		#should be ancestors to all Tyrannosauruses
 		allosaurus
 		dilophosaurus
 	}
-	#description = "The mighty tyrannosaurus rex was a fierce predator. The goddess Gaia brought a few of them to Jotunheim, where they originated the first draconic creatures."
+	modifier = {
+		movement = 15
+		trait = toughness
+		trait = toughness
+		trait = toughness
+	}
+	
 	#weighted 3.97 tons
 	#ground dwelling carnivore
 }
