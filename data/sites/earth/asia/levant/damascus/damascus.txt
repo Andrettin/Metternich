@@ -8,6 +8,7 @@ damascus = {
 	features = {
 		crossroads #important market or fair
 		#holy_site
+		prime_grain_land
 	}
 	
 	history = {

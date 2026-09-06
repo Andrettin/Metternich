@@ -1,6 +1,9 @@
-el_fasher = {
-	name = "El Fasher"
+fasher = {
+	name = "Fasher" #El Fasher
 	world = earth
 	geocoordinate = { 25.35001826850 13.62998069150 } #from Natural Earth
 	type = holding
+	features = {
+		prime_sheep_land
+	}
 }

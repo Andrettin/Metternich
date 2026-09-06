@@ -7,6 +7,7 @@ aleppo = {
 	province = homs #Aleppo
 	features = {
 		crossroads #important market or fair
+		prime_grain_land
 	}
 	
 	history = {

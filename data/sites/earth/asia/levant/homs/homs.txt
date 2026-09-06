@@ -8,4 +8,7 @@ homs = {
 	cultural_names = {
 		greek = "Emesa"
 	}
+	features = {
+		prime_grain_land
+	}
 }

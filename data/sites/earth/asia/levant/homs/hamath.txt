@@ -1,10 +1,13 @@
 hamath = {
-	name = "Hamath"
+	name = "Hamath" #also known as Hama
 	world = earth
 	geocoordinate = { 36.72999548210 35.15034669910 } #from Natural Earth
 	province = homs #Hamah
 	cultural_names = {
 		arabic = "Hamah"
+	}
+	features = {
+		prime_grain_land
 	}
 	
 	history = {

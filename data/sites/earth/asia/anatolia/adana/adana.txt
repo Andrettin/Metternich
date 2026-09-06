@@ -5,6 +5,9 @@ adana = {
 	type = holding
 	holding_type = castle
 	province = adana
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1481 = {

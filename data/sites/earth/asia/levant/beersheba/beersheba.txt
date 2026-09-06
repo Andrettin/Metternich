@@ -5,4 +5,7 @@ beersheba = {
 	type = holding
 	holding_type = castle
 	province = beersheba #Hadarom
+	features = {
+		prime_grain_land
+	}
 }

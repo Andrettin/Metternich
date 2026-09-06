@@ -5,4 +5,7 @@ giza = {
 	type = holding
 	holding_type = temple
 	province = giza
+	features = {
+		prime_cotton_land
+	}
 }

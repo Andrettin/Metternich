@@ -1,8 +1,11 @@
 zagazig = {
-	name = "Zagazig"
+	name = "Zagazig" #also known as Ziqaziq
 	world = earth
 	geocoordinate = { 31.516660 30.583332 } #from Natural Earth
 	type = holding
 	holding_type = castle
 	province = bilbays
+	features = {
+		prime_cotton_land
+	}
 }

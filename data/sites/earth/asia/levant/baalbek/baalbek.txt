@@ -5,4 +5,7 @@ baalbek = {
 	type = holding
 	holding_type = castle
 	province = baalbek
+	features = {
+		prime_grain_land
+	}
 }

@@ -5,6 +5,9 @@ jaffa = {
 	type = resource
 	resource = fruit
 	province = jerusalem #Tel Aviv
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

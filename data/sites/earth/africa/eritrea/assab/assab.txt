@@ -5,4 +5,7 @@ assab = {
 	type = holding
 	holding_type = guild
 	province = assab
+	features = {
+		prime_fruit_land
+	}
 }

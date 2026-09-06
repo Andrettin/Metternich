@@ -5,6 +5,9 @@ beirut = {
 	type = holding
 	holding_type = castle
 	province = beirut
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

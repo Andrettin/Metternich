@@ -1,5 +1,5 @@
 aintab = {
-	name = "Aintab"
+	name = "Aintab" #also known as Antep
 	world = earth
 	geocoordinate = { 37.38499426140 37.07498374330 } #from Natural Earth
 	type = holding
@@ -7,5 +7,8 @@ aintab = {
 	province = aintab
 	cultural_names = {
 		turkish = "Gaziantep"
+	}
+	features = {
+		prime_sheep_land
 	}
 }

@@ -5,4 +5,7 @@ mut = {
 	type = holding
 	holding_type = guild
 	province = farafra #Dakhla
+	features = {
+		prime_grain_land
+	}
 }

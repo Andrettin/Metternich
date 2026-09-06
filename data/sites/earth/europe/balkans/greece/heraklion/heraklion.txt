@@ -8,6 +8,9 @@ heraklion = {
 	cultural_names = {
 		italian = "Candia" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 	}
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

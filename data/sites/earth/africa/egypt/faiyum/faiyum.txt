@@ -1,10 +1,13 @@
 faiyum = {
-	name = "Faiyum"
+	name = "Faiyum" #also known as Fayyum
 	world = earth
 	geocoordinate = { 30.839967 29.310031 } #from Natural Earth
 	type = holding
 	holding_type = castle
 	province = faiyum
+	features = {
+		prime_cotton_land
+	}
 	
 	history = {
 		-2700 = {

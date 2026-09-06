@@ -8,6 +8,9 @@ chania = {
 	cultural_names = {
 		italian = "Canea" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 	}
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

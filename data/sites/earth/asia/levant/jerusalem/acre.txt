@@ -5,6 +5,9 @@ acre = {
 	type = resource
 	resource = fruit
 	province = jerusalem #Hazafon
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

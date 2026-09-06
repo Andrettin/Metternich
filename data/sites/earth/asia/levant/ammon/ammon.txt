@@ -8,4 +8,7 @@ ammon = {
 	cultural_names = {
 		arabic = "Amman"
 	}
+	features = {
+		prime_grain_land
+	}
 }

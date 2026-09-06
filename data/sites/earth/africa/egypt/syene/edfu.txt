@@ -1,8 +1,11 @@
 edfu = {
-	name = "Edfu"
+	name = "Edfu" #also known as Idfu
 	world = earth
 	geocoordinate = { 32.878888888889 24.978055555556 }
 	type = holding
 	holding_type = guild
 	province = syene
+	features = {
+		prime_cotton_land
+	}
 }

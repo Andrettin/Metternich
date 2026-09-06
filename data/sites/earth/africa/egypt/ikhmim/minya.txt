@@ -5,4 +5,7 @@ minya = {
 	type = holding
 	holding_type = guild
 	province = ikhmim #Minya
+	features = {
+		prime_cotton_land
+	}
 }

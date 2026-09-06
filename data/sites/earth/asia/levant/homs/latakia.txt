@@ -5,6 +5,9 @@ latakia = {
 	type = holding
 	holding_type = guild
 	province = homs #Latakia
+	features = {
+		prime_fruit_land
+	}
 	
 	history = {
 		1360 = {

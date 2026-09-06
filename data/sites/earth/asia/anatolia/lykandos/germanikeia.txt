@@ -8,6 +8,9 @@ germanikeia = {
 	cultural_names = {
 		turkish = "Marash" #Kahramanmaraş
 	}
+	features = {
+		prime_sheep_land
+	}
 	
 	history = {
 		1360 = {
