@@ -3,6 +3,7 @@ oligarchy = {
 	group = republic
 	icon = chest
 	primary_domain_attribute = economy
+	required_technology = republic
 	preferred_holding_types = {
 		guild
 		royal_palace

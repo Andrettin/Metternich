@@ -4,6 +4,7 @@ pier = {
 	portrait = dock
 	icon = anchor
 	wealth_cost = 16gb
+	required_technology = map_making
 	holding_types = {
 		guild
 	}

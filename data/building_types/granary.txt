@@ -4,6 +4,7 @@ granary = {
 	portrait = trading_post
 	icon = grain
 	wealth_cost = 12gb
+	required_technology = pottery
 	holding_types = {
 		castle
 		guild

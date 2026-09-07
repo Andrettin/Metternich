@@ -32,7 +32,7 @@ market = {
 	base_building = shop
 	min_holding_level = 2
 	wealth_cost = 40gb
-	required_technology = minor_merchant_houses
+	required_technology = coinage
 	holding_types = {
 		guild
 	}
