@@ -17,7 +17,7 @@ asceticism = {
 	period = classical_age
 	prerequisites = {
 		mysticism #earlier religious flexibility technology
-		road_building #to place it in the appropriate period
+		monotheism #seems reasonable
 	}
 	spread_conditions = {
 		source_province = {

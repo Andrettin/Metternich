@@ -21,6 +21,18 @@ polytheism = {
 	}
 }
 
+monotheism = {
+	name = "Monotheism"
+	subcategory = religious_stringency
+	portrait = temple
+	icon = wooden_cross
+	period = civic_age
+	prerequisites = {
+		polytheism
+		philosophy
+	}
+}
+
 clerical_celibacy = {
 	name = "Clerical Celibacy"
 	subcategory = religious_stringency
@@ -28,8 +40,7 @@ clerical_celibacy = {
 	icon = wooden_cross
 	period = classical_age
 	prerequisites = {
-		polytheism #earlier religious stringency technology
-		road_building #to place it in the appropriate period
+		monotheism #earlier religious stringency technology
 	}
 	spread_conditions = {
 		source_province = {
