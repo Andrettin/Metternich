@@ -645,8 +645,16 @@ QVariantList domain_technology::get_future_technologies_qvariant_list() const
 				has_all_prerequisites = false;
 			}
 		}
-		if (has_all_prerequisites && this->is_technology_researchable(technology)) {
-			return true;
+		if (has_all_prerequisites) {
+			if (this->is_technology_researchable(technology)) {
+				return true;
+			}
+
+			if (technology->get_discovery_event() != nullptr) {
+				if (this->get_game_data()->get_capital_province() != nullptr && technology->get_discovery_event()->can_fire(this->get_game_data()->get_capital_province(), read_only_context(this->get_game_data()->get_capital_province()))) {
+					return true;
+				}
+			}
 		}
 
 		return false;
