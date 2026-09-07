@@ -1958,6 +1958,49 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 	}
 }
 
+bool province_game_data::can_have_technology(const technology *technology) const
+{
+	assert_throw(technology != nullptr);
+
+	if (!technology->get_cultures().empty() || !technology->get_cultural_groups().empty() || !technology->get_religions().empty() || !technology->get_religious_groups().empty()) {
+		for (const site *holding_site : this->get_settlement_sites()) {
+			const site_game_data *holding_game_data = holding_site->get_game_data();
+
+			if (!holding_game_data->is_built()) {
+				continue;
+			}
+
+			const metternich::culture *holding_culture = holding_game_data->get_culture();
+			const metternich::culture *holding_owner_culture = holding_game_data->get_owner()->get_game_data()->get_culture();
+
+			if (technology->get_cultures().contains(holding_culture) || technology->get_cultures().contains(holding_owner_culture)) {
+				return true;
+			}
+
+			for (const cultural_group *cultural_group : technology->get_cultural_groups()) {
+				if (holding_culture->is_part_of_group(cultural_group) || holding_owner_culture->is_part_of_group(cultural_group)) {
+					return true;
+				}
+			}
+
+			const metternich::religion *holding_religion = holding_game_data->get_religion();
+			const metternich::religion *holding_owner_religion = holding_game_data->get_owner()->get_game_data()->get_religion();
+
+			if (technology->get_religions().contains(holding_religion) || technology->get_religions().contains(holding_owner_religion)) {
+				return true;
+			}
+
+			if (vector::contains(technology->get_religious_groups(), holding_religion->get_group()) || vector::contains(technology->get_religious_groups(), holding_owner_religion->get_group())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
 bool province_game_data::can_gain_technology(const technology *technology) const
 {
 	assert_throw(technology != nullptr);
@@ -1972,7 +2015,7 @@ bool province_game_data::can_gain_technology(const technology *technology) const
 		}
 	}
 
-	return true;
+	return this->can_have_technology(technology);
 }
 
 QCoro::Task<void> province_game_data::on_technology_gained(const technology *technology, const int multiplier)
@@ -2000,6 +2043,22 @@ centesimal_int province_game_data::get_extra_technology(const technology *techno
 	}
 
 	return extra_technology;
+}
+
+QCoro::Task<void> province_game_data::check_technologies()
+{
+	const technology_set technologies = this->get_technologies();
+
+	for (const technology *technology : technologies) {
+		if (!this->has_technology(technology)) {
+			//the technology might already have been removed due to the removal of a prerequisite
+			continue;
+		}
+
+		if (!this->can_have_technology(technology)) {
+			co_await this->remove_technology(technology);
+		}
+	}
 }
 
 QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const

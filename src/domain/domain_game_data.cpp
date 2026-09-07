@@ -511,6 +511,10 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->do_population_promotion();
 		co_await this->do_population_employment();
 
+		for (const province *province : this->get_provinces()) {
+			co_await province->get_game_data()->check_technologies();
+		}
+
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			co_await civilian_unit->do_turn();
 		}

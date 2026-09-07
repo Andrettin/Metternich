@@ -303,17 +303,15 @@ QCoro::Task<void> domain_technology::do_technology_spread()
 
 			if (should_spread) {
 				co_await province->get_game_data()->add_technology(technology);
-				if (technology->is_available_for_domain(this->domain)) {
-					//only display spread for technologies that are available for this domain
-					this->domain->get_turn_data()->add_province_spread_technology(province, technology);
 
-					if (province->get_game_data()->is_capital()) {
-						if (this->get_current_researches().contains(technology)) {
-							this->remove_current_research(technology, false, false);
-						}
+				this->domain->get_turn_data()->add_province_spread_technology(province, technology);
 
-						emit technology_researched(technology);
+				if (province->get_game_data()->is_capital()) {
+					if (this->get_current_researches().contains(technology)) {
+						this->remove_current_research(technology, false, false);
 					}
+
+					emit technology_researched(technology);
 				}
 			}
 		}
@@ -503,10 +501,6 @@ QCoro::Task<void> domain_technology::on_technology_lost(const technology *techno
 bool domain_technology::can_gain_technology(const technology *technology) const
 {
 	assert_throw(technology != nullptr);
-
-	if (!technology->is_available_for_domain(this->domain)) {
-		return false;
-	}
 
 	if (this->get_game_data()->get_capital_province() == nullptr) {
 		return false;

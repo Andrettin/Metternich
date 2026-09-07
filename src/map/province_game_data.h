@@ -32,6 +32,7 @@ class character;
 class civilian_unit;
 class commodity;
 class culture;
+class culture_base;
 class domain;
 class domain_skill;
 class icon;
@@ -43,6 +44,7 @@ class population_unit;
 class province;
 class province_feature;
 class religion;
+class religion_base;
 class scripted_province_modifier;
 class site;
 class site_feature;
@@ -337,9 +339,11 @@ public:
 	[[nodiscard]] QCoro::Task<void> add_technology(const technology *technology);
 	[[nodiscard]] QCoro::Task<void> add_technology_with_prerequisites(const technology *technology);
 	[[nodiscard]] QCoro::Task<void> remove_technology(const technology *technology);
+	bool can_have_technology(const technology *technology) const;
 	bool can_gain_technology(const technology *technology) const;
 	[[nodiscard]] QCoro::Task<void> on_technology_gained(const technology *technology, const int multiplier);
 	centesimal_int get_extra_technology(const technology *technology) const;
+	[[nodiscard]] QCoro::Task<void> check_technologies();
 
 	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
 	{

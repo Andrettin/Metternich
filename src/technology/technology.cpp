@@ -21,6 +21,8 @@
 #include "infrastructure/pathway.h"
 #include "infrastructure/wonder.h"
 #include "item/item_type.h"
+#include "map/province.h"
+#include "map/province_game_data.h"
 #include "map/terrain_type.h"
 #include "religion/deity.h"
 #include "religion/religion.h"
@@ -395,33 +397,11 @@ bool technology::is_available_for_domain(const domain *domain) const
 		return false;
 	}
 
-	if (!this->cultures.empty() || !this->cultural_groups.empty()) {
-		if (this->cultures.contains(domain->get_game_data()->get_culture())) {
-			return true;
-		}
-
-		for (const cultural_group *cultural_group : this->cultural_groups) {
-			if (domain->get_game_data()->get_culture()->is_part_of_group(cultural_group)) {
-				return true;
-			}
-		}
-
+	if (domain->get_game_data()->get_capital_province() == nullptr) {
 		return false;
 	}
 
-	if (!this->religions.empty() || !this->religious_groups.empty()) {
-		if (this->religions.contains(domain->get_game_data()->get_religion())) {
-			return true;
-		}
-
-		if (vector::contains(this->religious_groups, domain->get_game_data()->get_religion()->get_group())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	return true;
+	return domain->get_game_data()->get_capital_province()->get_game_data()->can_have_technology(this);
 }
 
 QVariantList technology::get_prerequisites_qvariant_list() const

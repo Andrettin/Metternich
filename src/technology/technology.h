@@ -157,6 +157,26 @@ public:
 		return this->icon;
 	}
 
+	const culture_set &get_cultures() const
+	{
+		return this->cultures;
+	}
+
+	const std::vector<const cultural_group *> &get_cultural_groups() const
+	{
+		return this->cultural_groups;
+	}
+
+	const religion_set &get_religions() const
+	{
+		return this->religions;
+	}
+
+	const std::vector<const religious_group *> &get_religious_groups() const
+	{
+		return this->religious_groups;
+	}
+
 	Q_INVOKABLE bool is_available_for_domain(const metternich::domain *domain) const;
 
 	bool is_discovery() const
