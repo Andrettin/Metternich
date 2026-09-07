@@ -26,6 +26,7 @@ philosophy = {
 	portrait = engineering
 	icon = philosophy
 	period = iron_age
+	free_technologies = 1
 	prerequisites = {
 		writing
 	}
