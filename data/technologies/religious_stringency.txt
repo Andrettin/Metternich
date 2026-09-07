@@ -7,9 +7,6 @@ ceremonial_burial = {
 	prerequisites = {
 		poultry_domestication #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 20
-	}
 }
 
 polytheism = {
@@ -21,9 +18,6 @@ polytheism = {
 	prerequisites = {
 		ceremonial_burial #earlier religious stringency technology
 		mysticism
-	}
-	commodity_costs = {
-		research = 120
 	}
 }
 

@@ -7,9 +7,6 @@ alphabet = {
 	prerequisites = {
 		handaxe #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 50
-	}
 }
 
 writing = {
@@ -20,9 +17,6 @@ writing = {
 	period = bronze_age
 	prerequisites = {
 		alphabet
-	}
-	commodity_costs = {
-		research = 80
 	}
 }
 

@@ -7,9 +7,6 @@ pottery = {
 	prerequisites = {
 		poultry_domestication #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 20
-	}
 }
 
 salt_refining = {

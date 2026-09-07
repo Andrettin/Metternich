@@ -7,9 +7,6 @@ bronze_working = {
 	prerequisites = {
 		handaxe #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 30
-	}
 }
 
 iron_working = {
@@ -20,9 +17,6 @@ iron_working = {
 	period = bronze_age
 	prerequisites = {
 		bronze_working
-	}
-	commodity_costs = {
-		research = 60
 	}
 }
 

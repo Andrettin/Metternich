@@ -7,9 +7,6 @@ masonry = {
 	prerequisites = {
 		stonepit #seems reasonable
 	}
-	commodity_costs = {
-		research = 40
-	}
 }
 
 construction = {
@@ -22,9 +19,6 @@ construction = {
 		masonry #earlier construction technology
 		iron_working
 		mathematics
-	}
-	commodity_costs = {
-		research = 200
 	}
 }
 

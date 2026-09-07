@@ -7,9 +7,6 @@ literature = {
 	prerequisites = {
 		writing
 	}
-	commodity_costs = {
-		research = 100
-	}
 }
 
 sculptures = {

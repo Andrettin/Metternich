@@ -7,9 +7,6 @@ coinage = {
 	prerequisites = {
 		mathematics
 	}
-	commodity_costs = {
-		research = 160
-	}
 }
 
 business_contracts = {

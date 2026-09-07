@@ -18,9 +18,6 @@ mathematics = {
 		alphabet
 		masonry
 	}
-	commodity_costs = {
-		research = 80
-	}
 }
 
 philosophy = {
@@ -31,9 +28,6 @@ philosophy = {
 	period = iron_age
 	prerequisites = {
 		writing
-	}
-	commodity_costs = {
-		research = 60
 	}
 }
 

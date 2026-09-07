@@ -8,7 +8,4 @@ map_making = {
 		writing
 		pottery
 	}
-	commodity_costs = {
-		research = 120
-	}
 }

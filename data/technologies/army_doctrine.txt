@@ -7,9 +7,6 @@ warrior_code = {
 	prerequisites = {
 		poultry_domestication #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 30
-	}
 }
 
 chariotry = {
@@ -22,9 +19,6 @@ chariotry = {
 		warrior_code #earlier army doctrine technology
 		wheel
 	}
-	commodity_costs = {
-		research = 20
-	}
 }
 
 horseback_riding = {
@@ -36,9 +30,6 @@ horseback_riding = {
 	prerequisites = {
 		chariotry #wheel
 		warrior_code
-	}
-	commodity_costs = {
-		research = 50
 	}
 }
 

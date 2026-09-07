@@ -7,9 +7,6 @@ code_of_laws = {
 	prerequisites = {
 		writing
 	}
-	commodity_costs = {
-		research = 100
-	}
 }
 
 monarchy = {
@@ -23,9 +20,6 @@ monarchy = {
 		warrior_code
 		polytheism
 	}
-	commodity_costs = {
-		research = 240
-	}
 }
 
 republic = {
@@ -37,9 +31,6 @@ republic = {
 	prerequisites = {
 		code_of_laws
 		philosophy
-	}
-	commodity_costs = {
-		research = 280
 	}
 }
 

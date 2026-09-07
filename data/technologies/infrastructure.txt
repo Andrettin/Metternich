@@ -8,9 +8,6 @@ wheel = {
 		handaxe #to place it in the appropriate period
 		goatherding #to place it in the appropriate period
 	}
-	commodity_costs = {
-		research = 40
-	}
 }
 
 road_building = {

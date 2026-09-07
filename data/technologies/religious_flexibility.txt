@@ -7,9 +7,6 @@ mysticism = {
 	prerequisites = {
 		ceremonial_burial
 	}
-	commodity_costs = {
-		research = 40
-	}
 }
 
 asceticism = {
