@@ -19,7 +19,7 @@ asceticism = {
 	icon = wooden_cross
 	period = classical_age
 	prerequisites = {
-		mysticism #earlier religious technology
+		mysticism #earlier religious flexibility technology
 		road_building #to place it in the appropriate period
 	}
 	spread_conditions = {

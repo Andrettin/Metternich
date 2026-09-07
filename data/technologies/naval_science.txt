@@ -1,0 +1,14 @@
+map_making = {
+	name = "Map Making"
+	subcategory = naval_science
+	portrait = unload
+	icon = anchor
+	period = iron_age
+	prerequisites = {
+		writing
+		pottery
+	}
+	commodity_costs = {
+		research = 120
+	}
+}

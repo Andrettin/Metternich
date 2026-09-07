@@ -12,6 +12,22 @@ masonry = {
 	}
 }
 
+construction = {
+	name = "Construction"
+	subcategory = architecture
+	portrait = engineering
+	icon = architecture
+	period = civic_age
+	prerequisites = {
+		masonry #earlier construction technology
+		iron_working
+		mathematics
+	}
+	commodity_costs = {
+		research = 200
+	}
+}
+
 basilican_structures = {
 	name = "Basilican Structures"
 	subcategory = architecture
@@ -19,8 +35,7 @@ basilican_structures = {
 	icon = architecture
 	period = classical_age
 	prerequisites = {
-		masonry #earlier architecture technology
-		road_building #to place it in the appropriate period
+		construction #earlier architecture technology
 	}
 	discovery_mean_time_to_happen = {
 		months = 50

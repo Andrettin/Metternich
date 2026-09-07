@@ -12,6 +12,21 @@ warrior_code = {
 	}
 }
 
+horseback_riding = {
+	name = "Horseback Riding"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = horses
+	period = iron_age
+	prerequisites = {
+		warrior_code
+		wheel
+	}
+	commodity_costs = {
+		research = 50
+	}
+}
+
 spanish_square = {
 	name = "Spanish Square"
 	subcategory = army_doctrine

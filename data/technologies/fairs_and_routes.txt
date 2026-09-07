@@ -5,7 +5,8 @@ annual_sailing = {
 	icon = anchor
 	period = classical_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		coinage #seems reasonable
+		map_making #seems reasonable
 	}
 	modifier = {
 		trade_efficiency = 1

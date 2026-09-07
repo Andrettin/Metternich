@@ -5,7 +5,7 @@ minor_merchant_houses = {
 	icon = chest
 	period = classical_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		coinage #seems reasonable
 	}
 	modifier = {
 		trade_efficiency = 1

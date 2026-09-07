@@ -1,3 +1,17 @@
+coinage = {
+	name = "Coinage"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = civic_age
+	prerequisites = {
+		mathematics
+	}
+	commodity_costs = {
+		research = 160
+	}
+}
+
 business_contracts = {
 	name = "Business Contracts"
 	subcategory = trade_practices
@@ -5,7 +19,7 @@ business_contracts = {
 	icon = wealth
 	period = classical_age
 	prerequisites = {
-		road_building #to place it in the appropriate period
+		coinage #seems reasonable
 	}
 	modifier = {
 		trade_efficiency = 1

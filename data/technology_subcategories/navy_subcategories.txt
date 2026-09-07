@@ -1,3 +1,9 @@
+naval_science = {
+	name = "Naval Science"
+	category = navy
+	icon = compass
+}
+
 ship_construction = {
 	name = "Ship Construction"
 	category = navy

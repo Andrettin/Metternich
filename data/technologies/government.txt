@@ -12,6 +12,37 @@ code_of_laws = {
 	}
 }
 
+monarchy = {
+	name = "Monarchy"
+	subcategory = government
+	portrait = grand_ducal_crown
+	icon = crown_royal
+	period = iron_age
+	prerequisites = {
+		code_of_laws #earlier government technology
+		warrior_code
+		polytheism
+	}
+	commodity_costs = {
+		research = 240
+	}
+}
+
+republic = {
+	name = "Republic"
+	subcategory = government
+	portrait = city
+	icon = philosophy
+	period = civic_age
+	prerequisites = {
+		code_of_laws
+		philosophy
+	}
+	commodity_costs = {
+		research = 280
+	}
+}
+
 feudalism = {
 	name = "Feudalism"
 	subcategory = government
@@ -21,7 +52,7 @@ feudalism = {
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
-		code_of_laws #earlier government technology
+		monarchy #earlier government technology
 		divine_right
 	}
 	discovery_conditions = {

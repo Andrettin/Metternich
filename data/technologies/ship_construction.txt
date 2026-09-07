@@ -5,6 +5,7 @@ large_ship_building = {
 	icon = anchor
 	period = dark_age
 	prerequisites = {
+		map_making #seems reasonable
 		road_building
 		annual_sailing #seems reasonable, and to place it on the appropriate period
 	}
