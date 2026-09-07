@@ -6,7 +6,7 @@ seven_liberal_arts = {
 	period = classical_age
 	prerequisites = {
 		philosophy #seems reasonable
-		road_building #to place it in the appropriate period
+		republic #to place it in the appropriate period
 	}
 	discovery_mean_time_to_happen = {
 		months = 75

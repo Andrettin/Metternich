@@ -40,7 +40,7 @@ aristotelian_logic = {
 	period = classical_age
 	prerequisites = {
 		philosophy #earlier philosophy technology
-		road_building #to place it in the appropriate period
+		republic #to place it in the appropriate period
 	}
 	discovery_effects = {
 		domain = {
