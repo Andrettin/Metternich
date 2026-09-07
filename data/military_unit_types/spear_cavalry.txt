@@ -2,6 +2,7 @@ chariots = {
 	name = "Chariots"
 	unit_class = chariots
 	icon = knights
+	required_technology = chariotry
 	death_sound = human_death
 	stats = {
 		melee = 5

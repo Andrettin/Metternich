@@ -3,9 +3,10 @@ wheel = {
 	subcategory = infrastructure
 	portrait = engineering
 	icon = cog
-	period = bronze_age
+	period = copper_age
 	prerequisites = {
-		wood_plow #to place it in the appropriate period
+		handaxe #to place it in the appropriate period
+		goatherding #to place it in the appropriate period
 	}
 	commodity_costs = {
 		research = 40

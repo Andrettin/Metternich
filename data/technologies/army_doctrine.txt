@@ -12,6 +12,21 @@ warrior_code = {
 	}
 }
 
+chariotry = {
+	name = "Chariotry"
+	subcategory = army_doctrine
+	portrait = helmet
+	icon = horses
+	period = bronze_age
+	prerequisites = {
+		warrior_code #earlier army doctrine technology
+		wheel
+	}
+	commodity_costs = {
+		research = 20
+	}
+}
+
 horseback_riding = {
 	name = "Horseback Riding"
 	subcategory = army_doctrine
@@ -19,8 +34,8 @@ horseback_riding = {
 	icon = horses
 	period = iron_age
 	prerequisites = {
+		chariotry #wheel
 		warrior_code
-		wheel
 	}
 	commodity_costs = {
 		research = 50
