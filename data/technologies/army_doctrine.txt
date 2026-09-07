@@ -33,6 +33,19 @@ horseback_riding = {
 	}
 }
 
+chivalry = {
+	name = "Chivalry"
+	subcategory = army_doctrine
+	portrait = dwarven_heater_shield
+	icon = heater_shield
+	period = feudal_age
+	prerequisites = {
+		horseback_riding #earlier cavalry-related army doctrine technology
+		feudalism
+		monotheism
+	}
+}
+
 spanish_square = {
 	name = "Spanish Square"
 	subcategory = army_doctrine

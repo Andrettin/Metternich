@@ -5,8 +5,8 @@ wind_wheel = {
 	icon = cog
 	period = feudal_age
 	prerequisites = {
+		engineering #seems reasonable
 		large_ship_building
-		wheel #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

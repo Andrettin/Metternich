@@ -58,6 +58,7 @@ dismounted_knights = {
 	period = castle_age
 	prerequisites = {
 		reserves
+		chivalry #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000

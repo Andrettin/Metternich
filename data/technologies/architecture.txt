@@ -22,6 +22,18 @@ construction = {
 	}
 }
 
+engineering = {
+	name = "Engineering"
+	subcategory = architecture
+	portrait = engineering
+	icon = cog
+	period = classical_age
+	prerequisites = {
+		construction
+		wheel
+	}
+}
+
 basilican_structures = {
 	name = "Basilican Structures"
 	subcategory = architecture
@@ -64,6 +76,7 @@ romanesque_vaulting = {
 	period = feudal_age
 	prerequisites = {
 		brickwork_structures
+		engineering #seems reasonable
 	}
 	discovery_mean_time_to_happen = {
 		months = 500

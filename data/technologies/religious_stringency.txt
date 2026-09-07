@@ -33,6 +33,17 @@ monotheism = {
 	}
 }
 
+theology = {
+	name = "Theology"
+	subcategory = religious_stringency
+	portrait = temple
+	icon = wooden_cross
+	period = classical_age
+	prerequisites = {
+		monotheism
+	}
+}
+
 clerical_celibacy = {
 	name = "Clerical Celibacy"
 	subcategory = religious_stringency
@@ -116,6 +127,7 @@ formalized_liturgy = {
 	period = castle_age
 	prerequisites = {
 		inquisition
+		theology #seems reasonable
 	}
 	spread_conditions = {
 		source_province = {

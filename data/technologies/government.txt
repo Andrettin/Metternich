@@ -14,7 +14,7 @@ monarchy = {
 	subcategory = government
 	portrait = grand_ducal_crown
 	icon = crown_royal
-	period = iron_age
+	period = civic_age
 	prerequisites = {
 		code_of_laws #earlier government technology
 		warrior_code
@@ -43,8 +43,9 @@ feudalism = {
 	discover_only_once = true
 	spread_from_neighbor = false
 	prerequisites = {
-		monarchy #earlier government technology
-		divine_right
+		monarchy
+		divine_right #seems reasonable
+		warrior_code
 	}
 	discovery_conditions = {
 		year >= 1000

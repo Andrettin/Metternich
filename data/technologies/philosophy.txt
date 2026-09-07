@@ -168,6 +168,7 @@ scholasticism = {
 	period = dark_age
 	prerequisites = {
 		aristotelian_logic
+		theology #seems reasonable
 	}
 	discovery_effects = {
 		domain = {

@@ -253,6 +253,7 @@ critical_bible_interpretations = {
 	period = feudal_age
 	prerequisites = {
 		apostolic_poverty
+		theology #seems reasonable
 	}
 	spread_conditions = {
 		source_province = {
