@@ -4,7 +4,6 @@ black_powder = {
 	portrait = engineering
 	icon = coal
 	period = renaissance_age
-	level = 1
 	prerequisites = {
 		natural_philosophy #to place it in the appropriate period
 	}

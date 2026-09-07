@@ -4,7 +4,6 @@ arquebus = {
 	portrait = engineering
 	icon = musket
 	period = gunpowder_age
-	level = 2
 	prerequisites = {
 		black_powder
 		marksman_long_bow #earlier ranged weapon
@@ -18,7 +17,6 @@ musket = {
 	portrait = engineering
 	icon = musket
 	period = absolutism_age
-	level = 3
 	prerequisites = {
 		arquebus
 	}
@@ -30,7 +28,6 @@ flintlock_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = revolutionary_age
-	level = 4
 	prerequisites = {
 		musket
 		spanish_square #earlier military technology
@@ -62,7 +59,6 @@ breech_loading_rifle = {
 	portrait = engineering
 	icon = rifle
 	period = napoleonic_age
-	level = 5
 	prerequisites = {
 		flintlock_rifle
 		industrialization #seems reasonable

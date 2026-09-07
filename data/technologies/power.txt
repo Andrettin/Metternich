@@ -39,7 +39,6 @@ steam_power = {
 	portrait = engineering
 	icon = cog
 	period = enlightenment_age
-	level = 1
 	prerequisites = {
 		manufactories #to place it in the appropriate period
 		black_coal #seems reasonable
