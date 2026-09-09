@@ -306,6 +306,7 @@ astronomy = {
 	portrait = engineering
 	icon = philosophy
 	period = feudal_age
+	#year = 1543 #development of the Heliocentric Model; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 209-211.
 	prerequisites = {
 		scholasticism
 		mathematics #seems reasonable

@@ -16,6 +16,12 @@ culture = {
 	domain_skill = culture
 }
 
+evolution = {
+	name = "Evolution"
+	icon = frog
+	domain_skill = order
+}
+
 industry = {
 	name = "Industry"
 	icon = cog

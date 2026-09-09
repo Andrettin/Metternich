@@ -1,0 +1,15 @@
+long_necks = {
+	name = "Long Necks"
+	subcategory = neck
+	portrait = building_slot
+	icon = deer
+	period = jurassic
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		endothermics
+		teeth
+	}
+}

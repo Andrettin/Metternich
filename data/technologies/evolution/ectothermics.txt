@@ -1,10 +1,9 @@
-scaly_skin = {
-	name = "Scaly Skin"
+ectothermics = {
+	name = "Ectothermics"
 	subcategory = body
 	portrait = building_slot
 	icon = frog
 	period = devonian
-	year = -215000000 #Coelophysis
 	cultural_groups = {
 		avian
 		mammal

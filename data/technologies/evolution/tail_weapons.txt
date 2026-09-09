@@ -1,3 +1,15 @@
+tail_weapons = {
+	name = "Tail Weapons"
+	subcategory = tail
+	portrait = building_slot
+	icon = beaver
+	period = devonian
+	cultural_groups = {
+		avian
+		mammal
+	}
+}
+
 #tail_spikes = {
 #	name = "Tail Spikes"
 #	subcategory = tail_weapons

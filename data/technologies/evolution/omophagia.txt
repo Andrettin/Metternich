@@ -1,0 +1,15 @@
+omophagia = {
+	name = "Omophagia"
+	subcategory = jaws
+	portrait = building_slot
+	icon = lion
+	period = triassic
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		phytophagia
+		teeth
+	}
+}

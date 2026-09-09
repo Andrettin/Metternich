@@ -1,10 +1,9 @@
-scaly_skin = {
-	name = "Scaly Skin"
+dam_building = {
+	name = "Dam Building"
 	subcategory = body
 	portrait = building_slot
-	icon = frog
+	icon = beaver
 	period = devonian
-	year = -215000000 #Coelophysis
 	cultural_groups = {
 		avian
 		mammal

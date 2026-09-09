@@ -1,8 +1,12 @@
-#egg_laying = {
-#	name = "Egg Laying"
-#	subcategory = procreation
-#	portrait = building_slot
-#	icon = lion
-#	period = devonian
-#	year = -385000000 #Gyroptychius
-#}
+egg_laying = {
+	name = "Egg Laying"
+	subcategory = body #procreation
+	portrait = building_slot
+	icon = frog
+	period = devonian
+	year = -385000000 #Gyroptychius
+	cultural_groups = {
+		avian
+		mammal
+	}
+}

@@ -1,0 +1,23 @@
+body = {
+	name = "Body"
+	category = evolution
+	icon = frog
+}
+
+jaws = {
+	name = "Jaws"
+	category = evolution
+	icon = lion
+}
+
+neck = {
+	name = "Neck"
+	category = evolution
+	icon = deer
+}
+
+tail = {
+	name = "Tail"
+	category = evolution
+	icon = beaver
+}
