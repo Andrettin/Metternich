@@ -1,0 +1,15 @@
+sharp_eyesight = {
+	name = "Sharp Eyesight"
+	subcategory = body
+	portrait = building_slot
+	icon = lion
+	period = jurassic
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		upright_stature
+		omophagia
+	}
+}
