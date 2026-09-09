@@ -493,6 +493,7 @@ university = {
 	period = castle_age
 	prerequisites = {
 		cathedral_school
+		theology
 	}
 	discovery_mean_time_to_happen = {
 		months = 1000

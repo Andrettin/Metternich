@@ -109,6 +109,18 @@ foreign_accreditation = {
 	}
 }
 
+banking = {
+	name = "Banking"
+	subcategory = trade_practices
+	portrait = coinage
+	icon = wealth
+	period = renaissance_age
+	prerequisites = {
+		letters_of_credit #seems reasonable
+		university
+	}
+}
+
 global_trade = {
 	name = "Global Trade"
 	subcategory = trade_practices
@@ -123,6 +135,7 @@ global_trade = {
 		printing_press
 		renowned_merchant_houses #seems reasonable
 		international_fairs #seems reasonable
+		banking #seems reasonable
 	}
 	discovery_conditions = {
 		year >= 1600

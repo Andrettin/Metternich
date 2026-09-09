@@ -7,6 +7,7 @@ early_classical_theory_and_critique = {
 	year = 1776 #Adam Smith published The Wealth of Nations in 1776; Source: "Encyclopædia Britannica", 1911, vol. 25, pp. 255-256.
 	prerequisites = {
 		enlightenment #seems reasonable, and to place it in the appropriate period
+		banking
 	}
 	modifier = {
 		capitalist_bonus = 2

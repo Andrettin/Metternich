@@ -5,28 +5,17 @@ the_wealth_of_nations = { #Source: "Encyclopædia Britannica", 1911, vol. 25, pp
 	trigger = per_turn_pulse
 	only_once = true
 	conditions = {
-		year >= 1776
+		owns_site = dundee #kirkcaldy #Adam Smith's home site
+		technology = early_classical_theory_and_critique
+		year == 1776
 		or = {
-			#owns_site = kirkcaldy #Adam Smith's home site
-			owns_site = toulouse #Adam Smith lived there for a while; this is here so that the event can trigger for a Continental Europe map
-			owns_province = ile_de_france #this is here so that the event can trigger for the Central Europe map
-		}
-		or = {
-			and = {
-				technology = early_classical_theory_and_critique
-				year == 1776
-				or = {
-					domain = england
-					domain = scotland
-					domain = great_britain
-				}
-			}
-			can_gain_technology = early_classical_theory_and_critique
+			domain = england
+			domain = scotland
+			domain = great_britain
 		}
 	}
 	option = {
 		effects = {
-			technologies += early_classical_theory_and_critique
 			regency += 2
 		}
 	}

@@ -9,3 +9,14 @@ map_making = {
 		pottery
 	}
 }
+
+navigation = {
+	name = "Navigation"
+	subcategory = naval_science
+	portrait = unload
+	icon = anchor
+	period = castle_age
+	prerequisites = {
+		astronomy
+	}
+}

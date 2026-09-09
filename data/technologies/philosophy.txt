@@ -32,6 +32,18 @@ philosophy = {
 	}
 }
 
+invention = {
+	name = "Invention"
+	subcategory = philosophy
+	portrait = engineering
+	icon = cog
+	period = feudal_age
+	prerequisites = {
+		engineering
+		feudalism
+	}
+}
+
 aristotelian_logic = {
 	name = "Aristotelian Logic"
 	subcategory = philosophy
@@ -297,6 +309,7 @@ astronomy = {
 	prerequisites = {
 		scholasticism
 		mathematics #seems reasonable
+		#university
 	}
 	discovery_effects = {
 		domain = {
@@ -667,6 +680,29 @@ science = {
 				realm = root
 			}
 		}
+	}
+}
+
+physics = {
+	name = "Physics"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = absolutism_age
+	prerequisites = {
+		astronomy
+		chemistry
+	}
+}
+
+theory_of_gravity = {
+	name = "Theory of Gravity"
+	subcategory = philosophy
+	portrait = engineering
+	icon = research
+	period = enlightenment_age
+	prerequisites = {
+		physics
 	}
 }
 

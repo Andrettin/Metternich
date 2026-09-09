@@ -5,6 +5,18 @@ black_powder = {
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
+		invention
 		natural_philosophy #to place it in the appropriate period
+	}
+}
+
+chemistry = {
+	name = "Chemistry"
+	subcategory = chemistry
+	portrait = engineering
+	icon = research
+	period = gunpowder_age
+	prerequisites = {
+		black_powder
 	}
 }

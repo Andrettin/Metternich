@@ -31,6 +31,7 @@ printing_press = {
 	prerequisites = {
 		writing #earlier writing technology
 		papermaking
+		theology
 	}
 	domain_modifier = {
 		research_output_modifier = 22
