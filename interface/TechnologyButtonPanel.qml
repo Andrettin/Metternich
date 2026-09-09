@@ -29,7 +29,7 @@ Rectangle {
 		spacing: 4 * scale_factor
 		
 		Repeater {
-			model: metternich.get_technology_categories()
+			model: get_categories()
 			
 			IconButton {
 				id: category_button
@@ -126,6 +126,25 @@ Rectangle {
 				}
 			}
 		}
+	}
+	
+	function get_categories() {
+		var categories = []
+		
+		for (var category of metternich.get_technology_categories()) {
+			var has_technology = false
+			for (var technology of category.technologies) {
+				if (technology.is_available_for_domain(metternich.game.player_domain)) {
+					has_technology = true
+					break
+				}
+			}
+			if (has_technology) {
+				categories.push(category)
+			}
+		}
+		
+		return categories
 	}
 	
 	function get_category_subcategories(category) {
