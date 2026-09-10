@@ -31,6 +31,24 @@ coyotes = {
 #	}
 }
 
+giant_toads = {
+	name = "Giant Toads"
+	unit_class = medium_predators
+	culture = frog
+	icon = frog
+	required_technology = amphibians
+	stats = {
+		hit_points = 2
+		movement = 1
+		defense = 3
+		melee = 2
+		range = 1
+	}
+#	commodity_costs = {
+#		giant_toads = 100
+#	}
+}
+
 jackals = {
 	name = "Jackals"
 	unit_class = small_predators

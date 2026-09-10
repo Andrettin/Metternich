@@ -1,0 +1,10 @@
+frog = {
+	name = "Frog"
+	color = { 74 140 26 }
+	group = amphibian
+	fauna = true
+	species = {
+		frog
+		giant_toad
+	}
+}

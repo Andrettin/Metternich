@@ -1,0 +1,5 @@
+amphibian = {
+	name = "Amphibian"
+	rank = supergroup
+	fauna = true
+}
