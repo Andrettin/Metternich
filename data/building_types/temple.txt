@@ -48,12 +48,10 @@ temple = {
 		lumber = 64
 	}
 	modifier = {
-		base_population_capacity = 50
+		scripted_modifier_effect = temple
 	}
 	domain_modifier = {
-		loyalty = 2
-		stability = 2
-		unrest = -2
+		scripted_modifier_effect = temple
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -81,12 +79,10 @@ large_temple = {
 		lumber = 64 #as Temple
 	}
 	modifier = {
-		base_population_capacity = 50
+		scripted_modifier_effect = temple
 	}
 	domain_modifier = {
-		loyalty = 2
-		stability = 2
-		unrest = -2
+		scripted_modifier_effect = temple
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item

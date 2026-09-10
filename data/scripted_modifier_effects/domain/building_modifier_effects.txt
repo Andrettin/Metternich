@@ -2,6 +2,17 @@ barracks = {
 	unrest = -1
 }
 
+granary = {
+	loyalty = 1
+	stability = 1
+}
+
 mine = {
 	economy = 2
+}
+
+temple = {
+	loyalty = 2
+	stability = 2
+	unrest = -2
 }

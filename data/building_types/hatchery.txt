@@ -1,0 +1,23 @@
+hatchery = {
+	name = "Hatchery"
+	building_class = hatchery
+	portrait = hospital
+	icon = frog
+	wealth_cost = 32gb #as temple (including the shrine costs as well)
+	required_technology = egg_laying
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+	}
+	conditions = {
+		scripted_condition = is_lair
+	}
+	modifier = {
+		scripted_modifier_effect = temple
+	}
+	domain_modifier = {
+		scripted_modifier_effect = temple
+	}
+}

@@ -22,8 +22,7 @@ granary = {
 		}
 	}
 	domain_modifier = {
-		loyalty = 1
-		stability = 1
+		scripted_modifier_effect = granary
 	}
 }
 
@@ -39,14 +38,11 @@ food_hoard = {
 	}
 	builder_civilian_unit_types = {
 		ruler
-		treasurer
-		engineer
 	}
 	conditions = {
 		scripted_condition = is_lair
 	}
-	domain_modifier = { #as granary
-		loyalty = 1
-		stability = 1
+	domain_modifier = {
+		scripted_modifier_effect = granary
 	}
 }
