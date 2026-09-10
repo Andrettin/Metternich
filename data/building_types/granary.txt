@@ -26,3 +26,27 @@ granary = {
 		stability = 1
 	}
 }
+
+food_hoard = {
+	name = "Food Hoard"
+	building_class = food_hoard
+	portrait = trading_post
+	icon = fruit
+	wealth_cost = 12gb #as granary
+	required_technology = food_gathering
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		scripted_condition = is_lair
+	}
+	domain_modifier = { #as granary
+		loyalty = 1
+		stability = 1
+	}
+}

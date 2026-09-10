@@ -1,0 +1,15 @@
+food_gathering = {
+	name = "Food Gathering"
+	subcategory = body
+	portrait = building_slot
+	icon = fruit
+	period = carboniferous
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		phytophagia
+		barter
+	}
+}
