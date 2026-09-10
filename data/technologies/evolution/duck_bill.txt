@@ -1,0 +1,14 @@
+duck_bill = {
+	name = "Duck Bill"
+	subcategory = jaws
+	portrait = building_slot
+	icon = frog
+	period = carboniferous
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		phytophagia
+	}
+}

@@ -4,6 +4,12 @@ body = {
 	icon = frog
 }
 
+limbs = {
+	name = "Limbs"
+	category = evolution
+	icon = lion
+}
+
 jaws = {
 	name = "Jaws"
 	category = evolution

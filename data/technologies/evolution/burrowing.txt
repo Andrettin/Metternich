@@ -1,0 +1,15 @@
+burrowing = {
+	name = "Burrowing"
+	subcategory = body
+	portrait = building_slot
+	icon = beaver
+	period = jurassic
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		fortified_nesting
+		claws
+	}
+}

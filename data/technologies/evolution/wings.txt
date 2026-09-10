@@ -1,15 +1,15 @@
-claws = {
-	name = "Claws"
-	subcategory = limbs #claws
+wings = {
+	name = "Wings"
+	subcategory = body
 	portrait = building_slot
-	icon = lion
+	icon = frog
 	period = triassic
-	year = -130000000 #Baryonyx
 	cultural_groups = {
 		avian
 		mammal
 	}
 	prerequisites = {
+		scaly_skin
 		fingers
 	}
 }

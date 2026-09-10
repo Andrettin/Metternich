@@ -1,0 +1,14 @@
+fingers = {
+	name = "Fingers"
+	subcategory = limbs
+	portrait = building_slot
+	icon = frog
+	period = permian
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		upright_stature
+	}
+}
