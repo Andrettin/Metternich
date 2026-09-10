@@ -78,3 +78,20 @@ mammoths = {
 #		mammoths = 100
 #	}
 }
+
+stegosauruses = {
+	name = "Stegosauruses"
+	unit_class = huge_herd_animals
+	icon = frog
+	required_technology = tail_spikes
+	stats = {
+		hit_points = 4
+		movement = 1
+		defense = 4
+		melee = 5
+		range = 1
+	}
+#	commodity_costs = {
+#		stegosauruses = 80
+#	}
+}

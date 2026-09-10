@@ -2,7 +2,7 @@ tail_weapons = {
 	name = "Tail Weapons"
 	subcategory = tail
 	portrait = building_slot
-	icon = beaver
+	icon = frog
 	period = devonian
 	cultural_groups = {
 		avian
@@ -10,15 +10,19 @@ tail_weapons = {
 	}
 }
 
-#tail_spikes = {
-#	name = "Tail Spikes"
-#	subcategory = tail_weapons
-#	portrait = building_slot
-#	icon = lion
-#	period = triassic
-#	year = -155000000 #Stegosaurus
-#	prerequisites = {
-#		spikes
-#		tail_weapons
-#	}
-#}
+tail_spikes = {
+	name = "Tail Spikes"
+	subcategory = tail
+	portrait = building_slot
+	icon = frog
+	period = triassic
+	year = -155000000 #Stegosaurus
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		spikes
+		tail_weapons
+	}
+}
