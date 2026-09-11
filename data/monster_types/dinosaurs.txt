@@ -1,0 +1,9 @@
+stegosaurus = {
+	name = "Stegosaurus"
+	species = stegosaurus
+	damage_dice = 5d4
+	experience_award = 9000
+	attribute_ratings = {
+		intelligence = animal
+	}
+}
