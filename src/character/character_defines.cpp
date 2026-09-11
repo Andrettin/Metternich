@@ -232,24 +232,79 @@ int character_defines::get_battle_attack_conversion_points_for_max_damage(int ma
 	return std::prev(find_iterator)->second;
 }
 
-int character_defines::get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const
+int character_defines::get_battle_attack_category_modifier(const bool is_character) const
 {
-	int attack_conversion_points = this->get_battle_attack_conversion_points_for_to_hit_bonus(to_hit_bonus);
-	attack_conversion_points += this->get_battle_attack_conversion_points_for_max_damage(max_damage);
+	int category_modifier = 0;
 
-	const auto find_iterator = this->battle_melee_per_attack_conversion_points.upper_bound(attack_conversion_points);
-	assert_throw(find_iterator != this->battle_melee_per_attack_conversion_points.begin());
-	return std::prev(find_iterator)->second;
+	if (is_character) {
+		category_modifier -= 1;
+	}
+
+	return category_modifier;
 }
 
-int character_defines::get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const
+int character_defines::get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage, const bool is_character) const
 {
 	int attack_conversion_points = this->get_battle_attack_conversion_points_for_to_hit_bonus(to_hit_bonus);
 	attack_conversion_points += this->get_battle_attack_conversion_points_for_max_damage(max_damage);
 
-	const auto find_iterator = this->battle_missile_per_attack_conversion_points.upper_bound(attack_conversion_points);
+	auto find_iterator = this->battle_melee_per_attack_conversion_points.upper_bound(attack_conversion_points);
+	assert_throw(find_iterator != this->battle_melee_per_attack_conversion_points.begin());
+
+	find_iterator = std::prev(find_iterator);
+
+	const int category_modifier = this->get_battle_attack_category_modifier(is_character);
+	if (category_modifier > 0) {
+		for (int i = 0; i < category_modifier; ++i) {
+			if (std::next(find_iterator) == this->battle_melee_per_attack_conversion_points.end()) {
+				break;
+			}
+
+			find_iterator = std::next(find_iterator);
+		}
+	} else if (category_modifier < 0) {
+		for (int i = 0; i < std::abs(category_modifier); ++i) {
+			if (find_iterator == this->battle_melee_per_attack_conversion_points.begin()) {
+				break;
+			}
+
+			find_iterator = std::prev(find_iterator);
+		}
+	}
+
+	return find_iterator->second;
+}
+
+int character_defines::get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage, const bool is_character) const
+{
+	int attack_conversion_points = this->get_battle_attack_conversion_points_for_to_hit_bonus(to_hit_bonus);
+	attack_conversion_points += this->get_battle_attack_conversion_points_for_max_damage(max_damage);
+
+	auto find_iterator = this->battle_missile_per_attack_conversion_points.upper_bound(attack_conversion_points);
 	assert_throw(find_iterator != this->battle_missile_per_attack_conversion_points.begin());
-	return std::prev(find_iterator)->second;
+
+	find_iterator = std::prev(find_iterator);
+
+	const int category_modifier = this->get_battle_attack_category_modifier(is_character);
+	if (category_modifier > 0) {
+		for (int i = 0; i < category_modifier; ++i) {
+			if (std::next(find_iterator) == this->battle_missile_per_attack_conversion_points.end()) {
+				break;
+			}
+
+			find_iterator = std::next(find_iterator);
+		}
+	} else if (category_modifier < 0) {
+		for (int i = 0; i < std::abs(category_modifier); ++i) {
+			if (find_iterator == this->battle_missile_per_attack_conversion_points.begin()) {
+				break;
+			}
+
+			find_iterator = std::prev(find_iterator);
+		}
+	}
+
+	return find_iterator->second;
 }
 
 int character_defines::get_battle_defense_for_armor_class(const int armor_class) const

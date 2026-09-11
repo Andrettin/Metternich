@@ -14,8 +14,10 @@
 #include "game/battle_resolution_type.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/armor_class_modifier_effect.h"
+#include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
+#include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "species/species.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"
@@ -219,16 +221,22 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 
 	decimillesimal_int armor_class;
-	decimillesimal_int natural_armor_class;
 	decimillesimal_int movement;
+	decimillesimal_int max_damage = decimillesimal_int(this->get_monster_type()->get_damage_dice().get_maximum_result());
+	decimillesimal_int natural_armor_class;
+	decimillesimal_int to_hit_bonus;
 
 	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
 		if (const armor_class_modifier_effect *armor_class_modifier_effect = dynamic_cast<const metternich::armor_class_modifier_effect *>(modifier_effect)) {
 			armor_class += armor_class_modifier_effect->get_value();
-		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
-			natural_armor_class += natural_armor_class_modifier_effect->get_value();
+		} else if (const damage_bonus_modifier_effect *damage_bonus_modifier_effect = dynamic_cast<const metternich::damage_bonus_modifier_effect *>(modifier_effect)) {
+			max_damage += damage_bonus_modifier_effect->get_value();
 		} else if (const movement_modifier_effect *movement_modifier_effect = dynamic_cast<const metternich::movement_modifier_effect *>(modifier_effect)) {
 			movement += movement_modifier_effect->get_value();
+		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
+			natural_armor_class += natural_armor_class_modifier_effect->get_value();
+		} else if (const to_hit_bonus_modifier_effect *to_hit_bonus_modifier_effect = dynamic_cast<const metternich::to_hit_bonus_modifier_effect *>(modifier_effect)) {
+			to_hit_bonus += to_hit_bonus_modifier_effect->get_value();
 		}
 	}
 
@@ -239,6 +247,9 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 	if (movement != 0) {
 		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);
+	}
+	if (max_damage != 0 || to_hit_bonus != 0) {
+		this->stats[military_unit_stat::melee] = centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_damage.to_int(), false));
 	}
 }
 

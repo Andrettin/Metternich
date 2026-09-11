@@ -115,8 +115,9 @@ public:
 
 	int get_battle_attack_conversion_points_for_to_hit_bonus(int to_hit_bonus) const;
 	int get_battle_attack_conversion_points_for_max_damage(int max_damage) const;
-	int get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const;
-	int get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage) const;
+	int get_battle_attack_category_modifier(const bool is_character) const;
+	int get_battle_melee_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage, const bool is_character) const;
+	int get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage, const bool is_character) const;
 	int get_battle_defense_for_armor_class(const int armor_class) const;
 
 signals:

@@ -627,7 +627,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 	int attack = 0;
 	if (ranged) {
 		if (target->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()));
+			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::missile).to_int();
 		}
@@ -635,7 +635,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 		attack = this->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
 		if (target->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()));
+			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::melee).to_int();
 		}

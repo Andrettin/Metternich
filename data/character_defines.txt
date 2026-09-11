@@ -198,20 +198,22 @@ battle_attack_conversion_points_per_max_damage = {
 
 battle_melee_per_attack_conversion_points = {
 	0 = 1
-	7 = 2
-	10 = 3
-	15 = 4
-	25 = 5
-	36 = 7
+	4 = 2
+	7 = 3
+	10 = 4
+	15 = 5
+	25 = 7
+	36 = 8
 }
 
 battle_missile_per_attack_conversion_points = {
 	0 = 1
-	7 = 2
-	10 = 4
+	4 = 2
+	7 = 4
+	10 = 5
 	15 = 5
-	25 = 5
-	36 = 7
+	25 = 7
+	36 = 8
 }
 
 battle_defense_per_armor_class = {
