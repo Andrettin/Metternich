@@ -8,6 +8,7 @@ spearmen = {
 		defense = 5
 		movement = 4
 		range = 1
+		saving_throw = 4
 	}
 	commodity_costs = {
 		manpower = 1
@@ -29,6 +30,7 @@ pikemen = {
 		defense = 3
 		melee = 3
 		range = 1
+		saving_throw = 4
 	}
 	free_promotions = {
 		pike

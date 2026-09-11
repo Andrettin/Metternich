@@ -10,6 +10,7 @@ catapult = {
 		melee = 1
 		missile = 5
 		range = 3
+		saving_throw = 5
 	}
 	battle_resolution_types = {
 		pennant

@@ -17,6 +17,7 @@
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
+#include "script/modifier_effect/saving_throw_modifier_effect.h"
 #include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "species/species.h"
 #include "technology/technology.h"
@@ -224,6 +225,7 @@ void military_unit_type::initialize_stats_from_monster_type()
 	decimillesimal_int movement;
 	decimillesimal_int max_damage = decimillesimal_int(this->get_monster_type()->get_damage_dice().get_maximum_result());
 	decimillesimal_int natural_armor_class;
+	decimillesimal_int saving_throw;
 	decimillesimal_int to_hit_bonus;
 
 	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
@@ -235,6 +237,8 @@ void military_unit_type::initialize_stats_from_monster_type()
 			movement += movement_modifier_effect->get_value();
 		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
 			natural_armor_class += natural_armor_class_modifier_effect->get_value();
+		} else if (const saving_throw_modifier_effect *saving_throw_modifier_effect = dynamic_cast<const metternich::saving_throw_modifier_effect *>(modifier_effect)) {
+			saving_throw += saving_throw_modifier_effect->get_value();
 		} else if (const to_hit_bonus_modifier_effect *to_hit_bonus_modifier_effect = dynamic_cast<const metternich::to_hit_bonus_modifier_effect *>(modifier_effect)) {
 			to_hit_bonus += to_hit_bonus_modifier_effect->get_value();
 		}
@@ -250,6 +254,9 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 	if (max_damage != 0 || to_hit_bonus != 0) {
 		this->stats[military_unit_stat::melee] = centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_damage.to_int(), false));
+	}
+	if (saving_throw != 0) {
+		this->stats[military_unit_stat::saving_throw] = centesimal_int(saving_throw);
 	}
 }
 

@@ -31,6 +31,7 @@ knights = {
 		melee = 4
 		charge = 6
 		range = 1
+		saving_throw = 6
 	}
 	battle_resolution_types = {
 		pennant

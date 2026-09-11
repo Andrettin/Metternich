@@ -11,6 +11,7 @@ archers = {
 		melee = 2
 		missile = 4
 		range = 3
+		saving_throw = 5
 	}
 	battle_resolution_types = {
 		pennant
@@ -45,6 +46,7 @@ crossbowmen = {
 		melee = 2
 		missile = 4
 		range = 3
+		saving_throw = 5
 	}
 	commodity_costs = {
 		wealth = 2gb
