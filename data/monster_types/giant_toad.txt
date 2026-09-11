@@ -6,11 +6,4 @@ giant_toad = {
 	attribute_ratings = {
 		intelligence = animal
 	}
-	modifier = {
-		hit_dice = 2d8+4
-		armor_class = 4
-		to_hit_bonus = 1
-		saving_throw_bonus = 4
-		movement = 6
-	}
 }

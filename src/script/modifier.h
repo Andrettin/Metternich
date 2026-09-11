@@ -40,6 +40,11 @@ public:
 	std::string get_string(const scope_type *scope, const int multiplier = 1, const size_t indent = 0, const std::string &separator = "\n") const;
 	std::string get_single_line_string(const scope_type *scope, const int multiplier = 1) const;
 
+	const std::vector<std::unique_ptr<modifier_effect<scope_type>>> &get_modifier_effects() const
+	{
+		return this->modifier_effects;
+	}
+
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);
 
 private:

@@ -2,13 +2,21 @@
 
 #include "unit/military_unit_type.h"
 
+#include "character/character_defines.h"
+#include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
 #include "game/battle.h"
 #include "game/battle_resolution_type.h"
+#include "script/modifier.h"
+#include "script/modifier_effect/armor_class_modifier_effect.h"
+#include "script/modifier_effect/movement_modifier_effect.h"
+#include "script/modifier_effect/natural_armor_class_modifier_effect.h"
+#include "species/species.h"
 #include "technology/technology.h"
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_class.h"
@@ -90,6 +98,10 @@ void military_unit_type::initialize()
 	if (this->required_technology != nullptr) {
 		assert_throw(this->get_unit_class() != nullptr);
 		this->required_technology->add_enabled_military_unit(this);
+	}
+
+	if (this->get_monster_type() != nullptr) {
+		this->initialize_stats_from_monster_type();
 	}
 
 	named_data_entry::initialize();
@@ -182,6 +194,52 @@ bool military_unit_type::is_ship() const
 	}
 
 	return this->get_unit_class()->is_ship();
+}
+
+void military_unit_type::initialize_stats_from_monster_type()
+{
+	assert_throw(this->get_monster_type() != nullptr);
+
+	std::vector<const modifier_effect<const character> *> modifier_effects;
+
+	if (this->get_monster_type()->get_modifier() != nullptr) {
+		for (const auto &modifier_effect : this->get_monster_type()->get_modifier()->get_modifier_effects()) {
+			modifier_effects.push_back(modifier_effect.get());
+		}
+	}
+
+	if (this->get_monster_type()->get_species() != nullptr && this->get_monster_type()->get_species()->get_modifier() != nullptr) {
+		for (const auto &modifier_effect : this->get_monster_type()->get_species()->get_modifier()->get_modifier_effects()) {
+			modifier_effects.push_back(modifier_effect.get());
+		}
+	}
+
+	if (modifier_effects.empty()) {
+		return;
+	}
+
+	decimillesimal_int armor_class;
+	decimillesimal_int natural_armor_class;
+	decimillesimal_int movement;
+
+	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
+		if (const armor_class_modifier_effect *armor_class_modifier_effect = dynamic_cast<const metternich::armor_class_modifier_effect *>(modifier_effect)) {
+			armor_class += armor_class_modifier_effect->get_value();
+		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
+			natural_armor_class += natural_armor_class_modifier_effect->get_value();
+		} else if (const movement_modifier_effect *movement_modifier_effect = dynamic_cast<const metternich::movement_modifier_effect *>(modifier_effect)) {
+			movement += movement_modifier_effect->get_value();
+		}
+	}
+
+	armor_class += natural_armor_class;
+
+	if (armor_class != 0) {
+		this->stats[military_unit_stat::defense] = centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(armor_class.to_int()));
+	}
+	if (movement != 0) {
+		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);
+	}
 }
 
 centesimal_int military_unit_type::get_stat_for_domain(const military_unit_stat stat, const domain *domain) const

@@ -36,11 +36,10 @@ giant_toads = {
 	unit_class = medium_predators
 	culture = frog
 	icon = frog
+	monster_type = giant_toad
 	required_technology = amphibians
 	stats = {
 		hit_points = 2
-		movement = 1
-		defense = 3
 		melee = 2
 		range = 1
 	}

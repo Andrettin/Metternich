@@ -7,4 +7,11 @@ giant_toad = {
 		peltobatrachus
 		platyhystrix
 	}
+	modifier = {
+		hit_dice = 2d8+4
+		natural_armor_class = 4
+		to_hit_bonus = 3
+		saving_throw_bonus = 4
+		movement = 6
+	}
 }
