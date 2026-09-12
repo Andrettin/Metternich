@@ -104,7 +104,7 @@ DialogBase {
 						anchors.top: unit_icon.top
 						anchors.topMargin: 4 * scale_factor
 						anchors.left: unit_icon.right
-						anchors.leftMargin: 4 * scale_factor
+						anchors.leftMargin: 4 * scale_factor + (64 * scale_factor - unit_icon.width) / 2
 					}
 				}
 			}
