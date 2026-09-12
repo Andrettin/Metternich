@@ -27,3 +27,13 @@ ice_toad = {
 		intelligence = average
 	}
 }
+
+poisonous_toad = {
+	name = "Poisonous Toad"
+	species = poisonous_toad
+	damage_dice = 1d4+1
+	experience_award = 175
+	attribute_ratings = {
+		intelligence = animal
+	}
+}
