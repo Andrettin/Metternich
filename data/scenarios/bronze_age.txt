@@ -8,6 +8,7 @@ bronze_age = {
 		assyria
 		babylonia
 		egypt
+		hittite_empire
 		phoenicia
 	}
 }
