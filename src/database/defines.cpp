@@ -350,19 +350,9 @@ int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_si
 
 const centesimal_int &defines::get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const
 {
-	const auto find_iterator = this->military_unit_hit_points_per_hit_dice.find(hit_dice_count);
-	if (find_iterator != this->military_unit_hit_points_per_hit_dice.end()) {
-		return find_iterator->second;
-	}
-
-	//use the last value if no specific one was found (if the hit dice count is greater than the hit dice count for the last value)
-	const auto last_iterator = this->military_unit_hit_points_per_hit_dice.rbegin();
-	if (hit_dice_count > last_iterator->first) {
-		return last_iterator->second;
-	}
-
-	static constexpr centesimal_int zero;
-	return zero;
+	const auto find_iterator = this->military_unit_hit_points_per_hit_dice.upper_bound(hit_dice_count);
+	assert_throw(find_iterator != this->military_unit_hit_points_per_hit_dice.begin());
+	return std::prev(find_iterator)->second;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const
