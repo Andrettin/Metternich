@@ -467,6 +467,11 @@ void domain_game_data::apply_ruler_history(const QDate &start_date)
 QCoro::Task<void> domain_game_data::do_turn()
 {
 	try {
+		if (!this->is_alive()) {
+			//the domain has disappeared in the meanwhile, e.g. due to being conquered
+			co_return;
+		}
+
 		for (const province *province : this->get_provinces()) {
 			co_await province->get_game_data()->do_turn();
 		}
