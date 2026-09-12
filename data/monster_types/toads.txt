@@ -1,3 +1,13 @@
+fire_toad = {
+	name = "Fire Toad"
+	species = fire_toad
+	damage_dice = 2d8 #small fireball
+	experience_award = 270
+	attribute_ratings = {
+		intelligence = low
+	}
+}
+
 giant_toad = {
 	name = "Giant Toad"
 	species = giant_toad
@@ -8,12 +18,12 @@ giant_toad = {
 	}
 }
 
-fire_toad = {
-	name = "Fire Toad"
-	species = fire_toad
-	damage_dice = 2d8 #small fireball
+ice_toad = {
+	name = "Ice Toad"
+	species = ice_toad
+	damage_dice = 3d4
 	experience_award = 270
 	attribute_ratings = {
-		intelligence = low
+		intelligence = average
 	}
 }

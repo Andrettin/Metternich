@@ -51,6 +51,16 @@ giant_toads = {
 	required_technology = amphibians
 }
 
+ice_toads = {
+	name = "Ice Toads"
+	unit_class = large_predators
+	culture = frog
+	icon = blue_frog
+	monster_type = ice_toad
+	#manpower_commodity = ice_toads
+	required_technology = amphibians
+}
+
 jackals = {
 	name = "Jackals"
 	unit_class = small_predators

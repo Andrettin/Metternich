@@ -1,0 +1,16 @@
+ice_toad = {
+	name = "Ice Toad"
+	supertaxon = amphibia
+	era = holocene
+	creature_size = large
+	pre_evolutions = { #same as the Frog
+		peltobatrachus
+		platyhystrix
+	}
+	modifier = {
+		hit_dice = 5d8
+		natural_armor_class = 6
+		to_hit_bonus = 5
+		movement = 9
+	}
+}

@@ -35,6 +35,19 @@ frog = {
 	}
 }
 
+blue_frog = {
+	filepath = "icons/animals/frog.png"
+	hue_rotation = 105
+	hue_ignored_colors = {
+		{ 0 46 143 }
+		{ 27 83 170 }
+		{ 61 105 203 }
+	}
+	character_conditions = {
+		species = ice_toad
+	}
+}
+
 red_frog = {
 	filepath = "icons/animals/frog.png"
 	hue_rotation = -105
