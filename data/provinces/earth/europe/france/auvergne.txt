@@ -12,9 +12,11 @@ auvergne = {
 	}
 	
 	history = {
-		owner = arvernia
-		culture = arverni
-		religion = druidic
+		classical_antiquity = {
+			owner = arvernia
+			culture = arverni
+			religion = druidic
+		}
 		
 		time_of_augustus = {
 			#inhabited by the Arverni in the time of Augustus; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 38-39.
