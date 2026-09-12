@@ -7,3 +7,17 @@ phorusrhacus = {
 		intelligence = animal
 	}
 }
+
+raven = {
+	name = "Raven"
+	species = raven
+	damage_dice = 1d2-5
+	attributes = {
+		strength = 1
+		dexterity = 15
+		constitution = 10
+		intelligence = 2
+		wisdom = 14
+		charisma = 6
+	}
+}
