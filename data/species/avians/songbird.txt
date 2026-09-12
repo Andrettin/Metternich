@@ -1,0 +1,9 @@
+songbird = {
+	name = "Songbird"
+	supertaxon = aves
+	era = holocene
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}

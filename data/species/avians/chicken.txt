@@ -1,0 +1,9 @@
+chicken = {
+	name = "Chicken"
+	supertaxon = aves
+	era = holocene
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}

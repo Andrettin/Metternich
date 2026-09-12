@@ -1,0 +1,8 @@
+parrot = {
+	name = "Parrot"
+	supertaxon = aves
+	era = holocene
+	pre_evolutions = {
+		hoatzin
+	}
+}

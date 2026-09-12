@@ -1,0 +1,9 @@
+pelican = {
+	name = "Pelican"
+	supertaxon = aves
+	era = holocene
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}

@@ -1,0 +1,9 @@
+owl = {
+	name = "Owl"
+	supertaxon = aves
+	era = holocene
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}
