@@ -8,6 +8,21 @@ phorusrhacus = {
 	}
 }
 
+crow = {
+	name = "Crow"
+	species = crow
+	damage_dice = 1d1
+	experience_award = 15
+	attributes = { #as raven
+		strength = 1
+		dexterity = 15
+		constitution = 10
+		intelligence = 2
+		wisdom = 14
+		charisma = 6
+	}
+}
+
 raven = {
 	name = "Raven"
 	species = raven
