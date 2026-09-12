@@ -71,6 +71,15 @@ poisonous_toads = {
 	required_technology = amphibians
 }
 
+dimetrodons = {
+	name = "Dimetrodons"
+	unit_class = large_predators
+	icon = frog
+	monster_type = dimetrodon
+	#manpower_commodity = dimetrodons
+	required_technology = dorsal_fin
+}
+
 jackals = {
 	name = "Jackals"
 	unit_class = small_predators

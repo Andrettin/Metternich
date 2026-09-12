@@ -1,0 +1,9 @@
+dimetrodon = {
+	name = "Dimetrodon"
+	species = dimetrodon
+	damage_dice = 3d4+3
+	experience_award = 120 #65-175
+	attribute_ratings = {
+		intelligence = animal
+	}
+}

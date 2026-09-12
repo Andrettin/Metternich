@@ -10,3 +10,19 @@ spiny_fins = {
 		mammal
 	}
 }
+
+dorsal_fin = {
+	name = "Dorsal Fin"
+	subcategory = body
+	portrait = building_slot
+	icon = frog
+	period = permian
+	cultural_groups = {
+		avian
+		mammal
+	}
+	prerequisites = {
+		spines
+		back_protection
+	}
+}

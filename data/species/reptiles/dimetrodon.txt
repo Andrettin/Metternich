@@ -1,10 +1,17 @@
 dimetrodon = {
 	name = "Dimetrodon"
 	supertaxon = reptilia
+	creature_size = large
 	pre_evolutions = {
 		edaphosaurus
 		hylonomus
 		petrolacosaurus
 		sphenacodon
+	}
+	modifier = {
+		hit_dice = 4d8 #3-5 hit dice
+		natural_armor_class = 6
+		to_hit_bonus = 3 #5 if it has 5 hit dice
+		movement = 12
 	}
 }
