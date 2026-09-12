@@ -10,5 +10,6 @@ adelobasileus = { #Source: Spencer G. Lucas and Zhexi Luo, "Adelobasileus from t
 		lystrosaurus
 		thrinaxodon
 	}
+	
 	#scansorial insectivore
 }

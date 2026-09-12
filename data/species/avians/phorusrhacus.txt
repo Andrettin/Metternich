@@ -1,0 +1,8 @@
+phorusrhacus = {
+	name = "Phorusrhacus"
+	supertaxon = aves
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}

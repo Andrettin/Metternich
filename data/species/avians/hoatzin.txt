@@ -1,0 +1,8 @@
+hoatzin = {
+	name = "Hoatzin"
+	supertaxon = aves
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}

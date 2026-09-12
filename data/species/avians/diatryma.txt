@@ -1,0 +1,8 @@
+diatryma = {
+	name = "Diatryma"
+	supertaxon = aves
+	pre_evolutions = {
+		ichthyornis
+		presbyornis
+	}
+}
