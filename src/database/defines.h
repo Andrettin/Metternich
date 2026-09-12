@@ -52,6 +52,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(archimedes::decimillesimal_int default_minimap_tile_scale MEMBER default_minimap_tile_scale READ get_default_minimap_tile_scale NOTIFY changed)
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn READ get_default_months_per_turn NOTIFY changed)
+	Q_PROPERTY(int evolutionary_months_per_turn MEMBER evolutionary_months_per_turn READ get_evolutionary_months_per_turn NOTIFY changed)
 	Q_PROPERTY(int battle_map_scale MEMBER battle_map_scale READ get_battle_map_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
@@ -147,6 +148,11 @@ public:
 	int get_default_months_per_turn() const
 	{
 		return this->default_months_per_turn;
+	}
+
+	int get_evolutionary_months_per_turn() const
+	{
+		return this->evolutionary_months_per_turn;
 	}
 
 	int get_months_per_turn(const int current_year) const
@@ -458,6 +464,7 @@ private:
 	decimillesimal_int default_minimap_tile_scale = decimillesimal_int(1);
 	QDate default_start_date;
 	int default_months_per_turn = 3;
+	int evolutionary_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
 	std::chrono::seconds combat_round_duration;
 	std::chrono::seconds battle_round_duration;

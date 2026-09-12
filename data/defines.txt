@@ -11,6 +11,7 @@ default_space_terrain = space
 
 default_start_date = 1815.11.20
 default_months_per_turn = 3
+evolutionary_months_per_turn = 120000 #10,000 years
 #months_per_turn_from_year = { #months per turn after a certain year has been reached
 #	-419200000 = 12000000
 #	-4000 = 480

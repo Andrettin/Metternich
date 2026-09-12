@@ -366,6 +366,7 @@ private:
 	const metternich::scenario *scenario = nullptr;
 	QDate date; //the current date in the game
 	int turn = 1;
+	bool evolutionary = true; //whether the game is in its evolutionary stage, i.e. before sapience was developed
 	std::vector<domain *> domains; //the domain currently in the game, i.e. those with at least 1 province or holding
 	std::vector<domain *> countries; //the domains which have at least 1 province
 	const character *player_character = nullptr;

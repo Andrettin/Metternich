@@ -554,6 +554,7 @@ QCoro::Task<void> game::clear_coro()
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
+		this->evolutionary = true;
 
 		this->exploration_diplomatic_map_image = QImage();
 		this->exploration_changed = false;
@@ -2102,7 +2103,11 @@ void game::do_trade()
 
 int game::get_current_months_per_turn() const
 {
-	return defines::get()->get_months_per_turn(this->get_year());
+	if (this->evolutionary) {
+		return defines::get()->get_evolutionary_months_per_turn();
+	} else {
+		return defines::get()->get_months_per_turn(this->get_year());
+	}
 }
 
 int game::get_current_quarters_per_turn() const
@@ -2178,6 +2183,10 @@ QVariantList game::get_domains_qvariant_list() const
 void game::add_domain(domain *domain)
 {
 	this->domains.push_back(domain);
+
+	if (!domain->is_clade() && this->evolutionary) {
+		this->evolutionary = false;
+	}
 
 	if (this->is_running()) {
 		emit domains_changed();
