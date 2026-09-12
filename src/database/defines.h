@@ -3,6 +3,7 @@
 #include "database/defines_base.h"
 #include "economy/commodity_container.h"
 #include "map/terrain_adjacency.h"
+#include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 #include "util/dice.h"
 #include "util/singleton.h"
@@ -417,6 +418,8 @@ public:
 	const dice &get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const;
 	int64_t get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
+	const centesimal_int &get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const;
+
 	const std::vector<std::unique_ptr<battle_resolution_table>> &get_battle_resolution_tables() const
 	{
 		return this->battle_resolution_tables;
@@ -503,6 +506,7 @@ private:
 	std::map<int, int> province_population_per_level;
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, int64_t> domain_maintenance_cost_per_domain_size;
+	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
 	std::vector<std::unique_ptr<battle_resolution_table>> battle_resolution_tables;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;

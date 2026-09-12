@@ -151,6 +151,16 @@ event_trigger_none_random_weights = {
 	yearly_pulse = 36
 }
 
+military_unit_hit_points_per_hit_dice = { #hit points per monster type hit dice
+	0 = 0.05
+	1 = 0.1
+	2 = 0.2
+	4 = 0.3
+	7 = 0.4
+	11 = 0.5
+	19 = 0.6
+}
+
 battle_resolution_tables = {
 	{
 		crossed_swords = {

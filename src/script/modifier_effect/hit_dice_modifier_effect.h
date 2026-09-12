@@ -46,6 +46,11 @@ public:
 		return std::format("{}: {}{}", this->get_base_string(scope), multiplier > 0 ? "+" : "-", this->hit_dice.to_display_string());
 	}
 
+	const dice &get_hit_dice() const
+	{
+		return this->hit_dice;
+	}
+
 private:
 	dice hit_dice;
 };

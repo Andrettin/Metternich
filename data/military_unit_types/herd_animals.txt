@@ -84,12 +84,6 @@ stegosauruses = {
 	unit_class = huge_herd_animals
 	icon = frog
 	monster_type = stegosaurus
+	#manpower_commodity = stegosauruses
 	required_technology = tail_spikes
-	stats = {
-		hit_points = 4
-		range = 1
-	}
-#	commodity_costs = {
-#		stegosauruses = 80
-#	}
 }

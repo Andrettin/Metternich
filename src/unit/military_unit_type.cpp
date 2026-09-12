@@ -15,6 +15,7 @@
 #include "script/modifier.h"
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
+#include "script/modifier_effect/hit_dice_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
 #include "script/modifier_effect/range_modifier_effect.h"
@@ -104,7 +105,7 @@ void military_unit_type::initialize()
 		this->required_technology->add_enabled_military_unit(this);
 	}
 
-	if (this->get_monster_type() != nullptr) {
+	if (this->monster_type != nullptr) {
 		this->initialize_stats_from_monster_type();
 	}
 
@@ -202,18 +203,18 @@ bool military_unit_type::is_ship() const
 
 void military_unit_type::initialize_stats_from_monster_type()
 {
-	assert_throw(this->get_monster_type() != nullptr);
+	assert_throw(this->monster_type != nullptr);
 
 	std::vector<const modifier_effect<const character> *> modifier_effects;
 
-	if (this->get_monster_type()->get_modifier() != nullptr) {
-		for (const auto &modifier_effect : this->get_monster_type()->get_modifier()->get_modifier_effects()) {
+	if (this->monster_type->get_modifier() != nullptr) {
+		for (const auto &modifier_effect : this->monster_type->get_modifier()->get_modifier_effects()) {
 			modifier_effects.push_back(modifier_effect.get());
 		}
 	}
 
-	if (this->get_monster_type()->get_species() != nullptr && this->get_monster_type()->get_species()->get_modifier() != nullptr) {
-		for (const auto &modifier_effect : this->get_monster_type()->get_species()->get_modifier()->get_modifier_effects()) {
+	if (this->monster_type->get_species() != nullptr && this->monster_type->get_species()->get_modifier() != nullptr) {
+		for (const auto &modifier_effect : this->monster_type->get_species()->get_modifier()->get_modifier_effects()) {
 			modifier_effects.push_back(modifier_effect.get());
 		}
 	}
@@ -223,8 +224,9 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 
 	decimillesimal_int armor_class;
+	int hit_dice_count = 0;
 	decimillesimal_int movement;
-	decimillesimal_int max_damage = decimillesimal_int(this->get_monster_type()->get_damage_dice().get_maximum_result());
+	decimillesimal_int max_damage = decimillesimal_int(this->monster_type->get_damage_dice().get_maximum_result());
 	decimillesimal_int natural_armor_class;
 	decimillesimal_int range;
 	decimillesimal_int saving_throw;
@@ -235,6 +237,8 @@ void military_unit_type::initialize_stats_from_monster_type()
 			armor_class += armor_class_modifier_effect->get_value();
 		} else if (const damage_bonus_modifier_effect *damage_bonus_modifier_effect = dynamic_cast<const metternich::damage_bonus_modifier_effect *>(modifier_effect)) {
 			max_damage += damage_bonus_modifier_effect->get_value();
+		} else if (const hit_dice_modifier_effect *hit_dice_modifier_effect = dynamic_cast<const metternich::hit_dice_modifier_effect *>(modifier_effect)) {
+			hit_dice_count += hit_dice_modifier_effect->get_hit_dice().get_count();
 		} else if (const movement_modifier_effect *movement_modifier_effect = dynamic_cast<const metternich::movement_modifier_effect *>(modifier_effect)) {
 			movement += movement_modifier_effect->get_value();
 		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
@@ -257,6 +261,24 @@ void military_unit_type::initialize_stats_from_monster_type()
 	const centesimal_int battle_range = battle::length_to_battle_range(effective_range);
 	const bool ranged = battle_range.to_int() > 1;
 	this->stats[military_unit_stat::range] = battle_range;
+
+	centesimal_int hit_points = defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
+	hit_points *= 10;
+	int manpower_needed = 100;
+
+	if (hit_points.to_int() < 2) {
+		hit_points *= 2;
+		manpower_needed *= 2;
+	} else if (hit_points.to_int() > 4) {
+		manpower_needed *= 4;
+		manpower_needed /= hit_points.to_int();
+		hit_points = centesimal_int(4);
+	}
+	assert_throw(hit_points.get_fractional_value() == 0);
+	this->stats[military_unit_stat::hit_points] = hit_points;
+	if (this->manpower_commodity != nullptr) {
+		this->commodity_costs[this->manpower_commodity] = manpower_needed;
+	}
 
 	if (movement != 0) {
 		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);

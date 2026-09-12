@@ -37,13 +37,8 @@ giant_toads = {
 	culture = frog
 	icon = frog
 	monster_type = giant_toad
+	#manpower_commodity = giant_toads
 	required_technology = amphibians
-	stats = {
-		hit_points = 2
-	}
-#	commodity_costs = {
-#		giant_toads = 100
-#	}
 }
 
 jackals = {

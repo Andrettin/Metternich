@@ -9,6 +9,7 @@
 Q_MOC_INCLUDE("character/monster_type.h")
 Q_MOC_INCLUDE("culture/cultural_group.h")
 Q_MOC_INCLUDE("culture/culture.h")
+Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
@@ -16,11 +17,11 @@ Q_MOC_INCLUDE("unit/military_unit_class.h")
 
 namespace metternich {
 
-class military_unit_class;
 class cultural_group;
 class culture;
 class domain;
 class icon;
+class military_unit_class;
 class monster_type;
 class promotion;
 class sound;
@@ -38,7 +39,8 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* cultural_group MEMBER cultural_group NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
-	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type READ get_monster_type NOTIFY changed)
+	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type NOTIFY changed)
+	Q_PROPERTY(const metternich::commodity* manpower_commodity MEMBER manpower_commodity NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* melee_attack_sound MEMBER melee_attack_sound READ get_melee_attack_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* ranged_attack_sound MEMBER ranged_attack_sound READ get_ranged_attack_sound NOTIFY changed)
@@ -84,11 +86,6 @@ public:
 	const metternich::icon *get_icon() const
 	{
 		return this->icon;
-	}
-
-	const metternich::monster_type *get_monster_type() const
-	{
-		return this->monster_type;
 	}
 
 	void initialize_stats_from_monster_type();
@@ -169,6 +166,7 @@ private:
 	metternich::cultural_group *cultural_group = nullptr;
 	const metternich::icon *icon = nullptr;
 	const metternich::monster_type *monster_type = nullptr; //the monster type for the individuals composing this unit type
+	const commodity *manpower_commodity = nullptr;
 	std::vector<battle_resolution_type> battle_resolution_types;
 	std::map<military_unit_stat, centesimal_int> stats;
 	technology *required_technology = nullptr;
