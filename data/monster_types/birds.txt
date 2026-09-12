@@ -1,0 +1,9 @@
+phorusrhacus = {
+	name = "Phorusrhacus"
+	species = phorusrhacus
+	damage_dice = 2d6 #beak attack
+	experience_award = 650
+	attribute_ratings = {
+		intelligence = animal
+	}
+}

@@ -1,8 +1,15 @@
 phorusrhacus = {
 	name = "Phorusrhacus"
 	supertaxon = aves
+	creature_size = large
 	pre_evolutions = {
 		ichthyornis
 		presbyornis
+	}
+	modifier = {
+		hit_dice = 7d8+7
+		natural_armor_class = 4
+		to_hit_bonus = 7
+		movement = 15
 	}
 }
