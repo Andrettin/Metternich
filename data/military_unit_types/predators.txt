@@ -31,6 +31,16 @@ coyotes = {
 #	}
 }
 
+fire_toads = {
+	name = "Fire Toads"
+	unit_class = small_predators
+	culture = frog
+	icon = red_frog
+	monster_type = fire_toad
+	#manpower_commodity = fire_toads
+	required_technology = amphibians
+}
+
 giant_toads = {
 	name = "Giant Toads"
 	unit_class = medium_predators
