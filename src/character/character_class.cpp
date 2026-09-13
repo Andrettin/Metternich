@@ -173,8 +173,8 @@ void character_class::check() const
 
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
 		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
-		if (saving_throw_bonus_table == nullptr) {
-			throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus table for saving throw type \"{}\".", this->get_identifier(), saving_throw_type->get_identifier()));
+		if (saving_throw_bonus_table == nullptr && saving_throw_type->get_base_saving_throw_type() == nullptr) {
+			throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus table for base saving throw type \"{}\".", this->get_identifier(), saving_throw_type->get_identifier()));
 		}
 	}
 
@@ -316,6 +316,11 @@ std::string character_class::get_level_modifier_string(const int level, const me
 
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
 		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
+
+		if (saving_throw_bonus_table == nullptr) {
+			continue;
+		}
+
 		const int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
 
 		if (saving_throw_bonus != 0) {

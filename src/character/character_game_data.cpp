@@ -1666,6 +1666,10 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
 		const level_bonus_table *saving_throw_bonus_table = character_class->get_saving_throw_bonus_table(saving_throw_type);
 
+		if (saving_throw_bonus_table == nullptr) {
+			continue;
+		}
+
 		int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier;
 		if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
 			//derived saving throw type bonus tables are applied with the base saving throw type bonus subtracted from it
