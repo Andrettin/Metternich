@@ -18,6 +18,7 @@ public:
 	static constexpr const char database_folder[] = "creature_sizes";
 
 	static void initialize_all();
+	static const creature_size *get_by_weight(const int weight);
 
 	explicit creature_size(const std::string &identifier);
 	~creature_size();
@@ -36,6 +37,16 @@ public:
 		return this->max_dimension;
 	}
 
+	int get_min_weight() const
+	{
+		return this->min_weight;
+	}
+
+	int get_max_weight() const
+	{
+		return this->max_weight;
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -44,6 +55,8 @@ public:
 private:
 	int min_dimension = 0; //in inches
 	int max_dimension = 0; //in inches
+	int min_weight = 0; //in ounces; this is exclusive
+	int max_weight = 0; //in ounces; this is inclusive
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 
