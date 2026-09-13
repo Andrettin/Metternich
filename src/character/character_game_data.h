@@ -319,6 +319,17 @@ public:
 		this->set_reputation(this->get_reputation() + change);
 	}
 
+	const creature_size *get_creature_size() const;
+	[[nodiscard]] QCoro::Task<void> set_creature_size(const metternich::creature_size *creature_size);
+
+	int get_weight() const
+	{
+		return this->weight;
+	}
+
+	[[nodiscard]] QCoro::Task<void> set_weight(const int weight);
+	[[nodiscard]] QCoro::Task<void> change_weight(const int change);
+
 	int get_stat_value(const character_stat *stat) const
 	{
 		const auto find_iterator = this->stat_values.find(stat);
@@ -1077,6 +1088,8 @@ signals:
 	void bloodline_changed();
 	void bloodline_strength_changed();
 	void reputation_changed();
+	void creature_size_changed();
+	void weight_changed();
 	void stat_values_changed();
 	void health_changed();
 	void max_health_changed();
@@ -1131,6 +1144,8 @@ private:
 	const metternich::bloodline *bloodline = nullptr;
 	int bloodline_strength = 0;
 	int reputation = 0;
+	const metternich::creature_size *creature_size = nullptr;
+	int weight = 0; //in ounces
 	data_entry_map<character_stat, int> stat_values;
 	data_entry_map<character_attribute, std::map<character_modifier_type, std::vector<int>>> attribute_modifiers;
 	int hit_dice_count = 0;

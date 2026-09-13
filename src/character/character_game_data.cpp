@@ -144,6 +144,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->bloodline_strength = std::stoi(value);
 	} else if (key == "reputation") {
 		this->reputation = std::stoi(value);
+	} else if (key == "creature_size") {
+		this->creature_size = creature_size::get(value);
+	} else if (key == "weight") {
+		this->weight = std::stoi(value);
 	} else if (key == "hit_dice_count") {
 		this->hit_dice_count = std::stoi(value);
 	} else if (key == "health") {
@@ -327,6 +331,8 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_property("bloodline_strength", std::to_string(this->get_bloodline_strength()));
 	}
 	data.add_property("reputation", std::to_string(this->get_reputation()));
+	data.add_property("creature_size", this->get_creature_size()->get_identifier());
+	data.add_property("weight", std::to_string(this->get_weight()));
 
 	if (!this->stat_values.empty()) {
 		gsml_data stats_data("stats");
@@ -666,12 +672,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		co_await species->get_modifier()->apply(this->character);
 	}
 
-	const creature_size *creature_size = species->get_creature_size();
-	assert_throw(creature_size != nullptr);
-	if (creature_size->get_modifier() != nullptr) {
-		co_await creature_size->get_modifier()->apply(this->character, 1);
-	}
-
 	const culture *culture = this->character->get_culture();
 	if (culture != nullptr && culture->get_character_modifier() != nullptr) {
 		co_await culture->get_character_modifier()->apply(this->character);
@@ -803,6 +803,8 @@ QCoro::Task<void> character_game_data::generate_attributes()
 			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
 		}
 
+		const int old_weight = this->get_weight();
+
 		bool valid_result = false;
 		while (!valid_result) {
 			int base_result = random::get()->roll_dice(attribute_dice);
@@ -819,6 +821,21 @@ QCoro::Task<void> character_game_data::generate_attributes()
 			valid_result = result >= min_result && result <= max_result;
 			if (valid_result) {
 				co_await this->change_attribute_value(attribute, base_result);
+			}
+		}
+
+		const int new_weight = this->get_weight();
+		if (new_weight != old_weight) {
+			//this attribute changes weight, so we should adjust it according to the species creature size
+			const metternich::creature_size *species_creature_size = species->get_creature_size();
+			assert_throw(species_creature_size != nullptr);
+
+			while (species_creature_size->get_max_weight() != 0 && this->get_weight() > species_creature_size->get_max_weight() && this->get_attribute_value(attribute) > 0) {
+				co_await this->change_attribute_value(attribute, -1);
+			}
+
+			while (species_creature_size->get_min_weight() != 0 && this->get_weight() <= species_creature_size->get_min_weight()) {
+				co_await this->change_attribute_value(attribute, 1);
 			}
 		}
 	}
@@ -1858,6 +1875,52 @@ void character_game_data::inherit_bloodline_from(const metternich::character *ot
 	this->set_bloodline_strength(other_character->get_game_data()->get_bloodline_strength());
 }
 
+const creature_size *character_game_data::get_creature_size() const
+{
+	return this->creature_size;
+}
+
+QCoro::Task<void> character_game_data::set_creature_size(const metternich::creature_size *creature_size)
+{
+	if (creature_size == this->get_creature_size()) {
+		co_return;
+	}
+
+	if (this->get_creature_size() != nullptr && this->get_creature_size()->get_modifier() != nullptr) {
+		co_await this->get_creature_size()->get_modifier()->apply(this->character, -1);
+	}
+
+	this->creature_size = creature_size;
+
+	if (this->get_creature_size() != nullptr && this->get_creature_size()->get_modifier() != nullptr) {
+		co_await this->get_creature_size()->get_modifier()->apply(this->character, 1);
+	}
+
+	if (game::get()->is_running()) {
+		emit creature_size_changed();
+	}
+}
+
+QCoro::Task<void> character_game_data::set_weight(const int weight)
+{
+	if (weight == this->get_weight()) {
+		co_return;
+	}
+
+	this->weight = weight;
+
+	co_await this->set_creature_size(creature_size::get_by_weight(this->get_weight()));
+
+	if (game::get()->is_running()) {
+		emit weight_changed();
+	}
+}
+
+QCoro::Task<void> character_game_data::change_weight(const int change)
+{
+	co_await this->set_weight(this->get_weight() + change);
+}
+
 void character_game_data::set_reputation(const int reputation)
 {
 	if (reputation == this->get_reputation()) {
@@ -2377,7 +2440,7 @@ void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_typ
 	}
 }
 
-const dice &character_game_data::get_damage_dice(const creature_size *target_size) const
+const dice &character_game_data::get_damage_dice(const metternich::creature_size *target_size) const
 {
 	const item *weapon = this->get_weapon();
 	if (weapon != nullptr) {
@@ -2436,7 +2499,7 @@ void character_game_data::change_weapon_damage_bonus(const item_type *weapon_typ
 	}
 }
 
-int character_game_data::get_max_damage(const creature_size *target_size) const
+int character_game_data::get_max_damage(const metternich::creature_size *target_size) const
 {
 	return this->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus();
 }

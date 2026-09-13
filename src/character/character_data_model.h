@@ -78,6 +78,8 @@ public:
 
 	void reset_model();
 	void create_divine_domain_rows();
+	void create_size_row();
+	void update_size_row();
 	void create_attribute_type_rows(const character_attribute_type type);
 	void update_attribute_type_rows(const character_attribute_type type);
 	void create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows);
@@ -122,6 +124,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	std::vector<std::unique_ptr<const character_data_row>> top_rows;
+	character_data_row *size_row = nullptr;
 	std::map<character_attribute_type, character_data_row *> attribute_type_rows;
 	character_data_row *mana_row = nullptr;
 	character_data_row *craft_row = nullptr;

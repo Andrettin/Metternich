@@ -143,6 +143,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
 		disconnect(this->character->get_game_data(), &character_game_data::max_craft_changed, this, &character_data_model::update_craft_row);
+		disconnect(this->character->get_game_data(), &character_game_data::weight_changed, this, &character_data_model::update_size_row);
 		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -172,6 +173,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
 		connect(this->character->get_game_data(), &character_game_data::max_craft_changed, this, &character_data_model::update_craft_row);
+		connect(this->character->get_game_data(), &character_game_data::weight_changed, this, &character_data_model::update_size_row);
 		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -199,6 +201,7 @@ void character_data_model::reset_model()
 	this->resetting_model = true;
 
 	this->top_rows.clear();
+	this->size_row = nullptr;
 	this->attribute_type_rows.clear();
 	this->mana_row = nullptr;
 	this->craft_row = nullptr;
@@ -312,6 +315,8 @@ void character_data_model::reset_model()
 
 		this->top_rows.push_back(std::make_unique<character_data_row>("Challenge Rating:", std::to_string(character_game_data->get_challenge_rating())));
 
+		this->create_size_row();
+
 		this->create_attribute_type_rows(character_attribute_type::main);
 		this->create_attribute_type_rows(character_attribute_type::personality);
 
@@ -366,6 +371,26 @@ void character_data_model::create_divine_domain_rows()
 	}
 
 	this->top_rows.push_back(std::move(top_row));
+}
+
+void character_data_model::create_size_row()
+{
+	auto row = std::make_unique<character_data_row>("Size:");
+	this->size_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_size_row();
+}
+
+void character_data_model::update_size_row()
+{
+	assert_throw(this->size_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	this->size_row->value = std::format("{} ({})", character_game_data->get_creature_size()->get_name(), string::from_weight(character_game_data->get_weight(), false));
+
+	this->on_top_row_changed(this->size_row);
 }
 
 void character_data_model::create_attribute_type_rows(const character_attribute_type type)

@@ -285,6 +285,10 @@ const species *military_unit::get_species() const
 
 const creature_size *military_unit::get_creature_size() const
 {
+	if (this->get_character() != nullptr) {
+		return this->get_character()->get_game_data()->get_creature_size();
+	}
+
 	if (this->get_species() == nullptr) {
 		return nullptr;
 	}
@@ -686,7 +690,7 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 	}
 
 	//perform attack between characters
-	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice(target_character->get_species()->get_creature_size())) + this->get_character()->get_game_data()->get_damage_bonus();
+	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice(target_character->get_game_data()->get_creature_size())) + this->get_character()->get_game_data()->get_damage_bonus();
 	co_await target_character->get_game_data()->change_health(-damage);
 }
 

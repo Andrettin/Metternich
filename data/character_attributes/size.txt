@@ -1,0 +1,81 @@
+size = {
+	name = "Size"	
+	type = main
+	value_modifiers = {
+		1 = {
+			weight = 10lb
+		}
+		2 = {
+			weight = 10lb
+		}
+		3 = {
+			weight = 10lb
+		}
+		4 = {
+			weight = 10lb
+		}
+		5 = {
+			weight = 10lb
+		}
+		6 = {
+			weight = 10lb
+		}
+		7 = {
+			weight = 10lb
+		}
+		8 = {
+			weight = 10lb
+		}
+		9 = {
+			weight = 10lb
+		}
+		10 = {
+			weight = 10lb
+		}
+		11 = {
+			weight = 11lb
+		}
+		12 = {
+			weight = 11lb
+		}
+		13 = {
+			weight = 12lb
+		}
+		14 = {
+			weight = 13lb
+		}
+		15 = {
+			weight = 15lb
+		}
+		16 = {
+			weight = 16lb
+		}
+		17 = {
+			weight = 18lb
+		}
+		18 = {
+			weight = 20lb
+		}
+		19 = {
+			weight = 22lb
+		}
+		20 = {
+			weight = 24lb
+		}
+		60 = {
+			weight = 4489lb
+		}
+		70 = {
+			weight = 18873lb
+		}
+		80 = {
+			weight = 48952lb
+		}
+		90 = {
+			weight = 126968lb
+		}
+		100 = {
+			weight = 329325lb
+		}
+	}
+}
