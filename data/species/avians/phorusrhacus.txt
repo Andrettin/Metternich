@@ -1,7 +1,7 @@
 phorusrhacus = {
 	name = "Phorusrhacus"
 	supertaxon = aves
-	creature_size = large
+	default_creature_size = large
 	pre_evolutions = {
 		ichthyornis
 		presbyornis

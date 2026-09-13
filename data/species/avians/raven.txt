@@ -2,7 +2,7 @@ raven = {
 	name = "Raven"
 	supertaxon = aves
 	era = holocene
-	creature_size = tiny
+	default_creature_size = tiny
 	pre_evolutions = {
 		ichthyornis #seems sensible, given the songbird is set to descend from this
 		presbyornis #seems sensible, given the songbird is set to descend from this

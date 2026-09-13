@@ -2,7 +2,7 @@ astrapotherium = {
 	name = "Astrapotherium"
 	supertaxon = mammalia
 	era = miocene
-	creature_size = large #as rhinoceros
+	default_creature_size = large #as rhinoceros
 	pre_evolutions = {
 		didolodus
 	}

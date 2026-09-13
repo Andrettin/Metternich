@@ -3,7 +3,7 @@ tyrannosaurus = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no
 	supertaxon = tyrannosaurus
 	specific_name = "rex"
 	era = cretaceous
-	creature_size = gargantuan
+	default_creature_size = gargantuan
 	#description = "The mighty tyrannosaurus rex was a fierce predator. The goddess Gaia brought a few of them to Jotunheim, where they originated the first draconic creatures."
 	pre_evolutions = {
 		#should be ancestors to all Tyrannosauruses

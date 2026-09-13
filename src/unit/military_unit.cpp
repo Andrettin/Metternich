@@ -293,7 +293,7 @@ const creature_size *military_unit::get_creature_size() const
 		return nullptr;
 	}
 
-	return this->get_species()->get_creature_size();
+	return this->get_species()->get_default_creature_size();
 }
 
 QCoro::Task<void> military_unit::set_province(const metternich::province *province)

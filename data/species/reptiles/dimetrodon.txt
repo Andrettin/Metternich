@@ -1,7 +1,7 @@
 dimetrodon = {
 	name = "Dimetrodon"
 	supertaxon = reptilia
-	creature_size = large
+	default_creature_size = large
 	pre_evolutions = {
 		edaphosaurus
 		hylonomus

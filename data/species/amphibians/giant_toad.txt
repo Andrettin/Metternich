@@ -2,7 +2,7 @@ giant_toad = {
 	name = "Giant Toad"
 	supertaxon = amphibia
 	era = holocene
-	creature_size = medium
+	default_creature_size = medium
 	pre_evolutions = { #same as the Frog
 		peltobatrachus
 		platyhystrix

@@ -3,7 +3,7 @@ rhinoceros = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_t
 	supertaxon = rhinoceros
 	specific_name = "unicornis"
 	era = holocene
-	creature_size = large
+	default_creature_size = large
 	pre_evolutions = {
 		aceratherium #earlier rhinocerotid
 		hispanotherium #earlier rhinocerotid

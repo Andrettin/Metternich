@@ -2,7 +2,7 @@ ice_toad = {
 	name = "Ice Toad"
 	supertaxon = amphibia
 	era = holocene
-	creature_size = large
+	default_creature_size = large
 	pre_evolutions = { #same as the Frog
 		peltobatrachus
 		platyhystrix

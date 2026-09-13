@@ -60,7 +60,7 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});
 	} else {
-		data_entry::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
 }
 
@@ -79,7 +79,7 @@ void taxon_base::initialize()
 		this->given_name_generator->propagate_ungendered_names();
 	}
 
-	data_entry::initialize();
+	named_data_entry::initialize();
 }
 
 const taxon *taxon_base::get_supertaxon_of_rank(const taxonomic_rank rank) const

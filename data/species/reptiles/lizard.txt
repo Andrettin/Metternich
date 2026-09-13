@@ -2,7 +2,7 @@ lizard = {
 	name = "Lizard"
 	supertaxon = reptilia
 	era = holocene
-	creature_size = tiny
+	default_creature_size = tiny
 	pre_evolutions = {
 		petrolacosaurus
 		thadeosaurus

@@ -2,7 +2,7 @@ wolf = {
 	name = "Wolf"
 	supertaxon = canidae
 	era = holocene
-	creature_size = small
+	default_creature_size = small
 	#ecological_niche = predator
 	pre_evolutions = {
 		osteoborus

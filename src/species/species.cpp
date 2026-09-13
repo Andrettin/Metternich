@@ -205,6 +205,21 @@ void species::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void species::initialize()
+{
+	if (this->get_default_creature_size() != nullptr) {
+		if (this->get_min_creature_size() == nullptr) {
+			this->min_creature_size = this->get_default_creature_size();
+		}
+
+		if (this->get_max_creature_size() == nullptr) {
+			this->max_creature_size = this->get_default_creature_size();
+		}
+	}
+
+	taxon_base::initialize();
+}
+
 void species::check() const
 {
 	if (this->get_supertaxon() == nullptr) {
@@ -212,11 +227,11 @@ void species::check() const
 	}
 
 	if (this->get_era() == geological_era::none && !this->is_ethereal()) {
-		//throw std::runtime_error("Non-ethereal species \"" + this->get_identifier() + "\" has no era.");
+		//throw std::runtime_error(std::format("Non-ethereal species \"{}\" has no era.", this->get_identifier()));
 	}
 
-	if (this->get_creature_size() == nullptr) {
-		log::log_error(std::format("Species \"{}\" has no creature size.", this->get_identifier()));
+	if (this->get_default_creature_size() == nullptr) {
+		log::log_error(std::format("Species \"{}\" has no default creature size.", this->get_identifier()));
 	}
 
 	for (const species *pre_evolution : this->get_pre_evolutions()) {

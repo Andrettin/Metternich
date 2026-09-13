@@ -33,7 +33,9 @@ class species final : public taxon_base, public data_type<species>
 	Q_PROPERTY(bool sapient MEMBER sapient READ is_sapient)
 	Q_PROPERTY(bool asexual MEMBER asexual READ is_asexual)
 	Q_PROPERTY(bool domestic MEMBER domestic READ is_domestic)
-	Q_PROPERTY(const metternich::creature_size* creature_size MEMBER creature_size READ get_creature_size NOTIFY changed)
+	Q_PROPERTY(const metternich::creature_size* default_creature_size MEMBER default_creature_size READ get_default_creature_size NOTIFY changed)
+	Q_PROPERTY(const metternich::creature_size* min_creature_size MEMBER min_creature_size READ get_min_creature_size NOTIFY changed)
+	Q_PROPERTY(const metternich::creature_size* max_creature_size MEMBER max_creature_size READ get_max_creature_size NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "species";
@@ -51,6 +53,7 @@ public:
 	~species();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	virtual taxonomic_rank get_rank() const override;
@@ -104,9 +107,19 @@ public:
 		return this->domestic;
 	}
 
-	const metternich::creature_size *get_creature_size() const
+	const creature_size *get_default_creature_size() const
 	{
-		return this->creature_size;
+		return this->default_creature_size;
+	}
+
+	const creature_size *get_min_creature_size() const
+	{
+		return this->min_creature_size;
+	}
+
+	const creature_size *get_max_creature_size() const
+	{
+		return this->max_creature_size;
 	}
 
 	const std::vector<const species *> &get_pre_evolutions() const
@@ -168,7 +181,9 @@ private:
 	bool sapient = false;
 	bool asexual = false;
 	bool domestic = false;
-	const metternich::creature_size *creature_size = nullptr;
+	const creature_size *default_creature_size = nullptr;
+	const creature_size *min_creature_size = nullptr;
+	const creature_size *max_creature_size = nullptr;
 	std::vector<const species *> pre_evolutions; //species from which this one can evolve
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;
