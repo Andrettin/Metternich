@@ -66,6 +66,7 @@ void preferences::save() const
 	data.add_property("sound_effects_enabled", string::from_bool(this->are_sound_effects_enabled()));
 	data.add_property("music_enabled", string::from_bool(this->is_music_enabled()));
 	data.add_property("scaling_algorithm_enabled", string::from_bool(this->is_scaling_algorithm_enabled()));
+	data.add_property("metric_measurements_enabled", string::from_bool(this->are_metric_measurements_enabled()));
 
 	data.add_child("game_rules", this->get_game_rules()->to_gsml_data());
 
@@ -137,6 +138,17 @@ void preferences::set_scaling_algorithm_enabled(const bool enabled)
 	this->scaling_algorithm_enabled = enabled;
 
 	emit scaling_algorithm_enabled_changed();
+}
+
+void preferences::set_metric_measurements_enabled(const bool enabled)
+{
+	if (enabled == this->are_metric_measurements_enabled()) {
+		return;
+	}
+
+	this->metric_measurements_enabled = enabled;
+
+	emit metric_measurements_enabled_changed();
 }
 
 }

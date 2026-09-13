@@ -18,6 +18,7 @@
 #include "character/trait_type.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/preferences.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "item/item.h"
@@ -388,7 +389,7 @@ void character_data_model::update_size_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->size_row->value = std::format("{} ({})", character_game_data->get_creature_size()->get_name(), string::from_weight(character_game_data->get_weight(), false));
+	this->size_row->value = std::format("{} ({})", character_game_data->get_creature_size()->get_name(), string::from_weight(character_game_data->get_weight(), false, preferences::get()->are_metric_measurements_enabled()));
 
 	this->on_top_row_changed(this->size_row);
 }
@@ -659,7 +660,7 @@ void character_data_model::update_range_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->range_row->value = string::from_length(character_game_data->get_effective_range(), false);
+	this->range_row->value = string::from_length(character_game_data->get_effective_range(), false, preferences::get()->are_metric_measurements_enabled());
 
 	this->on_top_row_changed(this->range_row);
 }

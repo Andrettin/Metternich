@@ -63,6 +63,20 @@ MenuBase {
 			}
 			
 		}
+		
+		CustomCheckBox {
+			id: metric_measurements_enabled_checkbox
+			text: qsTr("Metric Measurements")
+			checked: metternich.preferences.metric_measurements_enabled
+			checkable: true
+			onCheckedChanged: {
+				if (metternich.preferences.metric_measurements_enabled !== checked) {
+					metternich.preferences.metric_measurements_enabled = checked
+					options_changed = true
+				}
+			}
+			
+		}
 	}
 	
 	TextButton {

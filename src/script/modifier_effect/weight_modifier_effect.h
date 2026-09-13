@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/preferences.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/string_conversion_util.h"
 
@@ -39,7 +40,7 @@ public:
 		Q_UNUSED(ignore_decimals);
 
 		const decimillesimal_int value = this->get_multiplied_value(multiplier);
-		return std::format("{}{}", value >= 0 ? "+" : "0", string::from_weight(value.to_int(), false));
+		return std::format("{}{}", value >= 0 ? "+" : "0", string::from_weight(value.to_int(), false, preferences::get()->are_metric_measurements_enabled()));
 	}
 };
 
