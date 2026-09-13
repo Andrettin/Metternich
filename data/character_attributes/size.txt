@@ -62,6 +62,33 @@ size = {
 		20 = {
 			weight = 24lb
 		}
+		21 = {
+			weight = 26lb
+		}
+		22 = {
+			weight = 29lb
+		}
+		23 = {
+			weight = 32lb
+		}
+		24 = {
+			weight = 35lb
+		}
+		25 = {
+			weight = 38lb
+		}
+		26 = {
+			weight = 42lb
+		}
+		27 = {
+			weight = 46lb
+		}
+		50 = {
+			weight = 1732lb
+		}
+		55 = {
+			weight = 2787lb
+		}
 		60 = {
 			weight = 4489lb
 		}
