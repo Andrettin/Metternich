@@ -1,0 +1,19 @@
+medium_size = {
+	size = 6 #increase in size necessary to go from the lowest small size value to the lowest medium size value
+}
+
+large_size = {
+	size = 20 #increase in size necessary to go from the lowest medium size value to the lowest large size value
+}
+
+huge_size = {
+	size = 23
+}
+
+gargantuan_size = {
+	size = 30
+}
+
+colossal_size = {
+	size = 20
+}

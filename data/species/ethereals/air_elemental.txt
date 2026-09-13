@@ -3,6 +3,19 @@ air_elemental = {
 	supertaxon = auran
 	era = holocene
 	sapient = true
-	default_creature_size = large
-	max_creature_size = huge
+	default_creature_size = small #can grow further by gaining air elemental levels
+	min_attribute_values = {
+		intelligence = 5
+	}
+	max_attribute_values = {
+		intelligence = 7
+	}
+	character_class_level_limits = {
+		air_elemental = U
+	}
+	modifier = {
+		dexterity = 4
+		intelligence = -4
+		movement = 36 #flying
+	}
 }

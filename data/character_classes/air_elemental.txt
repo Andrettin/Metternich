@@ -1,0 +1,86 @@
+air_elemental = {
+	name = "Air Elemental"
+	attribute = dexterity
+	max_level = 14
+	starting_age_category = intuitive
+	craft_bonus_table = craft_bonus
+	reputation_bonus_table = medium_reputation_bonus #as warrior
+	to_hit_bonus_table = air_elemental_to_hit_bonus
+	saving_throw_bonus_tables = {
+		fortitude = air_elemental_fortitude_bonus
+		reflex = air_elemental_reflex_bonus
+		will = air_elemental_will_bonus
+	}
+	class_skill_groups = {
+		general
+	}
+	class_skills = {
+		#listen
+		#spot
+	}
+	allowed_species = {
+		air_elemental
+	}
+	health_bonus_per_level = {
+		1 = 1d8
+		2 = 1d8
+		3 = 1d8
+		4 = 1d8
+		5 = 0
+		6 = 0
+		7 = 1d8
+		8 = 0
+		9 = 1d8
+		10 = 0
+		11 = 1d8
+		12 = 0
+		13 = 1d8
+		14 = 0
+	}
+	level_modifiers = {
+		1 = {
+			trait_of_type = feat
+			natural_armor_class = 3
+			trait = improved_initiative
+		}
+		2 = {
+			dexterity = 2
+		}
+		3 = {
+			constitution = 2
+			trait_of_type = feat
+		}
+		4 = {
+			scripted_modifier_effect = medium_size
+			strength = 2
+		}
+		5 = {
+			constitution = 2
+		}
+		6 = {
+			dexterity = 2
+		}
+		7 = {
+			constitution = 2
+		}
+		8 = {
+			dexterity = 2
+		}
+		9 = {
+			trait_of_type = feat
+		}
+		10 = {
+			strength = 2
+			dexterity = 2
+		}
+		11 = {
+			natural_armor_class = 1
+		}
+		12 = {
+			dexterity = 2
+		}
+		13 = {
+			scripted_modifier_effect = large_size
+		}
+	}
+}
