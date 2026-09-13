@@ -1878,7 +1878,7 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
-	return this->domain->get_type() == domain_type::polity;
+	return this->domain->get_type() != domain_type::tribe;
 }
 
 QString domain_game_data::get_unplayable_reason() const
@@ -1895,8 +1895,8 @@ QString domain_game_data::get_unplayable_reason() const
 		return "You cannot play as a domain under anarchy";
 	}
 
-	if (this->domain->get_type() != domain_type::polity) {
-		return "You cannot play as a non-polity domain";
+	if (this->domain->get_type() == domain_type::tribe) {
+		return "You cannot play as an inherently tribal domain";
 	}
 
 	return QString();
