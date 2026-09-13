@@ -7,6 +7,22 @@ raven = {
 		ichthyornis #seems sensible, given the songbird is set to descend from this
 		presbyornis #seems sensible, given the songbird is set to descend from this
 	}
+	min_attribute_values = {
+		strength = 1
+		dexterity = 15
+		constitution = 10
+		intelligence = 2
+		wisdom = 14
+		charisma = 6
+	}
+	max_attribute_values = {
+		strength = 1
+		dexterity = 15
+		constitution = 10
+		intelligence = 2
+		wisdom = 14
+		charisma = 6
+	}
 	modifier = {
 		hit_dice = 1d2
 		natural_armor_class = 3

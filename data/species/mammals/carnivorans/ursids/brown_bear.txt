@@ -9,4 +9,10 @@ brown_bear = {
 		hemicyon
 		miacis
 	}
+	min_attribute_values = {
+		size = 25
+	}
+	max_attribute_values = {
+		size = 25
+	}
 }
