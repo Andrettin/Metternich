@@ -83,6 +83,36 @@ size = {
 		27 = {
 			weight = 46lb
 		}
+		28 = {
+			weight = 51lb
+		}
+		29 = {
+			weight = 56lb
+		}
+		30 = {
+			weight = 62lb
+		}
+		31 = {
+			weight = 68lb
+		}
+		32 = {
+			weight = 75lb
+		}
+		33 = {
+			weight = 82lb
+		}
+		34 = {
+			weight = 90lb
+		}
+		35 = {
+			weight = 99lb
+		}
+		40 = {
+			weight = 667lb
+		}
+		45 = {
+			weight = 1074lb
+		}
 		50 = {
 			weight = 1732lb
 		}
