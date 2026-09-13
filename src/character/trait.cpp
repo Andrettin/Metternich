@@ -42,7 +42,7 @@ void trait::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			trait_type *trait_type = trait_type::get(value);
 			trait_type->add_trait(this);
-			this->types.push_back(trait_type);
+			this->add_type(trait_type);
 		}
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {

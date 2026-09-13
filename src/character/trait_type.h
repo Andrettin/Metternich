@@ -30,6 +30,7 @@ public:
 	~trait_type();
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void initialize() override;
 	virtual void check() const override;
 
 	int get_max_traits() const
@@ -52,15 +53,17 @@ public:
 		return this->modifier.get();
 	}
 
-	const std::vector<const trait *> &get_traits() const
+	const std::vector<trait *> &get_traits()
 	{
 		return this->traits;
 	}
 
-	void add_trait(const trait *trait)
+	const std::vector<const trait *> &get_traits() const
 	{
-		this->traits.push_back(trait);
+		return reinterpret_cast<const std::vector<const trait *> &>(this->traits);
 	}
+
+	void add_trait(trait *trait);
 
 signals:
 	void changed();
@@ -68,9 +71,10 @@ signals:
 private:
 	int max_traits = 0; //the maximum amount of traits of this type a character can acquire
 	int none_weight = 0;
+	std::vector<trait_type *> upper_types;
 	std::unique_ptr<const and_condition<character>> gain_conditions;
 	std::unique_ptr<const modifier<const character>> modifier;
-	std::vector<const trait *> traits;
+	std::vector<trait *> traits;
 };
 
 }

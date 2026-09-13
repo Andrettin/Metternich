@@ -60,6 +60,11 @@ public:
 		return this->types;
 	}
 
+	void add_type(const trait_type *type)
+	{
+		this->types.push_back(type);
+	}
+
 	int get_level() const
 	{
 		return this->level;

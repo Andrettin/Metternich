@@ -1,9 +1,19 @@
 proficiency = {
 	name = "Proficiency"
+	upper_types = {
+		feat
+	}
 }
 
 weapon_proficiency = {
 	name = "Weapon Proficiency"
+	upper_types = {
+		feat
+	}
+}
+
+feat = {
+	name = "Feat"
 }
 
 epic_proficiency = {
@@ -24,8 +34,8 @@ flaw = {
 		level == 1
 	}
 	modifier = {
-		trait_of_type = proficiency
-		trait_of_type = proficiency
+		trait_of_type = feat
+		trait_of_type = feat
 	}
 }
 
