@@ -27,7 +27,7 @@ bool item_class::is_weapon() const
 		return this->get_slot()->is_weapon();
 	}
 
-	return false;
+	return this->is_natural_weapon();
 }
 
 }

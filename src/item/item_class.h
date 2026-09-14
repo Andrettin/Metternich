@@ -14,6 +14,7 @@ class item_class final : public named_data_entry, public data_type<item_class>
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::item_slot* slot MEMBER slot READ get_slot NOTIFY changed)
+	Q_PROPERTY(bool natural_weapon MEMBER natural_weapon READ is_natural_weapon NOTIFY changed)
 	Q_PROPERTY(bool consumable MEMBER consumable READ is_consumable NOTIFY changed)
 	Q_PROPERTY(QString consume_verb READ get_consume_verb_qstring NOTIFY changed)
 
@@ -33,6 +34,11 @@ public:
 	}
 
 	bool is_weapon() const;
+
+	bool is_natural_weapon() const
+	{
+		return this->natural_weapon;
+	}
 
 	bool is_consumable() const
 	{
@@ -69,6 +75,7 @@ signals:
 
 private:
 	const item_slot *slot = nullptr;
+	bool natural_weapon = false;
 	bool consumable = false;
 	std::string consume_verb = "consume";
 	std::vector<const item_type *> item_types;

@@ -102,7 +102,7 @@ void item_type::check() const
 		throw std::runtime_error(std::format("Item type \"{}\" has no icon.", this->get_identifier()));
 	}
 
-	if (this->get_price() == 0) {
+	if (this->get_price() == 0 && !this->get_item_class()->is_natural_weapon()) {
 		throw std::runtime_error(std::format("Item type \"{}\" has no price.", this->get_identifier()));
 	}
 
