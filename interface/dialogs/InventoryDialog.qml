@@ -111,6 +111,26 @@ DialogBase {
 		slot_icon_identifier: "heater_shield"
 	}
 	
+	ItemSlotButton {
+		id: hoof_slot_icon_1
+		anchors.top: belt_slot_icon.top
+		anchors.left: belt_slot_icon.right
+		anchors.leftMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("hoof")
+		item_slot_index: 0
+		slot_icon_identifier: "sack_2"
+	}
+	
+	ItemSlotButton {
+		id: hoof_slot_icon_2
+		anchors.top: hoof_slot_icon_1.top
+		anchors.left: hoof_slot_icon_1.right
+		anchors.leftMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("hoof")
+		item_slot_index: 1
+		slot_icon_identifier: "sack_2"
+	}
+	
 	Flickable {
 		id: inventory_grid_view
 		anchors.top: belt_slot_icon ? belt_slot_icon.bottom : (armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))

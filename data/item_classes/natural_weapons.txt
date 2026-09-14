@@ -1,0 +1,5 @@
+hoof = {
+	name = "Hoof"
+	slot = hoof
+	natural_weapon = true
+}

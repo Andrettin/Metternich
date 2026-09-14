@@ -77,6 +77,11 @@ centaur = {
 		cloak = 1
 		gloves = 1
 		ring = 2
+		hoof = 2
+	}
+	natural_weapons = {
+		hoof
+		hoof
 	}
 	modifier = {
 		constitution = 1
@@ -84,7 +89,6 @@ centaur = {
 		dexterity = -2
 		hit_points = 4
 		natural_armor_class = 5
-		#two front hooves dealing 1d6 of damage per round in addition to the weapon attack
 		#if equipped with a lance, can charge for double damage (in which case the front hooves cannot be used to attack simultaneously)
 	}
 }

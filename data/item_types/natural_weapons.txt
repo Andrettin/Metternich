@@ -1,0 +1,6 @@
+hoof = {
+	name = "Hoof"
+	item_class = hoof
+	icon = saber
+	damage_dice = 1d6
+}
