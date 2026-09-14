@@ -39,7 +39,3 @@ ring = {
 boots = {
 	name = "Boots"
 }
-
-hoof = {
-	name = "Hoof"
-}

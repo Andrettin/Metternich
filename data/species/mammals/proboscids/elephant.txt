@@ -7,7 +7,23 @@ elephant = {
 		phiomia
 		moeritherium #earlier proboscid
 	}
+	min_attribute_values = {
+		intelligence = 2
+	}
+	max_attribute_values = {
+		intelligence = 4
+	}
+	item_slots = {
+		tusk = 2
+	}
+	natural_weapons = {
+		elephant_tusk
+		elephant_tusk
+	}
 	modifier = {
+		hit_dice = 11d8
+		natural_armor_class = 4
+		to_hit_bonus = 11
 		movement = 15
 		trait = iron_will
 	}

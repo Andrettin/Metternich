@@ -4,3 +4,10 @@ hoof = {
 	icon = saber
 	damage_dice = 1d6
 }
+
+elephant_tusk = {
+	name = "Elephant Tusk"
+	item_class = tusk
+	icon = saber
+	damage_dice = 2d8
+}

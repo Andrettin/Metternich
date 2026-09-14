@@ -3,3 +3,9 @@ hoof = {
 	slot = hoof
 	natural_weapon = true
 }
+
+tusk = {
+	name = "Tusk"
+	slot = tusk
+	natural_weapon = true
+}

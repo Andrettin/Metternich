@@ -1,14 +1,5 @@
 african_elephant = {
 	name = "African Elephant"
 	species = elephant
-	damage_dice = 4d8 #2d8 for each tusk
 	experience_award = 4000
-	attribute_ratings = {
-		intelligence = semi
-	}
-	modifier = {
-		hit_dice = 11d8
-		natural_armor_class = 4
-		to_hit_bonus = 11
-	}
 }

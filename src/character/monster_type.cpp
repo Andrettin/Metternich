@@ -107,8 +107,8 @@ void monster_type::check() const
 	}
 
 	if (this->get_character_class() == nullptr) {
-		if (this->get_damage_dice().is_null() && this->get_items().empty()) {
-			throw std::runtime_error(std::format("Monster type \"{}\" has null damage dice, and no character class or items.", this->get_identifier()));
+		if (this->get_damage_dice().is_null() && this->get_items().empty() && this->get_species()->get_natural_weapons().empty()) {
+			throw std::runtime_error(std::format("Monster type \"{}\" has null damage dice, and no character class, items or natural weapons.", this->get_identifier()));
 		}
 	}
 }

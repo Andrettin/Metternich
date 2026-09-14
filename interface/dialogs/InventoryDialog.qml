@@ -131,6 +131,26 @@ DialogBase {
 		slot_icon_identifier: "sack_2"
 	}
 	
+	ItemSlotButton {
+		id: tusk_slot_icon_1
+		anchors.top: tusk_slot_icon_2.top
+		anchors.right: tusk_slot_icon_2.left
+		anchors.rightMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("tusk")
+		item_slot_index: 0
+		slot_icon_identifier: "sack_2"
+	}
+	
+	ItemSlotButton {
+		id: tusk_slot_icon_2
+		anchors.top: helmet_slot_icon.top
+		anchors.right: helmet_slot_icon.left
+		anchors.rightMargin: 8 * scale_factor
+		item_slot: metternich.get_item_slot("tusk")
+		item_slot_index: 1
+		slot_icon_identifier: "sack_2"
+	}
+	
 	Flickable {
 		id: inventory_grid_view
 		anchors.top: belt_slot_icon ? belt_slot_icon.bottom : (armor_slot_icon ? armor_slot_icon.bottom : (helmet_slot_icon ? helmet_slot_icon.bottom : title_item.bottom))

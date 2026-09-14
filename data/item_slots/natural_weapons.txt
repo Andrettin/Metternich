@@ -1,0 +1,7 @@
+hoof = {
+	name = "Hoof"
+}
+
+tusk = {
+	name = "Tusk"
+}
