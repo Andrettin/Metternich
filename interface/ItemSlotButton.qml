@@ -26,7 +26,7 @@ IconButton {
 	
 	onClicked: {
 		if (character === metternich.game.player_character) {
-			if (item !== null) {
+			if (item !== null && !item.type.item_class.natural_weapon) {
 				character.game_data.deequip_item(item)
 				status_text = item_name
 				middle_status_text = ""

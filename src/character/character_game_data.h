@@ -896,11 +896,11 @@ public:
 		return this->equip_item_coro(item);
 	}
 
-	[[nodiscard]] QCoro::Task<void> deequip_item_coro(item *item);
+	[[nodiscard]] QCoro::Task<void> deequip_item_coro(item *item, const bool reequip_natural_weapon);
 
 	Q_INVOKABLE QCoro::QmlTask deequip_item(metternich::item *item)
 	{
-		return this->deequip_item_coro(item);
+		return this->deequip_item_coro(item, true);
 	}
 
 	[[nodiscard]] QCoro::Task<void> on_item_equipped(const item *item, const int multiplier);

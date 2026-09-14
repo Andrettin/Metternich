@@ -936,6 +936,13 @@ QCoro::Task<void> character_game_data::add_starting_items()
 
 	data_entry_set<item_slot> filled_item_slots;
 
+	if (!this->character->get_species()->get_natural_weapons().empty()) {
+		for (const item_type *natural_weapon_type : this->character->get_species()->get_natural_weapons()) {
+			auto item = make_qunique<metternich::item>(natural_weapon_type, nullptr, nullptr, nullptr, nullptr);
+			co_await this->add_item(std::move(item));
+		}
+	}
+
 	if (!this->character->get_starting_items().empty()) {
 		co_await this->add_starting_items(this->character->get_starting_items(), filled_item_slots);
 	}
@@ -3737,6 +3744,11 @@ QVariantList character_game_data::get_unequipped_items_qvariant_list() const
 			continue;
 		}
 
+		if (item->get_type()->get_item_class()->is_natural_weapon()) {
+			//do not display natural weapons with the other unequipped items in the UI
+			continue;
+		}
+
 		unequipped_items.push_back(item.get());
 	}
 
@@ -3796,7 +3808,7 @@ QCoro::Task<qunique_ptr<item>> character_game_data::take_item(metternich::item *
 	}
 
 	if (item->is_equipped()) {
-		co_await this->deequip_item_coro(item);
+		co_await this->deequip_item_coro(item, true);
 	}
 
 	for (auto it = this->items.begin(); it != this->items.end(); ++it) {
@@ -3822,7 +3834,7 @@ QCoro::Task<void> character_game_data::remove_item_coro(item *item)
 	}
 
 	if (item->is_equipped()) {
-		co_await this->deequip_item_coro(item);
+		co_await this->deequip_item_coro(item, true);
 	}
 
 	vector::remove(this->items, item);
@@ -3946,13 +3958,26 @@ bool character_game_data::can_equip_item(const item_key &item_key, const bool ig
 				bool found_lower_price_item = false;
 
 				for (const metternich::item *other_item : this->get_equipped_items(slot)) {
-					if (other_item->get_price() < already_equipped_ignore_price_threshold.value()) {
+					if (other_item->get_price() < already_equipped_ignore_price_threshold.value() || other_item->get_type()->get_item_class()->is_natural_weapon()) {
 						found_lower_price_item = true;
 						break;
 					}
 				}
 
 				if (!found_lower_price_item) {
+					return false;
+				}
+			} else if (!item_key.type->get_item_class()->is_natural_weapon()) {
+				bool found_natural_weapon = false;
+
+				for (const metternich::item *other_item : this->get_equipped_items(slot)) {
+					if (other_item->get_type()->get_item_class()->is_natural_weapon()) {
+						found_natural_weapon = true;
+						break;
+					}
+				}
+
+				if (!found_natural_weapon) {
 					return false;
 				}
 			} else {
@@ -4036,7 +4061,7 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 	}
 
 	for (metternich::item *item_to_deequip : items_to_deequip) {
-		co_await this->deequip_item_coro(item_to_deequip);
+		co_await this->deequip_item_coro(item_to_deequip, false);
 	}
 
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
@@ -4052,7 +4077,7 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 	}
 }
 
-[[nodiscard]] QCoro::Task<void> character_game_data::deequip_item_coro(item *item)
+[[nodiscard]] QCoro::Task<void> character_game_data::deequip_item_coro(item *item, const bool reequip_natural_weapon)
 {
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
 	const auto slot_iterator = std::find(equipped_items.begin(), equipped_items.end(), item);
@@ -4067,6 +4092,24 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 	item->set_equipped(false);
 
 	co_await this->on_item_equipped(item, -1);
+
+	if (reequip_natural_weapon) {
+		//re-equip a natural weapon for the slot, if any is available
+		for (const qunique_ptr<metternich::item> &other_item : this->get_items()) {
+			if (!other_item->get_type()->get_item_class()->is_natural_weapon()) {
+				continue;
+			}
+
+			if (other_item.get() == item || other_item->is_equipped() || other_item->get_slot() != item->get_slot()) {
+				continue;
+			}
+
+			if (this->can_equip_item(other_item.get(), false)) {
+				co_await this->equip_item_coro(other_item.get());
+				break;
+			}
+		}
+	}
 
 	if (game::get()->is_running()) {
 		const int slot_count = this->character->get_species()->get_item_slot_count(item->get_slot());
