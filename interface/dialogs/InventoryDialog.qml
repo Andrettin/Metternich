@@ -9,6 +9,7 @@ DialogBase {
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
 	property var character: null
+	readonly property var domain: character ? character.game_data.domain : null
 	readonly property var items: character ? character.game_data.unequipped_items : []
 	readonly property int icon_button_width: 32 * scale_factor + 6 * scale_factor
 	readonly property int icon_button_height: 32 * scale_factor + 6 * scale_factor
@@ -20,7 +21,11 @@ DialogBase {
 		onEntered: {
 			if (typeof status_text !== 'undefined') {
 				status_text = ""
+			}
+			if (typeof middle_status_text !== 'undefined') {
 				middle_status_text = ""
+			}
+			if (typeof right_status_text !== 'undefined') {
 				right_status_text = ""
 			}
 		}
@@ -164,20 +169,24 @@ DialogBase {
 							if (hovered) {
 								status_text = item.name
 								if (character === metternich.game.player_character) {
-									if (item.type.item_class.slot !== null && character.game_data.can_equip_item(item, true)) {
-										middle_status_text = "Click to equip"
-									} else if (item.type.item_class.consumable && character.game_data.can_consume_item(item)) {
-										if (item.spell !== null && item.type.spell_learnable) {
-											middle_status_text = "Click to learn " + item.spell.name
-										} else {
-											middle_status_text = "Click to " + item.type.item_class.consume_verb
+									if (typeof middle_status_text !== 'undefined') {
+										if (item.type.item_class.slot !== null && character.game_data.can_equip_item(item, true)) {
+											middle_status_text = "Click to equip"
+										} else if (item.type.item_class.consumable && character.game_data.can_consume_item(item)) {
+											if (item.spell !== null && item.type.spell_learnable) {
+												middle_status_text = "Click to learn " + item.spell.name
+											} else {
+												middle_status_text = "Click to " + item.type.item_class.consume_verb
+											}
 										}
 									}
 								}
 								right_status_text = item.get_effects_string(character)
 							} else {
 								status_text = ""
-								middle_status_text = ""
+								if (typeof middle_status_text !== 'undefined') {
+									middle_status_text = ""
+								}
 								right_status_text = ""
 							}
 						}
@@ -200,7 +209,7 @@ DialogBase {
 			visible: inventory_dialog.character === metternich.game.player_character
 			
 			onClicked: {
-				item_shop_dialog.item_slots = country ? country.game_data.item_slots : []
+				item_shop_dialog.item_slots = domain ? domain.game_data.item_slots : []
 				item_shop_dialog.open()
 				item_shop_dialog.receive_focus()
 			}

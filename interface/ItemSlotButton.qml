@@ -29,8 +29,12 @@ IconButton {
 			if (item !== null && !item.type.item_class.natural_weapon) {
 				character.game_data.deequip_item(item)
 				status_text = item_name
-				middle_status_text = ""
-				right_status_text = ""
+				if (typeof middle_status_text !== 'undefined') {
+					middle_status_text = ""
+				}
+				if (typeof right_status_text !== 'undefined') {
+					right_status_text = ""
+				}
 			}
 		}
 	}
@@ -40,15 +44,23 @@ IconButton {
 			if (hovered) {
 				status_text = item_name
 				if (item !== null) {
-					if (character === metternich.game.player_character) {
-						middle_status_text = "Click to de-equip"
+					if (typeof middle_status_text !== 'undefined') {
+						if (character === metternich.game.player_character) {
+							middle_status_text = "Click to de-equip"
+						}
 					}
-					right_status_text = item.get_effects_string(character)
+					if (typeof right_status_text !== 'undefined') {
+						right_status_text = item.get_effects_string(character)
+					}
 				}
 			} else {
 				status_text = ""
-				middle_status_text = ""
-				right_status_text = ""
+				if (typeof middle_status_text !== 'undefined') {
+					middle_status_text = ""
+				}
+				if (typeof right_status_text !== 'undefined') {
+					right_status_text = ""
+				}
 			}
 		}
 	}
