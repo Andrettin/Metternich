@@ -609,30 +609,35 @@ void character_data_model::update_damage_rows()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	const dice base_damage_dice = character_game_data->get_damage_dice(character_defines::get()->get_default_creature_size());
-	dice damage_dice = base_damage_dice;
-	damage_dice.change_modifier(character_game_data->get_damage_bonus());
-	this->damage_row->value = damage_dice.to_display_string();
+	const int min_damage = character_game_data->get_min_damage(character_defines::get()->get_default_creature_size());
+	const int max_damage = character_game_data->get_max_damage(character_defines::get()->get_default_creature_size());
+
+	this->damage_row->value = std::format("{}-{}", min_damage, max_damage);
 
 	this->clear_child_rows(this->damage_row);
 
-	const item *weapon = character_game_data->get_weapon();
-	if (weapon != nullptr) {
-		for (const auto &[creature_size, base_creature_size_damage_dice] : weapon->get_type()->get_damage_dice_per_target_size()) {
-			if (creature_size == character_defines::get()->get_default_creature_size()) {
-				continue;
-			}
-
-			if (base_creature_size_damage_dice == base_damage_dice) {
-				continue;
-			}
-
-			dice creature_size_damage_dice = base_creature_size_damage_dice;
-			creature_size_damage_dice.change_modifier(character_game_data->get_damage_bonus());
-
-			auto row = std::make_unique<character_data_row>(std::format("Against {} Creatures:", creature_size->get_name()), creature_size_damage_dice.to_display_string(), this->damage_row);
-			this->damage_row->child_rows.push_back(std::move(row));
+	creature_size_set weapon_target_creature_sizes;
+	const std::vector<const item *> weapons = character_game_data->get_weapons();
+	for (const item *weapon : weapons) {
+		for (const auto &[creature_size, damage_dice] : weapon->get_type()->get_damage_dice_per_target_size()) {
+			weapon_target_creature_sizes.insert(creature_size);
 		}
+	}
+
+	for (const creature_size *creature_size : weapon_target_creature_sizes) {
+		if (creature_size == character_defines::get()->get_default_creature_size()) {
+			continue;
+		}
+
+		const int min_creature_size_damage = character_game_data->get_min_damage(creature_size);
+		const int max_creature_size_damage = character_game_data->get_max_damage(creature_size);
+
+		if (min_creature_size_damage == min_damage && max_creature_size_damage == max_damage) {
+			continue;
+		}
+
+		auto row = std::make_unique<character_data_row>(std::format("Against {} Creatures:", creature_size->get_name()), std::format("{}-{}", min_creature_size_damage, max_creature_size_damage), this->damage_row);
+		this->damage_row->child_rows.push_back(std::move(row));
 	}
 
 	for (const auto &[weapon_type, bonus] : character_game_data->get_weapon_damage_bonuses()) {

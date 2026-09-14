@@ -454,7 +454,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 
 	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
 
-	const bool hit = !spell->requires_to_hit_check() || target->get_character() == nullptr || unit->check_to_hit(target->get_character(), to_hit_modifier);
+	const bool hit = !spell->requires_to_hit_check() || target->get_character() == nullptr || unit->check_to_hit(target->get_character(), nullptr, to_hit_modifier);
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (spell->get_sound() != nullptr) {

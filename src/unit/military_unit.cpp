@@ -18,6 +18,8 @@
 #include "game/battle_resolution_table.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
+#include "item/item.h"
+#include "item/item_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/condition/and_condition.h"
@@ -683,26 +685,46 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 {
 	assert_throw(this->get_character() != nullptr);
 
-	const bool hit = this->check_to_hit(target_character, to_hit_modifier);
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	if (!hit) {
+	int damage = 0;
+
+	const std::vector<const item *> weapons = character_game_data->get_weapons();
+	for (const item *weapon : weapons) {
+		const bool hit = this->check_to_hit(target_character, weapon, to_hit_modifier);
+
+		if (!hit) {
+			continue;
+		}
+
+		damage += random::get()->roll_dice(weapon->get_type()->get_damage_dice(target_character->get_game_data()->get_creature_size())) + character_game_data->get_damage_bonus() + character_game_data->get_weapon_damage_bonus(weapon->get_type());
+	}
+
+	if (damage == 0) {
 		co_return;
 	}
 
 	//perform attack between characters
-	const int damage = random::get()->roll_dice(this->get_character()->get_game_data()->get_damage_dice(target_character->get_game_data()->get_creature_size())) + this->get_character()->get_game_data()->get_damage_bonus();
 	co_await target_character->get_game_data()->change_health(-damage);
 }
 
-bool military_unit::check_to_hit(const metternich::character *target_character, const int to_hit_modifier) const
+bool military_unit::check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const
 {
 	assert_throw(this->get_character() != nullptr);
 
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+	const metternich::character_game_data *target_character_game_data = target_character->get_game_data();
+
+	int to_hit_bonus = character_game_data->get_to_hit_bonus();
+	if (weapon != nullptr) {
+		to_hit_bonus += character_game_data->get_weapon_to_hit_bonus(weapon->get_type());
+	}
+
 	static constexpr dice to_hit_dice(1, 20);
-	const int to_hit = 20 - this->get_character()->get_game_data()->get_to_hit_bonus() - to_hit_modifier;
+	const int to_hit = 20 - to_hit_bonus - to_hit_modifier;
 	const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
 
-	const int armor_class_bonus = target_character->get_game_data()->get_armor_class_bonus() + target_character->get_game_data()->get_species_armor_class_bonus(this->get_character()->get_species());
+	const int armor_class_bonus = target_character_game_data->get_armor_class_bonus() + target_character_game_data->get_species_armor_class_bonus(this->get_character()->get_species());
 	const int armor_class = 10 - armor_class_bonus;
 	if (to_hit_result > armor_class) {
 		return false;

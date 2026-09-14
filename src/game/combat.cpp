@@ -17,6 +17,8 @@
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
+#include "item/item.h"
+#include "item/item_type.h"
 #include "item/object_type.h"
 #include "item/trap_type.h"
 #include "map/site.h"
@@ -660,7 +662,17 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 		co_return 0;
 	}
 
-	const int damage = random::get()->roll_dice(character->get_game_data()->get_damage_dice(enemy->get_game_data()->get_creature_size())) + character->get_game_data()->get_damage_bonus();
+	int damage = 0;
+
+	const std::vector<const item *> weapons = character->get_game_data()->get_weapons();
+	for (const item *weapon : weapons) {
+		damage += random::get()->roll_dice(weapon->get_type()->get_damage_dice(enemy->get_game_data()->get_creature_size())) + character->get_game_data()->get_damage_bonus() + character->get_game_data()->get_weapon_damage_bonus(weapon->get_type());
+	}
+
+	if (damage == 0) {
+		co_return 0;
+	}
+
 	co_await enemy->get_game_data()->change_health(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {

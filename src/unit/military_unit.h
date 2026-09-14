@@ -16,6 +16,7 @@ class cultural_group;
 class culture;
 class domain;
 class icon;
+class item;
 class military_unit_type;
 class phenotype;
 class promotion;
@@ -220,7 +221,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged, const bool moved, const int to_hit_modifier) const;
 	[[nodiscard]] QCoro::Task<void> attack_character(const metternich::character *target_character, const int to_hit_modifier) const;
-	bool check_to_hit(const metternich::character *target_character, const int to_hit_modifier) const;
+	bool check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const;
 	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);
 	[[nodiscard]] QCoro::Task<void> die();

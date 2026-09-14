@@ -557,8 +557,6 @@ public:
 
 	void change_weapon_to_hit_bonus(const item_type *weapon_type, const int change);
 
-	const dice &get_damage_dice(const creature_size *target_size) const;
-
 	int get_damage_bonus() const
 	{
 		return this->damage_bonus;
@@ -584,6 +582,7 @@ public:
 
 	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
 
+	int get_min_damage(const creature_size *target_size) const;
 	int get_max_damage(const creature_size *target_size) const;
 
 	int get_range() const
@@ -907,7 +906,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_item_equipped(const item *item, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_item_equipped_with_enchantment(const enchantment *enchantment, const int multiplier);
 
-	const item *get_weapon() const;
+	std::vector<const item *> get_weapons() const;
+	const item *get_primary_weapon() const;
 
 	bool can_use_item(const metternich::item *item, std::string *reason) const;
 

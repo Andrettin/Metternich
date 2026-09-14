@@ -2437,29 +2437,9 @@ void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_typ
 		this->weapon_to_hit_bonuses.erase(weapon_type);
 	}
 
-	const item *weapon = this->get_weapon();
-	if (weapon != nullptr && weapon->get_type() == weapon_type) {
-		this->change_to_hit_bonus(change);
-	}
-
 	if (game::get()->is_running()) {
 		emit weapon_to_hit_bonuses_changed();
 	}
-}
-
-const dice &character_game_data::get_damage_dice(const metternich::creature_size *target_size) const
-{
-	const item *weapon = this->get_weapon();
-	if (weapon != nullptr) {
-		return weapon->get_type()->get_damage_dice(target_size);
-	}
-
-	if (this->character->get_monster_type() != nullptr) {
-		return this->character->get_monster_type()->get_damage_dice();
-	}
-
-	static constexpr dice null_dice(0, 0, 0, 0);
-	return null_dice;
 }
 
 void character_game_data::set_damage_bonus(const int bonus)
@@ -2496,19 +2476,33 @@ void character_game_data::change_weapon_damage_bonus(const item_type *weapon_typ
 		this->weapon_damage_bonuses.erase(weapon_type);
 	}
 
-	const item *weapon = this->get_weapon();
-	if (weapon != nullptr && weapon->get_type() == weapon_type) {
-		this->change_damage_bonus(change);
-	}
-
 	if (game::get()->is_running()) {
 		emit weapon_damage_bonuses_changed();
 	}
 }
 
+int character_game_data::get_min_damage(const metternich::creature_size *target_size) const
+{
+	int min_damage = 0;
+
+	const std::vector<const item *> weapons = this->get_weapons();
+	for (const item *weapon : weapons) {
+		min_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_minimum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()), 0);
+	}
+
+	return min_damage;
+}
+
 int character_game_data::get_max_damage(const metternich::creature_size *target_size) const
 {
-	return this->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus();
+	int max_damage = 0;
+
+	const std::vector<const item *> weapons = this->get_weapons();
+	for (const item *weapon : weapons) {
+		max_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()), 0);
+	}
+
+	return max_damage;
 }
 
 int character_game_data::get_effective_range() const
@@ -4095,9 +4089,6 @@ QCoro::Task<void> character_game_data::on_item_equipped(const item *item, const 
 	}
 
 	if (item->get_slot()->is_weapon()) {
-		this->change_to_hit_bonus(this->get_weapon_to_hit_bonus(item->get_type()) * multiplier);
-		this->change_damage_bonus(this->get_weapon_damage_bonus(item->get_type()) * multiplier);
-
 		if (this->get_military_unit() != nullptr) {
 			this->update_military_unit_stats();
 		}
@@ -4115,18 +4106,42 @@ QCoro::Task<void> character_game_data::on_item_equipped_with_enchantment(const e
 	}
 }
 
-const item *character_game_data::get_weapon() const
+std::vector<const item *> character_game_data::get_weapons() const
 {
-	for (const auto &[slot, items] : this->equipped_items) {
-		if (!slot->is_weapon()) {
-			continue;
-		}
+	std::vector<const item *> weapons;
 
-		assert_throw(!items.empty());
-		return items.at(0);
+	for (const auto &[slot, items] : this->equipped_items) {
+		for (const item *item : items) {
+			if (!item->get_type()->is_weapon()) {
+				continue;
+			}
+
+			weapons.push_back(item);
+		}
 	}
 
-	return nullptr;
+	return weapons;
+}
+
+const item *character_game_data::get_primary_weapon() const
+{
+	const std::vector<const item *> weapons = this->get_weapons();
+
+	if (weapons.empty()) {
+		return nullptr;
+	}
+
+	if (weapons.size() == 1) {
+		return weapons.at(0);
+	}
+
+	for (const item *weapon : weapons) {
+		if (weapon->get_slot()->is_weapon()) {
+			return weapon;
+		}
+	}
+
+	return weapons.at(0);
 }
 
 bool character_game_data::can_use_item(const item *item, std::string *reason) const
@@ -4422,7 +4437,7 @@ QCoro::Task<void> character_game_data::ai_sell_items()
 
 const sound *character_game_data::get_attack_sound() const
 {
-	const item *weapon = this->get_weapon();
+	const item *weapon = this->get_primary_weapon();
 	if (weapon != nullptr) {
 		return weapon->get_type()->get_attack_sound();
 	}

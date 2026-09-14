@@ -135,11 +135,11 @@ const dice &item_type::get_damage_dice(const creature_size *target_size) const
 		return find_iterator->second;
 	}
 
-	if (target_size->get_min_dimension() <= this->damage_dice_per_target_size.begin()->first->get_min_dimension()) {
+	if (target_size->get_min_dimension() == 0 || target_size->get_min_dimension() <= this->damage_dice_per_target_size.begin()->first->get_min_dimension()) {
 		return this->damage_dice_per_target_size.begin()->second;
 	}
 
-	if (target_size->get_max_dimension() >= this->damage_dice_per_target_size.rbegin()->first->get_max_dimension()) {
+	if (target_size->get_max_dimension() == 0 || target_size->get_max_dimension() >= this->damage_dice_per_target_size.rbegin()->first->get_max_dimension()) {
 		return this->damage_dice_per_target_size.rbegin()->second;
 	}
 
