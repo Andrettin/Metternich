@@ -12,6 +12,7 @@
 #include "economy/commodity.h"
 #include "game/battle.h"
 #include "game/battle_resolution_type.h"
+#include "item/item_type.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
@@ -226,11 +227,15 @@ void military_unit_type::initialize_stats_from_monster_type()
 	decimillesimal_int armor_class;
 	int hit_dice_count = 0;
 	decimillesimal_int movement;
-	decimillesimal_int max_damage = decimillesimal_int(this->monster_type->get_damage_dice().get_maximum_result());
 	decimillesimal_int natural_armor_class;
 	decimillesimal_int range;
 	decimillesimal_int saving_throw;
 	decimillesimal_int to_hit_bonus;
+
+	decimillesimal_int max_damage = decimillesimal_int(this->monster_type->get_damage_dice().get_maximum_result());
+	for (const item_type *natural_weapon_type : this->monster_type->get_species()->get_natural_weapons()) {
+		max_damage += natural_weapon_type->get_damage_dice(character_defines::get()->get_default_creature_size()).get_maximum_result();
+	}
 
 	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
 		if (const armor_class_modifier_effect *armor_class_modifier_effect = dynamic_cast<const metternich::armor_class_modifier_effect *>(modifier_effect)) {
