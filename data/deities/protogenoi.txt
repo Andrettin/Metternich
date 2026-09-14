@@ -59,6 +59,7 @@ uranus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 4
 	}
 	character = {
 		monster_type = huge_air_elemental #Protogenoi
+		#level = 24
 		culture = auran
 		religion = hellenic
 		gender = male

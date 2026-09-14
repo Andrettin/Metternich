@@ -22,5 +22,6 @@ huge_air_elemental = {
 		hit_dice = 8d8
 		natural_armor_class = 4
 		to_hit_bonus = 9
+		scripted_modifier_effect = huge_size
 	}
 }
