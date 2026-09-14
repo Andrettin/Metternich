@@ -23,11 +23,15 @@ void item_class::check() const
 
 bool item_class::is_weapon() const
 {
+	if (this->is_natural_weapon()) {
+		return true;
+	}
+
 	if (this->get_slot() != nullptr) {
 		return this->get_slot()->is_weapon();
 	}
 
-	return this->is_natural_weapon();
+	return false;
 }
 
 }
