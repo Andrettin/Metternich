@@ -7,11 +7,14 @@
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
+#include "item/item_class.h"
+#include "item/item_type.h"
 #include "script/modifier.h"
 #include "species/geological_era.h"
 #include "species/phenotype.h"
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
+#include "util/assert_util.h"
 #include "util/log_util.h"
 
 #include <magic_enum/magic_enum_utility.hpp>
@@ -196,6 +199,11 @@ void species::process_gsml_scope(const gsml_data &scope)
 
 			this->character_class_level_limits[character_class::get(key)] = value_int;
 		});
+	} else if (tag == "natural_weapons") {
+		for (const std::string &value : values) {
+			const item_type *item_type = item_type::get(value);
+			this->natural_weapons.push_back(item_type);
+		}
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const character>>();
 		modifier->process_gsml_data(scope);
@@ -264,6 +272,10 @@ void species::check() const
 		if (!character_class->is_allowed_for_species(this)) {
 			throw std::runtime_error(std::format("Species \"{}\" has a level limit for character class \"{}\", but the latter is not allowed for the species.", this->get_identifier(), character_class->get_identifier()));
 		}
+	}
+
+	for (const item_type *item_type : this->get_natural_weapons()) {
+		assert_throw(item_type->get_item_class()->is_natural_weapon());
 	}
 }
 

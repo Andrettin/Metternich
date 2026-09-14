@@ -13,6 +13,7 @@ class character;
 class character_attribute;
 class creature_size;
 class culture;
+class item_type;
 class phenotype;
 class skill;
 class skill_group;
@@ -169,6 +170,11 @@ public:
 
 	int get_character_class_level_limit(const character_class *character_class) const;
 
+	const std::vector<const item_type *> &get_natural_weapons() const
+	{
+		return this->natural_weapons;
+	}
+
 	const metternich::modifier<const character> *get_modifier() const
 	{
 		return this->modifier.get();
@@ -193,6 +199,7 @@ private:
 	data_entry_map<character_attribute, int> min_attribute_values;
 	data_entry_map<character_attribute, int> max_attribute_values;
 	character_class_map<int> character_class_level_limits;
+	std::vector<const item_type *> natural_weapons;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;
 };
 
