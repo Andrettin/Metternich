@@ -3,11 +3,15 @@ large_air_elemental = {
 	species = air_elemental
 	character_class = air_elemental
 	level = 14
-	damage_dice = 2d10
 	experience_award = 3000
 	modifier = {
 		natural_armor_class = 4
 		to_hit_bonus = 1
+		natural_weapon_count = {
+			type = large_air_fist
+			count = -1
+		}
+		natural_weapon = huge_air_fist
 	}
 }
 
@@ -16,12 +20,16 @@ huge_air_elemental = {
 	species = air_elemental
 	character_class = air_elemental
 	level = 14
-	damage_dice = 2d10
 	experience_award = 11000
 	modifier = {
 		hit_dice = 8d8
 		natural_armor_class = 4
 		to_hit_bonus = 9
 		scripted_modifier_effect = huge_size
+		natural_weapon_count = {
+			type = large_air_fist
+			count = -1
+		}
+		natural_weapon = huge_air_fist
 	}
 }

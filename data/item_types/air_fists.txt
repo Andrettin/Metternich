@@ -1,0 +1,34 @@
+small_air_fist = {
+	name = "Small Air Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 1d4
+}
+
+medium_air_fist = {
+	name = "Medium Air Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 1d6
+}
+
+medium_large_air_fist = {
+	name = "Medium-Large Air Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 1d8
+}
+
+large_air_fist = {
+	name = "Large Air Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 2d6
+}
+
+huge_air_fist = {
+	name = "Huge Air Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 2d10
+}

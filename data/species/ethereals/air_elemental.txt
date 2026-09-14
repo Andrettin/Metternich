@@ -13,6 +13,12 @@ air_elemental = {
 	character_class_level_limits = {
 		air_elemental = U
 	}
+	item_slots = {
+		weapon = 1
+	}
+	natural_weapons = {
+		small_air_fist #improves by gaining air elemental levels
+	}
 	modifier = {
 		dexterity = 4
 		intelligence = -4

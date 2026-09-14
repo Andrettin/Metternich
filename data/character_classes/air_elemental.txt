@@ -55,6 +55,11 @@ air_elemental = {
 			strength = 2
 		}
 		5 = {
+			natural_weapon_count = {
+				type = small_air_fist
+				count = -1
+			}
+			natural_weapon = medium_air_fist
 			constitution = 2
 		}
 		6 = {
@@ -67,6 +72,11 @@ air_elemental = {
 			dexterity = 2
 		}
 		9 = {
+			natural_weapon_count = {
+				type = medium_air_fist
+				count = -1
+			}
+			natural_weapon = medium_large_air_fist
 			trait_of_type = feat
 		}
 		10 = {
@@ -81,6 +91,13 @@ air_elemental = {
 		}
 		13 = {
 			scripted_modifier_effect = large_size
+		}
+		14 = {
+			natural_weapon_count = {
+				type = medium_large_air_fist
+				count = -1
+			}
+			natural_weapon = large_air_fist
 		}
 	}
 }
