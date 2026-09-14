@@ -2497,6 +2497,10 @@ int character_game_data::get_min_damage(const metternich::creature_size *target_
 		min_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_minimum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()), 0);
 	}
 
+	if (weapons.empty() && this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_damage_dice().is_null()) {
+		min_damage += std::max(this->character->get_monster_type()->get_damage_dice().get_minimum_result() + this->get_damage_bonus(), 0);
+	}
+
 	return min_damage;
 }
 
@@ -2507,6 +2511,10 @@ int character_game_data::get_max_damage(const metternich::creature_size *target_
 	const std::vector<const item *> weapons = this->get_weapons();
 	for (const item *weapon : weapons) {
 		max_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()), 0);
+	}
+
+	if (weapons.empty() && this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_damage_dice().is_null()) {
+		max_damage += std::max(this->character->get_monster_type()->get_damage_dice().get_maximum_result() + this->get_damage_bonus(), 0);
 	}
 
 	return max_damage;

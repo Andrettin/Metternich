@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_defines.h"
 #include "character/character_game_data.h"
+#include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -698,6 +699,14 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 		}
 
 		damage += random::get()->roll_dice(weapon->get_type()->get_damage_dice(target_character->get_game_data()->get_creature_size())) + character_game_data->get_damage_bonus() + character_game_data->get_weapon_damage_bonus(weapon->get_type());
+	}
+
+	if (weapons.empty() && this->get_character()->get_monster_type() != nullptr && !this->get_character()->get_monster_type()->get_damage_dice().is_null()) {
+		const bool hit = this->check_to_hit(target_character, nullptr, to_hit_modifier);
+
+		if (hit) {
+			damage += random::get()->roll_dice(this->get_character()->get_monster_type()->get_damage_dice()) + character_game_data->get_damage_bonus();
+		}
 	}
 
 	if (damage == 0) {

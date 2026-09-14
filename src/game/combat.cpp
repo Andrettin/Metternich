@@ -669,6 +669,10 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 		damage += random::get()->roll_dice(weapon->get_type()->get_damage_dice(enemy->get_game_data()->get_creature_size())) + character->get_game_data()->get_damage_bonus() + character->get_game_data()->get_weapon_damage_bonus(weapon->get_type());
 	}
 
+	if (weapons.empty() && character->get_monster_type() != nullptr && !character->get_monster_type()->get_damage_dice().is_null()) {
+		damage += random::get()->roll_dice(character->get_monster_type()->get_damage_dice()) + character->get_game_data()->get_damage_bonus();
+	}
+
 	if (damage == 0) {
 		co_return 0;
 	}
