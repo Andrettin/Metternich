@@ -918,6 +918,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/movement_cost_modifier_effect.h
 	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/natural_armor_class_modifier_effect.h
+	src/script/modifier_effect/natural_weapon_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h
 	src/script/modifier_effect/population_capacity_modifier_effect.h
 	src/script/modifier_effect/population_capacity_modifier_modifier_effect.h

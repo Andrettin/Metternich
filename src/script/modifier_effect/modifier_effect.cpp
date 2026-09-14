@@ -62,6 +62,7 @@
 #include "script/modifier_effect/movement_cost_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
+#include "script/modifier_effect/natural_weapon_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_effect.h"
 #include "script/modifier_effect/population_capacity_modifier_modifier_effect.h"
@@ -131,6 +132,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<movement_modifier_effect>(value);
 		} else if (key == "natural_armor_class") {
 			return std::make_unique<natural_armor_class_modifier_effect>(value);
+		} else if (key == "natural_weapon") {
+			return std::make_unique<natural_weapon_modifier_effect>(value);
 		} else if (key == "range") {
 			return std::make_unique<range_modifier_effect>(value);
 		} else if (key == "to_hit_bonus") {
@@ -359,6 +362,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (tag == "attribute_skill_bonus") {
 			modifier_effect = std::make_unique<attribute_skill_bonus_modifier_effect>();
+		} else if (tag == "natural_weapon_count") {
+			modifier_effect = std::make_unique<natural_weapon_modifier_effect>();
 		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
 		} else if (tag == "trait_count") {
