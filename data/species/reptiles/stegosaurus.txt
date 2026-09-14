@@ -7,6 +7,18 @@ stegosaurus = {
 		scelidosaurus
 		ticinosuchus
 	}
+	min_attribute_values = {
+		intelligence = 1
+	}
+	max_attribute_values = {
+		intelligence = 1
+	}
+	item_slots = {
+		tail = 1
+	}
+	natural_weapons = {
+		stegosaurus_tail
+	}
 	modifier = {
 		hit_dice = 18d8
 		natural_armor_class = 5

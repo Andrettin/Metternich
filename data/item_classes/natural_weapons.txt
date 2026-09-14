@@ -4,6 +4,12 @@ hoof = {
 	natural_weapon = true
 }
 
+tail = {
+	name = "Tail"
+	slot = tail
+	natural_weapon = true
+}
+
 tusk = {
 	name = "Tusk"
 	slot = tusk

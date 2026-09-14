@@ -1,3 +1,10 @@
+elephant_tusk = {
+	name = "Elephant Tusk"
+	item_class = tusk
+	icon = saber
+	damage_dice = 2d8
+}
+
 hoof = {
 	name = "Hoof"
 	item_class = hoof
@@ -5,9 +12,9 @@ hoof = {
 	damage_dice = 1d6
 }
 
-elephant_tusk = {
-	name = "Elephant Tusk"
-	item_class = tusk
+stegosaurus_tail = {
+	name = "Stegosaurus Tail"
+	item_class = tail
 	icon = saber
-	damage_dice = 2d8
+	damage_dice = 5d4
 }
