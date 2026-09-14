@@ -679,13 +679,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	co_await this->generate_attributes();
 
-	const monster_type *monster_type = this->character->get_monster_type();
-	if (monster_type != nullptr) {
-		if (monster_type->get_modifier() != nullptr) {
-			co_await monster_type->get_modifier()->apply(this->character);
-		}
-	}
-
 	this->apply_bloodline(apply_history);
 	this->initialize_patron_deity();
 
@@ -694,6 +687,13 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
 		co_await this->set_level(std::min(level, character_class->get_max_level()));
+	}
+
+	const monster_type *monster_type = this->character->get_monster_type();
+	if (monster_type != nullptr) {
+		if (monster_type->get_modifier() != nullptr) {
+			co_await monster_type->get_modifier()->apply(this->character);
+		}
 	}
 
 	const metternich::mythic_path *mythic_path = this->character->get_mythic_path();
