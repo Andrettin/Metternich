@@ -4,4 +4,22 @@ titan = {
 	era = holocene
 	sapient = true
 	default_creature_size = gargantuan
+	min_attribute_values = {
+		strength = 25
+		intelligence = 19
+	}
+	max_attribute_values = {
+		strength = 25
+		intelligence = 21
+	}
+	modifier = {
+		hit_dice = 20d8
+		natural_armor_class = 10
+		to_hit_bonus = 15
+		movement = 36
+		
+		#attribute modifiers to make the given attribute ranges possible
+		strength = 7
+		intelligence = 3
+	}
 }

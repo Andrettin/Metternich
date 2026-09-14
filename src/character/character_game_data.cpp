@@ -677,6 +677,8 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		co_await culture->get_character_modifier()->apply(this->character);
 	}
 
+	co_await this->generate_attributes();
+
 	const monster_type *monster_type = this->character->get_monster_type();
 	if (monster_type != nullptr) {
 		if (monster_type->get_modifier() != nullptr) {
@@ -684,7 +686,6 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		}
 	}
 
-	co_await this->generate_attributes();
 	this->apply_bloodline(apply_history);
 	this->initialize_patron_deity();
 
