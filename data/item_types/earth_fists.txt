@@ -1,0 +1,34 @@
+small_earth_fist = {
+	name = "Small Earth Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 1d6
+}
+
+medium_earth_fist = {
+	name = "Medium Earth Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 1d8
+}
+
+medium_large_earth_fist = {
+	name = "Medium-Large Earth Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 2d6
+}
+
+large_earth_fist = {
+	name = "Large Earth Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 2d8
+}
+
+huge_earth_fist = {
+	name = "Huge Earth Fist"
+	item_class = fist
+	icon = labor
+	damage_dice = 4d8
+}

@@ -1,0 +1,101 @@
+earth_elemental = {
+	name = "Earth Elemental"
+	attribute = strength
+	max_level = 13
+	starting_age_category = intuitive
+	craft_bonus_table = craft_bonus
+	reputation_bonus_table = medium_reputation_bonus #as warrior
+	to_hit_bonus_table = earth_elemental_to_hit_bonus
+	saving_throw_bonus_tables = {
+		fortitude = earth_elemental_fortitude_bonus
+		reflex = earth_elemental_reflex_bonus
+		will = earth_elemental_will_bonus
+	}
+	class_skill_groups = {
+		general
+	}
+	class_skills = {
+		#listen
+		#spot
+	}
+	allowed_species = {
+		earth_elemental
+	}
+	health_bonus_per_level = {
+		1 = 1d8
+		2 = 1d8
+		3 = 1d8
+		4 = 1d8
+		5 = 0
+		6 = 1d8
+		7 = 0
+		8 = 1d8
+		9 = 0
+		10 = 1d8
+		11 = 0
+		12 = 1d8
+		13 = 0
+	}
+	level_modifiers = {
+		1 = {
+			trait_of_type = feat
+			natural_armor_class = 3
+		}
+		2 = {
+			strength = 2
+		}
+		3 = {
+			trait_of_type = feat
+			constitution = 2
+		}
+		4 = {
+			scripted_modifier_effect = medium_size
+			strength = 2
+			natural_armor_class = 2
+		}
+		5 = {
+			constitution = 2
+			natural_weapon_count = {
+				type = small_earth_fist
+				count = -1
+			}
+			natural_weapon = medium_earth_fist
+		}
+		6 = {
+			strength = 2
+		}
+		7 = {
+			constitution = 2
+			natural_armor_class = 2
+		}
+		8 = {
+			trait_of_type = feat
+			strength = 2
+		}
+		9 = {
+			natural_weapon_count = {
+				type = medium_earth_fist
+				count = -1
+			}
+			natural_weapon = medium_large_earth_fist
+		}
+		10 = {
+			strength = 2
+			natural_armor_class = 2
+		}
+		11 = {
+			constitution = 2
+		}
+		12 = {
+			scripted_modifier_effect = large_size
+		}
+		13 = {
+			natural_weapon_count = {
+				type = medium_large_earth_fist
+				count = -1
+			}
+			natural_weapon = large_earth_fist
+			natural_armor_class = 1
+		}
+	}
+}

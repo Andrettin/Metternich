@@ -1,31 +1,35 @@
 large_earth_elemental = {
 	name = "Large Earth Elemental"
 	species = earth_elemental
-	damage_dice = 4d8
+	character_class = earth_elemental
+	level = 13
 	experience_award = 2000
-	attributes = {
-		intelligence = 5-7
-	}
 	modifier = {
-		hit_dice = 8d8
-		armor_class = 8
-		to_hit_bonus = 7
-		movement = 6
+		natural_armor_class = -2
+		to_hit_bonus = 1
+		natural_weapon_count = {
+			type = large_earth_fist
+			count = -1
+		}
+		natural_weapon = huge_earth_fist
 	}
 }
 
 huge_earth_elemental = {
 	name = "Huge Earth Elemental"
 	species = earth_elemental
-	damage_dice = 4d8
+	character_class = earth_elemental
+	level = 13
 	experience_award = 10000
-	attributes = {
-		intelligence = 5-7
-	}
 	modifier = {
-		hit_dice = 16d8
-		armor_class = 8
-		to_hit_bonus = 15
-		movement = 6
+		hit_dice = 8d8
+		natural_armor_class = -2
+		to_hit_bonus = 9
+		scripted_modifier_effect = huge_size
+		natural_weapon_count = {
+			type = large_earth_fist
+			count = -1
+		}
+		natural_weapon = huge_earth_fist
 	}
 }

@@ -3,6 +3,26 @@ earth_elemental = {
 	supertaxon = terran
 	era = holocene
 	sapient = true
-	default_creature_size = large
-	max_creature_size = huge
+	default_creature_size = small #can grow further by gaining earth elemental levels
+	min_attribute_values = {
+		intelligence = 5
+	}
+	max_attribute_values = {
+		intelligence = 7
+	}
+	character_class_level_limits = {
+		earth_elemental = U
+	}
+	item_slots = {
+		weapon = 1
+	}
+	natural_weapons = {
+		small_earth_fist #improves by gaining earth elemental levels
+	}
+	modifier = {
+		strength = 4
+		dexterity = -2
+		intelligence = -4
+		movement = 6
+	}
 }
