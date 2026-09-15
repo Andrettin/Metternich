@@ -1439,6 +1439,10 @@ bool character_game_data::is_playable() const
 		return false;
 	}
 
+	if (this->character->get_monster_type() != nullptr) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -1450,6 +1454,10 @@ QString character_game_data::get_unplayable_reason() const
 
 	if (this->character->is_innate_deity()) {
 		return "You cannot play as a deity";
+	}
+
+	if (this->character->get_monster_type() != nullptr) {
+		return "You cannot play as a monstrous character";
 	}
 
 	return QString();
