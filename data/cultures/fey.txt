@@ -2,6 +2,7 @@ fey = {
 	name = "Fey"
 	group = sylvan
 	species = {
+		dryad
 		nymph
 	}
 }

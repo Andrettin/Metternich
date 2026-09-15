@@ -4,6 +4,7 @@ athena = {
 		gender = female
 		or = {
 			species = air_elemental
+			species = dryad
 			species = earth_elemental
 			species = nereid
 			species = nymph

@@ -3,6 +3,7 @@ elven_archer = {
 	character_conditions = {
 		or = {
 			species = air_elemental
+			species = dryad
 			species = elf
 			species = nereid
 			species = nymph

@@ -33,7 +33,9 @@ gaia = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, pp. 20
 		divination
 	}
 	character = {
-		monster_type = huge_earth_elemental #Protogenoi
+		species = earth_elemental #Protogenoi
+		character_class = earth_elemental
+		level = 24
 		culture = terran_elemental
 		religion = hellenic
 		gender = female
@@ -58,8 +60,9 @@ uranus = { #Source: Jenny March, "Dictionary of Classical Mythology", 2014, p. 4
 		healing
 	}
 	character = {
-		monster_type = huge_air_elemental #Protogenoi
-		#level = 24
+		species = air_elemental #Protogenoi
+		character_class = air_elemental
+		level = 24
 		culture = auran
 		religion = hellenic
 		gender = male

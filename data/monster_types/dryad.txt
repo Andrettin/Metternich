@@ -1,0 +1,11 @@
+dryad = {
+	name = "Dryad"
+	species = dryad
+	experience_award = 975
+	attributes = {
+		intelligence = 13-14
+	}
+	items = {
+		dagger
+	}
+}
