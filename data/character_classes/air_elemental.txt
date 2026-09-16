@@ -39,7 +39,7 @@ air_elemental = {
 	}
 	level_modifiers = {
 		1 = {
-			trait_of_type = feat
+			trait_of_type = proficiency
 			natural_armor_class = 3
 			trait = improved_initiative
 		}
@@ -48,7 +48,7 @@ air_elemental = {
 		}
 		3 = {
 			constitution = 2
-			trait_of_type = feat
+			trait_of_type = proficiency
 		}
 		4 = {
 			scripted_modifier_effect = medium_size
@@ -77,7 +77,7 @@ air_elemental = {
 				count = -1
 			}
 			natural_weapon = medium_large_air_fist
-			trait_of_type = feat
+			trait_of_type = proficiency
 		}
 		10 = {
 			strength = 2

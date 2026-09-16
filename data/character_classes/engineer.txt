@@ -85,16 +85,16 @@ engineer = {
 			#trait_of_type = weapon_proficiency
 			#trait_of_type = weapon_proficiency
 			trait = engineering
-			trait_of_type = proficiency #should be Reading/Writing proficiency instead
+			trait_of_type = general_proficiency #should be the Reading/Writing proficiency instead
 			trait_of_type = engineering_specialization #one of Carpentry, Mining or Stonemasonry
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
 		}
 	}
 	recurring_level_modifiers = {
 		1 = { #to ensure we don't inherit any level modifiers from the base class
 		}
 		3 = {
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
 		}
 		4 = {
 			#trait_of_type = weapon_proficiency

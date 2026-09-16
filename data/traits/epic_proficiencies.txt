@@ -4,7 +4,7 @@ armor_skin = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		natural_armor_class = 2
@@ -17,7 +17,7 @@ epic_prowess = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		to_hit_bonus = 1
@@ -29,7 +29,7 @@ epic_skill_focus_diplomacy = {
 	icon = treaty
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		diplomacy >= 20
@@ -44,7 +44,7 @@ epic_skill_focus_disguise = {
 	icon = dagger
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		disguise >= 20
@@ -59,7 +59,7 @@ epic_skill_focus_spellcraft = {
 	icon = treaty
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		spellcraft >= 20
@@ -75,7 +75,7 @@ epic_toughness = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		health = 30
@@ -88,7 +88,7 @@ great_charisma = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		charisma = 1
@@ -101,7 +101,7 @@ great_constitution = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		constitution = 1
@@ -114,7 +114,7 @@ great_dexterity = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		dexterity = 1
@@ -127,7 +127,7 @@ great_intelligence = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		intelligence = 1
@@ -140,7 +140,7 @@ great_strength = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		strength = 1
@@ -153,7 +153,7 @@ great_wisdom = {
 	unlimited = true
 	types = {
 		epic_proficiency
-		proficiency
+		general_proficiency
 	}
 	modifier = {
 		wisdom = 1

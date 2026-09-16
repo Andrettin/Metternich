@@ -2,7 +2,7 @@ administration = {
 	name = "Administration"
 	icon = chest
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = administration
@@ -16,7 +16,7 @@ agriculture = {
 	name = "Agriculture"
 	icon = grain
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = agriculture
@@ -30,7 +30,7 @@ animal_handling = {
 	name = "Animal Handling"
 	icon = horses
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = animal_handling
@@ -45,7 +45,7 @@ animal_training = {
 	name = "Animal Training"
 	icon = horses
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = animal_training
@@ -60,7 +60,7 @@ appraising = {
 	name = "Appraising"
 	icon = research
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = appraising
@@ -75,7 +75,7 @@ arcanology = {
 	name = "Arcanology"
 	icon = book
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = arcanology
@@ -89,7 +89,7 @@ armorer = {
 	name = "Armorer"
 	icon = clothing
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = armorer
@@ -103,7 +103,7 @@ artistic_ability = {
 	name = "Artistic Ability"
 	icon = painting
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = artistic_ability
@@ -118,7 +118,7 @@ astrology = {
 	name = "Astrology"
 	icon = research
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = astrology
@@ -133,7 +133,7 @@ blacksmithing = {
 	name = "Blacksmithing"
 	icon = tools
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = blacksmithing
@@ -147,7 +147,7 @@ bowyer = {
 	name = "Bowyer"
 	icon = bow
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = bowyer
@@ -161,7 +161,7 @@ carpentry = {
 	name = "Carpentry"
 	icon = lumber
 	types = {
-		proficiency
+		general_proficiency
 		engineering_specialization
 	}
 	conditions = {
@@ -176,7 +176,7 @@ cooking = {
 	name = "Cooking"
 	icon = tools
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = cooking
@@ -191,7 +191,7 @@ diplomacy = {
 	name = "Diplomacy"
 	icon = treaty
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = diplomacy
@@ -205,7 +205,7 @@ disguise = {
 	name = "Disguise"
 	icon = dagger
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = disguise
@@ -220,7 +220,7 @@ engineering = {
 	name = "Engineering"
 	icon = cog
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = engineering
@@ -234,7 +234,7 @@ fishing = {
 	name = "Fishing"
 	icon = fish
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = fishing
@@ -248,7 +248,7 @@ forgery = {
 	name = "Forgery"
 	icon = treaty
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = forgery
@@ -263,7 +263,7 @@ heraldry = {
 	name = "Heraldry"
 	icon = heater_shield
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = heraldry
@@ -277,7 +277,7 @@ herbalism = {
 	name = "Herbalism"
 	icon = tobacco
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = herbalism
@@ -291,7 +291,7 @@ hunting = {
 	name = "Hunting"
 	icon = deer
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = hunting
@@ -305,7 +305,7 @@ intrigue = {
 	name = "Intrigue"
 	icon = dagger
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = intrigue
@@ -319,7 +319,7 @@ law = {
 	name = "Law"
 	icon = treaty
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = law
@@ -333,7 +333,7 @@ leadership = {
 	name = "Leadership"
 	icon = flag
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = leadership
@@ -347,7 +347,7 @@ leatherworking = {
 	name = "Leatherworking"
 	icon = leather
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = leatherworking
@@ -361,7 +361,7 @@ mining = {
 	name = "Mining"
 	icon = iron_ore
 	types = {
-		proficiency
+		general_proficiency
 		engineering_specialization
 	}
 	conditions = {
@@ -376,7 +376,7 @@ pottery = {
 	name = "Pottery"
 	icon = glass
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = pottery
@@ -391,7 +391,7 @@ religion = {
 	name = "Religion"
 	icon = wooden_cross
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = religion
@@ -405,7 +405,7 @@ seamanship = {
 	name = "Seamanship"
 	icon = anchor
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = seamanship
@@ -419,7 +419,7 @@ siegecraft = {
 	name = "Siegecraft"
 	icon = cannon
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = siegecraft
@@ -433,7 +433,7 @@ spellcraft = {
 	name = "Spellcraft"
 	icon = book
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = spellcraft
@@ -447,7 +447,7 @@ stonemasonry = {
 	name = "Stonemasonry"
 	icon = architecture
 	types = {
-		proficiency
+		general_proficiency
 		engineering_specialization
 	}
 	conditions = {
@@ -462,7 +462,7 @@ strategy = {
 	name = "Strategy"
 	icon = crossed_sabers
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = strategy
@@ -476,7 +476,7 @@ swimming = {
 	name = "Swimming"
 	icon = anchor
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = swimming
@@ -491,7 +491,7 @@ tumbling = {
 	name = "Tumbling"
 	icon = labor
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = tumbling
@@ -506,7 +506,7 @@ weaponsmithing = {
 	name = "Weaponsmithing"
 	icon = saber
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = weaponsmithing
@@ -520,7 +520,7 @@ weaving = {
 	name = "Weaving"
 	icon = fabric
 	types = {
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		class_skill = weaving

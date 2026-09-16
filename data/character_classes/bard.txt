@@ -121,9 +121,9 @@ bard = {
 		1 = {
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			trait_of_type = proficiency
-			trait_of_type = proficiency
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
+			trait_of_type = general_proficiency
+			trait_of_type = general_proficiency
 		}
 	}
 	recurring_level_modifiers = {
@@ -131,7 +131,7 @@ bard = {
 			caster_level = 1
 		}
 		4 = {
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
 		}
 	}
 }

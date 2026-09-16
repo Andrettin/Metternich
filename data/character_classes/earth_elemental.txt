@@ -38,14 +38,14 @@ earth_elemental = {
 	}
 	level_modifiers = {
 		1 = {
-			trait_of_type = feat
+			trait_of_type = proficiency
 			natural_armor_class = 3
 		}
 		2 = {
 			strength = 2
 		}
 		3 = {
-			trait_of_type = feat
+			trait_of_type = proficiency
 			constitution = 2
 		}
 		4 = {
@@ -69,7 +69,7 @@ earth_elemental = {
 			natural_armor_class = 2
 		}
 		8 = {
-			trait_of_type = feat
+			trait_of_type = proficiency
 			strength = 2
 		}
 		9 = {

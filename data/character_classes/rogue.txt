@@ -123,9 +123,9 @@ rogue = {
 			trusting = -2
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			trait_of_type = proficiency
-			trait_of_type = proficiency
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
+			trait_of_type = general_proficiency
+			trait_of_type = general_proficiency
 		}
 		2 = {
 			find_disarm_traps = 5
@@ -140,7 +140,7 @@ rogue = {
 	}
 	recurring_level_modifiers = {
 		4 = {
-			trait_of_type = proficiency
+			trait_of_type = general_proficiency
 		}
 	}
 	starting_items = {

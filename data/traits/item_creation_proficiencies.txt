@@ -3,7 +3,7 @@ craft_wondrous_item = {
 	icon = research
 	types = {
 		item_creation_proficiency
-		proficiency
+		general_proficiency
 	}
 	conditions = {
 		caster_level >= 3

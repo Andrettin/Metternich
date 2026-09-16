@@ -29,8 +29,8 @@ brutal_schedule = {
 		character_class = warrior
 	}
 	modifier = {
-		trait_of_type = proficiency
-		trait_of_type = proficiency
+		trait_of_type = general_proficiency
+		trait_of_type = general_proficiency
 	}
 }
 
@@ -106,7 +106,7 @@ generous_teacher = {
 	}
 	modifier = {
 		constitution = 1
-		trait_of_type = proficiency
+		trait_of_type = general_proficiency
 	}
 }
 
@@ -200,6 +200,6 @@ fundamental_insight = {
 	}
 	modifier = {
 		intelligence = 1
-		trait_of_type = proficiency
+		trait_of_type = general_proficiency
 	}
 }
