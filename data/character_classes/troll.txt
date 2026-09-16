@@ -1,0 +1,93 @@
+troll = {
+	name = "Troll"
+	attribute = strength
+	max_level = 11
+	starting_age_category = intuitive
+	craft_bonus_table = craft_bonus
+	reputation_bonus_table = medium_reputation_bonus #as warrior
+	to_hit_bonus_table = troll_to_hit_bonus
+	saving_throw_bonus_tables = {
+		fortitude = troll_fortitude_bonus
+		reflex = troll_reflex_bonus
+		will = troll_will_bonus
+	}
+	class_skill_groups = {
+		general
+	}
+	class_skills = {
+		#listen
+		#spot
+	}
+	allowed_species = {
+		troll
+	}
+	health_bonus_per_level = {
+		1 = 1d8
+		2 = 1d8
+		3 = 1d8
+		4 = 1d8
+		5 = 0
+		6 = 1d8
+		7 = 0
+		8 = 1d8
+		9 = 0
+		10 = 1d8
+		11 = 0
+	}
+	level_modifiers = {
+		1 = {
+			trait_of_type = feat
+			natural_armor_class = 2
+		}
+		2 = {
+			dexterity = 2
+			constitution = 2
+		}
+		3 = {
+			strength = 2
+			natural_armor_class = 1
+		}
+		4 = {
+			trait_of_type = feat
+			constitution = 2
+		}
+		5 = {
+			scripted_modifier_effect = large_size
+			strength = 2
+			natural_armor_class = 1
+		}
+		6 = {
+			natural_weapon_count = {
+				type = medium_claw
+				count = -1
+			}
+			natural_weapon = large_claw
+			natural_weapon_count = {
+				type = medium_teeth
+				count = -1
+			}
+			natural_weapon = large_teeth
+			constitution = 2
+		}
+		7 = {
+			strength = 2
+			natural_armor_class = 1
+		}
+		8 = {
+			dexterity = 2
+			constitution = 2
+		}
+		9 = {
+			strength = 2
+			natural_armor_class = 1
+		}
+		10 = {
+			trait_of_type = feat
+			constitution = 2
+		}
+		11 = {
+			constitution = 2
+			natural_armor_class = 1
+		}
+	}
+}

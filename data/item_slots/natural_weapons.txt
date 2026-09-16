@@ -2,6 +2,10 @@ hoof = {
 	name = "Hoof"
 }
 
+jaw = {
+	name = "Jaw"
+}
+
 tail = {
 	name = "Tail"
 }

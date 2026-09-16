@@ -1,0 +1,20 @@
+medium_teeth = {
+	name = "Medium Teeth"
+	item_class = teeth
+	icon = saber
+	damage_dice = 1d4
+}
+
+large_teeth = {
+	name = "Large Teeth"
+	item_class = teeth
+	icon = saber
+	damage_dice = 1d6
+}
+
+sharp_large_teeth = {
+	name = "Sharp Large Teeth"
+	item_class = teeth
+	icon = saber
+	damage_dice = 1d8+4
+}

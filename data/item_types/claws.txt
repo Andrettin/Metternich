@@ -1,0 +1,20 @@
+medium_claw = {
+	name = "Medium Claw"
+	item_class = claw
+	icon = saber
+	damage_dice = 2d4 #2d4 instead of 1d4 because it represents two claws; should decrease if weapons being in the offhand slot is implemented
+}
+
+large_claw = {
+	name = "Large Claw"
+	item_class = claw
+	icon = saber
+	damage_dice = 2d6
+}
+
+sharp_large_claw = {
+	name = "Sharp Large Claw"
+	item_class = claw
+	icon = saber
+	damage_dice = 2d4+8
+}

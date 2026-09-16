@@ -1,3 +1,9 @@
+claw = {
+	name = "Claw"
+	slot = weapon
+	natural_weapon = true
+}
+
 hoof = {
 	name = "Hoof"
 	slot = hoof
@@ -13,6 +19,12 @@ fist = {
 tail = {
 	name = "Tail"
 	slot = tail
+	natural_weapon = true
+}
+
+teeth = {
+	name = "Teeth"
+	slot = jaw
 	natural_weapon = true
 }
 

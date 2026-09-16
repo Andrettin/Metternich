@@ -1,0 +1,22 @@
+troll = {
+	name = "Troll"
+	species = troll
+	character_class = troll
+	level = 11
+	experience_award = 1400
+	modifier = {
+		natural_armor_class = -1
+		health = 6
+		to_hit_bonus = 3
+		natural_weapon_count = {
+			type = large_claw
+			count = -1
+		}
+		natural_weapon = sharp_large_claw
+		natural_weapon_count = {
+			type = large_teeth
+			count = -1
+		}
+		natural_weapon = sharp_large_teeth
+	}
+}

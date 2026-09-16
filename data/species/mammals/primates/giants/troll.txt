@@ -3,5 +3,25 @@ troll = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
-	default_creature_size = large
+	default_creature_size = medium #can grow further by gaining levels
+	min_attribute_values = {
+		intelligence = 5
+	}
+	max_attribute_values = {
+		intelligence = 7
+	}
+	character_class_level_limits = {
+		troll = U
+	}
+	natural_weapons = {
+		medium_claw #improves by gaining levels
+		medium_teeth
+	}
+	modifier = {
+		strength = 4
+		intelligence = -4
+		wisdom = -2
+		charisma = -4
+		movement = 12
+	}
 }

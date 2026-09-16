@@ -14,8 +14,8 @@ giant = {
 		trained = 7d6
 	}
 	item_slots = {
-		#weapon = 1
-		#shield = 1
+		weapon = 1
+		shield = 1
 		armor = 1
 		helmet = 1
 		amulet = 1

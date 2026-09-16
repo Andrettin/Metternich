@@ -122,3 +122,17 @@ earth_elemental_to_hit_bonus = {
 	12 = 1
 	13 = 0
 }
+
+troll_to_hit_bonus = {
+	1 = 0
+	2 = 1
+	3 = 0
+	4 = 1
+	5 = 0
+	6 = 1
+	7 = 0
+	8 = 0
+	9 = 0
+	10 = 1
+	11 = 0
+}
