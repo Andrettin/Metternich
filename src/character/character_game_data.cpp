@@ -136,6 +136,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->experience = std::stoll(value);
 	} else if (key == "level_adjustment") {
 		this->level_adjustment = std::stoi(value);
+	} else if (key == "reduced_level_adjustment") {
+		this->reduced_level_adjustment = std::stoi(value);
 	} else if (key == "challenge_rating") {
 		this->challenge_rating = std::stoi(value);
 	} else if (key == "caster_level") {
@@ -325,6 +327,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
 	data.add_property("level_adjustment", std::to_string(this->get_level_adjustment()));
+	data.add_property("reduced_level_adjustment", std::to_string(this->reduced_level_adjustment));
 	data.add_property("challenge_rating", std::to_string(this->get_challenge_rating()));
 	if (this->get_caster_level() != 0) {
 		data.add_property("caster_level", std::to_string(this->get_caster_level()));
@@ -1714,6 +1717,14 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		co_await level_modifier->apply(this->character);
 	}
 
+	if (this->get_level_adjustment() > 0) {
+		const int next_level_adjustment_reduction_level = this->get_next_level_adjustment_reduction_level();
+		if (affected_level >= next_level_adjustment_reduction_level) {
+			co_await this->change_level_adjustment(-1);
+			++this->reduced_level_adjustment;
+		}
+	}
+
 	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
 		const std::string level_modifier_string = character_class->get_level_modifier_string(affected_level, this->character);
 
@@ -1755,13 +1766,23 @@ QCoro::Task<void> character_game_data::change_experience(const int64_t change)
 
 int64_t character_game_data::get_experience_for_level(const int level) const
 {
-	assert_throw(this->get_character_class() != nullptr);
-	int64_t experience = this->get_character_class()->get_experience_for_level(level);
+	const metternich::character_class *character_class = this->get_character_class();
+	assert_throw(character_class != nullptr);
+
+	int64_t experience = character_class->get_experience_for_level(level + this->get_level_adjustment());
 	if (level > 1) {
-		experience -= this->get_character_class()->get_experience_for_level(level - 1);
+		experience -= character_class->get_experience_for_level(level + this->get_level_adjustment() - 1);
 	}
 
-	const int level_limit = this->character->get_species()->get_character_class_level_limit(this->get_character_class());
+	if (this->get_level_adjustment() > 0) {
+		const int next_level_adjustment_reduction_level = this->get_next_level_adjustment_reduction_level();
+		if (level >= next_level_adjustment_reduction_level) {
+			experience += character_class->get_experience_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment());
+			experience -= character_class->get_experience_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment() - 1);
+		}
+	}
+
+	const int level_limit = this->character->get_species()->get_character_class_level_limit(character_class);
 	assert_throw(level_limit > 0);
 	if (level > level_limit) {
 		//multiply experience required by 4 for levels beyond the species level limit for the class
@@ -1773,7 +1794,7 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 
 int64_t character_game_data::get_experience_for_next_level() const
 {
-	return this->get_experience_for_level(this->get_level() + 1 + this->get_level_adjustment());
+	return this->get_experience_for_level(this->get_level() + 1);
 }
 
 QCoro::Task<void> character_game_data::change_level_adjustment(const int change)
@@ -1788,6 +1809,23 @@ QCoro::Task<void> character_game_data::change_level_adjustment(const int change)
 		//if the level adjustment decreased, check whether the character is now eligible for a level-up
 		co_await this->check_level_experience();
 	}
+}
+
+int character_game_data::get_next_level_adjustment_reduction_level() const
+{
+	const int total_level_adjustment = this->get_level_adjustment() + this->reduced_level_adjustment;
+
+	int target_level = 0;
+
+	for (int i = 0; i < total_level_adjustment; ++i) {
+		target_level += 3 * (total_level_adjustment - i);
+
+		if (i >= this->reduced_level_adjustment) {
+			break;
+		}
+	}
+
+	return target_level;
 }
 
 void character_game_data::change_challenge_rating(const int change)

@@ -280,6 +280,7 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> change_level_adjustment(const int change);
+	int get_next_level_adjustment_reduction_level() const;
 
 	int get_challenge_rating() const
 	{
@@ -1148,6 +1149,7 @@ private:
 	int level = 0;
 	int64_t experience = 0;
 	int level_adjustment = 0;
+	int reduced_level_adjustment = 0;
 	int challenge_rating = 0; //the challenge rating for defeating the character in combat
 	int caster_level = 0;
 	const metternich::bloodline *bloodline = nullptr;
