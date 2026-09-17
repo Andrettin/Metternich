@@ -241,7 +241,7 @@ void character_data_model::reset_model()
 			this->top_rows.push_back(std::make_unique<character_data_row>("Level:", std::to_string(level)));
 
 			if (character_game_data->get_level() < character_class->get_max_level()) {
-				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", std::format("{}/{}", number::to_formatted_string(character_game_data->get_experience()), number::to_formatted_string(character_game_data->get_experience_for_level(level + 1)))));
+				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", std::format("{}/{}", number::to_formatted_string(character_game_data->get_experience()), number::to_formatted_string(character_game_data->get_experience_for_next_level()))));
 			} else {
 				this->top_rows.push_back(std::make_unique<character_data_row>("Experience:", number::to_formatted_string(character_game_data->get_experience())));
 			}

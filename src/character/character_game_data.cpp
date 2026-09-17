@@ -134,6 +134,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "experience") {
 		this->experience = std::stoll(value);
+	} else if (key == "level_adjustment") {
+		this->level_adjustment = std::stoi(value);
 	} else if (key == "challenge_rating") {
 		this->challenge_rating = std::stoi(value);
 	} else if (key == "caster_level") {
@@ -322,6 +324,7 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
+	data.add_property("level_adjustment", std::to_string(this->get_level_adjustment()));
 	data.add_property("challenge_rating", std::to_string(this->get_challenge_rating()));
 	if (this->get_caster_level() != 0) {
 		data.add_property("caster_level", std::to_string(this->get_caster_level()));
@@ -1725,12 +1728,12 @@ QCoro::Task<void> character_game_data::check_level_experience()
 		co_return;
 	}
 
-	while (this->get_experience() >= this->get_experience_for_level(this->get_level() + 1)) {
+	while (this->get_experience() >= this->get_experience_for_next_level()) {
 		if (this->get_level() == character_class->get_max_level()) {
 			break;
 		}
 
-		co_await this->change_experience(-this->get_experience_for_level(this->get_level() + 1));
+		co_await this->change_experience(-this->get_experience_for_next_level());
 		co_await this->change_level(1);
 	}
 }
@@ -1766,6 +1769,25 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	}
 
 	return experience;
+}
+
+int64_t character_game_data::get_experience_for_next_level() const
+{
+	return this->get_experience_for_level(this->get_level() + 1 + this->get_level_adjustment());
+}
+
+QCoro::Task<void> character_game_data::change_level_adjustment(const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	this->level_adjustment += change;
+
+	if (change < 0) {
+		//if the level adjustment decreased, check whether the character is now eligible for a level-up
+		co_await this->check_level_experience();
+	}
 }
 
 void character_game_data::change_challenge_rating(const int change)

@@ -272,6 +272,14 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> change_experience(const int64_t change);
 	int64_t get_experience_for_level(const int level) const;
+	int64_t get_experience_for_next_level() const;
+
+	int get_level_adjustment() const
+	{
+		return this->level_adjustment;
+	}
+
+	[[nodiscard]] QCoro::Task<void> change_level_adjustment(const int change);
 
 	int get_challenge_rating() const
 	{
@@ -1139,6 +1147,7 @@ private:
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
+	int level_adjustment = 0;
 	int challenge_rating = 0; //the challenge rating for defeating the character in combat
 	int caster_level = 0;
 	const metternich::bloodline *bloodline = nullptr;

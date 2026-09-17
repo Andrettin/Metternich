@@ -51,6 +51,7 @@
 #include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
+#include "script/modifier_effect/level_adjustment_modifier_effect.h"
 #include "script/modifier_effect/max_current_constructions_modifier_effect.h"
 #include "script/modifier_effect/max_current_researches_modifier_effect.h"
 #include "script/modifier_effect/max_level_modifier_effect.h"
@@ -128,6 +129,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<health_per_hit_dice_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
+		} else if (key == "level_adjustment") {
+			return std::make_unique<level_adjustment_modifier_effect>(value);
 		} else if (key == "movement") {
 			return std::make_unique<movement_modifier_effect>(value);
 		} else if (key == "natural_armor_class") {
