@@ -731,7 +731,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	if (character_class != nullptr) {
 		while (!this->target_traits.empty()) {
-			if (this->get_level() == character_class->get_max_level()) {
+			if (this->get_level() == this->get_max_level()) {
 				break;
 			}
 
@@ -1629,6 +1629,11 @@ QCoro::Task<void> character_game_data::set_level(const int level)
 	this->level = level;
 
 	for (int i = old_level + 1; i <= level; ++i) {
+		if (i > this->get_max_level()) {
+			//this has to be done here, since the character's level adjustment can change when gaining a level
+			break;
+		}
+
 		co_await this->on_level_gained(i, 1);
 	}
 
@@ -1739,14 +1744,16 @@ QCoro::Task<void> character_game_data::check_level_experience()
 		co_return;
 	}
 
-	while (this->get_experience() >= this->get_experience_for_next_level()) {
-		if (this->get_level() == character_class->get_max_level()) {
-			break;
-		}
-
+	while (this->get_level() < this->get_max_level() && this->get_experience() >= this->get_experience_for_next_level()) {
 		co_await this->change_experience(-this->get_experience_for_next_level());
 		co_await this->change_level(1);
 	}
+}
+
+int character_game_data::get_max_level() const
+{
+	assert_throw(this->get_character_class() != nullptr);
+	return this->get_character_class()->get_max_level() - this->get_level_adjustment();
 }
 
 QCoro::Task<void> character_game_data::change_experience(const int64_t change)

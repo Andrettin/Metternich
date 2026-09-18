@@ -260,6 +260,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_level_gained(const int affected_level, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> check_level_experience();
 
+	int get_max_level() const;
+
 	int64_t get_experience() const
 	{
 		return this->experience;
