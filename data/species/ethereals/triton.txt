@@ -4,4 +4,32 @@ triton = {
 	era = holocene
 	sapient = true
 	default_creature_size = medium
+	max_attribute_values = {
+		strength = 19
+		constitution = 19
+	}
+	allowed_character_classes = {
+		cleric
+		druid
+		mage
+		ranger
+		warrior
+	}
+	character_class_level_limits = {
+		cleric = 12
+		druid = 12
+		mage = 15
+		ranger = 12
+		warrior = 12
+	}
+	modifier = {
+		strength = 1
+		constitution = 1
+		charisma = -1
+		dexterity = -1
+		base_armor_class = 5
+		movement = 9 #15 when swimming
+	}
+	
+	#300+ years as the maximum age
 }

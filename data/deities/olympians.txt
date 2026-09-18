@@ -436,7 +436,9 @@ poseidon = {
 		divination
 	}
 	character = {
-		monster_type = triton
+		species = triton
+		character_class = ranger #druid/fighter
+		level = 17
 		culture = aquan
 		religion = hellenic
 		gender = male
