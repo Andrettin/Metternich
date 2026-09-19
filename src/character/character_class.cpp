@@ -31,6 +31,20 @@ character_class::~character_class()
 {
 }
 
+void character_class::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "base_class") {
+		character_class *base_class = character_class::get(value);
+		base_class->derived_classes.push_back(this);
+		this->base_class = base_class;
+	} else {
+		named_data_entry::process_gsml_property(property);
+	}
+}
+
 void character_class::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();

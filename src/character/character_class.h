@@ -33,7 +33,6 @@ class character_class final : public named_data_entry, public data_type<characte
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::character_class* base_class MEMBER base_class READ get_base_class NOTIFY changed)
 	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
@@ -56,12 +55,18 @@ public:
 	explicit character_class(const std::string &identifier);
 	~character_class();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
 
 	const character_class *get_base_class() const
 	{
 		return this->base_class;
+	}
+
+	const std::vector<const character_class *> &get_derived_classes() const
+	{
+		return this->derived_classes;
 	}
 
 	const character_attribute *get_attribute() const
@@ -329,6 +334,7 @@ signals:
 
 private:
 	const character_class *base_class = nullptr;
+	std::vector<const character_class *> derived_classes;
 	const character_attribute *attribute = nullptr;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
