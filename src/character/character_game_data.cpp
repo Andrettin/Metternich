@@ -1609,6 +1609,48 @@ void character_game_data::set_character_class(const metternich::character_class 
 	}
 }
 
+void character_game_data::check_character_class_advancement(const int level)
+{
+	assert_throw(this->get_character_class() != nullptr);
+
+	std::vector<const metternich::character_class *> potential_character_classes;
+
+	for (const metternich::character_class *derived_character_class : this->get_character_class()->get_derived_classes()) {
+		if (derived_character_class->get_min_level() == 0 || derived_character_class->get_min_level() != level) {
+			continue;
+		}
+
+		if (!derived_character_class->is_allowed_for_species(this->character->get_species())) {
+			continue;
+		}
+
+		bool has_minimum_attributes = true;
+		for (const character_attribute *attribute : character_attribute::get_all()) {
+			const int min_attribute_value = derived_character_class->get_min_attribute_value(attribute);
+			if (min_attribute_value != 0 && this->get_attribute_value(attribute) < min_attribute_value) {
+				has_minimum_attributes = false;
+				break;
+			}
+		}
+		if (!has_minimum_attributes) {
+			continue;
+		}
+
+		if (derived_character_class->get_conditions() != nullptr && !derived_character_class->get_conditions()->check(this->character)) {
+			continue;
+		}
+
+		potential_character_classes.push_back(derived_character_class);
+	}
+
+	if (potential_character_classes.empty()) {
+		return;
+	}
+
+	const metternich::character_class *chosen_character_class = vector::get_random(potential_character_classes);
+	this->set_character_class(chosen_character_class);
+}
+
 int character_game_data::get_level() const
 {
 	return this->level;
@@ -1748,6 +1790,8 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_modifier_string));
 	}
+
+	this->check_character_class_advancement(affected_level);
 }
 
 QCoro::Task<void> character_game_data::check_level_experience()

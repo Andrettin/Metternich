@@ -253,6 +253,7 @@ public:
 
 	const metternich::character_class *get_character_class() const;
 	void set_character_class(const metternich::character_class *character_class);
+	void check_character_class_advancement(const int level);
 
 	int get_level() const;
 	[[nodiscard]] QCoro::Task<void> set_level(const int level);
