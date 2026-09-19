@@ -27,6 +27,7 @@ Item {
 	property bool tile_detail_mode: false
 	
 	readonly property var event_dialog_component: Qt.createComponent("dialogs/EventDialog.qml")
+	readonly property var character_class_choice_dialog_component: Qt.createComponent("dialogs/CharacterClassChoiceDialog.qml")
 	readonly property var trait_choice_dialog_component: Qt.createComponent("dialogs/TraitChoiceDialog.qml")
 	
 	property int next_civilian_unit_index: 0
@@ -239,6 +240,20 @@ Item {
 			construction_choice_dialog.buildable_locations = buildable_locations
 			construction_choice_dialog.open()
 			construction_choice_dialog.receive_focus()
+		}
+		
+		function onCharacter_class_choosable(character, potential_classes) {
+			if (character_class_choice_dialog_component.status == Component.Error) {
+				console.error(character_class_choice_dialog_component.errorString())
+				return
+			}
+			
+			var character_class_choice_dialog = character_class_choice_dialog_component.createObject(map_view, {
+				character: character,
+				potential_classes: potential_classes
+			})
+			
+			character_class_choice_dialog.open()
 		}
 		
 		function onTrait_choosable(character, type, potential_traits) {

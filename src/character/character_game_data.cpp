@@ -1609,7 +1609,7 @@ void character_game_data::set_character_class(const metternich::character_class 
 	}
 }
 
-void character_game_data::check_character_class_advancement(const int level)
+QCoro::Task<void> character_game_data::check_character_class_advancement(const int level)
 {
 	assert_throw(this->get_character_class() != nullptr);
 
@@ -1648,11 +1648,30 @@ void character_game_data::check_character_class_advancement(const int level)
 	}
 
 	if (potential_character_classes.empty()) {
-		return;
+		co_return;
 	}
 
-	const metternich::character_class *chosen_character_class = vector::get_random(potential_character_classes);
-	this->set_character_class(chosen_character_class);
+	if (this->character == game::get()->get_player_character()) {
+		this->choice_promise = std::make_unique<QPromise<void>>();
+		const QFuture<void> future = this->choice_promise->future();
+		this->choice_promise->start();
+
+		emit engine_interface::get()->character_class_choosable(this->character, container::to_qvariant_list(potential_character_classes));
+
+		co_await future;
+	} else {
+		const metternich::character_class *chosen_character_class = vector::get_random(potential_character_classes);
+		this->set_character_class(chosen_character_class);
+	}
+}
+
+void character_game_data::on_character_class_chosen(const metternich::character_class *character_class)
+{
+	this->set_character_class(character_class);
+
+	if (this->choice_promise != nullptr) {
+		this->choice_promise->finish();
+	}
 }
 
 int character_game_data::get_level() const
@@ -1704,7 +1723,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 	assert_throw(affected_level >= 1);
 
 	//check if gaining the level allows the character to advance to a new class
-	this->check_character_class_advancement(affected_level);
+	co_await this->check_character_class_advancement(affected_level);
 
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
@@ -1830,7 +1849,9 @@ QCoro::Task<void> character_game_data::change_experience(const int64_t change)
 		emit experience_changed();
 	}
 
-	co_await this->check_level_experience();
+	if (change > 0) {
+		co_await this->check_level_experience();
+	}
 }
 
 int64_t character_game_data::get_experience_for_level(const int level) const
@@ -3156,7 +3177,13 @@ QCoro::Task<void> character_game_data::add_trait_of_type(const trait_type *trait
 				return false;
 			});
 
+			this->choice_promise = std::make_unique<QPromise<void>>();
+			const QFuture<void> future = this->choice_promise->future();
+			this->choice_promise->start();
+
 			emit engine_interface::get()->trait_choosable(this->character, trait_type, container::to_qvariant_list(potential_traits));
+
+			co_await future;
 		} else {
 			const trait *chosen_trait = vector::get_random(potential_traits);
 			co_await this->on_trait_chosen_coro(chosen_trait, trait_type);
@@ -3230,6 +3257,10 @@ QCoro::Task<void> character_game_data::on_trait_chosen_coro(const trait *trait, 
 
 	if (trait != nullptr) {
 		co_await this->change_trait_count(trait, 1);
+	}
+
+	if (this->choice_promise != nullptr) {
+		this->choice_promise->finish();
 	}
 }
 

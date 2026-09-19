@@ -253,7 +253,8 @@ public:
 
 	const metternich::character_class *get_character_class() const;
 	void set_character_class(const metternich::character_class *character_class);
-	void check_character_class_advancement(const int level);
+	[[nodiscard]] QCoro::Task<void> check_character_class_advancement(const int level);
+	Q_INVOKABLE void on_character_class_chosen(const metternich::character_class *character_class);
 
 	int get_level() const;
 	[[nodiscard]] QCoro::Task<void> set_level(const int level);
@@ -1203,6 +1204,7 @@ private:
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;
+	std::unique_ptr<QPromise<void>> choice_promise;
 };
 
 }
