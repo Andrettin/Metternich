@@ -1703,6 +1703,9 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 	assert_throw(affected_level >= 1);
 
+	//check if gaining the level allows the character to advance to a new class
+	this->check_character_class_advancement(affected_level);
+
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
@@ -1794,8 +1797,6 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_modifier_string));
 	}
-
-	this->check_character_class_advancement(affected_level);
 }
 
 QCoro::Task<void> character_game_data::check_level_experience()
