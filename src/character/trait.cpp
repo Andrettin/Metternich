@@ -29,7 +29,7 @@ void trait::process_gsml_property(const gsml_property &property)
 		const int factor = std::stoi(value);
 		this->weight_factor = std::make_unique<metternich::factor<character>>(factor);
 	} else {
-		data_entry::process_gsml_property(property);
+		named_data_entry::process_gsml_property(property);
 	}
 }
 

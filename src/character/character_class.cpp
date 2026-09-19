@@ -13,6 +13,7 @@
 #include "character/trait_type.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_type.h"
+#include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "species/species.h"
 #include "spell/spell.h"
@@ -100,6 +101,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->min_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
+	} else if (tag == "conditions") {
+		auto conditions = std::make_unique<and_condition<character>>();
+		conditions->process_gsml_data(scope);
+		this->conditions = std::move(conditions);
 	} else if (tag == "rank_levels") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();

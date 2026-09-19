@@ -27,6 +27,9 @@ enum class military_unit_category;
 enum class starting_age_category;
 
 template <typename scope_type>
+class and_condition;
+
+template <typename scope_type>
 class modifier;
 
 class character_class final : public named_data_entry, public data_type<character_class>
@@ -269,6 +272,11 @@ public:
 		return 0;
 	}
 
+	const and_condition<character> *get_conditions() const
+	{
+		return this->conditions.get();
+	}
+
 	int get_rank_level(const std::string &rank) const
 	{
 		const auto find_iterator = this->rank_levels.find(rank);
@@ -357,6 +365,7 @@ private:
 	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const holding_type *> favored_holding_types;
 	data_entry_map<character_attribute, int> min_attribute_values;
+	std::unique_ptr<const and_condition<character>> conditions;
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::variant<int, dice>> health_bonus_per_level;
