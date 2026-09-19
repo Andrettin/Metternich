@@ -1717,6 +1717,19 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		co_await this->change_domain_skill_value(domain_skill, domain_skill_bonus);
 	}
 
+	for (const trait_type *trait_type : trait_type::get_all()) {
+		const level_bonus_table *trait_gain_table = character_class->get_trait_gain_table(trait_type);
+		if (trait_gain_table == nullptr) {
+			continue;
+		}
+
+		const int trait_gain_count = trait_gain_table->get_bonus_per_level(affected_level) * multiplier;
+
+		for (int i = 0; i < trait_gain_count; ++i) {
+			co_await this->add_trait_of_type(trait_type);
+		}
+	}
+
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
 	if (level_modifier != nullptr) {
 		co_await level_modifier->apply(this->character);
