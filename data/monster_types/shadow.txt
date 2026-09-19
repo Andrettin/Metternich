@@ -10,7 +10,7 @@ shadow = {
 		armor_class = 3
 		hit_dice = 3d8+3
 		to_hit_bonus = 3
-		saving_throw_bonus = 4
+		save_bonus = 4
 		movement = 12
 	}
 }

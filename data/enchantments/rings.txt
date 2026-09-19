@@ -7,6 +7,6 @@ of_protection_1 = {
 	}
 	modifier = {
 		armor_class = 1
-		saving_throw_bonus = 1
+		save_bonus = 1
 	}
 }

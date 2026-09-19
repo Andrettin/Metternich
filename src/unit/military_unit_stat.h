@@ -10,7 +10,7 @@ enum class military_unit_stat {
 	charge,
 	missile,
 	range,
-	saving_throw,
+	save,
 	melee_vs_mounted,
 	defense_vs_mounted,
 
@@ -34,8 +34,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Missile";
 		case military_unit_stat::range:
 			return "Range";
-		case military_unit_stat::saving_throw:
-			return "Saving Throw";
+		case military_unit_stat::save:
+			return "Save";
 		case military_unit_stat::melee_vs_mounted:
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:
@@ -64,8 +64,8 @@ inline std::string_view get_military_unit_stat_short_name(const military_unit_st
 			return "Missile";
 		case military_unit_stat::range:
 			return "Range";
-		case military_unit_stat::saving_throw:
-			return "Saving Throw";
+		case military_unit_stat::save:
+			return "Save";
 		case military_unit_stat::melee_vs_mounted:
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:

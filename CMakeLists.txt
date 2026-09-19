@@ -44,7 +44,7 @@ set(character_SRCS
 	src/character/monster_type.cpp
 	src/character/mythic_path.cpp
 	src/character/party.cpp
-	src/character/saving_throw_type.cpp
+	src/character/save_type.cpp
 	src/character/skill.cpp
 	src/character/skill_group.cpp
 	src/character/status_effect.cpp
@@ -421,7 +421,7 @@ set(character_HDRS
 	src/character/mythic_path.h
 	src/character/party.h
 	src/character/profession_profitability.h
-	src/character/saving_throw_type.h
+	src/character/save_type.h
 	src/character/skill.h
 	src/character/skill_group.h
 	src/character/starting_age_category.h
@@ -930,7 +930,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/range_modifier_effect.h
 	src/script/modifier_effect/reputation_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
-	src/script/modifier_effect/saving_throw_modifier_effect.h
+	src/script/modifier_effect/save_modifier_effect.h
 	src/script/modifier_effect/scripted_modifier_effect.h
 	src/script/modifier_effect/scripted_modifier_effect_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h

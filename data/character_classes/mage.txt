@@ -7,10 +7,10 @@ mage = {
 	craft_bonus_table = craft_bonus
 	reputation_bonus_table = medium_reputation_bonus
 	to_hit_bonus_table = mage_to_hit_bonus
-	saving_throw_bonus_tables = {
-		fortitude = low_saving_throw_bonus
-		reflex = low_saving_throw_bonus
-		will = high_saving_throw_bonus
+	save_bonus_tables = {
+		fortitude = low_save_bonus
+		reflex = low_save_bonus
+		will = high_save_bonus
 		save_vs_poison = mage_save_vs_poison_bonus
 	}
 	domain_skill_bonus_tables = {

@@ -7,10 +7,10 @@ engineer = {
 	starting_age_category = trained
 	reputation_bonus_table = medium_reputation_bonus
 	to_hit_bonus_table = cleric_to_hit_bonus
-	saving_throw_bonus_tables = {
-		fortitude = high_saving_throw_bonus
-		reflex = low_saving_throw_bonus
-		will = high_saving_throw_bonus
+	save_bonus_tables = {
+		fortitude = high_save_bonus
+		reflex = low_save_bonus
+		will = high_save_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
 	trait_gain_tables = {

@@ -183,15 +183,15 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_saving_throw_bonus_table(const saving_throw_type *saving_throw_type) const
+	const level_bonus_table *get_save_bonus_table(const save_type *save_type) const
 	{
-		const auto find_iterator = this->saving_throw_bonus_tables.find(saving_throw_type);
-		if (find_iterator != this->saving_throw_bonus_tables.end()) {
+		const auto find_iterator = this->save_bonus_tables.find(save_type);
+		if (find_iterator != this->save_bonus_tables.end()) {
 			return find_iterator->second;
 		}
 
 		if (this->get_base_class() != nullptr) {
-			return this->get_base_class()->get_saving_throw_bonus_table(saving_throw_type);
+			return this->get_base_class()->get_save_bonus_table(save_type);
 		}
 
 		return nullptr;
@@ -360,7 +360,7 @@ private:
 	const level_bonus_table *craft_bonus_table = nullptr;
 	const level_bonus_table *reputation_bonus_table = nullptr;
 	const level_bonus_table *to_hit_bonus_table = nullptr;
-	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
+	data_entry_map<save_type, const level_bonus_table *> save_bonus_tables;
 	data_entry_map<domain_skill, const level_bonus_table *> domain_skill_bonus_tables;
 	data_entry_map<trait_type, const level_bonus_table *> trait_gain_tables;
 	data_entry_set<skill> class_skills;

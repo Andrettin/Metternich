@@ -74,9 +74,9 @@
 #include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/reputation_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
+#include "script/modifier_effect/save_modifier_effect.h"
 #include "script/modifier_effect/scripted_modifier_effect_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
-#include "script/modifier_effect/saving_throw_modifier_effect.h"
 #include "script/modifier_effect/site_attribute_modifier_effect.h"
 #include "script/modifier_effect/skill_modifier_effect.h"
 #include "script/modifier_effect/skill_training_modifier_effect.h"
@@ -145,8 +145,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<initiative_modifier_effect>(value);
 		} else if (key == "reputation") {
 			return std::make_unique<reputation_modifier_effect>(value);
-		} else if (key == "saving_throw_bonus") {
-			return std::make_unique<saving_throw_modifier_effect>(value);
+		} else if (key == "save_bonus") {
+			return std::make_unique<save_modifier_effect>(value);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_modifier_effect>(value);
 		} else if (key == "trait") {
@@ -155,8 +155,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trait_of_type_modifier_effect>(value);
 		} else if (key == "weight") {
 			return std::make_unique<weight_modifier_effect>(value);
-		} else if (saving_throw_type::try_get(key) != nullptr) {
-			return std::make_unique<saving_throw_modifier_effect>(saving_throw_type::get(key), value);
+		} else if (save_type::try_get(key) != nullptr) {
+			return std::make_unique<save_modifier_effect>(save_type::get(key), value);
 		} else if (skill::try_get(key) != nullptr) {
 			return std::make_unique<skill_modifier_effect>(skill::get(key), value);
 		} else if (character_stat::try_get_stat(key) != nullptr) {

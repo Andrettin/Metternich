@@ -6,7 +6,7 @@
 #include "character/character_defines.h"
 #include "character/domain_skill.h"
 #include "character/level_bonus_table.h"
-#include "character/saving_throw_type.h"
+#include "character/save_type.h"
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
@@ -55,12 +55,12 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "saving_throw_bonus_tables") {
+	if (tag == "save_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->saving_throw_bonus_tables[saving_throw_type::get(key)] = level_bonus_table::get(value);
+			this->save_bonus_tables[save_type::get(key)] = level_bonus_table::get(value);
 		});
 	} else if (tag == "domain_skill_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -211,10 +211,10 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no to hit bonus table.", this->get_identifier()));
 	}
 
-	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
-		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
-		if (saving_throw_bonus_table == nullptr && saving_throw_type->get_base_saving_throw_type() == nullptr) {
-			throw std::runtime_error(std::format("Character class \"{}\" has no saving throw bonus table for base saving throw type \"{}\".", this->get_identifier(), saving_throw_type->get_identifier()));
+	for (const save_type *save_type : save_type::get_all()) {
+		const level_bonus_table *save_bonus_table = this->get_save_bonus_table(save_type);
+		if (save_bonus_table == nullptr && save_type->get_base_save_type() == nullptr) {
+			throw std::runtime_error(std::format("Character class \"{}\" has no save bonus table for base save type \"{}\".", this->get_identifier(), save_type->get_identifier()));
 		}
 	}
 
@@ -370,21 +370,21 @@ std::string character_class::get_level_modifier_string(const int level, const me
 		str += std::format("To Hit Bonus: {}", string::colored(number::to_signed_string(to_hit_bonus), ui_defines::get()->get_green_text_color()));
 	}
 
-	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
-		const level_bonus_table *saving_throw_bonus_table = this->get_saving_throw_bonus_table(saving_throw_type);
+	for (const save_type *save_type : save_type::get_all()) {
+		const level_bonus_table *save_bonus_table = this->get_save_bonus_table(save_type);
 
-		if (saving_throw_bonus_table == nullptr) {
+		if (save_bonus_table == nullptr) {
 			continue;
 		}
 
-		const int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(level);
+		const int save_bonus = save_bonus_table->get_bonus_per_level(level);
 
-		if (saving_throw_bonus != 0) {
+		if (save_bonus != 0) {
 			if (!str.empty()) {
 				str += "\n";
 			}
 
-			str += std::format("{}: {}", saving_throw_type->get_name(), string::colored(number::to_signed_string(saving_throw_bonus), ui_defines::get()->get_green_text_color()));
+			str += std::format("{}: {}", save_type->get_name(), string::colored(number::to_signed_string(save_bonus), ui_defines::get()->get_green_text_color()));
 		}
 	}
 

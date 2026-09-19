@@ -9,7 +9,7 @@ giant_bat = {
 	modifier = {
 		hit_dice = 1d4
 		armor_class = 2
-		saving_throw_bonus = 1
+		save_bonus = 1
 		movement = 18
 	}
 }

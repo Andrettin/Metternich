@@ -15,7 +15,7 @@
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
 #include "character/profession_profitability.h"
-#include "character/saving_throw_type.h"
+#include "character/save_type.h"
 #include "character/skill.h"
 #include "character/status_effect.h"
 #include "character/trait.h"
@@ -236,9 +236,9 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->weapon_damage_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
 		});
-	} else if (tag == "saving_throw_bonuses") {
+	} else if (tag == "save_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
-			this->saving_throw_bonuses[saving_throw_type::get(property.get_key())] = std::stoi(property.get_value());
+			this->save_bonuses[save_type::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "skill_trainings") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -423,12 +423,12 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(weapon_damage_bonuses_data));
 	}
 
-	if (!this->saving_throw_bonuses.empty()) {
-		gsml_data saving_throw_bonuses_data("saving_throw_bonuses");
-		for (const auto &[saving_throw_type, bonus] : this->saving_throw_bonuses) {
-			saving_throw_bonuses_data.add_property(saving_throw_type->get_identifier(), std::to_string(bonus));
+	if (!this->save_bonuses.empty()) {
+		gsml_data save_bonuses_data("save_bonuses");
+		for (const auto &[save_type, bonus] : this->save_bonuses) {
+			save_bonuses_data.add_property(save_type->get_identifier(), std::to_string(bonus));
 		}
-		data.add_child(std::move(saving_throw_bonuses_data));
+		data.add_child(std::move(save_bonuses_data));
 	}
 
 	if (!this->skill_trainings.empty()) {
@@ -1760,20 +1760,20 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
 	}
 
-	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
-		const level_bonus_table *saving_throw_bonus_table = character_class->get_saving_throw_bonus_table(saving_throw_type);
+	for (const save_type *save_type : save_type::get_all()) {
+		const level_bonus_table *save_bonus_table = character_class->get_save_bonus_table(save_type);
 
-		if (saving_throw_bonus_table == nullptr) {
+		if (save_bonus_table == nullptr) {
 			continue;
 		}
 
-		int saving_throw_bonus = saving_throw_bonus_table->get_bonus_per_level(affected_level) * multiplier;
-		if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
-			//derived saving throw type bonus tables are applied with the base saving throw type bonus subtracted from it
-			saving_throw_bonus -= character_class->get_saving_throw_bonus_table(saving_throw_type->get_base_saving_throw_type())->get_bonus_per_level(affected_level) * multiplier;
+		int save_bonus = save_bonus_table->get_bonus_per_level(affected_level) * multiplier;
+		if (save_type->get_base_save_type() != nullptr) {
+			//derived save type bonus tables are applied with the base save type bonus subtracted from it
+			save_bonus -= character_class->get_save_bonus_table(save_type->get_base_save_type())->get_bonus_per_level(affected_level) * multiplier;
 		}
 
-		this->change_saving_throw_bonus(saving_throw_type, saving_throw_bonus);
+		this->change_save_bonus(save_type, save_bonus);
 	}
 
 	for (const domain_skill *domain_skill : domain_skill::get_all()) {
@@ -2766,54 +2766,54 @@ void character_game_data::change_initiative_bonus(const int change)
 	this->set_initiative_bonus(this->get_initiative_bonus() + change);
 }
 
-QVariantList character_game_data::get_saving_throw_bonuses_qvariant_list() const
+QVariantList character_game_data::get_save_bonuses_qvariant_list() const
 {
-	return archimedes::map::to_qvariant_list(this->get_saving_throw_bonuses());
+	return archimedes::map::to_qvariant_list(this->get_save_bonuses());
 }
 
-void character_game_data::change_saving_throw_bonus(const saving_throw_type *type, const int change)
+void character_game_data::change_save_bonus(const save_type *type, const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const int new_value = (this->saving_throw_bonuses[type] += change);
+	const int new_value = (this->save_bonuses[type] += change);
 	if (new_value == 0) {
-		this->saving_throw_bonuses.erase(type);
+		this->save_bonuses.erase(type);
 	}
 
-	for (const saving_throw_type *derived_type : type->get_derived_saving_throw_types()) {
-		this->change_saving_throw_bonus(derived_type, change);
+	for (const save_type *derived_type : type->get_derived_save_types()) {
+		this->change_save_bonus(derived_type, change);
 	}
 
 	if (game::get()->is_running()) {
-		emit saving_throw_bonuses_changed();
+		emit save_bonuses_changed();
 	}
 }
 
-bool character_game_data::do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier) const
+bool character_game_data::do_save(const save_type *save_type, const int roll_modifier) const
 {
-	static constexpr dice saving_throw_dice(1, 20);
+	static constexpr dice save_dice(1, 20);
 
-	const int roll_result = random::get()->roll_dice(saving_throw_dice);
+	const int roll_result = random::get()->roll_dice(save_dice);
 	const int modified_roll_result = roll_result + roll_modifier;
 
-	const int saving_throw_value = 20 - this->get_saving_throw_bonus(saving_throw_type);
+	const int save_value = 20 - this->get_save_bonus(save_type);
 
-	return modified_roll_result >= saving_throw_value;
+	return modified_roll_result >= save_value;
 }
 
-int character_game_data::get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier) const
+int character_game_data::get_save_chance(const save_type *save_type, const int roll_modifier) const
 {
-	assert_throw(saving_throw_type != nullptr);
+	assert_throw(save_type != nullptr);
 
-	int chance = this->get_saving_throw_bonus(saving_throw_type) + 1;
+	int chance = this->get_save_bonus(save_type) + 1;
 	chance += roll_modifier;
 
-	static constexpr dice saving_throw_dice(1, 20);
+	static constexpr dice save_dice(1, 20);
 
 	chance *= 100;
-	chance /= saving_throw_dice.get_sides();
+	chance /= save_dice.get_sides();
 
 	chance = std::min(chance, 100);
 	chance = std::max(chance, 0);

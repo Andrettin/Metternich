@@ -7,7 +7,7 @@ goblin = {
 	}
 	modifier = {
 		hit_dice = 1d8-1
-		saving_throw_bonus = 1
+		save_bonus = 1
 	}
 	items = {
 		mace

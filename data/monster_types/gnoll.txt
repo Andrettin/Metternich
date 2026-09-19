@@ -8,7 +8,7 @@ gnoll = {
 	modifier = {
 		hit_dice = 2d8
 		to_hit_bonus = 1
-		saving_throw_bonus = 3
+		save_bonus = 3
 		movement = 9
 	}
 	items = {

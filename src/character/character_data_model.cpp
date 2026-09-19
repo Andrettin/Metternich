@@ -12,7 +12,7 @@
 #include "character/domain_skill.h"
 #include "character/dynasty.h"
 #include "character/mythic_path.h"
-#include "character/saving_throw_type.h"
+#include "character/save_type.h"
 #include "character/skill.h"
 #include "character/trait.h"
 #include "character/trait_type.h"
@@ -154,7 +154,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
-		disconnect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
@@ -184,7 +184,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
-		connect(this->character->get_game_data(), &character_game_data::saving_throw_bonuses_changed, this, &character_data_model::update_saving_throw_rows);
+		connect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
@@ -212,7 +212,7 @@ void character_data_model::reset_model()
 	this->range_row = nullptr;
 	this->movement_row = nullptr;
 	this->initiative_bonus_row = nullptr;
-	this->saving_throw_row = nullptr;
+	this->save_row = nullptr;
 	this->skill_row = nullptr;
 	this->domain_skill_row = nullptr;
 	this->trait_row = nullptr;
@@ -337,7 +337,7 @@ void character_data_model::reset_model()
 		this->create_range_row();
 		this->create_movement_row();
 		this->create_initiative_bonus_row();
-		this->create_saving_throw_rows();
+		this->create_save_rows();
 		this->create_skill_rows();
 		if (character_game_data->has_domain_skill()) {
 			this->create_domain_skill_rows();
@@ -710,53 +710,53 @@ void character_data_model::update_initiative_bonus_row()
 	this->on_top_row_changed(this->initiative_bonus_row);
 }
 
-void character_data_model::create_saving_throw_rows()
+void character_data_model::create_save_rows()
 {
-	auto row = std::make_unique<character_data_row>("Saving Throws");
-	this->saving_throw_row = row.get();
+	auto row = std::make_unique<character_data_row>("Saves");
+	this->save_row = row.get();
 	this->top_rows.push_back(std::move(row));
 
-	this->update_saving_throw_rows();
+	this->update_save_rows();
 }
 
-void character_data_model::update_saving_throw_rows()
+void character_data_model::update_save_rows()
 {
-	assert_throw(this->saving_throw_row != nullptr);
+	assert_throw(this->save_row != nullptr);
 
-	this->clear_child_rows(this->saving_throw_row);
+	this->clear_child_rows(this->save_row);
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	data_entry_map<saving_throw_type, character_data_row *> saving_throw_type_rows;
+	data_entry_map<save_type, character_data_row *> save_type_rows;
 
-	for (const auto &[saving_throw_type, bonus] : character_game_data->get_saving_throw_bonuses()) {
-		this->create_saving_throw_row(saving_throw_type, bonus, saving_throw_type_rows);
+	for (const auto &[save_type, bonus] : character_game_data->get_save_bonuses()) {
+		this->create_save_row(save_type, bonus, save_type_rows);
 	}
 
-	this->on_child_rows_inserted(this->saving_throw_row);
+	this->on_child_rows_inserted(this->save_row);
 }
 
-void character_data_model::create_saving_throw_row(const saving_throw_type *saving_throw_type, const int bonus, data_entry_map<metternich::saving_throw_type, character_data_row *> &saving_throw_type_rows)
+void character_data_model::create_save_row(const save_type *save_type, const int bonus, data_entry_map<metternich::save_type, character_data_row *> &save_type_rows)
 {
-	if (saving_throw_type_rows.contains(saving_throw_type)) {
-		//already created by derived saving throw row
+	if (save_type_rows.contains(save_type)) {
+		//already created by derived save row
 		return;
 	}
 
 	character_data_row *parent_row = nullptr;
 
-	if (saving_throw_type->get_base_saving_throw_type() != nullptr) {
-		if (!saving_throw_type_rows.contains(saving_throw_type->get_base_saving_throw_type())) {
-			this->create_saving_throw_row(saving_throw_type->get_base_saving_throw_type(), this->character->get_game_data()->get_saving_throw_bonus(saving_throw_type->get_base_saving_throw_type()), saving_throw_type_rows);
+	if (save_type->get_base_save_type() != nullptr) {
+		if (!save_type_rows.contains(save_type->get_base_save_type())) {
+			this->create_save_row(save_type->get_base_save_type(), this->character->get_game_data()->get_save_bonus(save_type->get_base_save_type()), save_type_rows);
 		}
 
-		parent_row = saving_throw_type_rows.find(saving_throw_type->get_base_saving_throw_type())->second;
+		parent_row = save_type_rows.find(save_type->get_base_save_type())->second;
 	} else {
-		parent_row = this->saving_throw_row;
+		parent_row = this->save_row;
 	}
 
-	auto row = std::make_unique<character_data_row>(saving_throw_type->get_name() + ":", number::to_signed_string(bonus), parent_row);
-	saving_throw_type_rows[saving_throw_type] = row.get();
+	auto row = std::make_unique<character_data_row>(save_type->get_name() + ":", number::to_signed_string(bonus), parent_row);
+	save_type_rows[save_type] = row.get();
 	parent_row->child_rows.push_back(std::move(row));
 }
 

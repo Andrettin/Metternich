@@ -4,10 +4,10 @@ aristocrat = {
 	military_unit_category = general
 	max_level = 20
 	reputation_bonus_table = early_reputation_bonus
-	saving_throw_bonus_tables = {
-		fortitude = low_saving_throw_bonus
-		reflex = low_saving_throw_bonus
-		will = high_saving_throw_bonus
+	save_bonus_tables = {
+		fortitude = low_save_bonus
+		reflex = low_save_bonus
+		will = high_save_bonus
 	}
 	domain_skill_bonus_tables = {
 		culture = high_domain_skill_bonus

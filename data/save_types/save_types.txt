@@ -12,5 +12,5 @@ will = {
 
 save_vs_poison = {
 	name = "Save vs. Poison"
-	base_saving_throw_type = fortitude
+	base_save_type = fortitude
 }

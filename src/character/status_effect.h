@@ -4,11 +4,11 @@
 #include "database/named_data_entry.h"
 #include "util/dice.h"
 
-Q_MOC_INCLUDE("character/saving_throw_type.h")
+Q_MOC_INCLUDE("character/save_type.h")
 
 namespace metternich {
 
-class saving_throw_type;
+class save_type;
 
 template <typename scope_type>
 class effect_list;
@@ -21,8 +21,8 @@ class status_effect final : public named_data_entry, public data_type<status_eff
 	Q_OBJECT
 
 	Q_PROPERTY(QString adjective READ get_adjective_qstring NOTIFY changed)
-	Q_PROPERTY(const metternich::saving_throw_type* saving_throw_type MEMBER saving_throw_type READ get_saving_throw_type NOTIFY changed)
-	Q_PROPERTY(int saving_throw_modifier MEMBER saving_throw_modifier READ get_saving_throw_modifier NOTIFY changed)
+	Q_PROPERTY(const metternich::save_type*save_type MEMBER save_type READ get_save_type NOTIFY changed)
+	Q_PROPERTY(int save_modifier MEMBER save_modifier READ get_save_modifier NOTIFY changed)
 	Q_PROPERTY(archimedes::dice duration_rounds MEMBER duration_rounds READ get_duration_rounds NOTIFY changed)
 
 public:
@@ -52,14 +52,14 @@ public:
 		return QString::fromStdString(this->get_adjective());
 	}
 
-	const metternich::saving_throw_type *get_saving_throw_type() const
+	const metternich::save_type *get_save_type() const
 	{
-		return this->saving_throw_type;
+		return this->save_type;
 	}
 
-	int get_saving_throw_modifier() const
+	int get_save_modifier() const
 	{
-		return this->saving_throw_modifier;
+		return this->save_modifier;
 	}
 
 	const dice &get_duration_rounds() const
@@ -89,8 +89,8 @@ signals:
 
 private:
 	std::string adjective;
-	const metternich::saving_throw_type *saving_throw_type = nullptr;
-	int saving_throw_modifier = 0;
+	const metternich::save_type *save_type = nullptr;
+	int save_modifier = 0;
 	dice duration_rounds;
 	std::chrono::seconds duration_per_caster_level = std::chrono::seconds(0);
 	std::unique_ptr<const metternich::modifier<const character>> modifier;

@@ -6,7 +6,7 @@
 #include "character/character_stat.h"
 #include "character/domain_skill.h"
 #include "character/monster_type.h"
-#include "character/saving_throw_type.h"
+#include "character/save_type.h"
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/status_effect.h"
@@ -76,7 +76,7 @@ template struct data_entry_compare<named_data_entry>;
 template struct data_entry_compare<object_type>;
 template struct data_entry_compare<office>;
 template struct data_entry_compare<province_feature>;
-template struct data_entry_compare<saving_throw_type>;
+template struct data_entry_compare<save_type>;
 template struct data_entry_compare<site_attribute>;
 template struct data_entry_compare<site_feature>;
 template struct data_entry_compare<skill>;

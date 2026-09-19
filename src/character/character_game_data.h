@@ -47,7 +47,7 @@ class office;
 class portrait;
 class province;
 class recipe;
-class saving_throw_type;
+class save_type;
 class scripted_character_modifier;
 class site;
 class skill;
@@ -100,7 +100,7 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
 	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
 	Q_PROPERTY(int initiative_bonus READ get_initiative_bonus NOTIFY initiative_bonus_changed)
-	Q_PROPERTY(QVariantList saving_throw_bonuses READ get_saving_throw_bonuses_qvariant_list NOTIFY saving_throw_bonuses_changed)
+	Q_PROPERTY(QVariantList save_bonuses READ get_save_bonuses_qvariant_list NOTIFY save_bonuses_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
@@ -624,26 +624,26 @@ public:
 	void set_initiative_bonus(const int initiative_bonus);
 	void change_initiative_bonus(const int change);
 
-	const data_entry_map<saving_throw_type, int> &get_saving_throw_bonuses() const
+	const data_entry_map<save_type, int> &get_save_bonuses() const
 	{
-		return this->saving_throw_bonuses;
+		return this->save_bonuses;
 	}
 
-	QVariantList get_saving_throw_bonuses_qvariant_list() const;
+	QVariantList get_save_bonuses_qvariant_list() const;
 
-	int get_saving_throw_bonus(const saving_throw_type *type) const
+	int get_save_bonus(const save_type *type) const
 	{
-		const auto find_iterator = this->saving_throw_bonuses.find(type);
-		if (find_iterator != this->saving_throw_bonuses.end()) {
+		const auto find_iterator = this->save_bonuses.find(type);
+		if (find_iterator != this->save_bonuses.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	void change_saving_throw_bonus(const saving_throw_type *type, const int change);
-	bool do_saving_throw(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
-	int get_saving_throw_chance(const saving_throw_type *saving_throw_type, const int roll_modifier = 0) const;
+	void change_save_bonus(const save_type *type, const int change);
+	bool do_save(const save_type *save_type, const int roll_modifier = 0) const;
+	int get_save_chance(const save_type *save_type, const int roll_modifier = 0) const;
 
 	bool is_skill_available(const skill *skill) const;
 	bool is_skill_trained(const skill *skill) const;
@@ -1121,7 +1121,7 @@ signals:
 	void range_changed();
 	void movement_changed();
 	void initiative_bonus_changed();
-	void saving_throw_bonuses_changed();
+	void save_bonuses_changed();
 	void skill_trainings_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
@@ -1183,7 +1183,7 @@ private:
 	int range = 0; //in inches
 	int movement = 0;
 	int initiative_bonus = 0;
-	data_entry_map<saving_throw_type, int> saving_throw_bonuses;
+	data_entry_map<save_type, int> save_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<trait, int> trait_counts;
 	data_entry_map<trait_type, std::vector<const trait *>> trait_choices;
