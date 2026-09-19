@@ -220,8 +220,6 @@ void engine_interface::add_event_instance(qunique_ptr<event_instance> &&event_in
 
 void engine_interface::remove_event_instance(event_instance *event_instance)
 {
-	emit event_closed(event_instance);
-
 	std::erase_if(this->event_instances, [event_instance](const qunique_ptr<metternich::event_instance> &element) {
 		return element.get() == event_instance;
 	});

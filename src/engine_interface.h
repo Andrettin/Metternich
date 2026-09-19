@@ -187,7 +187,6 @@ signals:
 	void notification_added(const QString &title, const QObject *portrait_object, const QString &text);
 	void combat_notification_added(const QString &title, const QObject *portrait_object, const QString &text);
 	void event_fired(const event_instance *event_instance);
-	void event_closed(const event_instance *event_instance);
 	void technology_choosable(const QVariantList &potential_technologies);
 	void free_technology_choosable(const QVariantList &potential_technologies);
 	void construction_choosable(const QVariantList &buildable_locations);

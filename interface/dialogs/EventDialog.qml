@@ -79,18 +79,9 @@ DialogBase {
 					
 					option_picked = true
 					event_instance.choose_option(index)
+					event_dialog.close()
+					event_dialog.destroy()
 				}
-			}
-		}
-	}
-	
-	Connections {
-		target: metternich
-		
-		function onEvent_closed(event_instance) {
-			if (event_instance === event_dialog.event_instance) {
-				event_dialog.close()
-				event_dialog.destroy()
 			}
 		}
 	}
