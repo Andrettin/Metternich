@@ -127,6 +127,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const int level_interval = std::stoi(child_tag);
 			for (int i = level_interval; i <= this->get_max_level(); i += level_interval) {
+				if (this->get_min_level() != 0 && i < this->get_min_level()) {
+					continue;
+				}
+
 				if (!this->level_modifiers.contains(i)) {
 					this->level_modifiers[i] = std::make_unique<metternich::modifier<const character>>();
 				}
