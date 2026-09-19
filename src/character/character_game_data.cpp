@@ -1604,6 +1604,8 @@ void character_game_data::set_character_class(const metternich::character_class 
 
 	this->character_class = character_class;
 
+	this->check_portrait();
+
 	if (game::get()->is_running()) {
 		emit character_class_changed();
 	}
