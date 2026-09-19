@@ -3480,7 +3480,20 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 	const metternich::government_type *government_type = this->get_government_type();
 	assert_throw(government_type != nullptr);
 
-	const character *ruler = co_await this->generate_character(government_type->get_ruler_character_classes(), government_type->get_ruler_monster_types(), 1, gender::none);
+	std::vector<const character_class *> ruler_character_classes;
+	for (const character_class *character_class : character_class::get_all()) {
+		if (character_class->get_min_level() != 0) {
+			continue;
+		}
+
+		if (character_class->is_government_type_allowed(government_type)) {
+			ruler_character_classes.push_back(character_class);
+		}
+	}
+
+	assert_throw(!ruler_character_classes.empty() || !government_type->get_ruler_monster_types().empty());
+
+	const character *ruler = co_await this->generate_character(ruler_character_classes, government_type->get_ruler_monster_types(), 1, gender::none);
 	ruler->get_game_data()->set_domain(this->domain);
 
 	co_await this->on_character_recruited(ruler);

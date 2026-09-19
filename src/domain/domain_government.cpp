@@ -3,6 +3,7 @@
 #include "domain/domain_government.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "database/defines.h"
 #include "domain/domain.h"
@@ -744,7 +745,7 @@ bool domain_government::can_have_office_holder(const office *office, const chara
 
 	if (office->is_ruler() || office->is_heir()) {
 		if (
-			(character->get_character_class() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_character_classes(), character->get_character_class()))
+			(character->get_character_class() == nullptr || !character->get_character_class()->is_government_type_allowed(this->get_game_data()->get_government_type()))
 			&& (character->get_monster_type() == nullptr || !vector::contains(this->get_game_data()->get_government_type()->get_ruler_monster_types(), character->get_monster_type()))
 		) {
 			return false;

@@ -311,7 +311,8 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		this->modifier = std::move(modifier);
 	} else if (tag == "ruler_character_classes") {
 		for (const std::string &value : values) {
-			this->ruler_character_classes.push_back(character_class::get(value));
+			character_class *character_class = character_class::get(value);
+			character_class->add_allowed_government_type(this);
 		}
 	} else if (tag == "ruler_monster_types") {
 		for (const std::string &value : values) {
@@ -361,7 +362,14 @@ void government_type::check() const
 		this->get_conditions()->check_validity();
 	}
 
-	if (this->get_ruler_character_classes().empty() && this->get_ruler_monster_types().empty()) {
+	bool has_ruler_character_class = false;
+	for (const character_class *character_class : character_class::get_all()) {
+		if (character_class->is_government_type_allowed(this)) {
+			has_ruler_character_class = true;
+			break;
+		}
+	}
+	if (!has_ruler_character_class && this->get_ruler_monster_types().empty()) {
 		throw std::runtime_error(std::format("Government type \"{}\" has no ruler character classes and no ruler monster types.", this->get_identifier()));
 	}
 }
