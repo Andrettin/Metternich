@@ -1,7 +1,6 @@
 #pragma once
 
 #include "character/character.h"
-#include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_modifier_type.h"
 #include "character/character_stat.h"
@@ -46,20 +45,14 @@ public:
 
 	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
-		const character_attribute *attribute = dynamic_cast<const character_attribute *>(this->stat);
-
-		if (attribute != nullptr) {
-			if (this->modifier_type.has_value()) {
-				if (multiplier > 0) {
-					co_await scope->get_game_data()->add_attribute_modifier(attribute, this->modifier_type.value(), this->value.to_int());
-				} else if (multiplier < 0) {
-					co_await scope->get_game_data()->remove_attribute_modifier(attribute, this->modifier_type.value(), this->value.to_int());
-				}
-			} else {
-				co_await scope->get_game_data()->change_attribute_value(attribute, (this->value * multiplier).to_int());
+		if (this->modifier_type.has_value()) {
+			if (multiplier > 0) {
+				co_await scope->get_game_data()->add_stat_modifier(this->stat, this->modifier_type.value(), this->value.to_int());
+			} else if (multiplier < 0) {
+				co_await scope->get_game_data()->remove_stat_modifier(this->stat, this->modifier_type.value(), this->value.to_int());
 			}
 		} else {
-			co_await scope->get_game_data()->change_stat_value(stat, (this->value * multiplier).to_int(), true, false);
+			co_await scope->get_game_data()->change_typed_stat_value(this->stat, (this->value * multiplier).to_int());
 		}
 	}
 
@@ -69,7 +62,7 @@ public:
 
 		if (this->modifier_type.has_value()) {
 			//FIXME: show "Malus" instead of "Bonus" if the modifier type is a penalty one
-			return std::format("{} ({} Bonus)", this->stat->get_name(), get_character_modifier_type_name(this->modifier_type.value()));;
+			return std::format("{} ({} Bonus)", this->stat->get_name(), get_character_modifier_type_name(this->modifier_type.value()));
 		} else {
 			return this->stat->get_name();
 		}

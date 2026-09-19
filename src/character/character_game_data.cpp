@@ -196,19 +196,19 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->stat_values[character_stat::get_stat(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
 		});
-	} else if (tag == "attribute_modifiers") {
+	} else if (tag == "stat_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 
-			const character_attribute *attribute = character_attribute::get(child_tag);
+			const character_stat *stat = character_stat::get_stat(child_tag);
 
-			child_scope.for_each_child([this, attribute](const gsml_data &grandchild_scope) {
+			child_scope.for_each_child([this, stat](const gsml_data &grandchild_scope) {
 				const std::string &grandchild_tag = grandchild_scope.get_tag();
 				const std::vector<std::string> &grandchild_values = grandchild_scope.get_values();
 
 				const character_modifier_type modifier_type = magic_enum::enum_cast<character_modifier_type>(grandchild_tag).value();
 				for (const std::string &grandchild_value : grandchild_values) {
-					this->attribute_modifiers[attribute][modifier_type].push_back(std::stoi(grandchild_value));
+					this->stat_modifiers[stat][modifier_type].push_back(std::stoi(grandchild_value));
 				}
 			});
 		});
@@ -346,26 +346,26 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(stats_data));
 	}
 
-	if (!this->attribute_modifiers.empty()) {
-		gsml_data attribute_modifiers_data("attribute_modifiers");
+	if (!this->stat_modifiers.empty()) {
+		gsml_data stat_modifiers_data("stat_modifiers");
 
-		for (const auto &[attribute, specific_attribute_modifiers] : this->attribute_modifiers) {
-			gsml_data specific_attribute_modifiers_data(attribute->get_identifier());
+		for (const auto &[stat, specific_stat_modifiers] : this->stat_modifiers) {
+			gsml_data specific_stat_modifiers_data(stat->get_identifier());
 
-			for (const auto &[modifier_type, modifiers] : specific_attribute_modifiers) {
+			for (const auto &[modifier_type, modifiers] : specific_stat_modifiers) {
 				gsml_data modifiers_data(std::string(magic_enum::enum_name(modifier_type)));
 
 				for (const int modifier : modifiers) {
 					modifiers_data.add_value(std::to_string(modifier));
 				}
 
-				specific_attribute_modifiers_data.add_child(std::move(modifiers_data));
+				specific_stat_modifiers_data.add_child(std::move(modifiers_data));
 			}
 
-			attribute_modifiers_data.add_child(std::move(specific_attribute_modifiers_data));
+			stat_modifiers_data.add_child(std::move(specific_stat_modifiers_data));
 		}
 
-		data.add_child(std::move(attribute_modifiers_data));
+		data.add_child(std::move(stat_modifiers_data));
 	}
 
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
@@ -1781,7 +1781,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(affected_level) * multiplier;
 
-		co_await this->change_domain_skill_value(domain_skill, domain_skill_bonus);
+		co_await this->change_typed_stat_value(domain_skill, domain_skill_bonus);
 	}
 
 	for (const trait_type *trait_type : trait_type::get_all()) {
@@ -2135,6 +2135,17 @@ QCoro::Task<void> character_game_data::change_stat_value(const character_stat *s
 
 	if (game::get()->is_running()) {
 		emit stat_values_changed();
+	}
+}
+
+QCoro::Task<void> character_game_data::change_typed_stat_value(const character_stat *stat, const int change)
+{
+	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
+		co_await this->change_attribute_value(attribute, change);
+	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
+		co_await this->change_skill_value(skill, change);
+	} else {
+		co_await this->change_stat_value(stat, change, true, false);
 	}
 }
 
@@ -2520,7 +2531,7 @@ QCoro::Task<void> character_game_data::apply_base_armor_class_bonus(const int mu
 		bonus = this->get_base_armor_class_bonus();
 	}
 
-	co_await this->change_stat_value(character_stat::armor_class.get(), bonus * multiplier, true, false);
+	co_await this->change_typed_stat_value(character_stat::armor_class.get(), bonus * multiplier);
 }
 
 int character_game_data::get_armor_class_bonus() const
@@ -2928,15 +2939,6 @@ bool character_game_data::has_domain_skill() const
 int character_game_data::get_domain_skill_value(const domain_skill *domain_skill) const
 {
 	return this->get_stat_value(domain_skill);
-}
-
-QCoro::Task<void> character_game_data::change_domain_skill_value(const domain_skill *domain_skill, const int change)
-{
-	if (change == 0) {
-		co_return;
-	}
-
-	co_await this->change_stat_value(domain_skill, change, true, false);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)

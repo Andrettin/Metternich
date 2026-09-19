@@ -1,24 +1,27 @@
 #pragma once
 
 #include "character/character.h"
-#include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_modifier_type.h"
+#include "character/character_stat.h"
 #include "script/condition/numerical_condition.h"
+#include "script/context.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
-class character_attribute_modifier_condition final : public numerical_condition<character, read_only_context>
+class character_stat_modifier_condition final : public numerical_condition<character, read_only_context>
 {
 public:
-	explicit character_attribute_modifier_condition(const gsml_operator condition_operator)
+	explicit character_stat_modifier_condition(const gsml_operator condition_operator)
 		: numerical_condition<character, read_only_context>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "character_attribute_modifier";
+		static const std::string class_identifier = "character_stat_modifier";
 		return class_identifier;
 	}
 
@@ -27,8 +30,8 @@ public:
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
-		if (key == "attribute") {
-			this->attribute = character_attribute::get(value);
+		if (key == "stat") {
+			this->stat = character_stat::get_stat(value);
 		} else if (key == "modifier_type") {
 			this->modifier_type = magic_enum::enum_cast<character_modifier_type>(value).value();
 		} else if (key == "modifier") {
@@ -43,16 +46,16 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_best_attribute_modifier(this->attribute, this->modifier_type.value());
+		return scope->get_game_data()->get_best_stat_modifier(this->stat, this->modifier_type.value());
 	}
 
 	virtual std::string get_value_name() const override
 	{
-		return std::format("{} ({} Bonus)", this->attribute->get_name(), get_character_modifier_type_name(this->modifier_type.value()));
+		return std::format("{} ({} Bonus)", this->stat->get_name(), get_character_modifier_type_name(this->modifier_type.value()));
 	}
 
 private:
-	const character_attribute *attribute = nullptr;
+	const character_stat *stat = nullptr;
 	std::optional<character_modifier_type> modifier_type;
 };
 

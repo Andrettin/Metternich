@@ -6,8 +6,8 @@ of_charisma_2 = {
 		cloak
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = charisma
+		stat_modifier = {
+			stat = charisma
 			modifier_type = enhancement
 			modifier < 2
 		}
@@ -28,8 +28,8 @@ of_charisma_4 = {
 		cloak
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = charisma
+		stat_modifier = {
+			stat = charisma
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -50,8 +50,8 @@ of_charisma_6 = {
 		cloak
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = charisma
+		stat_modifier = {
+			stat = charisma
 			modifier_type = enhancement
 			modifier < 6
 		}

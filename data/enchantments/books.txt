@@ -6,8 +6,8 @@ of_clear_thought_1 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = inherent
 			modifier < 1
 		}
@@ -28,8 +28,8 @@ of_clear_thought_2 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = inherent
 			modifier < 2
 		}
@@ -50,8 +50,8 @@ of_clear_thought_3 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = inherent
 			modifier < 3
 		}
@@ -72,8 +72,8 @@ of_clear_thought_4 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = inherent
 			modifier < 4
 		}
@@ -94,8 +94,8 @@ of_clear_thought_5 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = inherent
 			modifier < 5
 		}
@@ -116,8 +116,8 @@ of_understanding_1 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = inherent
 			modifier < 1
 		}
@@ -138,8 +138,8 @@ of_understanding_2 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = inherent
 			modifier < 2
 		}
@@ -160,8 +160,8 @@ of_understanding_3 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = inherent
 			modifier < 3
 		}
@@ -182,8 +182,8 @@ of_understanding_4 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = inherent
 			modifier < 4
 		}
@@ -204,8 +204,8 @@ of_understanding_5 = {
 		tome
 	}
 	conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = inherent
 			modifier < 5
 		}

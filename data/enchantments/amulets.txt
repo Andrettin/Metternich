@@ -6,8 +6,8 @@ of_health_2 = {
 		amulet
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = constitution
+		stat_modifier = {
+			stat = constitution
 			modifier_type = enhancement
 			modifier < 2
 		}
@@ -28,8 +28,8 @@ of_health_4 = {
 		amulet
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = constitution
+		stat_modifier = {
+			stat = constitution
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -50,8 +50,8 @@ of_health_6 = {
 		amulet
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = constitution
+		stat_modifier = {
+			stat = constitution
 			modifier_type = enhancement
 			modifier < 6
 		}
@@ -72,8 +72,8 @@ of_wisdom_2 = {
 		periapt
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = enhancement
 			modifier < 2
 		}
@@ -94,8 +94,8 @@ of_wisdom_4 = {
 		periapt
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -116,8 +116,8 @@ of_wisdom_6 = {
 		periapt
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = wisdom
+		stat_modifier = {
+			stat = wisdom
 			modifier_type = enhancement
 			modifier < 6
 		}

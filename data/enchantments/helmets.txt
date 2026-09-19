@@ -6,8 +6,8 @@ of_intellect_2 = {
 		headband
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = enhancement
 			modifier < 2
 		}
@@ -28,8 +28,8 @@ of_intellect_4 = {
 		headband
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -50,8 +50,8 @@ of_intellect_6 = {
 		headband
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = intelligence
+		stat_modifier = {
+			stat = intelligence
 			modifier_type = enhancement
 			modifier < 6
 		}

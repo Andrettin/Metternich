@@ -6,8 +6,8 @@ of_dexterity_2 = {
 		gloves
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = dexterity
+		stat_modifier = {
+			stat = dexterity
 			modifier_type = enhancement
 			modifier < 2
 		}
@@ -28,8 +28,8 @@ of_dexterity_4 = {
 		gloves
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = dexterity
+		stat_modifier = {
+			stat = dexterity
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -50,8 +50,8 @@ of_dexterity_6 = {
 		gloves
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = dexterity
+		stat_modifier = {
+			stat = dexterity
 			modifier_type = enhancement
 			modifier < 6
 		}
@@ -72,8 +72,8 @@ of_ogre_power = {
 		gauntlets
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = strength
+		stat_modifier = {
+			stat = strength
 			modifier_type = enhancement
 			modifier < 2
 		}

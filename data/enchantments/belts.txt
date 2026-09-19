@@ -6,8 +6,8 @@ of_giant_strength_4 = {
 		belt
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = strength
+		stat_modifier = {
+			stat = strength
 			modifier_type = enhancement
 			modifier < 4
 		}
@@ -28,8 +28,8 @@ of_giant_strength_6 = {
 		belt
 	}
 	ai_conditions = {
-		attribute_modifier = {
-			attribute = strength
+		stat_modifier = {
+			stat = strength
 			modifier_type = enhancement
 			modifier < 6
 		}

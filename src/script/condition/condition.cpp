@@ -31,9 +31,9 @@
 #include "script/condition/caster_level_condition.h"
 #include "script/condition/cavalry_condition.h"
 #include "script/condition/character_condition.h"
-#include "script/condition/character_attribute_modifier_condition.h"
 #include "script/condition/character_class_condition.h"
 #include "script/condition/character_stat_condition.h"
+#include "script/condition/character_stat_modifier_condition.h"
 #include "script/condition/class_skill_condition.h"
 #include "script/condition/coastal_condition.h"
 #include "script/condition/commodity_condition.h"
@@ -436,12 +436,12 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	std::unique_ptr<condition_base<scope_type, read_only_context>> condition;
 
 	if constexpr (std::is_same_v<scope_type, character>) {
-		if (tag == "attribute_modifier") {
-			condition = std::make_unique<character_attribute_modifier_condition>(condition_operator);
-		} else if (tag == "home_site") {
+		if (tag == "home_site") {
 			condition = std::make_unique<home_site_scope_condition>(condition_operator);
 		} else if (tag == "item") {
 			condition = std::make_unique<item_condition<scope_type>>(condition_operator);
+		} else if (tag == "stat_modifier") {
+			condition = std::make_unique<character_stat_modifier_condition>(condition_operator);
 		}
 	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		if (tag == "any_known_country") {

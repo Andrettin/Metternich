@@ -358,22 +358,14 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier);
+	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
 
-	int get_attribute_value(const character_attribute *attribute) const;
-	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
-	int get_primary_attribute_value() const;
-	int get_attribute_modifier(const character_attribute *attribute) const;
-	data_entry_set<character_attribute> get_main_attributes() const;
-	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
-	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
-	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value);
-
-	int get_best_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type) const
+	int get_best_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const
 	{
-		const auto attribute_find_iterator = this->attribute_modifiers.find(attribute);
-		if (attribute_find_iterator != this->attribute_modifiers.end()) {
-			const auto modifier_type_find_iterator = attribute_find_iterator->second.find(modifier_type);
-			if (modifier_type_find_iterator != attribute_find_iterator->second.end()) {
+		const auto stat_find_iterator = this->stat_modifiers.find(stat);
+		if (stat_find_iterator != this->stat_modifiers.end()) {
+			const auto modifier_type_find_iterator = stat_find_iterator->second.find(modifier_type);
+			if (modifier_type_find_iterator != stat_find_iterator->second.end()) {
 				int best_modifier = 0;
 
 				for (const int modifier : modifier_type_find_iterator->second) {
@@ -389,37 +381,46 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]] QCoro::Task<void> add_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	[[nodiscard]] QCoro::Task<void> add_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
 	{
-		const int old_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+		const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
-		this->attribute_modifiers[attribute][modifier_type].push_back(modifier);
+		this->stat_modifiers[stat][modifier_type].push_back(modifier);
 
-		const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+		const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
 		if (new_best_modifier != old_best_modifier) {
-			co_await this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+			co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
 		}
 	}
 
-	[[nodiscard]] QCoro::Task<void> remove_attribute_modifier(const character_attribute *attribute, const character_modifier_type modifier_type, const int modifier)
+	[[nodiscard]] QCoro::Task<void> remove_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
 	{
-		auto attribute_find_iterator = this->attribute_modifiers.find(attribute);
-		if (attribute_find_iterator != this->attribute_modifiers.end()) {
-			auto modifier_type_find_iterator = attribute_find_iterator->second.find(modifier_type);
-			if (modifier_type_find_iterator != attribute_find_iterator->second.end()) {
-				const int old_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+		auto stat_find_iterator = this->stat_modifiers.find(stat);
+		if (stat_find_iterator != this->stat_modifiers.end()) {
+			auto modifier_type_find_iterator = stat_find_iterator->second.find(modifier_type);
+			if (modifier_type_find_iterator != stat_find_iterator->second.end()) {
+				const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
 				std::erase(modifier_type_find_iterator->second, modifier);
 
-				const int new_best_modifier = this->get_best_attribute_modifier(attribute, modifier_type);
+				const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
 				if (new_best_modifier != old_best_modifier) {
-					co_await this->change_attribute_value(attribute, new_best_modifier - old_best_modifier);
+					co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
 				}
 			}
 		}
 	}
+
+	int get_attribute_value(const character_attribute *attribute) const;
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
+	int get_primary_attribute_value() const;
+	int get_attribute_modifier(const character_attribute *attribute) const;
+	data_entry_set<character_attribute> get_main_attributes() const;
+	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
+	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
+	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value);
 
 	int get_hit_dice_count() const
 	{
@@ -649,7 +650,6 @@ public:
 
 	bool has_domain_skill() const;
 	int get_domain_skill_value(const domain_skill *domain_skill) const;
-	[[nodiscard]] QCoro::Task<void> change_domain_skill_value(const domain_skill *domain_skill, const int change);
 
 	const data_entry_map<trait, int> &get_trait_counts() const
 	{
@@ -1153,7 +1153,7 @@ private:
 	const metternich::creature_size *creature_size = nullptr;
 	int weight = 0; //in ounces
 	data_entry_map<character_stat, int> stat_values;
-	data_entry_map<character_attribute, std::map<character_modifier_type, std::vector<int>>> attribute_modifiers;
+	data_entry_map<character_stat, std::map<character_modifier_type, std::vector<int>>> stat_modifiers;
 	int hit_dice_count = 0;
 	int health = 0;
 	int max_health = 0;
