@@ -3,6 +3,7 @@
 namespace metternich {
 
 enum class character_modifier_type {
+	dodge,
 	enhancement,
 	inherent
 };
@@ -10,6 +11,8 @@ enum class character_modifier_type {
 inline std::string_view get_character_modifier_type_name(const character_modifier_type modifier_type)
 {
 	switch (modifier_type) {
+		case character_modifier_type::dodge:
+			return "Dodge";
 		case character_modifier_type::enhancement:
 			return "Enhancement";
 		case character_modifier_type::inherent:
@@ -22,6 +25,16 @@ inline std::string_view get_character_modifier_type_name(const character_modifie
 }
 
 //FIXME: add support for penalty modifier types, i.e. ones for which the "best" value is the lowest one
+
+inline bool is_character_modifier_type_stackable(const character_modifier_type modifier_type)
+{
+	switch (modifier_type) {
+		case character_modifier_type::dodge:
+			return true;
+		default:
+			return false;
+	}
+}
 
 }
 

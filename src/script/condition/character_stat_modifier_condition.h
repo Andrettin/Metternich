@@ -46,7 +46,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_best_stat_modifier(this->stat, this->modifier_type.value());
+		return scope->get_game_data()->get_stat_modifier(this->stat, this->modifier_type.value());
 	}
 
 	virtual std::string get_value_name() const override

@@ -360,6 +360,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier);
 	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
 
+	int get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const;
+
 	int get_best_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const
 	{
 		const auto stat_find_iterator = this->stat_modifiers.find(stat);
@@ -381,37 +383,23 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]] QCoro::Task<void> add_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
+	[[nodiscard]] QCoro::Task<void> add_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier);
+	[[nodiscard]] QCoro::Task<void> remove_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier);
+
+	int get_stat_modifier_total(const character_stat *stat, const character_modifier_type modifier_type) const
 	{
-		const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
-
-		this->stat_modifiers[stat][modifier_type].push_back(modifier);
-
-		const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
-
-		if (new_best_modifier != old_best_modifier) {
-			co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
-		}
-	}
-
-	[[nodiscard]] QCoro::Task<void> remove_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
-	{
-		auto stat_find_iterator = this->stat_modifiers.find(stat);
-		if (stat_find_iterator != this->stat_modifiers.end()) {
-			auto modifier_type_find_iterator = stat_find_iterator->second.find(modifier_type);
+		const auto stat_find_iterator = this->stat_modifier_totals.find(stat);
+		if (stat_find_iterator != this->stat_modifier_totals.end()) {
+			const auto modifier_type_find_iterator = stat_find_iterator->second.find(modifier_type);
 			if (modifier_type_find_iterator != stat_find_iterator->second.end()) {
-				const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
-
-				std::erase(modifier_type_find_iterator->second, modifier);
-
-				const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
-
-				if (new_best_modifier != old_best_modifier) {
-					co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
-				}
+				return modifier_type_find_iterator->second;
 			}
 		}
+
+		return 0;
 	}
+
+	[[nodiscard]] QCoro::Task<void> change_stat_modifier_total(const character_stat *stat, const character_modifier_type modifier_type, const int change);
 
 	int get_attribute_value(const character_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
@@ -1154,6 +1142,7 @@ private:
 	int weight = 0; //in ounces
 	data_entry_map<character_stat, int> stat_values;
 	data_entry_map<character_stat, std::map<character_modifier_type, std::vector<int>>> stat_modifiers;
+	data_entry_map<character_stat, std::map<character_modifier_type, int>> stat_modifier_totals;
 	int hit_dice_count = 0;
 	int health = 0;
 	int max_health = 0;

@@ -12,6 +12,7 @@ namespace metternich {
 
 const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
 	auto armor_class = std::make_unique<character_stat>("armor_class");
+	armor_class->set_name("Armor Class");
 	armor_class->affect_military_unit_stats = true;
 
 	//an armor class bonus of +10 increases challenge rating by 1

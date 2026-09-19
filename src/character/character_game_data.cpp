@@ -2149,6 +2149,76 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 	}
 }
 
+int character_game_data::get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const
+{
+	if (is_character_modifier_type_stackable(modifier_type)) {
+		return this->get_stat_modifier_total(stat, modifier_type);
+	} else {
+		return this->get_best_stat_modifier(stat, modifier_type);
+	}
+}
+
+QCoro::Task<void> character_game_data::add_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
+{
+	const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
+
+	this->stat_modifiers[stat][modifier_type].push_back(modifier);
+
+	if (!is_character_modifier_type_stackable(modifier_type)) {
+		const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
+
+		if (new_best_modifier != old_best_modifier) {
+			co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
+		}
+	}
+
+	co_await this->change_stat_modifier_total(stat, modifier_type, modifier);
+}
+
+QCoro::Task<void> character_game_data::remove_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type, const int modifier)
+{
+	auto stat_find_iterator = this->stat_modifiers.find(stat);
+	if (stat_find_iterator != this->stat_modifiers.end()) {
+		auto modifier_type_find_iterator = stat_find_iterator->second.find(modifier_type);
+		if (modifier_type_find_iterator != stat_find_iterator->second.end()) {
+			const int old_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
+
+			std::erase(modifier_type_find_iterator->second, modifier);
+
+			if (!is_character_modifier_type_stackable(modifier_type)) {
+				const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
+
+				if (new_best_modifier != old_best_modifier) {
+					co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
+				}
+			}
+		}
+	}
+
+	co_await this->change_stat_modifier_total(stat, modifier_type, -modifier);
+}
+
+QCoro::Task<void> character_game_data::change_stat_modifier_total(const character_stat *stat, const character_modifier_type modifier_type, const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	const int new_value = (this->stat_modifier_totals[stat][modifier_type] += change);
+
+	if (new_value == 0) {
+		this->stat_modifier_totals[stat].erase(modifier_type);
+
+		if (this->stat_modifier_totals[stat].empty()) {
+			this->stat_modifier_totals.erase(stat);
+		}
+	}
+
+	if (is_character_modifier_type_stackable(modifier_type)) {
+		co_await this->change_typed_stat_value(stat, change);
+	}
+}
+
 int character_game_data::get_attribute_value(const character_attribute *attribute) const
 {
 	return this->get_stat_value(attribute);
