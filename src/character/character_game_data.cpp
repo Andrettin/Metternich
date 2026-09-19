@@ -1640,6 +1640,10 @@ void character_game_data::check_character_class_advancement(const int level)
 			continue;
 		}
 
+		if (this->is_ruler() && !derived_character_class->is_government_type_allowed(this->get_domain()->get_game_data()->get_government_type())) {
+			continue;
+		}
+
 		potential_character_classes.push_back(derived_character_class);
 	}
 
