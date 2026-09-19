@@ -14,7 +14,7 @@
 #include "game/battle_resolution_type.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
-#include "script/modifier_effect/armor_class_modifier_effect.h"
+#include "script/modifier_effect/character_stat_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
@@ -238,8 +238,10 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 
 	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
-		if (const armor_class_modifier_effect *armor_class_modifier_effect = dynamic_cast<const metternich::armor_class_modifier_effect *>(modifier_effect)) {
-			armor_class += armor_class_modifier_effect->get_value();
+		if (const character_stat_modifier_effect *character_stat_modifier_effect = dynamic_cast<const metternich::character_stat_modifier_effect *>(modifier_effect)) {
+			if (character_stat_modifier_effect->get_stat() == character_stat::armor_class.get()) {
+				armor_class += character_stat_modifier_effect->get_value();
+			}
 		} else if (const damage_bonus_modifier_effect *damage_bonus_modifier_effect = dynamic_cast<const metternich::damage_bonus_modifier_effect *>(modifier_effect)) {
 			max_damage += damage_bonus_modifier_effect->get_value();
 		} else if (const hit_dice_modifier_effect *hit_dice_modifier_effect = dynamic_cast<const metternich::hit_dice_modifier_effect *>(modifier_effect)) {

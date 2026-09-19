@@ -18,7 +18,7 @@ inline std::string_view get_character_modifier_type_name(const character_modifie
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid character modifier type: {}", static_cast<int>(modifier_type)));
+	throw std::runtime_error(std::format("Invalid character modifier type: {}", std::to_underlying(modifier_type)));
 }
 
 //FIXME: add support for penalty modifier types, i.e. ones for which the "best" value is the lowest one

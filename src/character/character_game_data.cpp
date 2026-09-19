@@ -172,8 +172,6 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->base_armor_class_bonus = std::stoi(value);
 	} else if (key == "natural_armor_class_bonus") {
 		this->natural_armor_class_bonus = std::stoi(value);
-	} else if (key == "armor_class_bonus") {
-		this->armor_class_bonus = std::stoi(value);
 	} else if (key == "to_hit_bonus") {
 		this->to_hit_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
@@ -380,7 +378,6 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("max_craft", std::to_string(this->get_max_craft()));
 	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
-	data.add_property("armor_class_bonus", std::to_string(this->get_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
 	data.add_property("range", std::to_string(this->get_range()));
@@ -2245,6 +2242,10 @@ QCoro::Task<void> character_game_data::on_stat_value_changed(const character_sta
 			}
 		}
 	}
+
+	if (this->get_military_unit() != nullptr && stat->affects_military_unit_stats()) {
+		this->update_military_unit_stats();
+	}
 }
 
 QCoro::Task<void> character_game_data::apply_hit_dice(const dice &hit_dice)
@@ -2461,51 +2462,51 @@ void character_game_data::change_max_craft(const int change, const bool increase
 	this->set_max_craft(this->get_max_craft() + change, increase_craft);
 }
 
-void character_game_data::set_base_armor_class_bonus(const int bonus)
+QCoro::Task<void> character_game_data::set_base_armor_class_bonus(const int bonus)
 {
 	if (bonus == this->get_base_armor_class_bonus()) {
-		return;
+		co_return;
 	}
 
-	this->apply_base_armor_class_bonus(-1);
+	co_await this->apply_base_armor_class_bonus(-1);
 
 	this->base_armor_class_bonus = bonus;
 
-	this->apply_base_armor_class_bonus(1);
+	co_await this->apply_base_armor_class_bonus(1);
 
 	if (game::get()->is_running()) {
 		emit base_armor_class_bonus_changed();
 	}
 }
 
-void character_game_data::change_base_armor_class_bonus(const int change)
+QCoro::Task<void> character_game_data::change_base_armor_class_bonus(const int change)
 {
-	this->set_base_armor_class_bonus(this->get_base_armor_class_bonus() + change);
+	co_await this->set_base_armor_class_bonus(this->get_base_armor_class_bonus() + change);
 }
 
-void character_game_data::set_natural_armor_class_bonus(const int bonus)
+QCoro::Task<void> character_game_data::set_natural_armor_class_bonus(const int bonus)
 {
 	if (bonus == this->get_natural_armor_class_bonus()) {
-		return;
+		co_return;
 	}
 
-	this->apply_base_armor_class_bonus(-1);
+	co_await this->apply_base_armor_class_bonus(-1);
 
 	this->natural_armor_class_bonus = bonus;
 
-	this->apply_base_armor_class_bonus(1);
+	co_await this->apply_base_armor_class_bonus(1);
 
 	if (game::get()->is_running()) {
 		emit natural_armor_class_bonus_changed();
 	}
 }
 
-void character_game_data::change_natural_armor_class_bonus(const int change)
+QCoro::Task<void> character_game_data::change_natural_armor_class_bonus(const int change)
 {
-	this->set_natural_armor_class_bonus(this->get_natural_armor_class_bonus() + change);
+	co_await this->set_natural_armor_class_bonus(this->get_natural_armor_class_bonus() + change);
 }
 
-void character_game_data::apply_base_armor_class_bonus(const int multiplier)
+QCoro::Task<void> character_game_data::apply_base_armor_class_bonus(const int multiplier)
 {
 	//apply bonus from base armor and natural armor
 	int bonus = 0;
@@ -2519,38 +2520,12 @@ void character_game_data::apply_base_armor_class_bonus(const int multiplier)
 		bonus = this->get_base_armor_class_bonus();
 	}
 
-	this->change_armor_class_bonus(bonus * multiplier);
+	co_await this->change_stat_value(character_stat::armor_class.get(), bonus * multiplier, true, false);
 }
 
-void character_game_data::set_armor_class_bonus(const int bonus)
+int character_game_data::get_armor_class_bonus() const
 {
-	if (bonus == this->get_armor_class_bonus()) {
-		return;
-	}
-
-	const int old_bonus = this->get_armor_class_bonus();
-
-	this->armor_class_bonus = bonus;
-
-	//an armor class bonus of +10 increases challenge rating by 1
-	if (bonus >= 10 && old_bonus < 10) {
-		this->change_challenge_rating(1);
-	} else if (bonus < 10 && old_bonus >= 10) {
-		this->change_challenge_rating(-1);
-	}
-
-	if (this->get_military_unit() != nullptr) {
-		this->update_military_unit_stats();
-	}
-
-	if (game::get()->is_running()) {
-		emit armor_class_bonus_changed();
-	}
-}
-
-void character_game_data::change_armor_class_bonus(const int change)
-{
-	this->set_armor_class_bonus(this->get_armor_class_bonus() + change);
+	return this->get_stat_value(character_stat::armor_class.get());
 }
 
 void character_game_data::change_species_armor_class_bonus(const species *species, const int change)

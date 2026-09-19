@@ -39,6 +39,8 @@ private:
 	static inline std::map<std::string, const character_stat *> stats_by_identifier;
 
 public:
+	static const std::unique_ptr<const character_stat> armor_class;
+
 	explicit character_stat(const std::string &identifier);
 	~character_stat();
 
@@ -54,10 +56,13 @@ public:
 		return nullptr;
 	}
 
+	bool affects_military_unit_stats() const;
+
 signals:
 	void changed();
 
 private:
+	bool affect_military_unit_stats = false;
 	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
 };
 

@@ -19,9 +19,9 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_natural_armor_class_bonus((this->value * multiplier).to_int());
+		co_await scope->get_game_data()->change_natural_armor_class_bonus((this->value * multiplier).to_int());
 	}
 
 	virtual std::string get_base_string(const character *scope) const override

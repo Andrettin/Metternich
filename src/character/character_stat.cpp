@@ -4,10 +4,23 @@
 
 #include "database/gsml_data.h"
 #include "script/modifier.h"
+#include "script/modifier_effect/challenge_rating_modifier_effect.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
+
+const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
+	auto armor_class = std::make_unique<character_stat>("armor_class");
+	armor_class->affect_military_unit_stats = true;
+
+	//an armor class bonus of +10 increases challenge rating by 1
+	auto value_modifier_10 = std::make_unique<metternich::modifier<const character>>();
+	value_modifier_10->add_modifier_effect(std::make_unique<challenge_rating_modifier_effect>(decimillesimal_int(1)));
+	armor_class->value_modifiers[10] = std::move(value_modifier_10);
+
+	return armor_class;
+}();
 
 character_stat::character_stat(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -50,6 +63,11 @@ void character_stat::process_gsml_scope(const gsml_data &scope)
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}
+}
+
+bool character_stat::affects_military_unit_stats() const
+{
+	return this->affect_military_unit_stats;
 }
 
 }

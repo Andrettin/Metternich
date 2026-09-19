@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "script/modifier_effect/agricultural_output_modifier_effect.h"
 #include "script/modifier_effect/ai_building_desire_modifier_effect.h"
-#include "script/modifier_effect/armor_class_modifier_effect.h"
 #include "script/modifier_effect/artillery_cost_modifier_effect.h"
 #include "script/modifier_effect/attribute_skill_bonus_modifier_effect.h"
 #include "script/modifier_effect/base_armor_class_modifier_effect.h"
@@ -111,9 +110,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	static const std::string bonus_suffix = "_bonus";
 
 	if constexpr (std::is_same_v<scope_type, const character>) {
-		if (key == "armor_class") {
-			return std::make_unique<armor_class_modifier_effect>(value);
-		} else if (key == "base_armor_class") {
+		if (key == "base_armor_class") {
 			return std::make_unique<base_armor_class_modifier_effect>(value);
 		} else if (key == "caster_level") {
 			return std::make_unique<caster_level_modifier_effect>(value);

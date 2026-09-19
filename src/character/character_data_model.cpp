@@ -145,7 +145,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
 		disconnect(this->character->get_game_data(), &character_game_data::max_craft_changed, this, &character_data_model::update_craft_row);
 		disconnect(this->character->get_game_data(), &character_game_data::weight_changed, this, &character_data_model::update_size_row);
-		disconnect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
@@ -175,7 +175,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::craft_changed, this, &character_data_model::update_craft_row);
 		connect(this->character->get_game_data(), &character_game_data::max_craft_changed, this, &character_data_model::update_craft_row);
 		connect(this->character->get_game_data(), &character_game_data::weight_changed, this, &character_data_model::update_size_row);
-		connect(this->character->get_game_data(), &character_game_data::armor_class_bonus_changed, this, &character_data_model::update_armor_class_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::species_armor_class_bonuses_changed, this, &character_data_model::update_armor_class_rows);
 		connect(this->character->get_game_data(), &character_game_data::to_hit_bonus_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		connect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/character.h"
+#include "character/character_attribute.h"
 #include "character/character_game_data.h"
 #include "character/character_modifier_type.h"
 #include "character/character_stat.h"
@@ -72,6 +73,11 @@ public:
 		} else {
 			return this->stat->get_name();
 		}
+	}
+
+	const character_stat *get_stat() const
+	{
+		return this->stat;
 	}
 
 private:

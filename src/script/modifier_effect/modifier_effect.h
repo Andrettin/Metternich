@@ -21,6 +21,10 @@ public:
 	{
 	}
 
+	explicit modifier_effect(const decimillesimal_int &value) : modifier_effect_base<scope_type>(value)
+	{
+	}
+
 	explicit modifier_effect(const std::string &value) : modifier_effect_base<scope_type>(value)
 	{
 	}

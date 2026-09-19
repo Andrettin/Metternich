@@ -9,6 +9,11 @@ namespace metternich {
 class challenge_rating_modifier_effect final : public modifier_effect<const character>
 {
 public:
+	explicit challenge_rating_modifier_effect(const decimillesimal_int &value)
+		: modifier_effect<const character>(value)
+	{
+	}
+
 	explicit challenge_rating_modifier_effect(const std::string &value)
 		: modifier_effect<const character>(value)
 	{
