@@ -1,0 +1,37 @@
+dwarven_defender = {
+	name = "Dwarven Defender"
+	base_class = warrior
+	min_level = 11
+	military_unit_category = general
+	saving_throw_bonus_tables = {
+		will = high_saving_throw_bonus
+	}
+	class_skills = {
+		#listen
+		sense_motive
+		#spot
+	}
+	allowed_species = {
+		dwarf
+	}
+	conditions = {
+		to_hit_bonus >= 7
+		#trait = dodge
+		#trait = endurance
+		trait = toughness
+	}
+	level_modifiers = {
+		11 = {
+			armor_class = 1 #dodge bonus
+		}
+		14 = {
+			armor_class = 1 #dodge bonus
+		}
+		17 = {
+			armor_class = 1 #dodge bonus
+		}
+		20 = {
+			armor_class = 1 #dodge bonus
+		}
+	}
+}
