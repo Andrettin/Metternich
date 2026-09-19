@@ -18,8 +18,11 @@
 #include "script/modifier.h"
 #include "species/species.h"
 #include "spell/spell.h"
+#include "ui/ui_defines.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
+#include "util/number_util.h"
+#include "util/string_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -348,14 +351,14 @@ std::string character_class::get_level_modifier_string(const int level, const me
 				str += "\n";
 			}
 
-			str += std::format("Health: +{}", health_bonus_int);
+			str += std::format("Health: {}", string::colored(number::to_signed_string(health_bonus_int), ui_defines::get()->get_green_text_color()));
 		}
 	} else if (std::holds_alternative<dice>(health_bonus)) {
 		if (!str.empty()) {
 			str += "\n";
 		}
 
-		str += std::format("Health: +{}", std::get<dice>(health_bonus).to_display_string());
+		str += std::format("Health: {}", string::colored("+" + std::get<dice>(health_bonus).to_display_string(), ui_defines::get()->get_green_text_color()));
 	}
 
 	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);
@@ -364,7 +367,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 			str += "\n";
 		}
 
-		str += std::format("To Hit Bonus: +{}", to_hit_bonus);
+		str += std::format("To Hit Bonus: {}", string::colored(number::to_signed_string(to_hit_bonus), ui_defines::get()->get_green_text_color()));
 	}
 
 	for (const saving_throw_type *saving_throw_type : saving_throw_type::get_all()) {
@@ -381,7 +384,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 				str += "\n";
 			}
 
-			str += std::format("{}: +{}", saving_throw_type->get_name(), saving_throw_bonus);
+			str += std::format("{}: {}", saving_throw_type->get_name(), string::colored(number::to_signed_string(saving_throw_bonus), ui_defines::get()->get_green_text_color()));
 		}
 	}
 
@@ -397,7 +400,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 				str += "\n";
 			}
 
-			str += std::format("{}: +{}", domain_skill->get_name(), domain_skill_bonus);
+			str += std::format("{}: {}", domain_skill->get_name(), string::colored(number::to_signed_string(domain_skill_bonus), ui_defines::get()->get_green_text_color()));
 		}
 	}
 
