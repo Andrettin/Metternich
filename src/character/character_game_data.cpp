@@ -182,6 +182,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->movement = std::stoi(value);
 	} else if (key == "initiative_bonus") {
 		this->initiative_bonus = std::stoi(value);
+	} else if (key == "flat_footed") {
+		this->flat_footed = string::to_bool(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -193,8 +195,8 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "stats") {
-		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->stat_values[character_stat::get_stat(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
+		scope.for_each_property([this](const gsml_property &stat_property) {
+			this->stat_values[character_stat::get_stat(stat_property.get_key())] = std::stoi(stat_property.get_value());
 		});
 	} else if (tag == "stat_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -210,6 +212,17 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				for (const std::string &grandchild_value : grandchild_values) {
 					this->stat_modifiers[stat][modifier_type].push_back(std::stoi(grandchild_value));
 				}
+			});
+		});
+	} else if (tag == "stat_modifier_totals") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+
+			const character_stat *stat = character_stat::get_stat(child_tag);
+
+			child_scope.for_each_property([this, stat](const gsml_property &stat_property) {
+				const character_modifier_type modifier_type = magic_enum::enum_cast<character_modifier_type>(stat_property.get_key()).value();
+				this->stat_modifier_totals[stat][modifier_type] = std::stoi(stat_property.get_value());
 			});
 		});
 	} else if (tag == "hit_dice_roll_results") {
@@ -368,6 +381,22 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(stat_modifiers_data));
 	}
 
+	if (!this->stat_modifier_totals.empty()) {
+		gsml_data stat_modifier_totals_data("stat_modifier_totals");
+
+		for (const auto &[stat, specific_stat_modifier_totals] : this->stat_modifier_totals) {
+			gsml_data specific_stat_modifier_totals_data(stat->get_identifier());
+
+			for (const auto &[modifier_type, modifier_total] : specific_stat_modifier_totals) {
+				specific_stat_modifier_totals_data.add_property(std::string(magic_enum::enum_name(modifier_type)), std::to_string(modifier_total));
+			}
+
+			stat_modifier_totals_data.add_child(std::move(specific_stat_modifier_totals_data));
+		}
+
+		data.add_child(std::move(stat_modifier_totals_data));
+	}
+
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
 	data.add_property("health", std::to_string(this->get_health()));
 	data.add_property("max_health", std::to_string(this->get_max_health()));
@@ -383,6 +412,10 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("range", std::to_string(this->get_range()));
 	data.add_property("movement", std::to_string(this->get_movement()));
 	data.add_property("initiative_bonus", std::to_string(this->get_initiative_bonus()));
+
+	if (this->is_flat_footed()) {
+		data.add_property("flat_footed", string::from_bool(this->is_flat_footed()));
+	}
 
 	if (!this->hit_dice_roll_results.empty()) {
 		gsml_data hit_dice_roll_results_data("hit_dice_roll_results");
@@ -2215,7 +2248,10 @@ QCoro::Task<void> character_game_data::change_stat_modifier_total(const characte
 	}
 
 	if (is_character_modifier_type_stackable(modifier_type)) {
-		co_await this->change_typed_stat_value(stat, change);
+		//do not apply dodge modifiers if flat footed
+		if (modifier_type != character_modifier_type::dodge || !this->is_flat_footed()) {
+			co_await this->change_typed_stat_value(stat, change);
+		}
 	}
 }
 
@@ -4613,6 +4649,26 @@ QCoro::Task<void> character_game_data::decrement_status_effect_durations(const s
 		if (this->get_status_effect_duration(status_effect) <= 0s) {
 			if (status_effect->get_end_effects() != nullptr) {
 				co_await status_effect->get_end_effects()->do_effects(this->character, ctx);
+			}
+		}
+	}
+}
+
+QCoro::Task<void> character_game_data::set_flat_footed(const bool value)
+{
+	if (value == this->is_flat_footed()) {
+		co_return;
+	}
+
+	this->flat_footed = value;
+
+	for (const auto &[stat, specific_stat_modifier_totals] : this->stat_modifier_totals) {
+		const int dodge_modifier_total = this->get_stat_modifier_total(stat, character_modifier_type::dodge);
+		if (dodge_modifier_total != 0) {
+			if (this->is_flat_footed()) {
+				co_await this->change_typed_stat_value(stat, -dodge_modifier_total);
+			} else {
+				co_await this->change_typed_stat_value(stat, dodge_modifier_total);
 			}
 		}
 	}

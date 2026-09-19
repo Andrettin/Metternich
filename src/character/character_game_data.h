@@ -1024,8 +1024,14 @@ public:
 		co_await this->set_status_effect_duration(status_effect, this->get_status_effect_duration(status_effect) + change);
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx);
+	[[nodiscard]] QCoro::Task<void> decrement_status_effect_durations(const std::chrono::seconds &decrement, context &ctx);
+
+	bool is_flat_footed() const
+	{
+		return this->flat_footed;
+	}
+
+	[[nodiscard]] QCoro::Task<void> set_flat_footed(const bool value);
 
 	const domain_set &get_ruled_domains() const
 	{
@@ -1180,6 +1186,7 @@ private:
 	military_unit_type_map<std::map<military_unit_stat, centesimal_int>> commanded_military_unit_type_stat_modifiers;
 	std::vector<const trait *> target_traits;
 	data_entry_map<status_effect, std::chrono::seconds> status_effect_durations;
+	bool flat_footed = false;
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;

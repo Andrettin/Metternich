@@ -126,7 +126,7 @@ QCoro::Task<void> army::do_turn()
 				battle_ctx.in_combat = true;
 				battle->set_context(battle_ctx);
 
-				battle->initialize();
+				co_await battle->initialize();
 
 				QFuture<bool> success_future = battle->get_future();
 

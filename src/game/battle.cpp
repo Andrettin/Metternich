@@ -103,7 +103,7 @@ void battle::remove_unit_info(const military_unit *unit)
 	emit unit_infos_changed();
 }
 
-void battle::initialize()
+QCoro::Task<void> battle::initialize()
 {
 	const size_t tile_count = static_cast<size_t>(this->get_map_width() * this->get_map_height());
 	this->tiles.reserve(tile_count);
@@ -112,11 +112,11 @@ void battle::initialize()
 		this->tiles.emplace_back(this->get_base_terrain(), this->get_base_terrain());
 	}
 
-	this->deploy_units(this->attacking_army->get_military_units(), false);
-	this->deploy_units(this->defending_army->get_military_units(), true);
+	co_await this->deploy_units(this->attacking_army->get_military_units(), false);
+	co_await this->deploy_units(this->defending_army->get_military_units(), true);
 }
 
-void battle::deploy_units(std::vector<military_unit *> units, const bool defenders)
+QCoro::Task<void> battle::deploy_units(std::vector<military_unit *> units, const bool defenders)
 {
 	const QPoint left_start_pos(1, (this->get_map_height() - 1) / 2);
 	const QPoint right_start_pos(this->get_map_width() - 2, (this->get_map_height() - 1) / 2);
@@ -137,6 +137,10 @@ void battle::deploy_units(std::vector<military_unit *> units, const bool defende
 	for (military_unit *unit : units) {
 		battle_unit_info *unit_info = this->get_unit_info(unit);
 		assert_throw(unit_info != nullptr);
+
+		if (unit->get_character() != nullptr) {
+			co_await unit->get_character()->get_game_data()->set_flat_footed(true);
+		}
 
 		QPoint start_tile_pos;
 
@@ -193,6 +197,14 @@ QCoro::Task<void> battle::start_coro()
 		co_await this->do_round();
 	}
 
+	std::vector<military_unit *> all_units = this->attacking_army->get_military_units();
+	vector::merge(all_units, this->defending_army->get_military_units());
+	for (military_unit *unit : all_units) {
+		if (unit->get_character() != nullptr && unit->get_character()->get_game_data()->is_flat_footed()) {
+			co_await unit->get_character()->get_game_data()->set_flat_footed(false);
+		}
+	}
+
 	this->result.attacker_victory = this->defending_army->get_military_units().empty();
 
 	this->get_promise()->addResult(this->result.attacker_victory);
@@ -245,6 +257,10 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 	unit_info->set_remaining_movement(unit->get_battle_movement());
 
 	this->set_current_unit(unit_info);
+
+	if (unit->get_character() != nullptr && unit->get_character()->get_game_data()->is_flat_footed()) {
+		co_await unit->get_character()->get_game_data()->set_flat_footed(false);
+	}
 
 	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
 	metternich::army *enemy_army = unit_info->is_defender() ? this->attacking_army : this->defending_army;
@@ -367,6 +383,10 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 				co_await this->move_unit_to(unit, target_pos);
 
 				if (this->can_current_unit_retreat_at(target_pos)) {
+					if (unit->get_character() != nullptr && unit->get_character()->get_game_data()->is_flat_footed()) {
+						co_await unit->get_character()->get_game_data()->set_flat_footed(false);
+					}
+
 					army->remove_military_unit(unit);
 					this->remove_unit_info(unit);
 					break;

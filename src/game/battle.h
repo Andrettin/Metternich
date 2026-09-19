@@ -110,8 +110,8 @@ public:
 	battle_unit_info *get_unit_info(const military_unit *unit) const;
 	void remove_unit_info(const military_unit *unit);
 
-	void initialize();
-	void deploy_units(std::vector<military_unit *> units, const bool defenders);
+	[[nodiscard]] QCoro::Task<void> initialize();
+	[[nodiscard]] QCoro::Task<void> deploy_units(std::vector<military_unit *> units, const bool defenders);
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
