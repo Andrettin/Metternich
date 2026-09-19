@@ -1,3 +1,20 @@
+dodge = {
+	name = "Dodge"
+	icon = heater_shield
+	types = {
+		general_proficiency
+	}
+	conditions = {
+		dexterity >= 13
+	}
+	modifier = {
+		armor_class = {
+			modifier_type = dodge
+			modifier = 1
+		}
+	}
+}
+
 great_fortitude = {
 	name = "Great Fortitude"
 	icon = labor

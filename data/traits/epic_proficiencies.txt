@@ -11,6 +11,18 @@ armor_skin = {
 	}
 }
 
+epic_fortitude = {
+	name = "Epic Fortitude"
+	icon = labor
+	types = {
+		epic_proficiency
+		general_proficiency
+	}
+	modifier = {
+		fortitude = 4
+	}
+}
+
 epic_prowess = {
 	name = "Epic Prowess"
 	icon = labor
@@ -21,6 +33,18 @@ epic_prowess = {
 	}
 	modifier = {
 		to_hit_bonus = 1
+	}
+}
+
+epic_reflexes = {
+	name = "Epic Reflexes"
+	icon = research
+	types = {
+		epic_proficiency
+		general_proficiency
+	}
+	modifier = {
+		reflex = 4
 	}
 }
 
@@ -79,6 +103,18 @@ epic_toughness = {
 	}
 	modifier = {
 		health = 30
+	}
+}
+
+epic_will = {
+	name = "Epic Will"
+	icon = research
+	types = {
+		epic_proficiency
+		general_proficiency
+	}
+	modifier = {
+		will = 4
 	}
 }
 
@@ -157,5 +193,20 @@ great_wisdom = {
 	}
 	modifier = {
 		wisdom = 1
+	}
+}
+
+superior_initiative = {
+	name = "Superior Initiative"
+	icon = saber
+	types = {
+		epic_proficiency
+		general_proficiency
+	}
+	conditions = {
+		trait = improved_initiative
+	}
+	modifier = {
+		initiative = 4
 	}
 }

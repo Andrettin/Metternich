@@ -22,16 +22,28 @@ dwarven_defender = {
 	}
 	level_modifiers = {
 		11 = {
-			armor_class = 1 #dodge bonus
+			armor_class = {
+				modifier_type = dodge
+				modifier = 1
+			}
 		}
 		14 = {
-			armor_class = 1 #dodge bonus
+			armor_class = {
+				modifier_type = dodge
+				modifier = 1
+			}
 		}
 		17 = {
-			armor_class = 1 #dodge bonus
+			armor_class = {
+				modifier_type = dodge
+				modifier = 1
+			}
 		}
 		20 = {
-			armor_class = 1 #dodge bonus
+			armor_class = {
+				modifier_type = dodge
+				modifier = 1
+			}
 		}
 	}
 }
