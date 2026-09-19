@@ -13,6 +13,10 @@ engineer = {
 		will = high_saving_throw_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
+	trait_gain_tables = {
+		general_proficiency = engineer_general_proficiency_gain
+		#weapon_proficiency = engineer_weapon_proficiency_gain
+	}
 	class_skill_groups = {
 		general
 		mage
@@ -81,23 +85,13 @@ engineer = {
 		1 = {
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			#trait_of_type = weapon_proficiency
-			#trait_of_type = weapon_proficiency
-			#trait_of_type = weapon_proficiency
 			trait = engineering
 			trait_of_type = general_proficiency #should be the Reading/Writing proficiency instead
 			trait_of_type = engineering_specialization #one of Carpentry, Mining or Stonemasonry
-			trait_of_type = general_proficiency
 		}
 	}
 	recurring_level_modifiers = {
 		1 = { #to ensure we don't inherit any level modifiers from the base class
-		}
-		3 = {
-			trait_of_type = general_proficiency
-		}
-		4 = {
-			#trait_of_type = weapon_proficiency
 		}
 	}
 	starting_items = {

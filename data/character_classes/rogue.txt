@@ -17,6 +17,10 @@ rogue = {
 		trade = high_domain_skill_bonus
 		order = low_domain_skill_bonus
 	}
+	trait_gain_tables = {
+		general_proficiency = rogue_general_proficiency_gain
+		#weapon_proficiency = rogue_weapon_proficiency_gain
+	}
 	class_skill_groups = {
 		general
 		rogue
@@ -123,9 +127,6 @@ rogue = {
 			trusting = -2
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
 		}
 		2 = {
 			find_disarm_traps = 5
@@ -136,11 +137,6 @@ rogue = {
 			find_disarm_traps = 5
 			open_locks = 4
 			pick_pockets = 5
-		}
-	}
-	recurring_level_modifiers = {
-		4 = {
-			trait_of_type = general_proficiency
 		}
 	}
 	starting_items = {

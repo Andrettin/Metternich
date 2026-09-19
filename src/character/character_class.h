@@ -22,6 +22,7 @@ class skill_group;
 class species;
 class spell;
 class technology;
+class trait_type;
 enum class military_unit_category;
 enum class starting_age_category;
 
@@ -195,6 +196,20 @@ public:
 		return nullptr;
 	}
 
+	const level_bonus_table *get_trait_gain_table(const trait_type *trait_type) const
+	{
+		const auto find_iterator = this->trait_gain_tables.find(trait_type);
+		if (find_iterator != this->trait_gain_tables.end()) {
+			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_trait_gain_table(trait_type);
+		}
+
+		return nullptr;
+	}
+
 	const data_entry_set<skill> &get_class_skills() const
 	{
 		if (!this->class_skills.empty()) {
@@ -322,6 +337,7 @@ private:
 	const level_bonus_table *to_hit_bonus_table = nullptr;
 	data_entry_map<saving_throw_type, const level_bonus_table *> saving_throw_bonus_tables;
 	data_entry_map<domain_skill, const level_bonus_table *> domain_skill_bonus_tables;
+	data_entry_map<trait_type, const level_bonus_table *> trait_gain_tables;
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;
 	std::vector<const species *> allowed_species;

@@ -17,6 +17,10 @@ bard = {
 		culture = high_domain_skill_bonus
 		trade = low_domain_skill_bonus
 	}
+	trait_gain_tables = {
+		general_proficiency = rogue_general_proficiency_gain
+		#weapon_proficiency = rogue_weapon_proficiency_gain
+	}
 	class_skill_groups = {
 		general
 		mage
@@ -121,17 +125,11 @@ bard = {
 		1 = {
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
 		}
 	}
 	recurring_level_modifiers = {
 		1 = {
 			caster_level = 1
-		}
-		4 = {
-			trait_of_type = general_proficiency
 		}
 	}
 }

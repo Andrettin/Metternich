@@ -19,6 +19,10 @@ ranger = {
 		order = high_domain_skill_bonus
 		trade = high_domain_skill_bonus
 	}
+	trait_gain_tables = {
+		general_proficiency = warrior_general_proficiency_gain
+		#weapon_proficiency = warrior_weapon_proficiency_gain
+	}
 	class_skill_groups = {
 		general
 		mage
@@ -113,17 +117,11 @@ ranger = {
 		1 = {
 			trait_of_type = affliction
 			trait_of_type = past_experience
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
-			trait_of_type = general_proficiency
 		}
 	}
 	recurring_level_modifiers = {
 		2 = {
 			caster_level = 1
-		}
-		3 = {
-			trait_of_type = general_proficiency
 		}
 	}
 }

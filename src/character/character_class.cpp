@@ -10,6 +10,7 @@
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
+#include "character/trait_type.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
@@ -48,6 +49,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			const std::string &value = property.get_value();
 
 			this->domain_skill_bonus_tables[domain_skill::get(key)] = level_bonus_table::get(value);
+		});
+	} else if (tag == "trait_gain_tables") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->trait_gain_tables[trait_type::get(key)] = level_bonus_table::get(value);
 		});
 	} else if (tag == "class_skills") {
 		for (const std::string &value : values) {
@@ -345,6 +353,26 @@ std::string character_class::get_level_modifier_string(const int level, const me
 			}
 
 			str += std::format("{}: +{}", domain_skill->get_name(), domain_skill_bonus);
+		}
+	}
+
+	for (const trait_type *trait_type : trait_type::get_all()) {
+		const level_bonus_table *trait_gain_table = this->get_trait_gain_table(trait_type);
+		if (trait_gain_table == nullptr) {
+			continue;
+		}
+		const int trait_gain_count = trait_gain_table->get_bonus_per_level(level);
+
+		if (trait_gain_count != 0) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			if (trait_gain_count == 1) {
+				str += std::format("Gain Trait of Type: {}", trait_type->get_name());
+			} else {
+				str += std::format("Gain {} Traits of Type: {}", trait_gain_count, trait_type->get_name());
+			}
 		}
 	}
 
