@@ -39,7 +39,7 @@ public:
 
 		//FIXME: should grant a bonus not only to skills which have their value based upon that of the attribute, but any skills for which the attribute grants the attribute modifier
 		for (const skill *skill : this->attribute->get_derived_skills()) {
-			co_await scope->get_game_data()->change_skill_value(skill, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_skill_value(skill, centesimal_int(this->value * multiplier));
 		}
 	}
 

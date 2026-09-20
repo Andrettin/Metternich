@@ -451,7 +451,7 @@ void character_data_model::update_attribute_type_rows(const character_attribute_
 	this->on_child_rows_inserted(attribute_type_row);
 }
 
-void character_data_model::create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows)
+void character_data_model::create_attribute_row(const character_attribute *attribute, const centesimal_int &value, data_entry_map<character_attribute, character_data_row *> &attribute_rows)
 {
 	if (attribute_rows.contains(attribute)) {
 		//already created by subattribute row
@@ -470,7 +470,9 @@ void character_data_model::create_attribute_row(const character_attribute *attri
 		parent_row = this->attribute_type_rows[attribute->get_type()];
 	}
 
-	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), parent_row);
+	const int value_int = value.to_int();
+
+	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", attribute->is_value_exceptional(value_int) ? value.to_string() : std::to_string(value_int), parent_row);
 	attribute_rows[attribute] = row.get();
 	parent_row->child_rows.push_back(std::move(row));
 }
@@ -787,7 +789,7 @@ void character_data_model::update_skill_rows()
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(skill->get_name() + ":", std::format("{}{}", value, skill->get_value_suffix()), this->skill_row);
+		auto row = std::make_unique<character_data_row>(skill->get_name() + ":", std::format("{}{}", value.to_int(), skill->get_value_suffix()), this->skill_row);
 		this->skill_row->child_rows.push_back(std::move(row));
 	}
 
@@ -819,7 +821,7 @@ void character_data_model::update_domain_skill_rows()
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(domain_skill->get_name() + ":", number::to_signed_string(value), this->domain_skill_row);
+		auto row = std::make_unique<character_data_row>(domain_skill->get_name() + ":", number::to_signed_string(value.to_int()), this->domain_skill_row);
 		this->domain_skill_row->child_rows.push_back(std::move(row));
 	}
 

@@ -25,7 +25,7 @@ public:
 	{
 		assert_throw(this->skill != nullptr);
 
-		co_await scope->get_game_data()->change_skill_value(this->skill, (this->value * multiplier).to_int());
+		co_await scope->get_game_data()->change_skill_value(this->skill, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const character *scope) const override

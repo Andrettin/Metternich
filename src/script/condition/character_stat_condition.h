@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_stat_value(this->stat);
+		return scope->get_game_data()->get_stat_value(this->stat).to_int();
 	}
 
 	virtual std::string get_value_name() const override

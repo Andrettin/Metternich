@@ -52,7 +52,7 @@ public:
 				co_await scope->get_game_data()->remove_stat_modifier(this->stat, this->modifier_type.value(), this->value.to_int());
 			}
 		} else {
-			co_await scope->get_game_data()->change_typed_stat_value(this->stat, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_typed_stat_value(this->stat, centesimal_int(this->value * multiplier));
 		}
 	}
 
