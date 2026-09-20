@@ -1,12 +1,6 @@
 strength = {
 	name = "Strength"
 	type = main
-}
-
-muscle = {
-	name = "Muscle"
-	type = main
-	base_attribute = strength
 	value_modifiers = {
 		1 = {
 			to_hit_bonus = -5
@@ -36,11 +30,11 @@ muscle = {
 			to_hit_bonus = 1
 		}
 		18 = {
-			damage_bonus = 2
+			damage_bonus = 1
 		}
 		19 = {
 			to_hit_bonus = 2
-			damage_bonus = 4
+			damage_bonus = 5
 		}
 		20 = {
 			damage_bonus = 1
@@ -65,10 +59,45 @@ muscle = {
 			damage_bonus = 2
 		}
 	}
+	exceptional_value_modifiers = {
+		18 = {
+			1 = {
+				damage_bonus = 1
+			}
+			51 = {
+				to_hit_bonus = 1
+				damage_bonus = 1
+			}
+			76 = {
+				to_hit_bonus = 1
+				damage_bonus = 2
+			}
+			91 = {
+				to_hit_bonus = 1
+				damage_bonus = 3
+			}
+			99 = {
+				to_hit_bonus = 2
+				damage_bonus = 4
+			}
+		}
+	}
+	
+	#should affect the maximum amount of weight the character can lift over their head
+}
+
+muscle = {
+	name = "Muscle"
+	type = main
+	base_attribute = strength
+	
+	#should affect the capability to force open doors and to bend bars
 }
 
 stamina = {
 	name = "Stamina"
 	type = main
 	base_attribute = strength
+	
+	#should affect carrying capacity
 }
