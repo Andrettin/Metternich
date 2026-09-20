@@ -82,7 +82,7 @@ public:
 	void update_size_row();
 	void create_attribute_type_rows(const character_attribute_type type);
 	void update_attribute_type_rows(const character_attribute_type type);
-	void create_attribute_row(const character_attribute *attribute, const centesimal_int &value, data_entry_map<character_attribute, character_data_row *> &attribute_rows);
+	void create_attribute_row(const character_attribute *attribute, const int value, data_entry_map<character_attribute, character_data_row *> &attribute_rows);
 	void update_attribute_rows();
 	void update_personality_rows();
 	void create_mana_row();

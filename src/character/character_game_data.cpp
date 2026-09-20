@@ -196,7 +196,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 
 	if (tag == "stats") {
 		scope.for_each_property([this](const gsml_property &stat_property) {
-			this->stat_values[character_stat::get_stat(stat_property.get_key())] = centesimal_int(stat_property.get_value());
+			this->stat_values[character_stat::get_stat(stat_property.get_key())] = std::stoi(stat_property.get_value());
 		});
 	} else if (tag == "stat_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -354,7 +354,7 @@ gsml_data character_game_data::to_gsml_data() const
 	if (!this->stat_values.empty()) {
 		gsml_data stats_data("stats");
 		for (const auto &[stat, value] : this->stat_values) {
-			stats_data.add_property(stat->get_identifier(), value.to_string());
+			stats_data.add_property(stat->get_identifier(), std::to_string(value));
 		}
 		data.add_child(std::move(stats_data));
 	}
@@ -550,7 +550,7 @@ gsml_data character_game_data::to_gsml_data() const
 QCoro::Task<void> character_game_data::initialize()
 {
 	for (const skill *skill : skill::get_all()) {
-		co_await this->change_skill_value(skill, centesimal_int(skill->get_base_value()));
+		co_await this->change_skill_value(skill, skill->get_base_value());
 	}
 }
 
@@ -599,7 +599,7 @@ void character_game_data::ply_trade()
 			continue;
 		}
 
-		const int percent_value = value.to_int() * 100 / skill->get_check_dice().get_sides();
+		const int percent_value = value * 100 / skill->get_check_dice().get_sides();
 		if (skill->get_profitability() > skill_profitability || (skill->get_profitability() == skill_profitability && percent_value > skill_percent_value)) {
 			best_skill = skill;
 			skill_profitability = skill->get_profitability();
@@ -823,7 +823,7 @@ QCoro::Task<void> character_game_data::generate_attributes()
 		assert_throw(max_result >= min_result);
 
 		if (min_result == max_result) {
-			co_await this->change_attribute_value(attribute, centesimal_int(min_result) - this->get_attribute_value(attribute));
+			co_await this->change_attribute_value(attribute, min_result - this->get_attribute_value(attribute));
 			continue;
 		}
 
@@ -834,8 +834,8 @@ QCoro::Task<void> character_game_data::generate_attributes()
 
 		const dice &attribute_dice = is_subattribute ? subattribute_dice : main_attribute_dice;
 
-		const int minimum_possible_result = (is_subattribute ? -attribute_dice.get_maximum_result() : attribute_dice.get_minimum_result()) + this->get_attribute_value(attribute).to_int();
-		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute).to_int();
+		const int minimum_possible_result = (is_subattribute ? -attribute_dice.get_maximum_result() : attribute_dice.get_minimum_result()) + this->get_attribute_value(attribute);
+		const int maximum_possible_result = attribute_dice.get_maximum_result() + this->get_attribute_value(attribute);
 		if ((maximum_possible_result < min_result || minimum_possible_result > max_result)) {
 			throw std::runtime_error(std::format("Character \"{}\" of species \"{}\" cannot be generated{}, since it cannot possibly fulfill the attribute requirements.", this->character->get_identifier(), species->get_identifier(), character_class != nullptr ? std::format(" with character class \"{}\"", character_class->get_identifier()) : ""));
 		}
@@ -853,11 +853,11 @@ QCoro::Task<void> character_game_data::generate_attributes()
 				}
 			}
 
-			const int result = base_result + this->get_attribute_value(attribute).to_int();
+			const int result = base_result + this->get_attribute_value(attribute);
 
 			valid_result = result >= min_result && result <= max_result;
 			if (valid_result) {
-				co_await this->change_attribute_value(attribute, centesimal_int(base_result));
+				co_await this->change_attribute_value(attribute, base_result);
 			}
 		}
 
@@ -869,12 +869,12 @@ QCoro::Task<void> character_game_data::generate_attributes()
 			assert_throw(min_creature_size != nullptr);
 			assert_throw(max_creature_size != nullptr);
 
-			while (max_creature_size->get_max_weight() != 0 && this->get_weight() > max_creature_size->get_max_weight() && this->get_attribute_value(attribute).to_int() > 0) {
-				co_await this->change_attribute_value(attribute, centesimal_int(-1));
+			while (max_creature_size->get_max_weight() != 0 && this->get_weight() > max_creature_size->get_max_weight() && this->get_attribute_value(attribute) > 0) {
+				co_await this->change_attribute_value(attribute, -1);
 			}
 
 			while (min_creature_size->get_min_weight() != 0 && this->get_weight() <= min_creature_size->get_min_weight()) {
-				co_await this->change_attribute_value(attribute, centesimal_int(1));
+				co_await this->change_attribute_value(attribute, 1);
 			}
 		}
 	}
@@ -1814,7 +1814,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 
 		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(affected_level) * multiplier;
 
-		co_await this->change_typed_stat_value(domain_skill, centesimal_int(domain_skill_bonus));
+		co_await this->change_typed_stat_value(domain_skill, domain_skill_bonus);
 	}
 
 	for (const trait_type *trait_type : trait_type::get_all()) {
@@ -2138,19 +2138,19 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
-QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const centesimal_int &change, const bool stat_enabled, const bool affects_office_modifier)
+QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier)
 {
 	if (change == 0) {
 		co_return;
 	}
 
-	const centesimal_int old_value = this->get_stat_value(stat);
+	const int old_value = this->get_stat_value(stat);
 
 	if (affects_office_modifier) {
 		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
 
-	const centesimal_int &new_value = (this->stat_values[stat] += change);
+	const int new_value = (this->stat_values[stat] += change);
 
 	if (new_value == 0) {
 		this->stat_values.erase(stat);
@@ -2171,7 +2171,7 @@ QCoro::Task<void> character_game_data::change_stat_value(const character_stat *s
 	}
 }
 
-QCoro::Task<void> character_game_data::change_typed_stat_value(const character_stat *stat, const centesimal_int &change)
+QCoro::Task<void> character_game_data::change_typed_stat_value(const character_stat *stat, const int change)
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
@@ -2201,7 +2201,7 @@ QCoro::Task<void> character_game_data::add_stat_modifier(const character_stat *s
 		const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
 		if (new_best_modifier != old_best_modifier) {
-			co_await this->change_typed_stat_value(stat, centesimal_int(new_best_modifier - old_best_modifier));
+			co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
 		}
 	}
 
@@ -2222,7 +2222,7 @@ QCoro::Task<void> character_game_data::remove_stat_modifier(const character_stat
 				const int new_best_modifier = this->get_best_stat_modifier(stat, modifier_type);
 
 				if (new_best_modifier != old_best_modifier) {
-					co_await this->change_typed_stat_value(stat, centesimal_int(new_best_modifier - old_best_modifier));
+					co_await this->change_typed_stat_value(stat, new_best_modifier - old_best_modifier);
 				}
 			}
 		}
@@ -2250,17 +2250,17 @@ QCoro::Task<void> character_game_data::change_stat_modifier_total(const characte
 	if (is_character_modifier_type_stackable(modifier_type)) {
 		//do not apply dodge modifiers if flat footed
 		if (modifier_type != character_modifier_type::dodge || !this->is_flat_footed()) {
-			co_await this->change_typed_stat_value(stat, centesimal_int(change));
+			co_await this->change_typed_stat_value(stat, change);
 		}
 	}
 }
 
-const centesimal_int &character_game_data::get_attribute_value(const character_attribute *attribute) const
+int character_game_data::get_attribute_value(const character_attribute *attribute) const
 {
 	return this->get_stat_value(attribute);
 }
 
-QCoro::Task<void> character_game_data::change_attribute_value(const character_attribute *attribute, const centesimal_int &change)
+QCoro::Task<void> character_game_data::change_attribute_value(const character_attribute *attribute, const int change)
 {
 	if (change == 0) {
 		co_return;
@@ -2283,12 +2283,12 @@ int character_game_data::get_primary_attribute_value() const
 {
 	assert_throw(this->get_character_class() != nullptr);
 
-	return this->get_attribute_value(this->character->get_primary_attribute()).to_int();
+	return this->get_attribute_value(this->character->get_primary_attribute());
 }
 
 int character_game_data::get_attribute_modifier(const character_attribute *attribute) const
 {
-	return -5 + (this->get_attribute_value(attribute).to_int() / 2);
+	return -5 + (this->get_attribute_value(attribute) / 2);
 }
 
 data_entry_set<character_attribute> character_game_data::get_main_attributes() const
@@ -2318,7 +2318,7 @@ bool character_game_data::do_attribute_check(const character_attribute *attribut
 		return false;
 	}
 
-	const int attribute_value = this->get_attribute_value(attribute).to_int();
+	const int attribute_value = this->get_attribute_value(attribute);
 	const int modified_attribute_value = attribute_value + roll_modifier;
 	return roll_result <= modified_attribute_value;
 }
@@ -2327,7 +2327,7 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 {
 	assert_throw(attribute != nullptr);
 
-	int chance = this->get_attribute_value(attribute).to_int();
+	int chance = this->get_attribute_value(attribute);
 	chance += roll_modifier;
 
 	static constexpr dice check_dice(1, 20);
@@ -2342,28 +2342,18 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 	return chance;
 }
 
-QCoro::Task<void> character_game_data::on_stat_value_changed(const character_stat *stat, const centesimal_int &new_value, const centesimal_int &old_value)
+QCoro::Task<void> character_game_data::on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value)
 {
 	if (new_value > old_value) {
-		for (int64_t i = old_value.get_value() + 1; i <= new_value.get_value(); ++i) {
-			const centesimal_int value = centesimal_int::from_value(i);
-			if (value.get_fractional_value() != 0 && !stat->is_value_exceptional(value.to_int())) {
-				continue;
-			}
-
-			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(value);
+		for (int i = old_value + 1; i <= new_value; ++i) {
+			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->apply(this->character);
 			}
 		}
 	} else {
-		for (int64_t i = old_value.get_value(); i > new_value.get_value(); --i) {
-			const centesimal_int value = centesimal_int::from_value(i);
-			if (value.get_fractional_value() != 0 && !stat->is_value_exceptional(value.to_int())) {
-				continue;
-			}
-
-			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(value);
+		for (int i = old_value; i > new_value; --i) {
+			const modifier<const metternich::character> *value_modifier = stat->get_value_modifier(i);
 			if (value_modifier != nullptr) {
 				co_await value_modifier->remove(this->character);
 			}
@@ -2647,12 +2637,12 @@ QCoro::Task<void> character_game_data::apply_base_armor_class_bonus(const int mu
 		bonus = this->get_base_armor_class_bonus();
 	}
 
-	co_await this->change_typed_stat_value(character_stat::armor_class.get(), centesimal_int(bonus * multiplier));
+	co_await this->change_typed_stat_value(character_stat::armor_class.get(), bonus * multiplier);
 }
 
 int character_game_data::get_armor_class_bonus() const
 {
-	return this->get_stat_value(character_stat::armor_class.get()).to_int();
+	return this->get_stat_value(character_stat::armor_class.get());
 }
 
 void character_game_data::change_species_armor_class_bonus(const species *species, const int change)
@@ -2956,9 +2946,9 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 	const bool is_trained = this->is_skill_trained(skill);
 
 	if (is_trained && !was_trained) {
-		co_await this->on_stat_value_changed(skill, this->get_skill_value(skill), centesimal_int(0));
+		co_await this->on_stat_value_changed(skill, this->get_skill_value(skill), 0);
 	} else if (!is_trained && was_trained) {
-		co_await this->on_stat_value_changed(skill, centesimal_int(0), this->get_skill_value(skill));
+		co_await this->on_stat_value_changed(skill, 0, this->get_skill_value(skill));
 	}
 
 	if (game::get()->is_running()) {
@@ -2966,12 +2956,12 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 	}
 }
 
-const centesimal_int &character_game_data::get_skill_value(const skill *skill) const
+int character_game_data::get_skill_value(const skill *skill) const
 {
 	return this->get_stat_value(skill);
 }
 
-QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const centesimal_int &change)
+QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
 {
 	if (change == 0) {
 		co_return;
@@ -2988,7 +2978,7 @@ int character_game_data::get_effective_skill_value(const skill *skill) const
 		return 0;
 	}
 
-	return this->get_skill_value(skill).to_int();
+	return this->get_skill_value(skill);
 }
 
 bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier, const site *location) const
@@ -3012,7 +3002,7 @@ bool character_game_data::do_skill_check(const skill *skill, const int roll_modi
 		return false;
 	}
 
-	const int skill_value = this->get_skill_value(skill).to_int();
+	const int skill_value = this->get_skill_value(skill);
 	const int modified_skill_value = skill_value + roll_modifier + location->get_game_data()->get_skill_modifier(skill);
 	return roll_result <= modified_skill_value;
 }
@@ -3026,7 +3016,7 @@ int character_game_data::get_skill_check_chance(const skill *skill, const int ro
 		return 0;
 	}
 
-	int chance = this->get_skill_value(skill).to_int();
+	int chance = this->get_skill_value(skill);
 	chance += roll_modifier;
 	chance += location->get_game_data()->get_skill_modifier(skill);
 
@@ -3054,7 +3044,7 @@ bool character_game_data::has_domain_skill() const
 
 int character_game_data::get_domain_skill_value(const domain_skill *domain_skill) const
 {
-	return this->get_stat_value(domain_skill).to_int();
+	return this->get_stat_value(domain_skill);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)
@@ -3178,7 +3168,7 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 	// characters cannot gain a trait which would reduce their main attributes below 1
 	for (const character_attribute *attribute : this->get_main_attributes()) {
 		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(attribute);
-		if (trait_primary_attribute_bonus < 0 && (this->get_attribute_value(attribute).to_int() + trait_primary_attribute_bonus) <= 0) {
+		if (trait_primary_attribute_bonus < 0 && (this->get_attribute_value(attribute) + trait_primary_attribute_bonus) <= 0) {
 			return false;
 		}
 	}
@@ -3202,7 +3192,7 @@ QCoro::Task<void> character_game_data::on_trait_gained(const trait *trait, const
 	}
 
 	for (const auto &[attribute, bonus] : trait->get_attribute_bonuses()) {
-		co_await this->change_attribute_value(attribute, centesimal_int(bonus * multiplier));
+		co_await this->change_attribute_value(attribute, bonus * multiplier);
 	}
 
 	if (trait->get_modifier() != nullptr) {
@@ -4676,9 +4666,9 @@ QCoro::Task<void> character_game_data::set_flat_footed(const bool value)
 		const int dodge_modifier_total = this->get_stat_modifier_total(stat, character_modifier_type::dodge);
 		if (dodge_modifier_total != 0) {
 			if (this->is_flat_footed()) {
-				co_await this->change_typed_stat_value(stat, centesimal_int(-dodge_modifier_total));
+				co_await this->change_typed_stat_value(stat, -dodge_modifier_total);
 			} else {
-				co_await this->change_typed_stat_value(stat, centesimal_int(dodge_modifier_total));
+				co_await this->change_typed_stat_value(stat, dodge_modifier_total);
 			}
 		}
 	}

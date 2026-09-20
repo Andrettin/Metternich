@@ -18,7 +18,7 @@ const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
 	//an armor class bonus of +10 increases challenge rating by 1
 	auto value_modifier_10 = std::make_unique<metternich::modifier<const character>>();
 	value_modifier_10->add_modifier_effect(std::make_unique<challenge_rating_modifier_effect>(decimillesimal_int(1)));
-	armor_class->value_modifiers[centesimal_int(10)] = std::move(value_modifier_10);
+	armor_class->value_modifiers[10] = std::move(value_modifier_10);
 
 	return armor_class;
 }();
@@ -42,15 +42,11 @@ void character_stat::process_gsml_scope(const gsml_data &scope)
 	if (tag == "value_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const centesimal_int value(child_tag);
+			const int value = std::stoi(child_tag);
 			if (!this->value_modifiers.contains(value)) {
 				this->value_modifiers[value] = std::make_unique<metternich::modifier<const character>>();
 			}
 			this->value_modifiers[value]->process_gsml_data(child_scope);
-
-			if (value.get_fractional_value() != 0) {
-				this->exceptional_values.insert(value.to_int());
-			}
 		});
 	} else if (tag == "recurring_value_modifiers") {
 		static constexpr int max_value = std::numeric_limits<uint8_t>::max();
@@ -59,11 +55,10 @@ void character_stat::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const int value_interval = std::stoi(child_tag);
 			for (int i = value_interval; i <= max_value; i += value_interval) {
-				const centesimal_int value(i);
-				if (!this->value_modifiers.contains(value)) {
-					this->value_modifiers[value] = std::make_unique<metternich::modifier<const character>>();
+				if (!this->value_modifiers.contains(i)) {
+					this->value_modifiers[i] = std::make_unique<metternich::modifier<const character>>();
 				}
-				this->value_modifiers[value]->process_gsml_data(child_scope);
+				this->value_modifiers[i]->process_gsml_data(child_scope);
 			}
 		});
 	} else {

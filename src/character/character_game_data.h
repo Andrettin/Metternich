@@ -342,24 +342,23 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_weight(const int weight);
 	[[nodiscard]] QCoro::Task<void> change_weight(const int change);
 
-	const centesimal_int &get_stat_value(const character_stat *stat) const
+	int get_stat_value(const character_stat *stat) const
 	{
 		const auto find_iterator = this->stat_values.find(stat);
 		if (find_iterator != this->stat_values.end()) {
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int zero;
-		return zero;
+		return 0;
 	}
 
-	const data_entry_map<character_stat, centesimal_int> &get_stat_values() const
+	const data_entry_map<character_stat, int> &get_stat_values() const
 	{
 		return this->stat_values;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const centesimal_int &change, const bool stat_enabled, const bool affects_office_modifier);
-	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const centesimal_int &change);
+	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier);
+	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
 
 	int get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const;
 
@@ -402,14 +401,14 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> change_stat_modifier_total(const character_stat *stat, const character_modifier_type modifier_type, const int change);
 
-	const centesimal_int &get_attribute_value(const character_attribute *attribute) const;
-	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const centesimal_int &change);
+	int get_attribute_value(const character_attribute *attribute) const;
+	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
 	int get_attribute_modifier(const character_attribute *attribute) const;
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
-	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const centesimal_int &new_value, const centesimal_int &old_value);
+	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value);
 
 	int get_hit_dice_count() const
 	{
@@ -631,8 +630,8 @@ public:
 	bool is_skill_trained(const skill *skill) const;
 	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 
-	const centesimal_int &get_skill_value(const skill *skill) const;
-	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const centesimal_int &change);
+	int get_skill_value(const skill *skill) const;
+	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const int change);
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
@@ -1147,7 +1146,7 @@ private:
 	int reputation = 0;
 	const metternich::creature_size *creature_size = nullptr;
 	int weight = 0; //in ounces
-	data_entry_map<character_stat, centesimal_int> stat_values;
+	data_entry_map<character_stat, int> stat_values;
 	data_entry_map<character_stat, std::map<character_modifier_type, std::vector<int>>> stat_modifiers;
 	data_entry_map<character_stat, std::map<character_modifier_type, int>> stat_modifier_totals;
 	int hit_dice_count = 0;

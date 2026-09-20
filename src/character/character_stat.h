@@ -1,7 +1,6 @@
 #pragma once
 
 #include "database/named_data_entry.h"
-#include "util/centesimal_int.h"
 
 namespace metternich {
 
@@ -47,7 +46,7 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const modifier<const character> *get_value_modifier(const centesimal_int &value) const
+	const modifier<const character> *get_value_modifier(const int value) const
 	{
 		const auto find_iterator = this->value_modifiers.find(value);
 		if (find_iterator != this->value_modifiers.end()) {
@@ -57,11 +56,6 @@ public:
 		return nullptr;
 	}
 
-	bool is_value_exceptional(const int value) const
-	{
-		return this->exceptional_values.contains(value);
-	}
-
 	bool affects_military_unit_stats() const;
 
 signals:
@@ -69,8 +63,7 @@ signals:
 
 private:
 	bool affect_military_unit_stats = false;
-	std::map<centesimal_int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
-	std::set<int> exceptional_values;
+	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
 };
 
 }
