@@ -3,6 +3,7 @@ troll = {
 	attribute = strength
 	max_level = 11
 	starting_age_category = intuitive
+	health_bonus_table = troll_health_bonus
 	craft_bonus_table = craft_bonus
 	reputation_bonus_table = medium_reputation_bonus #as warrior
 	to_hit_bonus_table = troll_to_hit_bonus
@@ -20,19 +21,6 @@ troll = {
 	}
 	allowed_species = {
 		troll
-	}
-	health_bonus_per_level = {
-		1 = 1d8
-		2 = 1d8
-		3 = 1d8
-		4 = 1d8
-		5 = 0
-		6 = 1d8
-		7 = 0
-		8 = 1d8
-		9 = 0
-		10 = 1d8
-		11 = 0
 	}
 	level_modifiers = {
 		1 = {

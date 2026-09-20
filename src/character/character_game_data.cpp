@@ -1778,34 +1778,36 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
-	const std::variant<int, dice> &health_bonus = character_class->get_health_bonus_for_level(affected_level);
-	if (std::holds_alternative<int>(health_bonus)) {
-		const int health_bonus_int = std::get<int>(health_bonus);
-		co_await this->change_max_health(health_bonus_int * multiplier, true);
-	} else if (std::holds_alternative<dice>(health_bonus)) {
-		const dice &health_bonus_dice = std::get<dice>(health_bonus);
+	if (character_class->get_health_bonus_table() != nullptr) {
+		const std::variant<int, dice> &health_bonus = character_class->get_health_bonus_table()->get_bonus_variant_for_level(affected_level);
+		if (std::holds_alternative<int>(health_bonus)) {
+			const int health_bonus_int = std::get<int>(health_bonus);
+			co_await this->change_max_health(health_bonus_int * multiplier, true);
+		} else if (std::holds_alternative<dice>(health_bonus)) {
+			const dice &health_bonus_dice = std::get<dice>(health_bonus);
 
-		if (multiplier > 0) {
-			co_await this->apply_hit_dice(health_bonus_dice);
-		} else if (multiplier < 0) {
-			co_await this->remove_hit_dice(health_bonus_dice);
+			if (multiplier > 0) {
+				co_await this->apply_hit_dice(health_bonus_dice);
+			} else if (multiplier < 0) {
+				co_await this->remove_hit_dice(health_bonus_dice);
+			}
 		}
 	}
 
 	if (character_class->get_mana_bonus_table() != nullptr) {
-		this->change_max_mana(character_class->get_mana_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
+		this->change_max_mana(character_class->get_mana_bonus_table()->get_bonus_for_level(affected_level) * multiplier, true);
 	}
 
 	if (character_class->get_craft_bonus_table() != nullptr) {
-		this->change_max_craft(character_class->get_craft_bonus_table()->get_bonus_per_level(affected_level) * multiplier, true);
+		this->change_max_craft(character_class->get_craft_bonus_table()->get_bonus_for_level(affected_level) * multiplier, true);
 	}
 
 	if (character_class->get_reputation_bonus_table() != nullptr) {
-		this->change_reputation(character_class->get_reputation_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
+		this->change_reputation(character_class->get_reputation_bonus_table()->get_bonus_for_level(affected_level) * multiplier);
 	}
 
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
-		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_per_level(affected_level) * multiplier);
+		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_bonus_for_level(affected_level) * multiplier);
 	}
 
 	for (const save_type *save_type : save_type::get_all()) {
@@ -1815,10 +1817,10 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			continue;
 		}
 
-		int save_bonus = save_bonus_table->get_bonus_per_level(affected_level) * multiplier;
+		int save_bonus = save_bonus_table->get_bonus_for_level(affected_level) * multiplier;
 		if (save_type->get_base_save_type() != nullptr) {
 			//derived save type bonus tables are applied with the base save type bonus subtracted from it
-			save_bonus -= character_class->get_save_bonus_table(save_type->get_base_save_type())->get_bonus_per_level(affected_level) * multiplier;
+			save_bonus -= character_class->get_save_bonus_table(save_type->get_base_save_type())->get_bonus_for_level(affected_level) * multiplier;
 		}
 
 		this->change_save_bonus(save_type, save_bonus);
@@ -1830,7 +1832,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			continue;
 		}
 
-		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(affected_level) * multiplier;
+		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_for_level(affected_level) * multiplier;
 
 		co_await this->change_typed_stat_value(domain_skill, domain_skill_bonus);
 	}
@@ -1841,7 +1843,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			continue;
 		}
 
-		const int trait_gain_count = trait_gain_table->get_bonus_per_level(affected_level) * multiplier;
+		const int trait_gain_count = trait_gain_table->get_bonus_for_level(affected_level) * multiplier;
 
 		for (int i = 0; i < trait_gain_count; ++i) {
 			co_await this->add_trait_of_type(trait_type);

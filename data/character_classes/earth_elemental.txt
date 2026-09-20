@@ -3,6 +3,7 @@ earth_elemental = {
 	attribute = strength
 	max_level = 13
 	starting_age_category = intuitive
+	health_bonus_table = earth_elemental_health_bonus
 	craft_bonus_table = craft_bonus
 	reputation_bonus_table = medium_reputation_bonus #as warrior
 	to_hit_bonus_table = earth_elemental_to_hit_bonus
@@ -20,21 +21,6 @@ earth_elemental = {
 	}
 	allowed_species = {
 		earth_elemental
-	}
-	health_bonus_per_level = {
-		1 = 1d8
-		2 = 1d8
-		3 = 1d8
-		4 = 1d8
-		5 = 0
-		6 = 1d8
-		7 = 0
-		8 = 1d8
-		9 = 0
-		10 = 1d8
-		11 = 0
-		12 = 1d8
-		13 = 0
 	}
 	level_modifiers = {
 		1 = {

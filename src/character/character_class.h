@@ -46,6 +46,7 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
+	Q_PROPERTY(const metternich::level_bonus_table* health_bonus_table MEMBER health_bonus_table READ get_health_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_bonus_table* mana_bonus_table MEMBER mana_bonus_table READ get_mana_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_bonus_table* craft_bonus_table MEMBER craft_bonus_table READ get_craft_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_bonus_table*reputation_bonus_table MEMBER reputation_bonus_table READ get_reputation_bonus_table NOTIFY changed)
@@ -129,6 +130,19 @@ public:
 	technology *get_obsolescence_technology() const
 	{
 		return this->obsolescence_technology;
+	}
+
+	const level_bonus_table *get_health_bonus_table() const
+	{
+		if (this->health_bonus_table != nullptr) {
+			return this->health_bonus_table;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_health_bonus_table();
+		}
+
+		return nullptr;
 	}
 
 	const level_bonus_table *get_mana_bonus_table() const
@@ -310,7 +324,6 @@ public:
 	}
 
 	int64_t get_experience_for_level(const int level) const;
-	const std::variant<int, dice> &get_health_bonus_for_level(const int level) const;
 
 	const modifier<const character> *get_level_modifier(const int level) const
 	{
@@ -369,6 +382,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	const level_bonus_table *health_bonus_table = nullptr;
 	const level_bonus_table *mana_bonus_table = nullptr;
 	const level_bonus_table *craft_bonus_table = nullptr;
 	const level_bonus_table *reputation_bonus_table = nullptr;
@@ -387,7 +401,6 @@ private:
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::map<std::string, int> rank_levels; //names for particular levels
 	std::map<int, int64_t> experience_per_level;
-	std::map<int, std::variant<int, dice>> health_bonus_per_level;
 	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
 	std::vector<const item_type *> starting_items;
 	std::vector<const spell *> starting_spells;

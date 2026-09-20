@@ -132,17 +132,6 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->experience_per_level[level] = experience;
 		});
-	} else if (tag == "health_bonus_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			const std::string &number_str = property.get_value();
-
-			if (number_str.find("d") != std::string::npos) {
-				this->health_bonus_per_level[level] = dice(number_str);
-			} else {
-				this->health_bonus_per_level[level] = std::stoi(number_str);
-			}
-		});
 	} else if (tag == "level_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -205,6 +194,10 @@ void character_class::check() const
 
 	if (this->get_starting_age_category() == starting_age_category::none) {
 		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
+	}
+
+	if (this->get_health_bonus_table() == nullptr) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no health bonus table.", this->get_identifier()));
 	}
 
 	if (this->get_reputation_bonus_table() == nullptr) {
@@ -328,26 +321,11 @@ int64_t character_class::get_experience_for_level(const int level) const
 	return character_defines::get()->get_experience_for_level(level);
 }
 
-const std::variant<int, dice> &character_class::get_health_bonus_for_level(const int level) const
-{
-	const auto find_iterator = this->health_bonus_per_level.find(level);
-	if (find_iterator != this->health_bonus_per_level.end()) {
-		return find_iterator->second;
-	}
-
-	if (this->get_base_class() != nullptr) {
-		return this->get_base_class()->get_health_bonus_for_level(level);
-	}
-
-	static const std::variant<int, dice> zero = 0;
-	return zero;
-}
-
 std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
 {
 	std::string str;
 
-	const std::variant<int, dice> &health_bonus = this->get_health_bonus_for_level(level);
+	const std::variant<int, dice> &health_bonus = this->get_health_bonus_table()->get_bonus_variant_for_level(level);
 	if (std::holds_alternative<int>(health_bonus)) {
 		const int health_bonus_int = std::get<int>(health_bonus);
 		if (health_bonus_int != 0) {
@@ -365,7 +343,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 		str += std::format("Health: {}", string::colored("+" + std::get<dice>(health_bonus).to_display_string(), ui_defines::get()->get_green_text_color()));
 	}
 
-	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_per_level(level);
+	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_for_level(level);
 	if (to_hit_bonus != 0) {
 		if (!str.empty()) {
 			str += "\n";
@@ -381,7 +359,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 			continue;
 		}
 
-		const int save_bonus = save_bonus_table->get_bonus_per_level(level);
+		const int save_bonus = save_bonus_table->get_bonus_for_level(level);
 
 		if (save_bonus != 0) {
 			if (!str.empty()) {
@@ -397,7 +375,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 		if (domain_skill_bonus_table == nullptr) {
 			continue;
 		}
-		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_per_level(level);
+		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_for_level(level);
 
 		if (domain_skill_bonus != 0) {
 			if (!str.empty()) {
@@ -413,7 +391,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 		if (trait_gain_table == nullptr) {
 			continue;
 		}
-		const int trait_gain_count = trait_gain_table->get_bonus_per_level(level);
+		const int trait_gain_count = trait_gain_table->get_bonus_for_level(level);
 
 		if (trait_gain_count != 0) {
 			if (!str.empty()) {
