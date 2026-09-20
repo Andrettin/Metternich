@@ -5,7 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/character_defines.h"
 #include "character/domain_skill.h"
-#include "character/level_bonus_table.h"
+#include "character/level_value_table.h"
 #include "character/save_type.h"
 #include "character/skill.h"
 #include "character/skill_group.h"
@@ -60,21 +60,21 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->save_bonus_tables[save_type::get(key)] = level_bonus_table::get(value);
+			this->save_bonus_tables[save_type::get(key)] = level_value_table::get(value);
 		});
 	} else if (tag == "domain_skill_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->domain_skill_bonus_tables[domain_skill::get(key)] = level_bonus_table::get(value);
+			this->domain_skill_bonus_tables[domain_skill::get(key)] = level_value_table::get(value);
 		});
 	} else if (tag == "trait_gain_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->trait_gain_tables[trait_type::get(key)] = level_bonus_table::get(value);
+			this->trait_gain_tables[trait_type::get(key)] = level_value_table::get(value);
 		});
 	} else if (tag == "exceptional_attributes") {
 		for (const std::string &value : values) {
@@ -209,7 +209,7 @@ void character_class::check() const
 	}
 
 	for (const save_type *save_type : save_type::get_all()) {
-		const level_bonus_table *save_bonus_table = this->get_save_bonus_table(save_type);
+		const level_value_table *save_bonus_table = this->get_save_bonus_table(save_type);
 		if (save_bonus_table == nullptr && save_type->get_base_save_type() == nullptr) {
 			throw std::runtime_error(std::format("Character class \"{}\" has no save bonus table for base save type \"{}\".", this->get_identifier(), save_type->get_identifier()));
 		}
@@ -325,7 +325,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 {
 	std::string str;
 
-	const std::variant<int, dice> &health_bonus = this->get_health_bonus_table()->get_bonus_variant_for_level(level);
+	const std::variant<int, dice> &health_bonus = this->get_health_bonus_table()->get_value_variant_for_level(level);
 	if (std::holds_alternative<int>(health_bonus)) {
 		const int health_bonus_int = std::get<int>(health_bonus);
 		if (health_bonus_int != 0) {
@@ -343,7 +343,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 		str += std::format("Health: {}", string::colored("+" + std::get<dice>(health_bonus).to_display_string(), ui_defines::get()->get_green_text_color()));
 	}
 
-	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_bonus_for_level(level);
+	const int to_hit_bonus = this->get_to_hit_bonus_table()->get_value_for_level(level);
 	if (to_hit_bonus != 0) {
 		if (!str.empty()) {
 			str += "\n";
@@ -353,13 +353,13 @@ std::string character_class::get_level_modifier_string(const int level, const me
 	}
 
 	for (const save_type *save_type : save_type::get_all()) {
-		const level_bonus_table *save_bonus_table = this->get_save_bonus_table(save_type);
+		const level_value_table *save_bonus_table = this->get_save_bonus_table(save_type);
 
 		if (save_bonus_table == nullptr) {
 			continue;
 		}
 
-		const int save_bonus = save_bonus_table->get_bonus_for_level(level);
+		const int save_bonus = save_bonus_table->get_value_for_level(level);
 
 		if (save_bonus != 0) {
 			if (!str.empty()) {
@@ -371,11 +371,11 @@ std::string character_class::get_level_modifier_string(const int level, const me
 	}
 
 	for (const domain_skill *domain_skill : domain_skill::get_all()) {
-		const level_bonus_table *domain_skill_bonus_table = this->get_domain_skill_bonus_table(domain_skill);
+		const level_value_table *domain_skill_bonus_table = this->get_domain_skill_bonus_table(domain_skill);
 		if (domain_skill_bonus_table == nullptr) {
 			continue;
 		}
-		const int domain_skill_bonus = domain_skill_bonus_table->get_bonus_for_level(level);
+		const int domain_skill_bonus = domain_skill_bonus_table->get_value_for_level(level);
 
 		if (domain_skill_bonus != 0) {
 			if (!str.empty()) {
@@ -387,11 +387,11 @@ std::string character_class::get_level_modifier_string(const int level, const me
 	}
 
 	for (const trait_type *trait_type : trait_type::get_all()) {
-		const level_bonus_table *trait_gain_table = this->get_trait_gain_table(trait_type);
+		const level_value_table *trait_gain_table = this->get_trait_gain_table(trait_type);
 		if (trait_gain_table == nullptr) {
 			continue;
 		}
-		const int trait_gain_count = trait_gain_table->get_bonus_for_level(level);
+		const int trait_gain_count = trait_gain_table->get_value_for_level(level);
 
 		if (trait_gain_count != 0) {
 			if (!str.empty()) {

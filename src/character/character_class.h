@@ -3,9 +3,8 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "util/dice.h"
 
-Q_MOC_INCLUDE("character/level_bonus_table.h")
+Q_MOC_INCLUDE("character/level_value_table.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")
 
@@ -18,7 +17,7 @@ class domain_skill;
 class government_type;
 class holding_type;
 class item_type;
-class level_bonus_table;
+class level_value_table;
 class skill_group;
 class species;
 class spell;
@@ -46,11 +45,11 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
-	Q_PROPERTY(const metternich::level_bonus_table* health_bonus_table MEMBER health_bonus_table READ get_health_bonus_table NOTIFY changed)
-	Q_PROPERTY(const metternich::level_bonus_table* mana_bonus_table MEMBER mana_bonus_table READ get_mana_bonus_table NOTIFY changed)
-	Q_PROPERTY(const metternich::level_bonus_table* craft_bonus_table MEMBER craft_bonus_table READ get_craft_bonus_table NOTIFY changed)
-	Q_PROPERTY(const metternich::level_bonus_table*reputation_bonus_table MEMBER reputation_bonus_table READ get_reputation_bonus_table NOTIFY changed)
-	Q_PROPERTY(const metternich::level_bonus_table* to_hit_bonus_table MEMBER to_hit_bonus_table READ get_to_hit_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* health_bonus_table MEMBER health_bonus_table READ get_health_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* mana_bonus_table MEMBER mana_bonus_table READ get_mana_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* craft_bonus_table MEMBER craft_bonus_table READ get_craft_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* reputation_bonus_table MEMBER reputation_bonus_table READ get_reputation_bonus_table NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* to_hit_bonus_table MEMBER to_hit_bonus_table READ get_to_hit_bonus_table NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "character_class";
@@ -132,7 +131,7 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	const level_bonus_table *get_health_bonus_table() const
+	const level_value_table *get_health_bonus_table() const
 	{
 		if (this->health_bonus_table != nullptr) {
 			return this->health_bonus_table;
@@ -145,7 +144,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_mana_bonus_table() const
+	const level_value_table *get_mana_bonus_table() const
 	{
 		if (this->mana_bonus_table != nullptr) {
 			return this->mana_bonus_table;
@@ -158,7 +157,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_craft_bonus_table() const
+	const level_value_table *get_craft_bonus_table() const
 	{
 		if (this->craft_bonus_table != nullptr) {
 			return this->craft_bonus_table;
@@ -171,7 +170,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_reputation_bonus_table() const
+	const level_value_table *get_reputation_bonus_table() const
 	{
 		if (this->reputation_bonus_table != nullptr) {
 			return this->reputation_bonus_table;
@@ -184,7 +183,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_to_hit_bonus_table() const
+	const level_value_table *get_to_hit_bonus_table() const
 	{
 		if (this->to_hit_bonus_table != nullptr) {
 			return this->to_hit_bonus_table;
@@ -197,7 +196,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_save_bonus_table(const save_type *save_type) const
+	const level_value_table *get_save_bonus_table(const save_type *save_type) const
 	{
 		const auto find_iterator = this->save_bonus_tables.find(save_type);
 		if (find_iterator != this->save_bonus_tables.end()) {
@@ -211,7 +210,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_domain_skill_bonus_table(const domain_skill *domain_skill) const
+	const level_value_table *get_domain_skill_bonus_table(const domain_skill *domain_skill) const
 	{
 		const auto find_iterator = this->domain_skill_bonus_tables.find(domain_skill);
 		if (find_iterator != this->domain_skill_bonus_tables.end()) {
@@ -225,7 +224,7 @@ public:
 		return nullptr;
 	}
 
-	const level_bonus_table *get_trait_gain_table(const trait_type *trait_type) const
+	const level_value_table *get_trait_gain_table(const trait_type *trait_type) const
 	{
 		const auto find_iterator = this->trait_gain_tables.find(trait_type);
 		if (find_iterator != this->trait_gain_tables.end()) {
@@ -382,14 +381,14 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	const level_bonus_table *health_bonus_table = nullptr;
-	const level_bonus_table *mana_bonus_table = nullptr;
-	const level_bonus_table *craft_bonus_table = nullptr;
-	const level_bonus_table *reputation_bonus_table = nullptr;
-	const level_bonus_table *to_hit_bonus_table = nullptr;
-	data_entry_map<save_type, const level_bonus_table *> save_bonus_tables;
-	data_entry_map<domain_skill, const level_bonus_table *> domain_skill_bonus_tables;
-	data_entry_map<trait_type, const level_bonus_table *> trait_gain_tables;
+	const level_value_table *health_bonus_table = nullptr;
+	const level_value_table *mana_bonus_table = nullptr;
+	const level_value_table *craft_bonus_table = nullptr;
+	const level_value_table *reputation_bonus_table = nullptr;
+	const level_value_table *to_hit_bonus_table = nullptr;
+	data_entry_map<save_type, const level_value_table *> save_bonus_tables;
+	data_entry_map<domain_skill, const level_value_table *> domain_skill_bonus_tables;
+	data_entry_map<trait_type, const level_value_table *> trait_gain_tables;
 	data_entry_set<character_attribute> exceptional_attributes;
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;

@@ -40,7 +40,7 @@ set(character_SRCS
 	src/character/domain_skill.cpp
 	src/character/dynasty.cpp
 	src/character/family_tree_model.cpp
-	src/character/level_bonus_table.cpp
+	src/character/level_value_table.cpp
 	src/character/monster_type.cpp
 	src/character/mythic_path.cpp
 	src/character/party.cpp
@@ -416,7 +416,7 @@ set(character_HDRS
 	src/character/domain_skill.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
-	src/character/level_bonus_table.h
+	src/character/level_value_table.h
 	src/character/monster_type.h
 	src/character/mythic_path.h
 	src/character/party.h
