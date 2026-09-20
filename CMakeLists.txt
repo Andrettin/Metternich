@@ -934,7 +934,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/scripted_modifier_effect_modifier_effect.h
 	src/script/modifier_effect/ship_stat_modifier_effect.h
 	src/script/modifier_effect/site_attribute_modifier_effect.h
-	src/script/modifier_effect/skill_modifier_effect.h
 	src/script/modifier_effect/skill_training_modifier_effect.h
 	src/script/modifier_effect/species_armor_class_bonus_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h

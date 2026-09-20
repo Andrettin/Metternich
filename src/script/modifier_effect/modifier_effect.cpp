@@ -77,7 +77,6 @@
 #include "script/modifier_effect/scripted_modifier_effect_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
 #include "script/modifier_effect/site_attribute_modifier_effect.h"
-#include "script/modifier_effect/skill_modifier_effect.h"
 #include "script/modifier_effect/skill_training_modifier_effect.h"
 #include "script/modifier_effect/species_armor_class_bonus_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
@@ -154,8 +153,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<weight_modifier_effect>(value);
 		} else if (save_type::try_get(key) != nullptr) {
 			return std::make_unique<save_modifier_effect>(save_type::get(key), value);
-		} else if (skill::try_get(key) != nullptr) {
-			return std::make_unique<skill_modifier_effect>(skill::get(key), value);
 		} else if (character_stat::try_get_stat(key) != nullptr) {
 			return std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(key), value);
 		}
