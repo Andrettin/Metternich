@@ -38,14 +38,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "experience_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			const int64_t experience = std::stoll(property.get_value());
-
-			this->experience_per_level[level] = experience;
-		});
-	} else if (tag == "experience_award_per_challenge_rating") {
+	if (tag == "experience_award_per_challenge_rating") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const int challenge_rating = std::stoi(property.get_key());
 			const int64_t experience_award = std::stoll(property.get_value());

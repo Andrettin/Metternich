@@ -1911,16 +1911,17 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 	const metternich::character_class *character_class = this->get_character_class();
 	assert_throw(character_class != nullptr);
 
-	int64_t experience = character_class->get_experience_for_level(level + this->get_level_adjustment());
+	const level_value_table *experience_table = character_class->get_experience_table();
+	int64_t experience = experience_table->get_value_for_level(level + this->get_level_adjustment());
 	if (level > 1) {
-		experience -= character_class->get_experience_for_level(level + this->get_level_adjustment() - 1);
+		experience -= experience_table->get_value_for_level(level + this->get_level_adjustment() - 1);
 	}
 
 	if (this->get_level_adjustment() > 0) {
 		const int next_level_adjustment_reduction_level = this->get_next_level_adjustment_reduction_level();
 		if (level >= next_level_adjustment_reduction_level) {
-			experience += character_class->get_experience_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment());
-			experience -= character_class->get_experience_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment() - 1);
+			experience += experience_table->get_value_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment());
+			experience -= experience_table->get_value_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment() - 1);
 		}
 	}
 
@@ -1930,6 +1931,8 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 		//multiply experience required by 4 for levels beyond the species level limit for the class
 		experience *= 4;
 	}
+
+	assert_throw(experience != 0);
 
 	return experience;
 }

@@ -10,6 +10,7 @@ namespace metternich {
 
 class character;
 class creature_size;
+class level_value_table;
 enum class bloodline_strength_category;
 enum class divine_rank;
 
@@ -21,6 +22,7 @@ class character_defines final : public defines_base, public singleton<character_
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::creature_size* default_creature_size MEMBER default_creature_size READ get_default_creature_size NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* default_experience_table MEMBER default_experience_table READ get_default_experience_table NOTIFY changed)
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
 	Q_PROPERTY(int battle_hit_point_rate MEMBER battle_hit_point_rate READ get_battle_hit_point_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::dice ruler_reputation_dice MEMBER ruler_reputation_dice READ get_ruler_reputation_dice NOTIFY changed)
@@ -48,6 +50,11 @@ public:
 		return this->default_creature_size;
 	}
 
+	const level_value_table *get_default_experience_table() const
+	{
+		return this->default_experience_table;
+	}
+
 	int get_craft_recovery_per_day() const
 	{
 		return this->craft_recovery_per_day;
@@ -71,21 +78,6 @@ public:
 	int get_max_character_normal_level() const
 	{
 		return this->max_character_normal_level;
-	}
-
-	int64_t get_experience_for_level(const int level) const
-	{
-		const auto find_iterator = this->experience_per_level.find(level);
-		if (find_iterator != this->experience_per_level.end()) {
-			return find_iterator->second;
-		}
-
-		if (level <= 0) {
-			throw std::runtime_error(std::format("No experience total is given for level {}.", level));
-		}
-
-		const int64_t previous_level_experience = this->get_experience_for_level(level - 1);
-		return (previous_level_experience - this->get_experience_for_level(level - 2)) * 2 + previous_level_experience;
 	}
 
 	int64_t get_experience_award_for_challenge_rating(const int challenge_rating) const
@@ -126,12 +118,12 @@ signals:
 private:
 	int minimum_character_range = 0;
 	const creature_size *default_creature_size = nullptr;
+	const level_value_table *default_experience_table = nullptr;
 	int craft_recovery_per_day = 0;
 	int battle_hit_point_rate = 0; //character health per military unit hit point
 	int battle_movement_rate = 0; //movement in battle per character movement point, in inches
 	dice ruler_reputation_dice;
 	int max_character_normal_level = 0;
-	std::map<int, int64_t> experience_per_level;
 	std::map<int, int64_t> experience_award_per_challenge_rating;
 	std::map<bloodline_strength_category, int> bloodline_strength_category_weights;
 	std::vector<bloodline_strength_category> weighted_bloodline_strength_categories;

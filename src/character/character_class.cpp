@@ -125,13 +125,6 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->rank_levels[key] = std::stoi(value);
 		});
-	} else if (tag == "experience_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			const int64_t experience = std::stoll(property.get_value());
-
-			this->experience_per_level[level] = experience;
-		});
 	} else if (tag == "level_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -196,6 +189,10 @@ void character_class::check() const
 		throw std::runtime_error(std::format("Character class \"{}\" has no starting age category.", this->get_identifier()));
 	}
 
+	if (this->get_experience_table() == nullptr) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no experience table.", this->get_identifier()));
+	}
+
 	if (this->get_health_bonus_table() == nullptr) {
 		throw std::runtime_error(std::format("Character class \"{}\" has no health bonus table.", this->get_identifier()));
 	}
@@ -237,6 +234,19 @@ metternich::starting_age_category character_class::get_starting_age_category() c
 	}
 
 	return starting_age_category::none;
+}
+
+const level_value_table *character_class::get_experience_table() const
+{
+	if (this->experience_table != nullptr) {
+		return this->experience_table;
+	}
+
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->get_experience_table();
+	}
+
+	return character_defines::get()->get_default_experience_table();
 }
 
 bool character_class::has_class_skill(const skill *skill) const
@@ -305,20 +315,6 @@ bool character_class::is_government_type_allowed(const government_type *governme
 void character_class::add_allowed_government_type(const government_type *government_type)
 {
 	this->allowed_government_types.push_back(government_type);
-}
-
-int64_t character_class::get_experience_for_level(const int level) const
-{
-	const auto find_iterator = this->experience_per_level.find(level);
-	if (find_iterator != this->experience_per_level.end()) {
-		return find_iterator->second;
-	}
-
-	if (this->get_base_class() != nullptr) {
-		return this->get_base_class()->get_experience_for_level(level);
-	}
-
-	return character_defines::get()->get_experience_for_level(level);
 }
 
 std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const

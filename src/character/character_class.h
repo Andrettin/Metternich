@@ -45,6 +45,7 @@ class character_class final : public named_data_entry, public data_type<characte
 	Q_PROPERTY(metternich::starting_age_category starting_age_category MEMBER starting_age_category READ get_starting_age_category NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
+	Q_PROPERTY(const metternich::level_value_table* experience_table MEMBER experience_table READ get_experience_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_value_table* health_bonus_table MEMBER health_bonus_table READ get_health_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_value_table* mana_bonus_table MEMBER mana_bonus_table READ get_mana_bonus_table NOTIFY changed)
 	Q_PROPERTY(const metternich::level_value_table* craft_bonus_table MEMBER craft_bonus_table READ get_craft_bonus_table NOTIFY changed)
@@ -130,6 +131,8 @@ public:
 	{
 		return this->obsolescence_technology;
 	}
+
+	const level_value_table *get_experience_table() const;
 
 	const level_value_table *get_health_bonus_table() const
 	{
@@ -322,8 +325,6 @@ public:
 		throw std::runtime_error(std::format("Invalid rank for class \"{}\": \"{}\".", this->get_identifier(), rank));
 	}
 
-	int64_t get_experience_for_level(const int level) const;
-
 	const modifier<const character> *get_level_modifier(const int level) const
 	{
 		const auto find_iterator = this->level_modifiers.find(level);
@@ -381,6 +382,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	const level_value_table *experience_table = nullptr;
 	const level_value_table *health_bonus_table = nullptr;
 	const level_value_table *mana_bonus_table = nullptr;
 	const level_value_table *craft_bonus_table = nullptr;
@@ -399,7 +401,6 @@ private:
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::map<std::string, int> rank_levels; //names for particular levels
-	std::map<int, int64_t> experience_per_level;
 	std::map<int, std::unique_ptr<modifier<const character>>> level_modifiers;
 	std::vector<const item_type *> starting_items;
 	std::vector<const spell *> starting_spells;
