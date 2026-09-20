@@ -2,6 +2,7 @@
 
 #include "character/character_attribute.h"
 
+#include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
 
@@ -50,6 +51,24 @@ void character_attribute::process_gsml_scope(const gsml_data &scope)
 
 			this->rating_ranges[key] = std::move(range);
 		});
+	} else if (tag == "exceptional_value_modifiers") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const int value = std::stoi(child_tag);
+
+			child_scope.for_each_child([this, value](const gsml_data &grandchild_scope) {
+				const std::string &grandchild_tag = grandchild_scope.get_tag();
+				const int exceptional_value = std::stoi(grandchild_tag);
+
+				assert_throw(exceptional_value >= 1);
+				assert_throw(exceptional_value <= 99);
+
+				if (!this->exceptional_value_modifiers[value].contains(exceptional_value)) {
+					this->exceptional_value_modifiers[value][exceptional_value] = std::make_unique<metternich::modifier<const character>>();
+				}
+				this->exceptional_value_modifiers[value][exceptional_value]->process_gsml_data(grandchild_scope);
+			});
+		});
 	} else {
 		character_stat::process_gsml_scope(scope);
 	}
@@ -62,6 +81,18 @@ void character_attribute::initialize()
 	}
 
 	character_stat::initialize();
+}
+
+const modifier<const character> *character_attribute::get_exceptional_value_modifier(const int value, const int exceptional_value) const
+{
+	const auto find_iterator = this->exceptional_value_modifiers.find(value);
+	if (find_iterator != this->exceptional_value_modifiers.end()) {
+		const auto sub_find_iterator = find_iterator->second.upper_bound(exceptional_value);
+		assert_throw(sub_find_iterator != find_iterator->second.begin());
+		return std::prev(sub_find_iterator)->second.get();
+	}
+
+	return nullptr;
 }
 
 }

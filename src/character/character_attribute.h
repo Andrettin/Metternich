@@ -78,6 +78,13 @@ public:
 		this->derived_skills.push_back(skill);
 	}
 
+	bool is_value_exceptional(const int value) const
+	{
+		return this->exceptional_value_modifiers.contains(value);
+	}
+
+	const modifier<const character> *get_exceptional_value_modifier(const int value, const int exceptional_value) const;
+
 signals:
 	void changed();
 
@@ -87,6 +94,7 @@ private:
 	std::map<std::string, std::pair<int, int>> rating_ranges; //names for particular ranges
 	std::vector<const character_attribute *> subattributes;
 	std::vector<const skill *> derived_skills;
+	std::map<int, std::map<int, std::unique_ptr<modifier<const character>>>> exceptional_value_modifiers; //the character modifiers applied for each exceptional value; these are not cumulative
 };
 
 }

@@ -404,6 +404,8 @@ public:
 	int get_attribute_value(const character_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
 	int get_primary_attribute_value() const;
+	int get_exceptional_attribute_value(const character_attribute *attribute) const;
+	[[nodiscard]] QCoro::Task<void> change_exceptional_attribute_value(const character_attribute *attribute, const int change);
 	int get_attribute_modifier(const character_attribute *attribute) const;
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
@@ -1090,6 +1092,7 @@ signals:
 	void creature_size_changed();
 	void weight_changed();
 	void stat_values_changed();
+	void exceptional_attribute_values_changed();
 	void health_changed();
 	void max_health_changed();
 	void mana_changed();
@@ -1147,6 +1150,7 @@ private:
 	const metternich::creature_size *creature_size = nullptr;
 	int weight = 0; //in ounces
 	data_entry_map<character_stat, int> stat_values;
+	data_entry_map<character_attribute, int> exceptional_attribute_values;
 	data_entry_map<character_stat, std::map<character_modifier_type, std::vector<int>>> stat_modifiers;
 	data_entry_map<character_stat, std::map<character_modifier_type, int>> stat_modifier_totals;
 	int hit_dice_count = 0;
