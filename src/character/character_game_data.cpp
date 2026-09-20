@@ -225,6 +225,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->stat_modifier_totals[stat][modifier_type] = std::stoi(stat_property.get_value());
 			});
 		});
+	} else if (tag == "exceptional_attributes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->exceptional_attribute_values[character_attribute::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "hit_dice_roll_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -395,6 +399,14 @@ gsml_data character_game_data::to_gsml_data() const
 		}
 
 		data.add_child(std::move(stat_modifier_totals_data));
+	}
+
+	if (!this->exceptional_attribute_values.empty()) {
+		gsml_data exceptional_attributes_data("exceptional_attributes");
+		for (const auto &[attribute, value] : this->exceptional_attribute_values) {
+			exceptional_attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
+		}
+		data.add_child(std::move(exceptional_attributes_data));
 	}
 
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
@@ -800,6 +812,12 @@ QCoro::Task<void> character_game_data::generate_attributes()
 	const metternich::character_class *character_class = this->get_character_class();
 
 	for (const character_attribute *attribute : character_attribute::get_all()) {
+		if (character_class != nullptr && character_class->get_exceptional_attributes().contains(attribute)) {
+			static constexpr dice exceptional_attribute_dice(1, 100);
+			const int exceptional_attribute_value = random::get()->roll_dice(exceptional_attribute_dice);
+			co_await this->change_exceptional_attribute_value(attribute, exceptional_attribute_value);
+		}
+
 		const std::optional<std::pair<int, int>> attribute_range = this->character->get_attribute_range(attribute);
 
 		int min_result = 0;
@@ -2268,7 +2286,23 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 
 	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
 
+	if (this->get_exceptional_attribute_value(attribute) != 0) {
+		//remove the exceptional value modifier before changing the attribute value, since the latter also affects it
+		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), this->get_exceptional_attribute_value(attribute));
+		if (value_modifier != nullptr) {
+			co_await value_modifier->remove(this->character);
+		}
+	}
+
 	co_await this->change_stat_value(attribute, change, true, is_office_attribute);
+
+	if (this->get_exceptional_attribute_value(attribute) != 0) {
+		//reapply the exceptional value modifier after changing the attribute value, since the latter also affects it
+		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), this->get_exceptional_attribute_value(attribute));
+		if (value_modifier != nullptr) {
+			co_await value_modifier->apply(this->character);
+		}
+	}
 
 	for (const character_attribute *subattribute : attribute->get_subattributes()) {
 		co_await this->change_attribute_value(subattribute, change);
@@ -2340,6 +2374,52 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 	chance = std::min(chance, 95);
 
 	return chance;
+}
+
+int character_game_data::get_exceptional_attribute_value(const character_attribute *attribute) const
+{
+	const auto find_iterator = this->exceptional_attribute_values.find(attribute);
+	if (find_iterator != this->exceptional_attribute_values.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
+QCoro::Task<void> character_game_data::change_exceptional_attribute_value(const character_attribute *attribute, const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	const int old_value = this->get_exceptional_attribute_value(attribute);
+
+	if (old_value != 0) {
+		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), old_value);
+		if (value_modifier != nullptr) {
+			co_await value_modifier->remove(this->character);
+		}
+	}
+
+	const int new_value = (this->exceptional_attribute_values[attribute] += change);
+
+	if (new_value == 0) {
+		this->exceptional_attribute_values.erase(attribute);
+	}
+
+	if (new_value != 0) {
+		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), new_value);
+		if (value_modifier != nullptr) {
+			co_await value_modifier->apply(this->character);
+		}
+	}
+
+	assert_throw(new_value >= 0);
+	assert_throw(new_value <= 100);
+
+	if (game::get()->is_running()) {
+		emit exceptional_attribute_values_changed();
+	}
 }
 
 QCoro::Task<void> character_game_data::on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value)

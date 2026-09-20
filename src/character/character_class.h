@@ -225,6 +225,19 @@ public:
 		return nullptr;
 	}
 
+	const data_entry_set<character_attribute> &get_exceptional_attributes() const
+	{
+		if (!this->exceptional_attributes.empty()) {
+			return this->exceptional_attributes;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_exceptional_attributes();
+		}
+
+		return this->exceptional_attributes;
+	}
+
 	const data_entry_set<skill> &get_class_skills() const
 	{
 		if (!this->class_skills.empty()) {
@@ -363,6 +376,7 @@ private:
 	data_entry_map<save_type, const level_bonus_table *> save_bonus_tables;
 	data_entry_map<domain_skill, const level_bonus_table *> domain_skill_bonus_tables;
 	data_entry_map<trait_type, const level_bonus_table *> trait_gain_tables;
+	data_entry_set<character_attribute> exceptional_attributes;
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;
 	std::vector<const species *> allowed_species;

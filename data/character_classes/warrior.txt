@@ -20,6 +20,11 @@ warrior = {
 		general_proficiency = warrior_general_proficiency_gain
 		#weapon_proficiency = warrior_weapon_proficiency_gain
 	}
+	exceptional_attributes = {
+		strength
+		muscle
+		stamina
+	}
 	class_skill_groups = {
 		general
 		warrior

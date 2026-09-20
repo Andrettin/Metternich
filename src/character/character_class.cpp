@@ -76,6 +76,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->trait_gain_tables[trait_type::get(key)] = level_bonus_table::get(value);
 		});
+	} else if (tag == "exceptional_attributes") {
+		for (const std::string &value : values) {
+			this->exceptional_attributes.insert(character_attribute::get(value));
+		}
 	} else if (tag == "class_skills") {
 		for (const std::string &value : values) {
 			this->class_skills.insert(skill::get(value));

@@ -76,7 +76,7 @@ strength = {
 				to_hit_bonus = 1
 				damage_bonus = 3
 			}
-			99 = {
+			100 = {
 				to_hit_bonus = 2
 				damage_bonus = 4
 			}

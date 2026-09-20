@@ -408,6 +408,8 @@ public:
 	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
+	int get_exceptional_attribute_value(const character_attribute *attribute) const;
+	[[nodiscard]] QCoro::Task<void> change_exceptional_attribute_value(const character_attribute *attribute, const int change);
 	[[nodiscard]] QCoro::Task<void> on_stat_value_changed(const character_stat *stat, const int new_value, const int old_value);
 
 	int get_hit_dice_count() const
@@ -1090,6 +1092,7 @@ signals:
 	void creature_size_changed();
 	void weight_changed();
 	void stat_values_changed();
+	void exceptional_attribute_values_changed();
 	void health_changed();
 	void max_health_changed();
 	void mana_changed();
@@ -1149,6 +1152,7 @@ private:
 	data_entry_map<character_stat, int> stat_values;
 	data_entry_map<character_stat, std::map<character_modifier_type, std::vector<int>>> stat_modifiers;
 	data_entry_map<character_stat, std::map<character_modifier_type, int>> stat_modifier_totals;
+	data_entry_map<character_attribute, int> exceptional_attribute_values;
 	int hit_dice_count = 0;
 	int health = 0;
 	int max_health = 0;
