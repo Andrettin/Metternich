@@ -163,6 +163,10 @@ void species::process_gsml_scope(const gsml_data &scope)
 			character_class *character_class = character_class::get(value);
 			character_class->add_allowed_species(this);
 		}
+	} else if (tag == "unexceptional_attributes") {
+		for (const std::string &value : values) {
+			this->unexceptional_attributes.insert(character_attribute::get(value));
+		}
 	} else if (tag == "class_skills") {
 		for (const std::string &value : values) {
 			this->class_skills.insert(skill::get(value));

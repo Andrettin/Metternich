@@ -812,7 +812,7 @@ QCoro::Task<void> character_game_data::generate_attributes()
 	const metternich::character_class *character_class = this->get_character_class();
 
 	for (const character_attribute *attribute : character_attribute::get_all()) {
-		if (character_class != nullptr && character_class->get_exceptional_attributes().contains(attribute)) {
+		if (character_class != nullptr && character_class->get_exceptional_attributes().contains(attribute) && !species->get_unexceptional_attributes().contains(attribute)) {
 			static constexpr dice exceptional_attribute_dice(1, 100);
 			const int exceptional_attribute_value = random::get()->roll_dice(exceptional_attribute_dice);
 			co_await this->change_exceptional_attribute_value(attribute, exceptional_attribute_value);

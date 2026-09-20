@@ -153,6 +153,11 @@ public:
 		this->cultures.push_back(culture);
 	}
 
+	const data_entry_set<character_attribute> &get_unexceptional_attributes() const
+	{
+		return this->unexceptional_attributes;
+	}
+
 	const data_entry_set<skill> &get_class_skills() const
 	{
 		return this->class_skills;
@@ -194,6 +199,7 @@ private:
 	std::vector<const species *> evolutions; //species to which this one can evolve
 	std::vector<const phenotype *> phenotypes;
 	std::vector<const culture *> cultures;
+	data_entry_set<character_attribute> unexceptional_attributes; //this makes the character have no exceptional value for an attribute, even if their class would have one
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;
 	data_entry_map<character_attribute, int> min_attribute_values;

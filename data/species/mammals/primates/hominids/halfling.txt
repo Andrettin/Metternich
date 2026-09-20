@@ -17,6 +17,11 @@ halfling = {
 		self_taught = 3d6
 		trained = 4d6
 	}
+	unexceptional_attributes = {
+		strength
+		muscle
+		stamina
+	}
 	min_attribute_values = {
 		strength = 3
 		dexterity = 11
