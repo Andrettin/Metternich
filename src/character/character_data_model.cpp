@@ -139,7 +139,6 @@ void character_data_model::set_character(const metternich::character *character)
 {
 	if (this->character != nullptr) {
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::exceptional_attribute_values_changed, this, &character_data_model::update_attribute_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_personality_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		disconnect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
@@ -170,7 +169,6 @@ void character_data_model::set_character(const metternich::character *character)
 
 	if (character != nullptr) {
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_attribute_rows);
-		connect(this->character->get_game_data(), &character_game_data::exceptional_attribute_values_changed, this, &character_data_model::update_attribute_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_personality_rows);
 		connect(this->character->get_game_data(), &character_game_data::mana_changed, this, &character_data_model::update_mana_row);
 		connect(this->character->get_game_data(), &character_game_data::max_mana_changed, this, &character_data_model::update_mana_row);
@@ -472,8 +470,7 @@ void character_data_model::create_attribute_row(const character_attribute *attri
 		parent_row = this->attribute_type_rows[attribute->get_type()];
 	}
 
-	const int exceptional_value = this->character->get_game_data()->get_exceptional_attribute_value(attribute);
-	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", attribute->is_value_exceptional(value) && exceptional_value > 0 ? std::format("{}/{}", value, exceptional_value) : std::to_string(value), parent_row);
+	auto row = std::make_unique<character_data_row>(attribute->get_name() + ":", std::to_string(value), parent_row);
 	attribute_rows[attribute] = row.get();
 	parent_row->child_rows.push_back(std::move(row));
 }

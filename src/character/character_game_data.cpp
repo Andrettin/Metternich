@@ -2266,68 +2266,16 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		co_return;
 	}
 
-	const int old_exceptional_value = this->get_exceptional_attribute_value(attribute);
-	const centesimal_int old_value = centesimal_int(this->get_attribute_value(attribute)) + centesimal_int::from_value(old_exceptional_value);
+	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
 
-	centesimal_int effective_change;
+	co_await this->change_stat_value(attribute, change, true, is_office_attribute);
 
-	if (change > 0) {
-		for (int i = 1; i <= change; ++i) {
-			const centesimal_int changed_value = old_value + effective_change;
-			if (attribute->is_value_exceptional(changed_value.to_int()) || (attribute->is_value_exceptional(changed_value.to_int() + 1) && changed_value.get_fractional_value() > 90)) {
-				effective_change += centesimal_int::from_value(10);
-			} else {
-				effective_change += 1;
-			}
-		}
-	} else {
-		const int abs_change = std::abs(change);
-		for (int i = 1; i <= abs_change; ++i) {
-			const centesimal_int changed_value = old_value + effective_change;
-			if (attribute->is_value_exceptional(changed_value.to_int() - 1) || (attribute->is_value_exceptional(changed_value.to_int()) && changed_value.get_fractional_value() > 0)) {
-				effective_change -= centesimal_int::from_value(10);
-			} else {
-				effective_change -= 1;
-			}
-		}
+	for (const character_attribute *subattribute : attribute->get_subattributes()) {
+		co_await this->change_attribute_value(subattribute, change);
 	}
 
-	const centesimal_int new_value = old_value + effective_change;
-	if (new_value.get_fractional_value() != 0) {
-		const int new_exceptional_value = static_cast<int>(new_value.get_fractional_value());
-		co_await this->change_exceptional_attribute_value(attribute, new_exceptional_value - old_exceptional_value);
-	}
-
-	const int change_int = new_value.to_int() - old_value.to_int();
-
-	if (change_int != 0) {
-		const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
-
-		if (this->get_exceptional_attribute_value(attribute) != 0) {
-			//remove the exceptional value modifier before changing the attribute value, since the latter also affects it
-			const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), this->get_exceptional_attribute_value(attribute));
-			if (value_modifier != nullptr) {
-				co_await value_modifier->remove(this->character);
-			}
-		}
-
-		co_await this->change_stat_value(attribute, change_int, true, is_office_attribute);
-
-		if (this->get_exceptional_attribute_value(attribute) != 0) {
-			//reapply the exceptional value modifier after changing the attribute value, since the latter also affects it
-			const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), this->get_exceptional_attribute_value(attribute));
-			if (value_modifier != nullptr) {
-				co_await value_modifier->apply(this->character);
-			}
-		}
-
-		for (const character_attribute *subattribute : attribute->get_subattributes()) {
-			co_await this->change_attribute_value(subattribute, change_int);
-		}
-
-		for (const skill *skill : attribute->get_derived_skills()) {
-			co_await this->change_skill_value(skill, change_int);
-		}
+	for (const skill *skill : attribute->get_derived_skills()) {
+		co_await this->change_skill_value(skill, change);
 	}
 }
 
@@ -2336,52 +2284,6 @@ int character_game_data::get_primary_attribute_value() const
 	assert_throw(this->get_character_class() != nullptr);
 
 	return this->get_attribute_value(this->character->get_primary_attribute());
-}
-
-int character_game_data::get_exceptional_attribute_value(const character_attribute *attribute) const
-{
-	const auto find_iterator = this->exceptional_attribute_values.find(attribute);
-	if (find_iterator != this->exceptional_attribute_values.end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
-}
-
-QCoro::Task<void> character_game_data::change_exceptional_attribute_value(const character_attribute *attribute, const int change)
-{
-	if (change == 0) {
-		co_return;
-	}
-
-	const int old_value = this->get_exceptional_attribute_value(attribute);
-
-	if (old_value != 0) {
-		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), old_value);
-		if (value_modifier != nullptr) {
-			co_await value_modifier->remove(this->character);
-		}
-	}
-
-	const int new_value = (this->exceptional_attribute_values[attribute] += change);
-
-	if (new_value == 0) {
-		this->exceptional_attribute_values.erase(attribute);
-	}
-
-	if (new_value != 0) {
-		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), new_value);
-		if (value_modifier != nullptr) {
-			co_await value_modifier->apply(this->character);
-		}
-	}
-
-	assert_throw(new_value >= 0);
-	assert_throw(new_value <= 99);
-
-	if (game::get()->is_running()) {
-		emit exceptional_attribute_values_changed();
-	}
 }
 
 int character_game_data::get_attribute_modifier(const character_attribute *attribute) const
