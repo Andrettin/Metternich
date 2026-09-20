@@ -20,6 +20,28 @@ weapon_focus_bows = {
 	}
 }
 
+weapon_focus_claw = {
+	name = "Weapon Focus: Claw"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = claw
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = claw
+			bonus = 1
+		}
+	}
+}
+
 weapon_focus_heavy_blades = {
 	name = "Weapon Focus: Heavy Blades"
 	icon = saber
@@ -81,6 +103,28 @@ weapon_focus_maces = {
 	modifier = {
 		weapon_to_hit_bonus = {
 			weapon_class = mace
+			bonus = 1
+		}
+	}
+}
+
+weapon_focus_tail = {
+	name = "Weapon Focus: Tail"
+	icon = saber
+	types = {
+		weapon_proficiency
+	}
+	conditions = {
+		to_hit_bonus >= 1
+	}
+	gain_conditions = {
+		item = {
+			item_class = tail
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = tail
 			bonus = 1
 		}
 	}

@@ -106,6 +106,75 @@ epic_toughness = {
 	}
 }
 
+epic_weapon_focus_bows = {
+	name = "Epic Weapon Focus: Bows"
+	icon = bow
+	types = {
+		weapon_proficiency
+		epic_proficiency
+	}
+	conditions = {
+		trait = weapon_focus_bows
+	}
+	gain_conditions = {
+		item = {
+			item_class = bow
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = bow
+			bonus = 2
+		}
+	}
+}
+
+epic_weapon_focus_claw = {
+	name = "Epic Weapon Focus: Claw"
+	icon = saber
+	types = {
+		weapon_proficiency
+		epic_proficiency
+	}
+	conditions = {
+		trait = weapon_focus_claw
+	}
+	gain_conditions = {
+		item = {
+			item_class = claw
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = claw
+			bonus = 2
+		}
+	}
+}
+
+epic_weapon_focus_maces = {
+	name = "Epic Weapon Focus: Maces"
+	icon = saber
+	types = {
+		weapon_proficiency
+		epic_proficiency
+	}
+	conditions = {
+		trait = weapon_focus_maces
+	}
+	gain_conditions = {
+		item = {
+			item_class = mace
+		}
+	}
+	modifier = {
+		weapon_to_hit_bonus = {
+			weapon_class = mace
+			bonus = 2
+		}
+	}
+}
+
 epic_will = {
 	name = "Epic Will"
 	icon = research
