@@ -3,6 +3,7 @@ dwarven_defender = {
 	base_class = warrior
 	min_level = 11
 	military_unit_category = general
+	health_bonus_table = barbarian_health_bonus #d12 hit dice
 	save_bonus_tables = {
 		will = high_save_bonus
 	}
