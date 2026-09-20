@@ -99,7 +99,7 @@ blacksmithing = {
 	name = "Blacksmithing"
 	icon = tools
 	check_dice = 1d20
-	base_attribute = muscle
+	base_attribute = strength
 	profitability = fair
 	groups = {
 		general
