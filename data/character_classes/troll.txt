@@ -1,6 +1,6 @@
 troll = {
 	name = "Troll"
-	attribute = strength
+	primary_attribute = strength
 	max_level = 11
 	starting_age_category = intuitive
 	health_bonus_table = troll_health_bonus

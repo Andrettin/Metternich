@@ -45,6 +45,8 @@ void character_class::process_gsml_property(const gsml_property &property)
 		character_class *base_class = character_class::get(value);
 		base_class->derived_classes.push_back(this);
 		this->base_class = base_class;
+	} else if (key == "primary_attribute") {
+		this->primary_attributes = { character_attribute::get(value) };
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -55,7 +57,11 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "save_bonus_tables") {
+	if (tag == "primary_attributes") {
+		for (const std::string &value : values) {
+			this->primary_attributes.push_back(character_attribute::get(value));
+		}
+	} else if (tag == "save_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
@@ -177,8 +183,8 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 void character_class::check() const
 {
-	if (this->get_attribute() == nullptr) {
-		throw std::runtime_error(std::format("Character class \"{}\" has no attribute.", this->get_identifier()));
+	if (this->get_primary_attributes().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no primary attributes.", this->get_identifier()));
 	}
 
 	if (this->get_max_level() == 0) {

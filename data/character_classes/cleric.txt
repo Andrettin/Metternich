@@ -1,6 +1,6 @@
 cleric = {
 	name = "Cleric"
-	attribute = wisdom
+	primary_attribute = wisdom
 	divine_spellcaster = true
 	max_level = 20
 	starting_age_category = trained

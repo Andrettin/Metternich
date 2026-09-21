@@ -36,7 +36,6 @@ class character_class final : public named_data_entry, public data_type<characte
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::character_attribute* attribute MEMBER attribute READ get_attribute NOTIFY changed)
 	Q_PROPERTY(metternich::military_unit_category military_unit_category MEMBER military_unit_category READ get_military_unit_category NOTIFY changed)
 	Q_PROPERTY(const metternich::civilian_unit_class* civilian_unit_class MEMBER civilian_unit_class READ get_civilian_unit_class NOTIFY changed)
 	Q_PROPERTY(bool divine_spellcaster MEMBER divine_spellcaster NOTIFY changed)
@@ -74,17 +73,17 @@ public:
 		return this->derived_classes;
 	}
 
-	const character_attribute *get_attribute() const
+	const std::vector<const character_attribute *> &get_primary_attributes() const
 	{
-		if (this->attribute != nullptr) {
-			return this->attribute;
+		if (!this->primary_attributes.empty()) {
+			return this->primary_attributes;
 		}
 
 		if (this->get_base_class() != nullptr) {
-			return this->get_base_class()->get_attribute();
+			return this->get_base_class()->get_primary_attributes();
 		}
 
-		return nullptr;
+		return this->primary_attributes;
 	}
 
 	metternich::military_unit_category get_military_unit_category() const
@@ -373,7 +372,7 @@ signals:
 private:
 	const character_class *base_class = nullptr;
 	std::vector<const character_class *> derived_classes;
-	const character_attribute *attribute = nullptr;
+	std::vector<const character_attribute *> primary_attributes;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
 	bool divine_spellcaster = false;

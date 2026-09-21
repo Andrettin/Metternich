@@ -66,7 +66,7 @@ QCoro::Task<void> party::gain_experience(const int64_t experience)
 	if (experience > 0) {
 		const int64_t experience_per_character = experience / static_cast<int64_t>(this->get_characters().size());
 		for (const character *character : this->get_characters()) {
-			co_await character->get_game_data()->change_experience(experience_per_character);
+			co_await character->get_game_data()->gain_experience(experience_per_character);
 		}
 	}
 }

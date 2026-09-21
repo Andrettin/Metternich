@@ -1,6 +1,6 @@
 warrior = {
 	name = "Warrior"
-	attribute = strength
+	primary_attribute = strength
 	military_unit_category = general
 	max_level = 30
 	starting_age_category = self_taught

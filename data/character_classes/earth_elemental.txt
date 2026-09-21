@@ -1,6 +1,6 @@
 earth_elemental = {
 	name = "Earth Elemental"
-	attribute = strength
+	primary_attribute = strength
 	max_level = 13
 	starting_age_category = intuitive
 	health_bonus_table = earth_elemental_health_bonus

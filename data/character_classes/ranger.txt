@@ -1,6 +1,10 @@
 ranger = {
 	name = "Ranger"
-	attribute = dexterity
+	primary_attributes = {
+		dexterity
+		strength
+		wisdom
+	}
 	military_unit_category = general
 	divine_spellcaster = true
 	max_level = 20

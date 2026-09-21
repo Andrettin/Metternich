@@ -1,6 +1,6 @@
 air_elemental = {
 	name = "Air Elemental"
-	attribute = dexterity
+	primary_attribute = dexterity
 	max_level = 14
 	starting_age_category = intuitive
 	health_bonus_table = air_elemental_health_bonus

@@ -1,6 +1,9 @@
 paladin = {
 	name = "Paladin"
-	attribute = strength
+	primary_attributes = {
+		charisma
+		strength
+	}
 	military_unit_category = general
 	divine_spellcaster = true
 	max_level = 20

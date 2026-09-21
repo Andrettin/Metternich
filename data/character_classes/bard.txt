@@ -1,6 +1,9 @@
 bard = {
 	name = "Bard"
-	attribute = charisma
+	primary_attributes = {
+		charisma
+		dexterity
+	}
 	max_level = 20
 	starting_age_category = self_taught
 	experience_table = rogue_experience

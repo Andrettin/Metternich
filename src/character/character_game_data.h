@@ -275,6 +275,7 @@ public:
 	}
 
 	[[nodiscard]] QCoro::Task<void> change_experience(const int64_t change);
+	[[nodiscard]] QCoro::Task<void> gain_experience(int64_t experience);
 	int64_t get_experience_for_level(const int level) const;
 	int64_t get_experience_for_next_level() const;
 
@@ -404,9 +405,7 @@ public:
 
 	int get_attribute_value(const character_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const character_attribute *attribute, const int change);
-	int get_primary_attribute_value() const;
 	int get_attribute_modifier(const character_attribute *attribute) const;
-	data_entry_set<character_attribute> get_main_attributes() const;
 	bool do_attribute_check(const character_attribute *attribute, const int roll_modifier) const;
 	int get_attribute_check_chance(const character_attribute *attribute, const int roll_modifier) const;
 	int get_exceptional_attribute_value(const character_attribute *attribute) const;

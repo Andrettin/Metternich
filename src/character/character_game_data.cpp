@@ -1919,6 +1919,35 @@ QCoro::Task<void> character_game_data::change_experience(const int64_t change)
 	}
 }
 
+QCoro::Task<void> character_game_data::gain_experience(int64_t experience)
+{
+	assert_throw(experience >= 0);
+
+	if (experience == 0) {
+		co_return;
+	}
+
+	if (this->get_character_class() != nullptr) {
+		static constexpr int64_t primary_attribute_experience_bonus_threshold = 16;
+
+		bool has_primary_attribute_experience_bonus = true;
+
+		for (const character_attribute *primary_attribute : this->get_character_class()->get_primary_attributes()) {
+			if (this->get_attribute_value(primary_attribute) < primary_attribute_experience_bonus_threshold) {
+				has_primary_attribute_experience_bonus = false;
+				break;
+			}
+		}
+
+		if (has_primary_attribute_experience_bonus) {
+			experience *= 110; //10% bonus
+			experience /= 100;
+		}
+	}
+
+	co_await this->change_experience(experience);
+}
+
 int64_t character_game_data::get_experience_for_level(const int level) const
 {
 	const metternich::character_class *character_class = this->get_character_class();
@@ -2331,27 +2360,9 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 	}
 }
 
-int character_game_data::get_primary_attribute_value() const
-{
-	assert_throw(this->get_character_class() != nullptr);
-
-	return this->get_attribute_value(this->character->get_primary_attribute());
-}
-
 int character_game_data::get_attribute_modifier(const character_attribute *attribute) const
 {
 	return -5 + (this->get_attribute_value(attribute) / 2);
-}
-
-data_entry_set<character_attribute> character_game_data::get_main_attributes() const
-{
-	data_entry_set<character_attribute> attributes;
-
-	if (this->character->get_primary_attribute() != nullptr) {
-		attributes.insert(this->character->get_primary_attribute());
-	}
-
-	return attributes;
 }
 
 bool character_game_data::do_attribute_check(const character_attribute *attribute, const int roll_modifier) const
@@ -3275,14 +3286,6 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 
 
 		if (trait_type->get_gain_conditions() != nullptr && !trait_type->get_gain_conditions()->check(this->character, read_only_context(this->character))) {
-			return false;
-		}
-	}
-
-	// characters cannot gain a trait which would reduce their main attributes below 1
-	for (const character_attribute *attribute : this->get_main_attributes()) {
-		const int trait_primary_attribute_bonus = trait->get_attribute_bonus(attribute);
-		if (trait_primary_attribute_bonus < 0 && (this->get_attribute_value(attribute) + trait_primary_attribute_bonus) <= 0) {
 			return false;
 		}
 	}

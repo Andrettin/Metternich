@@ -927,15 +927,6 @@ character *character::get_dynastic_parent() const
 	return this->get_father();
 }
 
-const character_attribute *character::get_primary_attribute() const
-{
-	if (this->get_character_class() != nullptr) {
-		return this->get_character_class()->get_attribute();
-	}
-
-	return nullptr;
-}
-
 std::optional<std::pair<int, int>> character::get_attribute_range(const character_attribute *attribute) const
 {
 	const auto find_iterator = this->attribute_ranges.find(attribute);

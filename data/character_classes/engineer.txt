@@ -1,7 +1,7 @@
 engineer = {
 	name = "Engineer"
 	base_class = rogue #should be something else?
-	attribute = intelligence
+	primary_attribute = intelligence
 	civilian_unit_class = engineer
 	max_level = 20
 	starting_age_category = trained

@@ -1,6 +1,6 @@
 mage = {
 	name = "Mage"
-	attribute = intelligence
+	primary_attribute = intelligence
 	max_level = 20
 	starting_age_category = trained
 	experience_table = mage_experience

@@ -32,7 +32,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		co_await scope->get_game_data()->change_experience(this->quantity);
+		co_await scope->get_game_data()->gain_experience(this->quantity);
 	}
 
 	[[nodiscard]] virtual QCoro::Task<void> do_subtraction_effect_coro(const character *scope, context &ctx) const override

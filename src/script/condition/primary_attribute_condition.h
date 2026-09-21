@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "script/condition/condition.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -25,7 +26,11 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_primary_attribute() == this->attribute;
+		if (scope->get_game_data()->get_character_class() == nullptr) {
+			return false;
+		}
+
+		return vector::contains(scope->get_game_data()->get_character_class()->get_primary_attributes(), this->attribute);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

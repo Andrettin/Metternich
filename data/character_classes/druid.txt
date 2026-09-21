@@ -1,6 +1,9 @@
 druid = {
 	name = "Druid"
-	attribute = wisdom
+	primary_attributes = {
+		charisma
+		wisdom
+	}
 	divine_spellcaster = true
 	max_level = 3
 	starting_age_category = trained

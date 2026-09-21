@@ -344,8 +344,6 @@ public:
 		return static_cast<character *>(character_base::get_contemporary_character());
 	}
 
-	const character_attribute *get_primary_attribute() const;
-
 	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
 
 	int get_health() const
