@@ -352,8 +352,14 @@ bool character_class::is_equipment_type_allowed(const item_type *equipment_type)
 	const auto type_slot_find_iterator = this->allowed_equipment_types.find(item_slot);
 	const auto class_slot_find_iterator = this->allowed_equipment_classes.find(item_slot);
 	if (type_slot_find_iterator != this->allowed_equipment_types.end() || class_slot_find_iterator != this->allowed_equipment_classes.end()) {
-		//if there is no specifically designated allowed equipment for this item slot, only allow the equipment type if it matches the allowed equipment types or classes
-		return vector::contains(type_slot_find_iterator->second, equipment_type) || vector::contains(class_slot_find_iterator->second, equipment_type->get_item_class());
+		//if there is specifically designated allowed equipment for this item slot, only allow the equipment type if it matches the allowed equipment types or classes
+		if (type_slot_find_iterator != this->allowed_equipment_types.end() && vector::contains(type_slot_find_iterator->second, equipment_type)) {
+			return true;
+		} else if (class_slot_find_iterator != this->allowed_equipment_classes.end() && vector::contains(class_slot_find_iterator->second, equipment_type->get_item_class())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	if (this->get_base_class() != nullptr) {
