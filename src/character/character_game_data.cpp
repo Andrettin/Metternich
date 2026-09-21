@@ -1967,9 +1967,24 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 		}
 	}
 
-	const int level_limit = this->character->get_species()->get_character_class_level_limit(character_class);
-	assert_throw(level_limit > 0);
-	if (level > level_limit) {
+	int species_level_limit = this->character->get_species()->get_character_class_level_limit(character_class);
+	assert_throw(species_level_limit > 0);
+	if (species_level_limit < character_class->get_max_level()) {
+		int lowest_primary_attribute_value = std::numeric_limits<int>::max();
+		for (const character_attribute *primary_attribute : character_class->get_primary_attributes()) {
+			lowest_primary_attribute_value = std::min(this->get_attribute_value(primary_attribute), lowest_primary_attribute_value);
+		}
+		if (lowest_primary_attribute_value >= 19) {
+			species_level_limit += 4;
+		} else if (lowest_primary_attribute_value >= 18) {
+			species_level_limit += 3;
+		} else if (lowest_primary_attribute_value >= 16) {
+			species_level_limit += 2;
+		} else if (lowest_primary_attribute_value >= 14) {
+			species_level_limit += 1;
+		}
+	}
+	if (level > species_level_limit) {
 		//multiply experience required by 4 for levels beyond the species level limit for the class
 		experience *= 4;
 	}
