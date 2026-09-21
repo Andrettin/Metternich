@@ -34,6 +34,9 @@ dwarven_defender = {
 				modifier = 1
 			}
 		}
+		16 = {
+			damage_reduction = 3
+		}
 		17 = {
 			armor_class = {
 				modifier_type = dodge
@@ -45,6 +48,7 @@ dwarven_defender = {
 				modifier_type = dodge
 				modifier = 1
 			}
+			damage_reduction = 3
 		}
 	}
 }
