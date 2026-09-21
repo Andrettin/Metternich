@@ -22,9 +22,13 @@ kent = {
 			owner = wessex #part of Wessex and its dependencies in 886; Source: William R. Shepherd, "Historical Atlas", 1911, p. 60.
 		}
 		
+		1190 = {
+			owner = england #part of the Kingdom of England c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+			culture = english
+		}
+		
 		1328 = {
 			owner = england #part of England in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
-			culture = english
 		}
 		
 		1360 = {

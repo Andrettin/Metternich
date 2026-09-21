@@ -1,0 +1,23 @@
+ruthenia = {
+	name = "Ruthenia"
+	type = polity
+	color = { 139 107 255 }
+	default_culture = ukrainian
+	default_religion = orthodox
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = kyiv
+	core_provinces = {
+		kyiv
+		brest
+		chernigov
+		gomel
+		grodno
+		minsk
+		mogilev
+		rivne
+		smolensk
+		vinnitsa
+		vitebsk
+	}
+}

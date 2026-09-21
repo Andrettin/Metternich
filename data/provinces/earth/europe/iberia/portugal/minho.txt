@@ -20,6 +20,10 @@ minho = {
 			religion = catholic
 		}
 		
+		1190 = {
+			owner = portugal #part of the Kingdom of Portugal c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+		}
+		
 		1740 = {
 			owner = portugal #part of the Kingdom of Portugal c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
 		}
