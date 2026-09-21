@@ -20,6 +20,8 @@ philip_ii_of_spain = {
 		}
 		or = {
 			character_class = aristocrat
+			character_class = archer
+			character_class = crossbowman
 			character_class = warrior
 			character_class = paladin
 			character_class = ranger
@@ -32,6 +34,8 @@ philip_ii_of_spain = {
 		or = {
 			age_category < old
 			immortal = true
+			character_class = archer
+			character_class = crossbowman
 		}
 	}
 }

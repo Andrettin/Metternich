@@ -1,0 +1,56 @@
+archer = {
+	name = "Archer"
+	base_class = warrior
+	allowed_equipment_classes = {
+		weapon = {
+			bow
+		}
+	}
+	starting_items = {
+		short_bow
+		chain_mail
+		#torch = 6
+	}
+	level_modifiers = {
+		5 = {
+			weapon_to_hit_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+		}
+		9 = {
+			weapon_to_hit_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+		}
+		13 = {
+			weapon_to_hit_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+		}
+		17 = {
+			weapon_to_hit_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = bow
+				bonus = 1
+			}
+		}
+	}
+}

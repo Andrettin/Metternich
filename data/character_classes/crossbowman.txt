@@ -1,0 +1,56 @@
+crossbowman = {
+	name = "Crossbowman"
+	base_class = warrior
+	allowed_equipment_classes = {
+		weapon = {
+			crossbow
+		}
+	}
+	starting_items = {
+		light_crossbow
+		chain_mail
+		#torch = 6
+	}
+	level_modifiers = {
+		5 = {
+			weapon_to_hit_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+		}
+		9 = {
+			weapon_to_hit_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+		}
+		13 = {
+			weapon_to_hit_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+		}
+		17 = {
+			weapon_to_hit_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = crossbow
+				bonus = 1
+			}
+		}
+	}
+}
