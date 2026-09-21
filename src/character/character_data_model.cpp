@@ -9,6 +9,7 @@
 #include "character/character_class.h"
 #include "character/character_defines.h"
 #include "character/character_game_data.h"
+#include "character/damage_reduction_type.h"
 #include "character/domain_skill.h"
 #include "character/dynasty.h"
 #include "character/mythic_path.h"
@@ -155,6 +156,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
+		disconnect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
@@ -186,6 +188,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
+		connect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
 		connect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
@@ -214,6 +217,7 @@ void character_data_model::reset_model()
 	this->range_row = nullptr;
 	this->movement_row = nullptr;
 	this->initiative_bonus_row = nullptr;
+	this->damage_reduction_row = nullptr;
 	this->save_row = nullptr;
 	this->skill_row = nullptr;
 	this->domain_skill_row = nullptr;
@@ -339,6 +343,9 @@ void character_data_model::reset_model()
 		this->create_range_row();
 		this->create_movement_row();
 		this->create_initiative_bonus_row();
+		if (!character_game_data->get_damage_reductions().empty()) {
+			this->create_damage_reduction_rows();
+		}
 		this->create_save_rows();
 		this->create_skill_rows();
 		if (character_game_data->has_domain_skill()) {
@@ -711,6 +718,40 @@ void character_data_model::update_initiative_bonus_row()
 	this->initiative_bonus_row->value = number::to_signed_string(character_game_data->get_initiative_bonus());
 
 	this->on_top_row_changed(this->initiative_bonus_row);
+}
+
+void character_data_model::create_damage_reduction_rows()
+{
+	auto row = std::make_unique<character_data_row>("Damage Reduction");
+	this->damage_reduction_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_damage_reduction_rows();
+}
+
+void character_data_model::update_damage_reduction_rows()
+{
+	assert_throw(this->damage_reduction_row != nullptr);
+
+	this->damage_reduction_row->name = "Damage Reduction";
+
+	this->clear_child_rows(this->damage_reduction_row);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	data_entry_map<damage_reduction_type, character_data_row *> damage_reduction_type_rows;
+
+	for (const auto &[damage_reduction_type, value] : character_game_data->get_damage_reductions()) {
+		if (damage_reduction_type->has_vulnerability()) {
+			auto row = std::make_unique<character_data_row>(std::format("{}:", damage_reduction_type->get_name()), number::to_signed_string(value), this->damage_reduction_row);
+			this->damage_reduction_row->child_rows.push_back(std::move(row));
+		} else {
+			this->damage_reduction_row->name = "Damage Reduction:";
+			this->damage_reduction_row->value = number::to_signed_string(value);
+		}
+	}
+
+	this->on_child_rows_inserted(this->damage_reduction_row);
 }
 
 void character_data_model::create_save_rows()

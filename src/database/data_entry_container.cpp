@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/character_stat.h"
+#include "character/damage_reduction_type.h"
 #include "character/domain_skill.h"
 #include "character/monster_type.h"
 #include "character/save_type.h"
@@ -57,6 +58,7 @@ template struct data_entry_compare<civilian_unit_type>;
 template struct data_entry_compare<commodity_unit>;
 template struct data_entry_compare<cultural_group>;
 template struct data_entry_compare<culture_base>;
+template struct data_entry_compare<damage_reduction_type>;
 template struct data_entry_compare<divine_domain>;
 template struct data_entry_compare<domain_attribute>;
 template struct data_entry_compare<domain_skill>;

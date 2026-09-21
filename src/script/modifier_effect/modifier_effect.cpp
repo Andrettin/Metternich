@@ -28,6 +28,7 @@
 #include "script/modifier_effect/consumption_modifier_effect.h"
 #include "script/modifier_effect/craft_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
+#include "script/modifier_effect/damage_reduction_modifier_effect.h"
 #include "script/modifier_effect/deployment_limit_modifier_effect.h"
 #include "script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h"
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
@@ -155,6 +156,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<save_modifier_effect>(save_type::get(key), value);
 		} else if (character_stat::try_get_stat(key) != nullptr) {
 			return std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(key), value);
+		} else if (damage_reduction_type::try_get(key) != nullptr) {
+			return std::make_unique<damage_reduction_modifier_effect>(damage_reduction_type::get(key), value);
 		}
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		static const std::string capital_commodity_bonus_prefix = "capital_";

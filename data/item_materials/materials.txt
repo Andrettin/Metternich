@@ -1,0 +1,7 @@
+cold_iron = {
+	name = "Cold Iron"
+	item_classes = {
+		light_blade
+		heavy_blade
+	}
+}

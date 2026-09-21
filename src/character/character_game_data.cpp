@@ -10,6 +10,7 @@
 #include "character/character_defines.h"
 #include "character/character_history.h"
 #include "character/character_modifier_type.h"
+#include "character/damage_reduction_type.h"
 #include "character/domain_skill.h"
 #include "character/level_value_table.h"
 #include "character/monster_type.h"
@@ -259,6 +260,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "damage_reductions") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->damage_reductions[damage_reduction_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "trait_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->trait_counts[trait::get(property.get_key())] = std::stoi(property.get_value());
@@ -479,6 +484,14 @@ gsml_data character_game_data::to_gsml_data() const
 			skill_trainings_data.add_property(skill->get_identifier(), std::to_string(training));
 		}
 		data.add_child(std::move(skill_trainings_data));
+	}
+
+	if (!this->damage_reductions.empty()) {
+		gsml_data damage_reductions_data("damage_reductions");
+		for (const auto &[damage_reduction_type, damage_reduction_value] : this->damage_reductions) {
+			damage_reductions_data.add_property(damage_reduction_type->get_identifier(), std::to_string(damage_reduction_value));
+		}
+		data.add_child(std::move(damage_reductions_data));
 	}
 
 	if (!this->trait_counts.empty()) {
@@ -3130,6 +3143,22 @@ bool character_game_data::has_domain_skill() const
 int character_game_data::get_domain_skill_value(const domain_skill *domain_skill) const
 {
 	return this->get_stat_value(domain_skill);
+}
+
+void character_game_data::change_damage_reduction(const damage_reduction_type *type, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->damage_reductions[type] += change);
+	if (new_value == 0) {
+		this->damage_reductions.erase(type);
+	}
+
+	if (game::get()->is_running()) {
+		emit damage_reductions_changed();
+	}
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)

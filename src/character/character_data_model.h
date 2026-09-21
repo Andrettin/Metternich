@@ -13,6 +13,7 @@ namespace archimedes {
 namespace metternich {
 
 class character_attribute;
+class damage_reduction_type;
 class save_type;
 enum class character_attribute_type;
 
@@ -101,6 +102,9 @@ public:
 	void update_movement_row();
 	void create_initiative_bonus_row();
 	void update_initiative_bonus_row();
+	void create_damage_reduction_rows();
+	void update_damage_reduction_rows();
+	void create_damage_reduction_row(const damage_reduction_type *damage_reduction_type, const int value, data_entry_map<metternich::damage_reduction_type, character_data_row *> &damage_reduction_type_rows);
 	void create_save_rows();
 	void update_save_rows();
 	void create_save_row(const save_type *save_type, const int bonus, data_entry_map<metternich::save_type, character_data_row *> &save_type_rows);
@@ -134,6 +138,7 @@ private:
 	character_data_row *range_row = nullptr;
 	character_data_row *movement_row = nullptr;
 	character_data_row *initiative_bonus_row = nullptr;
+	character_data_row *damage_reduction_row = nullptr;
 	character_data_row *save_row = nullptr;
 	character_data_row *skill_row = nullptr;
 	character_data_row *domain_skill_row = nullptr;

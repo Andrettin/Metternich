@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_defines.h"
 #include "character/character_game_data.h"
+#include "character/damage_reduction_type.h"
 #include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
@@ -698,14 +699,54 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 			continue;
 		}
 
-		damage += random::get()->roll_dice(weapon->get_type()->get_damage_dice(target_character->get_game_data()->get_creature_size())) + character_game_data->get_damage_bonus() + character_game_data->get_weapon_damage_bonus(weapon->get_type());
+		int weapon_damage = random::get()->roll_dice(weapon->get_type()->get_damage_dice(target_character->get_game_data()->get_creature_size()));
+		weapon_damage += character_game_data->get_damage_bonus();
+		weapon_damage += character_game_data->get_weapon_damage_bonus(weapon->get_type());
+
+		int damage_reduction = 0;
+		for (const auto &[damage_reduction_type, typed_damage_reduction] : target_character->get_game_data()->get_damage_reductions()) {
+			bool damage_reduction_applies = false;
+
+			if (!damage_reduction_type->has_vulnerability()) {
+				damage_reduction_applies = true;
+			} else if (damage_reduction_type->get_vulnerability_material() != nullptr && damage_reduction_type->get_vulnerability_material() == weapon->get_material()) {
+				damage_reduction_applies = true;
+			}
+
+			if (damage_reduction_applies) {
+				damage_reduction = std::max(damage_reduction, typed_damage_reduction);
+			}
+		}
+		if (damage_reduction > 0) {
+			weapon_damage -= damage_reduction;
+		}
+
+		if (weapon_damage <= 0) {
+			continue;
+		}
+
+		damage += weapon_damage;
 	}
 
 	if (weapons.empty() && this->get_character()->get_monster_type() != nullptr && !this->get_character()->get_monster_type()->get_damage_dice().is_null()) {
 		const bool hit = this->check_to_hit(target_character, nullptr, to_hit_modifier);
 
 		if (hit) {
-			damage += random::get()->roll_dice(this->get_character()->get_monster_type()->get_damage_dice()) + character_game_data->get_damage_bonus();
+			int attack_damage = random::get()->roll_dice(this->get_character()->get_monster_type()->get_damage_dice()) + character_game_data->get_damage_bonus();
+
+			int damage_reduction = 0;
+			for (const auto &[damage_reduction_type, value] : target_character->get_game_data()->get_damage_reductions()) {
+				if (!damage_reduction_type->has_vulnerability()) {
+					damage_reduction = std::max(damage_reduction, value);
+				}
+			}
+			if (damage_reduction > 0) {
+				attack_damage -= damage_reduction;
+			}
+
+			if (attack_damage > 0) {
+				damage += attack_damage;
+			}
 		}
 	}
 

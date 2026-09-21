@@ -413,6 +413,7 @@ set(character_HDRS
 	src/character/character_modifier_type.h
 	src/character/character_reference.h
 	src/character/character_stat.h
+	src/character/damage_reduction_type.h
 	src/character/domain_skill.h
 	src/character/dynasty.h
 	src/character/family_tree_model.h
@@ -883,6 +884,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/consumption_modifier_effect.h
 	src/script/modifier_effect/craft_modifier_effect.h
 	src/script/modifier_effect/damage_bonus_modifier_effect.h
+	src/script/modifier_effect/damage_reduction_modifier_effect.h
 	src/script/modifier_effect/deployment_limit_modifier_effect.h
 	src/script/modifier_effect/diplomatic_penalty_for_expansion_modifier_effect.h
 	src/script/modifier_effect/domain_attribute_modifier_effect.h

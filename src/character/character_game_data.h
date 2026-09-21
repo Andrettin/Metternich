@@ -32,6 +32,7 @@ class character_attribute;
 class character_stat;
 class civilian_unit;
 class creature_size;
+class damage_reduction_type;
 class deity;
 class domain;
 class domain_skill;
@@ -641,6 +642,13 @@ public:
 	bool has_domain_skill() const;
 	int get_domain_skill_value(const domain_skill *domain_skill) const;
 
+	const data_entry_map<damage_reduction_type, int> &get_damage_reductions() const
+	{
+		return this->damage_reductions;
+	}
+
+	void change_damage_reduction(const damage_reduction_type *type, const int change);
+
 	const data_entry_map<trait, int> &get_trait_counts() const
 	{
 		return this->trait_counts;
@@ -1111,6 +1119,7 @@ signals:
 	void initiative_bonus_changed();
 	void save_bonuses_changed();
 	void skill_trainings_changed();
+	void damage_reductions_changed();
 	void traits_changed();
 	void scripted_modifiers_changed();
 	void ruler_changed();
@@ -1174,6 +1183,7 @@ private:
 	int initiative_bonus = 0;
 	data_entry_map<save_type, int> save_bonuses;
 	data_entry_map<skill, int> skill_trainings;
+	data_entry_map<damage_reduction_type, int> damage_reductions;
 	data_entry_map<trait, int> trait_counts;
 	data_entry_map<trait_type, std::vector<const trait *>> trait_choices;
 	scripted_character_modifier_map<int> scripted_modifiers;

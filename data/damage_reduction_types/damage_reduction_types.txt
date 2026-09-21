@@ -1,0 +1,8 @@
+damage_reduction = {
+	name = "Damage Reduction"
+}
+
+damage_reduction_cold_iron = {
+	name = "Damage Reduction/Cold Iron"
+	vulnerability_material = cold_iron
+}
