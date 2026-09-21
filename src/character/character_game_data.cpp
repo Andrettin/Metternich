@@ -4336,6 +4336,10 @@ bool character_game_data::can_equip_item(const item_key &item_key, const bool ig
 		return false;
 	}
 
+	if (this->get_character_class() != nullptr && !this->get_character_class()->is_equipment_type_allowed(item_key.type)) {
+		return false;
+	}
+
 	if (item_key.enchantment != nullptr && !this->can_use_enchantment(item_key.enchantment)) {
 		return false;
 	}

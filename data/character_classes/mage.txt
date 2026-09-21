@@ -33,6 +33,20 @@ mage = {
 	favored_holding_types = {
 		magic_source
 	}
+	allowed_equipment_types = {
+		weapon = {
+			dagger
+			#dart
+			#sling
+			
+			#staves
+			quarterstaff
+		}
+		armor = {
+			#no armor, only clothing
+			robe
+		}
+	}
 	min_attribute_values = {
 		intelligence = 9
 	}

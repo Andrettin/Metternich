@@ -16,6 +16,7 @@ class domain;
 class domain_skill;
 class government_type;
 class holding_type;
+class item_class;
 class item_type;
 class level_value_table;
 class skill_group;
@@ -290,6 +291,8 @@ public:
 	bool is_government_type_allowed(const government_type *government_type) const;
 	void add_allowed_government_type(const government_type *government_type);
 
+	bool is_equipment_type_allowed(const item_type *equipment_type) const;
+
 	int get_min_attribute_value(const character_attribute *attribute) const
 	{
 		const auto find_iterator = this->min_attribute_values.find(attribute);
@@ -397,6 +400,8 @@ private:
 	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const holding_type *> favored_holding_types;
 	std::vector<const government_type *> allowed_government_types; //government types allowed for this character class to be a ruler of
+	data_entry_map<item_slot, std::vector<const item_type *>> allowed_equipment_types;
+	data_entry_map<item_slot, std::vector<const item_class *>> allowed_equipment_classes;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::map<std::string, int> rank_levels; //names for particular levels

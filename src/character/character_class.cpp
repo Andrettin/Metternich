@@ -13,6 +13,8 @@
 #include "character/trait_type.h"
 #include "domain/government_type.h"
 #include "infrastructure/holding_type.h"
+#include "item/item_class.h"
+#include "item/item_slot.h"
 #include "item/item_type.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
@@ -113,6 +115,26 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 			const government_type *government_type = government_type::get(value);
 			this->allowed_government_types.push_back(government_type);
 		}
+	} else if (tag == "allowed_equipment_types") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const item_slot *item_slot = item_slot::get(child_tag);
+
+			for (const std::string &value : child_scope.get_values()) {
+				const item_type *item_type = item_type::get(value);
+				this->allowed_equipment_types[item_slot].push_back(item_type);
+			}
+		});
+	} else if (tag == "allowed_equipment_classes") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const item_slot *item_slot = item_slot::get(child_tag);
+
+			for (const std::string &value : child_scope.get_values()) {
+				const item_class *item_class = item_class::get(value);
+				this->allowed_equipment_classes[item_slot].push_back(item_class);
+			}
+		});
 	} else if (tag == "min_attribute_values") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -321,6 +343,25 @@ bool character_class::is_government_type_allowed(const government_type *governme
 void character_class::add_allowed_government_type(const government_type *government_type)
 {
 	this->allowed_government_types.push_back(government_type);
+}
+
+bool character_class::is_equipment_type_allowed(const item_type *equipment_type) const
+{
+	const item_slot *item_slot = equipment_type->get_slot();
+
+	const auto type_slot_find_iterator = this->allowed_equipment_types.find(item_slot);
+	const auto class_slot_find_iterator = this->allowed_equipment_classes.find(item_slot);
+	if (type_slot_find_iterator != this->allowed_equipment_types.end() || class_slot_find_iterator != this->allowed_equipment_classes.end()) {
+		//if there is no specifically designated allowed equipment for this item slot, only allow the equipment type if it matches the allowed equipment types or classes
+		return vector::contains(type_slot_find_iterator->second, equipment_type) || vector::contains(class_slot_find_iterator->second, equipment_type->get_item_class());
+	}
+
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->is_equipment_type_allowed(equipment_type);
+	}
+
+	//if there is no specifically designated allowed equipment for this item slot, then the equipment type is considered allowed by default
+	return true;
 }
 
 std::string character_class::get_level_modifier_string(const int level, const metternich::character *character) const
