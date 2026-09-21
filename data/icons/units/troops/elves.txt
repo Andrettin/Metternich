@@ -1,22 +1,3 @@
 elven_archer = {
 	filepath = "icons/units/troops/elven_archer.png"
-	character_conditions = {
-		or = {
-			species = air_elemental
-			species = dryad
-			species = elf
-			species = nereid
-			species = nymph
-			species = triton
-			taxon = archon
-			and = {
-				species = half_elf
-				or = {
-					character_class = aristocrat
-					character_class = ranger
-					character_class = warrior
-				}
-			}
-		}
-	}
 }

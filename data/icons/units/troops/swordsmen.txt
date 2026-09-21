@@ -1,22 +1,5 @@
 longswordsmen = {
 	filepath = "icons/units/troops/longswordsmen.png"
-	character_conditions = {
-		or = {
-			species = half_elf
-			species = human
-			species = halfling
-			species = titan
-			species = triton
-			species = water_elemental
-		}
-		or = {
-			character_class = aristocrat
-			character_class = paladin
-			character_class = warrior
-			species = titan
-			species = water_elemental
-		}
-	}
 }
 
 longswordsmen_green = {

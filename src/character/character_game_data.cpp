@@ -65,7 +65,6 @@
 #include "species/species.h"
 #include "spell/spell.h"
 #include "technology/technology_category.h"
-#include "ui/icon.h"
 #include "ui/portrait.h"
 #include "ui/ui_defines.h"
 #include "unit/civilian_unit.h"
@@ -113,8 +112,6 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "portrait") {
 		this->portrait = portrait::get(value);
-	} else if (key == "icon") {
-		this->icon = icon::get(value);
 	} else if (key == "domain") {
 		this->domain = domain::get(value);
 	} else if (key == "dead") {
@@ -323,7 +320,6 @@ gsml_data character_game_data::to_gsml_data() const
 	gsml_data data(this->character->get_identifier());
 
 	data.add_property("portrait", this->get_portrait()->get_identifier());
-	data.add_property("icon", this->get_icon()->get_identifier());
 
 	if (this->get_domain() != nullptr) {
 		data.add_property("domain", this->get_domain()->get_identifier());
@@ -1130,7 +1126,6 @@ QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 void character_game_data::on_setup_finished()
 {
 	this->check_portrait();
-	this->check_icon();
 
 	if (this->get_home_site() != nullptr) {
 		this->get_home_site()->get_game_data()->add_homed_character(this->character);
@@ -1305,49 +1300,6 @@ void character_game_data::check_portrait()
 
 	this->portrait = vector::get_random(potential_portraits);
 	emit portrait_changed();
-}
-
-bool character_game_data::is_current_icon_valid() const
-{
-	if (this->get_icon() == nullptr) {
-		return false;
-	}
-
-	assert_throw(this->get_icon()->get_character_conditions() != nullptr);
-
-	if (!this->get_icon()->get_character_conditions()->check(this->character, read_only_context(this->character))) {
-		return false;
-	}
-
-	return true;
-}
-
-void character_game_data::check_icon()
-{
-	if (this->is_current_icon_valid()) {
-		return;
-	}
-
-	std::vector<const metternich::icon *> potential_icons;
-
-	for (const metternich::icon *icon : icon::get_character_icons()) {
-		assert_throw(icon->is_character_icon());
-		assert_throw(icon->get_character_conditions() != nullptr);
-
-		if (!icon->get_character_conditions()->check(this->character, read_only_context(this->character))) {
-			continue;
-		}
-
-		potential_icons.push_back(icon);
-	}
-
-	//there must always be an available icon for characters
-	if (potential_icons.empty()) {
-		throw std::runtime_error(std::format("No icon is suitable for character \"{}\".", this->character->get_identifier()));
-	}
-
-	this->icon = vector::get_random(potential_icons);
-	emit icon_changed();
 }
 
 void character_game_data::set_domain(const metternich::domain *domain)

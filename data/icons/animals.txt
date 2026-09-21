@@ -1,23 +1,9 @@
 beaver = {
 	filepath = "icons/animals/beaver.png"
-	character_conditions = {
-		or = {
-			species = giant_bat
-			species = giant_rat
-		}
-	}
 }
 
 cow = {
 	filepath = "icons/animals/cow.png"
-	character_conditions = {
-		or = {
-			species = cow
-			species = elephant
-			species = mammoth
-			species = phiomia
-		}
-	}
 }
 
 deer = {
@@ -26,13 +12,6 @@ deer = {
 
 frog = {
 	filepath = "icons/animals/frog.png"
-	character_conditions = {
-		or = {
-			species = giant_toad
-			taxon = arthropoda
-			taxon = ooze
-		}
-	}
 }
 
 blue_frog = {
@@ -42,9 +21,6 @@ blue_frog = {
 		{ 0 46 143 }
 		{ 27 83 170 }
 		{ 61 105 203 }
-	}
-	character_conditions = {
-		species = ice_toad
 	}
 }
 
@@ -56,15 +32,9 @@ red_frog = {
 		{ 27 83 170 }
 		{ 61 105 203 }
 	}
-	character_conditions = {
-		species = fire_toad
-	}
 }
 
 lion = {
 	filepath = "icons/animals/lion.png"
 	left_facing = true
-	character_conditions = {
-		species = wolf
-	}
 }

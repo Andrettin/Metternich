@@ -1023,14 +1023,14 @@ combat_tile::combat_tile(const terrain_type *base_terrain, const terrain_type *t
 combat_character_info::combat_character_info(const metternich::character *character, const bool defender)
 	: combat_unit_info_base(defender), character(character)
 {
-	connect(character->get_game_data(), &character_game_data::icon_changed, this, &combat_character_info::icon_changed);
 	connect(character->get_game_data(), &character_game_data::health_changed, this, &combat_character_info::hit_points_changed);
 	connect(character->get_game_data(), &character_game_data::max_health_changed, this, &combat_character_info::max_hit_points_changed);
 }
 
 const icon *combat_character_info::get_icon() const
 {
-	return this->get_character()->get_game_data()->get_icon();
+	//return this->get_character()->get_game_data()->get_icon();
+	return nullptr;
 }
 
 int combat_character_info::get_hit_points() const

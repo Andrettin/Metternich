@@ -1,18 +1,5 @@
 engineer = {
 	filepath = "icons/units/civilians/engineer.png"
-	character_conditions = {
-		or = {
-			species = half_elf
-			species = human
-			species = halfling
-			species = titan
-			species = triton
-		}
-		or = {
-			character_class = engineer
-			character_class = mage
-		}
-	}
 }
 
 engineer_small = {
@@ -21,16 +8,6 @@ engineer_small = {
 
 forester = {
 	filepath = "icons/units/civilians/forester.png"
-	character_conditions = {
-		or = {
-			species = half_elf
-			species = human
-			species = halfling
-			species = titan
-			species = triton
-		}
-		character_class = druid
-	}
 }
 
 forester_small = {
@@ -39,20 +16,6 @@ forester_small = {
 
 merchant = {
 	filepath = "icons/units/civilians/merchant.png"
-	character_conditions = {
-		or = {
-			and = {
-				or = {
-					species = half_elf
-					species = human
-					species = halfling
-					species = titan
-					species = triton
-				}
-				character_class = merchant
-			}
-		}
-	}
 }
 
 prospector = {
@@ -74,23 +37,4 @@ rancher_small = {
 spy = {
 	filepath = "icons/units/civilians/spy.png"
 	left_facing = true
-	character_conditions = {
-		or = {
-			and = {
-				or = {
-					species = half_elf
-					species = human
-					species = halfling
-					species = titan
-					species = triton
-				}
-				or = {
-					character_class = bard
-					character_class = rogue
-				}
-			}
-			species = shadow
-			taxon = undead
-		}
-	}
 }
