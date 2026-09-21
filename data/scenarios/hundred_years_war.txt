@@ -5,5 +5,11 @@ hundred_years_war = {
 	default_domains = {
 		england
 		france
+		
+		#other interesting domains for that date
+		#golden_horde
+		#ottoman_empire
+		poland
+		#rajastan
 	}
 }
