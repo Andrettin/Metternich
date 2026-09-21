@@ -1,0 +1,8 @@
+metternich = {
+	name = "Metternich"
+	world = earth
+	geocoordinate = { 6.88917 50.7372 } #Metternich (Weilerswist)
+	type = holding
+	holding_type = castle
+	province = rhineland
+}

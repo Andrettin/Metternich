@@ -1,3 +1,18 @@
+sybgin_von_metternich = { #Source: Wolfram Siemann, "Metternich: Strategist and Visionary", 2019, p. 24.
+	name = "Sybgin" #also known as Sibido
+	dynasty = metternich
+	character_class = aristocrat
+	rank = lord #lord of Metternich
+	culture = rhenish
+	religion = catholic
+	home_site = metternich
+	gender = male
+	birth_date = 1325
+	death_date = 1382
+	
+	#married to the Frau von Dünstekoven
+}
+
 franz_georg_von_metternich = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
 	name = "Franz Georg" #"Franz Georg Karl"
 	dynasty = metternich
