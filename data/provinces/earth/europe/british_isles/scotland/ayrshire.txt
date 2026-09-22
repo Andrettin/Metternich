@@ -18,10 +18,14 @@ ayrshire = {
 			culture = cumbrian
 		}
 		
-		1360 = {
-			owner = scotland #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		1190 = {
+			owner = scotland #part of the Kingdom of Scotland c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = highlander
 			religion = catholic
+		}
+		
+		1360 = {
+			owner = scotland #part of Scotland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 	}
 }

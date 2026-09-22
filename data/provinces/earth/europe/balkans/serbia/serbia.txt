@@ -19,6 +19,10 @@ serbia = {
 			culture = serbian
 		}
 		
+		1190 = {
+			owner = serbia #part of Serbia c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+		}
+		
 		1360 = {
 			owner = hungary #part of Hungary in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = serbian
