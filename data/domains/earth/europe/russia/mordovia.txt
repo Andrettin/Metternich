@@ -1,0 +1,13 @@
+mordovia = {
+	name = "Mordovia"
+	type = polity
+	color = { 15 64 33 }
+	default_culture = mordvin
+	default_religion = suomenusko #correct?
+	default_tier = duchy
+	default_government_type = tribal_despotism
+	default_capital = nizhny_novgorod #correct?
+	short_names = {
+		tribe = "Mordvins"
+	}
+}

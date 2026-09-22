@@ -1,0 +1,9 @@
+mordvin = {
+	name = "Mordvin"
+	group = finno_ugric
+	color = { 114 89 204 }
+	primary_domain = mordovia
+	species = {
+		human
+	}
+}

@@ -7,10 +7,14 @@ kursk = {
 	}
 	
 	history = {
-		1360 = {
-			owner = russia #part of the Russian States in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		1190 = {
+			owner = ruthenia #part of Ruthenia c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = russian
 			religion = orthodox
+		}
+		
+		1360 = {
+			owner = russia #part of the Russian States in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1740 = {
