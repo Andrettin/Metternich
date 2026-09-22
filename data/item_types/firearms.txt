@@ -3,14 +3,12 @@ arquebus = {
 	item_class = firearm
 	icon = musket
 	price = 500gp
+	range = 50yd
 	two_handed = true
 	required_technology = arquebus
 	damage_dice_per_target_size = {
 		small = 1d10
 		medium = 1d10
 		large = 1d10
-	}
-	modifier = {
-		range = 50yd
 	}
 }

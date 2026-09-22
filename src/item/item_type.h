@@ -91,6 +91,11 @@ public:
 
 	const dice &get_damage_dice(const creature_size *target_size) const;
 
+	int get_range() const
+	{
+		return this->range;
+	}
+
 	bool is_two_handed() const
 	{
 		return this->two_handed;
@@ -134,6 +139,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	int64_t price = 0;
 	creature_size_map<dice> damage_dice_per_target_size;
+	int range = 0; //in inches
 	bool two_handed = false;
 	bool stackable = false;
 	bool spell_learnable = false;

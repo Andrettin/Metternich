@@ -174,8 +174,6 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->to_hit_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
 		this->damage_bonus = std::stoi(value);
-	} else if (key == "range") {
-		this->range = std::stoi(value);
 	} else if (key == "movement") {
 		this->movement = std::stoi(value);
 	} else if (key == "initiative_bonus") {
@@ -422,7 +420,6 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
 	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
-	data.add_property("range", std::to_string(this->get_range()));
 	data.add_property("movement", std::to_string(this->get_movement()));
 	data.add_property("initiative_bonus", std::to_string(this->get_initiative_bonus()));
 
@@ -2832,55 +2829,41 @@ int character_game_data::get_min_damage(const metternich::creature_size *target_
 	return min_damage;
 }
 
-int character_game_data::get_max_damage(const metternich::creature_size *target_size) const
+int character_game_data::get_max_damage(const metternich::creature_size *target_size, const bool ranged_only) const
 {
 	int max_damage = 0;
 
 	const std::vector<const item *> weapons = this->get_weapons();
 	for (const item *weapon : weapons) {
+		if (ranged_only) {
+			const centesimal_int battle_range = battle::length_to_battle_range(std::max(weapon->get_type()->get_range(), character_defines::get()->get_minimum_character_range()));
+			const bool ranged = battle_range.to_int() > 1;
+
+			if (!ranged) {
+				continue;
+			}
+		}
+
 		max_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()), 0);
 	}
 
-	if (weapons.empty() && this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_damage_dice().is_null()) {
+	if (weapons.empty() && this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_damage_dice().is_null() && !ranged_only) {
 		max_damage += std::max(this->character->get_monster_type()->get_damage_dice().get_maximum_result() + this->get_damage_bonus(), 0);
 	}
 
 	return max_damage;
 }
 
-int character_game_data::get_effective_range() const
+int character_game_data::get_best_range() const
 {
-	return std::max(this->get_range(), character_defines::get()->get_minimum_character_range());
-}
+	int range = character_defines::get()->get_minimum_character_range();
 
-void character_game_data::set_range(const int range)
-{
-	if (range == this->get_range()) {
-		return;
+	const std::vector<const item *> weapons = this->get_weapons();
+	for (const item *weapon : weapons) {
+		range = std::max(range, weapon->get_type()->get_range());
 	}
 
-	const int old_range = this->get_range();
-
-	this->range = range;
-
-	if (range > 1 && old_range <= 1) {
-		this->change_challenge_rating(1);
-	} else if (range <= 1 && old_range > 1) {
-		this->change_challenge_rating(-1);
-	}
-
-	if (this->get_military_unit() != nullptr) {
-		this->update_military_unit_stats();
-	}
-
-	if (game::get()->is_running()) {
-		emit range_changed();
-	}
-}
-
-void character_game_data::change_range(const int change)
-{
-	this->set_range(this->get_range() + change);
+	return range;
 }
 
 void character_game_data::set_movement(const int movement)
@@ -3712,13 +3695,13 @@ void character_game_data::update_military_unit_stats()
 	metternich::military_unit *military_unit = this->get_military_unit();
 	assert_throw(military_unit != nullptr);
 
-	const centesimal_int battle_range = battle::length_to_battle_range(this->get_effective_range());
+	const centesimal_int battle_range = battle::length_to_battle_range(this->get_best_range());
 	const bool ranged = battle_range.to_int() > 1;
 
-	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size()), true)));
+	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), false), true)));
 	military_unit->set_stat(military_unit_stat::charge, centesimal_int(0));
 	if (ranged) {
-		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size()), true)));
+		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), true), true)));
 	} else {
 		military_unit->set_stat(military_unit_stat::missile, centesimal_int(0));
 	}
@@ -4413,12 +4396,22 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 		co_await this->deequip_item_coro(item_to_deequip, false);
 	}
 
+	const bool was_ranged = battle::length_to_battle_range(this->get_best_range()).to_int() > 1;
+
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
 	equipped_items.push_back(item);
 
 	item->set_equipped(true);
 
 	co_await this->on_item_equipped(item, 1);
+
+	const bool is_ranged = battle::length_to_battle_range(this->get_best_range()).to_int() > 1;
+
+	if (is_ranged && !was_ranged) {
+		this->change_challenge_rating(1);
+	} else if (!is_ranged && was_ranged) {
+		this->change_challenge_rating(-1);
+	}
 
 	if (game::get()->is_running()) {
 		emit equipped_item_changed(item->get_slot(), static_cast<int>(equipped_items.size()) - 1);
@@ -4428,6 +4421,8 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 
 [[nodiscard]] QCoro::Task<void> character_game_data::deequip_item_coro(item *item, const bool reequip_natural_weapon)
 {
+	const bool was_ranged = battle::length_to_battle_range(this->get_best_range()).to_int() > 1;
+
 	std::vector<metternich::item *> &equipped_items = this->equipped_items[item->get_slot()];
 	const auto slot_iterator = std::find(equipped_items.begin(), equipped_items.end(), item);
 	assert_throw(slot_iterator != equipped_items.end());
@@ -4441,6 +4436,14 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 	item->set_equipped(false);
 
 	co_await this->on_item_equipped(item, -1);
+
+	const bool is_ranged = battle::length_to_battle_range(this->get_best_range()).to_int() > 1;
+
+	if (is_ranged && !was_ranged) {
+		this->change_challenge_rating(1);
+	} else if (!is_ranged && was_ranged) {
+		this->change_challenge_rating(-1);
+	}
 
 	if (reequip_natural_weapon) {
 		//re-equip a natural weapon for the slot, if any is available

@@ -153,7 +153,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		disconnect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
@@ -185,7 +185,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
 		connect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
-		connect(this->character->get_game_data(), &character_game_data::range_changed, this, &character_data_model::update_range_row);
+		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
 		connect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
@@ -620,7 +620,7 @@ void character_data_model::update_damage_rows()
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
 	const int min_damage = character_game_data->get_min_damage(character_defines::get()->get_default_creature_size());
-	const int max_damage = character_game_data->get_max_damage(character_defines::get()->get_default_creature_size());
+	const int max_damage = character_game_data->get_max_damage(character_defines::get()->get_default_creature_size(), false);
 
 	this->damage_row->value = std::format("{}-{}", min_damage, max_damage);
 
@@ -640,7 +640,7 @@ void character_data_model::update_damage_rows()
 		}
 
 		const int min_creature_size_damage = character_game_data->get_min_damage(creature_size);
-		const int max_creature_size_damage = character_game_data->get_max_damage(creature_size);
+		const int max_creature_size_damage = character_game_data->get_max_damage(creature_size, false);
 
 		if (min_creature_size_damage == min_damage && max_creature_size_damage == max_damage) {
 			continue;
@@ -675,7 +675,7 @@ void character_data_model::update_range_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	this->range_row->value = string::from_length(character_game_data->get_effective_range(), false, preferences::get()->are_metric_measurements_enabled());
+	this->range_row->value = string::from_length(character_game_data->get_best_range(), false, preferences::get()->are_metric_measurements_enabled());
 
 	this->on_top_row_changed(this->range_row);
 }

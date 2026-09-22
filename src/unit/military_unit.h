@@ -219,8 +219,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_promotions();
 	[[nodiscard]] QCoro::Task<void> check_free_promotions();
 
-	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const bool ranged, const bool moved, const int to_hit_modifier) const;
-	[[nodiscard]] QCoro::Task<void> attack_character(const metternich::character *target_character, const int to_hit_modifier) const;
+	[[nodiscard]] QCoro::Task<void> attack(military_unit *target, const int battle_range, const bool moved, const int to_hit_modifier) const;
+	[[nodiscard]] QCoro::Task<void> attack_character(const metternich::character *target_character, const int battle_range, const int to_hit_modifier) const;
 	bool check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const;
 	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);

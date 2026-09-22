@@ -17,14 +17,12 @@ hand_axe = {
 	item_class = axe
 	icon = saber
 	price = 1gp
+	range = 10yd #can be thrown
 	required_technology = handaxe
 	attack_sound = axe
 	damage_dice_per_target_size = {
 		small = 1d6
 		medium = 1d6
 		large = 1d4
-	}
-	modifier = {
-		range = 10yd #can be thrown
 	}
 }

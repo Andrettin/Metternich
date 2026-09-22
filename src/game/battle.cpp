@@ -439,7 +439,7 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 
 	const sound *enemy_death_sound = enemy->get_death_sound();
 
-	co_await unit->attack(enemy, ranged, moved, to_hit_modifier);
+	co_await unit->attack(enemy, distance, moved, to_hit_modifier);
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (!ranged && unit->get_melee_attack_sound() != nullptr) {

@@ -68,10 +68,10 @@ int combat::get_max_range_of_units() const
 	int max_range = 0;
 
 	for (const character *character : this->attacking_party->get_characters()) {
-		max_range = std::max(max_range, character->get_game_data()->get_range());
+		max_range = std::max(max_range, character->get_game_data()->get_best_range());
 	}
 	for (const character *character : this->defending_party->get_characters()) {
-		max_range = std::max(max_range, character->get_game_data()->get_range());
+		max_range = std::max(max_range, character->get_game_data()->get_best_range());
 	}
 
 	return max_range;
@@ -220,8 +220,8 @@ void combat::deploy_characters(std::vector<const character *> characters, const 
 			return lhs->get_game_data()->get_movement() < rhs->get_game_data()->get_movement();
 		}
 
-		if (lhs->get_game_data()->get_range() != rhs->get_game_data()->get_range()) {
-			return lhs->get_game_data()->get_range() > rhs->get_game_data()->get_range();
+		if (lhs->get_game_data()->get_best_range() != rhs->get_game_data()->get_best_range()) {
+			return lhs->get_game_data()->get_best_range() > rhs->get_game_data()->get_best_range();
 		}
 
 		return lhs->get_identifier() < rhs->get_identifier();
@@ -1045,7 +1045,7 @@ int combat_character_info::get_max_hit_points() const
 
 int combat_character_info::get_range() const
 {
-	return this->get_character()->get_game_data()->get_range();
+	return this->get_character()->get_game_data()->get_best_range();
 }
 
 bool combat_character_info::is_player_unit() const

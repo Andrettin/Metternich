@@ -94,7 +94,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int max_craft READ get_max_craft NOTIFY max_craft_changed)
 	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
-	Q_PROPERTY(int range READ get_range NOTIFY range_changed)
 	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
 	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
 	Q_PROPERTY(int initiative_bonus READ get_initiative_bonus NOTIFY initiative_bonus_changed)
@@ -569,16 +568,9 @@ public:
 	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
 
 	int get_min_damage(const creature_size *target_size) const;
-	int get_max_damage(const creature_size *target_size) const;
+	int get_max_damage(const creature_size *target_size, const bool ranged_only) const;
 
-	int get_range() const
-	{
-		return this->range;
-	}
-
-	int get_effective_range() const;
-	void set_range(const int range);
-	void change_range(const int change);
+	int get_best_range() const;
 
 	int get_movement() const
 	{
@@ -1102,7 +1094,6 @@ signals:
 	void weapon_to_hit_bonuses_changed();
 	void damage_bonus_changed();
 	void weapon_damage_bonuses_changed();
-	void range_changed();
 	void movement_changed();
 	void initiative_bonus_changed();
 	void save_bonuses_changed();
@@ -1165,7 +1156,6 @@ private:
 	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
 	data_entry_map<item_type, int> weapon_damage_bonuses;
-	int range = 0; //in inches
 	int movement = 0;
 	int initiative_bonus = 0;
 	data_entry_map<save_type, int> save_bonuses;

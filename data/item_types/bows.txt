@@ -4,11 +4,9 @@ short_bow = {
 	icon = bow
 	price = 30gp
 	damage_dice = 1d8
+	range = 50yd
 	two_handed = true
 	required_technology = short_bow
-	modifier = {
-		range = 50yd
-	}
 }
 
 long_bow = {
@@ -17,11 +15,9 @@ long_bow = {
 	icon = bow
 	price = 75gp
 	damage_dice = 1d8
+	range = 70yd
 	two_handed = true
 	required_technology = long_bow
-	modifier = {
-		range = 70yd
-	}
 }
 
 composite_short_bow = {
@@ -30,11 +26,9 @@ composite_short_bow = {
 	icon = bow
 	price = 75gp
 	damage_dice = 1d8
+	range = 50yd
 	two_handed = true
 	required_technology = composite_bow
-	modifier = {
-		range = 50yd
-	}
 }
 
 composite_long_bow = {
@@ -43,11 +37,9 @@ composite_long_bow = {
 	icon = bow
 	price = 100gp
 	damage_dice = 1d8
+	range = 60yd
 	two_handed = true
 	required_technology = composite_bow
-	modifier = {
-		range = 60yd
-	}
 }
 
 light_crossbow = {
@@ -56,11 +48,9 @@ light_crossbow = {
 	icon = bow
 	price = 35gp
 	damage_dice = 1d4
+	range = 60yd
 	two_handed = true
 	required_technology = light_crossbow
-	modifier = {
-		range = 60yd
-	}
 }
 
 heavy_crossbow = {
@@ -68,14 +58,12 @@ heavy_crossbow = {
 	item_class = crossbow
 	icon = bow
 	price = 50gp
+	range = 80yd
 	two_handed = true
 	required_technology = heavy_crossbow
 	damage_dice_per_target_size = {
 		small = 1d4+1
 		medium = 1d4+1
 		large = 1d6+1
-	}
-	modifier = {
-		range = 80yd
 	}
 }

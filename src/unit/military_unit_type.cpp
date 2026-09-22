@@ -19,7 +19,6 @@
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
 #include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
-#include "script/modifier_effect/range_modifier_effect.h"
 #include "script/modifier_effect/save_modifier_effect.h"
 #include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "species/species.h"
@@ -228,13 +227,25 @@ void military_unit_type::initialize_stats_from_monster_type()
 	int hit_dice_count = 0;
 	decimillesimal_int movement;
 	decimillesimal_int natural_armor_class;
-	decimillesimal_int range;
+	decimillesimal_int range(1);
 	decimillesimal_int save;
 	decimillesimal_int to_hit_bonus;
 
-	decimillesimal_int max_damage = decimillesimal_int(this->monster_type->get_damage_dice().get_maximum_result());
+	decimillesimal_int max_melee_damage = decimillesimal_int(this->monster_type->get_damage_dice().get_maximum_result());
+	decimillesimal_int max_ranged_damage;
 	for (const item_type *natural_weapon_type : this->monster_type->get_species()->get_natural_weapons()) {
-		max_damage += natural_weapon_type->get_damage_dice(character_defines::get()->get_default_creature_size()).get_maximum_result();
+		const int weapon_maximum_damage = natural_weapon_type->get_damage_dice(character_defines::get()->get_default_creature_size()).get_maximum_result();
+		max_melee_damage += weapon_maximum_damage;
+
+		const centesimal_int weapon_battle_range = battle::length_to_battle_range(natural_weapon_type->get_range());
+		const bool weapon_ranged = weapon_battle_range.to_int() > 1;
+		if (weapon_ranged) {
+			max_ranged_damage += weapon_maximum_damage;
+
+			if (range < weapon_battle_range.to_int()) {
+				range = decimillesimal_int(weapon_battle_range.to_int());
+			}
+		}
 	}
 
 	for (const modifier_effect<const character> *modifier_effect : modifier_effects) {
@@ -243,15 +254,14 @@ void military_unit_type::initialize_stats_from_monster_type()
 				armor_class += character_stat_modifier_effect->get_value();
 			}
 		} else if (const damage_bonus_modifier_effect *damage_bonus_modifier_effect = dynamic_cast<const metternich::damage_bonus_modifier_effect *>(modifier_effect)) {
-			max_damage += damage_bonus_modifier_effect->get_value();
+			max_melee_damage += damage_bonus_modifier_effect->get_value();
+			max_ranged_damage += damage_bonus_modifier_effect->get_value();
 		} else if (const hit_dice_modifier_effect *hit_dice_modifier_effect = dynamic_cast<const metternich::hit_dice_modifier_effect *>(modifier_effect)) {
 			hit_dice_count += hit_dice_modifier_effect->get_hit_dice().get_count();
 		} else if (const movement_modifier_effect *movement_modifier_effect = dynamic_cast<const metternich::movement_modifier_effect *>(modifier_effect)) {
 			movement += movement_modifier_effect->get_value();
 		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
 			natural_armor_class += natural_armor_class_modifier_effect->get_value();
-		} else if (const range_modifier_effect *range_modifier_effect = dynamic_cast<const metternich::range_modifier_effect *>(modifier_effect)) {
-			range += range_modifier_effect->get_value();
 		} else if (const save_modifier_effect *save_modifier_effect = dynamic_cast<const metternich::save_modifier_effect *>(modifier_effect)) {
 			save += save_modifier_effect->get_value();
 		} else if (const to_hit_bonus_modifier_effect *to_hit_bonus_modifier_effect = dynamic_cast<const metternich::to_hit_bonus_modifier_effect *>(modifier_effect)) {
@@ -264,10 +274,8 @@ void military_unit_type::initialize_stats_from_monster_type()
 		this->stats[military_unit_stat::defense] = centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(armor_class.to_int()));
 	}
 
-	const int effective_range = std::max(range.to_int(), character_defines::get()->get_minimum_character_range());
-	const centesimal_int battle_range = battle::length_to_battle_range(effective_range);
-	const bool ranged = battle_range.to_int() > 1;
-	this->stats[military_unit_stat::range] = battle_range;
+	const bool ranged = range.to_int() > 1;
+	this->stats[military_unit_stat::range] = centesimal_int(range);
 
 	centesimal_int hit_points = defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
 	hit_points *= 10;
@@ -290,11 +298,11 @@ void military_unit_type::initialize_stats_from_monster_type()
 	if (movement != 0) {
 		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);
 	}
-	if (max_damage != 0 || to_hit_bonus != 0) {
-		this->stats[military_unit_stat::melee] = centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_damage.to_int(), false));
-		if (ranged) {
-			this->stats[military_unit_stat::missile] = centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_damage.to_int(), false));
-		}
+	if (max_melee_damage != 0 || to_hit_bonus != 0) {
+		this->stats[military_unit_stat::melee] = centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_melee_damage.to_int(), false));
+	}
+	if (ranged && max_ranged_damage != 0) {
+		this->stats[military_unit_stat::missile] = centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_ranged_damage.to_int(), false));
 	}
 	if (save != 0) {
 		this->stats[military_unit_stat::save] = centesimal_int(save);

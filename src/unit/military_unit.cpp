@@ -17,6 +17,7 @@
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
 #include "game/attack_result.h"
+#include "game/battle.h"
 #include "game/battle_resolution_table.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
@@ -622,20 +623,22 @@ QCoro::Task<void> military_unit::check_free_promotions()
 	}
 }
 
-QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged, const bool moved, const int to_hit_modifier) const
+QCoro::Task<void> military_unit::attack(military_unit *target, const int battle_range, const bool moved, const int to_hit_modifier) const
 {
 	assert_throw(target != nullptr);
 
 	if (this->get_character() != nullptr && target->get_character() != nullptr) {
 		//attack between characters
-		co_await this->attack_character(target->get_character(), to_hit_modifier);
+		co_await this->attack_character(target->get_character(), battle_range, to_hit_modifier);
 		co_return;
 	}
+
+	const bool ranged = battle_range > 1;
 
 	int attack = 0;
 	if (ranged) {
 		if (target->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()), true);
+			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), true), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::missile).to_int();
 		}
@@ -643,7 +646,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 		attack = this->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
 		if (target->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size()), true);
+			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus(), this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), false), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::melee).to_int();
 		}
@@ -683,7 +686,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const bool ranged
 	}
 }
 
-QCoro::Task<void> military_unit::attack_character(const metternich::character *target_character, const int to_hit_modifier) const
+QCoro::Task<void> military_unit::attack_character(const metternich::character *target_character, const int battle_range, const int to_hit_modifier) const
 {
 	assert_throw(this->get_character() != nullptr);
 
@@ -693,6 +696,12 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 
 	const std::vector<const item *> weapons = character_game_data->get_weapons();
 	for (const item *weapon : weapons) {
+		const int weapon_battle_range = battle::length_to_battle_range(weapon->get_type()->get_range()).to_int();
+		if (weapon_battle_range < battle_range) {
+			//we are attacking at range and the weapon's range does not suffice for the attack, so we must skip it
+			continue;
+		}
+
 		const bool hit = this->check_to_hit(target_character, weapon, to_hit_modifier);
 
 		if (!hit) {
@@ -728,7 +737,9 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 		damage += weapon_damage;
 	}
 
-	if (weapons.empty() && this->get_character()->get_monster_type() != nullptr && !this->get_character()->get_monster_type()->get_damage_dice().is_null()) {
+	const bool ranged = battle_range > 1;
+
+	if (weapons.empty() && this->get_character()->get_monster_type() != nullptr && !this->get_character()->get_monster_type()->get_damage_dice().is_null() && !ranged) {
 		const bool hit = this->check_to_hit(target_character, nullptr, to_hit_modifier);
 
 		if (hit) {

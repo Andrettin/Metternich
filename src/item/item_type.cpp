@@ -13,6 +13,7 @@
 #include "species/creature_size.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -34,6 +35,8 @@ void item_type::process_gsml_property(const gsml_property &property)
 	} else if (key == "damage_dice") {
 		assert_throw(character_defines::get()->get_default_creature_size() != nullptr);
 		this->damage_dice_per_target_size[character_defines::get()->get_default_creature_size()] = dice(value);
+	} else if (key == "range") {
+		this->range = string::to_length(value);
 	} else {
 		data_entry::process_gsml_property(property);
 	}
