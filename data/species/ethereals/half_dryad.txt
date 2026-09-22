@@ -1,42 +1,43 @@
-dryad = {
-	name = "Dryad"
+half_dryad = {
+	name = "Half-Dryad"
 	supertaxon = fey
 	era = holocene
 	sapient = true
 	default_creature_size = medium
 	min_attribute_values = {
 		strength = 3
-		dexterity = 6
-		constitution = 5
-		intelligence = 6
-		wisdom = 5
+		dexterity = 3
+		constitution = 3
+		intelligence = 5
+		wisdom = 3
 		charisma = 8
 	}
 	max_attribute_values = {
-		strength = 17
+		strength = 18
 		dexterity = 18
-		constitution = 18
+		constitution = 17
 		intelligence = 18
 		wisdom = 18
 		charisma = 18
 	}
 	allowed_character_classes = {
-		#cleric
+		bard
+		druid
 		mage
 		ranger
 		rogue
 		warrior
 	}
-	character_class_level_limits = { #as Half-Dryad
+	character_class_level_limits = {
+		bard = 12
+		druid = 7
 		mage = 5
 		ranger = 6
 		rogue = 10
 		warrior = 5
 	}
 	modifier = {
-		hit_dice = 2d8
-		armor_class = 1
-		to_hit_bonus = 1
-		movement = 12
+		charisma = 1
+		constitution = -1
 	}
 }

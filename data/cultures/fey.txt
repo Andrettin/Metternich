@@ -3,6 +3,7 @@ fey = {
 	group = sylvan
 	species = {
 		dryad
+		half_dryad
 		nymph
 	}
 }

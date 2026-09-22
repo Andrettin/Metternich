@@ -6,6 +6,7 @@ athena = {
 			species = air_elemental
 			species = dryad
 			species = earth_elemental
+			species = half_dryad
 			species = nereid
 			species = nymph
 			species = titan
