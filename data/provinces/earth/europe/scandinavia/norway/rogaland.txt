@@ -13,10 +13,14 @@ rogaland = {
 			religion = asatru
 		}
 		
-		1360 = {
-			owner = norway #part of Norway in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		1190 = {
+			owner = norway #part of the Kingdom of Norway c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = norwegian
 			religion = catholic
+		}
+		
+		1360 = {
+			owner = norway #part of Norway in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
 		
 		1740 = {

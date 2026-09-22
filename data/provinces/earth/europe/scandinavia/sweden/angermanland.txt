@@ -10,9 +10,14 @@ angermanland = {
 		culture = norse
 		religion = asatru
 		
+		1190 = {
+			owner = sweden #part of the Kingdom of Sweden c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+			culture = swedish
+			religion = catholic
+		}
+		
 		1524 = {
 			owner = sweden #part of Sweden in 1524; Source: William R. Shepherd, "Historical Atlas", 1911, p. 120.
-			culture = swedish
 			religion = protestant
 		}
 		

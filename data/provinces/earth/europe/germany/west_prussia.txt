@@ -19,16 +19,18 @@ west_prussia = {
 			culture = pomeranian
 		}
 		
-		1360 = {
-			owner = teutonic_order #territory of the Teutonic Order in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		1190 = {
+			owner = poland #part of the Kingdom of Poland c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = polish
 			religion = catholic
 		}
 		
+		1360 = {
+			owner = teutonic_order #territory of the Teutonic Order in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
 		1466 = {
 			owner = poland #became part of the Kingdom of Poland in 1466; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 86-87.
-			culture = polish
-			religion = catholic
 		}
 		
 		1740 = {
