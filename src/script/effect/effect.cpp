@@ -44,10 +44,10 @@
 #include "script/effect/opinion_modifiers_effect.h"
 #include "script/effect/population_scaled_commodity_effect.h"
 #include "script/effect/random_effect.h"
+#include "script/effect/random_holding_effect.h"
 #include "script/effect/random_known_domain_effect.h"
 #include "script/effect/random_list_effect.h"
 #include "script/effect/random_neighbor_country_effect.h"
-#include "script/effect/random_settlement_effect.h"
 #include "script/effect/save_scope_as_effect.h"
 #include "script/effect/save_string_as_effect.h"
 #include "script/effect/saved_scope_effect.h"
@@ -191,12 +191,12 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<create_transporter_effect>(effect_operator);
 		} else if (effect_identifier == "opinion_modifiers") {
 			effect = std::make_unique<opinion_modifiers_effect<scope_type>>(effect_operator);
+		} else if (effect_identifier == "random_holding") {
+			effect = std::make_unique<random_holding_effect>(effect_operator);
 		} else if (effect_identifier == "random_known_domain") {
 			effect = std::make_unique<random_known_domain_effect>(effect_operator);
 		} else if (effect_identifier == "random_neighbor_country") {
 			effect = std::make_unique<random_neighbor_country_effect>(effect_operator);
-		} else if (effect_identifier == "random_settlement") {
-			effect = std::make_unique<random_settlement_effect>(effect_operator);
 		} else if (office::try_get(effect_identifier) != nullptr) {
 			effect = std::make_unique<office_holder_effect>(office::get(effect_identifier), effect_operator);
 		}
