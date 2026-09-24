@@ -1,0 +1,58 @@
+gnoll_marauders = {
+	name = "Gnoll Marauders"
+	unit_class = macemen #should probably be a skirmisher instead
+	culture = gnoll
+	icon = gnoll
+	stats = {
+		hit_points = 2
+		movement = 2
+		defense = 3
+		melee = 3
+		missile = 2
+		range = 3
+	}
+	battle_resolution_types = {
+		pennant
+		shield
+	}
+	commodity_costs = {
+		wealth = 2gb
+		light_infantry = 200
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
+	}
+	#recruit_conditions = {
+	#	culture = gnoll
+	#}
+}
+
+gnoll_infantry = {
+	name = "Gnoll Infantry"
+	unit_class = axemen
+	culture = gnoll
+	icon = gnoll
+	stats = {
+		hit_points = 3
+		movement = 2
+		defense = 4
+		melee = 4
+		missile = 2
+		range = 3
+		#melee_vs_pikes = 1
+		#melee_vs_irregulars = 1
+	}
+	battle_resolution_types = {
+		crossed_swords
+	}
+	commodity_costs = {
+		wealth = 3gb
+		heavy_infantry = 200
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb
+	}
+	#recruit_conditions = {
+	#	culture = gnoll
+	#}
+}
