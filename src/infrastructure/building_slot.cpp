@@ -674,6 +674,10 @@ bool building_slot::is_available() const
 	}
 
 	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_settlement()->get_game_data()->get_holding_type())) {
+		if (building->is_ruin()) {
+			continue;
+		}
+
 		if (building->get_base_building() != nullptr) {
 			continue;
 		}

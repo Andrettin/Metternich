@@ -1851,6 +1851,10 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 			std::vector<const building_type *> potential_buildings;
 
 			for (const building_type *slot_building : building_slot->get_type()->get_building_types_for_holding_type(this->get_holding_type())) {
+				if (slot_building->is_ruin()) {
+					continue;
+				}
+
 				if (slot_building->get_base_building() != nullptr) {
 					continue;
 				}
