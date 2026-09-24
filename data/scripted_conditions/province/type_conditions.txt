@@ -5,7 +5,5 @@ is_lair = {
 }
 
 is_tribal = {
-	province = {
-		scripted_condition = is_tribal
-	}
+	province_level < 2
 }
