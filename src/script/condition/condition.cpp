@@ -115,6 +115,7 @@
 #include "script/condition/root_character_condition.h"
 #include "script/condition/ruler_condition.h"
 #include "script/condition/ruler_scope_condition.h"
+#include "script/condition/saved_building_condition.h"
 #include "script/condition/saved_scope_condition.h"
 #include "script/condition/scripted_condition_condition.h"
 #include "script/condition/scripted_modifier_condition.h"
@@ -495,6 +496,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		condition = std::make_unique<attacking_commander_condition<scope_type>>(condition_operator);
 	} else if (tag == "domain") {
 		condition = std::make_unique<domain_scope_condition<scope_type>>(condition_operator);
+	} else if (tag == "saved_building") {
+		condition = std::make_unique<saved_building_condition<scope_type>>(condition_operator);
 	} else if (tag == "saved_character_scope") {
 		condition = std::make_unique<saved_scope_condition<scope_type, character, read_only_context, metternich::condition<character>>>(condition_operator);
 	} else if (tag == "saved_domain_scope") {

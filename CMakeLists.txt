@@ -773,6 +773,7 @@ set(script_condition_HDRS
 	src/script/condition/root_character_condition.h
 	src/script/condition/ruler_condition.h
 	src/script/condition/ruler_scope_condition.h
+	src/script/condition/saved_building_condition.h
 	src/script/condition/scripted_condition.h
 	src/script/condition/scripted_condition_condition.h
 	src/script/condition/scripted_modifier_condition.h
