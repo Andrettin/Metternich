@@ -1,7 +1,5 @@
 #pragma once
 
-#include "character/party.h"
-#include "infrastructure/dungeon_area.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/effect/effect.h"
@@ -33,17 +31,13 @@ public:
 	[[nodiscard]]
 	virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
-		assert_throw(ctx.party != nullptr);
-		assert_throw(ctx.party->get_domain() == scope);
+		assert_throw(ctx.attacking_army != nullptr);
+		assert_throw(ctx.attacking_army->get_domain() == scope);
 
-		assert_throw(ctx.dungeon_site != nullptr);
+		assert_throw(ctx.ruin_site != nullptr);
 
 		if (this->value) {
-			if (ctx.dungeon_area != nullptr) {
-				ctx.dungeon_site->get_game_data()->add_explored_dungeon_area(ctx.dungeon_area);
-			}
-
-			co_await ctx.dungeon_site->get_game_data()->explore_dungeon(ctx.party);
+			co_await ctx.ruin_site->get_game_data()->explore_ruin(ctx.attacking_army);
 		}
 	}
 
@@ -54,11 +48,9 @@ public:
 		Q_UNUSED(prefix);
 
 		if (this->value) {
-			assert_throw(ctx.dungeon_site != nullptr);
+			assert_throw(ctx.ruin_site != nullptr);
 
-			const std::vector<const dungeon_area *> potential_dungeon_areas = ctx.dungeon_site->get_game_data()->get_potential_dungeon_areas(ctx.dungeon_area);
-
-			if (!potential_dungeon_areas.empty()) {
+			if (ctx.ruin_site->get_game_data()->is_ruin()) {
 				return "Explore the dungeon further";
 			} else {
 				return "Exit the dungeon";

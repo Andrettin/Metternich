@@ -9,7 +9,7 @@ enum class event_trigger {
 	yearly_pulse,
 	character_recruited,
 	ruler_death,
-	site_visited,
+	ruin_explored,
 	dungeon_cleared,
 	combat_started
 };
@@ -27,8 +27,8 @@ inline std::string_view get_event_trigger_name(const event_trigger event_trigger
 			return "Character Recruited";
 		case event_trigger::ruler_death:
 			return "Ruler Death";
-		case event_trigger::site_visited:
-			return "Site Visited";
+		case event_trigger::ruin_explored:
+			return "Ruin Explored";
 		case event_trigger::dungeon_cleared:
 			return "Dungeon Cleared";
 		default:

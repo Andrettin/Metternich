@@ -50,11 +50,9 @@
 #include "script/condition/domain_scope_condition.h"
 #include "script/condition/domain_skill_condition.h"
 #include "script/condition/domain_type_condition.h"
-#include "script/condition/dungeon_area_condition.h"
 #include "script/condition/dungeon_condition.h"
 #include "script/condition/dynasty_condition.h"
 #include "script/condition/event_condition.h"
-#include "script/condition/explored_dungeon_area_condition.h"
 #include "script/condition/feature_condition.h"
 #include "script/condition/game_rule_condition.h"
 #include "script/condition/government_group_condition.h"
@@ -378,12 +376,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 		return std::make_unique<domain_exists_condition<scope_type>>(value, condition_operator);
 	} else if (key == "dungeon") {
 		return std::make_unique<dungeon_condition<scope_type>>(value, condition_operator);
-	} else if (key == "dungeon_area") {
-		return std::make_unique<dungeon_area_condition<scope_type>>(value, condition_operator);
 	} else if (key == "event") {
 		return std::make_unique<event_condition<scope_type>>(value, condition_operator);
-	} else if (key == "explored_dungeon_area") {
-		return std::make_unique<explored_dungeon_area_condition<scope_type>>(value, condition_operator);
 	} else if (key == "game_rule") {
 		return std::make_unique<game_rule_condition<scope_type>>(value, condition_operator);
 	} else if (key == "law" && condition_operator == gsml_operator::assignment) {

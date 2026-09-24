@@ -80,7 +80,7 @@ class province_game_data final : public QObject
 	Q_PROPERTY(const metternich::pathway* pathway READ get_pathway NOTIFY pathway_changed)
 	Q_PROPERTY(const metternich::pathway* under_construction_pathway READ get_under_construction_pathway WRITE set_under_construction_pathway NOTIFY under_construction_pathway_changed)
 	Q_PROPERTY(QVariantList visible_sites READ get_visible_sites_qvariant_list NOTIFY visible_sites_changed)
-	Q_PROPERTY(QVariantList dungeon_sites READ get_dungeon_sites_qvariant_list NOTIFY dungeon_sites_changed)
+	Q_PROPERTY(QVariantList ruin_sites READ get_ruin_sites_qvariant_list NOTIFY ruin_sites_changed)
 	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
 	Q_PROPERTY(QVariantList technologies READ get_technologies_qvariant_list NOTIFY technologies_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -320,7 +320,7 @@ public:
 
 	std::vector<const site *> get_visible_sites() const;
 	QVariantList get_visible_sites_qvariant_list() const;
-	QVariantList get_dungeon_sites_qvariant_list() const;
+	QVariantList get_ruin_sites_qvariant_list() const;
 
 	bool produces_commodity(const commodity *commodity) const;
 
@@ -713,7 +713,7 @@ signals:
 	void map_mode_image_changed(QString map_mode_identifier);
 	void text_rect_changed();
 	void visible_sites_changed();
-	void dungeon_sites_changed();
+	void ruin_sites_changed();
 	void technologies_changed();
 	void scripted_modifiers_changed();
 	void population_units_changed();

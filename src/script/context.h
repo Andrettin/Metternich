@@ -12,7 +12,6 @@ class army;
 class building_type;
 class character;
 class domain;
-class dungeon_area;
 class military_unit;
 class party;
 class population_unit;
@@ -144,8 +143,7 @@ struct context_base
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
-	const site *dungeon_site = nullptr;
-	const dungeon_area *dungeon_area = nullptr;
+	const site *ruin_site = nullptr;
 	bool in_combat = false;
 };
 
@@ -207,8 +205,7 @@ public:
 		this->defending_army = ctx.defending_army;
 
 		this->party = ctx.party;
-		this->dungeon_site = ctx.dungeon_site;
-		this->dungeon_area = ctx.dungeon_area;
+		this->ruin_site = ctx.ruin_site;
 		this->in_combat = ctx.in_combat;
 
 		for (const auto &[str, military_unit] : ctx.saved_military_unit_scopes) {

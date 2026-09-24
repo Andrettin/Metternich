@@ -11,7 +11,6 @@
 
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
-Q_MOC_INCLUDE("infrastructure/dungeon.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
@@ -35,7 +34,6 @@ class building_type;
 class character;
 class culture;
 class domain;
-class dungeon;
 class employment_type;
 class holding_type;
 class icon;
@@ -75,7 +73,6 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QString holding_level READ get_holding_level_qstring NOTIFY holding_level_changed)
 	Q_PROPERTY(int weighted_holding_level_percent READ get_weighted_holding_level_percent NOTIFY holding_level_changed)
 	Q_PROPERTY(QVariantList construction_levels READ get_construction_levels_qvariant_list NOTIFY construction_levels_changed)
-	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
 	Q_PROPERTY(bool ruin READ is_ruin NOTIFY ruin_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
@@ -266,15 +263,8 @@ public:
 		this->resource_discovered = discovered;
 	}
 
-	const metternich::dungeon *get_dungeon() const
-	{
-		return this->dungeon;
-	}
-
-	[[nodiscard]] QCoro::Task<void> set_dungeon(const metternich::dungeon *dungeon);
-	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
-
 	bool is_ruin() const;
+	void change_ruin_building_count(const int change);
 
 	const icon *get_icon() const;
 	const portrait *get_portrait() const;
@@ -701,13 +691,7 @@ public:
 		emit visiting_armies_changed();
 	}
 
-	[[nodiscard]]
-	QCoro::Task<void> explore_dungeon(const std::shared_ptr<party> &party);
-
-	std::vector<const dungeon_area *> get_potential_dungeon_areas() const;
-	std::vector<const dungeon_area *> get_potential_dungeon_areas(const dungeon_area *additional_explored_area);
-	const data_entry_set<dungeon_area> &get_explored_dungeon_areas() const;
-	void add_explored_dungeon_area(const dungeon_area *dungeon_area);
+	[[nodiscard]] QCoro::Task<void> explore_ruin(army *army);
 
 	int get_skill_modifier(const skill *skill) const;
 
@@ -736,7 +720,6 @@ signals:
 	void weighted_holding_level_changed();
 	void construction_levels_changed();
 	void holding_type_name_changed();
-	void dungeon_changed();
 	void ruin_changed();
 	void icon_changed();
 	void portrait_changed();
@@ -760,8 +743,7 @@ private:
 	centesimal_int weighted_holding_level; //share of the holding levels available for the holding's province for the holding's domain skill
 	std::map<construction_type, centesimal_int> construction_levels;
 	std::string holding_type_name;
-	const metternich::dungeon *dungeon = nullptr;
-	data_entry_set<dungeon_area> explored_dungeon_areas;
+	int ruin_building_count = 0;
 	bool resource_discovered = false;
 	data_entry_set<site_feature> features;
 	data_entry_map<site_attribute, int> attribute_values;

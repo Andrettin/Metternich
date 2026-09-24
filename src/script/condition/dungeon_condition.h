@@ -1,6 +1,5 @@
 #pragma once
 
-#include "infrastructure/dungeon.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "script/condition/condition.h"
@@ -14,7 +13,7 @@ public:
 	explicit dungeon_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		this->dungeon = dungeon::get(value);
+		this->value = string::to_bool(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -26,10 +25,10 @@ public:
 	virtual bool check_assignment(const scope_type *scope, const read_only_context &ctx) const override
 	{
 		if constexpr (std::is_same_v<scope_type, site>) {
-			return scope->get_game_data()->get_dungeon() == this->dungeon;
+			return scope->get_game_data()->is_ruin() == this->value;
 		} else {
-			if (ctx.dungeon_site != nullptr) {
-				return ctx.dungeon_site->get_game_data()->get_dungeon() == this->dungeon;
+			if (ctx.ruin_site != nullptr) {
+				return ctx.ruin_site->get_game_data()->is_ruin() == this->value;
 			}
 
 			return false;
@@ -40,11 +39,11 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} dungeon", this->dungeon->get_name());
+		return "Ruin";
 	}
 
 private:
-	const metternich::dungeon *dungeon = nullptr;
+	bool value = false;
 };
 
 }

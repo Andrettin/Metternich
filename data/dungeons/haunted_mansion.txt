@@ -1,9 +1,0 @@
-haunted_mansion = {
-	name = "Haunted Mansion"
-	icon = dungeon_door
-	portrait = ruined_castle
-	level = 2
-	random = true
-	max_areas = 12
-	terrain = cave
-}

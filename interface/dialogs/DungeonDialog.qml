@@ -8,7 +8,7 @@ DialogBase {
 	width: Math.max(portrait_button_width * dungeon_grid.columns + dungeon_grid.spacing * (dungeon_grid.columns - 1), close_button.width) + 8 * scale_factor * 2
 	height: close_button.y + close_button.height + 8 * scale_factor
 	
-	property var dungeon_sites: []
+	property var ruin_sites: []
 	readonly property int portrait_button_width: 64 * scale_factor + 2 * scale_factor
 	readonly property int portrait_button_height: 64 * scale_factor + 2 * scale_factor
 	
@@ -32,18 +32,17 @@ DialogBase {
 		Grid {
 			id: dungeon_grid
 			anchors.horizontalCenter: parent.horizontalCenter
-			columns: Math.min(3, dungeon_sites.length)
+			columns: Math.min(3, ruin_sites.length)
 			spacing: 8 * scale_factor
 			
 			Repeater {
-				model: dungeon_sites
+				model: ruin_sites
 				
 				PortraitButton {
 					id: dungeon_portrait
-					portrait_identifier: dungeon.portrait.identifier
+					portrait_identifier: dungeon_site.game_data.portrait.identifier
 					
 					readonly property var dungeon_site: model.modelData
-					readonly property var dungeon: dungeon_site.game_data.dungeon
 					
 					onClicked: {
 						if (metternich.selected_military_units.length > 0) {

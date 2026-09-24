@@ -25,7 +25,7 @@ Flickable {
 				portrait_identifier: site.game_data.portrait ? site.game_data.portrait.identifier : "building_slot"
 				
 				readonly property var site: model.modelData
-				readonly property var dungeon: site.game_data.dungeon
+				readonly property bool is_ruin: site.game_data.ruin
 				readonly property bool is_visit_target: site.game_data.visiting_armies.length > 0
 				
 				Image {
@@ -38,8 +38,8 @@ Flickable {
 				}
 				
 				onClicked: {
-					if (dungeon !== null) {
-						dungeon_dialog.dungeon_sites = [site]
+					if (is_ruin) {
+						dungeon_dialog.ruin_sites = [site]
 						dungeon_dialog.open()
 					} else {
 						selected_civilian_unit = null

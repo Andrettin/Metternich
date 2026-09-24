@@ -146,8 +146,6 @@ set(infrastructure_SRCS
 	src/infrastructure/building_slot_type_container.cpp
 	src/infrastructure/building_type.cpp
 	src/infrastructure/building_type_container.cpp
-	src/infrastructure/dungeon.cpp
-	src/infrastructure/dungeon_area.cpp
 	src/infrastructure/holding_defines.cpp
 	src/infrastructure/holding_type.cpp
 	src/infrastructure/pathway.cpp
@@ -540,8 +538,6 @@ set(infrastructure_HDRS
 	src/infrastructure/building_type.h
 	src/infrastructure/building_type_container.h
 	src/infrastructure/construction_type.h
-	src/infrastructure/dungeon.h
-	src/infrastructure/dungeon_area.h
 	src/infrastructure/holding_defines.h
 	src/infrastructure/holding_type.h
 	src/infrastructure/pathway.h
@@ -708,11 +704,9 @@ set(script_condition_HDRS
 	src/script/condition/domain_scope_condition.h
 	src/script/condition/domain_skill_condition.h
 	src/script/condition/domain_type_condition.h
-	src/script/condition/dungeon_area_condition.h
 	src/script/condition/dungeon_condition.h
 	src/script/condition/dynasty_condition.h
 	src/script/condition/event_condition.h
-	src/script/condition/explored_dungeon_area_condition.h
 	src/script/condition/feature_condition.h
 	src/script/condition/game_rule_condition.h
 	src/script/condition/government_group_condition.h

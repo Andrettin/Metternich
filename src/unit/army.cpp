@@ -166,9 +166,8 @@ QCoro::Task<void> army::do_turn()
 		const site *target_site = this->get_target_site();
 		site_game_data *target_site_game_data = target_site->get_game_data();
 		if (target_site_game_data->can_be_visited_by(this->get_domain())) {
-			std::unique_ptr<party> party = this->to_party();
-			if (!party->get_characters().empty()) {
-				co_await target_site_game_data->explore_dungeon(std::move(party));
+			if (!this->get_military_units().empty()) {
+				co_await target_site_game_data->explore_ruin(this);
 			}
 		}
 	}

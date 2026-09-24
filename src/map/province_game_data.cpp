@@ -23,7 +23,6 @@
 #include "game/event_trigger.h"
 #include "game/game.h"
 #include "game/province_event.h"
-#include "infrastructure/dungeon.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/pathway.h"
 #include "map/diplomatic_map_mode.h"
@@ -84,7 +83,6 @@ province_game_data::province_game_data(const metternich::province *province)
 	this->get_population()->add_upper_population(game::get()->get_population());
 
 	connect(this, &province_game_data::provincial_capital_changed, this, &province_game_data::visible_sites_changed);
-	connect(this, &province_game_data::dungeon_sites_changed, this, &province_game_data::visible_sites_changed);
 
 	this->province_loyalty = static_cast<int>(province_loyalty_level::loyal);
 }
@@ -401,21 +399,13 @@ void province_game_data::do_ai_turn()
 					return true;
 				}
 
-				if (military_unit->get_character() == nullptr) {
-					return true;
-				}
-
 				return false;
 			});
 
 			if (!military_units.empty()) {
-				//only visit if the character party has a suitable level
-				const int max_appropriate_dungeon_level = party::get_max_appropriate_dungeon_level(army::get_characters(military_units));
-
-				if (site_game_data->get_dungeon() == nullptr || site_game_data->get_dungeon()->get_level() <= max_appropriate_dungeon_level) {
-					auto army = make_qunique<metternich::army>(military_units, site);
-					this->get_owner()->get_military()->add_army(std::move(army));
-				}
+				//FIXME: only visit if the army is strong enough, or if the army's leader is of a high enough level
+				auto army = make_qunique<metternich::army>(military_units, site);
+				this->get_owner()->get_military()->add_army(std::move(army));
 			}
 			break;
 		}
@@ -522,11 +512,6 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 	this->owner = domain;
 
 	for (const site *site : this->get_sites()) {
-		if (site->get_game_data()->get_dungeon() != nullptr) {
-			//dungeon sites cannot have owners
-			continue;
-		}
-
 		if (site->get_game_data()->get_owner() == old_owner) {
 			co_await site->get_game_data()->set_owner(domain);
 		}
@@ -1748,7 +1733,7 @@ std::vector<const site *> province_game_data::get_visible_sites() const
 	std::vector<const site *> visible_sites = this->province->get_map_data()->get_sites();
 
 	std::erase_if(visible_sites, [](const site *site) {
-		if (site->get_type() == site_type::holding || (site->get_type() == site_type::dungeon && site->get_game_data()->get_dungeon() != nullptr)) {
+		if (site->get_type() == site_type::holding) {
 			return false;
 		}
 
@@ -1779,17 +1764,17 @@ QVariantList province_game_data::get_visible_sites_qvariant_list() const
 	return container::to_qvariant_list(this->get_visible_sites());
 }
 
-QVariantList province_game_data::get_dungeon_sites_qvariant_list() const
+QVariantList province_game_data::get_ruin_sites_qvariant_list() const
 {
-	std::vector<const site *> dungeon_sites;
+	std::vector<const site *> ruin_sites;
 
 	for (const site *site : this->province->get_map_data()->get_sites()) {
-		if (site->get_type() == site_type::dungeon && site->get_game_data()->get_dungeon() != nullptr) {
-			dungeon_sites.push_back(site);
+		if (site->get_game_data()->is_ruin()) {
+			ruin_sites.push_back(site);
 		}
 	}
 
-	return container::to_qvariant_list(dungeon_sites);
+	return container::to_qvariant_list(ruin_sites);
 }
 
 void province_game_data::change_total_holding_level(const centesimal_int &change)

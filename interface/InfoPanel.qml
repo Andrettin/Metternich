@@ -150,16 +150,6 @@ Rectangle {
 		visible: !selected_site && !selected_garrison && !selected_civilian_unit && !selected_province
 	}
 	
-	PortraitButton {
-		id: portrait
-		anchors.top: title.bottom
-		anchors.topMargin: 16 * scale_factor
-		anchors.horizontalCenter: parent.horizontalCenter
-		portrait_identifier: selected_site && selected_site.game_data.holding_type === null && selected_site.game_data.dungeon !== null ? (selected_site.game_data.portrait ? selected_site.game_data.portrait.identifier : "building_slot") : ""
-		visible: selected_site && selected_site.game_data.holding_type === null && selected_site.game_data.dungeon !== null
-		enabled: false
-	}
-	
 	SmallText {
 		id: subtitle
 		anchors.top: icon.visible ? icon.bottom : (character_portrait.visible ? character_portrait.bottom : title.bottom)
@@ -266,16 +256,15 @@ Rectangle {
 	
 	SmallText {
 		id: site_info_text
-		anchors.top: portrait.visible ? portrait.bottom : title.bottom
+		anchors.top: title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: format_text(
 			selected_site_game_data ? (
-				(selected_site.game_data.owner !== null ? ("Domain: " + selected_site.game_data.owner.game_data.name) : "")
-				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.game_data.name) : "")
-				+ ((selected_site.holding_type !== null && dungeon === null) ? ("\nHolding Level: " + selected_site_game_data.holding_level + " (" + selected_site.holding_type.domain_skill.name + " " + selected_site_game_data.weighted_holding_level_percent + "%)") : "")
-				+ ((selected_site.holding_type !== null && dungeon === null && selected_site_game_data.construction_levels.length > 0) ? ("\n" + get_construction_levels_string(selected_site_game_data.construction_levels)) : "")
-				+ (dungeon && dungeon.level !== 0 ? ("Dungeon Level: " + dungeon.level) : "")
+				(selected_site.game_data.owner !== null && !is_ruin ? ("Domain: " + selected_site.game_data.owner.game_data.name) : "")
+				+ (selected_site.game_data.owner !== null && selected_site.game_data.owner.game_data.realm !== selected_site.game_data.owner && !is_ruin ? ("\nRealm: " + selected_site.game_data.owner.game_data.realm.game_data.name) : "")
+				+ ((selected_site.holding_type !== null && !is_ruin) ? ("\nHolding Level: " + selected_site_game_data.holding_level + " (" + selected_site.holding_type.domain_skill.name + " " + selected_site_game_data.weighted_holding_level_percent + "%)") : "")
+				+ ((selected_site.holding_type !== null && !is_ruin && selected_site_game_data.construction_levels.length > 0) ? ("\n" + get_construction_levels_string(selected_site_game_data.construction_levels)) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
 				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
 			) : ""
@@ -283,7 +272,7 @@ Rectangle {
 		visible: selected_site && !selected_garrison && !viewing_population && !viewing_population_units
 		
 		readonly property var holding_type: selected_site_game_data ? selected_site_game_data.holding_type : null
-		readonly property var dungeon: selected_site_game_data ? selected_site_game_data.dungeon : null
+		readonly property bool is_ruin: selected_site_game_data ? selected_site_game_data.ruin : null
 		
 		function get_construction_levels_string(construction_levels) {
 			var str = ""
@@ -669,16 +658,16 @@ Rectangle {
 		IconButton {
 			id: explore_dungeon_button
 			icon_identifier: "skull"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.dungeon_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0 && can_visit_dungeons(metternich.selected_military_units)
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.ruin_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0 && can_visit_dungeons(metternich.selected_military_units)
 			
 			onClicked: {
-				dungeon_dialog.dungeon_sites = selected_province.game_data.dungeon_sites
+				dungeon_dialog.ruin_sites = selected_province.game_data.ruin_sites
 				dungeon_dialog.open()
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "Explore Dungeon"
+					status_text = "Explore Ruin"
 				} else {
 					status_text = ""
 				}
@@ -687,12 +676,6 @@ Rectangle {
 			function can_visit_dungeons(selected_military_units) {
 				if (selected_military_units.length === 0) {
 					return false
-				}
-				
-				for (var military_unit of selected_military_units) {
-					if (military_unit.character === null) {
-						return false
-					}
 				}
 				
 				return true

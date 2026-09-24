@@ -192,9 +192,9 @@ public:
 
 	const site *get_location(const character *roll_character, const read_only_context &ctx) const
 	{
-		assert_throw(ctx.dungeon_site != nullptr || roll_character->get_game_data()->get_location() != nullptr);
-		if (ctx.dungeon_site != nullptr) {
-			return ctx.dungeon_site;
+		assert_throw(ctx.ruin_site != nullptr || roll_character->get_game_data()->get_location() != nullptr);
+		if (ctx.ruin_site != nullptr) {
+			return ctx.ruin_site;
 		}
 
 		return roll_character->get_game_data()->get_location();

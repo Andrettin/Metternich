@@ -31,8 +31,6 @@
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/construction_type.h"
-#include "infrastructure/dungeon.h"
-#include "infrastructure/dungeon_area.h"
 #include "infrastructure/holding_defines.h"
 #include "infrastructure/holding_type.h"
 #include "infrastructure/pathway.h"
@@ -101,8 +99,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->weighted_holding_level = centesimal_int(value);
 	} else if (key == "holding_type_name") {
 		this->holding_type_name = value;
-	} else if (key == "dungeon") {
-		this->dungeon = dungeon::get(value);
+	} else if (key == "ruin_building_count") {
+		this->ruin_building_count = std::stoi(value);
 	} else if (key == "base_population_capacity") {
 		this->base_population_capacity = std::stoll(value);
 	} else if (key == "population_capacity_modifier") {
@@ -231,16 +229,16 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("holding_type_name", this->get_holding_type_name());
 	}
 
+	if (this->ruin_building_count != 0) {
+		data.add_property("ruin_building_count", std::to_string(this->ruin_building_count));
+	}
+
 	if (this->get_holding_level() != 0) {
 		data.add_property("holding_level", this->get_holding_level().to_string());
 	}
 
 	if (this->get_weighted_holding_level() != 0) {
 		data.add_property("weighted_holding_level", this->get_weighted_holding_level().to_string());
-	}
-
-	if (this->get_dungeon() != nullptr) {
-		data.add_property("dungeon", this->get_dungeon()->get_identifier());
 	}
 
 	data.add_property("holding_level_income", std::to_string(this->holding_level_income));
@@ -417,7 +415,7 @@ QCoro::Task<void> site_game_data::initialize()
 	}
 
 	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::title_name_changed);
 
 	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
 	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
@@ -425,11 +423,9 @@ QCoro::Task<void> site_game_data::initialize()
 	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::icon_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::icon_changed);
 	connect(this, &site_game_data::ruin_changed, this, &site_game_data::icon_changed);
 
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
-	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::ruin_changed, this, &site_game_data::portrait_changed);
 
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
@@ -626,8 +622,6 @@ const std::string &site_game_data::get_title_name() const
 {
 	if (this->get_holding_type() != nullptr || this->is_ruin()) {
 		return this->get_holding_type_name();
-	} else if (this->get_dungeon() != nullptr && this->get_dungeon()->is_random()) {
-		return this->get_dungeon()->get_name();
 	}
 
 	return string::empty_str;
@@ -642,11 +636,7 @@ std::string site_game_data::get_titled_name() const
 		titled_name = title_name + " of ";
 	}
 
-	if (this->get_dungeon() != nullptr && !this->get_dungeon()->is_random()) {
-		titled_name = this->get_dungeon()->get_name();
-	} else {
-		titled_name += this->get_current_cultural_name();
-	}
+	titled_name += this->get_current_cultural_name();
 
 	return titled_name;
 }
@@ -667,25 +657,14 @@ std::string site_game_data::get_display_text() const
 		} else if (this->is_provincial_capital()) {
 			text += " (Provincial Capital)";
 		}
-	} else if (this->get_dungeon() != nullptr) {
-		if (this->get_dungeon()->get_level() != 0) {
-			const std::string dungeon_str = std::format("(Dungeon Level {})", this->get_dungeon()->get_level());
-			text += " ";
-			if (!engine_interface::get()->get_selected_military_units().empty()) {
-				const int max_appropriate_dungeon_level = party::get_max_appropriate_dungeon_level(army::get_characters(engine_interface::get()->get_selected_military_units()));
-				text += this->get_dungeon()->get_level() > max_appropriate_dungeon_level ? string::colored(dungeon_str, ui_defines::get()->get_red_text_color()) : dungeon_str;
-			} else {
-				text += dungeon_str;
-			}
-		} else {
-			text += " (Dungeon)";
-		}
-
-		if (!this->get_visiting_armies().empty()) {
-			text += " (Visiting)";
-		}
+	} else if (this->is_ruin()) {
+		text += " (Ruin)";
 	} else if (this->site->get_holding_type() != nullptr && !this->is_ruin()) {
 		text += " (" + this->site->get_holding_type()->get_name() + " Holding Slot)";
+	}
+
+	if (!this->get_visiting_armies().empty()) {
+		text += " (Visiting)";
 	}
 
 	return text;
@@ -918,8 +897,6 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	}
 
 	if (this->get_holding_type() != nullptr) {
-		assert_throw(this->get_dungeon() == nullptr);
-
 		if (this->get_holding_type()->get_modifier() != nullptr) {
 			co_await this->get_holding_type()->get_modifier()->apply(this->site, 1);
 		}
@@ -1328,65 +1305,12 @@ bool site_game_data::is_built() const
 
 bool site_game_data::is_used() const
 {
-	return this->is_built() || this->get_dungeon() != nullptr;
+	return this->is_built() || this->is_ruin();
 }
 
 const resource *site_game_data::get_resource() const
 {
 	return this->site->get_map_data()->get_resource();
-}
-
-QCoro::Task<void> site_game_data::set_dungeon(const metternich::dungeon *dungeon)
-{
-	if (dungeon == this->get_dungeon()) {
-		co_return;
-	}
-
-	if (dungeon != nullptr) {
-		assert_throw(this->get_holding_type() == nullptr);
-		assert_throw(this->can_have_dungeon(dungeon));
-	}
-
-	this->dungeon = dungeon;
-
-	this->explored_dungeon_areas.clear();
-
-	if (this->get_dungeon() != nullptr) {
-		//dungeons cannot have owners
-		co_await this->set_owner(nullptr);
-	} else {
-		//when sites are cleared of a dungeon, they can be owned
-		co_await this->set_owner(this->get_province()->get_game_data()->get_owner());
-	}
-
-	if (game::get()->is_running()) {
-		emit dungeon_changed();
-
-		if (this->get_province() != nullptr) {
-			emit this->get_province()->get_game_data()->dungeon_sites_changed();
-		}
-	}
-}
-
-bool site_game_data::can_have_dungeon(const metternich::dungeon *dungeon) const
-{
-	if (this->site->get_type() != site_type::dungeon && this->site->get_type() != site_type::holding) {
-		return false;
-	}
-
-	if (this->get_holding_type() != nullptr) {
-		return false;
-	}
-
-	if (this->get_dungeon() != nullptr && this->get_dungeon() != dungeon) {
-		return false;
-	}
-
-	if (dungeon->get_conditions() != nullptr && !dungeon->get_conditions()->check(this->site, read_only_context(this->site))) {
-		return false;
-	}
-
-	return true;
 }
 
 bool site_game_data::is_ruin() const
@@ -1395,19 +1319,28 @@ bool site_game_data::is_ruin() const
 		return false;
 	}
 
-	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
-		const building_type *building = building_slot->get_building();
+	return this->ruin_building_count > 0;
+}
 
-		if (building == nullptr) {
-			continue;
-		}
-
-		if (building->is_ruin()) {
-			return true;
-		}
+void site_game_data::change_ruin_building_count(const int change)
+{
+	if (change == 0) {
+		return;
 	}
 
-	return false;
+	const bool was_ruin = this->is_ruin();
+
+	this->ruin_building_count += change;
+
+	const bool is_ruin = this->is_ruin();
+
+	if (game::get()->is_running() && was_ruin != is_ruin) {
+		emit ruin_changed();
+
+		if (this->get_province() != nullptr) {
+			emit this->get_province()->get_game_data()->ruin_sites_changed();
+		}
+	}
 }
 
 const icon *site_game_data::get_icon() const
@@ -1422,10 +1355,6 @@ const icon *site_game_data::get_icon() const
 		} else {
 			return this->site->get_holding_type()->get_icon();
 		}
-	}
-
-	if (this->get_dungeon() != nullptr) {
-		return this->get_dungeon()->get_icon();
 	}
 
 	return nullptr;
@@ -1443,10 +1372,6 @@ const portrait *site_game_data::get_portrait() const
 		} else {
 			return this->site->get_holding_type()->get_portrait();
 		}
-	}
-
-	if (this->get_dungeon() != nullptr) {
-		return this->get_dungeon()->get_portrait();
 	}
 
 	return nullptr;
@@ -2976,7 +2901,7 @@ void site_game_data::update_holding_level_income()
 
 bool site_game_data::can_be_visited_by(const metternich::domain *domain) const
 {
-	if (this->get_dungeon() == nullptr) {
+	if (!this->is_ruin()) {
 		return false;
 	}
 
@@ -2992,115 +2917,38 @@ QVariantList site_game_data::get_visiting_armies_qvariant_list() const
 	return container::to_qvariant_list(this->get_visiting_armies());
 }
 
-QCoro::Task<void> site_game_data::explore_dungeon(const std::shared_ptr<party> &party)
+QCoro::Task<void> site_game_data::explore_ruin(army *army)
 {
-	assert_throw(!party->get_characters().empty());
+	assert_throw(!army->get_military_units().empty());
+	assert_throw(this->is_ruin());
 
-	const std::vector<const dungeon_area *> potential_dungeon_areas = this->get_potential_dungeon_areas();
+	std::vector<const building_type *> potential_ruin_buildings;
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		if (building_slot->get_building() != nullptr && building_slot->get_building()->is_ruin()) {
+			potential_ruin_buildings.push_back(building_slot->get_building());
+		}
+	}
+	assert_throw(!potential_ruin_buildings.empty());
 
-	if (potential_dungeon_areas.empty()) {
+	context ctx(army->get_domain());
+	ctx.root_scope = army->get_domain();
+	ctx.attacking_army = army;
+	ctx.ruin_site = this->site;
+	ctx.saved_buildings["ruin_building"] = vector::get_random(potential_ruin_buildings);
+
+	co_await domain_event::check_events_for_scope(army->get_domain(), event_trigger::ruin_explored, ctx);
+
+	if (!this->is_ruin()) {
 		//the dungeon has been fully explored
-		context ctx(party->get_domain());
-		ctx.root_scope = party->get_domain();
-		ctx.party = party;
-		ctx.dungeon_site = this->site;
-		co_await domain_event::check_events_for_scope(party->get_domain(), event_trigger::dungeon_cleared, ctx);
+		ctx.saved_buildings.clear();
+		co_await domain_event::check_events_for_scope(army->get_domain(), event_trigger::dungeon_cleared, ctx);
 
-		if (party->get_domain() == game::get()->get_player_domain()) {
-			const portrait *war_minister_portrait = party->get_domain()->get_government()->get_war_minister_portrait();
+		if (army->get_domain() == game::get()->get_player_domain()) {
+			const portrait *war_minister_portrait = army->get_domain()->get_government()->get_war_minister_portrait();
 
-			engine_interface::get()->add_notification("Dungeon Cleared", war_minister_portrait, std::format("You have cleared the {} dungeon!", this->get_dungeon()->get_name()));
-		}
-
-		co_await this->set_dungeon(nullptr);
-		co_return;
-	}
-
-	const dungeon_area *dungeon_area = vector::get_random(potential_dungeon_areas);
-
-	context ctx(party->get_domain());
-	ctx.root_scope = party->get_domain();
-	ctx.party = party;
-	ctx.dungeon_site = this->site;
-	ctx.dungeon_area = dungeon_area;
-
-	co_await dungeon_area->get_event()->fire(party->get_domain(), ctx);
-}
-
-std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas() const
-{
-	if (this->get_dungeon() == nullptr) {
-		return {};
-	}
-
-	if (this->get_dungeon()->get_max_areas() != 0 && static_cast<int>(this->get_explored_dungeon_areas().size()) >= this->get_dungeon()->get_max_areas()) {
-		return {};
-	}
-
-	bool needs_entrance = true;
-	for (const dungeon_area *dungeon_area : this->get_explored_dungeon_areas()) {
-		if (dungeon_area->is_entrance()) {
-			needs_entrance = false;
-			break;
+			engine_interface::get()->add_notification("Dungeon Cleared", war_minister_portrait, std::format("{}, you have cleared the {} dungeon!", army->get_domain()->get_game_data()->get_form_of_address(), this->get_current_cultural_name()));
 		}
 	}
-
-	std::vector<const dungeon_area *> potential_dungeon_areas;
-	bool found_entrance = false;
-
-	for (const dungeon_area *dungeon_area : dungeon_area::get_all()) {
-		if (dungeon_area->is_entrance() != needs_entrance) {
-			if ((needs_entrance && found_entrance) || !needs_entrance) {
-				continue;
-			}
-		}
-
-		if (this->get_explored_dungeon_areas().contains(dungeon_area)) {
-			continue;
-		}
-
-		if (dungeon_area->get_conditions() != nullptr && !dungeon_area->get_conditions()->check(this->site, read_only_context(this->site))) {
-			continue;
-		}
-
-		if (needs_entrance && !found_entrance && dungeon_area->is_entrance()) {
-			found_entrance = true;
-			potential_dungeon_areas.clear();
-		}
-
-		for (int i = 0; i < dungeon_area->get_weight(); ++i) {
-			potential_dungeon_areas.push_back(dungeon_area);
-		}
-	}
-
-	return potential_dungeon_areas;
-}
-
-std::vector<const dungeon_area *> site_game_data::get_potential_dungeon_areas(const dungeon_area *additional_explored_area)
-{
-	if (additional_explored_area == nullptr || this->get_explored_dungeon_areas().contains(additional_explored_area)) {
-		return this->get_potential_dungeon_areas();
-	}
-
-	assert_throw(!this->get_explored_dungeon_areas().contains(additional_explored_area));
-
-	this->explored_dungeon_areas.insert(additional_explored_area);
-
-	std::vector<const dungeon_area *> potential_dungeon_areas = this->get_potential_dungeon_areas();
-
-	this->explored_dungeon_areas.erase(additional_explored_area);
-
-	return potential_dungeon_areas;
-}
-
-const data_entry_set<dungeon_area> &site_game_data::get_explored_dungeon_areas() const
-{
-	return this->explored_dungeon_areas;
-}
-
-void site_game_data::add_explored_dungeon_area(const dungeon_area *dungeon_area)
-{
-	this->explored_dungeon_areas.insert(dungeon_area);
 }
 
 int site_game_data::get_skill_modifier(const skill *skill) const

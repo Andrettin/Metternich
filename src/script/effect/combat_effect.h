@@ -13,8 +13,6 @@
 #include "domain/domain.h"
 #include "game/combat.h"
 #include "game/game.h"
-#include "infrastructure/dungeon.h"
-#include "infrastructure/dungeon_area.h"
 #include "item/item_type.h"
 #include "item/object_type.h"
 #include "item/trap_type.h"
@@ -275,12 +273,6 @@ public:
 
 		for (const std::unique_ptr<object> &object : this->objects) {
 			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap(), object->get_description(), object->get_placement(), object->get_placement_offset());
-		}
-
-		if (ctx.dungeon_area != nullptr && ctx.dungeon_area->get_terrain() != nullptr) {
-			combat->set_base_terrain(ctx.dungeon_area->get_terrain());
-		} else if (ctx.dungeon_site != nullptr && ctx.dungeon_site->get_game_data()->get_dungeon()->get_terrain() != nullptr) {
-			combat->set_base_terrain(ctx.dungeon_site->get_game_data()->get_dungeon()->get_terrain());
 		}
 
 		combat->set_surprise(this->surprise);

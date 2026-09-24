@@ -2,6 +2,7 @@
 
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "game/battle.h"
 #include "game/game.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
@@ -67,8 +68,7 @@ public:
 		}
 	}
 
-	[[nodiscard]]
-	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs;
 		std::vector<military_unit *> enemy_units;
@@ -83,13 +83,38 @@ public:
 
 		auto enemy_army = make_qunique<army>(enemy_units, std::monostate());
 
-		bool success = false;
+		qunique_ptr<battle> battle;
 
 		if (this->attacker) {
-			success = co_await game::get()->do_battle(ctx.attacking_army, enemy_army.get());
+			battle = make_qunique<metternich::battle>(ctx.attacking_army, enemy_army.get(), QSize());
 		} else {
-			success = !(co_await game::get()->do_battle(enemy_army.get(), ctx.defending_army));
+			battle = make_qunique<metternich::battle>(enemy_army.get(), ctx.defending_army, QSize());
 		}
+
+		const domain *scope_domain = effect<scope_type>::get_scope_domain(scope);
+		assert_throw(scope_domain != nullptr);
+
+		battle->set_scope(scope_domain);
+		context battle_ctx;
+		battle_ctx.root_scope = scope_domain;
+		battle_ctx.in_combat = true;
+		battle->set_context(battle_ctx);
+
+		co_await battle->initialize();
+
+		QFuture<bool> success_future = battle->get_future();
+
+		if (scope_domain == game::get()->get_player_domain() ) {
+			game::get()->set_current_combat(std::move(battle));
+		} else {
+			QTimer::singleShot(0, [battle = std::move(battle)]() -> QCoro::Task<void> {
+				co_await battle->start_coro();
+			});
+		}
+
+		const bool success = co_await success_future;
+
+		enemy_army->clear();
 
 		if (success) {
 			if (this->victory_effects != nullptr) {

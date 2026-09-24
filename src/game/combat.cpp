@@ -1006,10 +1006,10 @@ bool combat::can_current_character_use_object(const combat_object *object) const
 
 const site *combat::get_location() const
 {
-	assert_throw(ctx.dungeon_site != nullptr || this->scope != nullptr);
+	assert_throw(ctx.ruin_site != nullptr || this->scope != nullptr);
 
-	if (ctx.dungeon_site != nullptr) {
-		return ctx.dungeon_site;
+	if (ctx.ruin_site != nullptr) {
+		return ctx.ruin_site;
 	}
 
 	return this->scope->get_game_data()->get_capital();
