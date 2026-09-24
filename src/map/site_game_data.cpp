@@ -62,6 +62,7 @@
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
+#include "ui/icon.h"
 #include "ui/portrait.h"
 #include "ui/ui_defines.h"
 #include "unit/army.h"
@@ -423,8 +424,13 @@ QCoro::Task<void> site_game_data::initialize()
 
 	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
 
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::icon_changed);
+	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::icon_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::icon_changed);
+
 	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
 	connect(this, &site_game_data::dungeon_changed, this, &site_game_data::portrait_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::portrait_changed);
 
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
 		co_await resource->get_modifier()->apply(this->site);
@@ -618,7 +624,7 @@ int site_game_data::get_level() const
 
 const std::string &site_game_data::get_title_name() const
 {
-	if (this->get_holding_type() != nullptr) {
+	if (this->get_holding_type() != nullptr || this->is_ruin()) {
 		return this->get_holding_type_name();
 	} else if (this->get_dungeon() != nullptr && this->get_dungeon()->is_random()) {
 		return this->get_dungeon()->get_name();
@@ -678,7 +684,7 @@ std::string site_game_data::get_display_text() const
 		if (!this->get_visiting_armies().empty()) {
 			text += " (Visiting)";
 		}
-	} else if (this->site->get_holding_type() != nullptr) {
+	} else if (this->site->get_holding_type() != nullptr && !this->is_ruin()) {
 		text += " (" + this->site->get_holding_type()->get_name() + " Holding Slot)";
 	}
 
@@ -1287,10 +1293,15 @@ void site_game_data::update_holding_type_name()
 {
 	std::string name;
 
-	if (this->get_holding_type() != nullptr) {
-		name = this->get_holding_type()->get_name();
+	const metternich::holding_type *holding_type = this->get_holding_type();
+	if (this->get_holding_type() == nullptr && this->is_ruin()) {
+		holding_type = this->site->get_holding_type();
+	}
 
-		for (const auto &[conditional_name, conditions] : this->get_holding_type()->get_conditional_names()) {
+	if (holding_type != nullptr) {
+		name = holding_type->get_name();
+
+		for (const auto &[conditional_name, conditions] : holding_type->get_conditional_names()) {
 			assert_throw(conditions != nullptr);
 
 			if (conditions->check(this->site, read_only_context(this->site))) {
@@ -1378,10 +1389,60 @@ bool site_game_data::can_have_dungeon(const metternich::dungeon *dungeon) const
 	return true;
 }
 
+bool site_game_data::is_ruin() const
+{
+	if (this->is_built()) {
+		return false;
+	}
+
+	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+		const building_type *building = building_slot->get_building();
+
+		if (building == nullptr) {
+			continue;
+		}
+
+		if (building->is_ruin()) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+const icon *site_game_data::get_icon() const
+{
+	if (this->get_holding_type() != nullptr) {
+		return this->get_holding_type()->get_icon();
+	}
+
+	if (this->is_ruin()) {
+		if (this->site->get_holding_type()->get_ruin_icon() != nullptr) {
+			return this->site->get_holding_type()->get_ruin_icon();
+		} else {
+			return this->site->get_holding_type()->get_icon();
+		}
+	}
+
+	if (this->get_dungeon() != nullptr) {
+		return this->get_dungeon()->get_icon();
+	}
+
+	return nullptr;
+}
+
 const portrait *site_game_data::get_portrait() const
 {
 	if (this->get_holding_type() != nullptr) {
 		return this->get_holding_type()->get_portrait();
+	}
+
+	if (this->is_ruin()) {
+		if (this->site->get_holding_type()->get_ruin_portrait() != nullptr) {
+			return this->site->get_holding_type()->get_ruin_portrait();
+		} else {
+			return this->site->get_holding_type()->get_portrait();
+		}
 	}
 
 	if (this->get_dungeon() != nullptr) {

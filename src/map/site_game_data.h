@@ -16,6 +16,8 @@ Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
+Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace archimedes {
 	class dice;
@@ -36,6 +38,7 @@ class domain;
 class dungeon;
 class employment_type;
 class holding_type;
+class icon;
 class party;
 class pathway;
 class phenotype;
@@ -73,6 +76,8 @@ class site_game_data final : public QObject
 	Q_PROPERTY(int weighted_holding_level_percent READ get_weighted_holding_level_percent NOTIFY holding_level_changed)
 	Q_PROPERTY(QVariantList construction_levels READ get_construction_levels_qvariant_list NOTIFY construction_levels_changed)
 	Q_PROPERTY(const metternich::dungeon* dungeon READ get_dungeon NOTIFY dungeon_changed)
+	Q_PROPERTY(bool ruin READ is_ruin NOTIFY ruin_changed)
+	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
 	Q_PROPERTY(const metternich::portrait* portrait READ get_portrait NOTIFY portrait_changed)
 	Q_PROPERTY(QVariantList features READ get_features_qvariant_list NOTIFY features_changed)
 	Q_PROPERTY(QVariantList attribute_values READ get_attribute_values_qvariant_list NOTIFY attribute_values_changed)
@@ -269,6 +274,9 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_dungeon(const metternich::dungeon *dungeon);
 	bool can_have_dungeon(const metternich::dungeon *dungeon) const;
 
+	bool is_ruin() const;
+
+	const icon *get_icon() const;
 	const portrait *get_portrait() const;
 
 	const data_entry_set<site_feature> &get_features() const
@@ -729,6 +737,8 @@ signals:
 	void construction_levels_changed();
 	void holding_type_name_changed();
 	void dungeon_changed();
+	void ruin_changed();
+	void icon_changed();
 	void portrait_changed();
 	void features_changed();
 	void attribute_values_changed();

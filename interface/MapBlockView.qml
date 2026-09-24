@@ -190,6 +190,7 @@ Item {
 			readonly property var tile_pos: site ? site.map_data.tile_pos : null
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			readonly property var dungeon: site ? site.game_data.dungeon : null
+			readonly property var icon: site ? site.game_data.icon : null
 			readonly property bool selected: site === selected_site
 			
 			Rectangle {
@@ -205,7 +206,7 @@ Item {
 				id: site_icon
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				source: "image://icon/" + (holding_type ? holding_type.icon.identifier : (dungeon ? dungeon.icon.identifier : (site && site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison")))
+				source: "image://icon/" + (icon ? icon.identifier : (site && site.holding_type ? (site.holding_type.icon.identifier + "/blank_silhouette") : "garrison"))
 			}
 			
 			MouseArea {

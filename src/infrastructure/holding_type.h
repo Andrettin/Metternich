@@ -30,7 +30,9 @@ class holding_type final : public named_data_entry, public data_type<holding_typ
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* ruin_icon MEMBER ruin_icon READ get_ruin_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::portrait* portrait MEMBER portrait READ get_portrait NOTIFY changed)
+	Q_PROPERTY(const metternich::portrait* ruin_portrait MEMBER ruin_portrait READ get_ruin_portrait NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath NOTIFY changed)
 	Q_PROPERTY(bool economic MEMBER economic READ is_economic NOTIFY changed)
 	Q_PROPERTY(bool religious MEMBER religious READ is_religious NOTIFY changed)
@@ -57,9 +59,19 @@ public:
 		return this->icon;
 	}
 
+	const metternich::icon *get_ruin_icon() const
+	{
+		return this->ruin_icon;
+	}
+
 	const metternich::portrait *get_portrait() const
 	{
 		return this->portrait;
+	}
+
+	const metternich::portrait *get_ruin_portrait() const
+	{
+		return this->ruin_portrait;
 	}
 
 	const std::filesystem::path &get_image_filepath() const
@@ -166,7 +178,9 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	const metternich::icon *ruin_icon = nullptr;
 	const metternich::portrait *portrait = nullptr;
+	const metternich::portrait *ruin_portrait = nullptr;
 	std::filesystem::path image_filepath;
 	bool economic = false;
 	bool religious = false;

@@ -175,6 +175,12 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 		}
 	}
 
+	const bool was_ruin = old_building != nullptr && old_building->is_ruin();
+	const bool is_ruin = building != nullptr && building->is_ruin();
+	if (is_ruin != was_ruin) {
+		emit this->get_settlement()->get_game_data()->ruin_changed();
+	}
+
 	//update the holding's type name, since it can depend on buildings
 	this->get_settlement()->get_game_data()->update_holding_type_name();
 
