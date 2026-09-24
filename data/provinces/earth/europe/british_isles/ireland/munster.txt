@@ -13,9 +13,13 @@ munster = {
 			religion = druidic
 		}
 		
+		1190 = {
+			owner = ireland #part of Ireland c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+			religion = catholic
+		}
+		
 		1360 = {
 			owner = ireland #part of Ireland in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			religion = catholic
 		}
 	}
 }
