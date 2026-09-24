@@ -95,8 +95,7 @@ public:
 		assert_throw(scope_domain != nullptr);
 
 		battle->set_scope(scope_domain);
-		context battle_ctx;
-		battle_ctx.root_scope = scope_domain;
+		context battle_ctx = ctx;
 		battle_ctx.in_combat = true;
 		battle->set_context(battle_ctx);
 

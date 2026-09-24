@@ -2930,11 +2930,13 @@ QCoro::Task<void> site_game_data::explore_ruin(army *army)
 	}
 	assert_throw(!potential_ruin_buildings.empty());
 
+	const building_type *ruin_building = vector::get_random(potential_ruin_buildings);
+
 	context ctx(army->get_domain());
 	ctx.root_scope = army->get_domain();
 	ctx.attacking_army = army;
 	ctx.ruin_site = this->site;
-	ctx.saved_buildings["ruin_building"] = vector::get_random(potential_ruin_buildings);
+	ctx.saved_buildings["ruin_building"] = ruin_building;
 
 	co_await domain_event::check_events_for_scope(army->get_domain(), event_trigger::ruin_explored, ctx);
 

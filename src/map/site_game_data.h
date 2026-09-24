@@ -334,8 +334,7 @@ public:
 
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
 
-	[[nodiscard]]
-	QCoro::Task<void> set_slot_building(const building_slot_type *slot_type, const building_type *building);
+	[[nodiscard]] QCoro::Task<void> set_slot_building(const building_slot_type *slot_type, const building_type *building);
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
 	bool has_building(const building_type *building) const;
