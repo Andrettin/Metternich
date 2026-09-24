@@ -35,7 +35,7 @@ beneficial_holding_event = {
 	random_weight = 25
 	hidden = true
 	immediate_effects = {
-		random_settlement = {
+		random_holding = {
 			event_group = beneficial_holding_events
 		}
 	}
