@@ -1,0 +1,10 @@
+ruined_keep = {
+	name = "Ruined Keep"
+	building_class = ruined_keep
+	portrait = ruined_castle
+	icon = wall
+	ruin = true
+	holding_types = {
+		castle
+	}
+}

@@ -1,0 +1,4 @@
+ruined_keep = {
+	name = "Ruined Keep"
+	slot_type = keep
+}

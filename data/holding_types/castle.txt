@@ -1,7 +1,9 @@
 castle = {
 	name = "Castle"
 	icon = non_aggression_pact
+	ruin_icon = dungeon
 	portrait = castle
+	ruin_portrait = ruined_castle
 	image_filepath = "tiles/settlements/town.png"
 	domain_skill = order
 	resource = true
@@ -12,19 +14,29 @@ castle = {
 	conditional_names = {
 		"Lair" = {
 			scripted_condition = is_lair
+			not = {
+				has_building_class = ruined_keep
+			}
 		}
 		"Tribal Hold" = {
 			scripted_condition = is_tribal
+			not = {
+				has_building_class = ruined_keep
+			}
 		}
 		"Manor" = {
 			not = {
 				has_building_class = donjon
+				has_building_class = ruined_keep
 				scripted_condition = is_tribal
 				scripted_condition = is_lair
 			}
 		}
 		"Castle" = {
 			has_building_class = donjon
+		}
+		"Ruined Castle" = {
+			has_building_class = ruined_keep
 		}
 	}
 	tier_levels = {
