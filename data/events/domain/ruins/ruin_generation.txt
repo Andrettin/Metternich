@@ -1,0 +1,20 @@
+ruin_generation = {
+	name = "Ruin Generation"
+	trigger = setup_finished
+	hidden = true
+	conditions = {
+		domain = none
+	}
+	immediate_effects = {
+		random_holding = {
+			global = true
+			built_only = false
+			conditions = {
+				holding_type = none
+				can_gain_building_class = ruined_keep
+			}
+			
+			add_building_class = ruined_keep
+		}
+	}
+}
