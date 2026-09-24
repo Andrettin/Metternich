@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} holding type", this->holding_type->get_name());
+		return std::format("{} holding type", this->holding_type != nullptr ? this->holding_type->get_name() : "No");
 	}
 
 private:
