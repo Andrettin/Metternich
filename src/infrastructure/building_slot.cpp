@@ -219,8 +219,15 @@ bool building_slot::can_have_building(const building_type *building) const
 		return false;
 	}
 
-	if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
-		return false;
+	if (building->is_ruin()) {
+		//ruins can be present in unbuilt holdings
+		if (!vector::contains(building->get_holding_types(), this->get_settlement()->get_holding_type())) {
+			return false;
+		}
+	} else {
+		if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
+			return false;
+		}
 	}
 
 	if (building->get_base_building() != nullptr && !this->can_have_building(building->get_base_building())) {
@@ -305,6 +312,11 @@ bool building_slot::can_gain_building(const building_type *building) const
 
 bool building_slot::can_build_building(const building_type *building) const
 {
+	if (building->is_ruin()) {
+		//ruins cannot be built
+		return false;
+	}
+
 	if (building->get_base_building() != nullptr && this->get_building() != building->get_base_building()) {
 		return false;
 	}

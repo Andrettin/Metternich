@@ -62,6 +62,7 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(bool capital_only MEMBER capital_only READ is_capital_only NOTIFY changed)
 	Q_PROPERTY(bool provincial_capital_only MEMBER provincial_capital_only READ is_provincial_capital_only NOTIFY changed)
 	Q_PROPERTY(bool wonder_only MEMBER wonder_only READ is_wonder_only NOTIFY changed)
+	Q_PROPERTY(bool ruin MEMBER ruin READ is_ruin NOTIFY changed)
 	Q_PROPERTY(archimedes::centesimal_int holding_level MEMBER holding_level READ get_holding_level NOTIFY changed)
 	Q_PROPERTY(metternich::building_type* base_building MEMBER base_building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
@@ -184,6 +185,11 @@ public:
 	bool is_wonder_only() const
 	{
 		return this->wonder_only;
+	}
+
+	bool is_ruin() const
+	{
+		return this->ruin;
 	}
 
 	const centesimal_int &get_holding_level() const
@@ -343,6 +349,7 @@ private:
 	bool capital_only = false;
 	bool provincial_capital_only = false;
 	bool wonder_only = false;
+	bool ruin = false; //whether this is a ruin; ruins can remain in building slots even if the holding is not build
 	centesimal_int holding_level;
 	std::map<construction_type, centesimal_int> construction_levels;
 	centesimal_int total_construction_level;
