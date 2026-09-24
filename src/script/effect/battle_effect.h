@@ -56,10 +56,10 @@ public:
 
 				this->enemies[military_unit_type] = quantity;
 			});
-		} else if (tag == "victory") {
+		} else if (tag == "on_victory") {
 			this->victory_effects = std::make_unique<effect_list<scope_type>>();
 			this->victory_effects->process_gsml_data(scope);
-		} else if (tag == "defeat") {
+		} else if (tag == "on_defeat") {
 			this->defeat_effects = std::make_unique<effect_list<scope_type>>();
 			this->defeat_effects->process_gsml_data(scope);
 		} else {
