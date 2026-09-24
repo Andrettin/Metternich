@@ -19,4 +19,19 @@ athena = {
 
 athena_short_hair = {
 	filepath = "portraits/characters/athena_short_hair.png"
+	character_conditions = {
+		gender = female
+		or = {
+			species = air_elemental
+			species = dryad
+			species = earth_elemental
+			species = half_dryad
+			species = nereid
+			species = nymph
+			species = titan
+			species = triton
+			species = water_elemental
+			taxon = archon
+		}
+	}
 }
