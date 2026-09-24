@@ -52,10 +52,7 @@ public:
 		return this->resource_discovered;
 	}
 
-	bool is_developed() const
-	{
-		return this->developed || this->development_level > 0 || this->get_holding_type() != nullptr || !this->get_buildings().empty() || !this->get_wonders().empty() || !this->get_population_groups().empty();
-	}
+	bool is_developed() const;
 
 	int get_development_level() const
 	{

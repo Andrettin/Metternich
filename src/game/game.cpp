@@ -1245,14 +1245,21 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 	metternich::site_game_data *settlement_game_data = settlement->get_game_data();
 	const metternich::holding_type *holding_type = settlement_game_data->get_holding_type();
 
+	const site_history *site_history = site->get_history();
+
 	if (holding_type == nullptr) {
+		//apply ruin buildings
+		for (auto [building_slot_type, building] : site_history->get_buildings()) {
+			if (building->is_ruin()) {
+				co_await settlement_game_data->add_building_with_prerequisites(building);
+			}
+		}
+		
 		co_return;
 	}
 
 	//holding level before applying buildings, e.g. from site features
 	const int holding_level_before_building_application = site_game_data->get_holding_level().to_int();
-
-	const site_history *site_history = site->get_history();
 
 	if (site == settlement && settlement_game_data->is_built()) {
 		//set an initial culture/religion so that buildings can be applied without issues
@@ -1273,6 +1280,10 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 	domain_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
+		if (building->is_ruin()) {
+			continue;
+		}
+
 		//add the building's required technology first, so that even if the building cannot be applied, its technology is still added
 		if (building->get_required_technology() != nullptr && settlement_game_data->get_province() != nullptr) {
 			co_await settlement_game_data->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());

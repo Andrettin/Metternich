@@ -124,4 +124,19 @@ void site_history::process_gsml_scope(const gsml_data &scope, const QDate &date)
 	}
 }
 
+bool site_history::is_developed() const
+{
+	if (this->developed || this->development_level > 0 || this->get_holding_type() != nullptr || !this->get_wonders().empty() || !this->get_population_groups().empty()) {
+		return true;
+	}
+
+	for (const auto &[building_slot, building_type] : this->get_buildings()) {
+		if (!building_type->is_ruin()) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 }
