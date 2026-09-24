@@ -1,0 +1,26 @@
+central_room = {
+	name = "Central Room"
+	description = "This large, ruined room was once central to the entire castle. Gnolls dwell here now, and they consider your visit most unwelcome."
+	trigger = ruin_explored
+	random = true
+	conditions = {
+		saved_building = {
+			name = ruin_building
+			building_type = ruined_keep
+		}
+	}
+	option = {
+		name = "To battle!"
+		effects = {
+			battle = {
+				attacker = true
+				enemies = {
+					gnoll_marauders = 2
+				}
+				on_victory = {
+					#FIXME: add treasure
+				}
+			}
+		}
+	}
+}
