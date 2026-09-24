@@ -7,6 +7,7 @@ enum class event_trigger {
 	per_turn_pulse,
 	quarterly_pulse,
 	yearly_pulse,
+	setup_finished,
 	character_recruited,
 	ruler_death,
 	ruin_explored,
@@ -23,6 +24,8 @@ inline std::string_view get_event_trigger_name(const event_trigger event_trigger
 			return "Quarterly Pulse";
 		case event_trigger::yearly_pulse:
 			return "Yearly Pulse";
+		case event_trigger::setup_finished:
+			return "Setup Finished";
 		case event_trigger::character_recruited:
 			return "Character Recruited";
 		case event_trigger::ruler_death:

@@ -33,6 +33,7 @@
 #include "game/character_event.h"
 #include "game/combat_base.h"
 #include "game/domain_event.h"
+#include "game/event_trigger.h"
 #include "game/game_rules.h"
 #include "game/province_event.h"
 #include "game/scenario.h"
@@ -1936,6 +1937,8 @@ QCoro::Task<void> game::on_setup_finished()
 
 		emit character->game_data_changed();
 	}
+
+	co_await domain_event::check_events_for_scope(nullptr, event_trigger::setup_finished, context(static_cast<const domain *>(nullptr)));
 
 	this->loaded = true;
 
