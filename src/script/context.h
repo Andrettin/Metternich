@@ -9,6 +9,7 @@ namespace archimedes {
 namespace metternich {
 
 class army;
+class building_type;
 class character;
 class domain;
 class dungeon_area;
@@ -118,6 +119,17 @@ struct context_base
 		return empty_str;
 	}
 
+	const building_type *get_saved_building(const std::string &name) const
+	{
+		const auto find_iterator = this->saved_buildings.find(name);
+
+		if (find_iterator != this->saved_buildings.end()) {
+			return find_iterator->second;
+		}
+
+		return nullptr;
+	}
+
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
 	scope_variant_type previous_scope = std::monostate();
@@ -128,6 +140,7 @@ struct context_base
 	std::map<std::string, const province *> saved_province_scopes;
 	std::map<std::string, const site *> saved_site_scopes;
 	std::map<std::string, std::string> saved_strings;
+	std::map<std::string, const building_type *> saved_buildings;
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
@@ -188,6 +201,7 @@ public:
 		this->saved_province_scopes = ctx.saved_province_scopes;
 		this->saved_site_scopes = ctx.saved_site_scopes;
 		this->saved_strings = ctx.saved_strings;
+		this->saved_buildings = ctx.saved_buildings;
 
 		this->attacking_army = ctx.attacking_army;
 		this->defending_army = ctx.defending_army;
