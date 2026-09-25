@@ -3,8 +3,8 @@ armor_skin = {
 	icon = heater_shield
 	unlimited = true
 	types = {
+		combat_proficiency
 		epic_proficiency
-		general_proficiency
 	}
 	modifier = {
 		natural_armor_class = 2
@@ -28,8 +28,8 @@ epic_prowess = {
 	icon = labor
 	unlimited = true
 	types = {
+		combat_proficiency
 		epic_proficiency
-		general_proficiency
 	}
 	modifier = {
 		to_hit_bonus = 1
@@ -98,8 +98,8 @@ epic_toughness = {
 	icon = labor
 	unlimited = true
 	types = {
+		combat_proficiency
 		epic_proficiency
-		general_proficiency
 	}
 	modifier = {
 		health = 30
@@ -269,8 +269,8 @@ superior_initiative = {
 	name = "Superior Initiative"
 	icon = saber
 	types = {
+		combat_proficiency
 		epic_proficiency
-		general_proficiency
 	}
 	conditions = {
 		trait = improved_initiative

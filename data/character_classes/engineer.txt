@@ -16,7 +16,7 @@ engineer = {
 		save_vs_poison = cleric_save_vs_poison_bonus
 	}
 	trait_gain_tables = {
-		#combat_proficiency = engineer_combat_proficiency_gain
+		combat_proficiency = engineer_combat_proficiency_gain
 		general_proficiency = engineer_general_proficiency_gain
 	}
 	class_skill_groups = {

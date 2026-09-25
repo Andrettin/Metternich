@@ -1,20 +1,3 @@
-dodge = {
-	name = "Dodge"
-	icon = heater_shield
-	types = {
-		general_proficiency
-	}
-	conditions = {
-		dexterity >= 13
-	}
-	modifier = {
-		armor_class = {
-			modifier_type = dodge
-			modifier = 1
-		}
-	}
-}
-
 great_fortitude = {
 	name = "Great Fortitude"
 	icon = labor
@@ -23,17 +6,6 @@ great_fortitude = {
 	}
 	modifier = {
 		fortitude = 2
-	}
-}
-
-improved_initiative = {
-	name = "Improved Initiative"
-	icon = saber
-	types = {
-		general_proficiency #maybe should be a weapon/combat proficiency instead?
-	}
-	modifier = {
-		initiative = 4
 	}
 }
 
@@ -267,17 +239,5 @@ skill_focus_weaving = {
 	}
 	modifier = {
 		weaving = 3
-	}
-}
-
-toughness = {
-	name = "Toughness"
-	icon = labor
-	unlimited = true
-	types = {
-		general_proficiency
-	}
-	modifier = {
-		health = 3
 	}
 }

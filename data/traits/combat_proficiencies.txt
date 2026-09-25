@@ -1,3 +1,43 @@
+dodge = {
+	name = "Dodge"
+	icon = heater_shield
+	types = {
+		combat_proficiency
+	}
+	conditions = {
+		dexterity >= 13
+	}
+	modifier = {
+		armor_class = {
+			modifier_type = dodge
+			modifier = 1
+		}
+	}
+}
+
+improved_initiative = {
+	name = "Improved Initiative"
+	icon = saber
+	types = {
+		combat_proficiency
+	}
+	modifier = {
+		initiative = 4
+	}
+}
+
+toughness = {
+	name = "Toughness"
+	icon = labor
+	unlimited = true
+	types = {
+		combat_proficiency
+	}
+	modifier = {
+		health = 3
+	}
+}
+
 weapon_focus_bows = {
 	name = "Weapon Focus: Bows"
 	icon = bow
