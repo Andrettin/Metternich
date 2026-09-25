@@ -3,7 +3,7 @@ vulnerable = {
 	icon = skull
 	types = {
 		flaw
-		combat_proficiency
+		general_proficiency
 	}
 	modifier = {
 		armor_class = -1
