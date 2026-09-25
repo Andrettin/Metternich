@@ -2946,6 +2946,7 @@ QCoro::Task<void> site_game_data::explore_ruin(army *army)
 
 	context ctx(army->get_domain());
 	ctx.root_scope = army->get_domain();
+	ctx.source_scope = this->site;
 	ctx.attacking_army = army;
 	ctx.ruin_site = this->site;
 	ctx.saved_buildings["ruin_building"] = ruin_building;
