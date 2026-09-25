@@ -739,7 +739,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 
 	co_await this->generate_attributes();
 
-	this->apply_bloodline(apply_history);
+	co_await this->apply_bloodline(apply_history);
 	this->initialize_patron_deity();
 
 	co_await this->add_starting_items();
@@ -910,25 +910,25 @@ QCoro::Task<void> character_game_data::generate_attributes()
 	}
 }
 
-void character_game_data::apply_bloodline(const bool apply_history)
+QCoro::Task<void> character_game_data::apply_bloodline(const bool apply_history)
 {
 	assert_throw(this->get_bloodline() == nullptr);
 
 	if (this->character->get_bloodline() != nullptr) {
 		assert_throw(this->character->get_bloodline_strength() > 0);
-		this->set_bloodline(this->character->get_bloodline());
+		co_await this->set_bloodline(this->character->get_bloodline());
 		this->set_bloodline_strength(this->character->get_bloodline_strength());
-		return;
+		co_return;
 	}
 
-	this->apply_bloodline_from_parents();
+	co_await this->apply_bloodline_from_parents();
 
 	if (apply_history) {
-		this->apply_bloodline_inheritance_investiture();
+		co_await this->apply_bloodline_inheritance_investiture();
 	}
 }
 
-void character_game_data::apply_bloodline_from_parents()
+QCoro::Task<void> character_game_data::apply_bloodline_from_parents()
 {
 	assert_throw(this->get_bloodline() == nullptr);
 
@@ -936,7 +936,7 @@ void character_game_data::apply_bloodline_from_parents()
 	const std::vector<metternich::character *> biological_parents = this->character->get_biological_parents();
 
 	if (biological_parents.empty()) {
-		return;
+		co_return;
 	}
 
 	std::vector<const metternich::bloodline *> potential_bloodlines;
@@ -964,19 +964,19 @@ void character_game_data::apply_bloodline_from_parents()
 	}
 
 	if (potential_bloodlines.empty()) {
-		return;
+		co_return;
 	}
 
 	bloodline_strength /= 2;
 
 	if (bloodline_strength > 0) {
-		this->set_bloodline(vector::get_random(potential_bloodlines));
+		co_await this->set_bloodline(vector::get_random(potential_bloodlines));
 		this->set_bloodline_strength(bloodline_strength);
 		log_trace(std::format("Set bloodline for character \"{}\": {} ({}).", this->character->get_identifier(), this->get_bloodline()->get_identifier(), bloodline_strength));
 	}
 }
 
-void character_game_data::apply_bloodline_inheritance_investiture()
+QCoro::Task<void> character_game_data::apply_bloodline_inheritance_investiture()
 {
 	//apply bloodline inheritance from predecessors (inheritance in the sense of inheriting a domain, not of genetic inheritance)
 
@@ -984,7 +984,7 @@ void character_game_data::apply_bloodline_inheritance_investiture()
 	const std::vector<const metternich::character *> predecessors = this->character->get_history()->get_predecessors();
 
 	if (predecessors.empty()) {
-		return;
+		co_return;
 	}
 
 	for (const metternich::character *predecessor : predecessors) {
@@ -992,7 +992,7 @@ void character_game_data::apply_bloodline_inheritance_investiture()
 			continue;
 		}
 
-		this->inherit_bloodline_from(predecessor);
+		co_await this->inherit_bloodline_from(predecessor);
 	}
 }
 
@@ -2094,13 +2094,22 @@ QCoro::Task<void> character_game_data::on_divine_rank_gained(const int affected_
 	}
 }
 
-void character_game_data::set_bloodline(const metternich::bloodline *bloodline)
+QCoro::Task<void> character_game_data::set_bloodline(const metternich::bloodline *bloodline)
 {
 	if (bloodline == this->get_bloodline()) {
-		return;
+		co_return;
 	}
 
+	const metternich::bloodline *old_bloodline = this->get_bloodline();
+
 	this->bloodline = bloodline;
+
+	//characters with a bloodline get +10% experience cost
+	if (old_bloodline == nullptr && this->get_bloodline() != nullptr) {
+		co_await this->change_experience_cost_modifier(10);
+	} else if (old_bloodline != nullptr && this->get_bloodline() == nullptr) {
+		co_await this->change_experience_cost_modifier(-10);
+	}
 
 	if (game::get()->is_running()) {
 		emit bloodline_changed();
@@ -2129,7 +2138,7 @@ void character_game_data::set_bloodline_strength(const int bloodline_strength)
 	}
 }
 
-void character_game_data::inherit_bloodline_from(const metternich::character *other_character)
+QCoro::Task<void> character_game_data::inherit_bloodline_from(const metternich::character *other_character)
 {
 	//inherit bloodline (via investiture) from another character
 
@@ -2138,11 +2147,11 @@ void character_game_data::inherit_bloodline_from(const metternich::character *ot
 	}
 
 	if (other_character->get_game_data()->get_bloodline_strength() < this->get_bloodline_strength()) {
-		return;
+		co_return;
 	}
 
 	if (this->get_bloodline() == nullptr) {
-		this->set_bloodline(other_character->get_game_data()->get_bloodline());
+		co_await this->set_bloodline(other_character->get_game_data()->get_bloodline());
 	}
 
 	this->set_bloodline_strength(other_character->get_game_data()->get_bloodline_strength());

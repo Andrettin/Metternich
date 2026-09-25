@@ -821,7 +821,7 @@ QCoro::Task<void> domain_government::on_office_holder_died(const office *office,
 	}
 
 	if (office->is_ruler() && this->get_heir() != nullptr) {
-		this->get_heir()->get_game_data()->inherit_bloodline_from(office_holder);
+		co_await this->get_heir()->get_game_data()->inherit_bloodline_from(office_holder);
 
 		//during succession, the heir also inherits the items of the previous ruler
 		std::vector<item *> items_to_take;

@@ -130,9 +130,9 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> apply_species_and_class(const int level, const bool apply_history);
 	[[nodiscard]] QCoro::Task<void> generate_attributes();
-	void apply_bloodline(const bool apply_history);
-	void apply_bloodline_from_parents();
-	void apply_bloodline_inheritance_investiture();
+	[[nodiscard]] QCoro::Task<void> apply_bloodline(const bool apply_history);
+	[[nodiscard]] QCoro::Task<void> apply_bloodline_from_parents();
+	[[nodiscard]] QCoro::Task<void> apply_bloodline_inheritance_investiture();
 	[[nodiscard]] QCoro::Task<void> add_starting_items();
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void add_starting_spells();
@@ -314,7 +314,7 @@ public:
 		return this->bloodline;
 	}
 
-	void set_bloodline(const metternich::bloodline *bloodline);
+	[[nodiscard]] QCoro::Task<void> set_bloodline(const metternich::bloodline *bloodline);
 
 	int get_bloodline_strength() const
 	{
@@ -322,7 +322,7 @@ public:
 	}
 
 	void set_bloodline_strength(const int bloodline_strength);
-	void inherit_bloodline_from(const metternich::character *other_character);
+	[[nodiscard]] QCoro::Task<void> inherit_bloodline_from(const metternich::character *other_character);
 
 	int get_reputation() const
 	{
