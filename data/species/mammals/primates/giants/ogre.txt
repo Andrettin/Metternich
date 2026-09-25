@@ -4,6 +4,40 @@ ogre = {
 	era = holocene
 	sapient = true
 	default_creature_size = large
+	class_skills = {
+		#drinking
+		#eating
+		#fire_building
+		hunting
+		intimidate
+		religion
+		#tracking
+		#wild_fighting
+	}
+	min_attribute_values = {
+		strength = 16
+		dexterity = 2
+		constitution = 14
+		intelligence = 2
+		wisdom = 2
+		charisma = 2
+	}
+	max_attribute_values = {
+		strength = 20
+		dexterity = 8
+		constitution = 20
+		intelligence = 8
+		wisdom = 9
+		charisma = 8
+	}
+	allowed_character_classes = {
+		#shaman
+		warrior
+	}
+	character_class_level_limits = {
+		#shaman = 3
+		warrior = 12
+	}
 	item_slots = {
 		weapon = 1
 		shield = 1
@@ -16,5 +50,15 @@ ogre = {
 		ring = 2
 		boots = 1
 	}
+	modifier = {
+		strength = 2
+		constitution = 2
+		intelligence = -2
+		charisma = -2
+		health = 4
+		natural_armor_class = 5
+		movement = 9
+	}
+	
 	#ogres, ettins and cyclopses should have a common ancestor
 }

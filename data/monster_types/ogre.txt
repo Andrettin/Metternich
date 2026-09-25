@@ -6,11 +6,9 @@ ogre = {
 		intelligence = low
 	}
 	modifier = {
-		armor_class = 5
 		hit_dice = 4d8+1
 		to_hit_bonus = 3
 		save_bonus = 4
-		movement = 9
 	}
 	items = {
 		ogre_club

@@ -5,6 +5,11 @@ dryad = {
 	attributes = {
 		intelligence = 13-14
 	}
+	modifier = {
+		hit_dice = 2d8
+		natural_armor_class = 1
+		to_hit_bonus = 1
+	}
 	items = {
 		dagger
 	}
