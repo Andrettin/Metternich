@@ -1796,6 +1796,18 @@ QCoro::Task<void> site_game_data::add_building_with_prerequisites(const building
 	co_await this->add_building(building);
 }
 
+QCoro::Task<void> site_game_data::remove_building(const building_type *building)
+{
+	if (!this->has_building(building)) {
+		co_return;
+	}
+
+	building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	assert_throw(building_slot != nullptr);
+	assert_throw(building_slot->get_building() == building);
+	co_await building_slot->set_building(nullptr);
+}
+
 QCoro::Task<void> site_game_data::clear_buildings()
 {
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {

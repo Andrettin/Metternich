@@ -800,6 +800,7 @@ set(script_effect_HDRS
 	src/script/effect/any_neighbor_country_effect.h
 	src/script/effect/attribute_check_effect.h
 	src/script/effect/battle_effect.h
+	src/script/effect/buildings_effect.h
 	src/script/effect/capital_effect.h
 	src/script/effect/change_opinion_effect.h
 	src/script/effect/clear_flag_effect.h

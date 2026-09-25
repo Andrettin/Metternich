@@ -345,6 +345,7 @@ public:
 	bool can_gain_building_class(const building_class *building_class) const;
 	[[nodiscard]] QCoro::Task<void> add_building(const building_type *building);
 	[[nodiscard]] QCoro::Task<void> add_building_with_prerequisites(const building_type *building);
+	[[nodiscard]] QCoro::Task<void> remove_building(const building_type *building);
 	[[nodiscard]] QCoro::Task<void> clear_buildings();
 
 	[[nodiscard]] QCoro::Task<void> check_building_conditions();

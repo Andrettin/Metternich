@@ -16,6 +16,7 @@
 #include "script/effect/any_neighbor_country_effect.h"
 #include "script/effect/attribute_check_effect.h"
 #include "script/effect/battle_effect.h"
+#include "script/effect/buildings_effect.h"
 #include "script/effect/capital_effect.h"
 #include "script/effect/change_opinion_effect.h"
 #include "script/effect/clear_flag_effect.h"
@@ -108,6 +109,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	} else if constexpr (std::is_same_v<scope_type, const site>) {
 		if (key == "add_building_class") {
 			return std::make_unique<add_building_class_effect>(value, effect_operator);
+		} else if (key == "buildings") {
+			return std::make_unique<buildings_effect>(value, effect_operator);
 		}
 	}
 
