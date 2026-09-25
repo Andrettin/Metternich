@@ -1,0 +1,26 @@
+ogres = {
+	name = "Ogres"
+	unit_class = clubmen
+	culture = ogre
+	icon = goblin
+	stats = {
+		hit_points = 4
+		movement = 2
+		defense = 3
+		melee = 7
+		range = 1
+	}
+	battle_resolution_types = {
+		crossed_swords
+	}
+	#commodity_costs = {
+	#	wealth = ?gb
+	#	heavy_infantry = 200
+	#}
+	#maintenance_commodity_costs = {
+	#	wealth = ?gb
+	#}
+	#recruit_conditions = {
+	#	culture = ogre
+	#}
+}
