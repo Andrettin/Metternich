@@ -28,3 +28,35 @@ central_room = {
 		}
 	}
 }
+
+ogres_den = {
+	name = "Ogre's Den"
+	description = "This is the den of an ogre, with a big pile of furs serving as their bed. The large creature looks at you menacingly, ordering their pet wolves to attack you!"
+	trigger = ruin_explored
+	random = true
+	conditions = {
+		saved_building = {
+			name = ruin_building
+			building_type = ruined_keep
+		}
+	}
+	option = {
+		name = "To battle!"
+		effects = {
+			battle = {
+				attacker = true
+				enemies = {
+					ogres = 1
+					wolves = 2
+				}
+				on_victory = {
+					#FIXME: add treasure
+					
+					source_site = {
+						buildings -= ruined_keep
+					}
+				}
+			}
+		}
+	}
+}
