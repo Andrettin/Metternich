@@ -132,6 +132,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->level = std::stoi(value);
 	} else if (key == "experience") {
 		this->experience = std::stoll(value);
+	} else if (key == "experience_modifier") {
+		this->experience_modifier = std::stoi(value);
+	} else if (key == "experience_cost_modifier") {
+		this->experience_cost_modifier = std::stoi(value);
 	} else if (key == "level_adjustment") {
 		this->level_adjustment = std::stoi(value);
 	} else if (key == "reduced_level_adjustment") {
@@ -340,6 +344,8 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	data.add_property("level", std::to_string(this->get_level()));
 	data.add_property("experience", std::to_string(this->get_experience()));
+	data.add_property("experience_modifier", std::to_string(this->get_experience_modifier()));
+	data.add_property("experience_cost_modifier", std::to_string(this->get_experience_cost_modifier()));
 	data.add_property("level_adjustment", std::to_string(this->get_level_adjustment()));
 	data.add_property("reduced_level_adjustment", std::to_string(this->reduced_level_adjustment));
 	data.add_property("challenge_rating", std::to_string(this->get_challenge_rating()));
@@ -1876,6 +1882,8 @@ QCoro::Task<void> character_game_data::gain_experience(int64_t experience)
 		co_return;
 	}
 
+	int experience_modifier = this->get_experience_modifier();
+
 	if (this->get_character_class() != nullptr) {
 		static constexpr int64_t primary_attribute_experience_bonus_threshold = 16;
 
@@ -1889,9 +1897,13 @@ QCoro::Task<void> character_game_data::gain_experience(int64_t experience)
 		}
 
 		if (has_primary_attribute_experience_bonus) {
-			experience *= 110; //10% bonus
-			experience /= 100;
+			experience_modifier += 10; //10% bonus
 		}
+	}
+
+	if (experience_modifier != 0) {
+		experience *= 100 + experience_modifier;
+		experience /= 100;
 	}
 
 	co_await this->change_experience(experience);
@@ -1914,6 +1926,11 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 			experience += experience_table->get_value_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment());
 			experience -= experience_table->get_value_for_level(next_level_adjustment_reduction_level + this->get_level_adjustment() - 1);
 		}
+	}
+
+	if (this->get_experience_cost_modifier() != 0) {
+		experience *= 100 + this->get_experience_cost_modifier();
+		experience /= 100;
 	}
 
 	int species_level_limit = this->character->get_species()->get_character_class_level_limit(character_class);
@@ -1946,6 +1963,29 @@ int64_t character_game_data::get_experience_for_level(const int level) const
 int64_t character_game_data::get_experience_for_next_level() const
 {
 	return this->get_experience_for_level(this->get_level() + 1);
+}
+
+void character_game_data::change_experience_modifier(const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	this->experience_modifier += change;
+}
+
+QCoro::Task<void> character_game_data::change_experience_cost_modifier(const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	this->experience_cost_modifier += change;
+
+	if (change < 0) {
+		//if the experience cost modifier decreased, check whether the character is now eligible for a level-up
+		co_await this->check_level_experience();
+	}
 }
 
 QCoro::Task<void> character_game_data::change_level_adjustment(const int change)

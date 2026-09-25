@@ -268,6 +268,20 @@ public:
 	int64_t get_experience_for_level(const int level) const;
 	int64_t get_experience_for_next_level() const;
 
+	int get_experience_modifier() const
+	{
+		return this->experience_modifier;
+	}
+
+	void change_experience_modifier(const int change);
+
+	int get_experience_cost_modifier() const
+	{
+		return this->experience_cost_modifier;
+	}
+
+	[[nodiscard]] QCoro::Task<void> change_experience_cost_modifier(const int change);
+
 	int get_level_adjustment() const
 	{
 		return this->level_adjustment;
@@ -1127,6 +1141,8 @@ private:
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
 	int64_t experience = 0;
+	int experience_modifier = 0;
+	int experience_cost_modifier = 0;
 	int level_adjustment = 0;
 	int reduced_level_adjustment = 0;
 	int challenge_rating = 0; //the challenge rating for defeating the character in combat

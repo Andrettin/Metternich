@@ -34,6 +34,8 @@
 #include "script/modifier_effect/domain_attribute_modifier_effect.h"
 #include "script/modifier_effect/employment_capacity_modifier_effect.h"
 #include "script/modifier_effect/employment_capacity_modifier_modifier_effect.h"
+#include "script/modifier_effect/experience_modifier_effect.h"
+#include "script/modifier_effect/experience_cost_modifier_effect.h"
 #include "script/modifier_effect/free_artillery_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_building_class_modifier_effect.h"
 #include "script/modifier_effect/free_cavalry_promotion_modifier_effect.h"
@@ -119,6 +121,10 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<craft_modifier_effect>(value);
 		} else if (key == "damage_bonus") {
 			return std::make_unique<damage_bonus_modifier_effect>(value);
+		} else if (key == "experience_modifier") {
+			return std::make_unique<experience_modifier_effect>(value);
+		} else if (key == "experience_cost_modifier") {
+			return std::make_unique<experience_cost_modifier_effect>(value);
 		} else if (key == "health") {
 			return std::make_unique<health_modifier_effect>(value);
 		} else if (key == "health_per_hit_dice") {
