@@ -89,6 +89,7 @@ centaur = {
 		dexterity = -2
 		hit_points = 4
 		natural_armor_class = 5
+		movement = 18
 		#if equipped with a lance, can charge for double damage (in which case the front hooves cannot be used to attack simultaneously)
 	}
 }
