@@ -2,7 +2,7 @@ weapon_focus_bows = {
 	name = "Weapon Focus: Bows"
 	icon = bow
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -24,7 +24,7 @@ weapon_focus_claw = {
 	name = "Weapon Focus: Claw"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -46,7 +46,7 @@ weapon_focus_heavy_blades = {
 	name = "Weapon Focus: Heavy Blades"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -68,7 +68,7 @@ weapon_focus_light_blades = {
 	name = "Weapon Focus: Light Blades"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -90,7 +90,7 @@ weapon_focus_maces = {
 	name = "Weapon Focus: Maces"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -112,7 +112,7 @@ weapon_focus_tail = {
 	name = "Weapon Focus: Tail"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		to_hit_bonus >= 1
@@ -134,7 +134,7 @@ weapon_specialization_bows = {
 	name = "Weapon Specialization: Bows"
 	icon = bow
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		trait = weapon_focus_bows
@@ -158,7 +158,7 @@ weapon_specialization_heavy_blades = {
 	name = "Weapon Specialization: Heavy Blades"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 	}
 	conditions = {
 		trait = weapon_focus_heavy_blades

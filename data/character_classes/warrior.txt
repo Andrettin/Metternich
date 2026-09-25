@@ -19,8 +19,8 @@ warrior = {
 		order = high_domain_skill_bonus
 	}
 	trait_gain_tables = {
+		#combat_proficiency = warrior_combat_proficiency_gain
 		general_proficiency = warrior_general_proficiency_gain
-		#weapon_proficiency = warrior_weapon_proficiency_gain
 	}
 	exceptional_attributes = {
 		strength

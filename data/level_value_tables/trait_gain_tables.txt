@@ -64,7 +64,7 @@ engineer_general_proficiency_gain = {
 	30 = 1
 }
 
-engineer_weapon_proficiency_gain = {
+engineer_combat_proficiency_gain = {
 	1 = 3
 	2 = 0
 	3 = 0
@@ -163,7 +163,7 @@ rogue_general_proficiency_gain = {
 	30 = 0
 }
 
-rogue_weapon_proficiency_gain = {
+rogue_combat_proficiency_gain = {
 	1 = 2
 	2 = 0
 	3 = 0
@@ -229,7 +229,7 @@ warrior_general_proficiency_gain = {
 	30 = 1
 }
 
-warrior_weapon_proficiency_gain = {
+warrior_combat_proficiency_gain = {
 	1 = 4
 	2 = 0
 	3 = 1

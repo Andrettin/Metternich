@@ -9,8 +9,8 @@ general_proficiency = {
 	}
 }
 
-weapon_proficiency = {
-	name = "Weapon Proficiency"
+combat_proficiency = {
+	name = "Combat Proficiency"
 	upper_types = {
 		proficiency
 	}

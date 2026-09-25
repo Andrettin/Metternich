@@ -20,8 +20,8 @@ rogue = {
 		order = low_domain_skill_bonus
 	}
 	trait_gain_tables = {
+		#combat_proficiency = rogue_combat_proficiency_gain
 		general_proficiency = rogue_general_proficiency_gain
-		#weapon_proficiency = rogue_weapon_proficiency_gain
 	}
 	class_skill_groups = {
 		general

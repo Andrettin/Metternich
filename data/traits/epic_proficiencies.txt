@@ -110,7 +110,7 @@ epic_weapon_focus_bows = {
 	name = "Epic Weapon Focus: Bows"
 	icon = bow
 	types = {
-		weapon_proficiency
+		combat_proficiency
 		epic_proficiency
 	}
 	conditions = {
@@ -133,7 +133,7 @@ epic_weapon_focus_claw = {
 	name = "Epic Weapon Focus: Claw"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 		epic_proficiency
 	}
 	conditions = {
@@ -156,7 +156,7 @@ epic_weapon_focus_maces = {
 	name = "Epic Weapon Focus: Maces"
 	icon = saber
 	types = {
-		weapon_proficiency
+		combat_proficiency
 		epic_proficiency
 	}
 	conditions = {
