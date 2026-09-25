@@ -19,6 +19,10 @@ central_room = {
 				}
 				on_victory = {
 					#FIXME: add treasure
+					
+					source_site = {
+						buildings -= ruined_keep
+					}
 				}
 			}
 		}
