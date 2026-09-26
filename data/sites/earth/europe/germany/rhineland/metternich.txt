@@ -5,4 +5,11 @@ metternich = {
 	type = holding
 	holding_type = castle
 	province = rhineland
+	
+	history = {
+		1316 = {
+			developed = true
+			owner = metternich
+		}
+	}
 }
