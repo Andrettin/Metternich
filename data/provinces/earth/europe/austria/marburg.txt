@@ -20,6 +20,8 @@ marburg = { #Lower Styria
 		
 		970 = {
 			owner = carinthia #became part of the March of Carinthia (under Carinthia itself) in 970; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = austrian
+			religion = catholic
 		}
 		
 		1035 = {

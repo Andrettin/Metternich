@@ -24,6 +24,7 @@ carniola = {
 		
 		976 = {
 			owner = carinthia #became part of Carinthia in 976; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			culture = austrian
 		}
 		
 		1040 = {
