@@ -251,6 +251,19 @@ void character_class::check() const
 	}
 }
 
+metternich::military_unit_category character_class::get_military_unit_category() const
+{
+	if (this->military_unit_category != military_unit_category::none) {
+		return this->military_unit_category;
+	}
+
+	if (this->get_base_class() != nullptr) {
+		return this->get_base_class()->get_military_unit_category();
+	}
+
+	return military_unit_category::none;
+}
+
 metternich::starting_age_category character_class::get_starting_age_category() const
 {
 	if (this->starting_age_category != starting_age_category::none) {

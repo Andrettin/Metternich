@@ -87,14 +87,19 @@ public:
 		return this->primary_attributes;
 	}
 
-	metternich::military_unit_category get_military_unit_category() const
-	{
-		return this->military_unit_category;
-	}
+	metternich::military_unit_category get_military_unit_category() const;
 
 	const metternich::civilian_unit_class *get_civilian_unit_class() const
 	{
-		return this->civilian_unit_class;
+		if (this->civilian_unit_class != nullptr) {
+			return this->civilian_unit_class;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_civilian_unit_class();
+		}
+
+		return nullptr;
 	}
 
 	bool is_divine_spellcaster() const
