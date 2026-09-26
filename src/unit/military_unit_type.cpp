@@ -110,7 +110,7 @@ void military_unit_type::initialize()
 		this->initialize_stats_from_monster_type(hit_dice_count);
 
 		if (this->get_experience_award() == 0) {
-			const centesimal_int hit_points_per_individual = defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
+			const centesimal_int hit_points_per_individual = hit_dice_count > 0 ? (centesimal_int(hit_dice_count) / 10) : (centesimal_int(5) / 100);
 			const int64_t population_size = (this->get_stat(military_unit_stat::hit_points) * 10 / hit_points_per_individual).to_int64();
 
 			this->experience_award = this->monster_type->get_experience_award() * population_size;
