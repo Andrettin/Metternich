@@ -1,0 +1,24 @@
+kobolds = {
+	name = "Kobolds"
+	unit_class = swordsmen
+	culture = kobold
+	icon = goblin
+	monster_type = kobold
+	stats = {
+		hit_points = 1
+		movement = 1
+		defense = 3
+		melee = 1
+		range = 1
+	}
+	commodity_costs = {
+		wealth = 1gb #as goblin infantry
+		light_infantry = 200
+	}
+	maintenance_commodity_costs = {
+		wealth = 1gb #as goblin infantry
+	}
+	#recruit_conditions = {
+	#	culture = kobold
+	#}
+}

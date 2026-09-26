@@ -28,6 +28,46 @@ central_room = {
 	}
 }
 
+kobold_guards = {
+	name = "Kobold Guards"
+	portrait = ruined_castle
+	description = "This cluttered room is home to a group of kobolds. Though at first they looked scared, soon they regained their composure and began acting menacingly towards you."
+	trigger = ruin_explored
+	random = true
+	conditions = {
+		saved_building = {
+			name = ruin_building
+			building_type = ruined_keep
+		}
+	}
+	option = {
+		name = "To battle!"
+		effects = {
+			battle = {
+				attacker = true
+				enemies = {
+					kobolds = 6
+				}
+				on_victory = {
+					#potion of healing
+					source_site = {
+						buildings -= ruined_keep
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = "Bribe them to leave"
+		effects = {
+			wealth -= 1gb
+			source_site = {
+				buildings -= ruined_keep
+			}
+		}
+	}
+}
+
 ogres_den = {
 	name = "Ogre's Den"
 	portrait = ruined_castle
