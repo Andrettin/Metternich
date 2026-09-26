@@ -821,6 +821,7 @@ set(script_effect_HDRS
 	src/script/effect/event_group_effect.h
 	src/script/effect/experience_effect.h
 	src/script/effect/explore_dungeon_effect.h
+	src/script/effect/for_effect.h
 	src/script/effect/free_technologies_effect.h
 	src/script/effect/gain_item_effect.h
 	src/script/effect/healing_effect.h

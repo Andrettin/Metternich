@@ -34,6 +34,7 @@
 #include "script/effect/event_group_effect.h"
 #include "script/effect/experience_effect.h"
 #include "script/effect/explore_dungeon_effect.h"
+#include "script/effect/for_effect.h"
 #include "script/effect/free_technologies_effect.h"
 #include "script/effect/gain_item_effect.h"
 #include "script/effect/healing_effect.h"
@@ -231,6 +232,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 
 	if (effect_identifier == "domain") {
 		effect = std::make_unique<domain_effect<scope_type>>(effect_operator);
+	} else if (effect_identifier == "for") {
+		effect = std::make_unique<for_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "hidden") {
 		effect = std::make_unique<hidden_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "if") {
