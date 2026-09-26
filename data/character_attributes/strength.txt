@@ -56,6 +56,65 @@ strength = {
 			to_hit_bonus = 1
 			damage_bonus = 1
 		}
+		26 = {
+			to_hit_bonus = 1
+		}
+		27 = {
+			to_hit_bonus = 1
+		}
+		27 = {
+			to_hit_bonus = 1
+		}
+		33 = {
+			to_hit_bonus = 1
+		}
+		39 = {
+			to_hit_bonus = 1
+		}
+		46 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		54 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		63 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		71 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		78 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		84 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		89 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		94 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		97 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		99 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
+		100 = {
+			to_hit_bonus = 1
+			damage_bonus = 1
+		}
 	}
 	exceptional_value_modifiers = {
 		18 = {
