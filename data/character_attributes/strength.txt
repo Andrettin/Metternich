@@ -139,6 +139,8 @@ strength = {
 			}
 		}
 		19 = {
+			1 = {
+			}
 			76 = {
 				damage_bonus = 1
 			}
@@ -151,6 +153,8 @@ strength = {
 			}
 		}
 		20 = {
+			1 = {
+			}
 			91 = {
 				damage_bonus = 1
 			}
@@ -160,6 +164,8 @@ strength = {
 			}
 		}
 		21 = {
+			1 = {
+			}
 			100 = {
 				to_hit_bonus = 1
 				damage_bonus = 1
