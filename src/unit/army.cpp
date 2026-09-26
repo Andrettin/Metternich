@@ -2,6 +2,8 @@
 
 #include "unit/army.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "character/party.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
@@ -235,6 +237,31 @@ const character *army::get_commander() const
 std::unique_ptr<party> army::to_party() const
 {
 	return std::make_unique<party>(army::get_characters(this->get_military_units()));
+}
+
+QCoro::Task<void> army::gain_experience(int64_t experience)
+{
+	std::vector<const character *> commanders;
+	for (const military_unit *military_unit : this->get_military_units()) {
+		if (military_unit->get_character() != nullptr) {
+			commanders.push_back(military_unit->get_character());
+		}
+	}
+
+	if (!commanders.empty()) {
+		//commanders get a 25% share of experience (plus their share as a fighting unit)
+		const int64_t commander_experience = experience * 25 / 100;
+
+		for (const character *commander : commanders) {
+			co_await commander->get_game_data()->gain_experience(commander_experience / static_cast<int>(commanders.size()));
+		}
+
+		experience -= commander_experience;
+	}
+
+	for (military_unit *military_unit : this->get_military_units()) {
+		co_await military_unit->gain_experience(experience / static_cast<int>(this->get_military_units().size()));
+	}
 }
 
 const icon *army::get_military_unit_icon() const

@@ -845,6 +845,26 @@ QCoro::Task<void> military_unit::disband(const bool dead)
 	}
 }
 
+QCoro::Task<void> military_unit::gain_experience(const int64_t experience)
+{
+	if (this->get_character() != nullptr) {
+		co_await this->get_character()->get_game_data()->gain_experience(experience);
+		co_return;
+	}
+
+	//FIXME: implement unit experience gain
+}
+
+int64_t military_unit::get_experience_award() const
+{
+	if (this->get_character() != nullptr) {
+		return this->get_character()->get_game_data()->get_experience_award();
+	}
+
+	//FIXME: implement
+	return 0;
+}
+
 int military_unit::get_score() const
 {
 	int score = 0;

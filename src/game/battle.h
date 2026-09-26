@@ -70,6 +70,7 @@ public:
 	struct result final
 	{
 		bool attacker_victory = false;
+		int64_t experience_award = 0;
 	};
 
 	static centesimal_int length_to_battle_tile_length(const int length);
@@ -122,15 +123,13 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_round();
 
-	[[nodiscard]] QCoro::Task<void> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
+	[[nodiscard]] QCoro::Task<int64_t> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	const military_unit *choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const;
 
-	[[nodiscard]]
-	QCoro::Task<void> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
+	[[nodiscard]] QCoro::Task<int64_t> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
-	[[nodiscard]]
-	QCoro::Task<void> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
+	[[nodiscard]] QCoro::Task<int64_t> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	void notify_result();
 	void process_result();
@@ -164,6 +163,8 @@ private:
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
 	battle::result result;
+	int64_t attacker_experience_award = 0;
+	int64_t defender_experience_award = 0;
 	const domain *scope = nullptr;
 	context ctx;
 	std::vector<battle_tile> tiles;

@@ -76,6 +76,8 @@ public:
 
 	std::unique_ptr<party> to_party() const;
 
+	[[nodiscard]] QCoro::Task<void> gain_experience(int64_t experience);
+
 	Q_INVOKABLE const icon *get_military_unit_icon() const;
 
 signals:

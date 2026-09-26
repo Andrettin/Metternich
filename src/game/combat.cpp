@@ -471,12 +471,12 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 			if (tile.character != nullptr) {
 				if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
 					if (distance <= this->get_current_spell()->get_range()) {
-						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
+						experience_award += co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
 				} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
 					if (distance <= this->get_current_spell()->get_range()) {
-						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
+						experience_award += co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
 						attacked = true;
 					}
 				}

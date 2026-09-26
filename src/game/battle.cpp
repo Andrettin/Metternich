@@ -25,6 +25,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/map_util.h"
+#include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/size_util.h"
 #include "util/vector_random_util.h"
@@ -207,6 +208,14 @@ QCoro::Task<void> battle::start_coro()
 
 	this->result.attacker_victory = this->defending_army->get_military_units().empty();
 
+	if (this->result.attacker_victory) {
+		co_await this->attacking_army->gain_experience(this->attacker_experience_award);
+		this->result.experience_award = this->attacker_experience_award;
+	} else {
+		co_await this->defending_army->gain_experience(this->defender_experience_award);
+		this->result.experience_award = this->defender_experience_award;
+	}
+
 	this->get_promise()->addResult(this->result.attacker_victory);
 
 	this->notify_result();
@@ -242,7 +251,13 @@ QCoro::Task<void> battle::do_round()
 		}
 
 		const bool is_attacker = vector::contains(this->attacking_army->get_military_units(), unit);
-		co_await this->do_unit_round(unit, killed_units, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
+		const int64_t experience_award = co_await this->do_unit_round(unit, killed_units, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
+
+		if (is_attacker) {
+			this->attacker_experience_award += experience_award;
+		} else {
+			this->defender_experience_award += experience_award;
+		}
 	}
 
 	if (this->get_current_unit() != nullptr) {
@@ -250,7 +265,7 @@ QCoro::Task<void> battle::do_round()
 	}
 }
 
-QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
+QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	bool attacked = false;
 	battle_unit_info *unit_info = this->get_unit_info(unit);
@@ -264,6 +279,8 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 
 	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
 	metternich::army *enemy_army = unit_info->is_defender() ? this->attacking_army : this->defending_army;
+
+	int64_t experience_award = 0;
 
 	while (!attacked && unit_info->get_remaining_movement() > 0) {
 		const QPoint current_tile_pos = unit_info->get_tile_pos();
@@ -366,7 +383,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 					}
 				}
 				if (is_valid_target) {
-					co_await this->do_unit_spellcast(unit, this->get_current_spell(), tile.unit, killed_units, to_hit_modifier);
+					experience_award += co_await this->do_unit_spellcast(unit, this->get_current_spell(), tile.unit, killed_units, to_hit_modifier);
 					attacked = true;
 				}
 			}
@@ -375,7 +392,7 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 		} else {
 			if (tile.unit != nullptr) {
 				if (distance <= unit_info->get_range() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
-					co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units, to_hit_modifier);
+					experience_award += co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units, to_hit_modifier);
 					attacked = true;
 				}
 			} else if (this->can_current_unit_move_to(target_pos)) {
@@ -394,6 +411,8 @@ QCoro::Task<void> battle::do_unit_round(military_unit *unit, std::vector<militar
 			}
 		}
 	}
+
+	co_return experience_award;
 }
 
 const military_unit *battle::choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const
@@ -425,7 +444,7 @@ const military_unit *battle::choose_enemy(const military_unit *unit, const std::
 	return vector::get_random(potential_enemies);
 }
 
-QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
+QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	const battle_unit_info *unit_info = this->get_unit_info(unit);
 	battle_unit_info *enemy_info = this->get_unit_info(enemy);
@@ -438,6 +457,7 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 	const bool ranged = distance > 1;
 
 	const sound *enemy_death_sound = enemy->get_death_sound();
+	const int64_t enemy_experience_award = enemy->get_experience_award();
 
 	co_await unit->attack(enemy, distance, moved, to_hit_modifier);
 
@@ -449,8 +469,11 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 		}
 	}
 
+	int64_t experience_award = 0;
+
 	const bool enemy_dead = !vector::contains(enemy_army->get_military_units(), enemy);
 	if (enemy_dead) {
+		experience_award += enemy_experience_award;
 		killed_units.push_back(enemy);
 		this->remove_unit_info(enemy);
 
@@ -460,9 +483,11 @@ QCoro::Task<void> battle::do_unit_attack(const military_unit *unit, military_uni
 			}
 		}
 	}
+
+	co_return experience_award;
 }
 
-QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
+QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	const character *caster = unit->get_character();
 
@@ -471,6 +496,8 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 
 	const army *target_army = target->get_army();
 	const sound *target_death_sound = target->get_death_sound();
+	const int64_t target_experience_award = target->get_experience_award();
+	const bool is_enemy = target_army != unit->get_army();
 
 	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
 
@@ -483,7 +510,7 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 	}
 
 	if (!hit) {
-		co_return;
+		co_return 0;
 	}
 
 	if (spell->get_target_character_effects() != nullptr && target->get_character() != nullptr) {
@@ -511,10 +538,16 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 		co_await spell->get_target_military_unit_effects()->do_effects(target, ctx);
 	}
 
+	int64_t experience_award = 0;
+
 	const bool target_dead = !vector::contains(target_army->get_military_units(), target);
 	if (target_dead) {
 		killed_units.push_back(target);
 		this->remove_unit_info(target);
+
+		if (is_enemy) {
+			experience_award += target_experience_award;
+		}
 
 		if (this->scope == game::get()->get_player_domain()) {
 			if (target_death_sound != nullptr) {
@@ -522,6 +555,8 @@ QCoro::Task<void> battle::do_unit_spellcast(const military_unit *unit, const spe
 			}
 		}
 	}
+
+	co_return experience_award;
 }
 
 void battle::notify_result()
@@ -532,7 +567,9 @@ void battle::notify_result()
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
-			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a battle!"));
+			std::string effects_string = std::format("Experience: {}", number::to_signed_string(this->result.experience_award));
+
+			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a battle!\n\n{}", effects_string));
 		} else {
 			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a battle!"));
 		}

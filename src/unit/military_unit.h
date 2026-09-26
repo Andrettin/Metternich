@@ -233,6 +233,9 @@ public:
 		return this->disband(false);
 	}
 
+	[[nodiscard]] QCoro::Task<void> gain_experience(const int64_t experience);
+	int64_t get_experience_award() const;
+
 	int get_score() const;
 
 	std::string get_stats_string(const bool in_battle) const;
