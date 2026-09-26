@@ -201,7 +201,7 @@ public:
 		this->set_holding_level(this->get_holding_level() + change);
 	}
 
-	centesimal_int get_building_holding_level_change(const building_type *building) const;
+	centesimal_int get_building_holding_level_change(const building_type *building, const building_slot_type *building_slot_type) const;
 	[[nodiscard]] QCoro::Task<void> set_holding_level_from_buildings(const int level);
 
 	const centesimal_int &get_weighted_holding_level() const
@@ -238,7 +238,7 @@ public:
 		co_await this->set_construction_level(construction_type, this->get_construction_level(construction_type) + change);
 	}
 
-	std::map<construction_type, centesimal_int> get_building_construction_level_changes(const building_type *building) const;
+	std::map<construction_type, centesimal_int> get_building_construction_level_changes(const building_type *building, const building_slot_type *building_slot_type) const;
 	centesimal_int get_building_construction_level_change(const construction_type construction_type, const building_type *building) const;
 
 	const std::string &get_holding_type_name() const

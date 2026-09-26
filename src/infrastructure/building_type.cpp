@@ -336,7 +336,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 
 	if (this->get_holding_level() > 0) {
 		assert_throw(holding_type != nullptr);
-		const centesimal_int holding_level_change = site->get_game_data()->get_building_holding_level_change(this);
+		const centesimal_int holding_level_change = site->get_game_data()->get_building_holding_level_change(this, this->get_slot_type());
 
 		for (const auto &[commodity, level_cost] : holding_type->get_level_commodity_costs()) {
 			costs[commodity] += level_cost * holding_level_change;

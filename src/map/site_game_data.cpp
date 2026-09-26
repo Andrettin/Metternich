@@ -1052,11 +1052,11 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	}
 }
 
-centesimal_int site_game_data::get_building_holding_level_change(const building_type *building) const
+centesimal_int site_game_data::get_building_holding_level_change(const building_type *building, const building_slot_type *building_slot_type) const
 {
-	assert_throw(building != nullptr);
+	assert_throw(building == nullptr || building->get_slot_type() == building_slot_type);
 
-	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	const building_slot *building_slot = this->get_building_slot(building_slot_type);
 	if (building_slot == nullptr) {
 		return centesimal_int(0);
 	}
@@ -1084,7 +1084,7 @@ QCoro::Task<void> site_game_data::set_holding_level_from_buildings(const int lev
 				continue;
 			}
 
-			if (this->get_building_holding_level_change(building) > holding_level_difference) {
+			if (this->get_building_holding_level_change(building, building->get_slot_type()) > holding_level_difference) {
 				continue;
 			}
 
@@ -1224,13 +1224,13 @@ QCoro::Task<void> site_game_data::set_construction_level(const construction_type
 	}
 }
 
-std::map<construction_type, centesimal_int> site_game_data::get_building_construction_level_changes(const building_type *building) const
+std::map<construction_type, centesimal_int> site_game_data::get_building_construction_level_changes(const building_type *building, const building_slot_type *building_slot_type) const
 {
-	assert_throw(building != nullptr);
+	assert_throw(building == nullptr || building->get_slot_type() == building_slot_type);
 
 	std::map<construction_type, centesimal_int> construction_level_changes;
 
-	const building_slot *building_slot = this->get_building_slot(building->get_slot_type());
+	const building_slot *building_slot = this->get_building_slot(building_slot_type);
 	if (building_slot == nullptr) {
 		return construction_level_changes;
 	}
