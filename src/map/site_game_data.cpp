@@ -2882,7 +2882,7 @@ void site_game_data::update_holding_level_income()
 
 	assert_throw(this->get_owner() != nullptr);
 
-	if (this->get_weighted_holding_level() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
+	if (this->get_weighted_holding_level().to_int() == 0 || this->get_province()->get_game_data()->get_level() == 0) {
 		return;
 	}
 
