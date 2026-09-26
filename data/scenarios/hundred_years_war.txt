@@ -13,3 +13,21 @@ hundred_years_war = {
 		#rajastan
 	}
 }
+
+lancastrian_england = {
+	name = "Lancastrian England"
+	start_date = 1399.10.13
+	map_template = europe
+	hidden = true
+	default_domains = {
+		england
+		
+		#other interesting domains for that date
+		austria
+		castille
+		france
+		muscovy
+		ottoman_empire
+		portugal
+	}
+}
