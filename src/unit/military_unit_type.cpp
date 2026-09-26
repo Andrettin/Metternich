@@ -106,7 +106,15 @@ void military_unit_type::initialize()
 	}
 
 	if (this->monster_type != nullptr) {
-		this->initialize_stats_from_monster_type();
+		int hit_dice_count = 0;
+		this->initialize_stats_from_monster_type(hit_dice_count);
+
+		if (this->get_experience_award() == 0) {
+			const centesimal_int hit_points_per_individual = defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
+			const int64_t population_size = (this->get_stat(military_unit_stat::hit_points) * 10 / hit_points_per_individual).to_int64();
+
+			this->experience_award = this->monster_type->get_experience_award() * population_size;
+		}
 	}
 
 	named_data_entry::initialize();
@@ -132,6 +140,11 @@ void military_unit_type::check() const
 	if (this->get_stat(military_unit_stat::missile) > 0 && this->get_stat(military_unit_stat::range) <= 1) {
 		throw std::runtime_error(std::format("Military unit type \"{}\" has a missile value, but cannot attack at range.", this->get_identifier()));
 	}
+
+	if (this->get_experience_award() == 0) {
+		log::log_error(std::format("Military unit type \"{}\" has no experience award.", this->get_identifier()));
+	}
+
 }
 
 military_unit_category military_unit_type::get_category() const
@@ -201,7 +214,7 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
-void military_unit_type::initialize_stats_from_monster_type()
+void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 {
 	assert_throw(this->monster_type != nullptr);
 
@@ -224,7 +237,7 @@ void military_unit_type::initialize_stats_from_monster_type()
 	}
 
 	decimillesimal_int armor_class;
-	int hit_dice_count = 0;
+	hit_dice_count = 0;
 	decimillesimal_int movement;
 	decimillesimal_int natural_armor_class;
 	decimillesimal_int range(1);
@@ -267,6 +280,11 @@ void military_unit_type::initialize_stats_from_monster_type()
 		} else if (const to_hit_bonus_modifier_effect *to_hit_bonus_modifier_effect = dynamic_cast<const metternich::to_hit_bonus_modifier_effect *>(modifier_effect)) {
 			to_hit_bonus += to_hit_bonus_modifier_effect->get_value();
 		}
+	}
+
+	if (!this->get_stats().empty()) {
+		//got the hit dice count, actually setting the stats is not needed since this unit already has stats
+		return;
 	}
 
 	armor_class += natural_armor_class;

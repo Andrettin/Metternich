@@ -51,6 +51,7 @@ elephants = {
 	unit_class = huge_herd_animals
 	culture = elephant
 	icon = cow
+	monster_type = african_elephant
 	stats = {
 		hit_points = 3
 		movement = 2

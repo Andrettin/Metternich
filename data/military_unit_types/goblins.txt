@@ -3,6 +3,7 @@ goblin_infantry = {
 	unit_class = spearmen
 	culture = goblin
 	icon = goblin
+	monster_type = goblin
 	stats = {
 		hit_points = 2
 		movement = 1

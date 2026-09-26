@@ -125,6 +125,7 @@ wolves = {
 	unit_class = medium_predators
 	culture = wolf
 	icon = lion
+	monster_type = wolf
 	required_technology = pack_hunting
 	stats = {
 		hit_points = 2

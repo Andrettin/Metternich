@@ -41,6 +41,7 @@ class military_unit_type final : public named_data_entry, public data_type<milit
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::monster_type* monster_type MEMBER monster_type NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* manpower_commodity MEMBER manpower_commodity NOTIFY changed)
+	Q_PROPERTY(qint64 experience_award MEMBER experience_award READ get_experience_award NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* melee_attack_sound MEMBER melee_attack_sound READ get_melee_attack_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* ranged_attack_sound MEMBER ranged_attack_sound READ get_ranged_attack_sound NOTIFY changed)
@@ -88,7 +89,7 @@ public:
 		return this->icon;
 	}
 
-	void initialize_stats_from_monster_type();
+	void initialize_stats_from_monster_type(int &hit_dice_count);
 
 	const std::vector<battle_resolution_type> &get_battle_resolution_types() const
 	{
@@ -114,6 +115,11 @@ public:
 	centesimal_int get_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
 	centesimal_int get_display_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
 	Q_INVOKABLE QVariantList get_stats_for_domain_qvariant_list(const domain *domain) const;
+
+	int64_t get_experience_award() const
+	{
+		return this->experience_award;
+	}
 
 	const technology *get_required_technology() const
 	{
@@ -169,6 +175,7 @@ private:
 	const commodity *manpower_commodity = nullptr;
 	std::vector<battle_resolution_type> battle_resolution_types;
 	std::map<military_unit_stat, centesimal_int> stats;
+	int64_t experience_award = 0;
 	technology *required_technology = nullptr;
 	commodity_map<int64_t> commodity_costs;
 	commodity_map<int64_t> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit

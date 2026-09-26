@@ -861,8 +861,7 @@ int64_t military_unit::get_experience_award() const
 		return this->get_character()->get_game_data()->get_experience_award();
 	}
 
-	//FIXME: implement
-	return 0;
+	return this->get_type()->get_experience_award();
 }
 
 int military_unit::get_score() const

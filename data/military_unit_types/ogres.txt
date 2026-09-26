@@ -3,6 +3,7 @@ ogres = {
 	unit_class = clubmen
 	culture = ogre
 	icon = goblin
+	monster_type = ogre
 	stats = {
 		hit_points = 4
 		movement = 2
