@@ -1,5 +1,6 @@
 central_room = {
 	name = "Central Room"
+	portrait = ruined_castle
 	description = "This large, ruined room was once central to the entire castle. Gnolls dwell here now, and they consider your visit most unwelcome."
 	trigger = ruin_explored
 	random = true
@@ -29,6 +30,7 @@ central_room = {
 
 ogres_den = {
 	name = "Ogre's Den"
+	portrait = ruined_castle
 	description = "This is the den of an ogre, with a big pile of furs serving as [saved_string:ogre_possessive_pronoun] bed. The large creature looks at you menacingly, ordering [saved_string:ogre_possessive_pronoun] pet wolves to attack you!"
 	trigger = ruin_explored
 	random = true
