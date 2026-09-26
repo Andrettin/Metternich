@@ -4,5 +4,5 @@ water_elemental = {
 	era = holocene
 	sapient = true
 	default_creature_size = large
-	max_creature_size = huge
+	max_starting_creature_size = huge
 }

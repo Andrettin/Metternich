@@ -3,7 +3,7 @@ mammoth = { #Source: http://fossilworks.org/bridge.pl?a=taxonInfo&taxon_no=43252
 	supertaxon = mammuthus
 	era = pleistocene #Quarternary
 	default_creature_size = large
-	max_creature_size = huge
+	max_starting_creature_size = huge
 	pre_evolutions = {
 		phiomia
 		moeritherium #earlier proboscid

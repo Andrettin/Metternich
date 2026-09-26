@@ -3,7 +3,8 @@ air_elemental = {
 	supertaxon = auran
 	era = holocene
 	sapient = true
-	default_creature_size = small #can grow further by gaining air elemental levels
+	default_creature_size = large
+	max_starting_creature_size = small #can grow further by gaining air elemental levels
 	min_attribute_values = {
 		intelligence = 5
 	}

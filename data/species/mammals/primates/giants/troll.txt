@@ -3,7 +3,8 @@ troll = {
 	supertaxon = giant
 	era = holocene
 	sapient = true
-	default_creature_size = medium #can grow further by gaining levels
+	default_creature_size = large
+	max_starting_creature_size = medium #can grow further by gaining levels
 	min_attribute_values = {
 		intelligence = 5
 	}

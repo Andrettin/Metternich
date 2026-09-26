@@ -220,12 +220,12 @@ void species::process_gsml_scope(const gsml_data &scope)
 void species::initialize()
 {
 	if (this->get_default_creature_size() != nullptr) {
-		if (this->get_min_creature_size() == nullptr) {
-			this->min_creature_size = this->get_default_creature_size();
+		if (this->get_min_starting_creature_size() == nullptr) {
+			this->min_starting_creature_size = this->get_default_creature_size();
 		}
 
-		if (this->get_max_creature_size() == nullptr) {
-			this->max_creature_size = this->get_default_creature_size();
+		if (this->get_max_starting_creature_size() == nullptr) {
+			this->max_starting_creature_size = this->get_default_creature_size();
 		}
 	}
 
