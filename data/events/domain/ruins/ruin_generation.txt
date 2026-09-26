@@ -6,21 +6,25 @@ ruin_generation = {
 		domain = none
 	}
 	immediate_effects = {
-		random_holding = {
-			global = true
-			built_only = false
-			conditions = {
-				holding_type = none
-				can_gain_building_class = ruined_keep
-				province = {
-					not = {
-						scripted_condition = is_lair
-						scripted_condition = is_tribal
+		for = {
+			count = 10
+			
+			random_holding = {
+				global = true
+				built_only = false
+				conditions = {
+					holding_type = none
+					can_gain_building_class = ruined_keep
+					province = {
+						not = {
+							scripted_condition = is_lair
+							scripted_condition = is_tribal
+						}
 					}
 				}
+				
+				add_building_class = ruined_keep
 			}
-			
-			add_building_class = ruined_keep
 		}
 	}
 }

@@ -18,8 +18,6 @@ central_room = {
 					gnoll_marauders = 2
 				}
 				on_victory = {
-					#FIXME: add treasure
-					
 					source_site = {
 						buildings -= ruined_keep
 					}
