@@ -4,6 +4,7 @@ crossbowman = {
 	required_technology = light_crossbow
 	variant_names = {
 		female = "Crossbowwoman"
+		dwarf = "Crossbowdwarf"
 	}
 	allowed_equipment_classes = {
 		weapon = {
