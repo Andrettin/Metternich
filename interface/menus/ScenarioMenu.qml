@@ -355,27 +355,15 @@ MenuBase {
 					) : "")
 					+ "\n" + selected_country.game_data.title_name
 					+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
+					+ (selected_country.game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_country.game_data.diplomacy.vassals.length) + " " + (selected_country.game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
 					+ (selected_country.game_data.provinces.length > 0 ? ("\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
 					+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count !== 1 ? "Holdings" : "Holding")
 					+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
 					+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))
 					+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
 					+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
-					+ get_subject_type_counts_string(selected_country.game_data.diplomacy.subject_type_counts)
 					+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
 				) : ""
-				
-				function get_subject_type_counts_string(subject_type_counts) {
-					var str = "";
-					
-					for (const kv_pair of subject_type_counts) {
-						var subject_type = kv_pair.key
-						var count = kv_pair.value
-						str += "\n" + count + " " + (count > 1 ? get_plural_form(subject_type.name) : subject_type.name)
-					}
-					
-					return str
-				}
 				
 				function get_resource_counts_string(resource_counts) {
 					var str = "";
