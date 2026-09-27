@@ -290,14 +290,6 @@ QCoro::Task<void> combat::start_coro()
 
 	this->result.attacker_victory = this->defending_party->get_characters().empty();
 
-	if (this->result.attacker_victory) {
-		co_await this->attacking_party->gain_experience(this->attacker_experience_award);
-		this->result.experience_award = this->attacker_experience_award;
-	} else {
-		co_await this->defending_party->gain_experience(this->defender_experience_award);
-		this->result.experience_award = this->defender_experience_award;
-	}
-
 	this->notify_result();
 
 	emit finished();
@@ -351,13 +343,7 @@ QCoro::Task<void> combat::do_round(std::map<const character *, int> &next_round_
 		const bool is_attacker = party == this->attacking_party;
 		metternich::party *enemy_party = is_attacker ? this->defending_party : this->attacking_party;
 
-		const int64_t experience_award = co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier, next_round_initiative_modifiers[character]);
-
-		if (is_attacker) {
-			this->attacker_experience_award += experience_award;
-		} else {
-			this->defender_experience_award += experience_award;
-		}
+		co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier, next_round_initiative_modifiers[character]);
 	}
 
 	if (this->get_current_unit() != nullptr) {
@@ -375,7 +361,6 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 		co_return 0;
 	}
 
-	int64_t experience_award = 0;
 	next_round_initiative_modifier = 0;
 
 	bool attacked = false;
@@ -471,12 +456,12 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 			if (tile.character != nullptr) {
 				if (this->get_current_spell()->get_target() == spell_target::enemy && vector::contains(enemy_party->get_characters(), tile.character)) {
 					if (distance <= this->get_current_spell()->get_range()) {
-						experience_award += co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
+						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, enemy_party, to_hit_modifier);
 						attacked = true;
 					}
 				} else if (this->get_current_spell()->get_target() == spell_target::ally && vector::contains(party->get_characters(), tile.character)) {
 					if (distance <= this->get_current_spell()->get_range()) {
-						experience_award += co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
+						co_await this->do_character_spellcast(character, this->get_current_spell(), tile.character, party, to_hit_modifier);
 						attacked = true;
 					}
 				}
@@ -490,7 +475,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 		} else {
 			if (tile.character != nullptr) {
 				if (distance <= character_info->get_range() && vector::contains(enemy_party->get_characters(), tile.character)) {
-					experience_award += co_await this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
+					co_await this->do_character_attack(character, tile.character, enemy_party, to_hit_modifier);
 					attacked = true;
 				}
 			} else if (tile.object != nullptr) {
@@ -573,7 +558,7 @@ QCoro::Task<int64_t> combat::do_character_round(const character *character, part
 		}
 	}
 
-	co_return experience_award;
+	co_return 0;
 }
 
 const character *combat::choose_enemy(const character *character, const std::vector<const metternich::character *> &enemies) const
@@ -680,9 +665,7 @@ QCoro::Task<int64_t> combat::do_character_attack(const character *character, con
 	co_await enemy->get_game_data()->change_health(-damage);
 
 	if (enemy->get_game_data()->is_dead()) {
-		const int64_t experience_award = enemy->get_game_data()->get_experience_award();
 		co_await this->on_character_killed(enemy, enemy_party, character);
-		co_return experience_award;
 	}
 
 	co_return 0;
@@ -716,9 +699,7 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 
 	if (target->get_game_data()->is_dead()) {
 		if (spell->get_target() == spell_target::enemy) {
-			const int64_t experience_award = target->get_game_data()->get_experience_award();
 			co_await this->on_character_killed(target, target_party, caster);
-			co_return experience_award;
 		} else {
 			co_await this->on_character_died(target, target_party);
 		}
@@ -773,7 +754,7 @@ void combat::notify_result()
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
-			std::string effects_string = std::format("Experience: {}", number::to_signed_string(this->result.experience_award));
+			std::string effects_string = std::format("Experience: {}", number::to_signed_string(0));
 			if (this->victory_effects != nullptr) {
 				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, ctx);
 				effects_string += "\n" + victory_effects_string;
@@ -887,7 +868,6 @@ bool combat::is_defender_defeated() const
 	return this->defending_party->get_characters().empty();
 }
 
-[[nodiscard]]
 QCoro::Task<void> combat::move_character_to(const character *character, const QPoint tile_pos)
 {
 	combat_character_info *character_info = this->get_character_info(character);

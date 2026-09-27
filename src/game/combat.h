@@ -185,7 +185,6 @@ public:
 	struct result final
 	{
 		bool attacker_victory = false;
-		int64_t experience_award = 0;
 	};
 
 	explicit combat(party *attacking_party, party *defending_party, const QSize &map_size);
@@ -319,8 +318,6 @@ private:
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
 	combat::result result;
-	int64_t attacker_experience_award = 0;
-	int64_t defender_experience_award = 0;
 	std::vector<std::shared_ptr<character_reference>> generated_characters;
 	std::unique_ptr<party> generated_party;
 	const domain *scope = nullptr;
