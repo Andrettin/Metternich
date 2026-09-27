@@ -1,6 +1,7 @@
 spinola = {
 	name = "Spinola"
 	type = polity
+	color = { 170 3 6 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony

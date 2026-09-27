@@ -1,6 +1,7 @@
 doria = {
 	name = "Doria"
 	type = polity
+	color = { 38 38 38 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony

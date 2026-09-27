@@ -1,6 +1,7 @@
 contarini = {
 	name = "Contarini"
 	type = polity
+	color = { 250 188 0 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony

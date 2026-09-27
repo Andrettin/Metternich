@@ -1,6 +1,7 @@
 dandolo = {
 	name = "Dandolo"
 	type = polity
+	color = { 188 0 7 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony

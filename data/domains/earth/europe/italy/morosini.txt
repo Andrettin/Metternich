@@ -1,6 +1,7 @@
 morosini = {
 	name = "Morosini"
 	type = polity
+	color = { 0 86 148 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony

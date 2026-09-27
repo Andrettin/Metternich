@@ -1,6 +1,7 @@
 embriaco = {
 	name = "Embriaco"
 	type = polity
+	color = { 37 37 37 }
 	default_culture = italian
 	default_religion = catholic
 	default_tier = barony
