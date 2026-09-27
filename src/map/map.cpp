@@ -819,31 +819,54 @@ void map::update_minimap_rect(const QRect &tile_rect)
 	const int end_x = std::min(minimap_size.width() - 1, (tile_rect.right() * minimap_tile_scale).to_int());
 	const int end_y = std::min(minimap_size.height() - 1, (tile_rect.bottom() * minimap_tile_scale).to_int());
 
+	const int tiles_per_pixel = (decimillesimal_int(1) / minimap_tile_scale).to_int();
+
 	for (int x = start_x; x <= end_x; ++x) {
 		for (int y = start_y; y <= end_y; ++y) {
 			const QPoint pixel_pos(x, y);
-			const QPoint tile_pos = pixel_pos / minimap_tile_scale;
+			const QPoint base_tile_pos = pixel_pos * tiles_per_pixel;
 
-			if (game::get()->get_player_domain()->get_game_data()->is_tile_explored(tile_pos)) {
-				const tile *tile = this->get_tile(tile_pos);
+			color_map<int> color_counts;
 
-				if (tile->get_province() != nullptr && tile->get_province()->is_water_zone()) {
-					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_minimap_ocean_color());
-					continue;
-				}
+			for (int x_offset = 0; x_offset < tiles_per_pixel; ++x_offset) {
+				for (int y_offset = 0; y_offset < tiles_per_pixel; ++y_offset) {
+					const QPoint tile_pos = base_tile_pos + QPoint(x_offset, y_offset);
 
-				const domain *domain = tile->get_owner();
+					if (game::get()->get_player_domain()->get_game_data()->is_tile_explored(tile_pos)) {
+						const tile *tile = this->get_tile(tile_pos);
 
-				if (domain != nullptr) {
-					this->minimap_image.setPixelColor(pixel_pos, domain->get_diplomacy()->get_diplomatic_map_color());
-					continue;
-				} else if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
-					this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_map_blank_color());
-					continue;
+						if (tile->get_province() != nullptr && tile->get_province()->is_water_zone()) {
+							++color_counts[defines::get()->get_minimap_ocean_color()];
+							continue;
+						}
+
+						const domain *domain = tile->get_owner();
+
+						if (domain != nullptr) {
+							++color_counts[domain->get_diplomacy()->get_diplomatic_map_color()];
+							continue;
+						} else if (tile->get_province() != nullptr && !tile->get_province()->is_water_zone()) {
+							++color_counts[defines::get()->get_map_blank_color()];
+							continue;
+						}
+					}
+
+					++color_counts[defines::get()->get_unexplored_terrain()->get_color()];
 				}
 			}
 
-			this->minimap_image.setPixelColor(pixel_pos, defines::get()->get_unexplored_terrain()->get_color());
+			QColor best_color;
+			int best_count = 0;
+
+			for (const auto &[color, count] : color_counts) {
+				if (count > best_count) {
+					best_color = color;
+					best_count = count;
+				}
+			}
+
+			assert_throw(best_color.isValid());
+			this->minimap_image.setPixelColor(pixel_pos, best_color);
 		}
 	}
 }
