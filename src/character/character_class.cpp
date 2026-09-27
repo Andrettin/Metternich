@@ -19,15 +19,58 @@
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "species/species.h"
+#include "species/taxon.h"
 #include "spell/spell.h"
 #include "ui/ui_defines.h"
 #include "unit/military_unit_category.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace metternich {
+
+void character_class::process_variant_name_scope(std::map<const taxon_base *, std::map<gender, std::string>> &variant_names, const gsml_data &scope)
+{
+	scope.for_each_property([&variant_names](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+
+		if (const species *species = species::try_get(key)) {
+			variant_names[species][gender::none] = value;
+		} else if (const taxon *taxon = taxon::try_get(key)) {
+			variant_names[taxon][gender::none] = value;
+		} else {
+			const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+			variant_names[nullptr][gender] = value;
+		}
+	});
+
+	scope.for_each_child([&variant_names](const gsml_data &child_scope) {
+		const std::string &child_tag = child_scope.get_tag();
+
+		const taxon_base *taxon = species::try_get(child_tag);
+		if (taxon == nullptr) {
+			taxon = taxon::get(child_tag);
+		}
+
+		character_class::process_variant_name_scope(variant_names[taxon], child_scope);
+	});
+}
+
+void character_class::process_variant_name_scope(std::map<gender, std::string> &variant_names, const gsml_data &scope)
+{
+	scope.for_each_property([&variant_names](const gsml_property &property) {
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+
+		const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+		variant_names[gender] = value;
+	});
+}
 
 character_class::character_class(const std::string &identifier)
 	: named_data_entry(identifier), military_unit_category(military_unit_category::none)
@@ -63,6 +106,8 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->primary_attributes.push_back(character_attribute::get(value));
 		}
+	} else if (tag == "variant_names") {
+		character_class::process_variant_name_scope(this->variant_names, scope);
 	} else if (tag == "save_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -275,6 +320,31 @@ metternich::starting_age_category character_class::get_starting_age_category() c
 	}
 
 	return starting_age_category::none;
+}
+
+const std::string &character_class::get_name(const taxon_base *taxon, const gender gender) const
+{
+	auto taxon_find_iterator = this->variant_names.find(taxon);
+	if (taxon_find_iterator == this->variant_names.end()) {
+		if (taxon->get_supertaxon() != nullptr) {
+			return this->get_name(taxon->get_supertaxon(), gender);
+		}
+
+		taxon_find_iterator = this->variant_names.find(nullptr);
+	}
+
+	if (taxon_find_iterator != this->variant_names.end()) {
+		auto gender_find_iterator = taxon_find_iterator->second.find(gender);
+		if (gender_find_iterator == taxon_find_iterator->second.end()) {
+			gender_find_iterator = taxon_find_iterator->second.find(gender::none);
+		}
+
+		if (gender_find_iterator != taxon_find_iterator->second.end()) {
+			return gender_find_iterator->second;
+		}
+	}
+
+	return named_data_entry::get_name();
 }
 
 const level_value_table *character_class::get_experience_table() const

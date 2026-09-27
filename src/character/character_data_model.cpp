@@ -241,7 +241,7 @@ void character_data_model::reset_model()
 
 		const character_class *character_class = character_game_data->get_character_class();
 		if (character_class != nullptr) {
-			this->top_rows.push_back(std::make_unique<character_data_row>("Class:", character_class->get_name()));
+			this->top_rows.push_back(std::make_unique<character_data_row>("Class:", character_game_data->get_character_class_name()));
 
 			const int level = character_game_data->get_level();
 			this->top_rows.push_back(std::make_unique<character_data_row>("Level:", std::to_string(level)));

@@ -321,7 +321,7 @@ public:
 			std::string character_class_string;
 			const character_class *character_class = party_character->get_game_data()->get_character_class();
 			if (character_class != nullptr) {
-				character_class_string += std::format(" {} {}", character_class->get_name(), party_character->get_game_data()->get_level());
+				character_class_string += std::format(" {} {}", party_character->get_game_data()->get_character_class_name(), party_character->get_game_data()->get_level());
 			}
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_game_data()->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_health(), party_character->get_game_data()->get_max_health());
 		}
@@ -355,7 +355,7 @@ public:
 			std::string character_class_string;
 			const character_class *character_class = character->get_game_data()->get_character_class();
 			if (character_class != nullptr) {
-				character_class_string += std::format(" {} {}", character_class->get_name(), character->get_game_data()->get_level());
+				character_class_string += std::format(" {} {}", character->get_game_data()->get_character_class_name(), character->get_game_data()->get_level());
 			}
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{})", character->get_game_data()->get_full_name(), character->get_species()->get_name(), character_class_string);
 		}

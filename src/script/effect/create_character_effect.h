@@ -1,11 +1,13 @@
 #pragma once
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
+#include "game/game.h"
 #include "script/effect/effect.h"
 #include "species/species.h"
 #include "util/assert_util.h"
@@ -102,11 +104,11 @@ public:
 		Q_UNUSED(prefix);
 
 		if (this->character != nullptr) {
-			return std::format("{} ({} {} {}) will join your domain", this->character->get_game_data()->get_full_name(), this->character->get_species()->get_name(), this->character->get_game_data()->get_character_class()->get_name(), this->character->get_game_data()->get_level());
+			return std::format("{} ({} {} {}) will join your domain", this->character->get_game_data()->get_full_name(), this->character->get_species()->get_name(), this->character->get_game_data()->get_character_class_name(), this->character->get_game_data()->get_level());
 		} else if (this->monster_type != nullptr) {
 			return std::format("{} {} will join your domain", string::capitalized(string::get_indefinite_article(this->monster_type->get_name())), this->monster_type->get_name());
 		} else if (this->character_class != nullptr) {
-			return std::format("{} {} will join your domain", string::capitalized(string::get_indefinite_article(this->character_class->get_name())), this->character_class->get_name());
+			return std::format("{} {} will join your domain", string::capitalized(string::get_indefinite_article(this->character_class->get_name(nullptr, this->gender))), this->character_class->get_name(nullptr, this->gender));
 		} else {
 			assert_throw(false);
 			return {};

@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "script/condition/condition.h"
+#include "util/gender.h"
 
 namespace metternich {
 
@@ -32,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} character class", this->character_class->get_name());
+		return std::format("{} character class", this->character_class->get_name(nullptr, gender::none));
 	}
 
 private:

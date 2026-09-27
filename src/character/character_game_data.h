@@ -242,6 +242,7 @@ public:
 
 	const metternich::character_class *get_character_class() const;
 	void set_character_class(const metternich::character_class *character_class);
+	const std::string &get_character_class_name() const;
 	[[nodiscard]] QCoro::Task<void> check_character_class_advancement(const int level);
 	Q_INVOKABLE void on_character_class_chosen(const metternich::character_class *character_class);
 

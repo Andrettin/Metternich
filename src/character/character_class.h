@@ -8,6 +8,10 @@ Q_MOC_INCLUDE("character/level_value_table.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class character_attribute;
@@ -22,6 +26,7 @@ class level_value_table;
 class skill_group;
 class species;
 class spell;
+class taxon_base;
 class technology;
 class trait_type;
 enum class military_unit_category;
@@ -56,6 +61,9 @@ public:
 	static constexpr const char class_identifier[] = "character_class";
 	static constexpr const char property_class_identifier[] = "metternich::character_class*";
 	static constexpr const char database_folder[] = "character_classes";
+
+	static void process_variant_name_scope(std::map<const taxon_base *, std::map<gender, std::string>> &variant_names, const gsml_data &scope);
+	static void process_variant_name_scope(std::map<gender, std::string> &variant_names, const gsml_data &scope);
 
 	explicit character_class(const std::string &identifier);
 	~character_class();
@@ -136,6 +144,8 @@ public:
 	{
 		return this->obsolescence_technology;
 	}
+
+	const std::string &get_name(const taxon_base *taxon, const gender gender) const;
 
 	const level_value_table *get_experience_table() const;
 
@@ -389,6 +399,7 @@ private:
 	metternich::starting_age_category starting_age_category{};
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
+	std::map<const taxon_base *, std::map<gender, std::string>> variant_names;
 	const level_value_table *experience_table = nullptr;
 	const level_value_table *health_bonus_table = nullptr;
 	const level_value_table *mana_bonus_table = nullptr;

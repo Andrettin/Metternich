@@ -1629,6 +1629,15 @@ void character_game_data::set_character_class(const metternich::character_class 
 	}
 }
 
+const std::string &character_game_data::get_character_class_name() const
+{
+	if (this->get_character_class() != nullptr) {
+		return this->get_character_class()->get_name(this->character->get_species(), this->character->get_gender());
+	}
+
+	return string::empty_str;
+}
+
 QCoro::Task<void> character_game_data::check_character_class_advancement(const int level)
 {
 	assert_throw(this->get_character_class() != nullptr);

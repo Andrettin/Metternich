@@ -825,7 +825,7 @@ std::string combat::get_tile_text(const QPoint &tile_pos) const
 	if (tile.character != nullptr) {
 		const character *character = tile.character;
 		const character_game_data *character_game_data = character->get_game_data();
-		const std::string type_name = character->get_monster_type() != nullptr ? character->get_monster_type()->get_name() : (character_game_data->get_character_class() != nullptr ? (character_game_data->get_character_class()->get_name() + " " + std::to_string(character_game_data->get_level())) : character->get_species()->get_name());
+		const std::string type_name = character->get_monster_type() != nullptr ? character->get_monster_type()->get_name() : (character_game_data->get_character_class() != nullptr ? (character_game_data->get_character_class_name() + " " + std::to_string(character_game_data->get_level())) : character->get_species()->get_name());
 		const std::string full_name = character_game_data->get_full_name();
 		text += " " + (!full_name.empty() ? (full_name + " (" + type_name + ")") : type_name);
 

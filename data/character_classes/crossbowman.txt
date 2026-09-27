@@ -2,6 +2,9 @@ crossbowman = {
 	name = "Crossbowman"
 	base_class = warrior
 	required_technology = light_crossbow
+	variant_names = {
+		female = "Crossbowwoman"
+	}
 	allowed_equipment_classes = {
 		weapon = {
 			crossbow
