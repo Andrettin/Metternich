@@ -212,8 +212,77 @@ Item {
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : (site.game_data.owner ? site.game_data.owner.color : "transparent")
-				visible: selected || (site.game_data.owner !== null && site.game_data.owner !== site.game_data.province.game_data.owner)
+				color: selected ? metternich.defines.selected_country_color : get_holding_map_mode_color(province_map.mode, site, change_count)
+				visible: site && (selected || color !== get_map_mode_color(province_map.mode, site.game_data.province, change_count))
+				
+				property int change_count: 0
+				
+				Connections {
+					target: site && site.game_data.province ? site.game_data.province.game_data : null
+					
+					function onMap_image_changed() {
+						change_count += 1
+					}
+					
+					function onMap_mode_image_changed(map_mode_identifier) {
+						switch (mode) {
+							case ProvinceMap.Mode.Realm:
+								return
+							case ProvinceMap.Mode.Kingdom:
+								if (map_mode_identifier !== "kingdom") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Duchy:
+								if (map_mode_identifier !== "duchy") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.County:
+								if (map_mode_identifier !== "county") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Terrain:
+								if (map_mode_identifier !== "terrain") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Cultural:
+								if (map_mode_identifier !== "cultural") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Religious:
+								if (map_mode_identifier !== "religious") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Technology:
+								if (map_mode_identifier !== "technology") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.TradeZone:
+								if (map_mode_identifier !== "trade_zone") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Temple:
+								if (map_mode_identifier !== "temple") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.CulturalSociety:
+								if (map_mode_identifier !== "cultural_society") {
+									return
+								}
+								break
+						}
+						
+						change_count += 1
+					}
+				}
 			}
 			
 			Image {

@@ -170,6 +170,40 @@ TableView {
 		}
 	}
 	
+	function get_holding_map_mode_color(mode, holding, change_count) {
+		if (holding !== null && holding.game_data.holding_type !== null) {
+			switch (mode) {
+				case ProvinceMap.Mode.Realm:
+				case ProvinceMap.Mode.Kingdom:
+				case ProvinceMap.Mode.Duchy:
+				case ProvinceMap.Mode.County:
+				case ProvinceMap.Mode.TradeZone:
+				case ProvinceMap.Mode.Temple:
+				case ProvinceMap.Mode.CulturalSociety:
+					if (holding.game_data.owner !== null) {
+						return holding.game_data.owner.color
+					}
+					break
+				case ProvinceMap.Mode.Terrain:
+					return holding.map_data.terrain.color
+				case ProvinceMap.Mode.Cultural:
+					if (holding.game_data.culture !== null) {
+						return holding.game_data.culture.color
+					}
+					break
+				case ProvinceMap.Mode.Religious:
+					if (holding.game_data.religion !== null) {
+						return holding.game_data.religion.color
+					}
+					break
+				case ProvinceMap.Mode.Technology:
+					break
+			}
+		}
+		
+		return "transparent"
+	}
+	
 	function update_civilian_unit_status_text(civilian_unit, show_text) {
 		var text = ""
 		
