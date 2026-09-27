@@ -19,6 +19,7 @@ central_room = {
 					gnoll_marauders = 2
 				}
 				on_victory = {
+					wealth += 3200gp
 					source_site = {
 						buildings -= ruined_keep
 					}
@@ -49,6 +50,7 @@ kobold_guards = {
 					kobolds = 6
 				}
 				on_victory = {
+					wealth += 2500gp
 					#potion of healing
 					source_site = {
 						buildings -= ruined_keep
@@ -112,6 +114,7 @@ ogres_den = {
 					wolves = 2
 				}
 				on_victory = {
+					wealth += 15gb
 					gain_item = { #dagger +1
 						type = dagger
 						enchantment = weapon_1
@@ -120,10 +123,15 @@ ogres_den = {
 						type = short_sword
 						enchantment = weapon_2
 					}
+					
+					#potion of healing
+					
 					gain_item = {
 						type = scroll
 						spell = arcane_missile
 					}
+					
+					#scroll of charm person
 				
 					source_site = {
 						buildings -= ruined_keep
