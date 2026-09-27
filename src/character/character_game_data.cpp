@@ -1374,51 +1374,53 @@ QCoro::Task<void> character_game_data::die()
 {
 	this->set_dead(true);
 
-	if (this->get_military_unit() != nullptr) {
-		co_await this->get_domain()->get_military()->on_leader_died(this->character);
-	}
-
-	if (this->get_office() != nullptr) {
-		assert_throw(this->get_domain() != nullptr);
-		co_await this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
-	}
-
-	if (this->get_civilian_unit() != nullptr) {
-		co_await this->get_civilian_unit()->disband(false);
-	}
-
-	assert_throw(this->get_office() == nullptr);
-	if (this->get_wealth() > 0 || !this->get_items().empty()) {
-		character_set checked_characters;
-		std::vector<const metternich::character *> next_of_kin = this->get_next_of_kin(checked_characters, true);
-
-		if (next_of_kin.empty() && this->get_domain() != nullptr) {
-			//if there is no next of kin, the ruler of the character's domain inherits their personal wealth
-			next_of_kin = { this->get_domain()->get_government()->get_ruler() };
+	if (this->get_domain() != nullptr) {
+		if (this->get_military_unit() != nullptr) {
+			co_await this->get_domain()->get_military()->on_leader_died(this->character);
 		}
 
-		if (!next_of_kin.empty()) {
-			const int64_t wealth_share = this->get_wealth() / static_cast<int64_t>(next_of_kin.size());
-			for (const metternich::character * inheritor : next_of_kin) {
-				inheritor->get_game_data()->change_wealth(wealth_share);
+		if (this->get_office() != nullptr) {
+			assert_throw(this->get_domain() != nullptr);
+			co_await this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
+		}
 
-				std::vector<item *> potential_items;
-				for (const qunique_ptr<item> &item : this->get_items()) {
-					potential_items.push_back(item.get());
-				}
-				for (item *item : potential_items) {
-					if (item->is_useful_for(inheritor)) {
-						co_await inheritor->get_game_data()->add_item(co_await this->take_item(item));
+		if (this->get_civilian_unit() != nullptr) {
+			co_await this->get_civilian_unit()->disband(false);
+		}
+
+		assert_throw(this->get_office() == nullptr);
+		if (this->get_wealth() > 0 || !this->get_items().empty()) {
+			character_set checked_characters;
+			std::vector<const metternich::character *> next_of_kin = this->get_next_of_kin(checked_characters, true);
+
+			if (next_of_kin.empty() && this->get_domain() != nullptr) {
+				//if there is no next of kin, the ruler of the character's domain inherits their personal wealth
+				next_of_kin = { this->get_domain()->get_government()->get_ruler() };
+			}
+
+			if (!next_of_kin.empty()) {
+				const int64_t wealth_share = this->get_wealth() / static_cast<int64_t>(next_of_kin.size());
+				for (const metternich::character *inheritor : next_of_kin) {
+					inheritor->get_game_data()->change_wealth(wealth_share);
+
+					std::vector<item *> potential_items;
+					for (const qunique_ptr<item> &item : this->get_items()) {
+						potential_items.push_back(item.get());
+					}
+					for (item *item : potential_items) {
+						if (item->is_useful_for(inheritor)) {
+							co_await inheritor->get_game_data()->add_item(co_await this->take_item(item));
+						}
 					}
 				}
 			}
+
+			this->wealth = 0;
 		}
 
-		this->wealth = 0;
+		assert_throw(this->get_office() == nullptr);
+		this->set_domain(nullptr);
 	}
-
-	assert_throw(this->get_office() == nullptr);
-	this->set_domain(nullptr);
 
 	if (this->is_deity() && this->character->get_deity()->is_apotheotic()) {
 		for (int i = 1; i <= this->character->get_deity()->get_divine_level(); ++i) {

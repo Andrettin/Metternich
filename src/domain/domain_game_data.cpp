@@ -3331,11 +3331,13 @@ QCoro::Task<void> domain_game_data::check_characters()
 				continue;
 			}
 
-			if (!site_character->is_immortal() && site_character->get_game_data()->get_death_date() <= current_date) {
+			if (site_character->get_game_data()->is_dead()) {
 				continue;
 			}
 
-			if (site_character->get_game_data()->is_dead()) {
+			if (!site_character->is_immortal() && site_character->get_game_data()->get_death_date() <= current_date) {
+				//set the character as dead (which makes them be considered as having existed) even if they don't exist in one of the game's domains, since they might be relevant for family trees or as apotheotic deities
+				co_await site_character->get_game_data()->die();
 				continue;
 			}
 
