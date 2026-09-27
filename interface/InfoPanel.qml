@@ -658,10 +658,10 @@ Rectangle {
 		IconButton {
 			id: explore_dungeon_button
 			icon_identifier: "skull"
-			visible: selected_garrison && selected_province !== null && selected_province.game_data.ruin_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0 && can_visit_dungeons(metternich.selected_military_units)
+			visible: selected_garrison && selected_province !== null && selected_province.game_data.ruin_sites.length > 0 && selected_province.game_data.get_domain_military_units_qvariant_list(metternich.game.player_domain).length > 0 && can_visit_dungeons(metternich.selected_military_units) && get_visitable_dungeons_in_province(selected_province).length > 0
 			
 			onClicked: {
-				dungeon_dialog.ruin_sites = selected_province.game_data.ruin_sites
+				dungeon_dialog.ruin_sites = get_visitable_dungeons_in_province(selected_province)
 				dungeon_dialog.open()
 			}
 			
@@ -673,12 +673,24 @@ Rectangle {
 				}
 			}
 			
-			function can_visit_dungeons(selected_military_units) {
+			function can_visit_dungeons(selected_military_units, province) {
 				if (selected_military_units.length === 0) {
 					return false
 				}
 				
 				return true
+			}
+			
+			function get_visitable_dungeons_in_province(province) {
+				var ruin_sites = []
+				
+				for (var ruin_site of province.game_data.ruin_sites) {
+					if (ruin_site.game_data.can_be_visited_by(metternich.game.player_domain)) {
+						ruin_sites.push(ruin_site)
+					}
+				}
+				
+				return ruin_sites
 			}
 		}
 		

@@ -670,7 +670,7 @@ public:
 
 	void update_holding_level_income();
 
-	bool can_be_visited_by(const metternich::domain *domain) const;
+	Q_INVOKABLE bool can_be_visited_by(const metternich::domain *domain) const;
 
 	const std::vector<army *> &get_visiting_armies() const
 	{
