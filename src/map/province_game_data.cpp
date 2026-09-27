@@ -13,6 +13,7 @@
 #include "domain/domain_government.h"
 #include "domain/domain_military.h"
 #include "domain/domain_technology.h"
+#include "domain/domain_tier.h"
 #include "domain/domain_turn_data.h"
 #include "domain/government_type.h"
 #include "economy/commodity.h"
@@ -655,6 +656,33 @@ void province_game_data::on_population_main_religion_changed(const metternich::r
 const std::string &province_game_data::get_current_cultural_name() const
 {
 	return this->province->get_cultural_name(this->get_culture());
+}
+
+const domain *province_game_data::get_tier_domain(const domain_tier tier) const
+{
+	const domain *domain = this->get_owner();
+	if (domain != nullptr) {
+		while (domain->get_game_data()->get_tier() < tier && domain->get_diplomacy()->get_overlord() != nullptr) {
+			domain = domain->get_diplomacy()->get_overlord();
+		}
+	}
+
+	return domain;
+}
+
+const metternich::domain *province_game_data::get_kingdom_domain() const
+{
+	return this->get_tier_domain(domain_tier::kingdom);
+}
+
+const metternich::domain *province_game_data::get_duchy_domain() const
+{
+	return this->get_tier_domain(domain_tier::duchy);
+}
+
+const metternich::domain *province_game_data::get_county_domain() const
+{
+	return this->get_tier_domain(domain_tier::county);
 }
 
 void province_game_data::set_trade_zone_domain(const metternich::domain *trade_zone_domain)

@@ -54,8 +54,23 @@ Item {
 					
 					function onMap_mode_image_changed(map_mode_identifier) {
 						switch (mode) {
-							case ProvinceMap.Mode.Political:
+							case ProvinceMap.Mode.Realm:
 								return
+							case ProvinceMap.Mode.Kingdom:
+								if (map_mode_identifier !== "kingdom") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.Duchy:
+								if (map_mode_identifier !== "duchy") {
+									return
+								}
+								break
+							case ProvinceMap.Mode.County:
+								if (map_mode_identifier !== "county") {
+									return
+								}
+								break
 							case ProvinceMap.Mode.Terrain:
 								if (map_mode_identifier !== "terrain") {
 									return

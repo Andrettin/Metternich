@@ -50,6 +50,7 @@ class site;
 class site_feature;
 class tile;
 class wonder;
+enum class domain_tier;
 enum class military_unit_category;
 
 template <typename scope_type>
@@ -144,6 +145,11 @@ public:
 	{
 		return QString::fromStdString(this->get_current_cultural_name());
 	}
+
+	const domain *get_tier_domain(const domain_tier tier) const;
+	Q_INVOKABLE const metternich::domain *get_kingdom_domain() const;
+	Q_INVOKABLE const metternich::domain *get_duchy_domain() const;
+	Q_INVOKABLE const metternich::domain *get_county_domain() const;
 
 	const metternich::domain *get_trade_zone_domain() const
 	{

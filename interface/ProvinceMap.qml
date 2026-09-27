@@ -18,7 +18,10 @@ TableView {
 	delegate: MapBlockView {}
 	
 	enum Mode {
-		Political,
+		Realm,
+		Kingdom,
+		Duchy,
+		County,
 		Terrain,
 		Cultural,
 		Religious,
@@ -28,7 +31,7 @@ TableView {
 		CulturalSociety
 	}
 	
-	property int mode: ProvinceMap.Mode.Political
+	property int mode: ProvinceMap.Mode.Realm
 	property bool show_sites: true
 	readonly property var reference_country: selected_province ? selected_province.game_data.owner : (metternich.game.player_domain ? metternich.game.player_domain : null)
 	property var hovered_site: null
@@ -108,34 +111,26 @@ TableView {
 		center_on_tile(capital_x, capital_y)
 	}
 	
-	function get_map_mode_suffix(mode, province) {
-		switch (mode) {
-			case ProvinceMap.Mode.Political:
-				return "/political"
-			case ProvinceMap.Mode.Terrain:
-				return "/terrain"
-			case ProvinceMap.Mode.Cultural:
-				return "/cultural"
-			case ProvinceMap.Mode.Religious:
-				return "/religious"
-			case ProvinceMap.Mode.Technology:
-				return "/technology"
-			case ProvinceMap.Mode.TradeZone:
-				return "/trade_zone"
-			case ProvinceMap.Mode.Temple:
-				return "/temple"
-			case ProvinceMap.Mode.CulturalSociety:
-				return "/cultural_society"
-		}
-		
-		return ""
-	}
-	
 	function get_map_mode_color(mode, province, change_count) {
 		if (province !== null) {
 			switch (mode) {
-				case ProvinceMap.Mode.Political:
+				case ProvinceMap.Mode.Realm:
 					return province.game_data.map_color
+				case ProvinceMap.Mode.Kingdom:
+					if (province.game_data.get_kingdom_domain() !== null) {
+						return province.game_data.get_kingdom_domain().color
+					}
+					break
+				case ProvinceMap.Mode.Duchy:
+					if (province.game_data.get_duchy_domain() !== null) {
+						return province.game_data.get_duchy_domain().color
+					}
+					break
+				case ProvinceMap.Mode.County:
+					if (province.game_data.get_county_domain() !== null) {
+						return province.game_data.get_county_domain().color
+					}
+					break
 				case ProvinceMap.Mode.Terrain:
 					return province.map_data.terrain.color
 				case ProvinceMap.Mode.Cultural:

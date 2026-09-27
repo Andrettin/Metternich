@@ -127,8 +127,6 @@ QCoro::Task<void> domain_diplomacy::set_overlord(const metternich::domain *overl
 		co_return;
 	}
 
-	const metternich::domain *old_realm = this->get_game_data()->get_realm();
-
 	if (overlord != nullptr && overlord->get_game_data()->get_tier() <= this->get_game_data()->get_tier()) {
 		throw std::runtime_error(std::format("Tried to set \"{}\" as the overlord of \"{}\", but the former does not have a higher tier than the latter.", overlord->get_identifier(), this->domain->get_identifier()));
 	}
@@ -153,15 +151,11 @@ QCoro::Task<void> domain_diplomacy::set_overlord(const metternich::domain *overl
 		co_await this->set_subject_type(nullptr);
 	}
 
-	const metternich::domain *realm = this->get_game_data()->get_realm();
-
-	if (realm != old_realm) {
+	if (game::get()->is_running()) {
 		for (const province *province : this->get_game_data()->get_provinces()) {
 			emit province->get_game_data()->map_image_changed();
 		}
-	}
 
-	if (game::get()->is_running()) {
 		emit overlord_changed();
 	}
 }

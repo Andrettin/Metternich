@@ -3,6 +3,9 @@
 namespace metternich {
 
 enum class province_map_mode {
+	kingdom,
+	duchy,
+	county,
 	terrain,
 	cultural,
 	religious,

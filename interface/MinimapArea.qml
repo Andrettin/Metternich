@@ -95,17 +95,71 @@ Rectangle {
 		columns: 2
 		
 		TinyIconButton {
-			id: political_map_mode_button
-			icon_identifier: "alliance"
-			highlighted: province_map.mode === ProvinceMap.Mode.Political
+			id: realm_map_mode_button
+			icon_identifier: "empire_crown"
+			highlighted: province_map.mode === ProvinceMap.Mode.Realm
 			
 			onClicked: {
-				province_map.mode = ProvinceMap.Mode.Political
+				province_map.mode = ProvinceMap.Mode.Realm
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "Political Map Mode"
+					status_text = "Realm Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
+			id: kingdom_map_mode_button
+			icon_identifier: "alliance_ring"
+			highlighted: province_map.mode === ProvinceMap.Mode.Kingdom
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Kingdom
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Kingdom Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
+			id: duchy_map_mode_button
+			icon_identifier: "non_aggression_pact_shield"
+			highlighted: province_map.mode === ProvinceMap.Mode.Duchy
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.Duchy
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "Duchy Map Mode"
+				} else {
+					status_text = ""
+				}
+			}
+		}
+		
+		TinyIconButton {
+			id: county_map_mode_button
+			icon_identifier: "alliance"
+			highlighted: province_map.mode === ProvinceMap.Mode.County
+			
+			onClicked: {
+				province_map.mode = ProvinceMap.Mode.County
+			}
+			
+			onHoveredChanged: {
+				if (hovered) {
+					status_text = "County Map Mode"
 				} else {
 					status_text = ""
 				}
