@@ -1,6 +1,7 @@
 crossbowman = {
 	name = "Crossbowman"
 	base_class = warrior
+	required_technology = light_crossbow
 	allowed_equipment_classes = {
 		weapon = {
 			crossbow

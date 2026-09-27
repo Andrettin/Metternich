@@ -1,6 +1,7 @@
 archer = {
 	name = "Archer"
 	base_class = warrior
+	required_technology = short_bow
 	allowed_equipment_classes = {
 		weapon = {
 			bow
