@@ -32,6 +32,7 @@ class building_item_slot;
 class building_slot;
 class building_type;
 class character;
+class character_class;
 class culture;
 class domain;
 class employment_type;
@@ -707,6 +708,8 @@ public:
 
 	bool is_accessible_for_character(const character *character) const;
 	bool is_accessible_for_domain(const domain *domain) const;
+
+	bool can_generate_character_of_class(const character_class *character_class) const;
 
 signals:
 	void title_name_changed();

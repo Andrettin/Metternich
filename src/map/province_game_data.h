@@ -12,7 +12,6 @@
 #include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 
-Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
@@ -28,7 +27,6 @@ namespace archimedes {
 namespace metternich {
 
 class army;
-class character;
 class civilian_unit;
 class commodity;
 class culture;

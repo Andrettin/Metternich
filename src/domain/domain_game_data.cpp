@@ -3355,6 +3355,10 @@ QCoro::Task<void> domain_game_data::check_characters()
 				continue;
 			}
 
+			if (!site->get_game_data()->can_generate_character_of_class(site_character->get_game_data()->get_character_class())) {
+				continue;
+			}
+
 			site_character->get_game_data()->set_domain(this->domain);
 
 			if (this->domain == game::get()->get_player_domain()) {
@@ -3432,6 +3436,9 @@ QCoro::Task<const character *> domain_game_data::generate_character(const std::v
 	const species *species = nullptr;
 	std::vector<character_type_variant> potential_character_types;
 
+	const site *capital = this->get_capital();
+	assert_throw(capital != nullptr);
+
 	while (potential_character_types.empty() && !species_list.empty()) {
 		species = vector::take_random(species_list);
 
@@ -3440,6 +3447,10 @@ QCoro::Task<const character *> domain_game_data::generate_character(const std::v
 
 		for (const character_class *character_class : allowed_character_classes) {
 			if (!character_class->is_allowed_for_species(species)) {
+				continue;
+			}
+
+			if (!capital->get_game_data()->can_generate_character_of_class(character_class)) {
 				continue;
 			}
 
@@ -3486,9 +3497,11 @@ QCoro::Task<void> domain_game_data::generate_ruler()
 			continue;
 		}
 
-		if (character_class->is_government_type_allowed(government_type)) {
-			ruler_character_classes.push_back(character_class);
+		if (!character_class->is_government_type_allowed(government_type)) {
+			continue;
 		}
+
+		ruler_character_classes.push_back(character_class);
 	}
 
 	assert_throw(!ruler_character_classes.empty() || !government_type->get_ruler_monster_types().empty());

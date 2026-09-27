@@ -3,8 +3,8 @@
 #include "map/site_game_data.h"
 
 #include "character/character.h"
+#include "character/character_class.h"
 #include "character/character_game_data.h"
-#include "character/party.h"
 #include "character/skill.h"
 #include "culture/culture.h"
 #include "database/defines.h"
@@ -3015,6 +3015,19 @@ bool site_game_data::is_accessible_for_domain(const domain *domain) const
 	}
 
 	return false;
+}
+
+bool site_game_data::can_generate_character_of_class(const character_class *character_class) const
+{
+	if (character_class->get_required_technology() != nullptr && !this->get_province()->get_game_data()->has_technology(character_class->get_required_technology())) {
+		return false;
+	}
+
+	if (character_class->get_obsolescence_technology() != nullptr && this->get_province()->get_game_data()->has_technology(character_class->get_obsolescence_technology())) {
+		return false;
+	}
+
+	return true;
 }
 
 }
