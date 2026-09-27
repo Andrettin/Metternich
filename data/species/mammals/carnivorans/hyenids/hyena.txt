@@ -2,8 +2,10 @@ hyena = {
 	name = "Hyena"
 	supertaxon = hyaenidae
 	era = holocene
+	default_creature_size = medium
 	pre_evolutions = {
 		protictitherium #earlier hyenid
 	}
+	
 	#scavenger
 }

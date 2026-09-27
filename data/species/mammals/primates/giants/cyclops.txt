@@ -4,5 +4,7 @@ cyclops = {
 	specific_name = "cyclops"
 	era = holocene
 	sapient = true
+	default_creature_size = huge
+	
 	#ogres, ettins and cyclopses should have a common ancestor
 }

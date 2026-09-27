@@ -2,6 +2,7 @@ owl = {
 	name = "Owl"
 	supertaxon = aves
 	era = holocene
+	default_creature_size = tiny
 	pre_evolutions = {
 		ichthyornis
 		presbyornis
