@@ -7,7 +7,7 @@ ruin_generation = {
 	}
 	immediate_effects = {
 		for = {
-			count = 10
+			count = 100
 			
 			random_holding = {
 				global = true
