@@ -20,7 +20,7 @@ melk = { #Mostviertel
 		}
 		
 		955 = {
-			owner = bavaria #became the Bavarian East March in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			owner = austria #became the Bavarian East March in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = german
 		}
 		

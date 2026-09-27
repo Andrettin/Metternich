@@ -13,7 +13,6 @@ denmark = {
 	}
 	core_provinces = {
 		zealand
-		jutland
 	}
 	
 	history = {

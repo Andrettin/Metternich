@@ -693,6 +693,9 @@ MenuBase {
 		} else {
 			diplomatic_map.selected_country = metternich.game.domains[random(metternich.game.domains.length)]
 		}
+		if (diplomatic_map.selected_country.game_data.diplomacy.overlord !== null) {
+			diplomatic_map.mode = DiplomaticMap.Mode.Political
+		}
 		diplomatic_map.center_on_selected_country_capital()
 	}
 	

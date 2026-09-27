@@ -1,0 +1,21 @@
+iron_century = {
+	name = "Iron Century"
+	start_date = 936.8.7 #coronation of Otto the Great
+	map_template = europe
+	hidden = true
+	default_domains = {
+		germany
+		england
+		norway
+	}
+}
+
+margraviate_of_austria = {
+	name = "Margraviate of Austria"
+	#parent_scenario = iron_century
+	start_date = 976
+	map_template = europe
+	default_domains = {
+		austria
+	}
+}

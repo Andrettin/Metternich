@@ -26,3 +26,17 @@ barbarossa = {
 		holy_roman_empire
 	}
 }
+
+third_crusade = {
+	name = "Third Crusade"
+	parent_scenario = high_middle_ages
+	start_date = 1187
+	map_template = europe
+	hidden = true
+	default_domains = {
+		england
+		france
+		holy_roman_empire
+		byzantium
+	}
+}

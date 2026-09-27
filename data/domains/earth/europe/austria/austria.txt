@@ -82,6 +82,20 @@ austria = {
 	}
 	
 	history = {
+		955 = {
+			owner = bavaria #Bavarian East March established in 955; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+		}
+		
+		976 = {
+			owner = none
+			government_type = monarchy
+			
+			diplomacy_state = {
+				domain = holy_roman_empire
+				subject_type = princely_state
+			}
+		}
+		
 		1075 = {
 			government_type = monarchy
 			
