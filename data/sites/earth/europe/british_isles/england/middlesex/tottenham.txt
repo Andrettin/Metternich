@@ -1,0 +1,8 @@
+tottenham = {
+	name = "Tottenham"
+	world = earth
+	geocoordinate = { -0.06805555555555555 51.5975 }
+	type = holding
+	holding_type = castle
+	province = middlesex
+}

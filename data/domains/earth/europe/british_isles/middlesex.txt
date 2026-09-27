@@ -5,7 +5,7 @@ middlesex = {
 	default_religion = catholic
 	default_tier = county
 	default_government_type = monarchy
-	default_capital = london
+	default_capital = westminster
 	core_provinces = {
 		middlesex
 	}

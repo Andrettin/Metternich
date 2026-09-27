@@ -7,7 +7,7 @@ england = {
 	default_religion = asatru
 	default_tier = kingdom
 	default_government_type = tribal_despotism
-	default_capital = london
+	default_capital = westminster
 	short_names = {
 		tribe = "Anglo-Saxons"
 	}

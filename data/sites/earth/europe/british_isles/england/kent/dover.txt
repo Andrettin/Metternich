@@ -1,7 +1,7 @@
 dover = {
 	name = "Dover"
 	world = earth
-	#geocoordinate = { 1.30001338563 51.13371217760 } #from Natural Earth
+	geocoordinate = { 1.30001338563 51.13371217760 } #from Natural Earth
 	province = kent
 	cultural_names = {
 		anglo_saxon = "Dofras" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.

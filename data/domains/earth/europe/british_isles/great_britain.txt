@@ -7,7 +7,7 @@ great_britain = {
 	default_religion = protestant
 	default_tier = kingdom
 	default_government_type = monarchy
-	default_capital = london
+	default_capital = westminster
 	core_provinces = {
 		middlesex
 		somerset

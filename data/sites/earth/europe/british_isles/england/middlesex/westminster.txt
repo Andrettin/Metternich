@@ -1,0 +1,8 @@
+westminster = {
+	name = "Westminster"
+	world = earth
+	geocoordinate = { -0.13722222222222 51.4975 } #City of Westminster
+	type = holding
+	holding_type = castle
+	province = middlesex
+}

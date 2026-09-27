@@ -1,0 +1,8 @@
+fulham = {
+	name = "Fulham"
+	world = earth
+	geocoordinate = { -0.2138 51.4767 }
+	type = holding
+	holding_type = castle
+	province = middlesex
+}

@@ -1,0 +1,21 @@
+saint_pauls = {
+	name = "Saint Pauls" #London cathedral
+	world = earth
+	geocoordinate = { -0.09830555555555556 51.513777777777776 } #St Paul's Cathedral
+	type = holding
+	holding_type = temple #bishopric
+	province = middlesex
+	features = {
+		holy_site #historical cathedral
+	}
+	
+	history = {
+		604 = {
+			buildings += temple #a church was built in London in 604 AD; Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 109.
+		}
+		
+		704 = {
+			buildings += cathedral #London possessed a bishopric as of 704; Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 142, 179.
+		}
+	}
+}

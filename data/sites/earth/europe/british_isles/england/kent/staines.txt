@@ -1,0 +1,8 @@
+staines = {
+	name = "Staines"
+	world = earth
+	geocoordinate = { -0.511 51.434 }
+	type = holding
+	holding_type = castle
+	province = kent #Surrey
+}

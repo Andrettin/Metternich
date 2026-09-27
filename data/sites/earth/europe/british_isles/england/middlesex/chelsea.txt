@@ -1,0 +1,8 @@
+chelsea = {
+	name = "Chelsea"
+	world = earth
+	geocoordinate = { -0.1684 51.4875 }
+	type = holding
+	holding_type = castle
+	province = middlesex
+}

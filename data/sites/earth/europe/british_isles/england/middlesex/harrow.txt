@@ -1,0 +1,8 @@
+harrow = {
+	name = "Harrow"
+	world = earth
+	geocoordinate = { -0.3464 51.5836 }
+	type = holding
+	holding_type = castle
+	province = middlesex
+}
