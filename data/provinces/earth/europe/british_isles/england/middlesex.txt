@@ -1,6 +1,7 @@
 middlesex = {
 	name = "Middlesex"
 	color = { 224 224 192 }
+	terrain = plains
 	default_provincial_capital = london
 	regions = {
 		england
