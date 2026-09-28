@@ -34,7 +34,6 @@ animal_handling = {
 	}
 	conditions = {
 		class_skill = animal_handling
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = animal_handling

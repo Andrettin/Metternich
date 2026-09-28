@@ -1,3 +1,74 @@
+castle_garden = {
+	name = "Castle Garden"
+	portrait = ruined_castle
+	description = "This garden is entirely derelict, void of any inhabitants except for a giant toad. The ground seems to shake with its loud croaks."
+	trigger = ruin_explored
+	random = true
+	conditions = {
+		saved_building = {
+			name = ruin_building
+			building_type = ruined_keep
+		}
+	}
+	option = {
+		name = "To battle!"
+		effects = {
+			battle = {
+				attacker = true
+				enemies = {
+					giant_toads = 1
+				}
+				on_victory = {
+					wealth += 10gb
+					gain_item = { #ring of protection +1
+						type = ring
+						enchantment = of_protection_1
+					}
+					source_site = {
+						buildings -= ruined_keep
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = "Get the toad to leave"
+		effects = {
+			skill_check = {
+				skill = animal_handling
+				on_success = {
+					wealth += 10gb
+					gain_item = { #ring of protection +1
+						type = ring
+						enchantment = of_protection_1
+					}
+					source_site = {
+						buildings -= ruined_keep
+					}
+				}
+				on_failure = {
+					battle = {
+						attacker = true
+						enemies = {
+							giant_toads = 1
+						}
+						on_victory = {
+							wealth += 10gb
+							gain_item = { #ring of protection +1
+								type = ring
+								enchantment = of_protection_1
+							}
+							source_site = {
+								buildings -= ruined_keep
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 central_room = {
 	name = "Central Room"
 	portrait = ruined_castle
