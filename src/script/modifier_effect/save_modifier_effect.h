@@ -30,6 +30,10 @@ public:
 	{
 		if (this->type == nullptr) {
 			for (const save_type *save_type : save_type::get_all()) {
+				if (save_type->get_base_save_type() != nullptr) {
+					continue;
+				}
+
 				scope->get_game_data()->change_save_bonus(save_type, (this->value * multiplier).to_int());
 			}
 		} else {
