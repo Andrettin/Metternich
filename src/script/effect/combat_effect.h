@@ -248,12 +248,6 @@ public:
 				++this->object_counts[object->get_object_type()];
 				this->objects.push_back(std::move(object));
 			});
-		} else if (tag == "on_victory") {
-			this->victory_effects = std::make_unique<effect_list<const domain>>();
-			this->victory_effects->process_gsml_data(scope);
-		} else if (tag == "on_defeat") {
-			this->defeat_effects = std::make_unique<effect_list<const domain>>();
-			this->defeat_effects->process_gsml_data(scope);
 		} else {
 			effect::process_gsml_scope(scope);
 		}
@@ -289,8 +283,6 @@ public:
 		context combat_ctx = ctx;
 		combat_ctx.in_combat = true;
 		combat->set_context(combat_ctx);
-		combat->set_victory_effects(this->victory_effects.get());
-		combat->set_defeat_effects(this->defeat_effects.get());
 
 		for (const auto &[character, enemy] : character_enemy_infos) {
 			combat_character_info *character_info = combat->get_character_info(character);
@@ -314,6 +306,9 @@ public:
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
+		Q_UNUSED(scope);
+		Q_UNUSED(prefix);
+
 		assert_throw(ctx.party != nullptr);
 
 		std::string str = std::format("Party{}{}:", !this->attacker && this->surprise ? " (surprised)" : "", this->to_hit_modifier != 0 ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
@@ -362,20 +357,6 @@ public:
 
 		for (const auto &[object_type, quantity] : this->object_counts) {
 			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + object_type->get_name();
-		}
-
-		if (this->victory_effects != nullptr) {
-			const std::string effects_string = this->victory_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-			if (!effects_string.empty()) {
-				str += "\n" + std::string(indent, '\t') + "If victorious:\n" + effects_string;
-			}
-		}
-
-		if (this->defeat_effects != nullptr) {
-			const std::string effects_string = this->defeat_effects->get_effects_string(scope, ctx, indent + 1, prefix);
-			if (!effects_string.empty()) {
-				str += "\n" + std::string(indent, '\t') + "If defeated:\n" + effects_string;
-			}
 		}
 
 		return str;
@@ -446,8 +427,6 @@ private:
 	std::vector<target_variant<const character>> enemy_characters;
 	std::vector<std::unique_ptr<object>> objects;
 	data_entry_map<object_type, int> object_counts;
-	std::unique_ptr<effect_list<const domain>> victory_effects;
-	std::unique_ptr<effect_list<const domain>> defeat_effects;
 };
 
 }

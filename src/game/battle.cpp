@@ -568,15 +568,25 @@ void battle::notify_result()
 
 		if (success) {
 			std::string effects_string = std::format("Experience: {}", number::to_signed_string(this->result.experience_award));
+			if (this->victory_effects != nullptr) {
+				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, ctx);
+				effects_string += "\n" + victory_effects_string;
+			}
 
 			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a battle!\n\n{}", effects_string));
 		} else {
-			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a battle!"));
+			std::string effects_string;
+			if (this->defeat_effects != nullptr) {
+				const std::string defeat_effects_string = this->defeat_effects->get_effects_string(this->scope, ctx);
+				effects_string += "\n" + defeat_effects_string;
+			}
+
+			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a battle!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
 		}
 	}
 }
 
-void battle::process_result()
+QCoro::Task<void> battle::process_result()
 {
 	const bool success = this->attacking_army->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
 
@@ -584,13 +594,19 @@ void battle::process_result()
 	ctx.in_combat = false;
 
 	if (success) {
-		//FIXME: do post-battle effects, if necessary
+		if (this->victory_effects != nullptr) {
+			co_await this->victory_effects->do_effects(this->scope, ctx);
+		}
+	} else {
+		if (this->defeat_effects != nullptr) {
+			co_await this->defeat_effects->do_effects(this->scope, ctx);
+		}
 	}
 }
 
 QCoro::Task<void> battle::on_ended_coro()
 {
-	this->process_result();
+	co_await this->process_result();
 
 	this->clear();
 

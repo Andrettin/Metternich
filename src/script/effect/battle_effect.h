@@ -16,11 +16,10 @@
 
 namespace metternich {
 
-template <typename scope_type>
-class battle_effect final : public effect<scope_type>
+class battle_effect final : public effect<const domain>
 {
 public:
-	explicit battle_effect(const gsml_operator effect_operator) : effect<scope_type>(effect_operator)
+	explicit battle_effect(const gsml_operator effect_operator) : effect<const domain>(effect_operator)
 	{
 	}
 
@@ -39,7 +38,7 @@ public:
 		} else if (key == "victorious_enemies_attack_province") {
 			this->victorious_enemies_attack_province = string::to_bool(property.get_value());
 		} else {
-			effect<scope_type>::process_gsml_property(property);
+			effect<const domain>::process_gsml_property(property);
 		}
 	}
 
@@ -58,17 +57,17 @@ public:
 				this->enemies[military_unit_type] = quantity;
 			});
 		} else if (tag == "on_victory") {
-			this->victory_effects = std::make_unique<effect_list<scope_type>>();
+			this->victory_effects = std::make_unique<effect_list<const domain>>();
 			this->victory_effects->process_gsml_data(scope);
 		} else if (tag == "on_defeat") {
-			this->defeat_effects = std::make_unique<effect_list<scope_type>>();
+			this->defeat_effects = std::make_unique<effect_list<const domain>>();
 			this->defeat_effects->process_gsml_data(scope);
 		} else {
-			effect<scope_type>::process_gsml_scope(scope);
+			effect<const domain>::process_gsml_scope(scope);
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
 		std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs;
 		std::vector<military_unit *> enemy_units;
@@ -91,13 +90,15 @@ public:
 			battle = make_qunique<metternich::battle>(enemy_army.get(), ctx.defending_army, QSize());
 		}
 
-		const domain *scope_domain = effect<scope_type>::get_scope_domain(scope);
+		const domain *scope_domain = effect<const domain>::get_scope_domain(scope);
 		assert_throw(scope_domain != nullptr);
 
 		battle->set_scope(scope_domain);
 		context battle_ctx = ctx;
 		battle_ctx.in_combat = true;
 		battle->set_context(battle_ctx);
+		battle->set_victory_effects(this->victory_effects.get());
+		battle->set_defeat_effects(this->defeat_effects.get());
 
 		co_await battle->initialize();
 
@@ -115,22 +116,14 @@ public:
 
 		enemy_army->clear();
 
-		if (success) {
-			if (this->victory_effects != nullptr) {
-				co_await this->victory_effects->do_effects(scope, ctx);
-			}
-		} else {
-			if (this->defeat_effects != nullptr) {
-				co_await this->defeat_effects->do_effects(scope, ctx);
-			}
-
+		if (!success) {
 			if (this->victorious_enemies_attack_province) {
 				//FIXME: make it so the enemies attack the province where the battle is taking place
 			}
 		}
 	}
 
-	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
+	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		std::string str = "Battle against:";
 
@@ -159,8 +152,8 @@ private:
 	bool attacker = false;
 	bool victorious_enemies_attack_province = false;
 	military_unit_type_map<int> enemies;
-	std::unique_ptr<effect_list<scope_type>> victory_effects;
-	std::unique_ptr<effect_list<scope_type>> defeat_effects;
+	std::unique_ptr<effect_list<const domain>> victory_effects;
+	std::unique_ptr<effect_list<const domain>> defeat_effects;
 };
 
 }

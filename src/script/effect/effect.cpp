@@ -182,7 +182,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		} else if (effect_identifier == "any_neighbor_country") {
 			effect = std::make_unique<any_neighbor_country_effect>(effect_operator);
 		} else if (effect_identifier == "battle") {
-			effect = std::make_unique<battle_effect<scope_type>>(effect_operator);
+			effect = std::make_unique<battle_effect>(effect_operator);
 		} else if (effect_identifier == "change_opinion") {
 			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
 		} else if (effect_identifier == "combat") {

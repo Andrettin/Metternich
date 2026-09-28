@@ -754,46 +754,16 @@ void combat::notify_result()
 		const portrait *war_minister_portrait = this->scope->get_government()->get_war_minister_portrait();
 
 		if (success) {
-			std::string effects_string = std::format("Experience: {}", number::to_signed_string(0));
-			if (this->victory_effects != nullptr) {
-				const std::string victory_effects_string = this->victory_effects->get_effects_string(this->scope, ctx);
-				effects_string += "\n" + victory_effects_string;
-			}
-
-			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a combat!\n\n{}", effects_string));
+			engine_interface::get()->add_combat_notification("Victory!", war_minister_portrait, std::format("You have won a combat!"));
 		} else {
-			std::string effects_string;
-			if (this->defeat_effects != nullptr) {
-				const std::string defeat_effects_string = this->defeat_effects->get_effects_string(this->scope, ctx);
-				effects_string += "\n" + defeat_effects_string;
-			}
-
-			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!{}", !effects_string.empty() ? ("\n\n" + effects_string) : ""));
-		}
-	}
-}
-
-QCoro::Task<void> combat::process_result()
-{
-	const bool success = this->attacking_party->get_domain() == this->scope ? this->result.attacker_victory : !this->result.attacker_victory;
-
-	context ctx = this->ctx;
-	ctx.in_combat = false;
-
-	if (success) {
-		if (this->victory_effects != nullptr) {
-			co_await this->victory_effects->do_effects(this->scope, ctx);
-		}
-	} else {
-		if (this->defeat_effects != nullptr) {
-			co_await this->defeat_effects->do_effects(this->scope, ctx);
+			engine_interface::get()->add_combat_notification("Defeat!", war_minister_portrait, std::format("You have lost a combat!"));
 		}
 	}
 }
 
 QCoro::Task<void> combat::on_ended_coro()
 {
-	co_await this->process_result();
+	//co_await this->process_result();
 
 	//resolve all remaining status effects
 	std::vector<const character *> all_characters = this->attacking_party->get_characters();

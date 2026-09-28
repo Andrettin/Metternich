@@ -20,6 +20,9 @@ class battle;
 class domain;
 class military_unit;
 
+template <typename scope_type>
+class effect_list;
+
 struct battle_tile final : public combat_tile_base
 {
 	explicit battle_tile(const terrain_type *base_terrain, const terrain_type *terrain);
@@ -106,6 +109,15 @@ public:
 	{
 		this->ctx = ctx;
 	}
+	void set_victory_effects(const effect_list<const domain> *victory_effects)
+	{
+		this->victory_effects = victory_effects;
+	}
+
+	void set_defeat_effects(const effect_list<const domain> *defeat_effects)
+	{
+		this->defeat_effects = defeat_effects;
+	}
 
 	virtual QVariantList get_unit_infos_qvariant_list() const override;
 	battle_unit_info *get_unit_info(const military_unit *unit) const;
@@ -132,7 +144,7 @@ public:
 	[[nodiscard]] QCoro::Task<int64_t> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	void notify_result();
-	void process_result();
+	[[nodiscard]] QCoro::Task<void> process_result();
 
 	[[nodiscard]] QCoro::Task<void> on_ended_coro();
 
@@ -167,6 +179,8 @@ private:
 	int64_t defender_experience_award = 0;
 	const domain *scope = nullptr;
 	context ctx;
+	const effect_list<const domain> *victory_effects = nullptr;
+	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<battle_tile> tiles;
 	std::map<const military_unit *, qunique_ptr<battle_unit_info>> unit_infos;
 };

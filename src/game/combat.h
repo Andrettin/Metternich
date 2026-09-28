@@ -225,16 +225,6 @@ public:
 		this->ctx = ctx;
 	}
 
-	void set_victory_effects(const effect_list<const domain> *victory_effects)
-	{
-		this->victory_effects = victory_effects;
-	}
-
-	void set_defeat_effects(const effect_list<const domain> *defeat_effects)
-	{
-		this->defeat_effects = defeat_effects;
-	}
-
 	virtual QVariantList get_unit_infos_qvariant_list() const override;
 	combat_character_info *get_character_info(const character *character) const;
 	void remove_character_info(const character *character);
@@ -281,9 +271,6 @@ public:
 	void notify_result();
 
 	[[nodiscard]]
-	QCoro::Task<void> process_result();
-
-	[[nodiscard]]
 	QCoro::Task<void> on_ended_coro();
 
 	Q_INVOKABLE QCoro::QmlTask on_ended()
@@ -322,8 +309,6 @@ private:
 	std::unique_ptr<party> generated_party;
 	const domain *scope = nullptr;
 	context ctx;
-	const effect_list<const domain> *victory_effects = nullptr;
-	const effect_list<const domain> *defeat_effects = nullptr;
 	std::vector<combat_tile> tiles;
 	character_map<qunique_ptr<combat_character_info>> character_infos;
 	std::vector<qunique_ptr<combat_object>> objects;
