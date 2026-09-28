@@ -85,10 +85,15 @@ public:
 		qunique_ptr<battle> battle;
 
 		if (this->attacker) {
-			battle = make_qunique<metternich::battle>(ctx.attacking_army, enemy_army.get(), QSize());
+			ctx.attacking_army = ctx.army;
+			ctx.defending_army = enemy_army.get();
+			battle = make_qunique<metternich::battle>(ctx.army, enemy_army.get(), QSize());
 		} else {
-			battle = make_qunique<metternich::battle>(enemy_army.get(), ctx.defending_army, QSize());
+			ctx.attacking_army = enemy_army.get();
+			ctx.defending_army = ctx.army;
 		}
+
+		battle = make_qunique<metternich::battle>(ctx.attacking_army, ctx.defending_army, QSize());
 
 		const domain *scope_domain = effect<const domain>::get_scope_domain(scope);
 		assert_throw(scope_domain != nullptr);

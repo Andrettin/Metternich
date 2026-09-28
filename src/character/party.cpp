@@ -71,21 +71,6 @@ QCoro::Task<void> party::gain_experience(const int64_t experience)
 	}
 }
 
-const character *party::get_best_skill_character(const skill *skill) const
-{
-	int best_skill_value = 0;
-	const character *best_skill_character = nullptr;
-
-	for (const character *character : this->get_characters()) {
-		if (best_skill_character == nullptr || character->get_game_data()->get_effective_skill_value(skill) > best_skill_value) {
-			best_skill_character = character;
-			best_skill_value = character->get_game_data()->get_effective_skill_value(skill);
-		}
-	}
-
-	return best_skill_character;
-}
-
 int party::get_max_appropriate_dungeon_level() const
 {
 	return party::get_max_appropriate_dungeon_level(this->get_characters());

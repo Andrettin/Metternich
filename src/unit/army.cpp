@@ -234,9 +234,14 @@ const character *army::get_commander() const
 	return nullptr;
 }
 
+std::vector<const character *> army::get_characters() const
+{
+	return army::get_characters(this->get_military_units());
+}
+
 std::unique_ptr<party> army::to_party() const
 {
-	return std::make_unique<party>(army::get_characters(this->get_military_units()));
+	return std::make_unique<party>(this->get_characters());
 }
 
 QCoro::Task<void> army::gain_experience(int64_t experience)
@@ -262,6 +267,21 @@ QCoro::Task<void> army::gain_experience(int64_t experience)
 	for (military_unit *military_unit : this->get_military_units()) {
 		co_await military_unit->gain_experience(experience / static_cast<int>(this->get_military_units().size()));
 	}
+}
+
+const character *army::get_best_skill_character(const skill *skill) const
+{
+	int best_skill_value = 0;
+	const character *best_skill_character = nullptr;
+
+	for (const character *character : this->get_characters()) {
+		if (best_skill_character == nullptr || character->get_game_data()->get_effective_skill_value(skill) > best_skill_value) {
+			best_skill_character = character;
+			best_skill_value = character->get_game_data()->get_effective_skill_value(skill);
+		}
+	}
+
+	return best_skill_character;
 }
 
 const icon *army::get_military_unit_icon() const

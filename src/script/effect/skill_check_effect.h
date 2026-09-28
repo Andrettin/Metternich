@@ -70,7 +70,7 @@ public:
 	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
-		const bool success = roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier, this->get_location(roll_character, ctx));
+		const bool success = roll_character != nullptr ? roll_character->get_game_data()->do_skill_check(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)) : false;
 
 		bool is_player = false;
 		if constexpr (std::is_same_v<scope_type, const character>) {
@@ -98,6 +98,7 @@ public:
 			}
 
 			if (this->character_success_effects != nullptr) {
+				assert_throw(roll_character != nullptr);
 				co_await this->character_success_effects->do_effects(roll_character, ctx);
 			}
 		} else {
@@ -105,7 +106,7 @@ public:
 				co_await this->failure_effects->do_effects(scope, ctx);
 			}
 
-			if (this->character_failure_effects != nullptr) {
+			if (this->character_failure_effects != nullptr && roll_character != nullptr) {
 				co_await this->character_failure_effects->do_effects(roll_character, ctx);
 			}
 		}
@@ -115,7 +116,7 @@ public:
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
 
-		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(), roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)));
+		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(), roll_character != nullptr ? roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)) : 0);
 
 		if (this->roll_modifier != 0) {
 			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());
@@ -142,12 +143,12 @@ public:
 			success_effects_string = this->success_effects->get_effects_string(scope, ctx, indent, prefix);
 		}
 
-		if (this->character_success_effects != nullptr) {
+		const character *roll_character = this->get_roll_character(scope, ctx);
+		if (this->character_success_effects != nullptr && roll_character != nullptr) {
 			if (!success_effects_string.empty()) {
 				success_effects_string += "\n";
 			}
 
-			const character *roll_character = this->get_roll_character(scope, ctx);
 			success_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_game_data()->get_full_name()) + this->character_success_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
 		}
 
@@ -162,12 +163,12 @@ public:
 			failure_effects_string = this->failure_effects->get_effects_string(scope, ctx, indent, prefix);
 		}
 
-		if (this->character_failure_effects != nullptr) {
+		const character *roll_character = this->get_roll_character(scope, ctx);
+		if (this->character_failure_effects != nullptr && roll_character != nullptr) {
 			if (!failure_effects_string.empty()) {
 				failure_effects_string += "\n";
 			}
 
-			const character *roll_character = this->get_roll_character(scope, ctx);
 			failure_effects_string += std::format("{}{}:\n", std::string(indent, '\t'), roll_character->get_game_data()->get_full_name()) + this->character_failure_effects->get_effects_string(roll_character, ctx, indent + 1, prefix);
 		}
 
@@ -181,17 +182,16 @@ public:
 		if constexpr (std::is_same_v<scope_type, const character>) {
 			roll_character = scope;
 		} else {
-			assert_throw(ctx.party != nullptr);
-			roll_character = ctx.party->get_best_skill_character(this->skill);
+			assert_throw(ctx.army != nullptr);
+			roll_character = ctx.army->get_best_skill_character(this->skill);
 		}
-
-		assert_throw(roll_character != nullptr);
 
 		return roll_character;
 	}
 
 	const site *get_location(const character *roll_character, const read_only_context &ctx) const
 	{
+		assert_throw(roll_character != nullptr);
 		assert_throw(ctx.ruin_site != nullptr || roll_character->get_game_data()->get_location() != nullptr);
 		if (ctx.ruin_site != nullptr) {
 			return ctx.ruin_site;

@@ -14,6 +14,7 @@ class military_unit;
 class party;
 class province;
 class site;
+class skill;
 
 //collection of military units which are moving to or attacking a province, or visiting a site
 class army final : public QObject
@@ -74,9 +75,12 @@ public:
 
 	const character *get_commander() const;
 
+	std::vector<const character *> get_characters() const;
 	std::unique_ptr<party> to_party() const;
 
 	[[nodiscard]] QCoro::Task<void> gain_experience(int64_t experience);
+
+	const character *get_best_skill_character(const skill *skill) const;
 
 	Q_INVOKABLE const icon *get_military_unit_icon() const;
 

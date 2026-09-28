@@ -31,13 +31,13 @@ public:
 	[[nodiscard]]
 	virtual QCoro::Task<void> do_assignment_effect_coro(const domain *scope, context &ctx) const override
 	{
-		assert_throw(ctx.attacking_army != nullptr);
-		assert_throw(ctx.attacking_army->get_domain() == scope);
+		assert_throw(ctx.army != nullptr);
+		assert_throw(ctx.army->get_domain() == scope);
 
 		assert_throw(ctx.ruin_site != nullptr);
 
 		if (this->value) {
-			co_await ctx.ruin_site->get_game_data()->explore_ruin(ctx.attacking_army);
+			co_await ctx.ruin_site->get_game_data()->explore_ruin(ctx.army);
 		}
 	}
 

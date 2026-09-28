@@ -140,6 +140,7 @@ struct context_base
 	std::map<std::string, const site *> saved_site_scopes;
 	std::map<std::string, std::string> saved_strings;
 	std::map<std::string, const building_type *> saved_buildings;
+	army_ptr army = nullptr;
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
@@ -201,6 +202,7 @@ public:
 		this->saved_strings = ctx.saved_strings;
 		this->saved_buildings = ctx.saved_buildings;
 
+		this->army = ctx.army;
 		this->attacking_army = ctx.attacking_army;
 		this->defending_army = ctx.defending_army;
 

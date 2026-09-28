@@ -30,8 +30,6 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> gain_experience(const int64_t experience);
 
-	const character *get_best_skill_character(const skill *skill) const;
-
 	int get_max_appropriate_dungeon_level() const;
 
 private:
