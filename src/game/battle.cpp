@@ -267,8 +267,15 @@ QCoro::Task<void> battle::do_round()
 
 QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
-	bool attacked = false;
 	battle_unit_info *unit_info = this->get_unit_info(unit);
+	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
+	const bool is_ai = army->get_domain() != game::get()->get_player_domain() || this->is_autoplay_enabled();
+
+	if (unit_info->is_defender() && this->defender_neutral && is_ai) {
+		co_return 0;
+	}
+
+	bool attacked = false;
 	unit_info->set_remaining_movement(unit->get_battle_movement());
 
 	this->set_current_unit(unit_info);
@@ -277,7 +284,6 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 		co_await unit->get_character()->get_game_data()->set_flat_footed(false);
 	}
 
-	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
 	metternich::army *enemy_army = unit_info->is_defender() ? this->attacking_army : this->defending_army;
 
 	int64_t experience_award = 0;
@@ -287,7 +293,7 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 
 		QPoint target_pos(-1, -1);
 
-		if (army->get_domain() == game::get()->get_player_domain() && !this->is_autoplay_enabled()) {
+		if (!is_ai) {
 			emit movable_tiles_changed();
 
 			target_pos = co_await this->get_target();
@@ -385,6 +391,9 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 				if (is_valid_target) {
 					experience_award += co_await this->do_unit_spellcast(unit, this->get_current_spell(), tile.unit, killed_units, to_hit_modifier);
 					attacked = true;
+					if (this->defender_neutral && vector::contains(enemy_army->get_military_units(), tile.unit)) {
+						this->defender_neutral = false;
+					}
 				}
 			}
 
@@ -394,6 +403,9 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 				if (distance <= unit_info->get_range() && vector::contains(enemy_army->get_military_units(), tile.unit)) {
 					experience_award += co_await this->do_unit_attack(unit, tile.unit, enemy_army, killed_units, to_hit_modifier);
 					attacked = true;
+					if (this->defender_neutral) {
+						this->defender_neutral = false;
+					}
 				}
 			} else if (this->can_current_unit_move_to(target_pos)) {
 				unit_info->change_remaining_movement(-distance);
@@ -671,7 +683,6 @@ bool battle::is_defender_defeated() const
 	return this->defending_army->get_military_units().empty();
 }
 
-[[nodiscard]]
 QCoro::Task<void> battle::move_unit_to(military_unit *unit, const QPoint tile_pos)
 {
 	battle_unit_info *unit_info = this->get_unit_info(unit);

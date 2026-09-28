@@ -210,6 +210,17 @@ void army::remove_military_unit(military_unit *military_unit)
 	}
 }
 
+military_unit_type_map<int> army::get_military_unit_type_counts() const
+{
+	military_unit_type_map<int> type_counts;
+
+	for (const military_unit *military_unit : this->get_military_units()) {
+		++type_counts[military_unit->get_type()];
+	}
+
+	return type_counts;
+}
+
 int army::get_score() const
 {
 	int score = 0;

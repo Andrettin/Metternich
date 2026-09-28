@@ -1,5 +1,7 @@
 #pragma once
 
+#include "unit/military_unit_type_container.h"
+
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")
@@ -36,8 +38,7 @@ public:
 
 	void clear();
 
-	[[nodiscard]]
-	QCoro::Task<void> do_turn();
+	[[nodiscard]] QCoro::Task<void> do_turn();
 
 	const metternich::domain *get_domain() const
 	{
@@ -70,6 +71,7 @@ public:
 	QVariantList get_military_units_qvariant_list() const;
 	void add_military_unit(military_unit *military_unit);
 	void remove_military_unit(military_unit *military_unit);
+	military_unit_type_map<int> get_military_unit_type_counts() const;
 
 	int get_score() const;
 

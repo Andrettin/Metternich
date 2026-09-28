@@ -90,6 +90,11 @@ public:
 	virtual int get_max_range_of_units() const override;
 	virtual int get_spell_range(const spell *spell) const override;
 
+	void set_defender_neutral(const bool defender_neutral)
+	{
+		this->defender_neutral = defender_neutral;
+	}
+
 	void set_attacker_to_hit_modifier(const int modifier)
 	{
 		this->attacker_to_hit_modifier = modifier;
@@ -162,8 +167,7 @@ public:
 	virtual bool is_attacker_defeated() const override;
 	virtual bool is_defender_defeated() const override;
 
-	[[nodiscard]]
-	QCoro::Task<void> move_unit_to(military_unit *unit, const QPoint tile_pos);
+	[[nodiscard]] QCoro::Task<void> move_unit_to(military_unit *unit, const QPoint tile_pos);
 
 	virtual bool is_current_unit_in_enemy_range_at(const QPoint &tile_pos) const override;
 
@@ -172,6 +176,7 @@ public:
 private:
 	army *attacking_army = nullptr;
 	army *defending_army = nullptr;
+	bool defender_neutral = false; //the defender will not attack until attacked first
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
 	battle::result result;
