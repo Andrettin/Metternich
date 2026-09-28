@@ -138,10 +138,9 @@ public:
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		const bool scope_army_has_characters = !ctx.army->get_characters().empty();
-		std::string str = std::format("Army{}:", this->to_hit_modifier != 0 && scope_army_has_characters ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
+		std::string str = "Army:";
 		for (const auto &[military_unit_type, quantity] : ctx.army->get_military_unit_type_counts()) {
-			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + military_unit_type->get_name();
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{}x{}{}", quantity, military_unit_type->get_name(), this->to_hit_modifier != 0 && military_unit_type->is_leader() ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
 		}
 
 		str += "\n" + std::string(indent, '\t') + std::format("Battles against{}:", this->attacker && this->defender_neutral ? " (neutral until attacked)" : "");

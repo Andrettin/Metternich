@@ -214,6 +214,15 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
+bool military_unit_type::is_leader() const
+{
+	if (this->get_unit_class() == nullptr) {
+		return false;
+	}
+
+	return this->get_unit_class()->is_leader();
+}
+
 void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 {
 	assert_throw(this->monster_type != nullptr);
