@@ -141,3 +141,74 @@ ogres_den = {
 		}
 	}
 }
+
+orc_mines = {
+	name = "Orc Mines"
+	portrait = ruined_castle
+	description = "This room was once a cellar, though it has now been ravaged by digging. The orcs who dwell in it have set up mining operations there, and are engrossed with the digging of tunnels. What do you wish to do?"
+	trigger = ruin_explored
+	random = true
+	conditions = {
+		saved_building = {
+			name = ruin_building
+			building_type = ruined_keep
+		}
+	}
+	option = {
+		name = "Attack them!"
+		effects = {
+			battle = {
+				attacker = true
+				enemies = {
+					orcs = 5
+				}
+				on_victory = {
+					wealth += 11400gp
+					#potion of healing
+					source_site = {
+						buildings -= ruined_keep
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = "Use a disguise"
+		effects = {
+			skill_check = {
+				skill = disguise
+				on_success = {
+					battle = {
+						attacker = true
+						defender_neutral = true #the orcs will not attack unless they have been attacked first
+						enemies = {
+							orcs = 5
+						}
+						on_victory = {
+							wealth += 11400gp
+							#potion of healing
+							source_site = {
+								buildings -= ruined_keep
+							}
+						}
+					}
+				}
+				on_failure = {
+					battle = {
+						attacker = true
+						enemies = {
+							orcs = 5
+						}
+						on_victory = {
+							wealth += 11400gp
+							#potion of healing
+							source_site = {
+								buildings -= ruined_keep
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -209,7 +209,6 @@ disguise = {
 	}
 	conditions = {
 		class_skill = disguise
-		playable = false #only for flavor for NPCs, no mechanics added for it yet
 	}
 	modifier = {
 		skill_training = disguise
