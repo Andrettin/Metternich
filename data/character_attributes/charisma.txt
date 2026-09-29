@@ -1,6 +1,71 @@
 charisma = {
 	name = "Charisma"
 	type = main
+	value_modifiers = {
+		1 = {
+			general_opinion = -35
+		}
+		2 = {
+			general_opinion = 5
+		}
+		3 = {
+			general_opinion = 5
+		}
+		4 = {
+			general_opinion = 5
+		}
+		5 = {
+			general_opinion = 5
+		}
+		6 = {
+			general_opinion = 5
+		}
+		7 = {
+			general_opinion = 5
+		}
+		8 = {
+			general_opinion = 5
+		}
+		13 = {
+			general_opinion = 5
+		}
+		14 = {
+			general_opinion = 5
+		}
+		15 = {
+			general_opinion = 5
+		}
+		16 = {
+			general_opinion = 10
+		}
+		17 = {
+			general_opinion = 5
+		}
+		18 = {
+			general_opinion = 5
+		}
+		19 = {
+			general_opinion = 5
+		}
+		20 = {
+			general_opinion = 5
+		}
+		21 = {
+			general_opinion = 5
+		}
+		22 = {
+			general_opinion = 5
+		}
+		23 = {
+			general_opinion = 5
+		}
+		24 = {
+			general_opinion = 5
+		}
+		25 = {
+			general_opinion = 5
+		}
+	}
 }
 
 appearance = {

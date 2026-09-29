@@ -185,6 +185,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->initiative_bonus = std::stoi(value);
 	} else if (key == "flat_footed") {
 		this->flat_footed = string::to_bool(value);
+	} else if (key == "general_opinion_modifier") {
+		this->general_opinion_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -364,6 +366,10 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("reputation", std::to_string(this->get_reputation()));
 	data.add_property("creature_size", this->get_creature_size()->get_identifier());
 	data.add_property("weight", std::to_string(this->get_weight()));
+
+	if (this->get_general_opinion_modifier() != 0) {
+		data.add_property("general_opinion_modifier", std::to_string(this->get_general_opinion_modifier()));
+	}
 
 	if (!this->stat_values.empty()) {
 		gsml_data stats_data("stats");
@@ -4840,9 +4846,11 @@ QCoro::Task<void> character_game_data::set_flat_footed(const bool value)
 
 int character_game_data::get_opinion_of(const metternich::character *other)
 {
+	assert_throw(other != nullptr);
+
 	int opinion = this->get_base_opinion_of(other);
 
-	//FIXME: add opinion modifiers
+	opinion += other->get_game_data()->get_general_opinion_modifier();
 
 	return opinion;
 }

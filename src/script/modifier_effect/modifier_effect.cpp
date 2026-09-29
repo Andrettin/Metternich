@@ -43,6 +43,7 @@
 #include "script/modifier_effect/free_infantry_promotion_modifier_effect.h"
 #include "script/modifier_effect/free_warship_promotion_modifier_effect.h"
 #include "script/modifier_effect/gain_technologies_known_by_others_modifier_effect.h"
+#include "script/modifier_effect/general_opinion_modifier_effect.h"
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
 #include "script/modifier_effect/health_modifier_effect.h"
 #include "script/modifier_effect/health_per_hit_dice_modifier_effect.h"
@@ -125,6 +126,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<experience_modifier_effect>(value);
 		} else if (key == "experience_cost_modifier") {
 			return std::make_unique<experience_cost_modifier_effect>(value);
+		} else if (key == "general_opinion") {
+			return std::make_unique<general_opinion_modifier_effect>(value);
 		} else if (key == "health") {
 			return std::make_unique<health_modifier_effect>(value);
 		} else if (key == "health_per_hit_dice") {

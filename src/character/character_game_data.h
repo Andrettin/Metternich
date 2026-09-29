@@ -1051,6 +1051,20 @@ public:
 		this->set_base_opinion_of(other, this->get_base_opinion_of(other) + change);
 	}
 
+	int get_general_opinion_modifier() const
+	{
+		return this->general_opinion_modifier;
+	}
+
+	void change_general_opinion_modifier(const int change)
+	{
+		if (change == 0) {
+
+		}
+
+		this->general_opinion_modifier += change;
+	}
+
 	const domain_set &get_ruled_domains() const
 	{
 		return this->ruled_domains;
@@ -1208,6 +1222,7 @@ private:
 	data_entry_map<status_effect, std::chrono::seconds> status_effect_durations;
 	bool flat_footed = false;
 	character_map<int> base_opinions;
+	int general_opinion_modifier = 0;
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;
