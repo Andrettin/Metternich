@@ -10,6 +10,7 @@
 #include "script/modifier_effect/base_armor_class_modifier_effect.h"
 #include "script/modifier_effect/base_population_capacity_modifier_effect.h"
 #include "script/modifier_effect/building_cost_efficiency_modifier_effect.h"
+#include "script/modifier_effect/burgher_opinion_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_bonus_per_population_modifier_effect.h"
 #include "script/modifier_effect/capital_commodity_output_modifier_effect.h"
@@ -114,6 +115,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 	if constexpr (std::is_same_v<scope_type, const character>) {
 		if (key == "base_armor_class") {
 			return std::make_unique<base_armor_class_modifier_effect>(value);
+		} else if (key == "burgher_opinion") {
+			return std::make_unique<burgher_opinion_modifier_effect>(value);
 		} else if (key == "caster_level") {
 			return std::make_unique<caster_level_modifier_effect>(value);
 		} else if (key == "challenge_rating") {
