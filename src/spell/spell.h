@@ -20,6 +20,7 @@ class sound;
 class technology;
 enum class attack_result;
 enum class spell_target;
+enum class spell_type;
 
 template <typename scope_type>
 class effect_list;
@@ -28,6 +29,7 @@ class spell final : public named_data_entry, public data_type<spell>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(metternich::spell_type type MEMBER type READ get_type NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(metternich::icon* icon MEMBER icon NOTIFY changed)
 	Q_PROPERTY(metternich::spell_target target MEMBER target READ get_target NOTIFY changed)
@@ -51,6 +53,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	spell_type get_type() const
+	{
+		return this->type;
+	}
 
 	int get_level() const
 	{
@@ -149,6 +156,7 @@ signals:
 	void changed();
 
 private:
+	spell_type type{};
 	int level = -1;
 	metternich::icon *icon = nullptr;
 	int64_t price = 0;

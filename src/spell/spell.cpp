@@ -14,6 +14,7 @@
 #include "script/effect/effect_list.h"
 #include "spell/arcane_school.h"
 #include "spell/spell_target.h"
+#include "spell/spell_type.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -113,6 +114,10 @@ void spell::initialize()
 
 void spell::check() const
 {
+	if (this->get_type() == spell_type::none) {
+		throw std::runtime_error(std::format("Spell \"{}\" has no type.", this->get_identifier()));
+	}
+
 	if (this->get_level() == -1) {
 		throw std::runtime_error(std::format("Spell \"{}\" has no level.", this->get_identifier()));
 	}
@@ -159,6 +164,14 @@ int spell::get_mana_cost(const character_class *character_class) const
 {
 	if (this->mana_cost != 0) {
 		return this->mana_cost;
+	}
+
+	switch (this->get_type()) {
+		case spell_type::exploit:
+			//spell type which does not cost mana by default
+			return 0;
+		default:
+			break;
 	}
 
 	return character_defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));

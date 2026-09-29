@@ -1,5 +1,6 @@
 symbol = {
 	name = "Symbol"
+	type = spell
 	level = 7
 	icon = golden_cross
 	price = 6650gp

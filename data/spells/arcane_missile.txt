@@ -1,5 +1,6 @@
 arcane_missile = {
 	name = "Arcane Missile"
+	type = spell
 	level = 1
 	icon = research
 	price = 25gp

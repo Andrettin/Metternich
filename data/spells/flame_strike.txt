@@ -1,5 +1,6 @@
 flame_strike = {
 	name = "Flame Strike"
+	type = spell
 	level = 5
 	icon = research
 	price = 1125gp

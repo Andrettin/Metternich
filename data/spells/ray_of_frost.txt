@@ -1,5 +1,6 @@
 ray_of_frost = {
 	name = "Ray of Frost"
+	type = spell
 	level = 0
 	icon = research
 	price = 125sp

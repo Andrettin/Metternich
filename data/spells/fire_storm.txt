@@ -1,5 +1,6 @@
 fire_storm = {
 	name = "Fire Storm"
+	type = spell
 	level = 7
 	icon = research
 	price = 3000gp

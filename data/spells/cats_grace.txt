@@ -1,5 +1,6 @@
 cats_grace = {
 	name = "Cat's Grace"
+	type = spell
 	level = 2
 	icon = lion
 	price = 150gp

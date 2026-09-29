@@ -86,6 +86,7 @@
 #include "species/geological_era.h"
 #include "species/taxonomic_rank.h"
 #include "spell/spell_target.h"
+#include "spell/spell_type.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
 #include "technology/technology_model.h"
@@ -212,6 +213,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<province_taxation_type>();
 		database_util::register_enum<site_type>();
 		database_util::register_enum<spell_target>();
+		database_util::register_enum<spell_type>();
 		database_util::register_enum<starting_age_category>();
 		database_util::register_enum<succession_gender_type>();
 		database_util::register_enum<succession_type>();

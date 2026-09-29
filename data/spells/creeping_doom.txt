@@ -1,5 +1,6 @@
 creeping_doom = {
 	name = "Creeping Doom"
+	type = spell
 	level = 7
 	icon = skull
 	price = 2275gp

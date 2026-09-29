@@ -1,5 +1,6 @@
 holy_word = {
 	name = "Holy Word"
+	type = spell
 	level = 7
 	icon = golden_cross
 	price = 2275gp

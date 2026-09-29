@@ -1,5 +1,6 @@
 earthquake = {
 	name = "Earthquake"
+	type = spell
 	level = 7
 	icon = mountains
 	price = 3000gp

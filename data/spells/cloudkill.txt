@@ -1,5 +1,6 @@
 cloudkill = {
 	name = "Cloudkill"
+	type = spell
 	level = 5
 	icon = skull
 	price = 1125gp

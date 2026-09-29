@@ -1,5 +1,6 @@
 fireball = {
 	name = "Fireball"
+	type = spell
 	level = 3
 	icon = research
 	price = 375gp

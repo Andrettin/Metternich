@@ -1,5 +1,6 @@
 cause_light_wounds = {
 	name = "Cause Light Wounds"
+	type = spell
 	level = 1
 	icon = skull
 	price = 25gp

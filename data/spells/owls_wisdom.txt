@@ -1,5 +1,6 @@
 owls_wisdom = {
 	name = "Owl's Wisdom"
+	type = spell
 	level = 2
 	icon = university
 	price = 150gp

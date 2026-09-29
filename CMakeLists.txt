@@ -981,6 +981,7 @@ set(spell_HDRS
 	src/spell/spell.h
 	src/spell/spell_container.h
 	src/spell/spell_target.h
+	src/spell/spell_type.h
 )
 source_group(spell FILES ${spell_HDRS})
 

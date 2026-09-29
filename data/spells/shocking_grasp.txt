@@ -1,5 +1,6 @@
 shocking_grasp = {
 	name = "Shocking Grasp"
+	type = spell
 	level = 1
 	icon = research
 	price = 25gp

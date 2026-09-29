@@ -1,5 +1,6 @@
 call_lightning = {
 	name = "Call Lightning"
+	type = spell
 	level = 3
 	icon = research
 	price = 375gp

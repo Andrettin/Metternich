@@ -1,5 +1,6 @@
 blade_barrier = {
 	name = "Blade Barrier"
+	type = spell
 	level = 6
 	icon = saber
 	price = 1650gp

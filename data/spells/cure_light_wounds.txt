@@ -1,5 +1,6 @@
 cure_light_wounds = {
 	name = "Cure Light Wounds"
+	type = spell
 	level = 1
 	icon = wooden_cross
 	price = 25gp

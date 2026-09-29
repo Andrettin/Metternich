@@ -1,5 +1,6 @@
 cure_minor_wounds = {
 	name = "Cure Minor Wounds"
+	type = spell
 	level = 0
 	icon = wooden_cross
 	price = 125sp

@@ -1,5 +1,6 @@
 eagles_splendor = {
 	name = "Eagle's Splendor"
+	type = spell
 	level = 2
 	icon = research
 	price = 150gp

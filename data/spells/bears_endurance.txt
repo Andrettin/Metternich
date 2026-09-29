@@ -1,5 +1,6 @@
 bears_endurance = {
 	name = "Bear's Endurance"
+	type = spell
 	level = 2
 	icon = lion
 	price = 150gp

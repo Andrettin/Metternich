@@ -1,5 +1,6 @@
 bulls_strength = {
 	name = "Bull's Strength"
+	type = spell
 	level = 2
 	icon = labor
 	price = 150gp

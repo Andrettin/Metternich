@@ -1,5 +1,6 @@
 fire_seeds = {
 	name = "Fire Seeds"
+	type = spell
 	level = 6
 	icon = research
 	price = 1650gp

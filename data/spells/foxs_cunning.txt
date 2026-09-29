@@ -1,5 +1,6 @@
 foxs_cunning = {
 	name = "Fox's Cunning"
+	type = spell
 	level = 2
 	icon = research
 	price = 150gp
