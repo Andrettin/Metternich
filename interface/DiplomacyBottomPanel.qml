@@ -329,10 +329,19 @@ Rectangle {
 		}
 	}
 	
+	SmallText {
+		id: opinion_label
+		anchors.top: ruler_portrait.bottom
+		anchors.topMargin: 8 * scale_factor
+		anchors.horizontalCenter: ruler_portrait.horizontalCenter
+		text: selected_country_ruler && selected_country_ruler !== metternich.game.player_character ? ("Opinion of You: " + selected_country_ruler.game_data.get_opinion_of(metternich.game.player_character)) : ""
+		visible: ruler_portrait.visible && selected_country_ruler !== null && metternich.game.player_character !== null && selected_country_ruler !== metternich.game.player_character
+	}
+	
 	TextButton {
 		id: view_domain_history_button
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		anchors.top: ruler_portrait.bottom
+		anchors.top: opinion_label.visible ? opinion_label.bottom : ruler_portrait.bottom
 		anchors.topMargin: 16 * scale_factor
 		text: qsTr("View History")
 		visible: ruler_portrait.visible && selected_country && selected_country.game_data.historical_rulers.length > 1
