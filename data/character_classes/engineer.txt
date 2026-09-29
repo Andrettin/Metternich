@@ -3,6 +3,7 @@ engineer = {
 	base_class = rogue #should be something else?
 	primary_attribute = intelligence
 	civilian_unit_class = engineer
+	burgher = true
 	max_level = 20
 	starting_age_category = trained
 	experience_table = engineer_experience

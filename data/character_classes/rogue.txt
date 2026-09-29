@@ -2,6 +2,7 @@ rogue = {
 	name = "Rogue"
 	primary_attribute = dexterity
 	civilian_unit_class = spy
+	burgher = true
 	max_level = 20
 	starting_age_category = intuitive
 	experience_table = rogue_experience

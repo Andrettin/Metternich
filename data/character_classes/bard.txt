@@ -4,6 +4,7 @@ bard = {
 		charisma
 		dexterity
 	}
+	burgher = true
 	max_level = 20
 	starting_age_category = self_taught
 	experience_table = rogue_experience

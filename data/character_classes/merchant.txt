@@ -1,9 +1,29 @@
 merchant = {
 	name = "Merchant"
 	base_class = rogue
+	burgher = true
 	class_skills = {
 		appraising
 		forgery
 		weaving
+	}
+	level_modifiers = {
+		1 = {
+			#as rogue
+			skill_training = find_disarm_traps
+			skill_training = open_locks
+			find_disarm_traps = 20 #5% base + 15%
+			open_locks = 25 #10% base + 15%
+			pick_pockets = 30 #15% base + 15%
+			honest = -2
+			cautious = 2
+			trusting = -2
+			trait_of_type = affliction
+			trait_of_type = past_experience
+			
+			#merchant modifiers
+			burgher_opinion = 5 #urban opinion
+			appraising = 2
+		}
 	}
 }
