@@ -326,7 +326,7 @@ const std::string &character_class::get_name(const taxon_base *taxon, const gend
 {
 	auto taxon_find_iterator = this->variant_names.find(taxon);
 	if (taxon_find_iterator == this->variant_names.end()) {
-		if (taxon->get_supertaxon() != nullptr) {
+		if (taxon != nullptr && taxon->get_supertaxon() != nullptr) {
 			return this->get_name(taxon->get_supertaxon(), gender);
 		}
 
