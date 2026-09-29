@@ -1829,6 +1829,18 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		this->change_save_bonus(save_type, save_bonus);
 	}
 
+	for (const skill *skill : skill::get_all()) {
+		const level_value_table *skill_bonus_table = character_class->get_skill_bonus_table(skill);
+		if (skill_bonus_table == nullptr) {
+			continue;
+		}
+
+		const int base_skill_bonus = skill_bonus_table->get_value_for_level(affected_level);
+		const int skill_bonus = base_skill_bonus * multiplier;
+
+		co_await this->change_typed_stat_value(skill, skill_bonus);
+	}
+
 	for (const domain_skill *domain_skill : domain_skill::get_all()) {
 		const level_value_table *domain_skill_bonus_table = character_class->get_domain_skill_bonus_table(domain_skill);
 		if (domain_skill_bonus_table == nullptr) {

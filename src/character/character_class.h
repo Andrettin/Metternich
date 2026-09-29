@@ -23,6 +23,7 @@ class holding_type;
 class item_class;
 class item_type;
 class level_value_table;
+class skill;
 class skill_group;
 class species;
 class spell;
@@ -234,6 +235,20 @@ public:
 		return nullptr;
 	}
 
+	const level_value_table *get_skill_bonus_table(const skill *skill) const
+	{
+		const auto find_iterator = this->skill_bonus_tables.find(skill);
+		if (find_iterator != this->skill_bonus_tables.end()) {
+			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_skill_bonus_table(skill);
+		}
+
+		return nullptr;
+	}
+
 	const level_value_table *get_domain_skill_bonus_table(const domain_skill *domain_skill) const
 	{
 		const auto find_iterator = this->domain_skill_bonus_tables.find(domain_skill);
@@ -414,6 +429,7 @@ private:
 	const level_value_table *reputation_bonus_table = nullptr;
 	const level_value_table *to_hit_bonus_table = nullptr;
 	data_entry_map<save_type, const level_value_table *> save_bonus_tables;
+	data_entry_map<skill, const level_value_table *> skill_bonus_tables;
 	data_entry_map<domain_skill, const level_value_table *> domain_skill_bonus_tables;
 	data_entry_map<trait_type, const level_value_table *> trait_gain_tables;
 	data_entry_set<character_attribute> exceptional_attributes;

@@ -115,6 +115,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->save_bonus_tables[save_type::get(key)] = level_value_table::get(value);
 		});
+	} else if (tag == "skill_bonus_tables") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->skill_bonus_tables[skill::get(key)] = level_value_table::get(value);
+		});
 	} else if (tag == "domain_skill_bonus_tables") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -499,6 +506,22 @@ std::string character_class::get_level_modifier_string(const int level, const me
 			}
 
 			str += std::format("{}: {}", save_type->get_name(), string::colored(number::to_signed_string(save_bonus), ui_defines::get()->get_green_text_color()));
+		}
+	}
+
+	for (const skill *skill : skill::get_all()) {
+		const level_value_table *skill_bonus_table = this->get_skill_bonus_table(skill);
+		if (skill_bonus_table == nullptr) {
+			continue;
+		}
+		const int skill_bonus = skill_bonus_table->get_value_for_level(level);
+
+		if (skill_bonus != 0) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("{}: {}", skill->get_name(), string::colored(number::to_signed_string(skill_bonus), ui_defines::get()->get_green_text_color()));
 		}
 	}
 

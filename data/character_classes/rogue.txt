@@ -16,6 +16,11 @@ rogue = {
 		will = low_save_bonus
 		save_vs_poison = rogue_save_vs_poison_bonus
 	}
+	skill_bonus_tables = {
+		find_disarm_traps = rogue_find_disarm_traps_bonus
+		open_locks = rogue_open_locks_bonus
+		pick_pockets = rogue_pick_pockets_bonus
+	}
 	domain_skill_bonus_tables = {
 		trade = high_domain_skill_bonus
 		order = low_domain_skill_bonus
@@ -58,24 +63,11 @@ rogue = {
 		1 = {
 			skill_training = find_disarm_traps
 			skill_training = open_locks
-			find_disarm_traps = 20 #5% base + 15%
-			open_locks = 25 #10% base + 15%
-			pick_pockets = 30 #15% base + 15%
 			honest = -2
 			cautious = 2
 			trusting = -2
 			trait_of_type = affliction
 			trait_of_type = past_experience
-		}
-		2 = {
-			find_disarm_traps = 5
-			open_locks = 4
-			pick_pockets = 5
-		}
-		3 = {
-			find_disarm_traps = 5
-			open_locks = 4
-			pick_pockets = 5
 		}
 	}
 	starting_items = {
