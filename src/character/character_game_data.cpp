@@ -4853,6 +4853,12 @@ opinion_type character_game_data::get_opinion_type_of(const metternich::characte
 	return character_defines::get()->get_opinion_type(opinion);
 }
 
+QString character_game_data::get_opinion_name_of(const metternich::character *other)
+{
+	const opinion_type opinion_type = this->get_opinion_type_of(other);
+	return QString::fromStdString(std::string(get_opinion_type_name(opinion_type)));
+}
+
 int character_game_data::get_base_opinion_of(const metternich::character *other)
 {
 	assert_throw(other != this->character);

@@ -334,7 +334,7 @@ Rectangle {
 		anchors.top: ruler_portrait.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		text: selected_country_ruler && selected_country_ruler !== metternich.game.player_character ? ("Opinion of You: " + selected_country_ruler.game_data.get_opinion_of(metternich.game.player_character)) : ""
+		text: selected_country_ruler && selected_country_ruler !== metternich.game.player_character ? ("Opinion of You: " + selected_country_ruler.game_data.get_opinion_name_of(metternich.game.player_character) + " (" + selected_country_ruler.game_data.get_opinion_of(metternich.game.player_character) + ")") : ""
 		visible: ruler_portrait.visible && selected_country_ruler !== null && metternich.game.player_character !== null && selected_country_ruler !== metternich.game.player_character
 	}
 	

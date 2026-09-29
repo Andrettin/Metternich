@@ -1042,6 +1042,7 @@ public:
 
 	Q_INVOKABLE int get_opinion_of(const metternich::character *other);
 	opinion_type get_opinion_type_of(const metternich::character *other);
+	Q_INVOKABLE QString get_opinion_name_of(const metternich::character *other);
 	int get_base_opinion_of(const metternich::character *other);
 	void set_base_opinion_of(const metternich::character *other, const int opinion);
 
