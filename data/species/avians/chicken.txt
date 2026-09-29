@@ -1,5 +1,9 @@
 chicken = {
 	name = "Chicken"
+	gendered_names = {
+		male = "Rooster"
+		female = "Hen"
+	}
 	supertaxon = aves
 	era = holocene
 	pre_evolutions = {

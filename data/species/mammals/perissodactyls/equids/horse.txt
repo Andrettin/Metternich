@@ -1,5 +1,8 @@
 horse = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=180691
 	name = "Horse"
+	gendered_names = {
+		female = "Mare"
+	}
 	supertaxon = equus
 	specific_name = "caballus"
 	era = holocene
