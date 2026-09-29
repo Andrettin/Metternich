@@ -66,7 +66,6 @@ class idea;
 class idea_slot;
 class journal_entry;
 class monster_type;
-class opinion_modifier;
 class pathway;
 class phenotype;
 class population;

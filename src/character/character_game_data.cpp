@@ -300,6 +300,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->status_effect_durations[status_effect::get(property.get_key())] = std::chrono::seconds(std::stoll(property.get_value()));
 		});
+	} else if (tag == "base_opinions") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->base_opinions[game::get()->get_character(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "ruled_domains") {
 		for (const std::string &value : values) {
 			this->ruled_domains.insert(domain::get(value));
@@ -543,6 +547,14 @@ gsml_data character_game_data::to_gsml_data() const
 			status_effect_durations_data.add_property(status_effect->get_identifier(), std::to_string(duration.count()));
 		}
 		data.add_child(std::move(status_effect_durations_data));
+	}
+
+	if (!this->base_opinions.empty()) {
+		gsml_data base_opinions_data("base_opinions");
+		for (const auto &[other, base_opinion] : this->base_opinions) {
+			base_opinions_data.add_property(other->get_identifier(), std::to_string(base_opinion));
+		}
+		data.add_child(std::move(base_opinions_data));
 	}
 
 	if (!this->get_ruled_domains().empty()) {
@@ -4822,6 +4834,48 @@ QCoro::Task<void> character_game_data::set_flat_footed(const bool value)
 				co_await this->change_typed_stat_value(stat, dodge_modifier_total);
 			}
 		}
+	}
+}
+
+int character_game_data::get_opinion_of(const metternich::character *other)
+{
+	int opinion = this->get_base_opinion_of(other);
+
+	//FIXME: add opinion modifiers
+
+	return opinion;
+}
+
+int character_game_data::get_base_opinion_of(const metternich::character *other)
+{
+	assert_throw(other != this->character);
+
+	const auto find_iterator = this->base_opinions.find(other);
+	if (find_iterator != this->base_opinions.end()) {
+		return find_iterator->second;
+	}
+
+	//generate an opinion towards the character
+	static constexpr dice opinion_dice(2, 10);
+	const int generated_opinion = 20 - random::get()->roll_dice(opinion_dice);
+
+	this->base_opinions[other] = generated_opinion;
+
+	return generated_opinion;
+}
+
+void character_game_data::set_base_opinion_of(const metternich::character *other, const int opinion)
+{
+	assert_throw(other != this->character);
+
+	if (opinion == this->get_base_opinion_of(other)) {
+		return;
+	}
+
+	if (opinion == 0) {
+		this->base_opinions.erase(other);
+	} else {
+		this->base_opinions[other] = opinion;
 	}
 }
 

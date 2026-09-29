@@ -1039,6 +1039,15 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_flat_footed(const bool value);
 
+	Q_INVOKABLE int get_opinion_of(const metternich::character *other);
+	int get_base_opinion_of(const metternich::character *other);
+	void set_base_opinion_of(const metternich::character *other, const int opinion);
+
+	void change_base_opinion_of(const metternich::character *other, const int change)
+	{
+		this->set_base_opinion_of(other, this->get_base_opinion_of(other) + change);
+	}
+
 	const domain_set &get_ruled_domains() const
 	{
 		return this->ruled_domains;
@@ -1195,6 +1204,7 @@ private:
 	std::vector<const trait *> target_traits;
 	data_entry_map<status_effect, std::chrono::seconds> status_effect_durations;
 	bool flat_footed = false;
+	character_map<int> base_opinions;
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;
