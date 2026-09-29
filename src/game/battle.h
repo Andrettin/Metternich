@@ -95,6 +95,11 @@ public:
 		this->defender_neutral = defender_neutral;
 	}
 
+	void set_surprise(const bool surprise)
+	{
+		this->surprise = surprise;
+	}
+
 	void set_attacker_to_hit_modifier(const int modifier)
 	{
 		this->attacker_to_hit_modifier = modifier;
@@ -177,6 +182,7 @@ private:
 	army *attacking_army = nullptr;
 	army *defending_army = nullptr;
 	bool defender_neutral = false; //the defender will not attack until attacked first
+	bool surprise = false;
 	int attacker_to_hit_modifier = 0;
 	int defender_to_hit_modifier = 0;
 	battle::result result;

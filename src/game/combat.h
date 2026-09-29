@@ -193,21 +193,6 @@ public:
 	virtual int get_max_range_of_units() const override;
 	virtual int get_spell_range(const spell *spell) const override;
 
-	void set_surprise(const bool surprise)
-	{
-		this->surprise = surprise;
-	}
-
-	void set_attacker_to_hit_modifier(const int modifier)
-	{
-		this->attacker_to_hit_modifier = modifier;
-	}
-
-	void set_defender_to_hit_modifier(const int modifier)
-	{
-		this->defender_to_hit_modifier = modifier;
-	}
-
 	void set_generated_characters(const std::vector<std::shared_ptr<character_reference>> &generated_characters)
 	{
 		this->generated_characters = generated_characters;
@@ -301,9 +286,6 @@ signals:
 private:
 	party *attacking_party = nullptr;
 	party *defending_party = nullptr;
-	bool surprise = false;
-	int attacker_to_hit_modifier = 0;
-	int defender_to_hit_modifier = 0;
 	combat::result result;
 	std::vector<std::shared_ptr<character_reference>> generated_characters;
 	std::unique_ptr<party> generated_party;

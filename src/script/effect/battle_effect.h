@@ -37,8 +37,12 @@ public:
 			this->attacker = string::to_bool(property.get_value());
 		} else if (key == "defender_neutral") {
 			this->defender_neutral = string::to_bool(property.get_value());
+		} else if (key == "surprise") {
+			this->surprise = string::to_bool(property.get_value());
 		} else if (key == "to_hit_modifier") {
 			this->to_hit_modifier = std::stoi(property.get_value());
+		} else if (key == "retreat_allowed") {
+			this->retreat_allowed = string::to_bool(property.get_value());
 		} else if (key == "victorious_enemies_attack_province") {
 			this->victorious_enemies_attack_province = string::to_bool(property.get_value());
 		} else {
@@ -100,8 +104,11 @@ public:
 		battle = make_qunique<metternich::battle>(ctx.attacking_army, ctx.defending_army, QSize());
 
 		battle->set_defender_neutral(this->defender_neutral);
+		battle->set_surprise(this->surprise);
 		battle->set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
 		battle->set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
+		battle->set_attacker_retreat_allowed(this->attacker ? this->retreat_allowed : false);
+		battle->set_defender_retreat_allowed(this->attacker ? false : this->retreat_allowed);
 
 		const domain *scope_domain = effect<const domain>::get_scope_domain(scope);
 		assert_throw(scope_domain != nullptr);
@@ -138,12 +145,12 @@ public:
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		std::string str = "Army:";
+		std::string str = std::format("Army{}:", !this->attacker && this->surprise ? " (surprised)" : "");
 		for (const auto &[military_unit_type, quantity] : ctx.army->get_military_unit_type_counts()) {
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{}x{}{}", quantity, military_unit_type->get_name(), this->to_hit_modifier != 0 && military_unit_type->is_leader() ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
 		}
 
-		str += "\n" + std::string(indent, '\t') + std::format("Battles against{}:", this->attacker && this->defender_neutral ? " (neutral until attacked)" : "");
+		str += "\n" + std::string(indent, '\t') + std::format("Battles against{}{}:", this->attacker && this->defender_neutral ? " (neutral until attacked)" : "", this->attacker && this->surprise ? " (surprised)" : "");
 
 		for (const auto &[military_unit_type, quantity] : this->enemies) {
 			str += "\n" + std::string(indent + 1, '\t') + std::to_string(quantity) + "x" + military_unit_type->get_name();
@@ -169,7 +176,9 @@ public:
 private:
 	bool attacker = false;
 	bool defender_neutral = false;
+	bool surprise = false;
 	int to_hit_modifier = 0;
+	bool retreat_allowed = true;
 	bool victorious_enemies_attack_province = false;
 	military_unit_type_map<int> enemies;
 	std::unique_ptr<effect_list<const domain>> victory_effects;

@@ -230,7 +230,13 @@ QCoro::Task<void> battle::start_coro()
 QCoro::Task<void> battle::do_round()
 {
 	std::vector<military_unit *> all_units = this->attacking_army->get_military_units();
-	vector::merge(all_units, this->defending_army->get_military_units());
+
+	if (this->surprise) {
+		//if the defenders are surprised, they won't act in the first round
+		this->surprise = false;
+	} else {
+		vector::merge(all_units, this->defending_army->get_military_units());
+	}
 
 	std::sort(all_units.begin(), all_units.end(), [](const military_unit *lhs, const military_unit *rhs) {
 		if (lhs->get_battle_movement() != rhs->get_battle_movement()) {

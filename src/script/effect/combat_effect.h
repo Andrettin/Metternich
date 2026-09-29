@@ -202,12 +202,6 @@ public:
 
 		if (key == "attacker") {
 			this->attacker = string::to_bool(property.get_value());
-		} else if (key == "surprise") {
-			this->surprise = string::to_bool(property.get_value());
-		} else if (key == "to_hit_modifier") {
-			this->to_hit_modifier = std::stoi(property.get_value());
-		} else if (key == "retreat_allowed") {
-			this->retreat_allowed = string::to_bool(property.get_value());
 		} else {
 			effect::process_gsml_property(property);
 		}
@@ -269,12 +263,6 @@ public:
 			combat->add_object(object->get_object_type(), object->get_use_effects(), object->get_trap(), object->get_description(), object->get_placement(), object->get_placement_offset());
 		}
 
-		combat->set_surprise(this->surprise);
-		combat->set_attacker_to_hit_modifier(this->attacker ? this->to_hit_modifier : 0);
-		combat->set_defender_to_hit_modifier(this->attacker ? 0 : this->to_hit_modifier);
-		combat->set_attacker_retreat_allowed(this->attacker ? this->retreat_allowed : false);
-		combat->set_defender_retreat_allowed(this->attacker ? false : this->retreat_allowed);
-
 		combat->set_generated_characters(generated_characters);
 		combat->set_generated_party(std::move(enemy_party));
 
@@ -311,7 +299,7 @@ public:
 
 		assert_throw(ctx.party != nullptr);
 
-		std::string str = std::format("Party{}{}:", !this->attacker && this->surprise ? " (surprised)" : "", this->to_hit_modifier != 0 ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
+		std::string str = "Party:";
 		for (const character *party_character : ctx.party->get_characters()) {
 			std::string character_class_string;
 			const character_class *character_class = party_character->get_game_data()->get_character_class();
@@ -321,7 +309,7 @@ public:
 			str += "\n" + std::string(indent + 1, '\t') + std::format("{} ({}{} HP {}/{})", party_character->get_game_data()->get_full_name(), party_character->get_species()->get_name(), character_class_string, party_character->get_game_data()->get_health(), party_character->get_game_data()->get_max_health());
 		}
 
-		str += "\n" + std::string(indent, '\t') + std::format("Does combat against{}:", this->attacker && this->surprise ? " (surprised)" : "");
+		str += "\n" + std::string(indent, '\t') + "Does combat against:";
 
 		for (const auto &[monster_type, quantity_variant] : this->enemy_counts) {
 			int additional_quantity = 0;
@@ -418,9 +406,6 @@ public:
 
 private:
 	bool attacker = true;
-	bool surprise = false;
-	int to_hit_modifier = 0;
-	bool retreat_allowed = true;
 	QSize map_size;
 	data_entry_map<monster_type, std::variant<int, dice>> enemy_counts;
 	std::vector<std::unique_ptr<enemy>> enemies;

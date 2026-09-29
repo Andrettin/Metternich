@@ -308,13 +308,9 @@ QCoro::Task<void> combat::do_round(std::map<const character *, int> &next_round_
 		all_characters.push_back(character);
 		character_parties[character] = this->attacking_party;
 	}
-	if (this->surprise) { //if the defenders are surprised, they won't act in the first round
-		this->surprise = false;
-	} else {
-		for (const character *character : this->defending_party->get_characters()) {
-			all_characters.push_back(character);
-			character_parties[character] = this->defending_party;
-		}
+	for (const character *character : this->defending_party->get_characters()) {
+		all_characters.push_back(character);
+		character_parties[character] = this->defending_party;
 	}
 
 	std::map<const character *, int> initiative_results;
@@ -343,7 +339,7 @@ QCoro::Task<void> combat::do_round(std::map<const character *, int> &next_round_
 		const bool is_attacker = party == this->attacking_party;
 		metternich::party *enemy_party = is_attacker ? this->defending_party : this->attacking_party;
 
-		co_await this->do_character_round(character, party, enemy_party, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier, next_round_initiative_modifiers[character]);
+		co_await this->do_character_round(character, party, enemy_party, 0, next_round_initiative_modifiers[character]);
 	}
 
 	if (this->get_current_unit() != nullptr) {
@@ -795,7 +791,7 @@ std::string combat::get_tile_text(const QPoint &tile_pos) const
 	if (tile.character != nullptr) {
 		const character *character = tile.character;
 		const character_game_data *character_game_data = character->get_game_data();
-		const std::string type_name = character->get_monster_type() != nullptr ? character->get_monster_type()->get_name() : (character_game_data->get_character_class() != nullptr ? (character_game_data->get_character_class_name() + " " + std::to_string(character_game_data->get_level())) : character->get_species()->get_name());
+		const std::string type_name = character->get_monster_type() != nullptr ? character->get_monster_type()->get_name() : (character_game_data->get_character_class() != nullptr ? (character_game_data->get_character_class_name() + " " + std::to_string(character_game_data->get_level())) : character->get_species()->get_name(character->get_gender()));
 		const std::string full_name = character_game_data->get_full_name();
 		text += " " + (!full_name.empty() ? (full_name + " (" + type_name + ")") : type_name);
 
