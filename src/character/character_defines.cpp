@@ -3,6 +3,7 @@
 #include "character/character_defines.h"
 
 #include "character/bloodline_strength_category.h"
+#include "character/opinion_type.h"
 #include "religion/divine_rank.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
@@ -119,6 +120,13 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 			const int defense = std::stoi(property.get_value());
 
 			this->battle_defense_per_armor_class[armor_class] = defense;
+		});
+	} else if (tag == "opinion_type_thresholds") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const opinion_type opinion_type = magic_enum::enum_cast<metternich::opinion_type>(property.get_key()).value();
+			const int opinion = std::stoi(property.get_value());
+
+			this->opinion_type_thresholds[opinion] = opinion_type;
 		});
 	} else {
 		defines_base::process_gsml_scope(scope);
@@ -314,6 +322,18 @@ int character_defines::get_battle_defense_for_armor_class(const int armor_class)
 	}
 
 	return 0;
+}
+
+opinion_type character_defines::get_opinion_type(const int opinion) const
+{
+	const auto find_iterator = this->opinion_type_thresholds.upper_bound(opinion);
+
+	if (find_iterator == this->opinion_type_thresholds.begin()) {
+		//if the value is smaller than the smallest threshold, use the lowest opinion type
+		return find_iterator->second;
+	}
+
+	return std::prev(find_iterator)->second;
 }
 
 }

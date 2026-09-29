@@ -15,6 +15,7 @@
 #include "character/level_value_table.h"
 #include "character/monster_type.h"
 #include "character/mythic_path.h"
+#include "character/opinion_type.h"
 #include "character/profession_profitability.h"
 #include "character/save_type.h"
 #include "character/skill.h"
@@ -4846,6 +4847,12 @@ int character_game_data::get_opinion_of(const metternich::character *other)
 	return opinion;
 }
 
+opinion_type character_game_data::get_opinion_type_of(const metternich::character *other)
+{
+	const int opinion = this->get_opinion_of(other);
+	return character_defines::get()->get_opinion_type(opinion);
+}
+
 int character_game_data::get_base_opinion_of(const metternich::character *other)
 {
 	assert_throw(other != this->character);
@@ -4856,8 +4863,8 @@ int character_game_data::get_base_opinion_of(const metternich::character *other)
 	}
 
 	//generate an opinion towards the character
-	static constexpr dice opinion_dice(2, 10);
-	const int generated_opinion = 20 - random::get()->roll_dice(opinion_dice);
+	static constexpr dice opinion_dice(1, 100);
+	const int generated_opinion = random::get()->roll_dice(opinion_dice);
 
 	this->base_opinions[other] = generated_opinion;
 

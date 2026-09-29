@@ -60,6 +60,7 @@ class trait_type;
 enum class age_category;
 enum class character_modifier_type;
 enum class military_unit_stat;
+enum class opinion_type;
 struct context;
 struct item_key;
 struct recipe_material;
@@ -1040,6 +1041,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_flat_footed(const bool value);
 
 	Q_INVOKABLE int get_opinion_of(const metternich::character *other);
+	opinion_type get_opinion_type_of(const metternich::character *other);
 	int get_base_opinion_of(const metternich::character *other);
 	void set_base_opinion_of(const metternich::character *other, const int opinion);
 

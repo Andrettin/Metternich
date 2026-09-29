@@ -13,6 +13,7 @@ class creature_size;
 class level_value_table;
 enum class bloodline_strength_category;
 enum class divine_rank;
+enum class opinion_type;
 
 template <typename scope_type>
 class modifier;
@@ -112,6 +113,8 @@ public:
 	int get_battle_missile_for_to_hit_bonus_and_max_damage(const int to_hit_bonus, const int max_damage, const bool is_character) const;
 	int get_battle_defense_for_armor_class(const int armor_class) const;
 
+	opinion_type get_opinion_type(const int opinion) const;
+
 signals:
 	void changed();
 
@@ -136,6 +139,7 @@ private:
 	std::map<int, int> battle_melee_per_attack_conversion_points;
 	std::map<int, int> battle_missile_per_attack_conversion_points;
 	std::map<int, int> battle_defense_per_armor_class; //military unit defense per character armor class
+	std::map<int, opinion_type> opinion_type_thresholds;
 };
 
 }
