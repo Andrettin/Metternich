@@ -32,6 +32,7 @@
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"
+#include "util/gender.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
@@ -237,7 +238,7 @@ void character_data_model::reset_model()
 			this->create_divine_domain_rows();
 		}
 
-		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", this->character->get_species()->get_name()));
+		this->top_rows.push_back(std::make_unique<character_data_row>("Species:", this->character->get_species()->get_name(this->character->get_gender())));
 
 		const character_class *character_class = character_game_data->get_character_class();
 		if (character_class != nullptr) {
@@ -567,7 +568,7 @@ void character_data_model::update_armor_class_rows()
 	this->clear_child_rows(this->armor_class_row);
 
 	for (const auto &[species, bonus] : character_game_data->get_species_armor_class_bonuses()) {
-		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name())), number::to_signed_string(bonus), this->armor_class_row);
+		auto row = std::make_unique<character_data_row>(std::format("Against {}:", string::get_plural_form(species->get_name(gender::none))), number::to_signed_string(bonus), this->armor_class_row);
 		this->armor_class_row->child_rows.push_back(std::move(row));
 	}
 

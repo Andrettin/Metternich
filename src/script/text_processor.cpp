@@ -16,6 +16,7 @@
 #include "population/population_unit.h"
 #include "species/species.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/queue_util.h"
 #include "util/string_util.h"
 
@@ -41,7 +42,7 @@ std::string text_processor::process_tokens(std::queue<std::string> &&tokens, con
 	if (front_subtoken == "party_species_name") {
 		assert_throw(this->context.party != nullptr && !this->context.party->get_characters().empty());
 		const character *character = this->context.party->get_characters().at(0);
-		const std::string &species_name = character->get_species()->get_name();
+		const std::string &species_name = character->get_species()->get_name(character->get_gender());
 
 		if (this->context.party->get_characters().size() > 1) {
 			str = string::get_plural_form(species_name);
@@ -51,7 +52,7 @@ std::string text_processor::process_tokens(std::queue<std::string> &&tokens, con
 	} else if (front_subtoken == "party_species_name_plural") {
 		assert_throw(this->context.party != nullptr && !this->context.party->get_characters().empty());
 		const character *character = this->context.party->get_characters().at(0);
-		str = string::get_plural_form(character->get_species()->get_name());
+		str = string::get_plural_form(character->get_species()->get_name(gender::none));
 	} else if (front_subtoken == "root") {
 		str = this->process_scope_variant_tokens(this->context.root_scope, tokens);
 	} else if (front_subtoken == "source") {

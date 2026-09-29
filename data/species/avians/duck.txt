@@ -1,5 +1,8 @@
 duck = {
 	name = "Duck"
+	gendered_names = {
+		male = "Drake"
+	}
 	supertaxon = aves
 	era = holocene
 	pre_evolutions = {

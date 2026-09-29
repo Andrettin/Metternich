@@ -7,6 +7,10 @@
 
 Q_MOC_INCLUDE("species/creature_size.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class character;
@@ -59,6 +63,8 @@ public:
 
 	virtual taxonomic_rank get_rank() const override;
 
+	const std::string &get_name(const gender gender) const;
+
 	const std::string &get_specific_name() const
 	{
 		return this->specific_name;
@@ -75,11 +81,7 @@ public:
 	}
 
 	std::string get_scientific_name() const;
-
-	virtual const std::string &get_common_name() const override
-	{
-		return this->get_name();
-	}
+	virtual const std::string &get_common_name() const override;
 
 	const QColor &get_color() const
 	{
@@ -187,6 +189,7 @@ public:
 
 private:
 	std::string specific_name;
+	std::map<gender, std::string> gendered_names;
 	QColor color;
 	geological_era era;
 	bool sapient = false;

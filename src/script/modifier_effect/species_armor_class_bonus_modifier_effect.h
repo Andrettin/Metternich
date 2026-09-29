@@ -5,6 +5,7 @@
 #include "script/modifier_effect/modifier_effect.h"
 #include "species/species.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -54,7 +55,7 @@ public:
 
 		assert_throw(this->species != nullptr);
 
-		return std::format("Armor Class Against {}", this->species->get_name());
+		return std::format("Armor Class Against {}", this->species->get_name(gender::none));
 	}
 
 private:

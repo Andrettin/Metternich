@@ -1,5 +1,8 @@
 tiger = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=183805
 	name = "Tiger"
+	gendered_names = {
+		female = "Tigress"
+	}
 	supertaxon = panthera
 	specific_name = "tigris"
 	era = holocene

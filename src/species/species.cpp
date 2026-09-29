@@ -15,8 +15,10 @@
 #include "species/taxon.h"
 #include "species/taxonomic_rank.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 
+#include <magic_enum/magic_enum.hpp>
 #include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
@@ -34,7 +36,7 @@ void species::process_database(const bool definition, const data_module_map<std:
 		for (species *species : species::get_all()) {
 			if (species->get_phenotypes().empty()) {
 				metternich::phenotype *phenotype = phenotype::add(species->get_identifier(), species->get_module());
-				phenotype->set_name(species->get_name());
+				phenotype->set_name(species->get_name(gender::none));
 				phenotype->set_species(species);
 				phenotype->set_color(species->get_color());
 			}
@@ -74,7 +76,7 @@ std::vector<std::string> species::get_name_list(const std::vector<const species 
 	
 	std::vector<std::string> species_names;
 	for (const species *species : species_list) {
-		species_names.push_back(species->get_name());
+		species_names.push_back(species->get_name(gender::none));
 	}
 	
 	bool changed_name_list = true;
@@ -125,7 +127,7 @@ std::vector<std::string> species::get_name_list(const std::vector<const species 
 			species_names.clear();
 			
 			for (const species *species : species_list) {
-				species_names.push_back(species->get_name());
+				species_names.push_back(species->get_name(gender::none));
 			}
 			for (const taxon *taxon : taxons) {
 				species_names.push_back(taxon->get_common_name());
@@ -152,7 +154,14 @@ void species::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "pre_evolutions") {
+	if (tag == "gendered_names") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->gendered_names[magic_enum::enum_cast<gender>(key).value()] = value;
+		});
+	} else if (tag == "pre_evolutions") {
 		for (const std::string &value : values) {
 			species *other_species = species::get(value);
 			this->pre_evolutions.push_back(other_species);
@@ -288,6 +297,17 @@ taxonomic_rank species::get_rank() const
 	return taxonomic_rank::species;
 }
 
+const std::string &species::get_name(const gender gender) const
+{
+	const auto find_iterator = this->gendered_names.find(gender);
+
+	if (find_iterator != this->gendered_names.end()) {
+		return find_iterator->second;
+	}
+
+	return named_data_entry::get_name();
+}
+
 std::string species::get_scientific_name() const
 {
 	if (this->get_supertaxon() == nullptr) {
@@ -303,6 +323,11 @@ std::string species::get_scientific_name() const
 	}
 
 	return this->get_supertaxon()->get_name();
+}
+
+const std::string &species::get_common_name() const
+{
+	return this->get_name(gender::none);
 }
 
 bool species::is_prehistoric() const

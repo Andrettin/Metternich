@@ -34,7 +34,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} species", this->species->get_name());
+		return std::format("{} species", this->species->get_name(gender::none));
 	}
 
 private:

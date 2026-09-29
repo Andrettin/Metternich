@@ -1,5 +1,8 @@
 lion = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=183803
 	name = "Lion"
+	gendered_names = {
+		female = "Lioness"
+	}
 	supertaxon = panthera
 	specific_name = "leo"
 	era = holocene
