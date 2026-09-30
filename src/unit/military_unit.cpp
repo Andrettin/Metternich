@@ -84,7 +84,7 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 	auto military_unit = co_await metternich::military_unit::create(type, domain, character->get_phenotype());
 
 	military_unit->character = character;
-	military_unit->name = character->get_game_data()->get_full_name();
+	military_unit->name.clear();
 
 	co_await character->get_game_data()->set_military_unit(military_unit.get());
 	co_await character->get_game_data()->apply_military_unit_modifier(military_unit.get(), 1);
@@ -133,6 +133,19 @@ void military_unit::do_ai_turn()
 	}
 
 	//FIXME: implement logic for upgrading military units, and for moving them to places in order to do combat or defend against attacks
+}
+
+std::string military_unit::get_name() const
+{
+	if (this->get_character() != nullptr) {
+		if (this->get_character()->get_game_data()->get_domain() != nullptr) {
+			return this->get_character()->get_game_data()->get_full_name_for_domain(this->get_character()->get_game_data()->get_domain());
+		} else {
+			return this->get_character()->get_game_data()->get_full_name();
+		}
+	}
+
+	return this->name;
 }
 
 void military_unit::generate_name()

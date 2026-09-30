@@ -57,10 +57,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> do_turn();
 	void do_ai_turn();
 
-	const std::string &get_name() const
-	{
-		return this->name;
-	}
+	std::string get_name() const;
 
 	QString get_name_qstring() const
 	{

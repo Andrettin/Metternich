@@ -1197,14 +1197,19 @@ std::string character_game_data::get_full_name() const
 	}
 }
 
-QString character_game_data::get_full_name_for_domain(const metternich::domain *domain) const
+std::string character_game_data::get_full_name_for_domain(const metternich::domain *domain) const
 {
 	if (this->is_deity()) {
-		return QString::fromStdString(this->character->get_deity()->get_cultural_name(domain->get_game_data()->get_culture()));
+		return this->character->get_deity()->get_cultural_name(domain->get_game_data()->get_culture());
 	}
 
 	//we presume here that we don't want to show the domain itself in the name, hence why we pass nullptr
-	return QString::fromStdString(this->character->get_full_name(nullptr, this->get_regnal_number_for_domain(domain)));
+	return this->character->get_full_name(nullptr, this->get_regnal_number_for_domain(domain));
+}
+
+QString character_game_data::get_full_name_for_domain_qstring(const metternich::domain *domain) const
+{
+	return QString::fromStdString(this->get_full_name_for_domain(domain));
 }
 
 std::string character_game_data::get_titled_name() const

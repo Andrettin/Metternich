@@ -61,7 +61,7 @@ Item {
 				
 				SmallText {
 					id: historical_ruler_label
-					text: metternich.game.year_to_labeled_qstring(date_year(historical_ruler_date)) + ": " + historical_ruler.game_data.get_full_name_for_domain(domain)
+					text: metternich.game.year_to_labeled_qstring(date_year(historical_ruler_date)) + ": " + historical_ruler.game_data.get_full_name_for_domain_qstring(domain)
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: 8 * scale_factor

@@ -309,7 +309,7 @@ Rectangle {
 		id: ruler_label
 		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		text: selected_country_ruler && selected_country ? selected_country_ruler.game_data.get_full_name_for_domain(selected_country) : ""
+		text: selected_country_ruler && selected_country ? selected_country_ruler.game_data.get_full_name_for_domain_qstring(selected_country) : ""
 		visible: ruler_portrait.visible
 	}
 	

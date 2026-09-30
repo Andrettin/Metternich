@@ -149,7 +149,8 @@ public:
 		return QString::fromStdString(this->get_full_name());
 	}
 
-	Q_INVOKABLE QString get_full_name_for_domain(const metternich::domain *domain) const;
+	std::string get_full_name_for_domain(const domain *domain) const;
+	Q_INVOKABLE QString get_full_name_for_domain_qstring(const metternich::domain *domain) const;
 
 	std::string get_titled_name() const;
 
