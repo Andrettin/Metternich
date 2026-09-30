@@ -4,6 +4,7 @@
 #include "database/data_entry_container.h"
 #include "domain/domain_container.h"
 #include "script/scripted_modifier_container.h"
+#include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -764,37 +765,19 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::character> *modifier, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> apply_military_unit_modifier(metternich::military_unit *military_unit, const int multiplier);
 
-	const std::vector<const spell *> &get_spells() const
-	{
-		return this->spells;
-	}
-
+	std::vector<const spell *> get_spells() const;
 	QVariantList get_spells_qvariant_list() const;
 	bool has_spell(const spell *spell) const;
-
-	void add_spell(const spell *spell)
-	{
-		this->spells.push_back(spell);
-		this->sort_spells();
-		emit spells_changed();
-	}
-
-	void remove_spell(const spell *spell)
-	{
-		std::erase(this->spells, spell);
-		emit spells_changed();
-	}
-
 	bool can_learn_spell(const metternich::spell *spell, std::string *reason = nullptr) const;
 
 	bool has_learned_spell(const spell *spell) const
 	{
-		return this->has_spell(spell);
+		return this->learned_spell_counts.contains(spell);
 	}
 
-	void learn_spell(const metternich::spell *spell);
+	void learn_spell(const spell *spell);
+	void change_learned_spell_count(const spell *spell, const int change);
 	Q_INVOKABLE bool can_cast_spell(const metternich::spell *spell) const;
-	void sort_spells();
 
 	QVariantList get_combat_spells_qvariant_list() const;
 	QVariantList get_battle_spells_qvariant_list() const;
@@ -1224,7 +1207,7 @@ private:
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	metternich::civilian_unit *civilian_unit = nullptr;
-	std::vector<const spell *> spells; //spells that the character has learned
+	spell_map<int> learned_spell_counts; //spells that the character has learned
 	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
 	std::vector<const recipe *> recipes; //recipes that the character has learned
 	int64_t wealth = 0;

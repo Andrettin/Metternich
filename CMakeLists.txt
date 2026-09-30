@@ -938,6 +938,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/site_attribute_modifier_effect.h
 	src/script/modifier_effect/skill_training_modifier_effect.h
 	src/script/modifier_effect/species_armor_class_bonus_modifier_effect.h
+	src/script/modifier_effect/spell_modifier_effect.h
 	src/script/modifier_effect/storage_capacity_modifier_effect.h
 	src/script/modifier_effect/technology_cost_modifier_effect.h
 	src/script/modifier_effect/technology_spread_modifier_effect.h

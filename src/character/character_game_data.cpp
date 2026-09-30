@@ -282,10 +282,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->trait_choices[trait_type].push_back(trait::get(child_value));
 			}
 		});
-	} else if (tag == "spells") {
-		for (const std::string &value : values) {
-			this->spells.push_back(spell::get(value));
-		}
+	} else if (tag == "learned_spell_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->learned_spell_counts[spell::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "recipes") {
 		for (const std::string &value : values) {
 			this->recipes.push_back(recipe::get(value));
@@ -529,12 +529,12 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(trait_choices_data));
 	}
 
-	if (!this->spells.empty()) {
-		gsml_data spells_data("spells");
-		for (const spell *spell : this->spells) {
-			spells_data.add_value(spell->get_identifier());
+	if (!this->learned_spell_counts.empty()) {
+		gsml_data learned_spell_counts_data("learned_spell_counts");
+		for (const auto &[spell, count] : this->learned_spell_counts) {
+			learned_spell_counts_data.add_property(spell->get_identifier(), std::to_string(count));
 		}
-		data.add_child(std::move(spells_data));
+		data.add_child(std::move(learned_spell_counts_data));
 	}
 
 	if (!this->recipes.empty()) {
@@ -1099,7 +1099,7 @@ void character_game_data::add_starting_spells(const std::vector<const spell *> &
 
 	for (const spell *spell : starting_spells) {
 		if (this->can_learn_spell(spell)) {
-			this->add_spell(spell);
+			this->learn_spell(spell);
 		}
 	}
 }
@@ -3898,6 +3898,15 @@ QCoro::Task<void> character_game_data::apply_military_unit_modifier(metternich::
 	}
 }
 
+std::vector<const spell *> character_game_data::get_spells() const
+{
+	std::vector<const spell *> spells = archimedes::map::get_keys(this->learned_spell_counts);
+
+	std::sort(spells.begin(), spells.end(), spell_compare());
+
+	return spells;
+}
+
 QVariantList character_game_data::get_spells_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_spells());
@@ -3905,7 +3914,7 @@ QVariantList character_game_data::get_spells_qvariant_list() const
 
 bool character_game_data::has_spell(const spell *spell) const
 {
-	return vector::contains(this->get_spells(), spell);
+	return this->has_learned_spell(spell);
 }
 
 bool character_game_data::can_learn_spell(const spell *spell, std::string *reason) const
@@ -3936,7 +3945,26 @@ bool character_game_data::can_learn_spell(const spell *spell, std::string *reaso
 
 void character_game_data::learn_spell(const spell *spell)
 {
-	this->add_spell(spell);
+	this->change_learned_spell_count(spell, 1);
+}
+
+void character_game_data::change_learned_spell_count(const spell *spell, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->learned_spell_counts[spell] += change);
+
+	if (new_value == 0) {
+		this->learned_spell_counts.erase(spell);
+	}
+
+	assert_throw(new_value >= 0);
+
+	if (game::get()->is_running()) {
+		emit spells_changed();
+	}
 }
 
 bool character_game_data::can_cast_spell(const metternich::spell *spell) const
@@ -3952,20 +3980,9 @@ bool character_game_data::can_cast_spell(const metternich::spell *spell) const
 	return true;
 }
 
-void character_game_data::sort_spells()
-{
-	std::sort(this->spells.begin(), this->spells.end(), [](const spell *lhs, const spell *rhs) {
-		if (lhs->get_level() != rhs->get_level()) {
-			return lhs->get_level() < rhs->get_level();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-}
-
 QVariantList character_game_data::get_combat_spells_qvariant_list() const
 {
-	std::vector<const spell *> spells = container::to_vector(this->get_spells());
+	std::vector<const spell *> spells = this->get_spells();
 
 	std::erase_if(spells, [](const spell *spell) {
 		return !spell->is_combat_spell();
@@ -3976,7 +3993,7 @@ QVariantList character_game_data::get_combat_spells_qvariant_list() const
 
 QVariantList character_game_data::get_battle_spells_qvariant_list() const
 {
-	std::vector<const spell *> spells = container::to_vector(this->get_spells());
+	std::vector<const spell *> spells = this->get_spells();
 
 	std::erase_if(spells, [](const spell *spell) {
 		return !spell->is_battle_spell();

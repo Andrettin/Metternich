@@ -83,6 +83,7 @@
 #include "script/modifier_effect/site_attribute_modifier_effect.h"
 #include "script/modifier_effect/skill_training_modifier_effect.h"
 #include "script/modifier_effect/species_armor_class_bonus_modifier_effect.h"
+#include "script/modifier_effect/spell_modifier_effect.h"
 #include "script/modifier_effect/storage_capacity_modifier_effect.h"
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/technology_spread_modifier_effect.h"
@@ -155,6 +156,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<save_modifier_effect>(value);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_modifier_effect>(value);
+		} else if (key == "spell") {
+			return std::make_unique<spell_modifier_effect>(value);
 		} else if (key == "trait") {
 			return std::make_unique<trait_modifier_effect>(value);
 		} else if (key == "trait_of_type") {
