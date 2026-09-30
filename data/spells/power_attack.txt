@@ -1,0 +1,12 @@
+power_attack = {
+	name = "Power Attack"
+	type = exploit
+	icon = labor
+	target = enemy
+	range = touch
+	weapon_attack = true
+	to_hit_modifier = -5
+	damage_modifier = 5 #FIXME: the modifier should be doubled for two-handed weapons (or one-handed weapons equipped with two hands)
+	
+	#FIXME: should restrict the weapon types with which this ability can be used, i.e. ranged weapons should be excluded, as should light weapons
+}

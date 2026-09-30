@@ -26,6 +26,20 @@ improved_initiative = {
 	}
 }
 
+power_attack = {
+	name = "Power Attack"
+	icon = labor
+	types = {
+		combat_proficiency
+	}
+	conditions = {
+		strength >= 13
+	}
+	modifier = {
+		spell = power_attack
+	}
+}
+
 toughness = {
 	name = "Toughness"
 	icon = labor
