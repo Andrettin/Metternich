@@ -103,6 +103,8 @@ public:
 		return this->to_hit_check;
 	}
 
+	bool is_item_learnable() const;
+
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;

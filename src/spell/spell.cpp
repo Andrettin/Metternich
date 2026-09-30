@@ -124,8 +124,8 @@ void spell::check() const
 
 	assert_throw(this->get_icon() != nullptr);
 
-	if (this->get_price() == 0) {
-		throw std::runtime_error(std::format("Spell \"{}\" has no price.", this->get_identifier()));
+	if (this->get_price() == 0 && this->is_item_learnable()) {
+		throw std::runtime_error(std::format("Spell \"{}\" can be learned from items, but has no price to add to the item price.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_target() != spell_target::none);
@@ -182,6 +182,11 @@ int spell::get_battle_range() const
 	}
 
 	return battle::length_to_battle_range(this->get_range()).to_int();
+}
+
+bool spell::is_item_learnable() const
+{
+	return is_spell_type_item_learnable(this->get_type());
 }
 
 bool spell::is_available_for_character_class(const character_class *character_class) const
