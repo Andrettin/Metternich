@@ -378,7 +378,9 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<natural_weapon_modifier_effect>();
 		} else if (tag == "species_armor_class_bonus") {
 			modifier_effect = std::make_unique<species_armor_class_bonus_modifier_effect>();
-		} else if (tag == "trait_count") {
+		} else if (tag == "spell") {
+			modifier_effect = std::make_unique<spell_modifier_effect>();
+		} else if (tag == "trait") {
 			modifier_effect = std::make_unique<trait_modifier_effect>();
 		} else if (tag == "weapon_damage_bonus") {
 			modifier_effect = std::make_unique<weapon_damage_bonus_modifier_effect>();

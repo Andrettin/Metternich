@@ -493,11 +493,7 @@ public:
 	void set_max_craft(const int craft, const bool increase_craft);
 	void change_max_craft(const int change, const bool increase_craft);
 
-	[[nodiscard]] QCoro::Task<void> fully_recover()
-	{
-		co_await this->set_health(this->get_max_health());
-		this->set_mana(this->get_max_mana());
-	}
+	[[nodiscard]] QCoro::Task<void> fully_recover();
 
 	int get_base_armor_class_bonus() const
 	{
@@ -777,7 +773,12 @@ public:
 
 	void learn_spell(const spell *spell);
 	void change_learned_spell_count(const spell *spell, const int change);
+	int get_spell_charges(const spell *spell) const;
+	void change_spell_charges(const spell *spell, const int change);
+	int get_max_spell_charges(const spell *spell) const;
+	void change_max_spell_charges(const spell *spell, const int change);
 	Q_INVOKABLE bool can_cast_spell(const metternich::spell *spell) const;
+	Q_INVOKABLE QString get_spell_costs_string(const metternich::spell *spell) const;
 
 	QVariantList get_combat_spells_qvariant_list() const;
 	QVariantList get_battle_spells_qvariant_list() const;
@@ -1207,7 +1208,9 @@ private:
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	metternich::civilian_unit *civilian_unit = nullptr;
-	spell_map<int> learned_spell_counts; //spells that the character has learned
+	spell_map<int> learned_spell_counts;
+	spell_map<int> spell_charges;
+	spell_map<int> max_spell_charges;
 	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
 	std::vector<const recipe *> recipes; //recipes that the character has learned
 	int64_t wealth = 0;

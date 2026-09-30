@@ -64,7 +64,7 @@ honest = {
 			trait = deceitful
 		}
 		6 = {
-			trait_count = {
+			trait = {
 				trait = deceitful
 				count = -1
 			}

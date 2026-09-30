@@ -32,6 +32,8 @@ public:
 
 		if (key == "spell") {
 			this->spell = spell::get(value);
+		} else if (key == "charges") {
+			this->charges = std::stoi(value);
 		} else if (key == "count") {
 			this->value = decimillesimal_int(std::stoi(value));
 		} else {
@@ -39,9 +41,13 @@ public:
 		}
 	}
 
-	[[nodiscard]] virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
+	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
 	{
-		scope->get_game_data()->change_learned_spell_count(this->spell, (this->value * multiplier).to_int());
+		if (this->charges != 0) {
+			scope->get_game_data()->change_max_spell_charges(this->spell, (decimillesimal_int(this->charges) * multiplier).to_int());
+		} else {
+			scope->get_game_data()->change_learned_spell_count(this->spell, (this->value * multiplier).to_int());
+		}
 	}
 
 	virtual std::string get_base_string(const character *scope) const override
@@ -57,11 +63,17 @@ public:
 		Q_UNUSED(ignore_decimals);
 		Q_UNUSED(separator);
 
-		return std::format("{} {}: {}", (this->value * multiplier) > 0 ? "Gain" : "Lose", this->get_base_string(scope), this->spell->get_name());
+		if (this->charges != 0) {
+			const int multiplied_charges = (decimillesimal_int(this->charges) * multiplier).to_int();
+			return std::format("{} {} {} Charges: {}", multiplied_charges > 0 ? "Gain" : "Lose", multiplied_charges, this->get_base_string(scope), this->spell->get_name());
+		} else {
+			return std::format("{} {}: {}", (this->value * multiplier) > 0 ? "Gain" : "Lose", this->get_base_string(scope), this->spell->get_name());
+		}
 	}
 
 private:
 	const metternich::spell *spell = nullptr;
+	int charges = 0;
 };
 
 }

@@ -286,6 +286,14 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->learned_spell_counts[spell::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "spell_charges") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->spell_charges[spell::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "max_spell_charges") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->max_spell_charges[spell::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "recipes") {
 		for (const std::string &value : values) {
 			this->recipes.push_back(recipe::get(value));
@@ -535,6 +543,22 @@ gsml_data character_game_data::to_gsml_data() const
 			learned_spell_counts_data.add_property(spell->get_identifier(), std::to_string(count));
 		}
 		data.add_child(std::move(learned_spell_counts_data));
+	}
+
+	if (!this->spell_charges.empty()) {
+		gsml_data spell_charges_data("spell_charges");
+		for (const auto &[spell, count] : this->spell_charges) {
+			spell_charges_data.add_property(spell->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(spell_charges_data));
+	}
+
+	if (!this->max_spell_charges.empty()) {
+		gsml_data max_spell_charges_data("max_spell_charges");
+		for (const auto &[spell, count] : this->max_spell_charges) {
+			max_spell_charges_data.add_property(spell->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(max_spell_charges_data));
 	}
 
 	if (!this->recipes.empty()) {
@@ -2748,6 +2772,15 @@ void character_game_data::change_max_craft(const int change, const bool increase
 	this->set_max_craft(this->get_max_craft() + change, increase_craft);
 }
 
+QCoro::Task<void> character_game_data::fully_recover()
+{
+	co_await this->set_health(this->get_max_health());
+	this->set_mana(this->get_max_mana());
+
+	this->spell_charges = this->max_spell_charges;
+	emit spells_changed();
+}
+
 QCoro::Task<void> character_game_data::set_base_armor_class_bonus(const int bonus)
 {
 	if (bonus == this->get_base_armor_class_bonus()) {
@@ -3901,6 +3934,10 @@ QCoro::Task<void> character_game_data::apply_military_unit_modifier(metternich::
 std::vector<const spell *> character_game_data::get_spells() const
 {
 	std::vector<const spell *> spells = archimedes::map::get_keys(this->learned_spell_counts);
+	vector::merge(spells, archimedes::map::get_keys(this->max_spell_charges));
+
+	//remove duplicates
+	spells = container::to_vector(container::to_set(spells));
 
 	std::sort(spells.begin(), spells.end(), spell_compare());
 
@@ -3914,7 +3951,7 @@ QVariantList character_game_data::get_spells_qvariant_list() const
 
 bool character_game_data::has_spell(const spell *spell) const
 {
-	return this->has_learned_spell(spell);
+	return this->has_learned_spell(spell) || this->get_max_spell_charges(spell) > 0;
 }
 
 bool character_game_data::can_learn_spell(const spell *spell, std::string *reason) const
@@ -3967,17 +4004,98 @@ void character_game_data::change_learned_spell_count(const spell *spell, const i
 	}
 }
 
+int character_game_data::get_spell_charges(const spell *spell) const
+{
+	const auto find_iterator = this->spell_charges.find(spell);
+	if (find_iterator != this->spell_charges.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
+void character_game_data::change_spell_charges(const spell *spell, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->spell_charges[spell] += change);
+
+	if (new_value == 0) {
+		this->spell_charges.erase(spell);
+	}
+
+	if (game::get()->is_running()) {
+		emit spells_changed();
+	}
+}
+
+int character_game_data::get_max_spell_charges(const spell *spell) const
+{
+	const auto find_iterator = this->max_spell_charges.find(spell);
+	if (find_iterator != this->max_spell_charges.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
+void character_game_data::change_max_spell_charges(const spell *spell, const int change)
+{
+	if (change == 0) {
+		return;
+	}
+
+	const int new_value = (this->max_spell_charges[spell] += change);
+
+	if (new_value == 0) {
+		this->max_spell_charges.erase(spell);
+	}
+
+	assert_throw(new_value >= 0);
+
+	this->change_spell_charges(spell, change);
+
+	if (game::get()->is_running()) {
+		emit spells_changed();
+	}
+}
+
 bool character_game_data::can_cast_spell(const metternich::spell *spell) const
 {
 	if (!this->has_spell(spell)) {
 		return false;
 	}
 
-	if (this->get_mana() < spell->get_mana_cost(this->get_character_class())) {
-		return false;
+	if (this->get_mana() < spell->get_mana_cost(this->get_character_class()) || !this->has_learned_spell(spell)) {
+		if (this->get_spell_charges(spell) <= 0) {
+			return false;
+		}
 	}
 
 	return true;
+}
+
+QString character_game_data::get_spell_costs_string(const metternich::spell *spell) const
+{
+	std::string str;
+
+	const int mana_cost = spell->get_mana_cost(this->get_character_class());
+	if (mana_cost > 0) {
+		str += std::format("Mana Cost: {}", mana_cost);
+	}
+
+	const int max_charges = this->get_max_spell_charges(spell);
+	if (max_charges > 0) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += std::format("Uses: {}/{}", this->get_spell_charges(spell), max_charges);
+	}
+
+	return QString::fromStdString(str);
 }
 
 QVariantList character_game_data::get_combat_spells_qvariant_list() const

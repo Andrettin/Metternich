@@ -517,7 +517,12 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 	const int64_t target_experience_award = target->get_experience_award();
 	const bool is_enemy = target_army != unit->get_army();
 
-	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
+	if (caster->get_game_data()->get_spell_charges(spell) > 0) {
+		caster->get_game_data()->change_spell_charges(spell, -1);
+	} else {
+		assert_throw(caster->get_game_data()->has_learned_spell(spell));
+		caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
+	}
 
 	bool target_dead = false;
 	
