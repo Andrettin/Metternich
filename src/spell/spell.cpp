@@ -230,11 +230,28 @@ QString spell::get_battle_effects_string(const metternich::character *caster) co
 	ctx.source_scope = caster;
 
 	std::string effects_str;
+
+	if (this->is_weapon_attack()) {
+		effects_str = "Weapon Attack";
+	}
+
 	if (this->get_battle_result() != attack_result::none) {
+		if (!effects_str.empty()) {
+			effects_str += ", ";
+		}
+
 		effects_str = get_attack_result_name(this->get_battle_result());
 	} else if (this->get_target_military_unit_effects() != nullptr) {
+		if (!effects_str.empty()) {
+			effects_str += ", ";
+		}
+
 		effects_str = this->get_target_military_unit_effects()->get_effects_single_line_string(nullptr, ctx);
 	} else if (this->get_target_character_effects() != nullptr) {
+		if (!effects_str.empty()) {
+			effects_str += ", ";
+		}
+
 		effects_str = this->get_target_character_effects()->get_effects_single_line_string(nullptr, ctx);
 	}
 
