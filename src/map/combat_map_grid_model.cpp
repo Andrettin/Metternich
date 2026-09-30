@@ -127,7 +127,8 @@ void combat_map_grid_model::on_tile_unit_changed(const QPoint &tile_pos)
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
 		static_cast<int>(role::tile_text),
-		static_cast<int>(role::tile_middle_text)
+		static_cast<int>(role::tile_middle_text),
+		static_cast<int>(role::tile_cursor)
 	});
 }
 
@@ -136,7 +137,8 @@ void combat_map_grid_model::on_tile_object_changed(const QPoint &tile_pos)
 	const QModelIndex index = this->index(tile_pos.y(), tile_pos.x());
 	emit dataChanged(index, index, {
 		static_cast<int>(role::tile_text),
-		static_cast<int>(role::tile_middle_text)
+		static_cast<int>(role::tile_middle_text),
+		static_cast<int>(role::tile_cursor)
 	});
 }
 
@@ -147,7 +149,8 @@ void combat_map_grid_model::on_movable_tiles_changed()
 	emit dataChanged(start_index, end_index, {
 		static_cast<int>(role::movable_to),
 		static_cast<int>(role::retreatable_at),
-		static_cast<int>(role::in_enemy_range_at)
+		static_cast<int>(role::in_enemy_range_at),
+		static_cast<int>(role::tile_cursor)
 	});
 }
 

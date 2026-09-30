@@ -8,7 +8,14 @@ Item {
 	
 	readonly property bool tile_hovered: tile_mouse_area.containsMouse
 	readonly property point tile_pos: Qt.point(column, row)
+	readonly property var current_tile_cursor: tile_cursor
 	property string saved_status_text: ""
+	
+	onCurrent_tile_cursorChanged: {
+		if (tile_hovered) {
+			metternich.set_current_cursor(current_tile_cursor)
+		}
+	}
 	
 	Repeater {
 		model: base_image_sources
