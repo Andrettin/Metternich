@@ -118,8 +118,8 @@ void spell::check() const
 		throw std::runtime_error(std::format("Spell \"{}\" has no type.", this->get_identifier()));
 	}
 
-	if (this->get_level() == -1) {
-		throw std::runtime_error(std::format("Spell \"{}\" has no level.", this->get_identifier()));
+	if (this->get_level() == -1 && (does_spell_type_cost_mana(this->get_type()) || !this->get_divine_domains().empty())) {
+		throw std::runtime_error(std::format("Spell \"{}\" has no level, and it is either of a mana-costing type or can be granted by deities. In both of those cases, the spell needs a level.", this->get_identifier()));
 	}
 
 	assert_throw(this->get_icon() != nullptr);
@@ -166,13 +166,11 @@ int spell::get_mana_cost(const character_class *character_class) const
 		return this->mana_cost;
 	}
 
-	switch (this->get_type()) {
-		case spell_type::exploit:
-			//spell type which does not cost mana by default
-			return 0;
-		default:
-			break;
+	if (!does_spell_type_cost_mana(this->get_type())) {
+		return 0;
 	}
+
+	assert_throw(this->get_level() != -1);
 
 	return character_defines::get()->get_mana_cost_for_spell_level(this->get_level_for_character_class(character_class));
 }

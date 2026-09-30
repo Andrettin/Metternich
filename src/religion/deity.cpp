@@ -187,6 +187,8 @@ std::string_view deity::get_divine_rank_name() const
 
 bool deity::can_grant_spell(const spell *spell) const
 {
+	assert_throw(spell->get_level() != -1);
+
 	if (vector::intersects(this->get_major_domains(), spell->get_divine_domains())) {
 		return true;
 	}
