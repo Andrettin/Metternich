@@ -129,7 +129,7 @@ void spell::check() const
 	}
 
 	assert_throw(this->get_target() != spell_target::none);
-	assert_throw(this->get_target_character_effects() != nullptr || this->get_target_military_unit_effects() != nullptr || this->get_battle_result() != attack_result::none);
+	assert_throw(this->get_target_character_effects() != nullptr || this->get_target_military_unit_effects() != nullptr || this->get_battle_result() != attack_result::none || this->is_weapon_attack());
 
 	switch (this->get_target()) {
 		case spell_target::ally:
@@ -144,11 +144,11 @@ void spell::check() const
 			break;
 	}
 
-	if ((this->get_target() == spell_target::ally || this->get_target() == spell_target::enemy) && this->get_battle_result() == attack_result::none && this->get_target_military_unit_effects() == nullptr) {
+	if ((this->get_target() == spell_target::ally || this->get_target() == spell_target::enemy) && this->get_battle_result() == attack_result::none && this->get_target_military_unit_effects() == nullptr && !this->is_weapon_attack()) {
 		throw std::runtime_error(std::format("Spell \"{}\" has a military unit target, but no target military unit effects.", this->get_identifier()));
 	}
 
-	if ((this->get_target() == spell_target::ally_character || this->get_target() == spell_target::enemy_character) && this->get_target_character_effects() == nullptr) {
+	if ((this->get_target() == spell_target::ally_character || this->get_target() == spell_target::enemy_character) && this->get_target_character_effects() == nullptr && !this->is_weapon_attack()) {
 		throw std::runtime_error(std::format("Spell \"{}\" has a character target, but no target character effects.", this->get_identifier()));
 	}
 

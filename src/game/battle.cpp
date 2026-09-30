@@ -465,7 +465,7 @@ const military_unit *battle::choose_enemy(const military_unit *unit, const std::
 QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
 {
 	const battle_unit_info *unit_info = this->get_unit_info(unit);
-	battle_unit_info *enemy_info = this->get_unit_info(enemy);
+	const battle_unit_info *enemy_info = this->get_unit_info(enemy);
 
 	const QPoint tile_pos = unit_info->get_tile_pos();
 	const QPoint enemy_tile_pos = enemy_info->get_tile_pos();
@@ -477,7 +477,7 @@ QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_
 	const sound *enemy_death_sound = enemy->get_death_sound();
 	const int64_t enemy_experience_award = enemy->get_experience_award();
 
-	co_await unit->attack(enemy, distance, moved, to_hit_modifier);
+	co_await unit->attack(enemy, distance, moved, to_hit_modifier, 0);
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (!ranged && unit->get_melee_attack_sound() != nullptr) {
@@ -519,7 +519,36 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 
 	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
 
-	const bool hit = !spell->requires_to_hit_check() || target->get_character() == nullptr || unit->check_to_hit(target->get_character(), nullptr, to_hit_modifier);
+	bool target_dead = false;
+	
+	const battle_unit_info *unit_info = this->get_unit_info(unit);
+	const battle_unit_info *target_info = this->get_unit_info(target);
+	const QPoint tile_pos = unit_info->get_tile_pos();
+	const QPoint target_tile_pos = target_info->get_tile_pos();
+	const int distance = point::distance_to(target_tile_pos, tile_pos);
+
+	const bool moved = unit_info->get_remaining_movement() < unit->get_battle_movement();
+	const bool ranged = distance > 1;
+
+	bool hit = false;
+	if (spell->is_weapon_attack()) {
+		hit = co_await unit->attack(target, distance, moved, to_hit_modifier + spell->get_to_hit_modifier(), spell->get_damage_modifier());
+
+		if (this->scope == game::get()->get_player_domain()) {
+			if (spell->get_sound() == nullptr) {
+				if (!ranged && unit->get_melee_attack_sound() != nullptr) {
+					co_await unit->get_melee_attack_sound()->play_coro(std::chrono::milliseconds(100));
+				} else if (ranged && unit->get_ranged_attack_sound() != nullptr) {
+					co_await unit->get_ranged_attack_sound()->play_coro(std::chrono::milliseconds(100));
+				}
+			}
+		}
+
+		//the attack might have killed the target already
+		target_dead = !vector::contains(target_army->get_military_units(), target);
+	} else {
+		hit = !spell->requires_to_hit_check() || target->get_character() == nullptr || unit->check_to_hit(target->get_character(), nullptr, to_hit_modifier + spell->get_to_hit_modifier());
+	}
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (spell->get_sound() != nullptr) {
@@ -531,34 +560,37 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 		co_return 0;
 	}
 
-	if (spell->get_target_character_effects() != nullptr && target->get_character() != nullptr) {
-		context ctx = this->ctx;
-		ctx.root_scope = target->get_character();
-		ctx.source_scope = caster;
-		co_await spell->get_target_character_effects()->do_effects(target->get_character(), ctx);
-	} else if (spell->get_battle_result() != attack_result::none) {
-		switch (spell->get_battle_result()) {
-			case attack_result::miss:
-			case attack_result::fall_back:
-				break;
-			case attack_result::hit:
-			case attack_result::rout:
-				co_await target->receive_damage(1);
-				break;
-			case attack_result::destroy:
-				co_await target->die();
-				break;
+	if (!target_dead) {
+		if (spell->get_target_character_effects() != nullptr && target->get_character() != nullptr) {
+			context ctx = this->ctx;
+			ctx.root_scope = target->get_character();
+			ctx.source_scope = caster;
+			co_await spell->get_target_character_effects()->do_effects(target->get_character(), ctx);
+		} else if (spell->get_battle_result() != attack_result::none) {
+			switch (spell->get_battle_result()) {
+				case attack_result::miss:
+				case attack_result::fall_back:
+					break;
+				case attack_result::hit:
+				case attack_result::rout:
+					co_await target->receive_damage(1);
+					break;
+				case attack_result::destroy:
+					co_await target->die();
+					break;
+			}
+		} else if (spell->get_target_military_unit_effects() != nullptr) {
+			context ctx = this->ctx;
+			ctx.root_scope = target;
+			ctx.source_scope = caster;
+			co_await spell->get_target_military_unit_effects()->do_effects(target, ctx);
 		}
-	} else if (spell->get_target_military_unit_effects() != nullptr) {
-		context ctx = this->ctx;
-		ctx.root_scope = target;
-		ctx.source_scope = caster;
-		co_await spell->get_target_military_unit_effects()->do_effects(target, ctx);
+		
+		target_dead = !vector::contains(target_army->get_military_units(), target);
 	}
 
 	int64_t experience_award = 0;
 
-	const bool target_dead = !vector::contains(target_army->get_military_units(), target);
 	if (target_dead) {
 		killed_units.push_back(target);
 		this->remove_unit_info(target);

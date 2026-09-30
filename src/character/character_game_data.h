@@ -585,7 +585,7 @@ public:
 	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
 
 	int get_min_damage(const creature_size *target_size) const;
-	int get_max_damage(const creature_size *target_size, const bool ranged_only) const;
+	int get_max_damage(const creature_size *target_size, const bool ranged_only, const int damage_modifier) const;
 
 	int get_best_range() const;
 

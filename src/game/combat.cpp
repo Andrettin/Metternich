@@ -674,7 +674,7 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 
 	caster->get_game_data()->change_mana(-spell->get_mana_cost(caster->get_game_data()->get_character_class()));
 
-	const bool hit = !spell->requires_to_hit_check() || this->do_to_hit_check(caster, target, to_hit_modifier);
+	const bool hit = !spell->requires_to_hit_check() || this->do_to_hit_check(caster, target, to_hit_modifier + spell->get_to_hit_modifier());
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (spell->get_sound() != nullptr) {

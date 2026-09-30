@@ -623,14 +623,13 @@ QCoro::Task<void> military_unit::check_free_promotions()
 	}
 }
 
-QCoro::Task<void> military_unit::attack(military_unit *target, const int battle_range, const bool moved, const int to_hit_modifier) const
+QCoro::Task<bool> military_unit::attack(military_unit *target, const int battle_range, const bool moved, const int to_hit_modifier, const int damage_modifier) const
 {
 	assert_throw(target != nullptr);
 
 	if (this->get_character() != nullptr && target->get_character() != nullptr) {
 		//attack between characters
-		co_await this->attack_character(target->get_character(), battle_range, to_hit_modifier);
-		co_return;
+		co_return co_await this->attack_character(target->get_character(), battle_range, to_hit_modifier, damage_modifier);
 	}
 
 	const bool ranged = battle_range > 1;
@@ -638,7 +637,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const int battle_
 	int attack = 0;
 	if (ranged) {
 		if (this->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus() + to_hit_modifier, this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), true), true);
+			attack = character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus() + to_hit_modifier, this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), true, damage_modifier), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::missile).to_int();
 		}
@@ -646,7 +645,7 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const int battle_
 		attack = this->get_effective_stat(military_unit_stat::charge).to_int();
 	} else {
 		if (this->get_character() != nullptr) {
-			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus() + to_hit_modifier, this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), false), true);
+			attack = character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_character()->get_game_data()->get_to_hit_bonus() + to_hit_modifier, this->get_character()->get_game_data()->get_max_damage(target->get_creature_size(), false, damage_modifier), true);
 		} else {
 			attack = this->get_effective_stat(military_unit_stat::melee).to_int();
 		}
@@ -684,14 +683,17 @@ QCoro::Task<void> military_unit::attack(military_unit *target, const int battle_
 			co_await target->die();
 			break;
 	}
+	
+	co_return true; //attacking a non-character military unit always hits
 }
 
-QCoro::Task<void> military_unit::attack_character(const metternich::character *target_character, const int battle_range, const int to_hit_modifier) const
+QCoro::Task<bool> military_unit::attack_character(const metternich::character *target_character, const int battle_range, const int to_hit_modifier, const int damage_modifier) const
 {
 	assert_throw(this->get_character() != nullptr);
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
+	bool any_attack_hit = false;
 	int damage = 0;
 
 	const std::vector<const item *> weapons = character_game_data->get_weapons();
@@ -708,9 +710,12 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 			continue;
 		}
 
+		any_attack_hit = true;
+
 		int weapon_damage = random::get()->roll_dice(weapon->get_type()->get_damage_dice(target_character->get_game_data()->get_creature_size()));
 		weapon_damage += character_game_data->get_damage_bonus();
 		weapon_damage += character_game_data->get_weapon_damage_bonus(weapon->get_type());
+		weapon_damage += damage_modifier;
 
 		int damage_reduction = 0;
 		for (const auto &[damage_reduction_type, typed_damage_reduction] : target_character->get_game_data()->get_damage_reductions()) {
@@ -743,7 +748,9 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 		const bool hit = this->check_to_hit(target_character, nullptr, to_hit_modifier);
 
 		if (hit) {
-			int attack_damage = random::get()->roll_dice(this->get_character()->get_monster_type()->get_damage_dice()) + character_game_data->get_damage_bonus();
+			any_attack_hit = true;
+
+			int attack_damage = random::get()->roll_dice(this->get_character()->get_monster_type()->get_damage_dice()) + character_game_data->get_damage_bonus() + damage_modifier;
 
 			int damage_reduction = 0;
 			for (const auto &[damage_reduction_type, value] : target_character->get_game_data()->get_damage_reductions()) {
@@ -761,12 +768,11 @@ QCoro::Task<void> military_unit::attack_character(const metternich::character *t
 		}
 	}
 
-	if (damage == 0) {
-		co_return;
+	if (damage > 0) {
+		co_await target_character->get_game_data()->change_health(-damage);
 	}
 
-	//perform attack between characters
-	co_await target_character->get_game_data()->change_health(-damage);
+	co_return any_attack_hit;
 }
 
 bool military_unit::check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const

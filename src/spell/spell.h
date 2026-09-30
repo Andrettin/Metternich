@@ -36,7 +36,10 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(int mana_cost MEMBER mana_cost NOTIFY changed)
 	Q_PROPERTY(int casting_time_initiative_modifier MEMBER casting_time_initiative_modifier READ get_casting_time_initiative_modifier NOTIFY changed)
 	Q_PROPERTY(attack_result battle_result MEMBER battle_result READ get_battle_result NOTIFY changed)
+	Q_PROPERTY(bool weapon_attack MEMBER weapon_attack READ is_weapon_attack NOTIFY changed)
 	Q_PROPERTY(bool to_hit_check MEMBER to_hit_check READ requires_to_hit_check NOTIFY changed)
+	Q_PROPERTY(int to_hit_modifier MEMBER to_hit_modifier READ get_to_hit_modifier NOTIFY changed)
+	Q_PROPERTY(int damage_modifier MEMBER damage_modifier READ get_damage_modifier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* sound MEMBER sound READ get_sound NOTIFY changed)
 
@@ -98,9 +101,24 @@ public:
 		return this->battle_result;
 	}
 
+	bool is_weapon_attack() const
+	{
+		return this->weapon_attack;
+	}
+
 	bool requires_to_hit_check() const
 	{
 		return this->to_hit_check;
+	}
+
+	int get_to_hit_modifier() const
+	{
+		return this->to_hit_modifier;
+	}
+
+	int get_damage_modifier() const
+	{
+		return this->damage_modifier;
 	}
 
 	bool is_item_learnable() const;
@@ -167,7 +185,10 @@ private:
 	int range = 0; //in inches
 	int casting_time_initiative_modifier = 0;
 	attack_result battle_result{};
+	bool weapon_attack = false; //whether this spell results in a weapon attack
 	bool to_hit_check = false;
+	int to_hit_modifier = 0;
+	int damage_modifier = 0;
 	technology *required_technology = nullptr;
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;
