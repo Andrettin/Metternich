@@ -1212,7 +1212,6 @@ private:
 	spell_map<int> learned_spell_counts;
 	spell_map<int> spell_charges;
 	spell_map<int> max_spell_charges;
-	std::vector<const spell *> item_spells; //spells granted by items, but which the character hasn't learned per se
 	std::vector<const recipe *> recipes; //recipes that the character has learned
 	int64_t wealth = 0;
 	std::vector<qunique_ptr<item>> items;
