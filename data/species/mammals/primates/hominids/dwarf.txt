@@ -33,6 +33,14 @@ dwarf = {
 		wisdom = 18
 		charisma = 17
 	}
+	min_starting_weights = {
+		female = 100lb
+		male = 130lb
+	}
+	max_starting_weights = {
+		female = 196lb
+		male = 226lb
+	}
 	character_class_level_limits = {
 		cleric = 12
 		rogue = 8

@@ -14,4 +14,12 @@ half_orc = {
 		self_taught = 1d6
 		trained = 2d6
 	}
+	min_starting_weights = {
+		female = 110lb
+		male = 150lb
+	}
+	max_starting_weights = {
+		female = 398lb
+		male = 438lb
+	}
 }

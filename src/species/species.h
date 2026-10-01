@@ -175,6 +175,9 @@ public:
 	int get_min_attribute_value(const character_attribute *attribute) const;
 	int get_max_attribute_value(const character_attribute *attribute) const;
 
+	int get_min_starting_weight(const gender gender) const;
+	int get_max_starting_weight(const gender gender) const;
+
 	int get_character_class_level_limit(const character_class *character_class) const;
 
 	const std::vector<const item_type *> &get_natural_weapons() const
@@ -207,6 +210,8 @@ private:
 	data_entry_set<skill_group> class_skill_groups;
 	data_entry_map<character_attribute, int> min_attribute_values;
 	data_entry_map<character_attribute, int> max_attribute_values;
+	std::map<gender, int> gendered_min_starting_weights; //in ounces
+	std::map<gender, int> gendered_max_starting_weights; //in ounces
 	character_class_map<int> character_class_level_limits;
 	std::vector<const item_type *> natural_weapons;
 	std::unique_ptr<const metternich::modifier<const character>> modifier;

@@ -33,6 +33,14 @@ gnome = {
 		wisdom = 17
 		charisma = 18
 	}
+	min_starting_weights = {
+		female = 35lb
+		male = 40lb
+	}
+	max_starting_weights = {
+		female = 43lb
+		male = 48lb
+	}
 	character_class_level_limits = {
 		cleric = 9
 		rogue = 13

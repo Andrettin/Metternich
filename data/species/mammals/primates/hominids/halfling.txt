@@ -38,6 +38,14 @@ halfling = {
 		wisdom = 19
 		charisma = 18
 	}
+	min_starting_weights = {
+		female = 25lb
+		male = 30lb
+	}
+	max_starting_weights = {
+		female = 33lb
+		male = 38lb
+	}
 	character_class_level_limits = {
 		cleric = 8
 		ranger = 7

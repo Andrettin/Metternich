@@ -30,6 +30,14 @@ half_elf = {
 		wisdom = 18
 		charisma = 18
 	}
+	min_starting_weights = {
+		female = 80lb
+		male = 100lb
+	}
+	max_starting_weights = {
+		female = 208lb
+		male = 228lb
+	}
 	character_class_level_limits = {
 		bard = U
 		cleric = 9

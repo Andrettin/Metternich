@@ -942,16 +942,14 @@ QCoro::Task<void> character_game_data::generate_attributes()
 		const int new_weight = this->get_weight();
 		if (new_weight != old_weight) {
 			//this attribute changes weight, so we should adjust it according to the species creature size
-			const metternich::creature_size *min_creature_size = species->get_min_starting_creature_size();
-			const metternich::creature_size *max_creature_size = species->get_max_starting_creature_size();
-			assert_throw(min_creature_size != nullptr);
-			assert_throw(max_creature_size != nullptr);
+			const int min_weight = species->get_min_starting_weight(this->character->get_gender());
+			const int max_weight = species->get_max_starting_weight(this->character->get_gender());
 
-			while (max_creature_size->get_max_weight() != 0 && this->get_weight() > max_creature_size->get_max_weight() && this->get_attribute_value(attribute) > 0) {
+			while (max_weight != 0 && this->get_weight() > max_weight && this->get_attribute_value(attribute) > 0) {
 				co_await this->change_attribute_value(attribute, -1);
 			}
 
-			while (min_creature_size->get_min_weight() != 0 && this->get_weight() <= min_creature_size->get_min_weight()) {
+			while (min_weight != 0 && this->get_weight() <= min_weight) {
 				co_await this->change_attribute_value(attribute, 1);
 			}
 		}

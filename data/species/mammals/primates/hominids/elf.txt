@@ -33,6 +33,14 @@ elf = {
 		wisdom = 18
 		charisma = 18
 	}
+	min_starting_weights = {
+		female = 80lb
+		male = 85lb
+	}
+	max_starting_weights = {
+		female = 152lb
+		male = 157lb
+	}
 	character_class_level_limits = {
 		bard = 9
 		cleric = 12

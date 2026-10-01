@@ -19,6 +19,14 @@ human = { #Source: http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=
 		self_taught = 1d6
 		trained = 2d6
 	}
+	min_starting_weights = {
+		female = 85lb
+		male = 120lb
+	}
+	max_starting_weights = {
+		female = 245lb
+		male = 280lb
+	}
 	character_class_level_limits = {
 		bard = U
 		cleric = U

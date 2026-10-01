@@ -10,6 +10,7 @@
 #include "item/item_class.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
+#include "species/creature_size.h"
 #include "species/geological_era.h"
 #include "species/phenotype.h"
 #include "species/taxon.h"
@@ -17,6 +18,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/string_conversion_util.h"
 
 #include <magic_enum/magic_enum.hpp>
 #include <magic_enum/magic_enum_utility.hpp>
@@ -198,6 +200,20 @@ void species::process_gsml_scope(const gsml_data &scope)
 
 			this->max_attribute_values[character_attribute::get(key)] = std::stoi(value);
 		});
+	} else if (tag == "min_starting_weights") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->gendered_min_starting_weights[magic_enum::enum_cast<gender>(key).value()] = string::to_weight(value);
+		});
+	} else if (tag == "max_starting_weights") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->gendered_max_starting_weights[magic_enum::enum_cast<gender>(key).value()] = string::to_weight(value);
+		});
 	} else if (tag == "character_class_level_limits") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -236,6 +252,13 @@ void species::initialize()
 		if (this->get_max_starting_creature_size() == nullptr) {
 			this->max_starting_creature_size = this->get_default_creature_size();
 		}
+	}
+
+	if (!this->gendered_min_starting_weights.contains(gender::none) && this->get_min_starting_creature_size() != nullptr) {
+		gendered_min_starting_weights[gender::none] = this->get_min_starting_creature_size()->get_min_weight();
+	}
+	if (!this->gendered_max_starting_weights.contains(gender::none) && this->get_max_starting_creature_size() != nullptr) {
+		gendered_max_starting_weights[gender::none] = this->get_max_starting_creature_size()->get_max_weight();
 	}
 
 	taxon_base::initialize();
@@ -374,6 +397,34 @@ int species::get_max_attribute_value(const character_attribute *attribute) const
 	}
 
 	return std::numeric_limits<int>::max();
+}
+
+int species::get_min_starting_weight(const gender gender) const
+{
+	auto find_iterator = this->gendered_min_starting_weights.find(gender);
+	if (find_iterator == this->gendered_min_starting_weights.end()) {
+		find_iterator = this->gendered_min_starting_weights.find(gender::none);
+	}
+
+	if (find_iterator != this->gendered_min_starting_weights.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
+}
+
+int species::get_max_starting_weight(const gender gender) const
+{
+	auto find_iterator = this->gendered_max_starting_weights.find(gender);
+	if (find_iterator == this->gendered_max_starting_weights.end()) {
+		find_iterator = this->gendered_max_starting_weights.find(gender::none);
+	}
+
+	if (find_iterator != this->gendered_max_starting_weights.end()) {
+		return find_iterator->second;
+	}
+
+	return 0;
 }
 
 int species::get_character_class_level_limit(const character_class *character_class) const
