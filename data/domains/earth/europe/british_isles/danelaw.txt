@@ -6,4 +6,5 @@ danelaw = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = york
+	definite_article = true
 }
