@@ -3,6 +3,7 @@ skeldu = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	language = proto_germanic
 	type = noun
 	gender = masculine
+	name_generation_word = english:shield
 	meanings = {
 		#source gives the German "(gespaltenes Holzstück) Brett, Schild"
 		"Split Piece of Wood"

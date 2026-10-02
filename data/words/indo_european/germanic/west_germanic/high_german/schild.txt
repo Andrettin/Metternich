@@ -4,6 +4,7 @@ schild = {
 	type = noun
 	gender = masculine
 	etymon = schilt #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 229.
+	name_generation_word = english:shield
 	meaning_words = {
 		shield
 	}

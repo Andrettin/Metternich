@@ -4,6 +4,7 @@ burda = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	type = noun
 	gender = neuter
 	etymon = bhrdho #the TLFi gives the reflexes of this word as deriving from the Indo-European word "bhrdho-" (Source: http://www.cnrtl.fr/definition/bord); Fick gives the Indo-European root as "bher(e)dh" instead
+	name_generation_word = english:board_noun
 	meanings = {
 		"Board" #source gives the German "Brett"
 	}

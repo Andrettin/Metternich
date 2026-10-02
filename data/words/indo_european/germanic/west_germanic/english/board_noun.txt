@@ -1,0 +1,15 @@
+board_noun = {
+	name = "Board"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:bord_1_old_english #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, pp. 135-136.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = "BOARD PLANK"
+	meanings = {
+		"Board"
+	}
+}
