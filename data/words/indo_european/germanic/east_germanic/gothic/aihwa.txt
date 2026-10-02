@@ -1,8 +1,10 @@
 aihwa = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapter 2, Section 5.
 	name = "Aihʷa"
+	anglicized_name = "Aihwa"
 	language = gothic
 	type = noun
 	etymon = proto_indo_european:ekwos
+	name_generation_word = english:horse
 	meaning_words = {
 		horse
 	}

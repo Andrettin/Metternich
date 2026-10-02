@@ -2,6 +2,7 @@ auso = { #Source: Richard M. Runge, "The Phonetic Realization of Proto-Germanic 
 	name = "Auso"
 	language = gothic
 	type = noun
+	name_generation_word = english:ear
 	meaning_words = {
 		ear #seemingly etymologically, if not actually
 	}

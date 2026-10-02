@@ -5,6 +5,7 @@ vulfs = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	gender = masculine
 	etymon = wulfa
 	name_rear_compound_element = true #as in Old English
+	given_name_compound = true
 	meaning_words = {
 		wolf_high_german #source gives the German "Wolf"
 	}

@@ -2,6 +2,7 @@ aiz = { #Source: Richard M. Runge, "The Phonetic Realization of Proto-Germanic /
 	name = "Aiz"
 	language = gothic
 	type = noun
+	name_generation_word = english:bronze_noun
 	meaning_words = {
 		bronze_noun
 	}

@@ -1,10 +1,12 @@
 theod = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 99.
 	name = "Þéod"
+	anglicized_name = "Theod"
 	language = old_english
 	type = noun
 	gender = feminine
 	etymon = proto_germanic:theudo
 	name_front_compound_element = true #"Theodric"
+	given_name_compound = true
 	meaning_words = {
 		#source gives the German "Volk, Leute" as the meaning
 		volk

@@ -1,5 +1,6 @@
 aikklesjo = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxvi.
 	name = "Aíkklēsjo"
+	anglicized_name = "Aikklesjo"
 	language = gothic
 	type = noun
 	etymon = greek:ekklesia

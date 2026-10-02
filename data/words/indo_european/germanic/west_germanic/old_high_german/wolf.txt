@@ -5,6 +5,7 @@ wolf_old_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der Germ
 	etymon = wulfa
 	name_front_compound_element = true #as in Old English
 	name_rear_compound_element = true #as in Old English
+	given_name_compound = true
 	meanings = {
 		"Wolf" #the TLFi gives the French "loup", while Fick gives the German "Wolf"
 	}

@@ -205,8 +205,29 @@ void culture_base::initialize()
 	if (this->get_language() != nullptr && this->uses_language_data_for_name_generation()) {
 		assert_throw(this->get_language()->is_initialized());
 
+		for (const word *name_word : this->get_language()->get_name_words()) {
+			if (!name_word->is_given_name()) {
+				continue;
+			}
+
+			if (this->given_name_generator == nullptr) {
+				this->given_name_generator = std::make_unique<gendered_name_generator>();
+			}
+
+			const gender gender = grammatical_gender_to_gender(name_word->get_gender());
+			this->given_name_generator->add_name(gender, name_word->get_anglicized_name());
+		}
+
 		for (const word *front_compound_element : this->get_language()->get_name_front_compound_elements()) {
+			if (!front_compound_element->is_given_name_compound()) {
+				continue;
+			}
+
 			for (const word *rear_compound_element : this->get_language()->get_name_rear_compound_elements()) {
+				if (!rear_compound_element->is_given_name_compound()) {
+					continue;
+				}
+
 				if (rear_compound_element == front_compound_element) {
 					continue;
 				}
@@ -218,6 +239,40 @@ void culture_base::initialize()
 				const gender gender = grammatical_gender_to_gender(rear_compound_element->get_gender());
 
 				this->given_name_generator->add_name(gender, front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name()));
+			}
+		}
+
+		for (const word *name_word : this->get_language()->get_name_words()) {
+			if (!name_word->is_surname()) {
+				continue;
+			}
+
+			if (this->surname_generator == nullptr) {
+				this->surname_generator = std::make_unique<gendered_name_generator>();
+			}
+
+			this->surname_generator->add_name(gender::none, name_word->get_anglicized_name());
+		}
+
+		for (const word *front_compound_element : this->get_language()->get_name_front_compound_elements()) {
+			if (!front_compound_element->is_surname_compound()) {
+				continue;
+			}
+
+			for (const word *rear_compound_element : this->get_language()->get_name_rear_compound_elements()) {
+				if (!rear_compound_element->is_surname_compound()) {
+					continue;
+				}
+
+				if (rear_compound_element == front_compound_element) {
+					continue;
+				}
+
+				if (this->surname_generator == nullptr) {
+					this->surname_generator = std::make_unique<gendered_name_generator>();
+				}
+
+				this->surname_generator->add_name(gender::none, front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name()));
 			}
 		}
 	}

@@ -5,6 +5,7 @@ wolf_old_frankish = { #Source: http://www.cnrtl.fr/definition/garou
 	etymon = wulfa #presumably
 	name_front_compound_element = true #as in Old English
 	name_rear_compound_element = true #as in Old English
+	given_name_compound = true
 	meanings = {
 		"Wolf" #source gives the French "loup"
 	}

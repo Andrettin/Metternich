@@ -2,6 +2,9 @@ bronze_adjective = {
 	name = "Bronze"
 	language = english
 	type = adjective
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	surname_compound = true
 	meanings = {
 		"Bronze"
 	}

@@ -4,6 +4,9 @@ bronze_noun = {
 	type = noun
 	gender = neuter
 	uncountable = true
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	surname_compound = true
 	df_word = BRONZE
 	meanings = {
 		"Bronze"
