@@ -3439,11 +3439,13 @@ QCoro::Task<void> character_game_data::add_trait_of_type(const trait_type *trait
 		if (potential_traits.empty()) {
 			potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
 
-			if (this->character == game::get()->get_player_character()) {
-				potential_traits.push_back(nullptr);
-			} else {
-				for (int i = 0; i < trait_type->get_none_weight(); ++i) {
+			if (trait_type->get_none_weight() > 0) {
+				if (this->character == game::get()->get_player_character()) {
 					potential_traits.push_back(nullptr);
+				} else {
+					for (int i = 0; i < trait_type->get_none_weight(); ++i) {
+						potential_traits.push_back(nullptr);
+					}
 				}
 			}
 		}
