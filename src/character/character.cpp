@@ -713,12 +713,14 @@ void character::set_name_front_compound_element(word *word)
 {
 	this->name_front_compound_element = word;
 	word->set_name_front_compound_element(true);
+	word->set_given_name_compound(true);
 }
 
 void character::set_name_rear_compound_element(word *word)
 {
 	this->name_rear_compound_element = word;
 	word->set_name_rear_compound_element(true);
+	word->set_given_name_compound(true);
 }
 
 std::string character::get_full_name(const metternich::domain *regnal_domain, const std::optional<int> &regnal_number) const
