@@ -268,10 +268,18 @@ void culture_base::initialize()
 	}
 
 	//enable Markov generation if a generator does not have enough names
-	if (this->given_name_generator != nullptr && !this->given_name_generator->has_enough_data()) {
+	if (this->given_name_generator == nullptr || !this->given_name_generator->has_enough_data()) {
+		if (this->given_name_generator == nullptr) {
+			this->given_name_generator = std::make_unique<gendered_name_generator>();
+		}
+
 		this->given_name_generator->enable_markov_generation(this->given_name_markov_chain_size != 0 ? this->given_name_markov_chain_size : name_generator::default_markov_chain_size);
 	}
-	if (this->surname_generator != nullptr && !this->surname_generator->has_enough_data()) {
+	if (this->surname_generator == nullptr || !this->surname_generator->has_enough_data()) {
+		if (this->surname_generator == nullptr) {
+			this->surname_generator = std::make_unique<gendered_name_generator>();
+		}
+
 		this->surname_generator->enable_markov_generation(this->surname_markov_chain_size != 0 ? this->surname_markov_chain_size : name_generator::default_markov_chain_size);
 	}
 
