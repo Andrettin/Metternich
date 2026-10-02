@@ -1879,6 +1879,12 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		co_await this->change_typed_stat_value(domain_skill, domain_skill_bonus);
 	}
 
+	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
+	if (level_modifier != nullptr) {
+		co_await level_modifier->apply(this->character);
+	}
+
+	//apply trait gains via table after applying the level modifier, since the latter could grant a trait of a type as well, and if belongs to a more limited selection, then none might be acquirable
 	for (const trait_type *trait_type : trait_type::get_all()) {
 		const level_value_table *trait_gain_table = character_class->get_trait_gain_table(trait_type);
 		if (trait_gain_table == nullptr) {
@@ -1890,11 +1896,6 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		for (int i = 0; i < trait_gain_count; ++i) {
 			co_await this->add_trait_of_type(trait_type);
 		}
-	}
-
-	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
-	if (level_modifier != nullptr) {
-		co_await level_modifier->apply(this->character);
 	}
 
 	if (this->get_level_adjustment() > 0) {
