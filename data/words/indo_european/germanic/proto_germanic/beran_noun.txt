@@ -3,6 +3,7 @@ beran_proto_germanic_noun = { #Source: August Fick and Alf Torp, "Wortschatz der
 	language = proto_germanic
 	type = noun
 	gender = masculine
+	name_generation_word = english:bear_noun
 	meanings = {
 		"Bear" #source gives the German "Bär"
 	}

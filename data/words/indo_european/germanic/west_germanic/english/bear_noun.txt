@@ -1,0 +1,15 @@
+bear_noun = {
+	name = "Bear"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:bera_old_english #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 136.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = BEAR
+	meanings = {
+		"Bear"
+	}
+}

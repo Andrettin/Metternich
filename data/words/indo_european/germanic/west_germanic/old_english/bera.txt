@@ -3,7 +3,8 @@ bera_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanis
 	language = old_english
 	type = noun
 	gender = masculine
-	etymon = beran_proto_germanic_noun
+	etymon = proto_germanic:beran_proto_germanic_noun
+	name_generation_word = english:bear_noun
 	meanings = {
 		"Bear" #source gives the German "Bär"
 	}
