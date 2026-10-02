@@ -4,7 +4,6 @@ visigothic = {
 	color = { 140 140 38 }
 	language = gothic
 	primary_domain = visigothia
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf

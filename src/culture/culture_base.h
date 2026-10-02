@@ -43,7 +43,6 @@ class culture_base : public named_data_entry
 	Q_PROPERTY(metternich::cultural_group* group MEMBER group WRITE set_group NOTIFY changed)
 	Q_PROPERTY(metternich::cultural_group* upper_group MEMBER group WRITE set_group NOTIFY changed)
 	Q_PROPERTY(bool fauna MEMBER fauna READ is_fauna)
-	Q_PROPERTY(bool use_language_data_for_name_generation MEMBER use_language_data_for_name_generation READ uses_language_data_for_name_generation)
 	Q_PROPERTY(metternich::phenotype* default_phenotype MEMBER default_phenotype)
 
 public:
@@ -104,11 +103,6 @@ public:
 
 	const std::string &get_patronym(const gender gender) const;
 
-	bool uses_language_data_for_name_generation() const
-	{
-		return this->use_language_data_for_name_generation;
-	}
-
 	phenotype *get_default_phenotype() const;
 
 	const std::string &get_title_name(const government_type *government_type, const domain_tier tier) const;
@@ -160,7 +154,6 @@ private:
 	cultural_group *group = nullptr;
 	bool fauna = false;
 	std::map<gender, std::string> patronyms;
-	bool use_language_data_for_name_generation = false;
 	phenotype *default_phenotype = nullptr;
 	title_name_map title_names;
 	site_title_name_map site_title_names;

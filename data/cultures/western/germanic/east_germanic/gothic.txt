@@ -3,7 +3,6 @@ gothic = {
 	group = east_germanic
 	color = { 204 102 204 }
 	language = gothic
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf

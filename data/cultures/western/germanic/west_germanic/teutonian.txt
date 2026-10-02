@@ -4,7 +4,6 @@ teutonian = {
 	color = { 175 175 90 }
 	language = old_saxon
 	primary_domain = teutonia
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf

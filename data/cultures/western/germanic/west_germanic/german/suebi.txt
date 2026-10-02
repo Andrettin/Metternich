@@ -3,7 +3,6 @@ suebi = {
 	group = central_germanic
 	color = { 178 178 178 }
 	language = proto_germanic
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf

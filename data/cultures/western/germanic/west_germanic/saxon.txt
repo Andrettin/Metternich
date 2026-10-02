@@ -4,7 +4,6 @@ saxon = {
 	color = { 127 25 25 }
 	language = old_saxon
 	primary_domain = saxony
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf

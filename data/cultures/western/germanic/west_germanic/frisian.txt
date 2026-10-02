@@ -3,7 +3,6 @@ frisian = {
 	group = west_germanic
 	color = { 178 76 0 }
 	language = old_frisian
-	use_language_data_for_name_generation = true
 	species = {
 		human
 		half_elf
