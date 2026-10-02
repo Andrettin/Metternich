@@ -52,16 +52,10 @@ void culture_base::process_gsml_property(const gsml_property &property)
 
 	if (key == "given_name_markov_chain_size") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		if (this->given_name_generator == nullptr) {
-			this->given_name_generator = std::make_unique<gendered_name_generator>();
-		}
-		this->given_name_generator->set_markov_chain_size(std::stoull(value));
+		this->given_name_markov_chain_size = std::stoull(value);
 	} else if (key == "surname_markov_chain_size") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		if (this->surname_generator == nullptr) {
-			this->surname_generator = std::make_unique<gendered_name_generator>();
-		}
-		this->surname_generator->set_markov_chain_size(std::stoull(value));
+		this->surname_markov_chain_size = std::stoull(value);
 	} else if (key == "patronym") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		this->patronyms[gender::none] = value;
@@ -293,6 +287,16 @@ void culture_base::initialize()
 				this->surname_generator->add_name(gender, male_name + patronym);
 			}
 		});
+	}
+
+	if (this->given_name_generator != nullptr && !this->given_name_generator->has_enough_data()) {
+		//enable Markov generation if the generator does not have enough names
+		this->given_name_generator->enable_markov_generation(this->given_name_markov_chain_size != 0 ? this->given_name_markov_chain_size : name_generator::default_markov_chain_size);
+	}
+
+	if (this->surname_generator != nullptr && !this->surname_generator->has_enough_data()) {
+		//enable Markov generation if the generator does not have enough names
+		this->surname_generator->enable_markov_generation(this->surname_markov_chain_size != 0 ? this->surname_markov_chain_size : name_generator::default_markov_chain_size);
 	}
 
 	if (this->group != nullptr) {

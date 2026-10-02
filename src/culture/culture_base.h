@@ -171,6 +171,8 @@ private:
 	military_unit_class_map<const military_unit_type *> military_class_unit_types;
 	transporter_class_map<const transporter_type *> transporter_class_types;
 	std::unique_ptr<gendered_name_generator> given_name_generator;
+	size_t given_name_markov_chain_size = 0;
+	size_t surname_markov_chain_size = 0;
 	std::unique_ptr<gendered_name_generator> surname_generator;
 	military_unit_class_map<std::unique_ptr<name_generator>> military_unit_class_name_generators;
 	transporter_class_map<std::unique_ptr<name_generator>> transporter_class_name_generators;

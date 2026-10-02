@@ -5,8 +5,6 @@ saxon = {
 	language = old_saxon
 	primary_domain = saxony
 	use_language_data_for_name_generation = true
-	given_name_markov_chain_size = 2
-	surname_markov_chain_size = 2
 	species = {
 		human
 		half_elf
