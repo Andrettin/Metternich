@@ -2962,7 +2962,7 @@ int character_game_data::get_min_damage(const metternich::creature_size *target_
 	return min_damage;
 }
 
-int character_game_data::get_max_damage(const metternich::creature_size *target_size, const bool ranged_only, const int damage_modifier) const
+int character_game_data::get_max_damage(const metternich::creature_size *target_size, const bool ranged_only, const int damage_modifier, const int weapon_damage_dice_multiplier) const
 {
 	int max_damage = 0;
 
@@ -2977,11 +2977,12 @@ int character_game_data::get_max_damage(const metternich::creature_size *target_
 			}
 		}
 
-		max_damage += std::max(weapon->get_type()->get_damage_dice(target_size).get_maximum_result() + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()) + damage_modifier, 0);
+		const int weapon_damage_maximum_result = weapon->get_type()->get_damage_dice(target_size).get_maximum_result() * weapon_damage_dice_multiplier;
+		max_damage += std::max(weapon_damage_maximum_result + this->get_damage_bonus() + this->get_weapon_damage_bonus(weapon->get_type()) + damage_modifier, 0);
 	}
 
 	if (weapons.empty() && this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_damage_dice().is_null() && !ranged_only) {
-		max_damage += std::max(this->character->get_monster_type()->get_damage_dice().get_maximum_result() + this->get_damage_bonus() + damage_modifier, 0);
+		max_damage += std::max((this->character->get_monster_type()->get_damage_dice().get_maximum_result() * weapon_damage_dice_multiplier) + this->get_damage_bonus() + damage_modifier, 0);
 	}
 
 	return max_damage;
@@ -3833,10 +3834,10 @@ void character_game_data::update_military_unit_stats()
 	const centesimal_int battle_range = battle::length_to_battle_range(this->get_best_range());
 	const bool ranged = battle_range.to_int() > 1;
 
-	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), false, 0), true)));
+	military_unit->set_stat(military_unit_stat::melee, centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), false, 0, 1), true)));
 	military_unit->set_stat(military_unit_stat::charge, centesimal_int(0));
 	if (ranged) {
-		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), true, 0), true)));
+		military_unit->set_stat(military_unit_stat::missile, centesimal_int(character_defines::get()->get_battle_missile_for_to_hit_bonus_and_max_damage(this->get_to_hit_bonus(), this->get_max_damage(character_defines::get()->get_default_creature_size(), true, 0, 1), true)));
 	} else {
 		military_unit->set_stat(military_unit_stat::missile, centesimal_int(0));
 	}

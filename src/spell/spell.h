@@ -40,6 +40,7 @@ class spell final : public named_data_entry, public data_type<spell>
 	Q_PROPERTY(bool to_hit_check MEMBER to_hit_check READ requires_to_hit_check NOTIFY changed)
 	Q_PROPERTY(int to_hit_modifier MEMBER to_hit_modifier READ get_to_hit_modifier NOTIFY changed)
 	Q_PROPERTY(int damage_modifier MEMBER damage_modifier READ get_damage_modifier NOTIFY changed)
+	Q_PROPERTY(int weapon_damage_dice_multiplier MEMBER weapon_damage_dice_multiplier READ get_weapon_damage_dice_multiplier NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* sound MEMBER sound READ get_sound NOTIFY changed)
 
@@ -121,6 +122,11 @@ public:
 		return this->damage_modifier;
 	}
 
+	int get_weapon_damage_dice_multiplier() const
+	{
+		return this->weapon_damage_dice_multiplier;
+	}
+
 	bool is_item_learnable() const;
 
 	const technology *get_required_technology() const
@@ -189,6 +195,7 @@ private:
 	bool to_hit_check = false;
 	int to_hit_modifier = 0;
 	int damage_modifier = 0;
+	int weapon_damage_dice_multiplier = 0;
 	technology *required_technology = nullptr;
 	std::vector<const arcane_school *> arcane_schools;
 	std::vector<const divine_domain *> divine_domains;

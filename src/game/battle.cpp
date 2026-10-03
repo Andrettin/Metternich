@@ -477,7 +477,7 @@ QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_
 	const sound *enemy_death_sound = enemy->get_death_sound();
 	const int64_t enemy_experience_award = enemy->get_experience_award();
 
-	co_await unit->attack(enemy, distance, moved, to_hit_modifier, 0);
+	co_await unit->attack(enemy, distance, moved, to_hit_modifier, 0, 1);
 
 	if (this->scope == game::get()->get_player_domain()) {
 		if (!ranged && unit->get_melee_attack_sound() != nullptr) {
@@ -537,7 +537,7 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 
 	bool hit = false;
 	if (spell->is_weapon_attack()) {
-		hit = co_await unit->attack(target, distance, moved, to_hit_modifier + spell->get_to_hit_modifier(), spell->get_damage_modifier());
+		hit = co_await unit->attack(target, distance, moved, to_hit_modifier + spell->get_to_hit_modifier(), spell->get_damage_modifier(), spell->get_weapon_damage_dice_multiplier() > 0 ? spell->get_weapon_damage_dice_multiplier() : 1);
 
 		if (this->scope == game::get()->get_player_domain()) {
 			if (spell->get_sound() == nullptr) {

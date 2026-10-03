@@ -235,11 +235,18 @@ QString spell::get_battle_effects_string(const metternich::character *caster) co
 	if (this->is_weapon_attack()) {
 		effects_str = "Weapon Attack";
 
-		if (this->get_to_hit_modifier() != 0 || this->get_damage_modifier() != 0) {
+		if (this->get_to_hit_modifier() != 0 || this->get_damage_modifier() != 0 || this->get_weapon_damage_dice_multiplier() != 0) {
 			std::string weapon_modifier_str;
 
 			if (this->get_to_hit_modifier() != 0) {
 				weapon_modifier_str += std::format("{} To Hit", number::to_signed_string(this->get_to_hit_modifier()));
+			}
+			if (this->get_weapon_damage_dice_multiplier() != 0) {
+				if (!weapon_modifier_str.empty()) {
+					weapon_modifier_str += ", ";
+				}
+
+				weapon_modifier_str += std::format("x{} Weapon Damage", this->get_weapon_damage_dice_multiplier());
 			}
 			if (this->get_damage_modifier() != 0) {
 				if (!weapon_modifier_str.empty()) {
