@@ -401,7 +401,7 @@ MenuBase {
 		id: ruler_label
 		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		width: ruler_portrait.width + 32 * scale_factor
+		width: ruler_portrait.width + 28 * scale_factor
 		text: ""
 		wrapMode: Text.WordWrap
 		horizontalAlignment: Text.AlignHCenter
