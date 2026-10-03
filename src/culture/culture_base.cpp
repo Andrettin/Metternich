@@ -190,20 +190,17 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 
 void culture_base::initialize()
 {
-	const bool has_enough_given_name_data = this->given_name_generator != nullptr && this->given_name_generator->has_enough_data();
-	const bool has_enough_surname_data = this->surname_generator != nullptr && this->surname_generator->has_enough_data();
-
-	if (this->get_language() != nullptr && (!has_enough_given_name_data || !has_enough_surname_data)) {
+	if (this->get_language() != nullptr) {
 		assert_throw(this->get_language()->is_initialized());
 
 		for (const word *name_word : this->get_language()->get_name_words()) {
-			if (name_word->is_given_name() && !has_enough_given_name_data) {
+			if (name_word->is_given_name()) {
 				const gender gender = grammatical_gender_to_gender(name_word->get_gender());
-				this->given_name_generator->add_name(gender, name_word);
+				this->given_name_generator->add_additional_name(gender, name_word);
 			}
 
-			if (name_word->is_surname() && !has_enough_surname_data) {
-				this->surname_generator->add_name(gender::none, name_word);
+			if (name_word->is_surname()) {
+				this->surname_generator->add_additional_name(gender::none, name_word);
 			}
 		}
 
@@ -215,19 +212,19 @@ void culture_base::initialize()
 
 				const std::string compound_name = front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name());
 
-				if (front_compound_element->is_given_name_compound() && rear_compound_element->is_given_name_compound() && !has_enough_given_name_data) {
+				if (front_compound_element->is_given_name_compound() && rear_compound_element->is_given_name_compound()) {
 					const gender gender = grammatical_gender_to_gender(rear_compound_element->get_gender());
-					this->given_name_generator->add_name(gender, compound_name);
+					this->given_name_generator->add_additional_name(gender, compound_name);
 				}
 
-				if (front_compound_element->is_surname_compound() && rear_compound_element->is_surname_compound() && !has_enough_surname_data) {
-					this->surname_generator->add_name(gender::none, compound_name);
+				if (front_compound_element->is_surname_compound() && rear_compound_element->is_surname_compound()) {
+					this->surname_generator->add_additional_name(gender::none, compound_name);
 				}
 			}
 		}
 	}
 
-	if (!this->get_patronyms().empty() && this->given_name_generator != nullptr && this->given_name_generator->get_name_generator(gender::male) != nullptr && !has_enough_surname_data) {
+	if (!this->get_patronyms().empty() && this->given_name_generator != nullptr && this->given_name_generator->get_name_generator(gender::male) != nullptr) {
 		magic_enum::enum_for_each<gender>([this](const gender gender) {
 			const std::string &patronym = this->get_patronym(gender);
 			if (patronym.empty()) {
@@ -236,7 +233,7 @@ void culture_base::initialize()
 
 			for (const auto &name_variant : this->given_name_generator->get_name_generator(gender::male)->get_names()) {
 				const std::string male_name = get_name_variant_string(name_variant);
-				this->surname_generator->add_name(gender, male_name + patronym);
+				this->surname_generator->add_additional_name(gender, male_name + patronym);
 			}
 		});
 	}
@@ -546,7 +543,7 @@ std::string culture_base::generate_given_name(const gender gender, const std::ma
 
 	if (name_generator != nullptr) {
 		if (surname_generator != nullptr) {
-			const size_t potential_full_name_count = name_generator->get_name_count() * surname_generator->get_name_count();
+			const size_t potential_full_name_count = name_generator->get_name_count(true) * surname_generator->get_name_count(true);
 
 			if (potential_full_name_count > used_name_counts.size()) {
 				std::string full_name;
