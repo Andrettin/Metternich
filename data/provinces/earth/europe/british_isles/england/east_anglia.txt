@@ -24,12 +24,12 @@ east_anglia = {
 		
 		919 = {
 			owner = england #part of the Kingdom of England in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
-			culture = english
 			religion = catholic
 		}
 		
 		1190 = {
 			owner = england #part of the Kingdom of England c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
+			culture = english
 		}
 		
 		1360 = {
