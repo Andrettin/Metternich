@@ -401,7 +401,10 @@ MenuBase {
 		id: ruler_label
 		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		text: "Ruler"
+		width: ruler_portrait.width + 32 * scale_factor
+		text: ""
+		wrapMode: Text.WordWrap
+		horizontalAlignment: Text.AlignHCenter
 		visible: ruler_portrait.visible
 	}
 	
@@ -717,6 +720,7 @@ MenuBase {
 		ruler_portrait.ruler = country ? country.game_data.government.ruler : null
 		if (ruler_portrait.ruler !== null) {
 			ruler_portrait.portrait = ruler_portrait.ruler.game_data.portrait
+			ruler_label.text = ruler_portrait.ruler.game_data.get_full_name_for_domain_qstring(country)
 		}
 		
 		var country_population = country ? (country.game_data.provinces.length > 0 ? country.game_data.country_population : country.game_data.population) : null
