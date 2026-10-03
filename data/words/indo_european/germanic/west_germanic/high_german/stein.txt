@@ -4,13 +4,18 @@ stein_high_german = {
 	type = noun
 	gender = masculine
 	etymon = stein_middle_high_german #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 245.
+	noun_inflections = {
+		singular = {
+			genitive = "Steines" #alternatively also "Steins"
+		}
+		plural = {
+			nominative = "Steine"
+			accusative = "Steine"
+			dative = "Steinen"
+			genitive = "Steine"
+		}
+	}
 	meanings = {
 		"Stone"
 	}
-	
-	#singular genitive: "Steines", alternatively also "Steins"
-	#plural nominative: "Steine"
-	#plural accusative: "Steine"
-	#plural dative: "Steinen"
-	#plural genitive: "Steine"
 }

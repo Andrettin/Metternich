@@ -4,12 +4,17 @@ mork_1 = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	type = noun
 	gender = feminine
 	etymon = mark_proto_germanic
+	noun_inflections = {
+		singular = {
+			genitive = "Markar" #alternatively also "Merkr"
+		}
+		plural = {
+			nominative = "Markir" #alternatively also "Merkr"
+		}
+	}
 	meanings = {
 		#source gives the German "Wald, Grenzwald (ursprünglich ungerodetes Grenzland)"
 		"Forest"
 		"Border Forest"
 	}
-	
-	#singular genitive: "Markar", alternatively also "Merkr"
-	#plural nominative: "Markir", alternatively also "Merkr"
 }

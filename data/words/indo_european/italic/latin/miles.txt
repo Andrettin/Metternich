@@ -2,9 +2,12 @@ miles = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldie
 	name = "Mīles"
 	language = latin
 	type = noun
+	noun_inflections = {
+		plural = {
+			nominative = "Mīlitēs"
+		}
+	}
 	meanings = {
 		"Soldier"
 	}
-	
-	#plural nominative: "Mīlitēs"
 }

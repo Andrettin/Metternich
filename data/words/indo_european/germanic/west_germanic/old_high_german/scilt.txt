@@ -4,9 +4,12 @@ scilt = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	type = noun
 	gender = masculine
 	etymon = skeldu
+	noun_inflections = {
+		plural = {
+			nominative = "Scilti" #alternatively also "schiltâ"
+		}
+	}
 	meanings = {
 		"Shield" #source gives the German "Schild"
 	}
-	
-	#plural nominative: "scilti", alternatively also "schiltâ"
 }

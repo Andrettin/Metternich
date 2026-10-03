@@ -4,16 +4,19 @@ land_high_german = {
 	type = noun
 	gender = neuter
 	etymon = lant_middle_high_german #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 184.
+	noun_inflections = {
+		singular = {
+			genitive = "Landes"
+		}
+		plural = {
+			nominative = "Länder"
+			accusative = "Länder"
+		}
+	}
 	meaning_words = {
 		land_english
 	}
 	meanings = {
 		"Country"
 	}
-	
-	#singular genitive: "Landes"
-	#plural nominative: "Länder"
-	#plural genitive: "Länder"
 }
-
-	DerivesFrom = {"middle-high-german", "noun", "Lant"}, -- 

@@ -5,13 +5,18 @@ schild = {
 	gender = masculine
 	etymon = schilt #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 229.
 	name_generation_word = english:shield
+	noun_inflections = {
+		singular = {
+			genitive = "Schildes" #alternatively also "Schilds"
+		}
+		plural = {
+			nominative = "Schilde"
+			accusative = "Schilde"
+			dative = "Schilden"
+			genitive = "Schilde"
+		}
+	}
 	meaning_words = {
 		shield
 	}
-	
-	#singular genitive: "Schildes", alternatively also "Schilds"
-	#plural nominative: "Schilde"
-	#plural accusative: "Schilde"
-	#plural dative: "Schilden"
-	#plural genitive: "Schilde"
 }

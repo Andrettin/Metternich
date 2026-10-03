@@ -4,12 +4,15 @@ sage_high_german = {
 	type = noun
 	gender = feminine
 	etymon = sage_middle_high_german #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 213.
+	noun_inflections = {
+		plural = {
+			nominative = "Sägen"
+			accusative = "Sägen"
+			dative = "Sägen"
+			genitive = "Sägen"
+		}
+	}
 	meanings = {
 		"Saw"
 	}
-	
-	#plural nominative: "Sägen"
-	#plural accusative: "Sägen"
-	#plural dative: "Sägen"
-	#plural genitive: "Sägen"
 }
