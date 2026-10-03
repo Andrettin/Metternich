@@ -66,6 +66,7 @@ hochberg_zu_furstenstein = {
 
 hohenstein = {
 	name = "Hohenstein"
+	name_rear_compound_element = stein_high_german
 	prefix = "von"
 	culture = german #Saxon
 }

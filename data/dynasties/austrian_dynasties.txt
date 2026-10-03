@@ -6,6 +6,7 @@ auersperg = { #Source: Marquis of Ruvigny, "The Titled Nobility of Europe", 1914
 
 karnstein = { #Source: Sheridan Le Fanu, "Carmilla".
 	name = "Karnstein"
+	name_rear_compound_element = stein_high_german
 	prefix = "von"
 	culture = austrian
 }

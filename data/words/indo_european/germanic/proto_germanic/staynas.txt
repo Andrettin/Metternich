@@ -3,7 +3,7 @@ staynas = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.
 	language = proto_germanic
 	type = noun
 	gender = masculine #as given by Fick
-	name_generation_word = english:stone_noun
+	name_generation_word = high_german:stein_high_german
 	meaning_words = {
 		stone_noun #as given by both sources (Fick gives the German "Stein")
 	}
