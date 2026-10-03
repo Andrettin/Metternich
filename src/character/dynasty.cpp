@@ -4,6 +4,8 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "language/word.h"
+#include "util/assert_util.h"
 #include "util/gender.h"
 
 #include <magic_enum/magic_enum.hpp>
@@ -72,6 +74,14 @@ void dynasty::check() const
 	if (this->get_culture() == nullptr) {
 		throw std::runtime_error(std::format("Dynasty \"{}\" has no culture.", this->get_identifier()));
 	}
+
+	if (this->name_front_compound_element != nullptr) {
+		assert_throw(this->name_front_compound_element->get_language() == this->get_culture()->get_language());
+	}
+
+	if (this->name_rear_compound_element != nullptr) {
+		assert_throw(this->name_rear_compound_element->get_language() == this->get_culture()->get_language());
+	}
 }
 
 const std::string &dynasty::get_name(const metternich::culture *culture, const gender gender) const
@@ -96,6 +106,20 @@ const std::string &dynasty::get_name(const metternich::culture *culture, const g
 	}
 
 	return this->get_name();
+}
+
+void dynasty::set_name_front_compound_element(word *word)
+{
+	this->name_front_compound_element = word;
+	word->set_name_front_compound_element(true);
+	word->set_surname_compound(true);
+}
+
+void dynasty::set_name_rear_compound_element(word *word)
+{
+	this->name_rear_compound_element = word;
+	word->set_name_rear_compound_element(true);
+	word->set_surname_compound(true);
 }
 
 const std::string &dynasty::get_prefix(const metternich::culture *culture) const

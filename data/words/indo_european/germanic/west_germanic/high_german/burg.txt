@@ -1,0 +1,18 @@
+burg_high_german = {
+	name = "Burg"
+	language = high_german
+	type = noun
+	gender = feminine
+	etymon = middle_high_german:burc_middle_high_german
+	noun_inflections = {
+		plural = {
+			nominative = "Burgen"
+			accusative = "Burgen"
+			dative = "Burgen"
+			genitive = "Burgen"
+		}
+	}
+	meanings = {
+		"Castle"
+	}
+}

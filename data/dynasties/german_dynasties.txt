@@ -45,6 +45,7 @@ furstenberg = {
 
 habsburg = {
 	name = "Habsburg"
+	name_rear_compound_element = burg_high_german
 	prefix = "von"
 	culture = german #Swabian/Swiss
 }
@@ -131,6 +132,7 @@ salian = {
 
 schwarzenberg = { #Source: "Encyclopædia Britannica", 1911, vol. 24, p. 390.
 	name = "Schwarzenberg"
+	name_front_compound_element = schwarz
 	prefix = "zu"
 	culture = german #Franconian
 	

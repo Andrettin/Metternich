@@ -1,0 +1,13 @@
+burg_proto_germanic = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 137.
+	name = "Burg"
+	language = proto_germanic
+	type = noun
+	gender = feminine
+	name_generation_word = high_german:burg_high_german
+	meanings = {
+		#source gives "Burg, Stadt" as the meaning
+		"Castle"
+		"City"
+		"Town"
+	}
+}

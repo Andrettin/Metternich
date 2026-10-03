@@ -1,0 +1,17 @@
+burg_old_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 137; Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Burg" #Fick also gives the alternative form "Purg"
+	language = old_high_german
+	type = noun
+	gender = feminine #as given by Fick
+	etymon = proto_germanic:burg_proto_germanic #as given by Fick
+	meanings = {
+		#Fick gives "befestigter Ort, Burg, Schloß, Stadt" as the meaning
+		"Fortified Place"
+		"Castle"
+		"Palace"
+		"City"
+		"Town"
+	}
+	
+	#Donkin gives this word as coming "bergan" (to shelter)
+}

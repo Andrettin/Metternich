@@ -18,6 +18,8 @@ class dynasty final : public named_data_entry, public data_type<dynasty>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(archimedes::word* name_front_compound_element MEMBER name_front_compound_element WRITE set_name_front_compound_element NOTIFY changed)
+	Q_PROPERTY(archimedes::word* name_rear_compound_element MEMBER name_rear_compound_element WRITE set_name_rear_compound_element NOTIFY changed)
 	Q_PROPERTY(std::string prefix MEMBER prefix NOTIFY changed)
 	Q_PROPERTY(bool contracted_prefix MEMBER contracted_prefix NOTIFY changed)
 	Q_PROPERTY(metternich::culture* culture MEMBER culture NOTIFY changed)
@@ -37,6 +39,9 @@ public:
 	using named_data_entry::get_name;
 	const std::string &get_name(const metternich::culture *culture, const gender gender) const;
 
+	void set_name_front_compound_element(word *word);
+	void set_name_rear_compound_element(word *word);
+
 	const std::string &get_prefix() const
 	{
 		return this->prefix;
@@ -55,6 +60,8 @@ signals:
 	void changed();
 
 private:
+	word *name_front_compound_element = nullptr;
+	word *name_rear_compound_element = nullptr;
 	data_entry_map<culture_base, std::map<gender, std::string>> cultural_names;
 	std::string prefix;
 	bool contracted_prefix = false;

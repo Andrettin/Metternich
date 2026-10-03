@@ -1,0 +1,8 @@
+schwarz = {
+	name = "Schwarz"
+	language = high_german
+	type = adjective
+	meanings = {
+		"Black"
+	}
+}
