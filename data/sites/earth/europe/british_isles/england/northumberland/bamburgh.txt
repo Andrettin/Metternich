@@ -1,0 +1,8 @@
+bamburgh = {
+	name = "Bamburgh"
+	world = earth
+	geocoordinate = { -1.7222 55.604 }
+	type = holding
+	holding_type = castle
+	province = northumberland
+}

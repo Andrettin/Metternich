@@ -1,0 +1,8 @@
+morpeth = {
+	name = "Morpeth"
+	world = earth
+	geocoordinate = { -1.6908333333333 55.1675 }
+	type = holding
+	holding_type = castle
+	province = northumberland
+}

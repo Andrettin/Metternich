@@ -1,0 +1,8 @@
+saint_aidans = {
+	name = "Saint Aidans"
+	world = earth
+	geocoordinate = { -1.71825 55.608 } #St. Aidan's Church (Bamburgh)
+	type = holding
+	holding_type = temple
+	province = northumberland
+}

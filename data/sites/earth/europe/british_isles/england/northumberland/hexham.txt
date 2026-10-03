@@ -1,0 +1,8 @@
+hexham = {
+	name = "Hexham"
+	world = earth
+	geocoordinate = { -2.1 54.966666666667 }
+	type = holding
+	holding_type = castle
+	province = northumberland
+}

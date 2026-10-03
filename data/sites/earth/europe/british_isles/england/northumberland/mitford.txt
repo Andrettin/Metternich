@@ -1,0 +1,8 @@
+mitford = {
+	name = "Mitford"
+	world = earth
+	geocoordinate = { -1.726 55.168 }
+	type = holding
+	holding_type = castle
+	province = northumberland
+}

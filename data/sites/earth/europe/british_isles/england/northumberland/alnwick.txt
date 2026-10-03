@@ -1,0 +1,8 @@
+alnwick = {
+	name = "Alnwick"
+	world = earth
+	geocoordinate = { -1.70691 55.4134 }
+	type = holding
+	holding_type = castle
+	province = northumberland
+}

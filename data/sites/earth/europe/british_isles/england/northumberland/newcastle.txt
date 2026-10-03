@@ -3,6 +3,9 @@ newcastle = {
 	world = earth
 	geocoordinate = { -1.59999047994 55.00037538570 } #from Natural Earth
 	type = holding
-	#resource = coal
+	holding_type = guild
 	province = northumberland
+	features = {
+		coal_deposit
+	}
 }
