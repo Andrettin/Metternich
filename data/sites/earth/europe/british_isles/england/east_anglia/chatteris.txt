@@ -1,0 +1,8 @@
+chatteris = {
+	name = "Chatteris"
+	world = earth
+	geocoordinate = { 0.055 52.456 }
+	type = holding
+	holding_type = castle
+	province = east_anglia #Cambridgeshire
+}

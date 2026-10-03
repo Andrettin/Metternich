@@ -1,0 +1,8 @@
+castle_rising = {
+	name = "Castle Rising"
+	world = earth
+	geocoordinate = { 0.4694 52.7945 }
+	type = holding
+	holding_type = castle
+	province = east_anglia #Norfolk
+}

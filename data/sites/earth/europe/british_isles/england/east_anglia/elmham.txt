@@ -1,0 +1,8 @@
+elmham = {
+	name = "Elmham"
+	world = earth
+	geocoordinate = { 0.93971944444444 52.748561111111 } #North Elmham
+	type = holding
+	holding_type = temple
+	province = east_anglia #Norfolk
+}

@@ -1,0 +1,8 @@
+buckenham = {
+	name = "Buckenham"
+	world = earth
+	geocoordinate = { 1.477 52.599 }
+	type = holding
+	holding_type = castle
+	province = east_anglia #Norfolk
+}

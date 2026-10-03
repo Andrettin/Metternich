@@ -1,0 +1,8 @@
+thetford = {
+	name = "Thetford"
+	world = earth
+	geocoordinate = { 0.74 52.41 }
+	type = holding
+	holding_type = castle
+	province = east_anglia #Norfolk
+}
