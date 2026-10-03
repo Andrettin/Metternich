@@ -1,0 +1,11 @@
+brute_strike = {
+	name = "Brute Strike"
+	type = exploit
+	icon = labor
+	target = enemy
+	range = touch
+	weapon_attack = true
+	weapon_damage_dice_multiplier = 3
+	
+	#FIXME: should be restricted to melee weapons
+}
