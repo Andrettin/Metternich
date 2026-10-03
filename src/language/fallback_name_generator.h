@@ -31,7 +31,7 @@ public:
 	const name_generator *get_transporter_class_name_generator(const transporter_class *transporter_class) const;
 	void add_transporter_class_names(const transporter_class_map<std::unique_ptr<name_generator>> &transporter_class_names);
 
-	void add_ship_names(const std::vector<name_variant> &ship_names);
+	void add_ship_names_from(const std::unique_ptr<name_generator> &source_name_generator);
 
 private:
 	//name generation lists containing all names (i.e. from each culture)

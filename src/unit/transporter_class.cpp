@@ -19,7 +19,7 @@ void transporter_class::propagate_names(const transporter_class_map<std::unique_
 				ship_name_generator = std::make_unique<name_generator>();
 			}
 
-			ship_name_generator->add_names(kv_pair.second->get_names());
+			ship_name_generator->add_names_from(kv_pair.second);
 		}
 	}
 }

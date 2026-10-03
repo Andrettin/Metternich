@@ -269,7 +269,7 @@ void culture_base::initialize()
 	transporter_class::propagate_names(this->transporter_class_name_generators, this->ship_name_generator);
 
 	if (this->ship_name_generator != nullptr) {
-		fallback_name_generator::get()->add_ship_names(this->ship_name_generator->get_names());
+		fallback_name_generator::get()->add_ship_names_from(this->ship_name_generator);
 	}
 
 	named_data_entry::initialize();
@@ -762,7 +762,7 @@ void culture_base::add_names_from(const culture_base *other)
 			this->military_unit_class_name_generators[kv_pair.first] = std::make_unique<name_generator>();
 		}
 
-		this->military_unit_class_name_generators[kv_pair.first]->add_names(kv_pair.second->get_names());
+		this->military_unit_class_name_generators[kv_pair.first]->add_names_from(kv_pair.second);
 	}
 
 	military_unit_class::propagate_names(other->military_unit_class_name_generators, this->ship_name_generator);
@@ -772,7 +772,7 @@ void culture_base::add_names_from(const culture_base *other)
 			this->transporter_class_name_generators[kv_pair.first] = std::make_unique<name_generator>();
 		}
 
-		this->transporter_class_name_generators[kv_pair.first]->add_names(kv_pair.second->get_names());
+		this->transporter_class_name_generators[kv_pair.first]->add_names_from(kv_pair.second);
 	}
 
 	transporter_class::propagate_names(other->transporter_class_name_generators, this->ship_name_generator);
@@ -782,7 +782,7 @@ void culture_base::add_names_from(const culture_base *other)
 			this->ship_name_generator = std::make_unique<name_generator>();
 		}
 
-		this->ship_name_generator->add_names(other->ship_name_generator->get_names());
+		this->ship_name_generator->add_names_from(other->ship_name_generator);
 	}
 
 	if (this->group != nullptr) {

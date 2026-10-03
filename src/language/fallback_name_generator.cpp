@@ -76,7 +76,7 @@ void fallback_name_generator::add_military_unit_class_names(const military_unit_
 			this->military_unit_class_name_generators[kv_pair.first] = std::make_unique<name_generator>();
 		}
 
-		this->military_unit_class_name_generators[kv_pair.first]->add_names(kv_pair.second->get_names());
+		this->military_unit_class_name_generators[kv_pair.first]->add_names_from(kv_pair.second);
 	}
 
 	military_unit_class::propagate_names(unit_class_names, this->ship_name_generator);
@@ -103,19 +103,19 @@ void fallback_name_generator::add_transporter_class_names(const transporter_clas
 			this->transporter_class_name_generators[kv_pair.first] = std::make_unique<name_generator>();
 		}
 
-		this->transporter_class_name_generators[kv_pair.first]->add_names(kv_pair.second->get_names());
+		this->transporter_class_name_generators[kv_pair.first]->add_names_from(kv_pair.second);
 	}
 
 	transporter_class::propagate_names(transporter_class_names, this->ship_name_generator);
 }
 
-void fallback_name_generator::add_ship_names(const std::vector<name_variant> &ship_names)
+void fallback_name_generator::add_ship_names_from(const std::unique_ptr<name_generator> &source_name_generator)
 {
 	if (this->ship_name_generator == nullptr) {
 		this->ship_name_generator = std::make_unique<name_generator>();
 	}
 
-	this->ship_name_generator->add_names(ship_names);
+	this->ship_name_generator->add_names_from(source_name_generator);
 }
 
 }
