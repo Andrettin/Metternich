@@ -178,6 +178,7 @@ ecgberht_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illu
 
 aethelwulf_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Aethelwulf" #"Æthelwulf"
+	name_rear_compound_element = wulf_old_english #presumably
 	dynasty = wessex
 	character_class = warrior #king
 	rank = lord
@@ -193,6 +194,7 @@ aethelwulf_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Il
 
 aethelstan_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Aethelstan" #"Æthelstan"
+	name_rear_compound_element = stan_old_english #presumably
 	dynasty = wessex
 	character_class = warrior #king
 	rank = lord
