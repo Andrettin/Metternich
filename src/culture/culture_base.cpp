@@ -39,6 +39,8 @@ const std::set<std::string> culture_base::database_dependencies = {
 
 culture_base::culture_base(const std::string &identifier) : named_data_entry(identifier)
 {
+	this->given_name_generator = std::make_unique<gendered_name_generator>();
+	this->surname_generator = std::make_unique<gendered_name_generator>();
 }
 
 culture_base::~culture_base()
@@ -128,10 +130,6 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->set_transporter_class_type(transporter_class, transporter_type);
 		});
 	} else if (tag == "given_names") {
-		if (this->given_name_generator == nullptr) {
-			this->given_name_generator = std::make_unique<gendered_name_generator>();
-		}
-
 		if (!values.empty()) {
 			this->given_name_generator->add_names(gender::none, values);
 		}
@@ -144,10 +142,6 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});
 	} else if (tag == "surnames") {
-		if (this->surname_generator == nullptr) {
-			this->surname_generator = std::make_unique<gendered_name_generator>();
-		}
-
 		if (!values.empty()) {
 			this->surname_generator->add_names(gender::none, values);
 		}
@@ -204,20 +198,12 @@ void culture_base::initialize()
 
 		for (const word *name_word : this->get_language()->get_name_words()) {
 			if (name_word->is_given_name() && !has_enough_given_name_data) {
-				if (this->given_name_generator == nullptr) {
-					this->given_name_generator = std::make_unique<gendered_name_generator>();
-				}
-
 				const gender gender = grammatical_gender_to_gender(name_word->get_gender());
-				this->given_name_generator->add_name(gender, name_word->get_anglicized_name());
+				this->given_name_generator->add_name(gender, name_word);
 			}
 
 			if (name_word->is_surname() && !has_enough_surname_data) {
-				if (this->surname_generator == nullptr) {
-					this->surname_generator = std::make_unique<gendered_name_generator>();
-				}
-
-				this->surname_generator->add_name(gender::none, name_word->get_anglicized_name());
+				this->surname_generator->add_name(gender::none, name_word);
 			}
 		}
 
@@ -230,19 +216,11 @@ void culture_base::initialize()
 				const std::string compound_name = front_compound_element->get_anglicized_name() + string::lowered(rear_compound_element->get_anglicized_name());
 
 				if (front_compound_element->is_given_name_compound() && rear_compound_element->is_given_name_compound() && !has_enough_given_name_data) {
-					if (this->given_name_generator == nullptr) {
-						this->given_name_generator = std::make_unique<gendered_name_generator>();
-					}
-
 					const gender gender = grammatical_gender_to_gender(rear_compound_element->get_gender());
 					this->given_name_generator->add_name(gender, compound_name);
 				}
 
 				if (front_compound_element->is_surname_compound() && rear_compound_element->is_surname_compound() && !has_enough_surname_data) {
-					if (this->surname_generator == nullptr) {
-						this->surname_generator = std::make_unique<gendered_name_generator>();
-					}
-
 					this->surname_generator->add_name(gender::none, compound_name);
 				}
 			}
@@ -256,10 +234,6 @@ void culture_base::initialize()
 				return;
 			}
 
-			if (this->surname_generator == nullptr) {
-				this->surname_generator = std::make_unique<gendered_name_generator>();
-			}
-
 			for (const auto &name_variant : this->given_name_generator->get_name_generator(gender::male)->get_names()) {
 				const std::string male_name = get_name_variant_string(name_variant);
 				this->surname_generator->add_name(gender, male_name + patronym);
@@ -267,21 +241,8 @@ void culture_base::initialize()
 		});
 	}
 
-	//enable Markov generation if a generator does not have enough names
-	if (this->given_name_generator == nullptr || !this->given_name_generator->has_enough_data()) {
-		if (this->given_name_generator == nullptr) {
-			this->given_name_generator = std::make_unique<gendered_name_generator>();
-		}
-
-		this->given_name_generator->enable_markov_generation(this->given_name_markov_chain_size != 0 ? this->given_name_markov_chain_size : name_generator::default_markov_chain_size);
-	}
-	if (this->surname_generator == nullptr || !this->surname_generator->has_enough_data()) {
-		if (this->surname_generator == nullptr) {
-			this->surname_generator = std::make_unique<gendered_name_generator>();
-		}
-
-		this->surname_generator->enable_markov_generation(this->surname_markov_chain_size != 0 ? this->surname_markov_chain_size : name_generator::default_markov_chain_size);
-	}
+	this->given_name_generator->set_markov_chain_size(this->given_name_markov_chain_size != 0 ? this->given_name_markov_chain_size : name_generator::default_markov_chain_size);
+	this->surname_generator->set_markov_chain_size(this->surname_markov_chain_size != 0 ? this->surname_markov_chain_size : name_generator::default_markov_chain_size);
 
 	if (this->group != nullptr) {
 		if (!this->group->is_initialized()) {
@@ -653,10 +614,6 @@ const name_generator *culture_base::get_given_name_generator(const gender gender
 
 void culture_base::add_given_name(const gender gender, const name_variant &name)
 {
-	if (this->given_name_generator == nullptr) {
-		this->given_name_generator = std::make_unique<gendered_name_generator>();
-	}
-
 	this->given_name_generator->add_name(gender, name);
 
 	if (gender == gender::none) {
@@ -703,10 +660,6 @@ const name_generator *culture_base::get_surname_generator(const gender gender) c
 
 void culture_base::add_surname(const gender gender, const name_variant &surname)
 {
-	if (this->surname_generator == nullptr) {
-		this->surname_generator = std::make_unique<gendered_name_generator>();
-	}
-
 	this->surname_generator->add_name(gender, surname);
 
 	if (gender == gender::none) {
@@ -797,18 +750,10 @@ void culture_base::add_ship_name(const name_variant &ship_name)
 void culture_base::add_names_from(const culture_base *other)
 {
 	if (other->given_name_generator != nullptr) {
-		if (this->given_name_generator == nullptr) {
-			this->given_name_generator = std::make_unique<gendered_name_generator>();
-		}
-
 		this->given_name_generator->add_names_from(other->given_name_generator);
 	}
 
 	if (other->surname_generator != nullptr) {
-		if (this->surname_generator == nullptr) {
-			this->surname_generator = std::make_unique<gendered_name_generator>();
-		}
-
 		this->surname_generator->add_names_from(other->surname_generator);
 	}
 
