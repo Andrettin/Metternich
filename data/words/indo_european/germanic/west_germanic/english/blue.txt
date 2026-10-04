@@ -1,0 +1,13 @@
+blue = {
+	name = "Blue"
+	language = english
+	type = adjective
+	etymon = old_english:blaw #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 147.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	surname_compound = true
+	df_word = BLUE
+	meanings = {
+		"Blue"
+	}
+}

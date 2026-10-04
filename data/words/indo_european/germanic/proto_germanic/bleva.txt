@@ -1,0 +1,9 @@
+bleva = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 147.
+	name = "Blêva"
+	language = proto_germanic
+	type = adjective
+	name_generation_word = english:blue
+	meaning_words = {
+		blue #source gives the German "blau" as the meaning
+	}
+}
