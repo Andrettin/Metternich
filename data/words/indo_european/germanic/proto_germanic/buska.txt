@@ -1,0 +1,10 @@
+buska = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 143.
+	name = "Buska"
+	language = proto_germanic
+	type = noun
+	gender = masculine
+	name_generation_word = english:bush
+	meaning_words = {
+		bush #source gives the German "Busch" as the meaning
+	}
+}

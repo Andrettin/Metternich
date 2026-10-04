@@ -1,5 +1,5 @@
 blao = { #Source: http://www.cnrtl.fr/definition/bleu
-	name = "Blāo"
+	name = "Blāo"
 	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
 	type = adjective
 	etymon = proto_germanic:bleva #presumably

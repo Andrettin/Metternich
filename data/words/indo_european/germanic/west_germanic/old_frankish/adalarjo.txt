@@ -1,0 +1,9 @@
+adalarjo = { #Source: http://www.cnrtl.fr/definition/al%C3%A9rion
+	name = "Aδalarjo" #source also gives the alternative form "Adalaro"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	name_generation_word = english:eagle
+	meaning_words = {
+		eagle #source gives the French "aigle" as the meaning
+	}
+}

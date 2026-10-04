@@ -1,0 +1,10 @@
+bosk = { #Source: http://www.cnrtl.fr/definition/bois
+	name = "Bŏsk"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:buska #presumably
+	name_generation_word = english:bush
+	meaning_words = {
+		bush #source gives the French "buisson" as the meaning
+	}
+}

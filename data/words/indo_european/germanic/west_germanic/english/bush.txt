@@ -1,0 +1,15 @@
+bush = {
+	name = "Bush"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = middle_english:busch_middle_english #presumably
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = BUSH
+	meanings = {
+		"Bush"
+	}
+}

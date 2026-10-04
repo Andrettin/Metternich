@@ -1,0 +1,5 @@
+busch_middle_english = { #Source: http://www.cnrtl.fr/definition/bois
+	name = "Busch" #source also gives the alternative form "Busk"
+	language = middle_english
+	etymon = proto_germanic:buska #presumably
+}
