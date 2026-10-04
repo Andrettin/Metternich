@@ -1,0 +1,10 @@
+haim = { #Source: http://www.cnrtl.fr/definition/hameau
+	name = "Haim"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:haima_noun #presumably
+	name_generation_word = english:village
+	meanings = {
+		"Small Village" #source gives the French "petit village" as the meaning
+	}
+}

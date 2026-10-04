@@ -41,7 +41,6 @@ theodemer_amelung = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietric
 
 widemer_amelung = { #Source: F. E. Sandbach, "The Heroic Saga-Cycle of Dietrich of Bern", 1906, p. 6.
 	name = "Widemer"
-	name_front_compound_element = thiuda #presumably
 	dynasty = amelung
 	character_class = warrior
 	culture = gothic
