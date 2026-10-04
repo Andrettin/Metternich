@@ -1,5 +1,6 @@
 paladin = {
 	name = "Paladin"
+	type = base_class
 	primary_attributes = {
 		charisma
 		strength

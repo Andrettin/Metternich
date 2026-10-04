@@ -13,9 +13,18 @@ elizabeth_i_of_england = {
 			cultural_group = african
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
-			character_class = paladin
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = paladin
+				type = base_class
+			}
 		}
 		birth_year >= 1500
 		birth_year < 1700
@@ -38,7 +47,10 @@ francis_drake = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = rogue
+		character_class = {
+			character_class = rogue
+			type = base_class
+		}
 	}
 }
 
@@ -59,7 +71,10 @@ henry_hudson = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = rogue #navigator
+		character_class = {
+			character_class = rogue #navigator
+			type = base_class
+		}
 	}
 }
 
@@ -80,6 +95,9 @@ william_penn = {
 			cultural_group = asian
 		}
 		religion = protestant
-		character_class = cleric
+		character_class = {
+			character_class = cleric
+			type = base_class
+		}
 	}
 }

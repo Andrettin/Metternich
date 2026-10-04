@@ -1,5 +1,6 @@
 troll = {
 	name = "Troll"
+	type = base_class
 	primary_attribute = strength
 	max_level = 11
 	starting_age_category = intuitive

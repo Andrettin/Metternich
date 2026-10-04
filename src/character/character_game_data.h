@@ -59,6 +59,7 @@ class status_effect;
 class trait;
 class trait_type;
 enum class age_category;
+enum class character_class_type;
 enum class character_modifier_type;
 enum class military_unit_stat;
 enum class opinion_type;
@@ -244,6 +245,7 @@ public:
 	}
 
 	const metternich::character_class *get_character_class() const;
+	const metternich::character_class *get_character_class_for_type(const character_class_type type) const;
 	void set_character_class(const metternich::character_class *character_class);
 	const std::string &get_character_class_name() const;
 	[[nodiscard]] QCoro::Task<void> check_character_class_advancement(const int level);

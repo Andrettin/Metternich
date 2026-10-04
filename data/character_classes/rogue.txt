@@ -1,5 +1,6 @@
 rogue = {
 	name = "Rogue"
+	type = base_class
 	primary_attribute = dexterity
 	civilian_unit_class = spy
 	burgher = true

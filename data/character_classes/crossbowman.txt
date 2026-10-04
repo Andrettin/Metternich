@@ -1,5 +1,6 @@
 crossbowman = {
 	name = "Crossbowman"
+	type = subclass
 	base_class = warrior
 	required_technology = light_crossbow
 	variant_names = {

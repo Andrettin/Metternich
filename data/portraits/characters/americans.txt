@@ -4,8 +4,14 @@ george_washington = {
 		gender = male
 		culture = american
 		or = {
-			character_class = aristocrat
-			character_class = warrior
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 		}
 		birth_year >= 1700
 	}
@@ -26,7 +32,10 @@ jp_morgan = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = merchant
+		character_class = {
+			character_class = merchant
+			type = subclass
+		}
 		birth_year >= 1800
 	}
 }

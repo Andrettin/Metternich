@@ -1,5 +1,6 @@
 merchant = {
 	name = "Merchant"
+	type = subclass
 	base_class = rogue
 	burgher = true
 	class_skills = {

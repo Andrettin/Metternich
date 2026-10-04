@@ -1,5 +1,6 @@
 engineer = {
 	name = "Engineer"
+	type = base_class
 	base_class = rogue #should be something else?
 	primary_attribute = intelligence
 	civilian_unit_class = engineer

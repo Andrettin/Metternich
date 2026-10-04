@@ -6,7 +6,10 @@ complete_dedication = {
 		past_experience
 	}
 	conditions = {
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 	}
 	gain_conditions = {
 		strength < 16
@@ -26,7 +29,10 @@ brutal_schedule = {
 		past_experience
 	}
 	conditions = {
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 	}
 	modifier = {
 		trait_of_type = general_proficiency
@@ -42,7 +48,10 @@ hard_training = {
 		past_experience
 	}
 	conditions = {
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 	}
 	gain_conditions = {
 		strength < 15
@@ -63,7 +72,10 @@ training_accident = {
 	}
 	conditions = {
 		not = {
-			character_class = mage
+			character_class = {
+				character_class = mage
+				type = base_class
+			}
 		}
 	}
 	gain_conditions = {
@@ -83,7 +95,10 @@ patient_practice = {
 	}
 	conditions = {
 		not = {
-			character_class = mage
+			character_class = {
+				character_class = mage
+				type = base_class
+			}
 		}
 	}
 	gain_conditions = {
@@ -134,7 +149,10 @@ good_health_good_environment = {
 	}
 	conditions = {
 		not = {
-			character_class = warrior
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 		}
 	}
 	modifier = {
@@ -151,7 +169,10 @@ learned_bad_habits = {
 	}
 	conditions = {
 		not = {
-			character_class = warrior
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 		}
 	}
 	gain_conditions = {
@@ -170,7 +191,10 @@ had_access_to_good_library = {
 		past_experience
 	}
 	conditions = {
-		character_class = mage
+		character_class = {
+			character_class = mage
+			type = base_class
+		}
 	}
 	gain_conditions = {
 		intelligence < 15
@@ -193,7 +217,10 @@ fundamental_insight = {
 		past_experience
 	}
 	conditions = {
-		character_class = mage
+		character_class = {
+			character_class = mage
+			type = base_class
+		}
 	}
 	gain_conditions = {
 		intelligence < 16

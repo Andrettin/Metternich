@@ -7,8 +7,14 @@ frederick_the_great = {
 			culture = polish
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 		}
 		birth_year >= 1700
 	}
@@ -30,7 +36,10 @@ jakob_fugger = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = merchant
+		character_class = {
+			character_class = merchant
+			type = subclass
+		}
 		birth_year < 1800
 	}
 }
@@ -78,8 +87,14 @@ otto_von_bismarck = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 			species = air_elemental
 			species = earth_elemental
 			species = triton

@@ -1,5 +1,6 @@
 cleric = {
 	name = "Cleric"
+	type = base_class
 	primary_attribute = wisdom
 	divine_spellcaster = true
 	max_level = 20

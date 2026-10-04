@@ -1,5 +1,6 @@
 ranger = {
 	name = "Ranger"
+	type = base_class
 	primary_attributes = {
 		dexterity
 		strength

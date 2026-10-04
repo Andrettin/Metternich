@@ -2,16 +2,24 @@
 
 #include "character/character.h"
 #include "character/character_class.h"
+#include "character/character_class_type.h"
 #include "script/condition/condition.h"
 #include "util/gender.h"
+
+#include <magic_enum/magic_enum.hpp>
 
 namespace metternich {
 
 class character_class_condition final : public condition<character>
 {
 public:
-	explicit character_class_condition(const std::string &value, const gsml_operator condition_operator)
+	explicit character_class_condition(const gsml_operator condition_operator)
 		: condition<character>(condition_operator)
+	{
+	}
+
+	explicit character_class_condition(const std::string &value, const gsml_operator condition_operator)
+		: character_class_condition(condition_operator)
 	{
 		this->character_class = character_class::get(value);
 	}
@@ -22,11 +30,30 @@ public:
 		return class_identifier;
 	}
 
+	virtual void process_gsml_property(const gsml_property &property) override
+	{
+		const std::string &key = property.get_key();
+		const std::string &value = property.get_value();
+
+		if (key == "character_class") {
+			this->character_class = character_class::get(value);
+		} else if (key == "type") {
+			this->type = magic_enum::enum_cast<character_class_type>(value).value();
+		} else {
+			condition<character>::process_gsml_property(property);
+		}
+	}
+
 	virtual bool check_assignment(const character *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_game_data()->get_character_class() == this->character_class;
+		if (this->type.has_value()) {
+			assert_throw(this->type.value() == this->character_class->get_type());
+			return scope->get_game_data()->get_character_class_for_type(this->type.value()) == this->character_class;
+		} else {
+			return scope->get_game_data()->get_character_class() == this->character_class;
+		}
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override
@@ -38,6 +65,7 @@ public:
 
 private:
 	const metternich::character_class *character_class = nullptr;
+	std::optional<character_class_type> type;
 };
 
 }

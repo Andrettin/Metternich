@@ -1,5 +1,6 @@
 mage = {
 	name = "Mage"
+	type = base_class
 	primary_attribute = intelligence
 	max_level = 20
 	starting_age_category = trained

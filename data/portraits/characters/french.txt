@@ -4,9 +4,18 @@ louis_xiv = {
 		gender = male
 		culture = french
 		or = {
-			character_class = aristocrat
-			character_class = warrior
-			character_class = paladin
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = paladin
+				type = base_class
+			}
 		}
 	}
 }
@@ -27,6 +36,9 @@ cardinal_richelieu = {
 			cultural_group = asian
 		}
 		religion = catholic #because of the cardinal's hat
-		character_class = cleric
+		character_class = {
+			character_class = cleric
+			type = base_class
+		}
 	}
 }

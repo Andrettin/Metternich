@@ -5,7 +5,10 @@ brute_strike = {
 		combat_proficiency
 	}
 	conditions = {
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 	}
 	modifier = {
 		spell = {
@@ -209,7 +212,10 @@ weapon_specialization_bows = {
 	}
 	conditions = {
 		trait = weapon_focus_bows
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 		level >= 4
 	}
 	gain_conditions = {
@@ -233,7 +239,10 @@ weapon_specialization_heavy_blades = {
 	}
 	conditions = {
 		trait = weapon_focus_heavy_blades
-		character_class = warrior
+		character_class = {
+			character_class = warrior
+			type = base_class
+		}
 		level >= 4
 	}
 	gain_conditions = {

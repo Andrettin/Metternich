@@ -1,5 +1,6 @@
 aristocrat = {
 	name = "Aristocrat"
+	type = base_class
 	base_class = warrior
 	military_unit_category = general
 	max_level = 20

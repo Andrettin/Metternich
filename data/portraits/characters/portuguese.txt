@@ -13,7 +13,10 @@ henry_the_navigator = {
 			species = water_elemental
 		}
 		or = {
-			character_class = rogue #navigator
+			character_class = {
+				character_class = rogue #navigator
+				type = base_class
+			}
 			taxon = archon
 			species = air_elemental
 			species = titan

@@ -19,12 +19,22 @@ philip_ii_of_spain = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = aristocrat
-			character_class = archer
-			character_class = crossbowman
-			character_class = warrior
-			character_class = paladin
-			character_class = ranger
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = paladin
+				type = base_class
+			}
+			character_class = {
+				character_class = ranger
+				type = base_class
+			}
 			taxon = archon
 			species = air_elemental
 			species = titan
@@ -34,8 +44,6 @@ philip_ii_of_spain = {
 		or = {
 			age_category < old
 			immortal = true
-			character_class = archer
-			character_class = crossbowman
 		}
 	}
 }

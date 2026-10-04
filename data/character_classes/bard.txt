@@ -1,5 +1,6 @@
 bard = {
 	name = "Bard"
+	type = base_class
 	primary_attributes = {
 		charisma
 		dexterity

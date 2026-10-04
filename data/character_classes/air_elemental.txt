@@ -1,5 +1,6 @@
 air_elemental = {
 	name = "Air Elemental"
+	type = base_class
 	primary_attribute = dexterity
 	max_level = 14
 	starting_age_category = intuitive

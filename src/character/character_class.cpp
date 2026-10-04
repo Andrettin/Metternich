@@ -3,6 +3,7 @@
 #include "character/character_class.h"
 
 #include "character/character_attribute.h"
+#include "character/character_class_type.h"
 #include "character/character_defines.h"
 #include "character/domain_skill.h"
 #include "character/level_value_table.h"
@@ -257,6 +258,44 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 void character_class::check() const
 {
+	switch (this->get_type()) {
+		case character_class_type::base_class:
+			if (this->get_min_level() > 0) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a base class, but has a minimum level.", this->get_identifier()));
+			}
+			break;
+		case character_class_type::subclass:
+			if (this->get_base_class() == nullptr) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a subclass, but has no base class.", this->get_identifier()));
+			}
+			if (this->get_base_class()->get_type() != character_class_type::base_class) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a subclass, but its base class is not a base class.", this->get_identifier()));
+			}
+			break;
+		case character_class_type::prestige_class:
+			if (this->get_base_class() == nullptr) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but has no base class.", this->get_identifier()));
+			}
+			if (this->get_base_class()->get_type() != character_class_type::base_class && this->get_base_class()->get_type() != character_class_type::subclass) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but its base class is neither a base class nor a subclass.", this->get_identifier()));
+			}
+			if (this->get_min_level() == 0) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but has no minimum level.", this->get_identifier()));
+			}
+			break;
+		case character_class_type::epic_class:
+			if (this->get_base_class() == nullptr) {
+				throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but has no base class.", this->get_identifier()));
+			}
+			if (this->get_base_class()->get_type() != character_class_type::base_class && this->get_base_class()->get_type() != character_class_type::subclass && this->get_base_class()->get_type() != character_class_type::prestige_class) {
+				throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but its base class is neither a base class, nor a subclass, nor a prestige class.", this->get_identifier()));
+			}
+			if (this->get_min_level() <= 20) {
+				throw std::runtime_error(std::format("Character class \"{}\" has is an epic class, but does not have a minimum level beyond 20.", this->get_identifier()));
+			}
+			break;
+	}
+
 	if (this->get_primary_attributes().empty()) {
 		throw std::runtime_error(std::format("Character class \"{}\" has no primary attributes.", this->get_identifier()));
 	}

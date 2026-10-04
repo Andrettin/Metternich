@@ -1,5 +1,6 @@
 druid = {
 	name = "Druid"
+	type = base_class
 	primary_attributes = {
 		charisma
 		wisdom

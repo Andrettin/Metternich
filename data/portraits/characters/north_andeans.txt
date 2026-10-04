@@ -7,8 +7,14 @@ simon_bolivar = {
 			culture = brazilian
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 		}
 		birth_year >= 1750
 	}

@@ -15,8 +15,14 @@ frankish_cleric = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = cleric
-			character_class = druid
+			character_class = {
+				character_class = cleric
+				type = base_class
+			}
+			character_class = {
+				character_class = druid
+				type = base_class
+			}
 		}
 	}
 }

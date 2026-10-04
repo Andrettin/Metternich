@@ -36,9 +36,18 @@ franz_i_of_austria = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
-			character_class = paladin
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = paladin
+				type = base_class
+			}
 		}
 		age_category >= old
 	}
@@ -60,7 +69,10 @@ metternich = {
 			cultural_group = african
 			cultural_group = asian
 		}
-		character_class = aristocrat
+		character_class = {
+			character_class = aristocrat
+			type = base_class
+		}
 		birth_year >= 1750
 	}
 }

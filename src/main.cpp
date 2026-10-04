@@ -4,6 +4,7 @@
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_attribute_type.h"
+#include "character/character_class_type.h"
 #include "character/character_data_model.h"
 #include "character/character_defines.h"
 #include "character/character_game_data.h"
@@ -190,6 +191,7 @@ int main(int argc, char **argv)
 		database_util::register_enum<battle_resolution_type>();
 		database_util::register_enum<bloodline_strength_category>();
 		database_util::register_enum<character_attribute_type>();
+		database_util::register_enum<character_class_type>();
 		database_util::register_enum<commodity_type>();
 		database_util::register_enum<cultural_group_rank>();
 		database_util::register_enum<decision_type>();

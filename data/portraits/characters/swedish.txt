@@ -8,8 +8,14 @@ gustav_adolf_of_sweden = {
 			species = frost_giant
 		}
 		or = {
-			character_class = aristocrat
-			character_class = warrior
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
 			species = frost_giant
 		}
 	}

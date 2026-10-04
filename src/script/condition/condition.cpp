@@ -431,7 +431,9 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	std::unique_ptr<condition_base<scope_type, read_only_context>> condition;
 
 	if constexpr (std::is_same_v<scope_type, character>) {
-		if (tag == "home_site") {
+		if (tag == "character_class") {
+			condition = std::make_unique<character_class_condition>(condition_operator);
+		} else if (tag == "home_site") {
 			condition = std::make_unique<home_site_scope_condition>(condition_operator);
 		} else if (tag == "item") {
 			condition = std::make_unique<item_condition<scope_type>>(condition_operator);

@@ -1662,6 +1662,20 @@ const metternich::character_class *character_game_data::get_character_class() co
 	return this->character_class;
 }
 
+const metternich::character_class *character_game_data::get_character_class_for_type(const character_class_type type) const
+{
+	const metternich::character_class *character_class = this->get_character_class();
+	while (character_class != nullptr && character_class->get_type() >= type) {
+		if (character_class->get_type() == type) {
+			return character_class;
+		}
+
+		character_class = character_class->get_base_class();
+	}
+
+	return nullptr;
+}
+
 void character_game_data::set_character_class(const metternich::character_class *character_class)
 {
 	if (character_class == this->get_character_class()) {

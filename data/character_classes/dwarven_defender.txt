@@ -1,5 +1,6 @@
 dwarven_defender = {
 	name = "Dwarven Defender"
+	type = prestige_class
 	base_class = warrior
 	min_level = 11
 	military_unit_category = general

@@ -15,9 +15,18 @@ scholar = {
 			cultural_group = asian
 		}
 		or = {
-			character_class = bard
-			character_class = engineer
-			character_class = mage
+			character_class = {
+				character_class = bard
+				type = base_class
+			}
+			character_class = {
+				character_class = engineer
+				type = base_class
+			}
+			character_class = {
+				character_class = mage
+				type = base_class
+			}
 		}
 	}
 }

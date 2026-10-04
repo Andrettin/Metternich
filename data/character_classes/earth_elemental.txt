@@ -1,5 +1,6 @@
 earth_elemental = {
 	name = "Earth Elemental"
+	type = base_class
 	primary_attribute = strength
 	max_level = 13
 	starting_age_category = intuitive
