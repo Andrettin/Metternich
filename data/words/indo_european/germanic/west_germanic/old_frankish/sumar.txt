@@ -1,0 +1,10 @@
+sumar = { #Source: http://www.cnrtl.fr/definition/sombre//3
+	name = "Sumar"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:sumara #presumably
+	name_generation_word = english:summer
+	meaning_words = {
+		summer #source gives the French "été" as the meaning
+	}
+}

@@ -4,6 +4,7 @@ scield = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	type = noun
 	gender = masculine
 	etymon = skeldu
+	name_generation_word = english:shield
 	meanings = {
 		#source gives the German "Schild, Schutz"
 		"Shield"

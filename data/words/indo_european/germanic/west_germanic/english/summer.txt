@@ -1,0 +1,15 @@
+summer = {
+	name = "Summer"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:sumor #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 223.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = SUMMER
+	meanings = {
+		"Summer"
+	}
+}
