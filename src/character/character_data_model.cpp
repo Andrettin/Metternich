@@ -264,6 +264,8 @@ void character_data_model::reset_model()
 
 		if (this->character->get_dynasty() != nullptr) {
 			this->top_rows.push_back(std::make_unique<character_data_row>("Dynasty:", this->character->get_dynasty()->get_name()));
+		} else if (!this->character->get_surname().empty()) {
+			this->top_rows.push_back(std::make_unique<character_data_row>("Surname:", this->character->get_surname()));
 		}
 
 		if (character_game_data->get_bloodline() != nullptr) {
