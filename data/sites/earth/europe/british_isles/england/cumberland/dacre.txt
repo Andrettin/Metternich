@@ -1,0 +1,8 @@
+dacre = {
+	name = "Dacre"
+	world = earth
+	geocoordinate = { -2.839 54.631 }
+	type = holding
+	holding_type = castle
+	province = cumberland
+}

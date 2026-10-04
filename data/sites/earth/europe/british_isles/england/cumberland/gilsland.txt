@@ -1,0 +1,8 @@
+gilsland = {
+	name = "Gilsland"
+	world = earth
+	geocoordinate = { -2.574 54.991 }
+	type = holding
+	holding_type = castle
+	province = cumberland #between Cumberland and Northumberland
+}

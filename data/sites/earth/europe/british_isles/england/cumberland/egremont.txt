@@ -1,0 +1,8 @@
+egremont = {
+	name = "Egremont"
+	world = earth
+	geocoordinate = { -3.5306 54.484 }
+	type = holding
+	holding_type = castle
+	province = cumberland
+}

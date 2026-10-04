@@ -1,0 +1,8 @@
+penrith = {
+	name = "Penrith"
+	world = earth
+	geocoordinate = { -2.7548 54.6648 }
+	type = holding
+	holding_type = guild
+	province = cumberland
+}

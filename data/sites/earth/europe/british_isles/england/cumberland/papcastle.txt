@@ -1,0 +1,8 @@
+papcastle = {
+	name = "Papcastle"
+	world = earth
+	geocoordinate = { -3.3807 54.67 }
+	type = holding
+	holding_type = castle
+	province = cumberland
+}

@@ -1,0 +1,8 @@
+burgh = {
+	name = "Burgh"
+	world = earth
+	geocoordinate = { -3.0508333333333 54.923055555556 } #Burgh by Sands
+	type = holding
+	holding_type = castle
+	province = cumberland
+}

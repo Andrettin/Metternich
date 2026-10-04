@@ -1,0 +1,8 @@
+cockermouth = {
+	name = "Cockermouth"
+	world = earth
+	geocoordinate = { -3.362 54.6613 }
+	type = holding
+	holding_type = castle
+	province = cumberland
+}

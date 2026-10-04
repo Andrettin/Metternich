@@ -3,6 +3,7 @@ carlisle = {
 	world = earth
 	geocoordinate = { -2.92998681783 54.87999513660 } #from Natural Earth
 	type = holding
+	holding_type = temple
 	province = cumberland
 	cultural_names = {
 		anglo_saxon = "Luel" #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 732.
