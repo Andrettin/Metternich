@@ -1,0 +1,9 @@
+iarn = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 24.
+	name = "Íarn"
+	language = irish
+	type = noun
+	name_generation_word = english:iron_noun
+	meaning_words = {
+		iron_noun #source gives the German "Eisen" as the meaning
+	}
+}

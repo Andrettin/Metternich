@@ -3,10 +3,14 @@ ais = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprachei
 	language = gothic
 	type = noun
 	etymon = proto_germanic:aiza
+	noun_inflections = {
+		singular = {
+			genitive = "Aizis"
+		}
+	}
 	meanings = {
 		#source gives the German "Erz, Geld"
 		"Ore"
 		"Money"
 	}
-	#singular genitive: "Aizis"
 }

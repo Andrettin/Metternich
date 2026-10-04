@@ -1,0 +1,9 @@
+arget = { #Source: H. H. Howorth, "The Ethnology of Germany, Part II: The Germans of Caesar", 1878, p. 217.
+	name = "Arget"
+	language = irish
+	type = noun
+	name_generation_word = english:silver_noun
+	meaning_words = {
+		silver_noun
+	}
+}

@@ -3,8 +3,12 @@ battle = {
 	language = english
 	type = noun
 	gender = neuter
-	df_word = BATTLE
 	etymon = french:bataille #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 3.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = BATTLE
 	meanings = {
 		"Battle"
 	}

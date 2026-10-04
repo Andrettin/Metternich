@@ -2,6 +2,7 @@ wigans = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldi
 	name = "Wigans"
 	language = gothic
 	type = noun
+	name_generation_word = english:battle
 	meaning_words = {
 		battle
 		war

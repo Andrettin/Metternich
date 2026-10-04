@@ -4,11 +4,14 @@ lant_middle_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der G
 	type = noun
 	gender = neuter
 	etymon = lant_old_high_german
+	noun_inflections = {
+		singular = {
+			genitive = "Landes"
+		}
+	}
 	meanings = {
 		#source gives the German "Land"
 		"Land"
 		"Country"
 	}
-	
-	#singular genitive: "Landes"
 }

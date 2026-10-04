@@ -1,0 +1,9 @@
+cath = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, pp. 6, 8.
+	name = "Cath"
+	language = irish
+	type = noun
+	name_generation_word = english:battle
+	meaning_words = {
+		battle
+	}
+}

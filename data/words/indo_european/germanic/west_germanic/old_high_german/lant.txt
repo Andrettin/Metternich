@@ -4,11 +4,14 @@ lant_old_high_german = { #Source: August Fick and Alf Torp, "Wortschatz der Germ
 	type = noun
 	gender = neuter
 	etymon = landa
+	noun_inflections = {
+		singular = {
+			genitive = "Lantes" #source also gives the alternative form "Landes"
+		}
+	}
 	meanings = {
 		#source gives the German "Land"
 		"Land"
 		"Country"
 	}
-	
-	#singular genitive: "Lantes" #source also gives the alternative form "Landes"
 }

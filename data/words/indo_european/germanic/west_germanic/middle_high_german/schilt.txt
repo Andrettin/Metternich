@@ -4,9 +4,12 @@ schilt = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	type = noun
 	gender = masculine
 	etymon = scilt
+	noun_inflections = {
+		singular = {
+			genitive = "Schildes"
+		}
+	}
 	meanings = {
 		"Shield" #source gives the German "Schild"
 	}
-	
-	#singular genitive: "Schildes"
 }

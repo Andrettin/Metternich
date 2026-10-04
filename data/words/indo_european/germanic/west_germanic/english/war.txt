@@ -2,8 +2,12 @@ war = {
 	name = "War"
 	language = english
 	type = noun
-	df_word = WAR
 	etymon = middle_english:werre #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 8.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = WAR
 	meanings = {
 		"War"
 	}

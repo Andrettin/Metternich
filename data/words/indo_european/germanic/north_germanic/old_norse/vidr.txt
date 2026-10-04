@@ -4,10 +4,14 @@ vidr = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 201
 	type = noun
 	gender = masculine #as given by both sources
 	etymon = widu_proto_germanic #as given by both sources
+	noun_inflections = {
+		singular = {
+			genitive = "Viðar" #as given by both sources
+		}
+	}
 	meanings = {
 		"Tree" #as given by both sources (Fick gives the German "Baum")
 		"Wood" #as given by both sources (Fick gives the German "Holz")
 		#Fick also gives the German "Wald" ("forest") as a meaning
 	}
-	#singular genitive: "Viðar" (as given by both sources)
 }

@@ -4,6 +4,7 @@ reiks = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 20
 	type = noun
 	gender = masculine #as given by Kroonen
 	etymon = proto_germanic:rika_noun #as given by both Fick and Kroonen
+	name_generation_word = english:king
 	meanings = {
 		#Fick gives the German "Herrscher" as the meaning
 		#Kroonen gives "ruler, king" as the meaning

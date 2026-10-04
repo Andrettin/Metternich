@@ -2,6 +2,7 @@ thiudans = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Lan
 	name = "Þiudans"
 	language = gothic
 	type = noun
+	name_generation_word = english:king
 	meaning_words = {
 		king
 	}
