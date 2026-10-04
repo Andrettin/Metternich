@@ -1,0 +1,9 @@
+ib_egyptian = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 34.
+	name = "Ib"
+	language = egyptian
+	type = noun
+	name_generation_word = english:heart
+	meaning_words = {
+		heart
+	}
+}

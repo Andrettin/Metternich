@@ -1,0 +1,9 @@
+hut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 68.
+	name = "Hut"
+	language = egyptian
+	type = noun
+	name_generation_word = english:dwelling
+	meaning_words = {
+		dwelling
+	}
+}

@@ -1,0 +1,9 @@
+nekhekh = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, pp. 68, 71.
+	name = "Nekhekh"
+	language = egyptian
+	type = noun
+	name_generation_word = english:whip
+	meaning_words = {
+		whip
+	}
+}

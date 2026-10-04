@@ -1,0 +1,9 @@
+atef = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 70.
+	name = "Atef"
+	language = egyptian
+	type = noun
+	name_generation_word = english:crown
+	meaning_words = {
+		crown
+	}
+}

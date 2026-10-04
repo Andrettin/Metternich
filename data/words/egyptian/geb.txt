@@ -1,0 +1,9 @@
+geb = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 68.
+	name = "Geb"
+	language = egyptian
+	type = noun
+	name_generation_word = english:goose
+	meaning_words = {
+		goose
+	}
+}
