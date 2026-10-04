@@ -4,12 +4,14 @@
 
 #include "culture/cultural_group.h"
 #include "domain/domain.h"
+#include "language/gendered_name_generator.h"
 #include "script/condition/and_condition.h"
 #include "script/mean_time_to_happen.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
 #include "species/species.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/log_util.h"
 #include "util/random.h"
 #include "util/vector_util.h"
@@ -98,6 +100,14 @@ void culture::check() const
 		} else if (!this->is_fauna() && !species->is_sapient()) {
 			throw std::runtime_error(std::format("Sapient culture \"{}\" has a non-sapient species.", this->get_identifier()));
 		}
+	}
+
+	log_trace(std::format("Culture \"{}\" has {} female given names.", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::female)));
+	log_trace(std::format("Culture \"{}\" has {} male given names.", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::male)));
+
+	if (!this->is_fauna()) {
+		log_trace(std::format("Culture \"{}\" has {} female surnames.", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::female)));
+		log_trace(std::format("Culture \"{}\" has {} male surnames.", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::male)));
 	}
 
 	culture_base::check();

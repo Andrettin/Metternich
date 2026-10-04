@@ -1611,7 +1611,7 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 		co_return population;
 	}
 
-	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", population, site->get_identifier()));
+	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", number::to_formatted_string(population), site->get_identifier()));
 
 	const domain *domain = site_game_data->get_owner();
 

@@ -128,9 +128,23 @@ public:
 	std::string generate_military_unit_name(const military_unit_type *type, const std::map<std::string, int> &used_name_counts) const;
 	std::string generate_transporter_name(const transporter_type *type, const std::map<std::string, int> &used_name_counts) const;
 
+protected:
+	const gendered_name_generator *get_given_name_generator() const
+	{
+		return this->given_name_generator.get();
+	}
+
+public:
 	const name_generator *get_given_name_generator(const gender gender) const;
 	void add_given_name(const gender gender, const name_variant &name);
 
+protected:
+	const gendered_name_generator *get_surname_generator() const
+	{
+		return this->surname_generator.get();
+	}
+
+public:
 	const name_generator *get_surname_generator(const gender gender) const;
 	void add_surname(const gender gender, const name_variant &surname);
 
