@@ -3,9 +3,7 @@ wolf_old_frisian = { #Source: August Fick and Alf Torp, "Wortschatz der Germanis
 	language = old_frisian
 	type = noun
 	etymon = wulfa
-	name_front_compound_element = true #as in Old English
-	name_rear_compound_element = true #as in Old English
-	given_name_compound = true
+	name_generation_word = old_english:wulf_old_english
 	meanings = {
 		"Wolf" #source gives the German "Wolf"
 	}

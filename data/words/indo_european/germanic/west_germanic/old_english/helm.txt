@@ -1,0 +1,14 @@
+helm_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 49.
+	name = "Helm"
+	language = old_english
+	type = noun
+	gender = masculine
+	etymon = proto_germanic:helma
+	name_generation_word = english:helm_english
+	meanings = {
+		#source gives the German "Helm, Wipfel" as the meaning
+		"Helm"
+		"Helmet"
+		"Treetop"
+	}
+}

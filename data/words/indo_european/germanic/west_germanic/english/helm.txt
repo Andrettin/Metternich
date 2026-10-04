@@ -1,0 +1,15 @@
+helm_english = {
+	name = "Helm"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:helm_old_english #presumably
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = HELM
+	meanings = {
+		"Helm"
+	}
+}

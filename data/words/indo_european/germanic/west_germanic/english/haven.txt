@@ -3,7 +3,7 @@ haven_english = {
 	language = english
 	type = noun
 	gender = neuter
-	etymon = haefen #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 196.
+	etymon = old_english:haefen #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 196.
 	meanings = {
 		"Haven"
 	}

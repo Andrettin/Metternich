@@ -1,0 +1,10 @@
+fridu = { #Source: http://www.cnrtl.fr/definition/effrayer
+	name = "Fridu"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:frithu #presumably
+	name_generation_word = english:peace
+	meaning_words = {
+		peace #source gives the French "paix" as the meaning
+	}
+}

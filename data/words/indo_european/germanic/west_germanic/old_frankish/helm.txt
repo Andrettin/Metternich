@@ -1,0 +1,12 @@
+helm_old_frankish = { #Source: http://www.cnrtl.fr/definition/heaume
+	name = "Helm"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:helma #presumably
+	name_generation_word = old_english:helm_old_english
+	meanings = {
+		#source gives the French "casque" as the meaning
+		"Helm"
+		"Helmet"
+	}
+}

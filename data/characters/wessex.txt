@@ -285,6 +285,7 @@ aelfred_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illus
 
 aethelm_of_wessex = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Aethelm" #"Æthelm"
+	name_rear_compound_element = helm_old_english #presumably
 	dynasty = wessex
 	character_class = warrior
 	culture = anglo_saxon
