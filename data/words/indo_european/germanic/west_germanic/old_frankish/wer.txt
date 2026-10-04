@@ -1,0 +1,10 @@
+wer_old_frankish = { #Source: http://www.cnrtl.fr/definition/garou
+	name = "Wer"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_indo_european:wiros #presumably
+	name_generation_word = english:man_english
+	meaning_words = {
+		man_english #source gives the French "homme" as the meaning
+	}
+}

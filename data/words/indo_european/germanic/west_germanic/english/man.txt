@@ -1,0 +1,14 @@
+man_english = {
+	name = "Man"
+	language = english
+	type = noun
+	gender = masculine
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = MAN
+	meanings = {
+		"Man"
+	}
+}

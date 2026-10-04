@@ -1,0 +1,9 @@
+wiros = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, 2.6, 2.7.1.
+	name = "Wiros" #the source also later gives "wir-"
+	language = proto_indo_european
+	type = noun
+	name_generation_word = english:man_english
+	meaning_words = {
+		man_english
+	}
+}

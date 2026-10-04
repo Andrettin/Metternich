@@ -1,0 +1,9 @@
+vurma = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 209.
+	name = "Vurma" #source also gives the alternative form "Vurmi"
+	language = proto_germanic
+	type = noun
+	gender = masculine
+	meanings = {
+		"Worm" #source gives the German "Wurm" as the meaning
+	}
+}

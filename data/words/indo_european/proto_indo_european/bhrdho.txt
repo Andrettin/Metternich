@@ -2,7 +2,8 @@ bhrdho = { #Fick gives "bher(e)dh" instead; Source: August Fick and Alf Torp, "W
 	name = "Bhrdho"
 	language = proto_indo_european
 	type = noun
-	meanings = {
-		"Board" #source gives the French "planche"
+	name_generation_word = english:board_noun
+	meaning_words = {
+		board_noun #source gives the French "planche"
 	}
 }

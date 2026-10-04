@@ -1,0 +1,10 @@
+worm_old_frankish = { #Source: http://www.cnrtl.fr/definition/gourme
+	name = "Worm" #source also gives the alternative form "Wurm"
+	language = old_frankish #source gives "Ancien Bas Francique" (= Old Frankish)
+	type = noun
+	etymon = proto_germanic:vurma #presumably
+	name_generation_word = english:pus
+	meaning_words = {
+		pus #source gives the French "pus" as the meaning
+	}
+}
