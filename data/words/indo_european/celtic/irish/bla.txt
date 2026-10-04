@@ -1,0 +1,9 @@
+bla_irish = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 147.
+	name = "Blá"
+	language = irish
+	type = adjective
+	name_generation_word = english:yellow
+	meaning_words = {
+		yellow #source gives the German "gelb" as the meaning
+	}
+}

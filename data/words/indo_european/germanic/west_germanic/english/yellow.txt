@@ -1,0 +1,11 @@
+yellow = {
+	name = "Yellow"
+	language = english
+	type = adjective
+	name_front_compound_element = true
+	surname_compound = true
+	df_word = YELLOW
+	meanings = {
+		"Yellow"
+	}
+}

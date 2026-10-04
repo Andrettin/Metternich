@@ -1,0 +1,15 @@
+hill = {
+	name = "Hill"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:hyll #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 50.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = HILL
+	meanings = {
+		"Hill"
+	}
+}

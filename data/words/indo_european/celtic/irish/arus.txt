@@ -1,0 +1,9 @@
+arus = { #Source: Sean Crist, "An Analysis of *z loss in West Germanic", 2002, p. 9.
+	name = "Árus"
+	language = irish
+	type = noun
+	name_generation_word = english:dwelling
+	meaning_words = {
+		dwelling
+	}
+}

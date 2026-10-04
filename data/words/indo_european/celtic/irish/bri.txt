@@ -1,0 +1,16 @@
+bri_irish = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 137.
+	name = "Bri"
+	language = irish
+	type = noun
+	name_generation_word = english:mountain
+	noun_inflections = {
+		singular = {
+			genitive = "Brig"
+		}
+	}
+	meaning_words = {
+		#source gives the German "Berg" as the meaning
+		mountain
+		hill
+	}
+}

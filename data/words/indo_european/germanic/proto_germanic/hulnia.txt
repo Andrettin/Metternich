@@ -1,0 +1,4 @@
+hulnia = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 50.
+	name = "Hulnia"
+	language = proto_germanic
+}
