@@ -7,6 +7,9 @@ norway = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = oslo
+	short_names = {
+		tribe = "Northmen"
+	}
 	core_provinces = {
 		akershus
 		rogaland
@@ -18,12 +21,20 @@ norway = {
 	}
 	
 	history = {
+		#culture = norse
+		religion = asatru
+		government_type = tribal_despotism
+		
 		1814 = {
 			#united with Sweden as the Kingdom of Sweden and Norway in 1814/1815; Source: William R. Shepherd, "Historical Atlas", 1911, p. 157.
 			diplomacy_state = {
 				domain = sweden
 				subject_type = personal_union_subject
 			}
+			
+			culture = norwegian
+			religion = protestant
+			government_type = monarchy
 		}
 	}
 }
