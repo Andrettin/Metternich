@@ -1,0 +1,10 @@
+soldato_italian = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	name = "Soldato"
+	language = italian
+	type = noun
+	etymon = latin:solidatus
+	name_generation_word = english:soldier
+	meaning_words = {
+		soldier
+	}
+}

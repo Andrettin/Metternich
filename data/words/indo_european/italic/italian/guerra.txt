@@ -1,0 +1,9 @@
+guerra_italian = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 8.
+	name = "Guerra"
+	language = italian
+	type = noun
+	name_generation_word = english:war
+	meaning_words = {
+		war
+	}
+}
