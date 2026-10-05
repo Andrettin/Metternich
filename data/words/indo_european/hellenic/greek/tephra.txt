@@ -3,6 +3,7 @@ tephra = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Cha
 	language = greek
 	type = noun
 	etymon = dhagh
+	name_generation_word = english:ash
 	meanings = {
 		"Ashes"
 	}

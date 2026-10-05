@@ -2,6 +2,7 @@ kyriakon = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Lan
 	name = "Kyriakón"
 	language = greek
 	type = noun
+	name_generation_word = english:church
 	meanings = {
 		"That which belongs to the Lord"
 		"That House of the Lord"

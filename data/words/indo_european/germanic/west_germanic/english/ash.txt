@@ -1,15 +1,17 @@
-church = {
-	name = "Church"
+ash = {
+	name = "Ash"
 	language = english
 	type = noun
 	gender = neuter
-	etymon = cirice #presumably
 	name_front_compound_element = true
 	name_rear_compound_element = true
 	given_name = true
 	surname_compound = true
-	df_word = CHURCH
+	df_word = ASH
+	noun_inflections = {
+		plural = "Ashes"
+	}
 	meanings = {
-		"Church"
+		"Ash"
 	}
 }

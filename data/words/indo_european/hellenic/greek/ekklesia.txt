@@ -2,6 +2,7 @@ ekklesia = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Lan
 	name = "Ekklēsía"
 	language = greek
 	type = noun
+	name_generation_word = english:church
 	meanings = {
 		"Congregation"
 		"Christian Congregation"
