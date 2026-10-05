@@ -1,6 +1,7 @@
 nymph = {
 	name = "Nymph"
 	species = nymph
+	icon = elven_archer
 	experience_award = 1400
 	items = {
 		dagger

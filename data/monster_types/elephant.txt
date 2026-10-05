@@ -1,5 +1,6 @@
 african_elephant = {
 	name = "African Elephant"
 	species = elephant
+	icon = cow
 	experience_award = 4000
 }

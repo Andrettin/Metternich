@@ -1,6 +1,7 @@
 shadow = {
 	name = "Shadow"
 	species = shadow
+	icon = spy
 	damage_dice = 1d4+1
 	experience_award = 420
 	attribute_ratings = {

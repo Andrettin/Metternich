@@ -1,6 +1,7 @@
 wolf = {
 	name = "Wolf"
 	species = wolf
+	icon = lion
 	damage_dice = 1d4+1
 	experience_award = 65
 	attribute_ratings = {

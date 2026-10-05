@@ -1,6 +1,7 @@
 large_water_elemental = {
 	name = "Large Water Elemental"
 	species = water_elemental
+	icon = elven_archer
 	damage_dice = 5d6
 	experience_award = 2000
 	attributes = {
@@ -17,6 +18,7 @@ large_water_elemental = {
 huge_water_elemental = {
 	name = "Huge Water Elemental"
 	species = water_elemental
+	icon = elven_archer
 	damage_dice = 5d6
 	experience_award = 10000
 	attributes = {

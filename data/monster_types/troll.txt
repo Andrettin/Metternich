@@ -3,6 +3,7 @@ troll = {
 	species = troll
 	character_class = troll
 	level = 11
+	icon = goblin
 	experience_award = 1400
 	modifier = {
 		natural_armor_class = -1

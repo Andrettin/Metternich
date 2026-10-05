@@ -1,6 +1,7 @@
 dimetrodon = {
 	name = "Dimetrodon"
 	species = dimetrodon
+	icon = frog
 	damage_dice = 3d4+3
 	experience_award = 120 #65-175
 	attribute_ratings = {

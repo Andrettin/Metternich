@@ -1,6 +1,7 @@
 triton = {
 	name = "Triton"
 	species = triton
+	icon = spearmen
 	experience_award = 270
 	attributes = {
 		intelligence = 13

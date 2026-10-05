@@ -1,6 +1,7 @@
 titan = {
 	name = "Titan"
 	species = titan
+	icon = longswordsmen
 	damage_dice = 7d6
 	experience_award = 21000
 }

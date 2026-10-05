@@ -1,6 +1,7 @@
 hobgoblin = {
 	name = "Hobgoblin"
 	species = hobgoblin
+	icon = goblin
 	experience_award = 35
 	attribute_ratings = {
 		intelligence = average

@@ -1,6 +1,7 @@
 gnoll = {
 	name = "Gnoll"
 	species = gnoll
+	icon = gnoll
 	experience_award = 35
 	attribute_ratings = {
 		intelligence = low

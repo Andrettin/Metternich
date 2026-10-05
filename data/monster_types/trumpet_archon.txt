@@ -1,6 +1,7 @@
 trumpet_archon = {
 	name = "Trumpet Archon"
 	species = trumpet_archon
+	icon = elven_archer
 	damage_dice = 1d10
 	experience_award = 15000
 	attributes = {

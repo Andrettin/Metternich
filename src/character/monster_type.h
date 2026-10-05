@@ -7,11 +7,13 @@
 
 Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("species/species.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
 class character_attribute;
 class character_class;
+class icon;
 class item_type;
 class species;
 class spell;
@@ -27,6 +29,7 @@ class monster_type final : public named_data_entry, public data_type<monster_typ
 	Q_PROPERTY(const metternich::species* species MEMBER species READ get_species NOTIFY changed)
 	Q_PROPERTY(const metternich::character_class* character_class MEMBER character_class READ get_character_class NOTIFY changed)
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
+	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(archimedes::dice damage_dice MEMBER damage_dice READ get_damage_dice NOTIFY changed)
 	Q_PROPERTY(int64_t experience_award MEMBER experience_award READ get_experience_award NOTIFY changed)
 
@@ -55,6 +58,11 @@ public:
 	int get_level() const
 	{
 		return this->level;
+	}
+
+	const metternich::icon *get_icon() const
+	{
+		return this->icon;
 	}
 
 	const dice &get_damage_dice() const
@@ -104,6 +112,7 @@ private:
 	const metternich::species *species = nullptr;
 	const metternich::character_class *character_class = nullptr;
 	int level = 0;
+	const metternich::icon *icon = nullptr;
 	dice damage_dice;
 	int64_t experience_award = 0; //the experience award for defeating the monster
 	data_entry_map<character_attribute, std::string> attribute_ratings;

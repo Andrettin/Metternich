@@ -111,6 +111,10 @@ void monster_type::check() const
 			throw std::runtime_error(std::format("Monster type \"{}\" has null damage dice, and no character class, items or natural weapons.", this->get_identifier()));
 		}
 	}
+
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Monster type \"{}\" has no icon.", this->get_identifier()));
+	}
 }
 
 }

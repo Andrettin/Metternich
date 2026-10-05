@@ -1,5 +1,6 @@
 stegosaurus = {
 	name = "Stegosaurus"
 	species = stegosaurus
+	icon = frog
 	experience_award = 9000
 }

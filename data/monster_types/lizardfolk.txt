@@ -1,6 +1,7 @@
 lizardfolk = {
 	name = "Lizardfolk"
 	species = lizardfolk
+	icon = goblin
 	experience_award = 65
 	attribute_ratings = {
 		intelligence = low

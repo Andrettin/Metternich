@@ -1,6 +1,7 @@
 phorusrhacus = {
 	name = "Phorusrhacus"
 	species = phorusrhacus
+	icon = frog
 	damage_dice = 2d6 #beak attack
 	experience_award = 650
 	attribute_ratings = {
@@ -11,6 +12,7 @@ phorusrhacus = {
 crow = {
 	name = "Crow"
 	species = crow
+	icon = frog
 	damage_dice = 1d1
 	experience_award = 15
 }
@@ -18,6 +20,7 @@ crow = {
 raven = {
 	name = "Raven"
 	species = raven
+	icon = frog
 	damage_dice = 1d1
 	experience_award = 15
 }

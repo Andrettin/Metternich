@@ -1,6 +1,7 @@
 kobold = {
 	name = "Kobold"
 	species = kobold
+	icon = goblin
 	experience_award = 7
 	attribute_ratings = {
 		intelligence = average

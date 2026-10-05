@@ -1,6 +1,7 @@
 dryad = {
 	name = "Dryad"
 	species = dryad
+	icon = elven_archer
 	experience_award = 975
 	attributes = {
 		intelligence = 13-14
