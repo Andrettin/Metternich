@@ -26,7 +26,8 @@ enum class military_unit_category {
 	huge_herd_animals,
 	small_predators,
 	medium_predators,
-	large_predators
+	large_predators,
+	monster
 };
 
 inline std::string_view get_military_unit_category_name(const military_unit_category category)
@@ -78,6 +79,8 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			return "Medium Predators";
 		case military_unit_category::large_predators:
 			return "Large Predators";
+		case military_unit_category::monster:
+			return "Monster";
 		default:
 			break;
 	}
@@ -115,6 +118,7 @@ inline bool is_character_military_unit_category(const military_unit_category cat
 {
 	switch (category) {
 		case military_unit_category::general:
+		case military_unit_category::monster:
 			return true;
 		default:
 			return false;

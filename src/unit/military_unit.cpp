@@ -253,6 +253,13 @@ military_unit_domain military_unit::get_domain() const
 
 const icon *military_unit::get_icon() const
 {
+	if (this->get_type()->is_monster()) {
+		assert_throw(this->get_character() != nullptr);
+		assert_throw(this->get_character()->get_monster_type() != nullptr);
+
+		return this->get_character()->get_monster_type()->get_icon();
+	}
+
 	return this->get_type()->get_icon();
 }
 

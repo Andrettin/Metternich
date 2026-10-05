@@ -226,6 +226,15 @@ bool military_unit_type::is_character() const
 	return this->get_unit_class()->is_character();
 }
 
+bool military_unit_type::is_monster() const
+{
+	if (this->get_unit_class() == nullptr) {
+		return false;
+	}
+
+	return this->get_unit_class()->is_monster();
+}
+
 void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 {
 	assert_throw(this->monster_type != nullptr);

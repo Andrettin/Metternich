@@ -74,6 +74,7 @@ public:
 	bool is_artillery() const;
 	bool is_ship() const;
 	bool is_character() const;
+	bool is_monster() const;
 
 	const metternich::culture *get_culture() const
 	{

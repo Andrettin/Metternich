@@ -1,0 +1,14 @@
+monster = {
+	name = "Monster"
+	unit_class = monster
+	icon = cow
+	stats = {
+		hit_points = 3
+		movement = 4
+		defense = 1
+		melee = 2
+		charge = 2
+		missile = 2
+		range = 3
+	}
+}

@@ -52,6 +52,11 @@ bool military_unit_class::is_character() const
 	return is_character_military_unit_category(this->get_category());
 }
 
+bool military_unit_class::is_monster() const
+{
+	return this->get_category() == military_unit_category::monster;
+}
+
 void military_unit_class::set_default_unit_type(const military_unit_type *unit_type)
 {
 	if (this->get_default_unit_type() != nullptr) {
