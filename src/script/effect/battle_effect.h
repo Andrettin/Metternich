@@ -147,7 +147,7 @@ public:
 	{
 		std::string str = std::format("Army{}:", !this->attacker && this->surprise ? " (surprised)" : "");
 		for (const auto &[military_unit_type, quantity] : ctx.army->get_military_unit_type_counts()) {
-			str += "\n" + std::string(indent + 1, '\t') + std::format("{}x{}{}", quantity, military_unit_type->get_name(), this->to_hit_modifier != 0 && military_unit_type->is_leader() ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
+			str += "\n" + std::string(indent + 1, '\t') + std::format("{}x{}{}", quantity, military_unit_type->get_name(), this->to_hit_modifier != 0 && military_unit_type->is_character() ? std::format(" (To Hit {})", number::to_signed_string(this->to_hit_modifier)) : "");
 		}
 
 		str += "\n" + std::string(indent, '\t') + std::format("Battles against{}{}:", this->attacker && this->defender_neutral ? " (neutral until attacked)" : "", this->attacker && this->surprise ? " (surprised)" : "");
