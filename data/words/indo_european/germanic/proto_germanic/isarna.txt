@@ -5,7 +5,7 @@ isarna = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2
 	type = noun
 	gender = neuter #as given by both sources
 	name_generation_word = english:iron_noun
-	meanings = {
+	meaning_words = {
 		iron_noun #as given by both sources (Fick gives the German "Eisen")
 	}
 }

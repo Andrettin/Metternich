@@ -1,0 +1,11 @@
+bourg = { #Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Bourg"
+	language = french
+	type = noun
+	etymon = proto_germanic:burg_proto_germanic #the source gives it as being of Germanic origin (then going on to list a series of words in Germanic languages); presumably from the Old Frankish in French, since they were the Germanic people who settled in France; but since we don't know the relevant Old Frankish word, set this as being derived from the Proto-Germanic one instead
+	name_generation_word = english:town
+	meanings = {
+		"Small Town"
+		"Borough"
+	}
+}

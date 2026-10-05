@@ -1,0 +1,17 @@
+tun_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 89.
+	name = "Tûn"
+	language = old_english
+	type = noun
+	gender = masculine
+	etymon = proto_germanic:tuna_proto_germanic
+	name_generation_word = english:town
+	meanings = {
+		#source gives the German "Zaun um das Haus, Garten, Hof, Dorf, Stadt" as the meaning
+		"Fence Around the House"
+		"Garden"
+		"Farm"
+		"Village"
+		"City"
+		"Town"
+	}
+}

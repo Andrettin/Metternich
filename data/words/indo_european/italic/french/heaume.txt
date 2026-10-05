@@ -1,0 +1,12 @@
+heaume = {
+	name = "Heaume"
+	language = french
+	type = noun
+	etymon = old_frankish:helm_old_frankish #Source: http://www.cnrtl.fr/definition/heaume
+	name_generation_word = english:helm_english
+	meanings = {
+		#source gives the French "casque" as the meaning
+		"Helm"
+		"Helmet"
+	}
+}

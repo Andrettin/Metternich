@@ -4,6 +4,11 @@ wood = {
 	type = noun
 	gender = neuter
 	etymon = widu_old_english #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 585; Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 207.
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = WOOD
 	meanings = {
 		"Wood"
 	}

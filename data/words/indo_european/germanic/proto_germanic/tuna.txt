@@ -1,0 +1,11 @@
+tuna_proto_germanic = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 89.
+	name = "Tûna"
+	language = proto_germanic
+	type = noun
+	name_generation_word = english:town
+	meanings = {
+		#source gives the German "Zaun, Gehege" as the meaning
+		"Fence"
+		"Enclosure"
+	}
+}

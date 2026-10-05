@@ -1,0 +1,15 @@
+town = {
+	name = "Town"
+	language = english
+	type = noun
+	gender = neuter
+	etymon = old_english:tun_old_english #presumably
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = TOWN
+	meanings = {
+		"Town"
+	}
+}

@@ -1,0 +1,12 @@
+bois = {
+	name = "Bois"
+	language = french
+	type = noun
+	etymon = old_frankish:bosk #Source: http://www.cnrtl.fr/definition/bois
+	name_generation_word = english:wood
+	meaning_words = {
+		wood
+	}
+	
+	#Fick gives it as being derived from Medieval Latin "Buscus" instead; Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 143.
+}
