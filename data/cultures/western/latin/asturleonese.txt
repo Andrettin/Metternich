@@ -1,0 +1,8 @@
+asturleonese = {
+	name = "Asturleonese"
+	group = ibero_romance
+	color = { 250 216 91 }
+	species = {
+		human
+	}
+}

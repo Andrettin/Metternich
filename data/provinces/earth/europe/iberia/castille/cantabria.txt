@@ -22,10 +22,15 @@ cantabria = {
 			owner = visigothia #part of the Kingdom of the West Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
+		814 = {
+			owner = asturias #part of the Kingdom of Asturias c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = asturleonese
+			religion = catholic
+		}
+		
 		1360 = {
 			owner = castille #part of Castille in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = castillian
-			religion = catholic
 		}
 		
 		1560 = {

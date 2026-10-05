@@ -1,0 +1,13 @@
+asturias = {
+	name = "Asturias"
+	type = polity
+	color = { 104 173 230 }
+	default_culture = asturleonese
+	default_religion = catholic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = oviedo
+	core_provinces = {
+		asturias
+	}
+}
