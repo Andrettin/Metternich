@@ -13,9 +13,13 @@ trebizond = {
 			religion = hellenic
 		}
 		
+		814 = {
+			owner = byzantium #part of the Byzantine Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			religion = orthodox
+		}
+		
 		1360 = {
 			owner = trebizond #part of the Empire of Trebizond in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			religion = orthodox
 		}
 	}
 }

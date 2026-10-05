@@ -18,6 +18,12 @@ sardinia = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = byzantium #part of the Byzantine Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = italian
+			religion = catholic
+		}
+		
 		1360 = {
 			owner = aragon #Aragonese possession in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = italian

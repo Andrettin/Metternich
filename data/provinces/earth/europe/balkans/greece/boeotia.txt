@@ -31,6 +31,10 @@ boeotia = {
 			religion = orthodox
 		}
 		
+		814 = {
+			owner = byzantium #part of the Byzantine Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		1089 = {
 			trade_zone = morosini
 		}

@@ -19,6 +19,10 @@ ostergotland = {
 			religion = asatru
 		}
 		
+		814 = {
+			owner = sweden #territory of the Swedes c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		1190 = {
 			owner = sweden #part of the Kingdom of Sweden c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = swedish

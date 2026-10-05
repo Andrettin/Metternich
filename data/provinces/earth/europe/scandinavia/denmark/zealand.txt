@@ -19,6 +19,10 @@ zealand = {
 			religion = asatru
 		}
 		
+		814 = {
+			owner = denmark #territory of the Danish Kingdom c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		1000 = {
 			owner = denmark #part of the Kingdom of Denmark c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
 			culture = danish

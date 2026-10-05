@@ -23,14 +23,20 @@ schleswig = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = denmark #territory of the Danish Kingdom c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = norse
+			religion = asatru
+		}
+		
 		919 = {
 			owner = denmark #part of the Kingdom of Denmark in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
-			culture = german
-			religion = catholic
 		}
 		
 		1000 = {
 			owner = denmark #part of the Kingdom of Denmark c. 1000; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 58-59.
+			culture = danish
+			religion = catholic
 		}
 		
 		1360 = {

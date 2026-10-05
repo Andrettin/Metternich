@@ -12,16 +12,12 @@ norway = {
 	}
 	core_provinces = {
 		akershus
-		rogaland
 		hordaland
-		trondelag
-		nordland
-		troms
-		finnmark
+		rogaland
 	}
 	
 	history = {
-		#culture = norse
+		culture = norse
 		religion = asatru
 		government_type = tribal_despotism
 		

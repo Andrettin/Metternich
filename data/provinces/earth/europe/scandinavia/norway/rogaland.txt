@@ -13,6 +13,10 @@ rogaland = {
 			religion = asatru
 		}
 		
+		814 = {
+			owner = norway #territory of the Northmen c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		1190 = {
 			owner = norway #part of the Kingdom of Norway c. 1190; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 70-71.
 			culture = norwegian

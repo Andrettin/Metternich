@@ -37,6 +37,10 @@ attica = {
 			religion = orthodox
 		}
 		
+		814 = {
+			owner = byzantium #part of the Byzantine Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		1360 = {
 			owner = athens #part of the Duchy of Athens in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 		}
