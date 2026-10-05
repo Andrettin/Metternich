@@ -564,7 +564,7 @@ std::string culture_base::generate_military_unit_name(const military_unit_type *
 {
 	const military_unit_class *unit_class = type->get_unit_class();
 
-	if (unit_class->is_leader()) {
+	if (unit_class->is_character()) {
 		return this->generate_given_name(gender::male, used_name_counts);
 	} else {
 		const name_generator *name_generator = this->get_military_unit_class_name_generator(unit_class);

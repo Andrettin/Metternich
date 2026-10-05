@@ -123,7 +123,7 @@ QCoro::Task<bool> domain_military::create_military_unit(const military_unit_type
 
 	const character *chosen_character = nullptr;
 
-	if (military_unit_type->get_unit_class()->is_leader()) {
+	if (military_unit_type->get_unit_class()->is_character()) {
 		std::vector<const metternich::character *> potential_characters;
 
 		for (const metternich::character *character : this->get_game_data()->get_characters()) {
@@ -245,7 +245,7 @@ int domain_military::get_military_unit_type_cost_modifier(const military_unit_ty
 		return this->get_artillery_cost_modifier();
 	} else if (military_unit_type->is_ship()) {
 		return this->get_warship_cost_modifier();
-	} else if (military_unit_type->get_unit_class()->is_leader()) {
+	} else if (military_unit_type->get_unit_class()->is_character()) {
 		return this->get_leader_cost_modifier();
 	}
 

@@ -45,7 +45,7 @@ public:
 
 	bool is_animal() const;
 	bool is_ship() const;
-	bool is_leader() const;
+	bool is_character() const;
 
 	const military_unit_type *get_default_unit_type() const
 	{

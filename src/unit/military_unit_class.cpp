@@ -47,9 +47,9 @@ bool military_unit_class::is_ship() const
 	return is_ship_military_unit_category(this->get_category());
 }
 
-bool military_unit_class::is_leader() const
+bool military_unit_class::is_character() const
 {
-	return is_leader_military_unit_category(this->get_category());
+	return is_character_military_unit_category(this->get_category());
 }
 
 void military_unit_class::set_default_unit_type(const military_unit_type *unit_type)

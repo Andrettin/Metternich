@@ -123,7 +123,10 @@ void military_unit_type::initialize()
 void military_unit_type::check() const
 {
 	assert_throw(this->get_domain() != military_unit_domain::none);
-	assert_throw(this->get_icon() != nullptr);
+
+	if (this->get_icon() == nullptr) {
+		throw std::runtime_error(std::format("Military unit type \"{}\" has no icon.", this->get_identifier()));
+	}
 
 	if (this->get_battle_resolution_types().empty()) {
 		log::log_error(std::format("Military unit type \"{}\" has no battle resolution types.", this->get_identifier()));
@@ -214,13 +217,13 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
-bool military_unit_type::is_leader() const
+bool military_unit_type::is_character() const
 {
 	if (this->get_unit_class() == nullptr) {
 		return false;
 	}
 
-	return this->get_unit_class()->is_leader();
+	return this->get_unit_class()->is_character();
 }
 
 void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
