@@ -137,6 +137,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_bloodline(const bool apply_history);
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_from_parents();
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_inheritance_investiture();
+	void add_starting_wealth(const character_package *package);
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const character_package *package);
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
 	void add_starting_spells(const character_package *package);

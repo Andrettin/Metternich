@@ -35,6 +35,7 @@
 #include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
+#include "economy/commodity.h"
 #include "engine_interface.h"
 #include "game/battle.h"
 #include "game/character_event.h"
@@ -809,6 +810,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 			}
 		}
 
+		this->add_starting_wealth(package);
 		co_await this->add_starting_items(package);
 	}
 
@@ -1061,6 +1063,29 @@ QCoro::Task<void> character_game_data::apply_bloodline_inheritance_investiture()
 		}
 
 		co_await this->inherit_bloodline_from(predecessor);
+	}
+}
+
+void character_game_data::add_starting_wealth(const character_package *package)
+{
+	if (package != nullptr) {
+		const auto &wealth_variant = package->get_wealth_variant();
+		const commodity_unit *wealth_unit = package->get_wealth_unit();
+
+		int64_t wealth = 0;
+
+		if (std::holds_alternative<dice>(wealth_variant)) {
+			const dice dice = std::get<archimedes::dice>(wealth_variant);
+
+			const int roll_result = random::get()->roll_dice(dice);
+			wealth = roll_result;
+		} else {
+			wealth = std::get<int64_t>(wealth_variant);
+		}
+
+		wealth *= defines::get()->get_wealth_commodity()->get_unit_value(wealth_unit);
+
+		this->change_wealth(wealth);
 	}
 }
 

@@ -1,4 +1,5 @@
 dwarven_warrior = {
+	wealth = 4d4gp
 	conditions = {
 		species = dwarf
 		or = {
@@ -22,6 +23,7 @@ dwarven_warrior = {
 }
 
 human_warrior = {
+	wealth = 2d4gp
 	conditions = {
 		#species = human
 		not = {

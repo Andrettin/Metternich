@@ -1,10 +1,11 @@
 #pragma once
 
+#include "database/data_entry.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 
 namespace metternich {
 
+class character;
 class item_type;
 class spell;
 
@@ -12,7 +13,7 @@ template <typename scope_type>
 class and_condition;
 
 //a starting package for a character
-class character_package final : public named_data_entry, public data_type<character_package>
+class character_package final : public data_entry, public data_type<character_package>
 {
 	Q_OBJECT
 
@@ -24,7 +25,18 @@ public:
 	explicit character_package(const std::string &identifier);
 	~character_package();
 
+	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+
+	const std::variant<int64_t, dice> &get_wealth_variant() const
+	{
+		return this->wealth_variant;
+	}
+
+	const commodity_unit *get_wealth_unit() const
+	{
+		return this->wealth_unit;
+	}
 
 	const and_condition<character> *get_conditions() const
 	{
@@ -45,6 +57,8 @@ signals:
 	void changed();
 
 private:
+	std::variant<int64_t, dice> wealth_variant = 0;
+	const commodity_unit *wealth_unit = nullptr;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::vector<const item_type *> items;
 	std::vector<const spell *> spells;

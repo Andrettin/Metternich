@@ -1,4 +1,5 @@
 human_cleric = {
+	wealth = 1d4gp
 	conditions = {
 		#species = human
 		character_class = {
