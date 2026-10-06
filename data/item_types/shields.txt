@@ -1,3 +1,13 @@
+heavy_wooden_shield = {
+	name = "Heavy Wooden Shield"
+	item_class = shield
+	icon = heater_shield
+	price = 7gp
+	modifier = {
+		armor_class = 2
+	}
+}
+
 shield = {
 	name = "Shield"
 	item_class = shield

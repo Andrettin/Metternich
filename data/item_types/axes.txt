@@ -12,6 +12,16 @@ battle_axe = {
 	}
 }
 
+dwarven_waraxe = {
+	name = "Dwarven Waraxe"
+	item_class = axe
+	icon = saber
+	price = 30gp
+	damage_dice = 1d10
+	required_technology = battle_axe
+	attack_sound = axe
+}
+
 hand_axe = {
 	name = "Hand Axe"
 	item_class = axe

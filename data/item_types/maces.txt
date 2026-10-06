@@ -11,6 +11,16 @@ club = {
 	}
 }
 
+heavy_mace = {
+	name = "Heavy Mace"
+	item_class = mace
+	icon = saber
+	price = 12gp
+	damage_dice = 1d8
+	required_technology = mace
+	attack_sound = mace
+}
+
 mace = {
 	name = "Mace"
 	item_class = mace
