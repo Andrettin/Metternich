@@ -4,7 +4,8 @@ isern_old_english = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-G
 	type = noun
 	gender = neuter #as given by both sources
 	etymon = isarna #as given by both sources
-	meanings = {
-		"Iron" #as given by both sources (Fick gives the German "Eisen")
+	name_generation_word = english:iron_noun
+	meaning_words = {
+		iron_noun #as given by both sources (Fick gives the German "Eisen")
 	}
 }

@@ -3,6 +3,7 @@ gold_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanis
 	language = old_english
 	type = noun
 	etymon = gultha
+	name_generation_word = english:gold
 	meaning_words = {
 		gold_high_german #source gives the German "Gold"
 	}

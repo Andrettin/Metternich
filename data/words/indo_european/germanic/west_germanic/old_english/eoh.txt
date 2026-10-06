@@ -3,7 +3,8 @@ eoh = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapte
 	language = old_english
 	type = noun
 	etymon = ekwos
-	meanings = {
-		"Horse"
+	name_generation_word = english:horse
+	meaning_words = {
+		horse
 	}
 }

@@ -4,6 +4,7 @@ skjoldr = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spra
 	type = noun
 	gender = masculine
 	etymon = skeldu
+	name_generation_word = english:shield
 	meanings = {
 		"Shield" #source gives the German "Schild"
 	}

@@ -3,7 +3,8 @@ rann = { #Source: Sean Crist, "An Analysis of *z loss in West Germanic", 2002, p
 	language = old_norse
 	type = noun
 	gender = neuter
-	meanings = {
-		"House"
+	name_generation_word = english:house
+	meaning_words = {
+		house
 	}
 }

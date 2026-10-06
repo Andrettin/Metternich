@@ -4,7 +4,8 @@ steinn_old_norse = { #Source: August Fick and Alf Torp, "Wortschatz der Germanis
 	type = noun
 	gender = masculine
 	etymon = staynas
-	meanings = {
-		"Stone" #source (apparently) gives the German "Stein"
+	name_generation_word = english:stone_noun
+	meaning_words = {
+		stone_noun #source (apparently) gives the German "Stein"
 	}
 }

@@ -4,6 +4,7 @@ bur_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanisc
 	type = noun
 	gender = masculine
 	etymon = bura
+	name_generation_word = english:hut
 	meanings = {
 		#source gives the German "Hütte, Zimmer"
 		"Hut"

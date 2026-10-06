@@ -4,7 +4,8 @@ silfr_old_norse = { #Source: August Fick and Alf Torp, "Wortschatz der Germanisc
 	type = noun
 	gender = neuter
 	etymon = silubra
-	meanings = {
-		"Silver" #source gives the German "Silber"
+	name_generation_word = english:silver_noun
+	meaning_words = {
+		silver_noun #source gives the German "Silber"
 	}
 }

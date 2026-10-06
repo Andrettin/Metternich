@@ -4,7 +4,8 @@ stan_old_english = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic",
 	type = noun
 	gender = masculine #as given by Fick
 	etymon = staynas #as given by both Lehmann and Fick
-	meanings = {
-		"Stone" #as given by Lehmann
+	name_generation_word = english:stone_noun
+	meaning_words = {
+		stone_noun #as given by Lehmann
 	}
 }

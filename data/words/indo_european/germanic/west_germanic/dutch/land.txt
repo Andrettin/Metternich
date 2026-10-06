@@ -2,6 +2,7 @@ land_dutch = {
 	name = "Land"
 	language = dutch
 	type = noun
+	name_generation_word = english:land_english
 	meanings = {
 		#Source: http://www.vandale.nl/opzoeken?pattern=Land&lang=ne
 		"Land"

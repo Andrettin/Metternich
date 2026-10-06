@@ -4,6 +4,7 @@ widu_old_english = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Ge
 	type = noun
 	gender = masculine #as given by both sources
 	etymon = widu_proto_germanic #as given by both sources
+	name_generation_word = english:wood
 	meanings = {
 		"Tree" #as given by both sources (Fick gives the German "Baum")
 		"Wood" #as given by both sources (Fick gives the German "Holz")

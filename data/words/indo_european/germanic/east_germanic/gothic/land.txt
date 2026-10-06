@@ -4,6 +4,7 @@ land_gothic = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen 
 	type = noun
 	gender = neuter
 	etymon = landa
+	name_generation_word = english:land_english
 	meaning_words = {
 		land_high_german #source gives the German "Land"
 	}

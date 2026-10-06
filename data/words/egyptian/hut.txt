@@ -1,4 +1,4 @@
-hut = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 68.
+hut_egyptian = { #Source: Claude Traunecker, "Os Deuses do Egito", 1992, p. 68.
 	name = "Hut"
 	language = egyptian
 	type = noun

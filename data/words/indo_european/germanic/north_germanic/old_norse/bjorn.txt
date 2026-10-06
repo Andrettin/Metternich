@@ -4,7 +4,8 @@ bjorn = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprach
 	type = noun
 	gender = masculine
 	etymon = beran_proto_germanic_noun
-	meanings = {
-		"Bear" #source gives the German "Bär"
+	name_generation_word = english:bear_noun
+	meaning_words = {
+		bear_noun #source gives the German "Bär"
 	}
 }

@@ -3,6 +3,7 @@ cyning = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	language = old_english
 	type = noun
 	etymon = proto_germanic:kuninga
+	name_generation_word = english:king
 	meaning_words = {
 		konig #source (apparently) gives the German "König" as the meaning
 	}
