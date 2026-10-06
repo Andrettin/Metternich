@@ -72,9 +72,6 @@ rogue = {
 		}
 	}
 	starting_items = {
-		short_sword
-		composite_long_bow
-		leather_armor
 		#torch = 6
 	}
 }

@@ -1,0 +1,17 @@
+halfling_rogue = {
+	wealth = 4d4gp
+	conditions = {
+		#species = halfling
+		character_class = {
+			character_class = rogue
+			type = base_class
+		}
+	}
+	items = {
+		leather_armor
+		short_sword
+		light_crossbow
+		dagger
+		#10 bolts
+	}
+}

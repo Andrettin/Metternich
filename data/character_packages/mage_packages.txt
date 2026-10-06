@@ -1,0 +1,20 @@
+elven_mage = {
+	wealth = 3d6gp
+	conditions = {
+		#species = elf
+		character_class = {
+			character_class = mage
+			type = base_class
+		}
+	}
+	items = {
+		quarterstaff
+		light_crossbow
+		#10 bolts
+	}
+	spells = {
+		#charm_person
+		#sleep
+		#summon_monster_1
+	}
+}
