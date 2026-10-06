@@ -37,3 +37,14 @@ plate_mail = {
 		base_armor_class = 7
 	}
 }
+
+scale_mail = {
+	name = "Scale Mail"
+	item_class = armor
+	icon = clothing
+	price = 120gp
+	required_technology = scale_mail
+	modifier = {
+		base_armor_class = 4
+	}
+}

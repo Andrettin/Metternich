@@ -39,6 +39,21 @@ broad_sword = {
 	}
 }
 
+greatsword = {
+	name = "Greatsword"
+	item_class = heavy_blade
+	icon = saber
+	price = 50gp
+	two_handed = true
+	required_technology = greatsword
+	attack_sound = sword
+	damage_dice_per_target_size = {
+		small = 2d6
+		medium = 2d6
+		large = 3d6 #as two-handed sword
+	}
+}
+
 long_sword = {
 	name = "Long Sword"
 	item_class = heavy_blade
