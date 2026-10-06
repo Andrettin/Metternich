@@ -1,0 +1,17 @@
+human_paladin = {
+	wealth = 6d4gp
+	conditions = {
+		#species = human
+		character_class = {
+			character_class = paladin
+			type = base_class
+		}
+	}
+	items = {
+		scale_mail
+		heavy_wooden_shield
+		long_sword
+		short_bow
+		#20 arrows
+	}
+}
