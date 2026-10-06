@@ -22,7 +22,7 @@ dwarven_warrior = {
 	}
 }
 
-human_warrior = {
+human_warrior_greatsword = {
 	wealth = 2d4gp
 	conditions = {
 		#species = human
@@ -45,11 +45,56 @@ human_warrior = {
 				type = subclass
 			}
 		}
+		or = {
+			home_site = {
+				technology = greatsword
+			}
+			character_class = {
+				character_class = archer
+				type = subclass
+			}
+		}
 	}
 	items = {
 		scale_mail
 		greatsword
 		short_bow
 		#20 arrows
+	}
+}
+
+human_warrior_long_sword = {
+	wealth = 2d4gp #as human warrior (greatsword)
+	conditions = {
+		#species = human
+		not = {
+			species = dwarf
+		}
+		or = {
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+		}
+		not = {
+			character_class = {
+				character_class = archer
+				type = subclass
+			}
+			character_class = {
+				character_class = crossbowman
+				type = subclass
+			}
+		}
+	}
+	items = {
+		chain_mail
+		shield
+		long_sword
+		#6 torches
 	}
 }

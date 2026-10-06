@@ -62,7 +62,4 @@ warrior = {
 			trait_of_type = past_experience
 		}
 	}
-	starting_items = {
-		#torch = 6
-	}
 }
