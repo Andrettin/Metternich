@@ -8,6 +8,8 @@ human_cleric = {
 	}
 	items = {
 		scale_mail
+		heavy_wooden_shield
+		heavy_mace
 		light_crossbow
 		#10 bolts
 	}

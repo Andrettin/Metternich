@@ -1,6 +1,32 @@
+dwarven_warrior = {
+	conditions = {
+		species = dwarf
+		or = {
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+		}
+	}
+	items = {
+		scale_mail
+		heavy_wooden_shield
+		dwarven_waraxe
+		short_bow
+		#20 arrows
+	}
+}
+
 human_warrior = {
 	conditions = {
 		#species = human
+		not = {
+			species = dwarf
+		}
 		or = {
 			character_class = {
 				character_class = warrior

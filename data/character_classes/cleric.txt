@@ -70,8 +70,6 @@ cleric = {
 		}
 	}
 	starting_items = {
-		mace
-		shield
 		#torch = 6
 	}
 }
