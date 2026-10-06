@@ -8,11 +8,6 @@ archer = {
 			bow
 		}
 	}
-	starting_items = {
-		short_bow
-		chain_mail
-		#torch = 6
-	}
 	level_modifiers = {
 		5 = {
 			weapon_to_hit_bonus = {

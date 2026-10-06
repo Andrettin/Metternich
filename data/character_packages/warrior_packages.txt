@@ -1,0 +1,27 @@
+human_warrior = {
+	conditions = {
+		#species = human
+		or = {
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+		}
+		not = {
+			character_class = {
+				character_class = crossbowman
+				type = subclass
+			}
+		}
+	}
+	items = {
+		scale_mail
+		greatsword
+		short_bow
+		#20 arrows
+	}
+}

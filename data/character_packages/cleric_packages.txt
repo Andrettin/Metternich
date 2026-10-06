@@ -1,0 +1,20 @@
+human_cleric = {
+	conditions = {
+		#species = human
+		character_class = {
+			character_class = cleric
+			type = base_class
+		}
+	}
+	items = {
+		scale_mail
+		light_crossbow
+		#10 bolts
+	}
+	spells = {
+		cure_minor_wounds
+		
+		cure_light_wounds
+		#protection_from_evil
+	}
+}
