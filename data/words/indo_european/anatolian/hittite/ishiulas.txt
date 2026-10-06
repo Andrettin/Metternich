@@ -2,6 +2,7 @@ ishiulas = { #Source: Giuseppe Furlani, "The Basic Aspect of Hittite Religion", 
 	name = "Išḫiulāš"
 	language = hittite
 	type = noun
+	name_generation_word = english:duty
 	meanings = {
 		"Obligation"
 		"Binding"
