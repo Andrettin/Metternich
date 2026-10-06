@@ -2,6 +2,8 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "map/site.h"
+#include "map/site_map_data.h"
 #include "script/condition/scope_condition.h"
 
 namespace metternich {
@@ -25,6 +27,10 @@ public:
 	virtual const site *get_scope(const character *upper_scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
+
+		if (upper_scope->get_game_data()->get_home_site() != nullptr && !upper_scope->get_game_data()->get_home_site()->get_map_data()->is_on_map()) {
+			return nullptr;
+		}
 
 		return upper_scope->get_game_data()->get_home_site();
 	}
