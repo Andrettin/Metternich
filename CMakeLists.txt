@@ -35,6 +35,7 @@ set(character_SRCS
 	src/character/character_defines.cpp
 	src/character/character_game_data.cpp
 	src/character/character_history.cpp
+	src/character/character_package.cpp
 	src/character/character_reference.cpp
 	src/character/character_stat.cpp
 	src/character/domain_skill.cpp
@@ -409,6 +410,7 @@ set(character_HDRS
 	src/character/character_game_data.h
 	src/character/character_history.h
 	src/character/character_modifier_type.h
+	src/character/character_package.h
 	src/character/character_reference.h
 	src/character/character_stat.h
 	src/character/damage_reduction_type.h

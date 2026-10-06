@@ -29,6 +29,7 @@ class bloodline;
 class building_item_slot;
 class character;
 class character_attribute;
+class character_package;
 class character_stat;
 class civilian_unit;
 class creature_size;
@@ -136,9 +137,9 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_bloodline(const bool apply_history);
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_from_parents();
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_inheritance_investiture();
-	[[nodiscard]] QCoro::Task<void> add_starting_items();
+	[[nodiscard]] QCoro::Task<void> add_starting_items(const character_package *package);
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
-	void add_starting_spells();
+	void add_starting_spells(const character_package *package);
 	void add_starting_spells(const std::vector<const spell *> &starting_spells);
 	[[nodiscard]] QCoro::Task<void> apply_history(const QDate &start_date);
 	void on_setup_finished();
@@ -189,6 +190,11 @@ public:
 
 	void set_dead(const bool dead);
 	[[nodiscard]] QCoro::Task<void> die();
+
+	bool is_alive() const
+	{
+		return !this->is_dead();
+	}
 
 	bool exists() const;
 	bool has_ever_existed() const;

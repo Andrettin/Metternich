@@ -10,6 +10,7 @@
 #include "character/character_defines.h"
 #include "character/character_history.h"
 #include "character/character_modifier_type.h"
+#include "character/character_package.h"
 #include "character/damage_reduction_type.h"
 #include "character/domain_skill.h"
 #include "character/level_value_table.h"
@@ -790,7 +791,26 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	co_await this->apply_bloodline(apply_history);
 	this->initialize_patron_deity();
 
-	co_await this->add_starting_items();
+	const character_package *package = nullptr;
+	if (this->is_alive() || this->is_deity()) {
+		if (this->character->get_monster_type() == nullptr) {
+			std::vector<const character_package *> potential_packages;
+
+			for (const character_package *potential_package : character_package::get_all()) {
+				if (potential_package->get_conditions() != nullptr && !potential_package->get_conditions()->check(this->character)) {
+					continue;
+				}
+
+				potential_packages.push_back(potential_package);
+			}
+
+			if (!potential_packages.empty()) {
+				package = vector::get_random(potential_packages);
+			}
+		}
+
+		co_await this->add_starting_items(package);
+	}
 
 	const metternich::character_class *character_class = this->get_character_class();
 	if (character_class != nullptr) {
@@ -845,7 +865,9 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
-	this->add_starting_spells();
+	if (this->is_alive() || this->is_deity()) {
+		this->add_starting_spells(package);
+	}
 
 	if (this->character->get_health() != 0) {
 		int min_hp = 0;
@@ -1042,7 +1064,7 @@ QCoro::Task<void> character_game_data::apply_bloodline_inheritance_investiture()
 	}
 }
 
-QCoro::Task<void> character_game_data::add_starting_items()
+QCoro::Task<void> character_game_data::add_starting_items(const character_package *package)
 {
 	const metternich::character_class *character_class = this->get_character_class();
 
@@ -1061,6 +1083,8 @@ QCoro::Task<void> character_game_data::add_starting_items()
 
 	if (this->character->get_monster_type() != nullptr) {
 		co_await this->add_starting_items(this->character->get_monster_type()->get_items(), filled_item_slots);
+	} else if (package != nullptr) {
+		co_await this->add_starting_items(package->get_items(), filled_item_slots);
 	}
 
 	if (character_class != nullptr) {
@@ -1100,7 +1124,7 @@ QCoro::Task<void> character_game_data::add_starting_items(const std::vector<cons
 	filled_item_slots = new_filled_item_slots;
 }
 
-void character_game_data::add_starting_spells()
+void character_game_data::add_starting_spells(const character_package *package)
 {
 	const metternich::character_class *character_class = this->get_character_class();
 
@@ -1108,6 +1132,8 @@ void character_game_data::add_starting_spells()
 		this->add_starting_spells(this->character->get_starting_spells());
 	} else if (this->character->get_monster_type() != nullptr && !this->character->get_monster_type()->get_spells().empty()) {
 		this->add_starting_spells(this->character->get_monster_type()->get_spells());
+	} else if (package != nullptr && !package->get_spells().empty()) {
+		this->add_starting_spells(package->get_spells());
 	} else if (character_class != nullptr) {
 		this->add_starting_spells(character_class->get_starting_spells());
 	}
@@ -3668,7 +3694,7 @@ QCoro::Task<void> character_game_data::set_office(const metternich::office *offi
 	}
 
 	if (office != nullptr) {
-		assert_throw(!this->is_dead());
+		assert_throw(this->is_alive());
 	}
 
 	const civilian_unit_type *old_deployable_civilian_unit_type = this->get_deployable_civilian_unit_type();
