@@ -2,9 +2,15 @@ halfling_rogue = {
 	wealth = 4d4gp
 	conditions = {
 		#species = halfling
-		character_class = {
-			character_class = rogue
-			type = base_class
+		or = {
+			character_class = {
+				character_class = rogue
+				type = base_class
+			}
+			character_class = {
+				character_class = crossbowman
+				type = subclass
+			}
 		}
 	}
 	items = {

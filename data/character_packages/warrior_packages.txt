@@ -41,18 +41,16 @@ human_warrior_greatsword = {
 		}
 		not = {
 			character_class = {
+				character_class = archer
+				type = subclass
+			}
+			character_class = {
 				character_class = crossbowman
 				type = subclass
 			}
 		}
-		or = {
-			home_site = {
-				technology = greatsword
-			}
-			character_class = {
-				character_class = archer
-				type = subclass
-			}
+		home_site = {
+			technology = greatsword
 		}
 	}
 	items = {
