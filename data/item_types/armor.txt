@@ -16,6 +16,17 @@ leather_armor = {
 	}
 }
 
+studded_leather_armor = {
+	name = "Studded Leather Armor"
+	item_class = armor
+	icon = clothing
+	price = 20gp
+	required_technology = reinforced_leather_armor
+	modifier = {
+		base_armor_class = 3
+	}
+}
+
 chain_mail = {
 	name = "Chain Mail"
 	item_class = armor

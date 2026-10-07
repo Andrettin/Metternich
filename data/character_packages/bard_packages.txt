@@ -1,0 +1,22 @@
+gnomish_bard = {
+	wealth = 2d4gp
+	conditions = {
+		#species = gnome
+		character_class = {
+			character_class = bard
+			type = base_class
+		}
+	}
+	items = {
+		studded_leather_armor
+		long_sword
+		light_crossbow
+		#10 bolts
+	}
+	spells = {
+		#detect_magic
+		#ghost_sound
+		#light
+		#read_magic
+	}
+}
