@@ -69,7 +69,4 @@ cleric = {
 			caster_level = 1
 		}
 	}
-	starting_items = {
-		#torch = 6
-	}
 }

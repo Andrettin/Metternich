@@ -12,11 +12,6 @@ crossbowman = {
 			crossbow
 		}
 	}
-	starting_items = {
-		light_crossbow
-		chain_mail
-		#torch = 6
-	}
 	level_modifiers = {
 		5 = {
 			weapon_to_hit_bonus = {
