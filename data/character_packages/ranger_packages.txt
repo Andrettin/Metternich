@@ -1,0 +1,23 @@
+elven_ranger = {
+	wealth = 2d4gp
+	conditions = {
+		#species = elf
+		or = {
+			character_class = {
+				character_class = ranger
+				type = base_class
+			}
+			character_class = {
+				character_class = archer
+				type = subclass
+			}
+		}
+	}
+	items = {
+		studded_leather_armor
+		long_sword
+		short_sword
+		long_bow
+		#20 arrows
+	}
+}

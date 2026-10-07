@@ -22,6 +22,16 @@ dwarven_waraxe = {
 	attack_sound = axe
 }
 
+greataxe = {
+	name = "Greataxe"
+	item_class = axe
+	icon = saber
+	price = 20gp
+	damage_dice = 1d12
+	required_technology = battle_axe
+	attack_sound = axe
+}
+
 hand_axe = {
 	name = "Hand Axe"
 	item_class = axe

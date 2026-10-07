@@ -1,0 +1,27 @@
+half_orc_barbarian = {
+	wealth = 2d4gp
+	conditions = {
+		#species = half_orc
+		character_class = {
+			character_class = warrior #barbarian
+			type = base_class
+		}
+		not = {
+			character_class = {
+				character_class = archer
+				type = subclass
+			}
+			character_class = {
+				character_class = crossbowman
+				type = subclass
+			}
+		}
+	}
+	items = {
+		studded_leather_armor
+		greataxe
+		short_bow
+		dagger
+		#20 arrows
+	}
+}
