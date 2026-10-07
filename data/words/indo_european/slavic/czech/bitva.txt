@@ -1,0 +1,9 @@
+bitva = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 4.
+	name = "Bitva"
+	language = czech #source gives Bohemian
+	type = noun
+	name_generation_word = english:battle
+	meaning_words = {
+		battle
+	}
+}

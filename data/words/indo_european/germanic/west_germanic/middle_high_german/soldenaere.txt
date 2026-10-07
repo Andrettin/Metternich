@@ -1,0 +1,9 @@
+soldenaere = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	name = "Soldenaere" #source also gives the alternative forms "soldener" and "soltner"
+	language = middle_high_german
+	type = noun
+	etymon = latin:solidenarius
+	meaning_words = {
+		soldier
+	}
+}
