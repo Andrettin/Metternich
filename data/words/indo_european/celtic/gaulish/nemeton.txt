@@ -2,6 +2,7 @@ nemeton = { #Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 
 	name = "Nemeton"
 	language = gaulish
 	type = noun
+	name_generation_word = english:temple
 	meanings = {
 		"Temple"
 		"Grove"

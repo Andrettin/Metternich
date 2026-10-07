@@ -1,0 +1,9 @@
+pryderi = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 33.
+	name = "Pryderi"
+	language = welsh
+	type = noun
+	name_generation_word = english:worry
+	meaning_words = {
+		worry #source gives the German "die Sorge" as the meaning
+	}
+}

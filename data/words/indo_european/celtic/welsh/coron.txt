@@ -1,0 +1,9 @@
+coron = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 119.
+	name = "Coron"
+	language = welsh
+	type = noun
+	name_generation_word = english:crown
+	meaning_words = {
+		crown #source gives the German "Krone" as the meaning
+	}
+}

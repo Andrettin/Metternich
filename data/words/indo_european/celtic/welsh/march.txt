@@ -1,0 +1,9 @@
+march_welsh = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 120.
+	name = "March"
+	language = welsh
+	type = noun
+	name_generation_word = english:horse
+	meaning_words = {
+		horse #source gives the German "Pferd" as the meaning
+	}
+}
