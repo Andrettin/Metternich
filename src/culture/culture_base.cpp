@@ -598,7 +598,7 @@ const name_generator *culture_base::get_given_name_generator(const gender gender
 		name_generator = this->given_name_generator->get_name_generator(gender);
 	}
 
-	if (name_generator != nullptr && name_generator->has_data()) {
+	if (name_generator != nullptr && name_generator->has_enough_data()) {
 		return name_generator;
 	}
 
@@ -644,7 +644,7 @@ const name_generator *culture_base::get_surname_generator(const gender gender) c
 		name_generator = this->surname_generator->get_name_generator(gender);
 	}
 
-	if (name_generator != nullptr && name_generator->has_data()) {
+	if (name_generator != nullptr && name_generator->has_enough_data()) {
 		return name_generator;
 	}
 
