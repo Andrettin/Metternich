@@ -25,8 +25,7 @@ public:
 		return identifier;
 	}
 
-	[[nodiscard]]
-	virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const character *scope, context &ctx) const override
 	{
 		bool apply_status_effect = true;
 

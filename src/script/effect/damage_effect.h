@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "character/save_type.h"
 #include "script/effect/effect.h"
 #include "util/dice.h"
 #include "util/random.h"
@@ -38,6 +39,8 @@ public:
 			this->damage = damage_effect::string_to_damage_variant(value);
 		} else if (key == "value_per_caster_level") {
 			this->damage_per_caster_level = std::stoi(value);
+		} else if (key == "save_type") {
+			this->save_type = save_type::get(value);
 		} else {
 			effect::process_gsml_property(property);
 		}
@@ -72,6 +75,15 @@ public:
 				}
 
 				damage += damage_effect::damage_variant_to_damage(caster_level_damage);
+			}
+		}
+
+
+		if (this->save_type != nullptr) {
+			//halve the damage if the save check is successful
+			const bool save_successful = scope->get_game_data()->do_save(this->save_type, 0);
+			if (save_successful) {
+				damage /= 2;
 			}
 		}
 
@@ -112,7 +124,17 @@ public:
 			quantity_string = std::format("{}-{}", min_damage, max_damage);
 		}
 
-		return std::format("Receive {} Damage", quantity_string);
+		const std::string damage_str = std::format("Receive {} Damage", quantity_string);
+
+		if (this->save_type != nullptr) {
+			if (scope != nullptr) {
+				return std::format("{} (Half-Damage Save: {} {}% Chance)", damage_str, this->save_type->get_name(), scope->get_game_data()->get_save_chance(this->save_type));
+			} else {
+				return std::format("{} (Half-Damage Save: {})", damage_str, this->save_type->get_name());
+			}
+		}
+
+		return damage_str;
 	}
 
 	static damage_variant string_to_damage_variant(const std::string &str)
@@ -150,6 +172,7 @@ public:
 private:
 	damage_variant damage;
 	int damage_per_caster_level = 0;
+	const metternich::save_type *save_type = nullptr;
 	std::map<int, damage_variant> caster_level_damage;
 };
 
