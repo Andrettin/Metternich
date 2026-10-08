@@ -47,7 +47,6 @@ public:
 		scope.for_each_element([this](const gsml_property &property) {
 			if (property.get_key() == "monster_type") {
 				this->monster_type = monster_type::get(property.get_value());
-				assert_throw(this->military_unit_type->is_monster());
 			} else if (property.get_key() == "health") {
 				this->health = std::stoi(property.get_value());
 			} else if (property.get_key() == "placement") {
@@ -354,6 +353,8 @@ public:
 			qunique_ptr<military_unit> military_unit;
 
 			if (enemy->get_monster_type() != nullptr) {
+				assert_throw(enemy->get_military_unit_type()->is_monster());
+
 				std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
 				generated_characters.push_back(enemy_character);
 				character_enemy_infos[enemy_character->get_character()] = enemy.get();
