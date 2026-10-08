@@ -1481,11 +1481,15 @@ QCoro::Task<void> character_game_data::die()
 {
 	this->set_dead(true);
 
-	if (this->get_domain() != nullptr) {
-		if (this->get_military_unit() != nullptr) {
+	if (this->get_military_unit() != nullptr) {
+		if (this->get_domain() != nullptr) {
 			co_await this->get_domain()->get_military()->on_leader_died(this->character);
+		} else {
+			co_await this->get_military_unit()->disband(false);
 		}
+	}
 
+	if (this->get_domain() != nullptr) {
 		if (this->get_office() != nullptr) {
 			assert_throw(this->get_domain() != nullptr);
 			co_await this->get_domain()->get_government()->on_office_holder_died(this->get_office(), this->character);
