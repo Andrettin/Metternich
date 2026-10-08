@@ -116,4 +116,8 @@ DialogBase {
 			spell_dialog.close()
 		}
 	}
+	
+	onClosed: {
+		caster = null
+	}
 }
