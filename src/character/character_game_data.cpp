@@ -7,6 +7,7 @@
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/character_class_type.h"
 #include "character/character_defines.h"
 #include "character/character_history.h"
 #include "character/character_modifier_type.h"
@@ -1764,18 +1765,18 @@ QCoro::Task<void> character_game_data::check_character_class_advancement(const i
 
 	std::vector<const metternich::character_class *> potential_character_classes;
 
-	for (const metternich::character_class *derived_character_class : this->get_character_class()->get_derived_classes()) {
-		if (derived_character_class->get_min_level() == 0 || derived_character_class->get_min_level() != level) {
+	for (const metternich::character_class *advanced_character_class : this->get_character_class()->get_advanced_classes()) {
+		if (advanced_character_class->get_min_level() == 0 || advanced_character_class->get_min_level() != level) {
 			continue;
 		}
 
-		if (!derived_character_class->is_allowed_for_species(this->character->get_species())) {
+		if (!advanced_character_class->is_allowed_for_species(this->character->get_species())) {
 			continue;
 		}
 
 		bool has_minimum_attributes = true;
 		for (const character_attribute *attribute : character_attribute::get_all()) {
-			const int min_attribute_value = derived_character_class->get_min_attribute_value(attribute);
+			const int min_attribute_value = advanced_character_class->get_min_attribute_value(attribute);
 			if (min_attribute_value != 0 && this->get_attribute_value(attribute) < min_attribute_value) {
 				has_minimum_attributes = false;
 				break;
@@ -1785,15 +1786,15 @@ QCoro::Task<void> character_game_data::check_character_class_advancement(const i
 			continue;
 		}
 
-		if (derived_character_class->get_conditions() != nullptr && !derived_character_class->get_conditions()->check(this->character)) {
+		if (advanced_character_class->get_conditions() != nullptr && !advanced_character_class->get_conditions()->check(this->character)) {
 			continue;
 		}
 
-		if (this->is_ruler() && !derived_character_class->is_government_type_allowed(this->get_domain()->get_game_data()->get_government_type())) {
+		if (this->is_ruler() && !advanced_character_class->is_government_type_allowed(this->get_domain()->get_game_data()->get_government_type())) {
 			continue;
 		}
 
-		potential_character_classes.push_back(derived_character_class);
+		potential_character_classes.push_back(advanced_character_class);
 	}
 
 	if (potential_character_classes.empty()) {

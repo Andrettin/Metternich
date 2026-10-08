@@ -89,7 +89,6 @@ void character_class::process_gsml_property(const gsml_property &property)
 
 	if (key == "base_class") {
 		character_class *base_class = character_class::get(value);
-		base_class->derived_classes.push_back(this);
 		this->base_class = base_class;
 	} else if (key == "primary_attribute") {
 		this->primary_attributes = { character_attribute::get(value) };
@@ -103,7 +102,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "primary_attributes") {
+	if (tag == "prerequisite_classes") {
+		for (const std::string &value : values) {
+			character_class *prerequisite_class = character_class::get(value);
+			this->prerequisite_classes.push_back(prerequisite_class);
+			prerequisite_class->advanced_classes.push_back(this);
+		}
+	} else if (tag == "primary_attributes") {
 		for (const std::string &value : values) {
 			this->primary_attributes.push_back(character_attribute::get(value));
 		}
@@ -258,42 +263,68 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 void character_class::check() const
 {
+	if (this->get_min_level() > 0 && this->get_prerequisite_classes().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has a minimum level, but has no prerequisite classes.", this->get_identifier()));
+	}
+	if (this->get_min_level() == 0 && !this->get_prerequisite_classes().empty()) {
+		throw std::runtime_error(std::format("Character class \"{}\" has no minimum level, but has prerequisite classes.", this->get_identifier()));
+	}
+
 	switch (this->get_type()) {
 		case character_class_type::base_class:
+			if (!this->get_prerequisite_classes().empty()) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a base class, but has a prerequisite class.", this->get_identifier()));
+			}
 			if (this->get_min_level() > 0) {
 				throw std::runtime_error(std::format("Character class \"{}\" is a base class, but has a minimum level.", this->get_identifier()));
 			}
 			break;
-		case character_class_type::subclass:
-			if (this->get_base_class() == nullptr) {
-				throw std::runtime_error(std::format("Character class \"{}\" is a subclass, but has no base class.", this->get_identifier()));
-			}
-			if (this->get_base_class()->get_type() != character_class_type::base_class) {
-				throw std::runtime_error(std::format("Character class \"{}\" is a subclass, but its base class is not a base class.", this->get_identifier()));
-			}
-			break;
 		case character_class_type::prestige_class:
-			if (this->get_base_class() == nullptr) {
-				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but has no base class.", this->get_identifier()));
-			}
-			if (this->get_base_class()->get_type() != character_class_type::base_class && this->get_base_class()->get_type() != character_class_type::subclass) {
-				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but its base class is neither a base class nor a subclass.", this->get_identifier()));
+			if (this->get_prerequisite_classes().empty()) {
+				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but has no prerequisite class.", this->get_identifier()));
 			}
 			if (this->get_min_level() == 0) {
 				throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but has no minimum level.", this->get_identifier()));
 			}
 			break;
 		case character_class_type::epic_class:
-			if (this->get_base_class() == nullptr) {
-				throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but has no base class.", this->get_identifier()));
-			}
-			if (this->get_base_class()->get_type() != character_class_type::base_class && this->get_base_class()->get_type() != character_class_type::subclass && this->get_base_class()->get_type() != character_class_type::prestige_class) {
-				throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but its base class is neither a base class, nor a subclass, nor a prestige class.", this->get_identifier()));
+			if (this->get_prerequisite_classes().empty()) {
+				throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but has no prerequisite class.", this->get_identifier()));
 			}
 			if (this->get_min_level() <= 20) {
 				throw std::runtime_error(std::format("Character class \"{}\" has is an epic class, but does not have a minimum level beyond 20.", this->get_identifier()));
 			}
 			break;
+		default:
+			break;
+	}
+
+	for (const character_class *prerequisite_class : this->get_prerequisite_classes()) {
+		const character_class_type prerequisite_class_type = prerequisite_class->get_type();
+
+		switch (this->get_type()) {
+			case character_class_type::subclass:
+				if (prerequisite_class_type != character_class_type::base_class) {
+					throw std::runtime_error(std::format("Character class \"{}\" is a subclass, but its prerequisite class \"{}\" is not a base class.", this->get_identifier(), prerequisite_class->get_identifier()));
+				}
+				break;
+			case character_class_type::prestige_class:
+				if (prerequisite_class_type != character_class_type::base_class && prerequisite_class_type != character_class_type::subclass) {
+					throw std::runtime_error(std::format("Character class \"{}\" is a prestige class, but its prerequisite class \"{}\" is neither a base class nor a subclass.", this->get_identifier(), prerequisite_class->get_identifier()));
+				}
+				break;
+			case character_class_type::epic_class:
+				if (prerequisite_class_type != character_class_type::base_class && prerequisite_class_type != character_class_type::subclass && prerequisite_class_type != character_class_type::prestige_class) {
+					throw std::runtime_error(std::format("Character class \"{}\" is an epic class, but its prerequisite class \"{}\" is neither a base class, nor a subclass, nor a prestige class.", this->get_identifier(), prerequisite_class->get_identifier()));
+				}
+				break;
+			default:
+				break;
+		}
+
+		if (prerequisite_class->get_min_level() > this->get_min_level()) {
+			throw std::runtime_error(std::format("Character class \"{}\" has prerequisite class \"{}\", but the latter has a higher minimum level.", this->get_identifier(), prerequisite_class->get_identifier()));
+		}
 	}
 
 	if (this->get_primary_attributes().empty()) {

@@ -2,6 +2,9 @@ dwarven_defender = {
 	name = "Dwarven Defender"
 	type = prestige_class
 	base_class = warrior
+	prerequisite_classes = {
+		warrior
+	}
 	min_level = 11
 	military_unit_category = general
 	health_bonus_table = barbarian_health_bonus #d12 hit dice

@@ -86,9 +86,14 @@ public:
 		return this->base_class;
 	}
 
-	const std::vector<const character_class *> &get_derived_classes() const
+	const std::vector<const character_class *> &get_prerequisite_classes() const
 	{
-		return this->derived_classes;
+		return this->prerequisite_classes;
+	}
+
+	const std::vector<const character_class *> &get_advanced_classes() const
+	{
+		return this->advanced_classes;
 	}
 
 	const std::vector<const character_attribute *> &get_primary_attributes() const
@@ -418,7 +423,8 @@ signals:
 private:
 	character_class_type type{};
 	const character_class *base_class = nullptr;
-	std::vector<const character_class *> derived_classes;
+	std::vector<const character_class *> prerequisite_classes;
+	std::vector<const character_class *> advanced_classes;
 	std::vector<const character_attribute *> primary_attributes;
 	metternich::military_unit_category military_unit_category;
 	const metternich::civilian_unit_class *civilian_unit_class = nullptr;
