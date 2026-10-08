@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_defines.h"
 #include "character/character_game_data.h"
+#include "character/monster_type.h"
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
@@ -687,7 +688,7 @@ std::string battle::get_tile_text(const QPoint &tile_pos) const
 	const battle_tile &tile = this->get_tile(tile_pos);
 	if (tile.unit != nullptr) {
 		const military_unit *unit = tile.unit;
-		const std::string &type_name = unit->get_type()->get_name();
+		const std::string &type_name = unit->get_type()->is_monster() ? unit->get_character()->get_monster_type()->get_name() : unit->get_type()->get_name();
 		const std::string &unit_name = unit->get_name();
 		text += " " + (!unit_name.empty() ? (unit_name + " (" + type_name + ")") : type_name);
 	}

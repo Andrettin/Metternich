@@ -63,15 +63,16 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 
 	military_unit->generate_name();
 
-	assert_throw(military_unit->get_country() != nullptr);
 	assert_throw(military_unit->get_phenotype() != nullptr);
 
-	military_unit->get_country()->get_game_data()->change_military_score(military_unit->get_score());
+	if (military_unit->get_country() != nullptr) {
+		military_unit->get_country()->get_game_data()->change_military_score(military_unit->get_score());
 
-	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
-		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, military_unit->get_country());
-		military_unit->change_stat(stat, type_stat_value - type->get_stat(stat));
+		for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
+			const military_unit_stat stat = static_cast<military_unit_stat>(i);
+			const centesimal_int type_stat_value = type->get_stat_for_domain(stat, military_unit->get_country());
+			military_unit->change_stat(stat, type_stat_value - type->get_stat(stat));
+		}
 	}
 
 	co_await military_unit->check_free_promotions();
@@ -148,10 +149,8 @@ std::string military_unit::get_name() const
 	return this->name;
 }
 
-void military_unit::generate_name()
+void military_unit::generate_name(const std::map<std::string, int> &used_name_counts)
 {
-	const std::map<std::string, int> &used_name_counts = this->get_country() ? this->get_country()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
-
 	const culture_base *culture = this->get_culture();
 	if (culture == nullptr) {
 		culture = this->get_cultural_group();
@@ -165,7 +164,7 @@ void military_unit::generate_name()
 
 	//if no name could be generated for the unit, give it a name along the patterns of "1st Regulars"
 	int ordinal_name_count = 1;
-	while (this->get_name().empty() && this->get_country() != nullptr) {
+	while (this->get_name().empty()) {
 		std::string ordinal_name = std::format("{}{} {}", ordinal_name_count, number::get_ordinal_number_suffix(ordinal_name_count), this->get_type()->get_name());
 		if (used_name_counts.contains(ordinal_name)) {
 			++ordinal_name_count;
@@ -177,6 +176,12 @@ void military_unit::generate_name()
 	if (!this->get_name().empty()) {
 		log_trace(std::format("Generated name \"{}\" for military unit of type \"{}\" and culture \"{}\".", this->get_name(), this->get_type()->get_identifier(), culture->get_identifier()));
 	}
+}
+
+void military_unit::generate_name()
+{
+	const std::map<std::string, int> &used_name_counts = this->get_country() ? this->get_country()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
+	this->generate_name(used_name_counts);
 }
 
 QCoro::Task<void> military_unit::set_type(const military_unit_type *type)

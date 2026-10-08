@@ -33,87 +33,6 @@
 
 namespace metternich {
 
-class enemy final
-{
-public:
-	explicit enemy(const gsml_data &scope)
-	{
-		this->monster_type = monster_type::get(scope.get_tag());
-
-		scope.for_each_element([this](const gsml_property &property) {
-			if (property.get_key() == "health") {
-				this->health = std::stoi(property.get_value());
-			} else if (property.get_key() == "placement") {
-				this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
-			} else {
-				assert_throw(false);
-			}
-		}, [this](const gsml_data &child_scope) {
-			if (child_scope.get_tag() == "placement_offset") {
-				this->placement_offset = child_scope.to_point();
-			} else if (child_scope.get_tag() == "items") {
-				for (const std::string &value : child_scope.get_values()) {
-					this->items.push_back(item_type::get(value));
-				}
-
-				child_scope.for_each_property([this](const gsml_property &property) {
-					const std::string &key = property.get_key();
-					const std::string &value = property.get_value();
-					const item_type *item_type = item_type::get(key);
-					const int quantity = std::stoi(value);
-
-					for (int i = 0; i < quantity; ++i) {
-						this->items.push_back(item_type);
-					}
-				});
-			} else if (child_scope.get_tag() == "on_killed") {
-				this->kill_effects = std::make_unique<effect_list<const domain>>();
-				this->kill_effects->process_gsml_data(child_scope);
-			} else {
-				assert_throw(false);
-			}
-		});
-	}
-
-	const metternich::monster_type *get_monster_type() const
-	{
-		return this->monster_type;
-	}
-
-	int get_health()
-	{
-		return this->health;
-	}
-
-	const combat_placement get_placement() const
-	{
-		return this->placement;
-	}
-
-	const QPoint &get_placement_offset() const
-	{
-		return this->placement_offset;
-	}
-
-	const std::vector<const item_type *> &get_items() const
-	{
-		return this->items;
-	}
-
-	const effect_list<const domain> *get_kill_effects() const
-	{
-		return this->kill_effects.get();
-	}
-
-private:
-	const metternich::monster_type *monster_type = nullptr;
-	int health = 0;
-	combat_placement placement = combat_placement::right;
-	QPoint placement_offset = QPoint(0, 0);
-	std::vector<const item_type *> items;
-	std::unique_ptr<effect_list<const domain>> kill_effects;
-};
-
 class combat_effect final : public effect<const domain>
 {
 public:
@@ -214,24 +133,6 @@ public:
 
 		if (tag == "map_size") {
 			this->map_size = scope.to_size();
-		} else if (tag == "enemies") {
-			scope.for_each_element([this](const gsml_property &property) {
-				const std::string &key = property.get_key();
-				const monster_type *monster_type = monster_type::get(key);
-
-				const std::string &value = property.get_value();
-				if (string::is_number(value)) {
-					this->enemy_counts[monster_type] = std::stoi(value);
-				} else {
-					this->enemy_counts[monster_type] = dice(value);
-				}
-			}, [this](const gsml_data &child_scope) {
-				auto enemy = std::make_unique<metternich::enemy>(child_scope);
-				if (!this->enemy_counts.contains(enemy->get_monster_type())) {
-					this->enemy_counts[enemy->get_monster_type()] = 0;
-				}
-				this->enemies.push_back(std::move(enemy));
-			});
 		} else if (tag == "enemy_characters") {
 			for (const std::string &value : values) {
 				this->enemy_characters.push_back(string_to_target_variant<const character>(value));
@@ -311,27 +212,6 @@ public:
 
 		str += "\n" + std::string(indent, '\t') + "Does combat against:";
 
-		for (const auto &[monster_type, quantity_variant] : this->enemy_counts) {
-			int additional_quantity = 0;
-			for (const std::unique_ptr<enemy> &enemy : this->enemies) {
-				if (enemy->get_monster_type() == monster_type) {
-					++additional_quantity;
-				}
-			}
-
-			std::string quantity_string;
-			if (std::holds_alternative<int>(quantity_variant)) {
-				const int quantity = std::get<int>(quantity_variant) + additional_quantity;
-				quantity_string = std::to_string(quantity);
-			} else {
-				dice quantity_dice = std::get<dice>(quantity_variant);
-				quantity_dice.change_modifier(additional_quantity);
-				quantity_string = quantity_dice.to_display_string();
-			}
-
-			str += "\n" + std::string(indent + 1, '\t') + quantity_string + "x" + monster_type->get_name();
-		}
-
 		for (const target_variant<const character> &enemy_character : this->enemy_characters) {
 			const character *character = this->get_enemy_character(enemy_character, ctx);
 
@@ -353,30 +233,6 @@ public:
 	[[nodiscard]] QCoro::Task<std::vector<const character *>> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
 	{
 		std::vector<const character *> enemy_characters;
-
-		for (const auto &[monster_type, quantity_variant] : this->enemy_counts) {
-			int quantity = 0;
-			if (std::holds_alternative<int>(quantity_variant)) {
-				quantity = std::get<int>(quantity_variant);
-			} else {
-				const dice quantity_dice = std::get<dice>(quantity_variant);
-				quantity = random::get()->roll_dice(quantity_dice);
-			}
-
-			for (int i = 0; i < quantity; ++i) {
-				std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(monster_type, nullptr, nullptr, nullptr, 0, {});
-				enemy_characters.push_back(enemy_character->get_character());
-				generated_characters.push_back(enemy_character);
-			}
-		}
-
-		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
-			std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
-			enemy_characters.push_back(enemy_character->get_character());
-			generated_characters.push_back(enemy_character);
-
-			character_enemy_infos[enemy_character->get_character()] = enemy.get();
-		}
 
 		for (const target_variant<const character> &enemy_character_variant : this->enemy_characters) {
 			const character *enemy_character = this->get_enemy_character(enemy_character_variant, ctx);
@@ -407,8 +263,6 @@ public:
 private:
 	bool attacker = true;
 	QSize map_size;
-	data_entry_map<monster_type, std::variant<int, dice>> enemy_counts;
-	std::vector<std::unique_ptr<enemy>> enemies;
 	std::vector<target_variant<const character>> enemy_characters;
 	std::vector<std::unique_ptr<object>> objects;
 	data_entry_map<object_type, int> object_counts;

@@ -75,6 +75,7 @@ public:
 		emit name_changed();
 	}
 
+	void generate_name(const std::map<std::string, int> &used_name_counts);
 	void generate_name();
 
 	const military_unit_type *get_type() const
