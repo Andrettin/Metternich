@@ -1,0 +1,35 @@
+burning_hands = {
+	name = "Burning Hands"
+	type = spell
+	level = 1
+	icon = research
+	price = 25gp
+	target = enemy_character
+	range = touch
+	casting_time_initiative_modifier = 1
+	sound = fire
+	arcane_schools = {
+		alteration
+	}
+	character_classes = {
+		mage
+	}
+	target_character_effects = {
+		damage = {
+			value = 1d3
+			save_type = reflex
+			caster_level_values = {
+				1 = 2
+				2 = 2
+				3 = 2
+				4 = 2
+				5 = 2
+				6 = 2
+				7 = 2
+				8 = 2
+				9 = 2
+				10 = 2
+			}
+		}
+	}
+}
