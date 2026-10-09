@@ -71,7 +71,23 @@ dwarf = {
 		}
 		species_armor_class_bonus = {
 			species = ogre
-			bonus = 2
+			bonus = 4
+		}
+		#species_armor_class_bonus = {
+		#	species = ogre_mage
+		#	bonus = 4
+		#}
+		species_armor_class_bonus = {
+			species = troll
+			bonus = 4
+		}
+		#species_armor_class_bonus = {
+		#	species = giant #FIXME: add support for adding a taxon here instead of a species
+		#	bonus = 4
+		#}
+		species_armor_class_bonus = {
+			species = titan
+			bonus = 4
 		}
 		
 		find_disarm_traps = 15
