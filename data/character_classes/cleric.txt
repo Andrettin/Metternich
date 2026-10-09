@@ -15,7 +15,11 @@ cleric = {
 		fortitude = high_save_bonus
 		reflex = low_save_bonus
 		will = high_save_bonus
+		save_vs_breath_weapon = cleric_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = cleric_save_vs_poison_bonus
+		save_vs_petrification = cleric_save_vs_petrification_bonus
 		save_vs_poison = cleric_save_vs_poison_bonus
+		save_vs_polymorph = cleric_save_vs_petrification_bonus
 	}
 	domain_skill_bonus_tables = {
 		faith = high_domain_skill_bonus

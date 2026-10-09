@@ -15,7 +15,11 @@ rogue = {
 		fortitude = low_save_bonus
 		reflex = high_save_bonus
 		will = low_save_bonus
+		save_vs_breath_weapon = rogue_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = rogue_save_vs_poison_bonus
+		save_vs_petrification = rogue_save_vs_petrification_bonus
 		save_vs_poison = rogue_save_vs_poison_bonus
+		save_vs_polymorph = rogue_save_vs_petrification_bonus
 	}
 	skill_bonus_tables = {
 		find_disarm_traps = rogue_find_disarm_traps_bonus

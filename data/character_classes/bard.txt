@@ -18,7 +18,11 @@ bard = {
 		fortitude = low_save_bonus
 		reflex = high_save_bonus
 		will = high_save_bonus
+		save_vs_breath_weapon = rogue_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = rogue_save_vs_poison_bonus
+		save_vs_petrification = rogue_save_vs_petrification_bonus
 		save_vs_poison = rogue_save_vs_poison_bonus
+		save_vs_polymorph = rogue_save_vs_petrification_bonus
 	}
 	domain_skill_bonus_tables = {
 		culture = high_domain_skill_bonus

@@ -20,7 +20,11 @@ ranger = {
 		fortitude = high_save_bonus
 		reflex = high_save_bonus
 		will = low_save_bonus
-		save_vs_poison = cleric_save_vs_poison_bonus
+		save_vs_breath_weapon = warrior_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = warrior_save_vs_poison_bonus
+		save_vs_petrification = warrior_save_vs_petrification_bonus
+		save_vs_poison = warrior_save_vs_poison_bonus
+		save_vs_polymorph = warrior_save_vs_petrification_bonus
 	}
 	domain_skill_bonus_tables = {
 		order = high_domain_skill_bonus

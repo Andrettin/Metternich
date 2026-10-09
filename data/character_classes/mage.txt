@@ -14,7 +14,11 @@ mage = {
 		fortitude = low_save_bonus
 		reflex = low_save_bonus
 		will = high_save_bonus
+		save_vs_breath_weapon = mage_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = mage_save_vs_poison_bonus
+		save_vs_petrification = mage_save_vs_petrification_bonus
 		save_vs_poison = mage_save_vs_poison_bonus
+		save_vs_polymorph = mage_save_vs_petrification_bonus
 	}
 	domain_skill_bonus_tables = {
 		magic = high_domain_skill_bonus

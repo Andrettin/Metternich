@@ -10,7 +10,27 @@ will = {
 	name = "Will"
 }
 
+save_vs_breath_weapon = {
+	name = "Save vs. Breath Weapon"
+	base_save_type = reflex
+}
+
+save_vs_paralyzation = {
+	name = "Save vs. Paralyzation"
+	base_save_type = fortitude
+}
+
+save_vs_petrification = {
+	name = "Save vs. Petrification"
+	base_save_type = fortitude
+}
+
 save_vs_poison = {
 	name = "Save vs. Poison"
+	base_save_type = fortitude
+}
+
+save_vs_polymorph = {
+	name = "Save vs. Polymorph"
 	base_save_type = fortitude
 }
