@@ -1,0 +1,15 @@
+baurgs = { #Donkin gives "Baurgs" instead; Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 137; Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Baúrgs"
+	language = gothic
+	type = noun
+	gender = feminine #as given by Fick
+	etymon = proto_germanic:burg_proto_germanic #as given by Fick
+	name_generation_word = high_german:burg_high_german
+	meanings = {
+		#Fick gives "Stadt" as the meaning
+		"City"
+		"Town"
+	}
+	
+	#Donkin (apparently) gives this word as coming from "bairgan" (to shelter)
+}

@@ -4,6 +4,7 @@ schmied = {
 	type = noun
 	gender = masculine
 	etymon = smit_middle_high_german #presumably
+	name_generation_word = english:smith
 	meaning_words = {
 		smith
 	}

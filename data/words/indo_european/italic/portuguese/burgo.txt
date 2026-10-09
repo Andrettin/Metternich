@@ -1,0 +1,11 @@
+burgo_portuguese = { #Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Burgo"
+	language = portuguese
+	type = noun
+	etymon = gothic:baurgs #the source gives it as being of Germanic origin (then going on to list a series of Germanic words including this Gothic one); presumably from the Gothic in Portuguese, since it seems likely it has the same origin as the Spanish word
+	name_generation_word = english:town
+	meanings = {
+		"Small Town"
+		"Borough"
+	}
+}

@@ -3,6 +3,7 @@ smithu = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Sprac
 	language = proto_germanic
 	type = noun
 	gender = masculine
+	name_generation_word = english:smith
 	meaning_words = {
 		#source gives the German "Schmied, Werkmeister"
 		smith
