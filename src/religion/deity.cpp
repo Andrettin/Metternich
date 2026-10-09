@@ -36,16 +36,18 @@ const std::set<std::string> deity::database_dependencies = {
 	mythic_path::class_identifier
 };
 
-deity *deity::add(const std::string &identifier, const metternich::data_module *data_module)
+void deity::process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process, const data_type_metadata *metadata)
 {
-	deity *deity = data_type::add(identifier, data_module);
+	data_type::process_database(definition, gsml_data_to_process, metadata);
 
-	//add a character with the same identifier as the deity for it
-	metternich::character *character = character::add(identifier, data_module);
-	character->set_deity(deity);
-	deity->character = character;
-
-	return deity;
+	if (definition) {
+		for (deity *deity : deity::get_all()) {
+			//add a character with the same identifier as the deity for it
+			metternich::character *character = character::add(deity->get_identifier(), deity->get_module());
+			character->set_deity(deity);
+			deity->character = character;
+		}
+	}
 }
 
 deity::deity(const std::string &identifier) : idea(identifier)

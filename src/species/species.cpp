@@ -30,9 +30,9 @@ const std::set<std::string> species::database_dependencies = {
 	phenotype::class_identifier
 };
 
-void species::process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process)
+void species::process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process, const data_type_metadata *metadata)
 {
-	data_type::process_database(definition, gsml_data_to_process);
+	data_type::process_database(definition, gsml_data_to_process, metadata);
 
 	if (!definition) {
 		for (species *species : species::get_all()) {

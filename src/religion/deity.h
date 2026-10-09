@@ -39,7 +39,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static deity *add(const std::string &identifier, const metternich::data_module *data_module);
+	static void process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process, const data_type_metadata *metadata);
 
 	explicit deity(const std::string &identifier);
 	~deity();
