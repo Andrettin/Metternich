@@ -2,6 +2,7 @@
 
 #include "map/site_feature.h"
 
+#include "database/gsml_data.h"
 #include "infrastructure/holding_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"

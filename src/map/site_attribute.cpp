@@ -3,6 +3,7 @@
 #include "map/site_attribute.h"
 
 #include "character/skill.h"
+#include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "util/vector_util.h"
 

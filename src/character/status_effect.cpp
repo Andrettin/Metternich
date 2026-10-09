@@ -3,6 +3,7 @@
 #include "character/status_effect.h"
 
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "util/random.h"

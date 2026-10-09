@@ -2,6 +2,7 @@
 
 #include "character/mythic_path.h"
 
+#include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "util/string_util.h"
 

@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/skill_group.h"
+#include "database/gsml_data.h"
 #include "util/assert_util.h"
 
 namespace metternich {

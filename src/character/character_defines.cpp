@@ -4,6 +4,7 @@
 
 #include "character/bloodline_strength_category.h"
 #include "character/opinion_type.h"
+#include "database/gsml_data.h"
 #include "religion/divine_rank.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"

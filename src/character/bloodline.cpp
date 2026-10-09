@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "culture/culture.h"
+#include "database/gsml_data.h"
 #include "religion/deity.h"
 
 namespace metternich {

@@ -5,6 +5,7 @@
 #include "character/character_attribute.h"
 #include "character/character_class.h"
 #include "character/trait.h"
+#include "database/gsml_data.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
 #include "species/species.h"

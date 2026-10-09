@@ -10,6 +10,7 @@ Q_MOC_INCLUDE("map/site.h")
 
 namespace archimedes {
 	class gsml_data;
+	class gsml_property;
 }
 
 namespace metternich {

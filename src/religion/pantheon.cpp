@@ -2,6 +2,7 @@
 
 #include "religion/pantheon.h"
 
+#include "database/gsml_data.h"
 #include "religion/divine_rank.h"
 
 #include <magic_enum/magic_enum.hpp>

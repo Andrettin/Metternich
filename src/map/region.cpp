@@ -2,6 +2,8 @@
 
 #include "map/region.h"
 
+#include "database/gsml_data.h"
+#include "database/gsml_property.h"
 #include "map/province.h"
 #include "map/region_history.h"
 #include "map/site_feature.h"

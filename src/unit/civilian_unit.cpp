@@ -7,6 +7,7 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"

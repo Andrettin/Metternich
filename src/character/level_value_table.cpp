@@ -2,6 +2,8 @@
 
 #include "character/level_value_table.h"
 
+#include "database/gsml_operator.h"
+#include "database/gsml_property.h"
 #include "util/assert_util.h"
 
 namespace metternich {

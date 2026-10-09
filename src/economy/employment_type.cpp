@@ -3,6 +3,8 @@
 #include "economy/employment_type.h"
 
 #include "database/defines.h"
+#include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "economy/commodity.h"

@@ -5,6 +5,7 @@
 #include "character/character_class.h"
 #include "character/character_defines.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "economy/commodity.h"
 #include "game/attack_result.h"
 #include "game/battle.h"

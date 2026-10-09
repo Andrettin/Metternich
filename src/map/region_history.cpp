@@ -3,6 +3,7 @@
 #include "map/region_history.h"
 
 #include "culture/culture.h"
+#include "database/gsml_data.h"
 #include "map/province.h"
 #include "map/province_container.h"
 #include "map/province_game_data.h"

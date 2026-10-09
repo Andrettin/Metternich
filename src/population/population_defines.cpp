@@ -2,6 +2,7 @@
 
 #include "population/population_defines.h"
 
+#include "database/gsml_data.h"
 #include "script/factor.h"
 
 namespace metternich {

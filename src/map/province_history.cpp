@@ -4,6 +4,7 @@
 
 #include "culture/culture.h"
 #include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"

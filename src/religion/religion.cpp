@@ -2,6 +2,7 @@
 
 #include "religion/religion.h"
 
+#include "database/gsml_data.h"
 #include "religion/divine_domain.h"
 #include "religion/religious_group.h"
 #include "spell/spell.h"

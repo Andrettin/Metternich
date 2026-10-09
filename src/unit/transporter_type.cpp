@@ -4,6 +4,8 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/gsml_data.h"
+#include "database/gsml_property.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
