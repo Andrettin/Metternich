@@ -1,3 +1,7 @@
+castle = {
+	filepath = "icons/sites/castle.png"
+}
+
 dungeon = {
 	filepath = "icons/sites/dungeon.png"
 }
@@ -10,6 +14,14 @@ law = {
 	filepath = "icons/sites/law.png"
 }
 
+library_tiny = {
+	filepath = "icons/sites/library.png"
+}
+
 temple = {
 	filepath = "icons/sites/temple.png"
+}
+
+university_tiny = {
+	filepath = "icons/sites/university.png"
 }

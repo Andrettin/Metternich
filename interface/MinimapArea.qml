@@ -204,7 +204,7 @@ Rectangle {
 		
 		TinyIconButton {
 			id: cultural_society_map_mode_button
-			icon_identifier: "embassy"
+			icon_identifier: "university_tiny"
 			highlighted: province_map.mode === ProvinceMap.Mode.CulturalSociety
 			
 			onClicked: {
@@ -276,7 +276,7 @@ Rectangle {
 		
 		TinyIconButton {
 			id: technology_map_mode_button
-			icon_identifier: "law"
+			icon_identifier: "library_tiny"
 			highlighted: province_map.mode === ProvinceMap.Mode.Technology
 			
 			onClicked: {

@@ -1,6 +1,6 @@
 university = {
 	name = "University"
-	icon = embassy
+	icon = university_tiny
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
 	cultural = true

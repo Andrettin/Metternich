@@ -1,6 +1,6 @@
 library = {
 	name = "Library"
-	icon = law
+	icon = library_tiny
 	portrait = university
 	image_filepath = "tiles/settlements/town.png"
 	cultural = true

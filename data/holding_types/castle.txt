@@ -1,6 +1,6 @@
 castle = {
 	name = "Castle"
-	icon = non_aggression_pact
+	icon = castle
 	ruin_icon = dungeon
 	portrait = castle
 	ruin_portrait = ruined_castle

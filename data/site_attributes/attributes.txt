@@ -18,7 +18,7 @@ law = {
 
 lore = {
 	name = "Lore"
-	tiny_icon = embassy
+	tiny_icon = library_tiny
 	affected_skills = {
 		astrology
 		heraldry
