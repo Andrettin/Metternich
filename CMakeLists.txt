@@ -242,6 +242,7 @@ source_group(religion FILES ${religion_SRCS})
 set_source_files_properties(${religion_SRCS} PROPERTIES UNITY_GROUP "religion")
 
 set(script_SRCS
+	src/script/battle_enemy.cpp
 	src/script/context.cpp
 	src/script/factor.cpp
 	src/script/factor_modifier.cpp
@@ -644,6 +645,7 @@ set(religion_HDRS
 source_group(religion FILES ${religion_HDRS})
 
 set(script_HDRS
+	src/script/battle_enemy.h
 	src/script/context.h
 	src/script/factor.h
 	src/script/factor_modifier.h
@@ -810,6 +812,7 @@ set(script_effect_HDRS
 	src/script/effect/commodity_effect.h
 	src/script/effect/commodity_percent_effect.h
 	src/script/effect/create_character_effect.h
+	src/script/effect/create_enemy_effect.h
 	src/script/effect/create_military_unit_effect.h
 	src/script/effect/create_transporter_effect.h
 	src/script/effect/damage_effect.h

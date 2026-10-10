@@ -36,7 +36,6 @@ namespace metternich {
 class combat_effect final : public effect<const domain>
 {
 public:
-
 	class object final
 	{
 	public:
@@ -153,7 +152,7 @@ public:
 		assert_throw(ctx.party != nullptr);
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
-		character_map<const enemy *> character_enemy_infos;
+		character_map<const battle_enemy *> character_enemy_infos;
 		const std::vector<const character *> enemy_characters = co_await this->get_enemy_characters(ctx, generated_characters, character_enemy_infos);
 
 		auto enemy_party = std::make_unique<party>(enemy_characters);
@@ -230,7 +229,7 @@ public:
 		return str;
 	}
 
-	[[nodiscard]] QCoro::Task<std::vector<const character *>> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
+	[[nodiscard]] QCoro::Task<std::vector<const character *>> get_enemy_characters(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const battle_enemy *> &character_enemy_infos) const
 	{
 		std::vector<const character *> enemy_characters;
 

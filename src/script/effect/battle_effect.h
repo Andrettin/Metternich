@@ -6,6 +6,7 @@
 #include "database/gsml_property.h"
 #include "game/battle.h"
 #include "game/game.h"
+#include "script/battle_enemy.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
@@ -35,95 +36,6 @@ struct enemy_type_compare final
 			return std::get<const monster_type *>(lhs)->get_identifier() < std::get<const monster_type *>(rhs)->get_identifier();
 		}
 	}
-};
-
-class enemy final
-{
-public:
-	explicit enemy(const gsml_data &scope)
-	{
-		this->military_unit_type = military_unit_type::get(scope.get_tag());
-
-		scope.for_each_element([this](const gsml_property &property) {
-			if (property.get_key() == "monster_type") {
-				this->monster_type = monster_type::get(property.get_value());
-			} else if (property.get_key() == "health") {
-				this->health = std::stoi(property.get_value());
-			} else if (property.get_key() == "placement") {
-				this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
-			} else {
-				assert_throw(false);
-			}
-		}, [this](const gsml_data &child_scope) {
-			if (child_scope.get_tag() == "placement_offset") {
-				this->placement_offset = child_scope.to_point();
-			} else if (child_scope.get_tag() == "items") {
-				for (const std::string &value : child_scope.get_values()) {
-					this->items.push_back(item_type::get(value));
-				}
-
-				child_scope.for_each_property([this](const gsml_property &property) {
-					const std::string &key = property.get_key();
-					const std::string &value = property.get_value();
-					const item_type *item_type = item_type::get(key);
-					const int quantity = std::stoi(value);
-
-					for (int i = 0; i < quantity; ++i) {
-						this->items.push_back(item_type);
-					}
-				});
-			} else if (child_scope.get_tag() == "on_killed") {
-				this->kill_effects = std::make_unique<effect_list<const domain>>();
-				this->kill_effects->process_gsml_data(child_scope);
-			} else {
-				assert_throw(false);
-			}
-		});
-	}
-
-	const metternich::military_unit_type *get_military_unit_type() const
-	{
-		return this->military_unit_type;
-	}
-
-	const metternich::monster_type *get_monster_type() const
-	{
-		return this->monster_type;
-	}
-
-	int get_health()
-	{
-		return this->health;
-	}
-
-	const combat_placement get_placement() const
-	{
-		return this->placement;
-	}
-
-	const QPoint &get_placement_offset() const
-	{
-		return this->placement_offset;
-	}
-
-	const std::vector<const item_type *> &get_items() const
-	{
-		return this->items;
-	}
-
-	const effect_list<const domain> *get_kill_effects() const
-	{
-		return this->kill_effects.get();
-	}
-
-private:
-	const metternich::military_unit_type *military_unit_type = nullptr;
-	const metternich::monster_type *monster_type = nullptr;
-	int health = 0;
-	combat_placement placement = combat_placement::right;
-	QPoint placement_offset = QPoint(0, 0);
-	std::vector<const item_type *> items;
-	std::unique_ptr<effect_list<const domain>> kill_effects;
 };
 
 class battle_effect final : public effect<const domain>
@@ -176,14 +88,7 @@ public:
 					this->enemy_counts[military_unit_type] = dice(value);
 				}
 			}, [this](const gsml_data &child_scope) {
-				auto enemy = std::make_unique<metternich::enemy>(child_scope);
-				if (enemy->get_monster_type() != nullptr) {
-					if (!this->enemy_counts.contains(enemy->get_monster_type())) {
-						this->enemy_counts[enemy->get_monster_type()] = 0;
-					}
-				} else if (!this->enemy_counts.contains(enemy->get_military_unit_type())) {
-					this->enemy_counts[enemy->get_military_unit_type()] = 0;
-				}
+				auto enemy = std::make_unique<battle_enemy>(child_scope);
 				this->enemies.push_back(std::move(enemy));
 			});
 		} else if (tag == "on_victory") {
@@ -202,7 +107,7 @@ public:
 		std::vector<military_unit *> enemy_units;
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
-		character_map<const enemy *> character_enemy_infos;
+		character_map<const battle_enemy *> character_enemy_infos;
 		const std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs = co_await this->create_enemy_units(ctx, generated_characters, character_enemy_infos);
 
 		for (const auto &enemy_unit : enemy_unit_unique_ptrs) {
@@ -273,11 +178,23 @@ public:
 
 		str += "\n" + std::string(indent, '\t') + std::format("Battles against{}{}:", this->attacker && this->defender_neutral ? " (neutral until attacked)" : "", this->attacker && this->surprise ? " (surprised)" : "");
 
-		for (const auto &[enemy_type_variant, quantity_variant] : this->enemy_counts) {
+		std::map<enemy_type_variant, std::variant<int, dice>, enemy_type_compare> enemy_counts = this->enemy_counts;
+		const std::vector<const battle_enemy *> enemies = this->get_enemies(ctx);
+		for (const battle_enemy *enemy : enemies) {
+			if (enemy->get_monster_type() != nullptr) {
+				if (!enemy_counts.contains(enemy->get_monster_type())) {
+					enemy_counts[enemy->get_monster_type()] = 0;
+				}
+			} else if (!enemy_counts.contains(enemy->get_military_unit_type())) {
+				enemy_counts[enemy->get_military_unit_type()] = 0;
+			}
+		}
+
+		for (const auto &[enemy_type_variant, quantity_variant] : enemy_counts) {
 			int additional_quantity = 0;
 			const military_unit_type *military_unit_type = std::holds_alternative<const metternich::military_unit_type *>(enemy_type_variant) ? std::get<const metternich::military_unit_type *>(enemy_type_variant) : nullptr;
 			const monster_type *monster_type = std::holds_alternative<const metternich::monster_type *>(enemy_type_variant) ? std::get<const metternich::monster_type *>(enemy_type_variant) : nullptr;
-			for (const std::unique_ptr<enemy> &enemy : this->enemies) {
+			for (const battle_enemy *enemy : enemies) {
 				if ((enemy->get_military_unit_type() != nullptr && enemy->get_military_unit_type() == military_unit_type) || (enemy->get_monster_type() != nullptr && enemy->get_monster_type() == monster_type)) {
 					++additional_quantity;
 				}
@@ -315,7 +232,7 @@ public:
 		return str;
 	}
 
-	[[nodiscard]] QCoro::Task<std::vector<qunique_ptr<military_unit>>> create_enemy_units(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const enemy *> &character_enemy_infos) const
+	[[nodiscard]] QCoro::Task<std::vector<qunique_ptr<military_unit>>> create_enemy_units(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const battle_enemy *> &character_enemy_infos) const
 	{
 		std::vector<qunique_ptr<military_unit>> enemy_units;
 		std::map<std::string, int> used_name_counts;
@@ -349,7 +266,7 @@ public:
 			}
 		}
 
-		for (const std::unique_ptr<enemy> &enemy : this->enemies) {
+		for (const battle_enemy *enemy : this->get_enemies(ctx)) {
 			qunique_ptr<military_unit> military_unit;
 
 			if (enemy->get_monster_type() != nullptr) {
@@ -357,7 +274,7 @@ public:
 
 				std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
 				generated_characters.push_back(enemy_character);
-				character_enemy_infos[enemy_character->get_character()] = enemy.get();
+				character_enemy_infos[enemy_character->get_character()] = enemy;
 
 				military_unit = co_await metternich::military_unit::create(enemy->get_military_unit_type(), nullptr, enemy_character->get_character());
 			} else {
@@ -370,6 +287,21 @@ public:
 		co_return enemy_units;
 	}
 
+	std::vector<const battle_enemy *> get_enemies(const read_only_context &ctx) const
+	{
+		std::vector<const battle_enemy *> enemies;
+
+		for (const std::unique_ptr<const battle_enemy> &enemy : this->enemies) {
+			enemies.push_back(enemy.get());
+		}
+
+		for (const battle_enemy *enemy : ctx.enemies) {
+			enemies.push_back(enemy);
+		}
+
+		return enemies;
+	}
+
 private:
 	bool attacker = false;
 	bool defender_neutral = false;
@@ -378,7 +310,7 @@ private:
 	bool retreat_allowed = true;
 	bool victorious_enemies_attack_province = false;
 	std::map<enemy_type_variant, std::variant<int, dice>, enemy_type_compare> enemy_counts;
-	std::vector<std::unique_ptr<enemy>> enemies;
+	std::vector<std::unique_ptr<const battle_enemy>> enemies;
 	std::unique_ptr<effect_list<const domain>> victory_effects;
 	std::unique_ptr<effect_list<const domain>> defeat_effects;
 };

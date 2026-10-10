@@ -9,6 +9,7 @@ namespace archimedes {
 namespace metternich {
 
 class army;
+class battle_enemy;
 class building_type;
 class character;
 class domain;
@@ -144,6 +145,7 @@ struct context_base
 	army_ptr attacking_army = nullptr;
 	army_ptr defending_army = nullptr;
 	party_ptr party;
+	std::vector<const battle_enemy *> enemies;
 	const site *ruin_site = nullptr;
 	bool in_combat = false;
 };
@@ -207,6 +209,7 @@ public:
 		this->defending_army = ctx.defending_army;
 
 		this->party = ctx.party;
+		this->enemies = ctx.enemies;
 		this->ruin_site = ctx.ruin_site;
 		this->in_combat = ctx.in_combat;
 
