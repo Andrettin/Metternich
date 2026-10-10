@@ -3,6 +3,8 @@
 #include "domain/domain_history.h"
 
 #include "character/character.h"
+#include "database/gsml_data.h"
+#include "database/gsml_property.h"
 #include "domain/consulate.h"
 #include "domain/diplomacy_state.h"
 #include "domain/domain.h"

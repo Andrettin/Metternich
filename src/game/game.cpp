@@ -83,6 +83,7 @@
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "unit/transporter_type.h"
+#include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/date_util.h"
