@@ -51,16 +51,6 @@ public:
 
 	virtual const icon *get_icon() const override;
 
-	const effect_list<const domain> *get_kill_effects() const
-	{
-		return this->kill_effects;
-	}
-
-	void set_kill_effects(const effect_list<const domain> *kill_effects)
-	{
-		this->kill_effects = kill_effects;
-	}
-
 	virtual int get_hit_points() const override;
 	virtual int get_max_hit_points() const override;
 	virtual int get_range() const override;
@@ -69,7 +59,6 @@ public:
 
 private:
 	const metternich::character *character = nullptr;
-	const effect_list<const domain> *kill_effects = nullptr;
 };
 
 class combat_object final : public QObject
@@ -247,8 +236,7 @@ public:
 	[[nodiscard]]
 	QCoro::Task<int64_t> do_character_spellcast(const character *caster, const spell *spell, const metternich::character *target, party *target_party, const int to_hit_modifier);
 
-	[[nodiscard]]
-	QCoro::Task<void> on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer);
+	[[nodiscard]] QCoro::Task<void> on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer);
 
 	[[nodiscard]]
 	QCoro::Task<void> on_character_died(const character *dead_character, party *dead_character_party);

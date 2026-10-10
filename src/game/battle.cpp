@@ -477,6 +477,8 @@ QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_
 
 	const sound *enemy_death_sound = enemy->get_death_sound();
 	const int64_t enemy_experience_award = enemy->get_experience_award();
+	const std::string enemy_type_name = enemy_info->get_type_name();
+	const character *enemy_character = enemy->get_character();
 
 	co_await unit->attack(enemy, distance, moved, to_hit_modifier, 0, 1);
 
@@ -494,7 +496,8 @@ QCoro::Task<int64_t> battle::do_unit_attack(const military_unit *unit, military_
 	if (enemy_dead) {
 		experience_award += enemy_experience_award;
 		killed_units.push_back(enemy);
-		this->remove_unit_info(enemy);
+
+		co_await this->on_unit_killed(enemy_info, enemy_army, enemy_type_name, enemy_character, unit);
 
 		if (this->scope == game::get()->get_player_domain()) {
 			if (enemy_death_sound != nullptr) {
@@ -514,8 +517,11 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 	assert_throw(caster->get_game_data()->can_cast_spell(spell));
 
 	const army *target_army = target->get_army();
+	const battle_unit_info *target_info = this->get_unit_info(target);
 	const sound *target_death_sound = target->get_death_sound();
 	const int64_t target_experience_award = target->get_experience_award();
+	const std::string target_type_name = target_info->get_type_name();
+	const character *target_character = target->get_character();
 	const bool is_enemy = target_army != unit->get_army();
 
 	if (caster->get_game_data()->get_spell_charges(spell) > 0) {
@@ -528,7 +534,6 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 	bool target_dead = false;
 	
 	const battle_unit_info *unit_info = this->get_unit_info(unit);
-	const battle_unit_info *target_info = this->get_unit_info(target);
 	const QPoint tile_pos = unit_info->get_tile_pos();
 	const QPoint target_tile_pos = target_info->get_tile_pos();
 	const int distance = point::distance_to(target_tile_pos, tile_pos);
@@ -599,7 +604,8 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 
 	if (target_dead) {
 		killed_units.push_back(target);
-		this->remove_unit_info(target);
+
+		co_await this->on_unit_killed(target_info, target_army, target_type_name, target_character, unit);
 
 		if (is_enemy) {
 			experience_award += target_experience_award;
@@ -613,6 +619,29 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 	}
 
 	co_return experience_award;
+}
+
+QCoro::Task<void> battle::on_unit_killed(const battle_unit_info *dead_unit_info, const army *dead_unit_army, const std::string &dead_unit_type_name, const character *dead_unit_character, const military_unit *killer)
+{
+	assert_throw(dead_unit_info != nullptr);
+
+	if (killer->get_country() != nullptr) {
+		if (dead_unit_info->get_kill_effects() != nullptr) {
+			context ctx = this->ctx;
+			ctx.root_scope = killer->get_country();
+
+			if (killer->get_country() == game::get()->get_player_domain()) {
+				const portrait *war_minister_portrait = killer->get_country()->get_government()->get_war_minister_portrait();
+				const std::string effects_string = dead_unit_info->get_kill_effects()->get_effects_string(killer->get_country(), ctx);
+
+				engine_interface::get()->add_combat_notification(std::format("{} Killed", dead_unit_character != nullptr && dead_unit_character->get_monster_type() == nullptr ? dead_unit_character->get_game_data()->get_full_name() : dead_unit_type_name), war_minister_portrait, effects_string);
+			}
+
+			co_await dead_unit_info->get_kill_effects()->do_effects(killer->get_country(), ctx);
+		}
+	}
+
+	this->remove_unit_info(dead_unit_info->get_unit());
 }
 
 void battle::notify_result()
@@ -688,7 +717,8 @@ std::string battle::get_tile_text(const QPoint &tile_pos) const
 	const battle_tile &tile = this->get_tile(tile_pos);
 	if (tile.unit != nullptr) {
 		const military_unit *unit = tile.unit;
-		const std::string &type_name = unit->get_type()->is_monster() ? unit->get_character()->get_monster_type()->get_name() : unit->get_type()->get_name();
+		const battle_unit_info *unit_info = this->get_unit_info(unit);
+		const std::string &type_name = unit_info->get_type_name();
 		const std::string &unit_name = unit->get_name();
 		text += " " + (!unit_name.empty() ? (unit_name + " (" + type_name + ")") : type_name);
 	}
@@ -861,6 +891,15 @@ bool battle_unit_info::is_player_unit() const
 bool battle_unit_info::is_player_enemy() const
 {
 	return this->get_unit()->get_country() != game::get()->get_player_domain();
+}
+
+const std::string &battle_unit_info::get_type_name() const
+{
+	if (this->get_unit()->get_type()->is_monster()) {
+		return this->get_unit()->get_character()->get_monster_type()->get_name();
+	}
+
+	return this->get_unit()->get_type()->get_name();
 }
 
 }

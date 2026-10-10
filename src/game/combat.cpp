@@ -711,24 +711,6 @@ QCoro::Task<int64_t> combat::do_character_spellcast(const character *caster, con
 
 QCoro::Task<void> combat::on_character_killed(const character *dead_character, party *dead_character_party, const metternich::character *killer)
 {
-	if (killer->get_game_data()->get_domain() != nullptr) {
-		const combat_character_info *dead_character_info = this->get_character_info(dead_character);
-		assert_throw(dead_character_info != nullptr);
-		if (dead_character_info->get_kill_effects() != nullptr) {
-			context ctx = this->ctx;
-			ctx.root_scope = killer->get_game_data()->get_domain();
-
-			if (killer->get_game_data()->get_domain() == game::get()->get_player_domain()) {
-				const portrait *war_minister_portrait = killer->get_game_data()->get_domain()->get_government()->get_war_minister_portrait();
-				const std::string effects_string = dead_character_info->get_kill_effects()->get_effects_string(killer->get_game_data()->get_domain(), ctx);
-
-				engine_interface::get()->add_combat_notification(std::format("{} Killed", dead_character->is_temporary() && dead_character->get_monster_type() != nullptr ? dead_character->get_monster_type()->get_name() : dead_character->get_game_data()->get_full_name()), war_minister_portrait, effects_string);
-			}
-
-			co_await dead_character_info->get_kill_effects()->do_effects(killer->get_game_data()->get_domain(), ctx);
-		}
-	}
-
 	co_await this->on_character_died(dead_character, dead_character_party);
 }
 

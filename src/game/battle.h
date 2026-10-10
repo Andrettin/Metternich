@@ -57,12 +57,25 @@ public:
 	virtual bool is_player_unit() const override;
 	virtual bool is_player_enemy() const override;
 
+	const std::string &get_type_name() const;
+
+	const effect_list<const domain> *get_kill_effects() const
+	{
+		return this->kill_effects;
+	}
+
+	void set_kill_effects(const effect_list<const domain> *kill_effects)
+	{
+		this->kill_effects = kill_effects;
+	}
+
 signals:
 	void pos_changed();
 	void remaining_movement_changed();
 
 private:
 	const military_unit *unit = nullptr;
+	const effect_list<const domain> *kill_effects = nullptr;
 };
 
 class battle final : public combat_base
@@ -152,6 +165,8 @@ public:
 	[[nodiscard]] QCoro::Task<int64_t> do_unit_attack(const military_unit *unit, military_unit *enemy, army *enemy_army, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
 
 	[[nodiscard]] QCoro::Task<int64_t> do_unit_spellcast(const military_unit *unit, const spell *spell, military_unit *target, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
+
+	[[nodiscard]] QCoro::Task<void> on_unit_killed(const battle_unit_info *dead_unit_info, const army *dead_unit_army, const std::string &dead_unit_type_name, const character *dead_unit_character, const military_unit *killer);
 
 	void notify_result();
 	[[nodiscard]] QCoro::Task<void> process_result();

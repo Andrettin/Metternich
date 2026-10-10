@@ -107,8 +107,8 @@ public:
 		std::vector<military_unit *> enemy_units;
 
 		std::vector<std::shared_ptr<character_reference>> generated_characters;
-		character_map<const battle_enemy *> character_enemy_infos;
-		const std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs = co_await this->create_enemy_units(ctx, generated_characters, character_enemy_infos);
+		std::map<const military_unit *, const battle_enemy *> enemy_infos;
+		const std::vector<qunique_ptr<military_unit>> enemy_unit_unique_ptrs = co_await this->create_enemy_units(ctx, generated_characters, enemy_infos);
 
 		for (const auto &enemy_unit : enemy_unit_unique_ptrs) {
 			enemy_units.push_back(enemy_unit.get());
@@ -145,6 +145,15 @@ public:
 		battle->set_context(battle_ctx);
 		battle->set_victory_effects(this->victory_effects.get());
 		battle->set_defeat_effects(this->defeat_effects.get());
+
+		for (const auto &[character, enemy] : enemy_infos) {
+			battle_unit_info *unit_info = battle->get_unit_info(character);
+			assert_throw(unit_info != nullptr);
+
+			unit_info->set_placement(enemy->get_placement());
+			unit_info->set_placement_offset(enemy->get_placement_offset());
+			unit_info->set_kill_effects(enemy->get_kill_effects());
+		}
 
 		co_await battle->initialize();
 
@@ -232,7 +241,7 @@ public:
 		return str;
 	}
 
-	[[nodiscard]] QCoro::Task<std::vector<qunique_ptr<military_unit>>> create_enemy_units(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, character_map<const battle_enemy *> &character_enemy_infos) const
+	[[nodiscard]] QCoro::Task<std::vector<qunique_ptr<military_unit>>> create_enemy_units(const read_only_context &ctx, std::vector<std::shared_ptr<character_reference>> &generated_characters, std::map<const military_unit *, const battle_enemy *> &enemy_infos) const
 	{
 		std::vector<qunique_ptr<military_unit>> enemy_units;
 		std::map<std::string, int> used_name_counts;
@@ -274,13 +283,13 @@ public:
 
 				std::shared_ptr<character_reference> enemy_character = co_await character::generate_temporary(enemy->get_monster_type(), nullptr, nullptr, nullptr, enemy->get_health(), enemy->get_items());
 				generated_characters.push_back(enemy_character);
-				character_enemy_infos[enemy_character->get_character()] = enemy;
 
 				military_unit = co_await metternich::military_unit::create(enemy->get_military_unit_type(), nullptr, enemy_character->get_character());
 			} else {
 				military_unit = co_await metternich::military_unit::create(enemy->get_military_unit_type());
 			}
 
+			enemy_infos[military_unit.get()] = enemy;
 			enemy_units.push_back(std::move(military_unit));
 		}
 

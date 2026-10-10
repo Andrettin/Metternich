@@ -172,15 +172,6 @@ public:
 		combat_ctx.in_combat = true;
 		combat->set_context(combat_ctx);
 
-		for (const auto &[character, enemy] : character_enemy_infos) {
-			combat_character_info *character_info = combat->get_character_info(character);
-			assert_throw(character_info != nullptr);
-
-			character_info->set_placement(enemy->get_placement());
-			character_info->set_placement_offset(enemy->get_placement_offset());
-			character_info->set_kill_effects(enemy->get_kill_effects());
-		}
-
 		combat->initialize();
 
 		if (scope == game::get()->get_player_domain()) {
