@@ -27,3 +27,72 @@ create_gnoll_enemy = {
 		}
 	}
 }
+
+create_kobold_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = kobold
+				health = 4
+				items = {
+					short_sword
+					leather_armor
+					shield
+				}
+				on_killed = {
+					wealth += 25sp
+					wealth += 10gp
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = kobold
+				health = 4
+				items = {
+					short_sword
+					leather_armor
+					shield
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = kobold
+				health = 3
+				items = {
+					short_sword
+					leather_armor
+					shield
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = kobold
+				health = 2
+				items = {
+					short_sword
+					leather_armor
+					shield
+				}
+			}
+		}
+		2 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = kobold
+				health = 1
+				items = {
+					short_sword
+					leather_armor
+					shield
+				}
+			}
+		}
+	}
+}

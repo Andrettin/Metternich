@@ -114,16 +114,18 @@ kobold_guards = {
 			building_type = ruined_keep
 		}
 	}
+	immediate_effects = {
+		for = {
+			count = 6
+			scripted_effect = create_kobold_enemy
+		}
+	}
 	option = {
 		name = "To battle!"
 		effects = {
 			battle = {
 				attacker = true
-				enemies = {
-					kobolds = 6
-				}
 				on_victory = {
-					wealth += 2500gp
 					#potion of healing
 					source_site = {
 						buildings -= ruined_keep
