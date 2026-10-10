@@ -190,7 +190,6 @@ signals:
 	void event_fired(const event_instance *event_instance);
 	void technology_choosable(const QVariantList &potential_technologies);
 	void free_technology_choosable(const QVariantList &potential_technologies);
-	void construction_choosable(const QVariantList &buildable_locations);
 	void next_advisor_choosable(const QVariantList &potential_advisors);
 	void character_class_choosable(const character *character, const QVariantList &potential_classes);
 	void trait_choosable(const character *character, const trait_type *trait_type, const QVariantList &potential_traits);

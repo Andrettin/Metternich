@@ -161,8 +161,6 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->domain_size = std::stoi(value);
 	} else if (key == "domain_power") {
 		this->domain_power = std::stoi(value);
-	} else if (key == "max_current_constructions") {
-		this->max_current_constructions = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain game data property: \"{}\".", key));
 	}
@@ -256,10 +254,6 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_property("unrest", std::to_string(this->get_unrest()));
 	data.add_property("domain_size", std::to_string(this->get_domain_size()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
-
-	if (this->max_current_constructions != 0) {
-		data.add_property("max_current_constructions", std::to_string(this->max_current_constructions));
-	}
 
 	if (!this->attribute_values.empty()) {
 		gsml_data attributes_data("attributes");
@@ -509,7 +503,6 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->get_military()->do_military_unit_recruitment();
 		co_await this->get_technology()->do_research();
 		co_await this->get_technology()->do_technology_spread();
-		co_await this->do_construction();
 		co_await this->do_population_growth();
 		this->do_population_literacy_change();
 		co_await this->do_population_cultural_change();
@@ -726,51 +719,6 @@ QCoro::Task<void> domain_game_data::do_population_growth()
 		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Error doing population growth for domain \"{}\".", this->domain->get_identifier())));
-	}
-}
-
-QCoro::Task<void> domain_game_data::do_construction()
-{
-	int under_construction_project_count = 0;
-	for (const province *province : this->get_provinces()) {
-		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
-			++under_construction_project_count;
-		}
-	}
-	for (const site *site : this->get_sites()) {
-		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
-				if (building_slot->get_under_construction_building() != nullptr) {
-					if (building_slot->is_available()) {
-						++under_construction_project_count;
-					} else {
-						building_slot->cancel_construction();
-					}
-				}
-			}
-		}
-	}
-
-	const int available_current_construction_slots = this->get_max_current_constructions() - under_construction_project_count;
-	for (int i = 0; i < available_current_construction_slots; ++i) {
-		const bool construction_chosen = co_await this->choose_construction();
-		if (construction_chosen) {
-			++under_construction_project_count;
-		}
-	}
-
-	if (under_construction_project_count == 0) {
-		co_return;
-	}
-
-	for (const province *province : this->get_provinces()) {
-		co_await province->get_game_data()->do_construction();
-	}
-
-	for (const site *site : this->get_sites()) {
-		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			co_await site->get_game_data()->do_construction();
-		}
 	}
 }
 
@@ -2786,82 +2734,6 @@ QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const
 	} else if (multiplier < 0 && game::get()->get_wonder_country(wonder) == this->domain) {
 		game::get()->set_wonder_country(wonder, nullptr);
 	}
-}
-
-QCoro::Task<bool> domain_game_data::choose_construction()
-{
-	std::vector<std::variant<building_slot *, const province *>> buildable_locations;
-
-	for (const province *province : this->get_provinces()) {
-		if (province->get_game_data()->get_under_construction_pathway() != nullptr) {
-			continue;
-		}
-
-		if (province->get_game_data()->get_buildable_pathway() != nullptr) {
-			buildable_locations.push_back(province);
-		}
-	}
-	for (const site *site : this->get_sites()) {
-		if (site->is_settlement() && site->get_game_data()->is_built()) {
-			for (const auto &building_slot : site->get_game_data()->get_building_slots()) {
-				if (!building_slot->is_available()) {
-					continue;
-				}
-
-				if (building_slot->get_under_construction_building() != nullptr) {
-					continue;
-				}
-
-				const building_type *buildable_building = building_slot->get_buildable_building();
-				if (buildable_building != nullptr) {
-					buildable_locations.push_back(building_slot.get());
-				}
-			}
-		}
-	}
-
-	if (buildable_locations.empty()) {
-		co_return false;
-	}
-
-	vector::shuffle(buildable_locations);
-	static constexpr size_t max_choosable_constructions = 5;
-	buildable_locations.resize(std::min(buildable_locations.size(), max_choosable_constructions));
-
-	if (this->is_ai()) {
-		std::variant<building_slot *, const province *> chosen_buildable_location = vector::get_random(buildable_locations);
-		if (std::holds_alternative<building_slot *>(chosen_buildable_location)) {
-			building_slot *building_slot = std::get<metternich::building_slot *>(chosen_buildable_location);
-			building_slot->build_building(building_slot->get_buildable_building());
-		} else if (std::holds_alternative<const province *>(chosen_buildable_location)) {
-			const province *province = std::get<const metternich::province *>(chosen_buildable_location);
-			province->get_game_data()->build_pathway(province->get_game_data()->get_buildable_pathway());
-		} else {
-			assert_throw(false);
-		}
-	} else {
-		this->construction_chosen_promise = std::make_unique<QPromise<void>>();
-		const QFuture<void> future = this->construction_chosen_promise->future();
-		this->construction_chosen_promise->start();
-
-		emit engine_interface::get()->construction_choosable(container::to_qvariant_list(buildable_locations));
-		co_await future;
-	}
-
-	this->construction_chosen_promise.reset();
-
-	co_return true;
-}
-
-void domain_game_data::set_max_current_constructions(const int max)
-{
-	if (max == this->get_max_current_constructions()) {
-		return;
-	}
-
-	this->max_current_constructions = max;
-
-	emit max_current_constructions_changed();
 }
 
 std::vector<building_item_slot *> domain_game_data::get_item_slots() const

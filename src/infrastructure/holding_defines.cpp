@@ -2,6 +2,7 @@
 
 #include "infrastructure/holding_defines.h"
 
+#include "database/gsml_data.h"
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "infrastructure/construction_type.h"

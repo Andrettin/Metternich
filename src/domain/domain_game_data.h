@@ -138,7 +138,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(metternich::population* country_population READ get_country_population CONSTANT)
-	Q_PROPERTY(int max_current_constructions READ get_max_current_constructions NOTIFY max_current_constructions_changed)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
 	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
@@ -156,7 +155,6 @@ public:
 	static constexpr int first_deity_cost = 10;
 	static constexpr int base_deity_cost = 200;
 	static constexpr int deity_cost_increment = 100;
-	static constexpr int base_max_current_constructions = 1;
 
 	explicit domain_game_data(metternich::domain *domain);
 	~domain_game_data();
@@ -177,7 +175,6 @@ public:
 	void check_item_slots();
 	void do_civilian_unit_recruitment();
 	void do_transporter_recruitment();
-	[[nodiscard]] QCoro::Task<void> do_construction();
 	[[nodiscard]] QCoro::Task<void> do_population_growth();
 	void do_population_literacy_change();
 	[[nodiscard]] QCoro::Task<void> do_population_cultural_change();
@@ -648,20 +645,6 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
 
-	[[nodiscard]] QCoro::Task<bool> choose_construction();
-
-	int get_max_current_constructions() const
-	{
-		return this->max_current_constructions;
-	}
-
-	void set_max_current_constructions(const int max);
-
-	void change_max_current_constructions(const int change)
-	{
-		this->set_max_current_constructions(this->get_max_current_constructions() + change);
-	}
-
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
 
@@ -1037,11 +1020,6 @@ public:
 		this->flags.erase(flag);
 	}
 
-	QPromise<void> *get_construction_chosen_promise()
-	{
-		return this->construction_chosen_promise.get();
-	}
-
 	Q_INVOKABLE bool can_visit_site(const metternich::site *site) const;
 
 signals:
@@ -1069,7 +1047,6 @@ signals:
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
 	void settlement_building_counts_changed();
-	void max_current_constructions_changed();
 	void building_built(const building_type *building, const site *site);
 	void pathway_built(const pathway *pathway, const province *province);
 	void item_slots_changed();
@@ -1122,7 +1099,6 @@ private:
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
 	building_type_map<int> settlement_building_counts;
-	int max_current_constructions = domain_game_data::base_max_current_constructions;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_domain_modifier_map<int> scripted_modifiers;
@@ -1146,7 +1122,6 @@ private:
 	std::vector<const journal_entry *> finished_journal_entries;
 	building_class_map<int> free_building_class_counts;
 	std::set<const flag *> flags;
-	std::unique_ptr<QPromise<void>> construction_chosen_promise;
 	qunique_ptr<domain_diplomacy> diplomacy;
 	qunique_ptr<domain_economy> economy;
 	qunique_ptr<domain_government> government;

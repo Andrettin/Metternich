@@ -95,10 +95,6 @@ Item {
 		id: research_choice_dialog
 	}
 	
-	ConstructionChoiceDialog {
-		id: construction_choice_dialog
-	}
-	
 	CharacterDialog {
 		id: character_dialog
 	}
@@ -234,12 +230,6 @@ Item {
 			research_choice_dialog.potential_technologies = potential_technologies
 			research_choice_dialog.free_technology = true
 			research_choice_dialog.open()
-		}
-		
-		function onConstruction_choosable(buildable_locations) {
-			construction_choice_dialog.buildable_locations = buildable_locations
-			construction_choice_dialog.open()
-			construction_choice_dialog.receive_focus()
 		}
 		
 		function onCharacter_class_choosable(character, potential_classes) {

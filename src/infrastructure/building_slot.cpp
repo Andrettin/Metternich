@@ -511,10 +511,6 @@ void building_slot::build_building(const building_type *building)
 	}
 
 	this->set_under_construction_building(building);
-
-	if (this->get_country()->get_game_data()->get_construction_chosen_promise() != nullptr) {
-		this->get_country()->get_game_data()->get_construction_chosen_promise()->finish();
-	}
 }
 
 void building_slot::cancel_construction()

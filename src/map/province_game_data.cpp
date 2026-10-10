@@ -6,6 +6,7 @@
 #include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
@@ -1397,10 +1398,6 @@ void province_game_data::build_pathway(const metternich::pathway *pathway)
 	}
 
 	this->set_under_construction_pathway(pathway);
-
-	if (this->get_owner()->get_game_data()->get_construction_chosen_promise() != nullptr) {
-		this->get_owner()->get_game_data()->get_construction_chosen_promise()->finish();
-	}
 }
 
 void province_game_data::cancel_pathway_construction()
