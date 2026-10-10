@@ -17,7 +17,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::creature_size*";
 	static constexpr const char database_folder[] = "creature_sizes";
 
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 	static const creature_size *get_by_weight(const int weight);
 
 	explicit creature_size(const std::string &identifier);

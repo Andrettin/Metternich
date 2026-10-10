@@ -95,7 +95,7 @@ public:
 	static constexpr const char database_folder[] = "technologies";
 
 public:
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 
 	static const std::vector<const technology *> &get_top_level_technologies()
 	{

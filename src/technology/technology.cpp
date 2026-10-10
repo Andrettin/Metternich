@@ -55,9 +55,9 @@
 
 namespace metternich {
 	
-void technology::initialize_all()
+void technology::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	const auto sort_function = [](const technology *lhs, const technology *rhs) {
 		if (lhs->get_category() != rhs->get_category() && lhs->get_category() != nullptr && rhs->get_category() != nullptr) {

@@ -8,9 +8,9 @@
 
 namespace metternich {
 	
-void character_attribute::initialize_all()
+void character_attribute::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	character_attribute::sort_instances([](const character_attribute *lhs, const character_attribute *rhs) {
 		if (lhs->is_subattribute() != rhs->is_subattribute()) {

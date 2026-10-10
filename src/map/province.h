@@ -85,7 +85,7 @@ public:
 		return nullptr;
 	}
 
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 
 	static void clear()
 	{

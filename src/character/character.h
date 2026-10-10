@@ -103,7 +103,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 	static void initialize_all_vital_dates();
 	static void initialize_all_home_sites();
 

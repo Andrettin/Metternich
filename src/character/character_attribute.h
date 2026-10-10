@@ -20,7 +20,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::character_attribute*";
 	static constexpr const char database_folder[] = "character_attributes";
 
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 
 	explicit character_attribute(const std::string &identifier);
 	~character_attribute();

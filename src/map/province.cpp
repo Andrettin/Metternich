@@ -4,6 +4,7 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "map/province_feature.h"
@@ -27,9 +28,9 @@ const std::set<std::string> province::database_dependencies = {
 	region::class_identifier
 };
 
-void province::initialize_all()
+void province::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	std::map<const metternich::world *, world::province_geodata_map_type> world_province_geodata_maps;
 

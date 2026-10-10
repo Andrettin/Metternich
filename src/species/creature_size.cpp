@@ -9,9 +9,9 @@
 
 namespace metternich {
 	
-void creature_size::initialize_all()
+void creature_size::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	creature_size::sort_instances(creature_size_compare());
 }

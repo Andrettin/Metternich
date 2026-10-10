@@ -10,9 +10,9 @@
 
 namespace metternich {
 	
-void scenario::initialize_all()
+void scenario::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	const auto sort_function = [](const scenario *a, const scenario *b) {
 		if (a->get_start_date() != b->get_start_date()) {

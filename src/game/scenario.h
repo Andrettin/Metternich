@@ -35,7 +35,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::scenario*";
 	static constexpr const char database_folder[] = "scenarios";
 
-	static void initialize_all();
+	static void initialize_all(const data_type_metadata *metadata);
 
 	static const std::vector<const scenario *> &get_top_level_scenarios()
 	{

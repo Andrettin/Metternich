@@ -62,9 +62,9 @@ const std::set<std::string> character::database_dependencies = {
 	province::class_identifier
 };
 
-void character::initialize_all()
+void character::initialize_all(const data_type_metadata *metadata)
 {
-	data_type::initialize_all();
+	data_type::initialize_all(metadata);
 
 	character::initialize_all_vital_dates();
 	character::initialize_all_home_sites();
