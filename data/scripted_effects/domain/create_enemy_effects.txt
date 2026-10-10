@@ -108,3 +108,69 @@ create_kobold_enemy = {
 		}
 	}
 }
+
+create_orc_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = orc
+				health = 8
+				items = {
+					battle_axe
+					leather_armor
+					shield
+				}
+				on_killed = {
+					wealth += 45gp
+					#potion of healing
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = orc
+				health = 6
+				items = {
+					battle_axe
+					leather_armor
+					shield
+				}
+				on_killed = {
+					wealth += 3gp
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = orc
+				health = 5
+				items = {
+					battle_axe
+					leather_armor
+					shield
+				}
+				on_killed = {
+					wealth += 3gp
+				}
+			}
+		}
+		2 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = orc
+				health = 4
+				items = {
+					battle_axe
+					leather_armor
+					shield
+				}
+				on_killed = {
+					wealth += 3gp
+				}
+			}
+		}
+	}
+}

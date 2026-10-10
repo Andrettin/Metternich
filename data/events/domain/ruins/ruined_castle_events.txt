@@ -226,17 +226,18 @@ orc_mines = {
 			building_type = ruined_keep
 		}
 	}
+	immediate_effects = {
+		for = {
+			count = 5
+			scripted_effect = create_orc_enemy
+		}
+	}
 	option = {
 		name = "Attack them!"
 		effects = {
 			battle = {
 				attacker = true
-				enemies = {
-					orcs = 5
-				}
 				on_victory = {
-					wealth += 11400gp
-					#potion of healing
 					source_site = {
 						buildings -= ruined_keep
 					}
@@ -253,12 +254,7 @@ orc_mines = {
 					battle = {
 						attacker = true
 						defender_neutral = true #the orcs will not attack unless they have been attacked first
-						enemies = {
-							orcs = 5
-						}
 						on_victory = {
-							wealth += 11400gp
-							#potion of healing
 							source_site = {
 								buildings -= ruined_keep
 							}
@@ -268,12 +264,7 @@ orc_mines = {
 				on_failure = {
 					battle = {
 						attacker = true
-						enemies = {
-							orcs = 5
-						}
 						on_victory = {
-							wealth += 11400gp
-							#potion of healing
 							source_site = {
 								buildings -= ruined_keep
 							}
