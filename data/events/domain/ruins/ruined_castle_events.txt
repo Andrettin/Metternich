@@ -81,16 +81,18 @@ central_room = {
 			building_type = ruined_keep
 		}
 	}
+	immediate_effects = {
+		for = {
+			count = 2
+			scripted_effect = create_gnoll_enemy
+		}
+	}
 	option = {
 		name = "To battle!"
 		effects = {
 			battle = {
 				attacker = true
-				enemies = {
-					gnoll_marauders = 2
-				}
 				on_victory = {
-					wealth += 3200gp
 					source_site = {
 						buildings -= ruined_keep
 					}

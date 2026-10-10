@@ -1,0 +1,29 @@
+create_gnoll_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = gnoll
+				health = 9
+				items = {
+					morning_star
+					chain_mail
+				}
+				on_killed = {
+					wealth += 16gp
+				}
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = gnoll
+				health = 8
+				items = {
+					morning_star
+					chain_mail
+				}
+			}
+		}
+	}
+}
