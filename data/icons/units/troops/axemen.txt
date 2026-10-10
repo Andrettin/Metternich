@@ -1,0 +1,3 @@
+axeman = {
+	filepath = "icons/units/troops/axeman.png"
+}

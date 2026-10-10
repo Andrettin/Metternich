@@ -1,7 +1,7 @@
 axemen = {
 	name = "Axemen"
 	unit_class = axemen
-	icon = longswordsmen
+	icon = axeman
 	required_technology = handaxe
 	melee_attack_sound = axe
 	death_sound = human_death
