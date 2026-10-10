@@ -10,16 +10,16 @@ castle_garden = {
 			building_type = ruined_keep
 		}
 	}
+	immediate_effects = {
+		scripted_effect = create_giant_toad_enemy
+	}
 	option = {
 		name = "To battle!"
 		effects = {
 			battle = {
 				attacker = true
-				enemies = {
-					giant_toads = 1
-				}
 				on_victory = {
-					wealth += 10gb
+					wealth += 100gp
 					gain_item = { #ring of protection +1
 						type = ring
 						enchantment = of_protection_1
@@ -37,7 +37,7 @@ castle_garden = {
 			skill_check = {
 				skill = animal_handling
 				on_success = {
-					wealth += 10gb
+					wealth += 100gp
 					gain_item = { #ring of protection +1
 						type = ring
 						enchantment = of_protection_1
@@ -49,11 +49,8 @@ castle_garden = {
 				on_failure = {
 					battle = {
 						attacker = true
-						enemies = {
-							giant_toads = 1
-						}
 						on_victory = {
-							wealth += 10gb
+							wealth += 100gp
 							gain_item = { #ring of protection +1
 								type = ring
 								enchantment = of_protection_1

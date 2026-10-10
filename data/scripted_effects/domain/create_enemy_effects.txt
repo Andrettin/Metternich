@@ -1,3 +1,15 @@
+create_giant_toad_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = giant_toad
+				health = 14
+			}
+		}
+	}
+}
+
 create_gnoll_enemy = {
 	random_list = {
 		1 = {
