@@ -145,7 +145,7 @@ kobold_guards = {
 ogres_den = {
 	name = "Ogre's Den"
 	portrait = ruined_castle
-	description = "This is the den of an ogre, with a big pile of furs serving as [saved_string:ogre_possessive_pronoun] bed. The large creature looks at you menacingly, ordering [saved_string:ogre_possessive_pronoun] pet wolves to attack you!"
+	description = "This is the den of an ogre, with a big pile of furs serving as their bed. The large creature looks at you menacingly, ordering their pet wolves to attack you!"
 	trigger = ruin_explored
 	random = true
 	conditions = {
@@ -155,25 +155,10 @@ ogres_den = {
 		}
 	}
 	immediate_effects = {
-		random_list = {
-			49 = {
-				save_string_as = {
-					name = ogre_possessive_pronoun
-					string = "her"
-				}
-			}
-			49 = {
-				save_string_as = {
-					name = ogre_possessive_pronoun
-					string = "his"
-				}
-			}
-			2 = {
-				save_string_as = {
-					name = ogre_possessive_pronoun
-					string = "their"
-				}
-			}
+		scripted_effect = create_ogre_enemy
+		for = {
+			count = 2
+			scripted_effect = create_wolf_enemy
 		}
 	}
 	option = {
@@ -181,12 +166,8 @@ ogres_den = {
 		effects = {
 			battle = {
 				attacker = true
-				enemies = {
-					ogres = 1 #should be an ogre character instead
-					wolves = 2
-				}
 				on_victory = {
-					wealth += 15gb
+					wealth += 150gp
 					gain_item = { #dagger +1
 						type = dagger
 						enchantment = weapon_1

@@ -109,6 +109,21 @@ create_kobold_enemy = {
 	}
 }
 
+create_ogre_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = ogre
+				health = 23
+				items = {
+					ogre_club
+				}
+			}
+		}
+	}
+}
+
 create_orc_enemy = {
 	random_list = {
 		1 = {
@@ -170,6 +185,25 @@ create_orc_enemy = {
 				on_killed = {
 					wealth += 3gp
 				}
+			}
+		}
+	}
+}
+
+create_wolf_enemy = {
+	random_list = {
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = wolf
+				health = 10
+			}
+		}
+		1 = {
+			create_enemy = {
+				military_unit_type = monster
+				monster_type = wolf
+				health = 11
 			}
 		}
 	}
