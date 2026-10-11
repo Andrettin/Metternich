@@ -180,6 +180,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> do_population_cultural_change();
 	[[nodiscard]] QCoro::Task<void> do_population_promotion();
 	[[nodiscard]] QCoro::Task<void> do_population_employment();
+	[[nodiscard]] QCoro::Task<void> do_decisions();
 	[[nodiscard]] QCoro::Task<void> do_events();
 
 	domain_diplomacy *get_diplomacy() const

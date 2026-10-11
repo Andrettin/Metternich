@@ -37,6 +37,7 @@
 #include "economy/income_transaction_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
+#include "game/decision.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -72,6 +73,7 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "script/factor.h"
 #include "script/flag.h"
 #include "script/modifier.h"
 #include "script/scripted_domain_modifier.h"
@@ -513,6 +515,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 			co_await province->get_game_data()->check_technologies();
 		}
 
+		co_await this->do_decisions();
+
 		for (const qunique_ptr<civilian_unit> &civilian_unit : this->civilian_units) {
 			co_await civilian_unit->do_turn();
 		}
@@ -751,6 +755,35 @@ QCoro::Task<void> domain_game_data::do_population_employment()
 		if (site->is_settlement() && site->get_game_data()->is_built()) {
 			co_await site->get_game_data()->check_employment();
 		}
+	}
+}
+
+QCoro::Task<void> domain_game_data::do_decisions()
+{
+	if (!this->is_ai()) {
+		co_return;
+	}
+
+	for (const decision *decision : decision::get_all()) {
+		if (!decision->can_be_enacted_by(this->domain)) {
+			continue;
+		}
+
+		decimillesimal_int ai_chance;
+
+		if (decision->get_ai_chance() != nullptr) {
+			ai_chance = decision->get_ai_chance()->calculate(this->domain);
+		}
+
+		if (ai_chance <= 0) {
+			continue;
+		}
+
+		if (random::get()->generate(100ll * decimillesimal_int::divisor) >= ai_chance.get_value()) {
+			continue;
+		}
+
+		co_await decision->enact_for_coro(this->domain);
 	}
 }
 

@@ -5,6 +5,7 @@
 #include "game/decision_type.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
+#include "script/factor.h"
 
 namespace metternich {
 
@@ -26,6 +27,10 @@ void decision::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "effects") {
 		this->effects = std::make_unique<effect_list<const domain>>();
 		this->effects->process_gsml_data(scope);
+	} else if (tag == "ai_chance") {
+		auto factor = std::make_unique<metternich::factor<domain>>(100);
+		factor->process_gsml_data(scope);
+		this->ai_chance = std::move(factor);
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}

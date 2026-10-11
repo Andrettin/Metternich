@@ -17,6 +17,9 @@ class and_condition;
 template <typename scope_type>
 class effect_list;
 
+template <typename scope_type>
+class factor;
+
 class decision final : public named_data_entry, public data_type<decision>
 {
 	Q_OBJECT
@@ -75,6 +78,11 @@ public:
 
 	Q_INVOKABLE QString get_effects_string(const metternich::domain *domain) const;
 
+	const factor<domain> *get_ai_chance() const
+	{
+		return this->ai_chance.get();
+	}
+
 	Q_INVOKABLE bool can_be_enacted_by(const metternich::domain *domain) const;
 	[[nodiscard]] QCoro::Task<void> enact_for_coro(const metternich::domain *domain) const;
 
@@ -92,6 +100,7 @@ private:
 	std::string description;
 	std::unique_ptr<and_condition<domain>> conditions;
 	std::unique_ptr<effect_list<const domain>> effects;
+	std::unique_ptr<const factor<domain>> ai_chance;
 };
 
 }
