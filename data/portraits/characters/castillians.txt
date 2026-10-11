@@ -24,7 +24,7 @@ philip_ii_of_spain = {
 				type = base_class
 			}
 			character_class = {
-				character_class = warrior
+				character_class = blacksmith
 				type = base_class
 			}
 			character_class = {
@@ -33,6 +33,10 @@ philip_ii_of_spain = {
 			}
 			character_class = {
 				character_class = ranger
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
 				type = base_class
 			}
 			taxon = archon

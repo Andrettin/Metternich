@@ -38,6 +38,29 @@ barbarian_health_bonus = {
 	20 = 3
 }
 
+blacksmith_health_bonus = {
+	1 = 1d10
+	2 = 1d10
+	3 = 1d10
+	4 = 1d10
+	5 = 1d10
+	6 = 1d10
+	7 = 1d10
+	8 = 1d10
+	9 = 2
+	10 = 2
+	11 = 2
+	12 = 2
+	13 = 2
+	14 = 2
+	15 = 2
+	16 = 2
+	17 = 2
+	18 = 2
+	19 = 2
+	20 = 2
+}
+
 cleric_health_bonus = {
 	1 = 1d8
 	2 = 1d8

@@ -1,0 +1,9 @@
+blacksmith = {
+	name = "Blacksmith"
+	unit_class = blacksmith
+	icon = trained_workers
+	commodity_costs = {
+		wealth = 2000gp
+		paper = 2
+	}
+}

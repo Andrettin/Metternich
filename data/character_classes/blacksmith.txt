@@ -1,0 +1,82 @@
+blacksmith = {
+	name = "Blacksmith"
+	type = base_class
+	base_class = warrior
+	primary_attributes = {
+		strength
+		constitution
+	}
+	civilian_unit_class = blacksmith
+	burgher = true
+	max_level = 20
+	starting_age_category = self_taught
+	experience_table = blacksmith_experience
+	health_bonus_table = blacksmith_health_bonus
+	reputation_bonus_table = medium_reputation_bonus
+	to_hit_bonus_table = warrior_to_hit_bonus
+	save_bonus_tables = {
+		fortitude = high_save_bonus
+		reflex = low_save_bonus
+		will = low_save_bonus
+		save_vs_breath_weapon = warrior_save_vs_breath_weapon_bonus
+		save_vs_paralyzation = warrior_save_vs_poison_bonus
+		save_vs_petrification = warrior_save_vs_petrification_bonus
+		save_vs_poison = warrior_save_vs_poison_bonus
+		save_vs_polymorph = warrior_save_vs_petrification_bonus
+	}
+	trait_gain_tables = {
+		combat_proficiency = blacksmith_combat_proficiency_gain
+		general_proficiency = blacksmith_general_proficiency_gain
+	}
+	exceptional_attributes = {
+		strength
+		muscle
+		stamina
+	}
+	class_skill_groups = {
+		general
+		warrior
+	}
+	class_skills = {
+		animal_handling
+		artistic_ability
+		bowyer
+		heraldry
+		mining
+	}
+	min_attribute_values = {
+		strength = 12
+		dexterity = 9
+		constitution = 12
+		intelligence = 9
+		wisdom = 9
+	}
+	level_modifiers = {
+		1 = {
+			trait_of_type = affliction
+			trait_of_type = past_experience
+			trait = blacksmithing
+			trait = armorer
+			trait = weaponsmithing
+			
+			weapon_to_hit_bonus = {
+				weapon_class = hammer
+				bonus = 1
+			}
+			weapon_damage_bonus = {
+				weapon_class = hammer
+				bonus = 2
+			}
+		}
+	}
+	recurring_level_modifiers = {
+		1 = { #to ensure we don't inherit any level modifiers from the base class
+		}
+	}
+	starting_items = {
+		warhammer
+		shield
+		plate_mail
+		#hammer and tongs
+	}
+}

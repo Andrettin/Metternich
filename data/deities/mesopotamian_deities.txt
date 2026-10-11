@@ -98,7 +98,7 @@ ea = {
 		or = {
 			character_class = cleric
 			#character_class = farmer
-			character_class = engineer #blacksmith
+			character_class = blacksmith
 			character_class = cleric #healer
 			character_class = mage #seer
 		}

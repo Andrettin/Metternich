@@ -8,9 +8,7 @@ smithy = {
 		guild
 	}
 	builder_civilian_unit_types = {
-		ruler
-		treasurer
-		engineer
+		blacksmith
 	}
 	conditions = {
 		or = {
@@ -48,9 +46,7 @@ swordsmithy = {
 		great_mansion
 	}
 	builder_civilian_unit_types = {
-		ruler
-		marshal
-		engineer
+		blacksmith
 	}
 	commodity_cost_weights = {
 		lumber = 64 #as Smithy
