@@ -3851,7 +3851,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 		}
 
 		if (output_skill != nullptr) {
-			str += output_skill->get_name();
+			str += output_skill->get_name(this->character->get_species(), this->character->get_gender());
 		}
 
 		str += ")";
@@ -3879,7 +3879,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 			str += ", ";
 		}
 
-		str += string::highlight(trait->get_name());
+		str += string::highlight(trait->get_name(this->character->get_species(), this->character->get_gender()));
 
 		str += ": " + trait_modifier_str;
 	}
@@ -4261,7 +4261,7 @@ bool character_game_data::can_learn_recipe(const recipe *recipe, std::string *re
 	for (const trait *trait : recipe->get_required_traits()) {
 		if (!this->has_trait(trait)) {
 			if (reason != nullptr) {
-				*reason = trait->get_name() + " required";
+				*reason = trait->get_name(this->character->get_species(), this->character->get_gender()) + " required";
 			}
 
 			return false;

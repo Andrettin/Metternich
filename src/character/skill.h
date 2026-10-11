@@ -6,11 +6,16 @@
 
 Q_MOC_INCLUDE("ui/icon.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class character_attribute;
 class icon;
 class skill_group;
+class taxon_base;
 enum class profession_profitability;
 
 class skill final : public character_stat, public data_type<skill>
@@ -54,6 +59,7 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
+	const std::string &get_name(const taxon_base *taxon, const gender gender) const;
 	const metternich::icon *get_icon() const;
 	const dice &get_check_dice() const;
 
@@ -96,6 +102,7 @@ private:
 	bool find_traps = false;
 	bool disarm_traps = false;
 	profession_profitability profitability{};
+	std::map<const taxon_base *, std::map<gender, std::string>> variant_names;
 	std::vector<const skill_group *> groups;
 };
 

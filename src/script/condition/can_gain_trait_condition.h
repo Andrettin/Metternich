@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("Can gain the {} trait", this->trait->get_name());
+		return std::format("Can gain the {} trait", this->trait->get_name(nullptr, gender::none));
 	}
 
 private:

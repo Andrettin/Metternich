@@ -329,6 +329,9 @@ seamanship = {
 	base_attribute = dexterity
 	base_value = 1
 	profitability = marginal #sailor
+	variant_names = {
+		female = "Seawomanship"
+	}
 	groups = {
 		general
 	}

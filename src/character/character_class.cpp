@@ -2,6 +2,7 @@
 
 #include "character/character_class.h"
 
+#include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class_type.h"
 #include "character/character_defines.h"
@@ -591,7 +592,7 @@ std::string character_class::get_level_modifier_string(const int level, const me
 				str += "\n";
 			}
 
-			str += std::format("{}: {}", skill->get_name(), string::colored(number::to_signed_string(skill_bonus), ui_defines::get()->get_green_text_color()));
+			str += std::format("{}: {}", skill->get_name(character->get_species(), character->get_gender()), string::colored(number::to_signed_string(skill_bonus), ui_defines::get()->get_green_text_color()));
 		}
 	}
 

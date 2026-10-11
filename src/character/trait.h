@@ -7,6 +7,10 @@
 Q_MOC_INCLUDE("religion/divine_domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
+namespace archimedes {
+	enum class gender;
+}
+
 namespace metternich {
 
 class character;
@@ -16,6 +20,7 @@ class domain;
 class icon;
 class military_unit;
 class office;
+class taxon_base;
 class trait_type;
 
 template <typename scope_type>
@@ -49,6 +54,8 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void check() const override;
+
+	const std::string &get_name(const taxon_base *taxon, const gender gender) const;
 
 	const metternich::icon *get_icon() const
 	{
@@ -150,6 +157,7 @@ signals:
 
 private:
 	const metternich::icon *icon = nullptr;
+	std::map<const taxon_base *, std::map<gender, std::string>> variant_names;
 	std::vector<const trait_type *> types;
 	int level = 1;
 	bool unlimited = false;

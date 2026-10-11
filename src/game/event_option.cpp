@@ -15,6 +15,7 @@
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "util/assert_util.h"
+#include "util/gender.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -89,7 +90,7 @@ std::string event_option<scope_type>::get_tooltip(const read_only_context &ctx) 
 	}
 
 	if (this->tooltip_info_trait != nullptr) {
-		str = "(This option is available due to the " + this->tooltip_info_trait->get_name() + " trait)\n" + str;
+		str = "(This option is available due to the " + this->tooltip_info_trait->get_name(nullptr, gender::none) + " trait)\n" + str;
 	}
 
 	return str;

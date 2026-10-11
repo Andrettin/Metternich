@@ -30,7 +30,7 @@ public:
 
 	virtual std::string get_value_name() const override
 	{
-		return this->skill->get_name();
+		return this->skill->get_name(nullptr, gender::none);
 	}
 
 private:

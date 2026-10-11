@@ -56,7 +56,7 @@ public:
 		Q_UNUSED(ignore_decimals);
 		Q_UNUSED(separator);
 
-		return std::format("{} {}: {}", (this->value * multiplier) > 0 ? "Gain" : "Lose", this->get_base_string(scope), this->trait->get_name());
+		return std::format("{} {}: {}", (this->value * multiplier) > 0 ? "Gain" : "Lose", this->get_base_string(scope), this->trait->get_name(scope ? scope->get_species() : nullptr, scope ? scope->get_gender() : gender::none));
 	}
 
 private:

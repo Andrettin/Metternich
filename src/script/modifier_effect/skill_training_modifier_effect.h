@@ -31,11 +31,9 @@ public:
 
 	virtual std::string get_base_string(const character *scope) const override
 	{
-		Q_UNUSED(scope);
-
 		assert_throw(this->skill != nullptr);
 
-		return std::format("{} Training", this->skill->get_name());
+		return std::format("{} Training", this->skill->get_name(scope ? scope->get_species() : nullptr, scope ? scope->get_gender() : gender::none));
 	}
 
 	virtual std::string get_string(const character *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override

@@ -86,9 +86,9 @@ public:
 			const std::string effects_string = success ? this->get_success_effects_string(scope, ctx, 0, "") : this->get_failure_effects_string(scope, ctx, 0, "");
 
 			if (success) {
-				engine_interface::get()->add_notification("Skill Check Successful!", interior_minister_portrait, std::format("You have succeeded in a {} skill check!{}", this->skill->get_name(), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+				engine_interface::get()->add_notification("Skill Check Successful!", interior_minister_portrait, std::format("You have succeeded in a {} skill check!{}", this->skill->get_name(roll_character->get_species(), roll_character->get_gender()), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
 			} else {
-				engine_interface::get()->add_notification("Skill Check Failed!", interior_minister_portrait, std::format("You have failed a {} skill check!{}", this->skill->get_name(), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
+				engine_interface::get()->add_notification("Skill Check Failed!", interior_minister_portrait, std::format("You have failed a {} skill check!{}", this->skill->get_name(roll_character->get_species(), roll_character->get_gender()), !effects_string.empty() ? ("\n\n" + effects_string) : ""));
 			}
 		}
 
@@ -116,7 +116,7 @@ public:
 	{
 		const character *roll_character = this->get_roll_character(scope, ctx);
 
-		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(), roll_character != nullptr ? roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)) : 0);
+		std::string str = std::format("{} Check ({}% Chance)", this->skill->get_name(roll_character->get_species(), roll_character->get_gender()), roll_character != nullptr ? roll_character->get_game_data()->get_skill_check_chance(this->skill, this->roll_modifier, this->get_location(roll_character, ctx)) : 0);
 
 		if (this->roll_modifier != 0) {
 			str += "\n" + std::string(indent + 1, '\t') + std::format("Roll Modifier: {}{}", number::to_signed_string(this->roll_modifier), this->skill->get_value_suffix());

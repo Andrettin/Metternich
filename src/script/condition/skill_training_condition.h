@@ -34,7 +34,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->skill->get_name() + " training";
+		return this->skill->get_name(nullptr, gender::none) + " training";
 	}
 
 private:

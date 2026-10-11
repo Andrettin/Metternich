@@ -402,6 +402,9 @@ religion = {
 seamanship = {
 	name = "Seamanship"
 	icon = anchor
+	variant_names = {
+		female = "Seawomanship"
+	}
 	types = {
 		general_proficiency
 	}

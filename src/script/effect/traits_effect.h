@@ -38,12 +38,12 @@ public:
 
 	virtual std::string get_addition_string() const override
 	{
-		return "Gain the " + this->trait->get_name() + " trait";
+		return "Gain the " + this->trait->get_name(nullptr, gender::none) + " trait";
 	}
 
 	virtual std::string get_subtraction_string() const override
 	{
-		return "Lose the " + this->trait->get_name() + " trait";
+		return "Lose the " + this->trait->get_name(nullptr, gender::none) + " trait";
 	}
 
 private:

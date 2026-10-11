@@ -33,7 +33,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return this->trait->get_name() + " trait";
+		return this->trait->get_name(nullptr, gender::none) + " trait";
 	}
 
 private:

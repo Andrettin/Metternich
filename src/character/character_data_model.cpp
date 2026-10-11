@@ -834,7 +834,7 @@ void character_data_model::update_skill_rows()
 			continue;
 		}
 
-		auto row = std::make_unique<character_data_row>(skill->get_name() + ":", std::format("{}{}", value, skill->get_value_suffix()), this->skill_row);
+		auto row = std::make_unique<character_data_row>(skill->get_name(this->get_character()->get_species(), this->get_character()->get_gender()) + ":", std::format("{}{}", value, skill->get_value_suffix()), this->skill_row);
 		this->skill_row->child_rows.push_back(std::move(row));
 	}
 
@@ -901,7 +901,7 @@ void character_data_model::update_trait_rows()
 
 		for (const trait *trait : traits) {
 			const int trait_count = character_game_data->get_trait_count(trait);
-			auto row = std::make_unique<character_data_row>(trait->get_name(), (trait->is_unlimited() && trait_count > 1 ? std::format("(x{})", trait_count) : ""), trait_type_row.get());
+			auto row = std::make_unique<character_data_row>(trait->get_name(this->get_character()->get_species(), this->get_character()->get_gender()), (trait->is_unlimited() && trait_count > 1 ? std::format("(x{})", trait_count) : ""), trait_type_row.get());
 			row->tooltip = trait->get_modifier_string(trait_count, true);
 			trait_type_row->child_rows.push_back(std::move(row));
 		}

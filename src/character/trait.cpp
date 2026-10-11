@@ -3,11 +3,14 @@
 #include "character/trait.h"
 
 #include "character/character_attribute.h"
+#include "character/character_class.h"
 #include "character/trait_type.h"
 #include "domain/office.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
 #include "script/modifier.h"
+#include "species/taxon.h"
+#include "util/gender.h"
 
 namespace metternich {
 
@@ -38,7 +41,9 @@ void trait::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "types") {
+	if (tag == "variant_names") {
+		character_class::process_variant_name_scope(this->variant_names, scope);
+	} else if (tag == "types") {
 		for (const std::string &value : values) {
 			trait_type *trait_type = trait_type::get(value);
 			trait_type->add_trait(this);
@@ -107,6 +112,31 @@ void trait::check() const
 	}
 
 	named_data_entry::check();
+}
+
+const std::string &trait::get_name(const taxon_base *taxon, const gender gender) const
+{
+	auto taxon_find_iterator = this->variant_names.find(taxon);
+	if (taxon_find_iterator == this->variant_names.end()) {
+		if (taxon != nullptr && taxon->get_supertaxon() != nullptr) {
+			return this->get_name(taxon->get_supertaxon(), gender);
+		}
+
+		taxon_find_iterator = this->variant_names.find(nullptr);
+	}
+
+	if (taxon_find_iterator != this->variant_names.end()) {
+		auto gender_find_iterator = taxon_find_iterator->second.find(gender);
+		if (gender_find_iterator == taxon_find_iterator->second.end()) {
+			gender_find_iterator = taxon_find_iterator->second.find(gender::none);
+		}
+
+		if (gender_find_iterator != taxon_find_iterator->second.end()) {
+			return gender_find_iterator->second;
+		}
+	}
+
+	return named_data_entry::get_name();
 }
 
 std::string trait::get_modifier_string(const int multiplier, const bool single_line) const

@@ -39,7 +39,7 @@ public:
 	{
 		Q_UNUSED(indent);
 
-		return std::format("{} class skill", this->skill->get_name());
+		return std::format("{} class skill", this->skill->get_name(nullptr, gender::none));
 	}
 
 private:
