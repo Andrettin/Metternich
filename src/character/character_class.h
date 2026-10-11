@@ -390,6 +390,7 @@ public:
 	}
 
 	std::string get_level_modifier_string(const int level, const metternich::character *character) const;
+	std::string get_character_class_advancement_modifier_string(const metternich::character_class *old_character_class, const int current_level) const;
 
 	const std::vector<const item_type *> &get_starting_items() const
 	{

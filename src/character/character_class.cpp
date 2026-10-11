@@ -643,4 +643,43 @@ std::string character_class::get_level_modifier_string(const int level, const me
 	return str;
 }
 
+std::string character_class::get_character_class_advancement_modifier_string(const metternich::character_class *old_character_class, const int current_level) const
+{
+	assert_throw(old_character_class != nullptr);
+	assert_throw(current_level >= 1);
+
+	std::string str;
+
+	for (const save_type *save_type : save_type::get_all()) {
+		const level_value_table *old_save_bonus_table = old_character_class->get_save_bonus_table(save_type);
+		const level_value_table *new_save_bonus_table = this->get_save_bonus_table(save_type);
+
+		if (old_save_bonus_table == new_save_bonus_table) {
+			continue;
+		}
+
+		int old_bonus = 0;
+		int new_bonus = 0;
+		for (int i = 1; i <= current_level; ++i) {
+			if (old_save_bonus_table != nullptr) {
+				old_bonus += old_save_bonus_table->get_value_for_level(i);
+			}
+			if (new_save_bonus_table != nullptr) {
+				new_bonus += new_save_bonus_table->get_value_for_level(i);
+			}
+		}
+
+		const int bonus_change = new_bonus - old_bonus;
+		if (bonus_change != 0) {
+			if (!str.empty()) {
+				str += "\n";
+			}
+
+			str += std::format("{}: {}", save_type->get_name(), string::colored(number::to_signed_string(bonus_change), bonus_change > 0 ? ui_defines::get()->get_green_text_color() : ui_defines::get()->get_red_text_color()));
+		}
+	}
+
+	return str;
+}
+
 }

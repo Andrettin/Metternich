@@ -1745,7 +1745,38 @@ void character_game_data::set_character_class(const metternich::character_class 
 	assert_throw(character_class != nullptr);
 	assert_throw(character_class->is_allowed_for_species(this->character->get_species()));
 
+	const metternich::character_class *old_character_class = this->get_character_class();
+
 	this->character_class = character_class;
+
+	//adjust stats based on the character class change
+	if (old_character_class != nullptr && character_class != nullptr) {
+		const int current_level = this->get_level() - 1; //decrement 1 because this occurs right after setting the new level when leveling up, but before the effects of the level up are applied
+
+		//adjust saves
+		for (const save_type *save_type : save_type::get_all()) {
+			const level_value_table *old_save_bonus_table = old_character_class->get_save_bonus_table(save_type);
+			const level_value_table *new_save_bonus_table = character_class->get_save_bonus_table(save_type);
+
+			if (old_save_bonus_table == new_save_bonus_table) {
+				continue;
+			}
+
+			int old_bonus = 0;
+			int new_bonus = 0;
+			for (int i = 1; i <= current_level; ++i) {
+				if (old_save_bonus_table != nullptr) {
+					old_bonus += old_save_bonus_table->get_value_for_level(i);
+				}
+				if (new_save_bonus_table != nullptr) {
+					new_bonus += new_save_bonus_table->get_value_for_level(i);
+				}
+			}
+
+			const int bonus_change = new_bonus - old_bonus;
+			this->change_save_bonus(save_type, bonus_change);
+		}
+	}
 
 	this->check_portrait();
 
@@ -1821,7 +1852,13 @@ QCoro::Task<void> character_game_data::check_character_class_advancement(const i
 
 void character_game_data::on_character_class_chosen(const metternich::character_class *character_class)
 {
+	const metternich::character_class *old_character_class = this->get_character_class();
+
 	this->set_character_class(character_class);
+
+	const std::string character_class_advancement_modifier_string = character_class->get_character_class_advancement_modifier_string(old_character_class, this->get_level() - 1);
+
+	engine_interface::get()->add_notification(std::format("New Class: {}", this->get_character_class_name()), this->get_portrait(), std::format("You have advanced to the {} class!\n\n{}", this->get_character_class_name(), character_class_advancement_modifier_string));
 
 	if (this->choice_promise != nullptr) {
 		this->choice_promise->finish();
