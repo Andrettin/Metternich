@@ -192,6 +192,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->general_opinion_modifier = std::stoi(value);
 	} else if (key == "burgher_opinion_modifier") {
 		this->burgher_opinion_modifier = std::stoi(value);
+	} else if (key == "same_culture_opinion_modifier") {
+		this->same_culture_opinion_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid character game data property: \"{}\".", key));
 	}
@@ -385,6 +387,9 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 	if (this->get_burgher_opinion_modifier() != 0) {
 		data.add_property("burgher_opinion_modifier", std::to_string(this->get_burgher_opinion_modifier()));
+	}
+	if (this->get_same_culture_opinion_modifier() != 0) {
+		data.add_property("same_culture_opinion_modifier", std::to_string(this->get_same_culture_opinion_modifier()));
 	}
 
 	if (!this->stat_values.empty()) {
@@ -5138,6 +5143,9 @@ int character_game_data::get_opinion_of(const metternich::character *other)
 
 	if (this->get_character_class() != nullptr && this->get_character_class()->is_burgher()) {
 		opinion += other->get_game_data()->get_burgher_opinion_modifier();
+	}
+	if (this->character->get_culture() == other->get_culture()) {
+		opinion += other->get_game_data()->get_same_culture_opinion_modifier();
 	}
 
 	return opinion;

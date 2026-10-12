@@ -936,6 +936,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/quarterly_technology_category_research_modifier_effect.h
 	src/script/modifier_effect/reputation_modifier_effect.h
 	src/script/modifier_effect/resource_output_modifier_effect.h
+	src/script/modifier_effect/same_culture_opinion_modifier_effect.h
 	src/script/modifier_effect/save_modifier_effect.h
 	src/script/modifier_effect/scripted_modifier_effect.h
 	src/script/modifier_effect/scripted_modifier_effect_modifier_effect.h

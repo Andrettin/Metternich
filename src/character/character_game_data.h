@@ -1079,6 +1079,20 @@ public:
 		this->burgher_opinion_modifier += change;
 	}
 
+	int get_same_culture_opinion_modifier() const
+	{
+		return this->same_culture_opinion_modifier;
+	}
+
+	void change_same_culture_opinion_modifier(const int change)
+	{
+		if (change == 0) {
+
+		}
+
+		this->same_culture_opinion_modifier += change;
+	}
+
 	const domain_set &get_ruled_domains() const
 	{
 		return this->ruled_domains;
@@ -1239,6 +1253,7 @@ private:
 	character_map<int> base_opinions;
 	int general_opinion_modifier = 0;
 	int burgher_opinion_modifier = 0;
+	int same_culture_opinion_modifier = 0;
 	domain_set ruled_domains; //domains that this character has ever ruled
 	domain_set reigned_domains; //domains that this character has ever ruled with a regnal number
 	std::set<const flag *> flags;

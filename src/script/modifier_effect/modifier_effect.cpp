@@ -76,6 +76,7 @@
 #include "script/modifier_effect/quarterly_technology_category_research_modifier_effect.h"
 #include "script/modifier_effect/reputation_modifier_effect.h"
 #include "script/modifier_effect/resource_output_modifier_effect.h"
+#include "script/modifier_effect/same_culture_opinion_modifier_effect.h"
 #include "script/modifier_effect/save_modifier_effect.h"
 #include "script/modifier_effect/scripted_modifier_effect_modifier_effect.h"
 #include "script/modifier_effect/ship_stat_modifier_effect.h"
@@ -137,6 +138,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<health_per_hit_dice_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
+		} else if (key == "initiative") {
+			return std::make_unique<initiative_modifier_effect>(value);
 		} else if (key == "level_adjustment") {
 			return std::make_unique<level_adjustment_modifier_effect>(value);
 		} else if (key == "movement") {
@@ -145,18 +148,18 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<natural_armor_class_modifier_effect>(value);
 		} else if (key == "natural_weapon") {
 			return std::make_unique<natural_weapon_modifier_effect>(value);
-		} else if (key == "to_hit_bonus") {
-			return std::make_unique<to_hit_bonus_modifier_effect>(value);
-		} else if (key == "initiative") {
-			return std::make_unique<initiative_modifier_effect>(value);
 		} else if (key == "reputation") {
 			return std::make_unique<reputation_modifier_effect>(value);
+		} else if (key == "same_culture_opinion") {
+			return std::make_unique<same_culture_opinion_modifier_effect>(value);
 		} else if (key == "save_bonus") {
 			return std::make_unique<save_modifier_effect>(value);
 		} else if (key == "skill_training") {
 			return std::make_unique<skill_training_modifier_effect>(value);
 		} else if (key == "spell") {
 			return std::make_unique<spell_modifier_effect>(value);
+		} else if (key == "to_hit_bonus") {
+			return std::make_unique<to_hit_bonus_modifier_effect>(value);
 		} else if (key == "trait") {
 			return std::make_unique<trait_modifier_effect>(value);
 		} else if (key == "trait_of_type") {
