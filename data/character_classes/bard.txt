@@ -31,6 +31,8 @@ bard = {
 	trait_gain_tables = {
 		combat_proficiency = rogue_combat_proficiency_gain
 		general_proficiency = rogue_general_proficiency_gain
+		affliction = initial_trait_gain
+		past_experience = initial_trait_gain
 	}
 	class_skill_groups = {
 		general
@@ -67,12 +69,6 @@ bard = {
 		troubadour = 7
 		minstrel = 8
 		master_bard = 12
-	}
-	level_modifiers = {
-		1 = {
-			trait_of_type = affliction
-			trait_of_type = past_experience
-		}
 	}
 	recurring_level_modifiers = {
 		1 = {

@@ -27,6 +27,8 @@ cleric = {
 	}
 	trait_gain_tables = {
 		general_proficiency = cleric_general_proficiency_gain
+		affliction = initial_trait_gain
+		past_experience = initial_trait_gain
 	}
 	class_skill_groups = {
 		general
@@ -64,8 +66,6 @@ cleric = {
 			reverent = 3
 			dogmatic = 2
 			loyal = 1
-			trait_of_type = affliction
-			trait_of_type = past_experience
 		}
 	}
 	recurring_level_modifiers = {

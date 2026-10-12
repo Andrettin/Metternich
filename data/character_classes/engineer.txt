@@ -52,8 +52,6 @@ engineer = {
 	}
 	level_modifiers = {
 		1 = {
-			trait_of_type = affliction
-			trait_of_type = past_experience
 			trait = engineering
 			trait_of_type = general_proficiency #should be the Reading/Writing proficiency instead
 			trait_of_type = engineering_specialization #one of Carpentry, Mining or Stonemasonry

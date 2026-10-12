@@ -33,6 +33,8 @@ rogue = {
 	trait_gain_tables = {
 		combat_proficiency = rogue_combat_proficiency_gain
 		general_proficiency = rogue_general_proficiency_gain
+		affliction = initial_trait_gain
+		past_experience = initial_trait_gain
 	}
 	class_skill_groups = {
 		general
@@ -71,8 +73,6 @@ rogue = {
 			honest = -2
 			cautious = 2
 			trusting = -2
-			trait_of_type = affliction
-			trait_of_type = past_experience
 		}
 	}
 }

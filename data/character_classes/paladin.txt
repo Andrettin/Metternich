@@ -32,6 +32,8 @@ paladin = {
 	trait_gain_tables = {
 		combat_proficiency = warrior_combat_proficiency_gain
 		general_proficiency = warrior_general_proficiency_gain
+		affliction = initial_trait_gain
+		past_experience = initial_trait_gain
 	}
 	exceptional_attributes = {
 		strength
@@ -63,12 +65,6 @@ paladin = {
 	rank_levels = {
 		chevalier = 7
 		paladin = 9
-	}
-	level_modifiers = {
-		1 = {
-			trait_of_type = affliction
-			trait_of_type = past_experience
-		}
 	}
 	recurring_level_modifiers = {
 		2 = {
