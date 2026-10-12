@@ -1,0 +1,30 @@
+noble_carolingian_warrior = {
+	name = "Noble Carolingian Warrior"
+	type = subclass
+	base_class = warrior
+	required_technology = chronicle_writing #so that it isn't available in earlier periods e.g. the Merovingian one
+	class_skills = {
+		#gaming
+		hunting
+		religion
+		#riding
+	}
+	allowed_cultures = {
+		frankish
+	}
+	allowed_equipment_classes = {
+		weapon = {
+			heavy_blade #long sword
+			#light_lance
+			#medium_lance
+			bow #short bow
+		}
+	}
+	level_modifiers = {
+		1 = {
+			#trait = riding
+			same_culture_opinion = 15
+			#FIXME: add +10% per level for item/personal service base costs?
+		}
+	}
+}
