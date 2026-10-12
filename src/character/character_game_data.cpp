@@ -2009,6 +2009,13 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 		co_await this->change_typed_stat_value(domain_skill, domain_skill_bonus);
 	}
 
+	//show the notification before any trait selection dialog appears
+	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
+		const std::string level_modifier_string = character_class->get_level_modifier_string(affected_level, this->character);
+
+		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_modifier_string));
+	}
+
 	const modifier<const metternich::character> *level_modifier = character_class->get_level_modifier(affected_level);
 	if (level_modifier != nullptr) {
 		co_await level_modifier->apply(this->character);
@@ -2034,12 +2041,6 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			co_await this->change_level_adjustment(-1);
 			++this->reduced_level_adjustment;
 		}
-	}
-
-	if (game::get()->is_running() && this->character == game::get()->get_player_character()) {
-		const std::string level_modifier_string = character_class->get_level_modifier_string(affected_level, this->character);
-
-		engine_interface::get()->add_notification("Level Up", this->get_portrait(), std::format("You have gained a level!\n\n{}", level_modifier_string));
 	}
 }
 
