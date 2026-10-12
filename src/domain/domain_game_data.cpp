@@ -3357,6 +3357,10 @@ QCoro::Task<const character *> domain_game_data::generate_character(const std::v
 				continue;
 			}
 
+			if (!character_class->is_allowed_for_culture(this->get_culture())) {
+				continue;
+			}
+
 			if (!capital->get_game_data()->can_generate_character_of_class(character_class)) {
 				continue;
 			}

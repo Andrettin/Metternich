@@ -7,6 +7,7 @@
 #include "character/skill.h"
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
+#include "database/gsml_data.h"
 #include "item/item_class.h"
 #include "item/item_type.h"
 #include "script/modifier.h"

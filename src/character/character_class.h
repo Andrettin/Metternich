@@ -16,6 +16,7 @@ namespace metternich {
 
 class character_attribute;
 class civilian_unit_class;
+class culture;
 class domain;
 class domain_skill;
 class government_type;
@@ -347,6 +348,9 @@ public:
 	bool is_allowed_for_species(const species *species) const;
 	void add_allowed_species(const species *species);
 
+	bool is_allowed_for_culture(const culture *culture) const;
+	void add_allowed_culture(const culture *culture);
+
 	bool is_holding_type_allowed(const holding_type *holding_type) const;
 	bool is_holding_type_favored(const holding_type *holding_type) const;
 
@@ -466,6 +470,7 @@ private:
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;
 	std::vector<const species *> allowed_species;
+	std::vector<const culture *> allowed_cultures;
 	std::vector<const holding_type *> allowed_holding_types;
 	std::vector<const holding_type *> favored_holding_types;
 	std::vector<const government_type *> allowed_government_types; //government types allowed for this character class to be a ruler of

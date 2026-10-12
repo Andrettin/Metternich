@@ -13,6 +13,7 @@
 #include "character/skill_group.h"
 #include "character/starting_age_category.h"
 #include "character/trait_type.h"
+#include "culture/culture.h"
 #include "domain/government_type.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_class.h"
@@ -165,6 +166,10 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "allowed_species") {
 		for (const std::string &value : values) {
 			this->allowed_species.push_back(species::get(value));
+		}
+	} else if (tag == "allowed_cultures") {
+		for (const std::string &value : values) {
+			this->allowed_cultures.push_back(culture::get(value));
 		}
 	} else if (tag == "allowed_holding_types") {
 		for (const std::string &value : values) {
@@ -473,6 +478,24 @@ bool character_class::is_allowed_for_species(const species *species) const
 void character_class::add_allowed_species(const species *species)
 {
 	this->allowed_species.push_back(species);
+}
+
+bool character_class::is_allowed_for_culture(const culture *culture) const
+{
+	if (this->allowed_cultures.empty()) {
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->is_allowed_for_culture(culture);
+		}
+
+		return true;
+	}
+
+	return vector::contains(this->allowed_cultures, culture);
+}
+
+void character_class::add_allowed_culture(const culture *culture)
+{
+	this->allowed_cultures.push_back(culture);
 }
 
 bool character_class::is_holding_type_allowed(const holding_type *holding_type) const

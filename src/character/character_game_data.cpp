@@ -1744,6 +1744,7 @@ QCoro::Task<void> character_game_data::set_character_class(const metternich::cha
 
 	assert_throw(character_class != nullptr);
 	assert_throw(character_class->is_allowed_for_species(this->character->get_species()));
+	assert_throw(character_class->is_allowed_for_culture(this->character->get_culture()));
 
 	const metternich::character_class *old_character_class = this->get_character_class();
 
@@ -1815,6 +1816,10 @@ QCoro::Task<void> character_game_data::check_character_class_advancement(const i
 		}
 
 		if (!advanced_character_class->is_allowed_for_species(this->character->get_species())) {
+			continue;
+		}
+
+		if (!advanced_character_class->is_allowed_for_culture(this->character->get_culture())) {
 			continue;
 		}
 

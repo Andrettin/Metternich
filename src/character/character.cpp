@@ -457,8 +457,14 @@ void character::check() const
 		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
-	if (this->get_character_class() != nullptr && !this->get_character_class()->is_allowed_for_species(this->get_species())) {
-		throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
+	if (this->get_character_class() != nullptr) {
+		if (!this->get_character_class()->is_allowed_for_species(this->get_species())) {
+			throw std::runtime_error(std::format("Character \"{}\" has a species (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_species()->get_identifier(), this->get_character_class()->get_identifier()));
+		}
+
+		if (!this->get_character_class()->is_allowed_for_culture(this->get_culture())) {
+			throw std::runtime_error(std::format("Character \"{}\" has a culture (\"{}\") which is not allowed for its character class (\"{}\").", this->get_identifier(), this->get_culture()->get_identifier(), this->get_character_class()->get_identifier()));
+		}
 	}
 
 	if (this->get_home_site() == nullptr && !this->is_innate_deity() && !this->is_temporary()) {
