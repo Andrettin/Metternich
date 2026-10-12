@@ -225,7 +225,7 @@ QCoro::Task<character *> character::generate(const metternich::species *species,
 	generated_character->check();
 
 	co_await generated_character->reset_game_data();
-	generated_character->get_game_data()->set_character_class(character_class);
+	co_await generated_character->get_game_data()->set_character_class(character_class);
 	generated_character->get_game_data()->set_target_traits(traits);
 	co_await generated_character->get_game_data()->apply_species_and_class(level, false);
 	generated_character->get_game_data()->on_setup_finished();

@@ -29,6 +29,10 @@ warrior = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = {
+		courageous = 3
+		cautious = -3
+	}
 	exceptional_attributes = {
 		strength
 		muscle
@@ -59,11 +63,5 @@ warrior = {
 	rank_levels = {
 		champion = 7
 		lord = 9
-	}
-	level_modifiers = {
-		1 = {
-			courageous = 3
-			cautious = -3
-		}
 	}
 }

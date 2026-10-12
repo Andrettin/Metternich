@@ -34,6 +34,11 @@ bard = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = { #as Rogue
+		honest = -2
+		cautious = 2
+		trusting = -2
+	}
 	class_skill_groups = {
 		general
 		mage

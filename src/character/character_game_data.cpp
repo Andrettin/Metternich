@@ -1190,7 +1190,7 @@ QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 
 	const character_history *character_history = this->character->get_history();
 
-	this->character_class = this->character->get_character_class();
+	co_await this->set_character_class(this->character->get_character_class());
 
 	this->set_target_traits(character_history->get_traits());
 	if (this->is_deity()) {
@@ -1736,10 +1736,10 @@ const metternich::character_class *character_game_data::get_character_class_for_
 	return nullptr;
 }
 
-void character_game_data::set_character_class(const metternich::character_class *character_class)
+QCoro::Task<void> character_game_data::set_character_class(const metternich::character_class *character_class)
 {
 	if (character_class == this->get_character_class()) {
-		return;
+		co_return;
 	}
 
 	assert_throw(character_class != nullptr);
@@ -1750,7 +1750,16 @@ void character_game_data::set_character_class(const metternich::character_class 
 	this->character_class = character_class;
 
 	//adjust stats based on the character class change
-	if (old_character_class != nullptr && character_class != nullptr) {
+	for (const character_attribute *attribute : character_attribute::get_all()) {
+		const int old_attribute_modifier = old_character_class != nullptr ? old_character_class->get_attribute_modifier(attribute) : 0;
+		const int new_attribute_modifier = character_class->get_attribute_modifier(attribute);
+
+		const int attribute_change = new_attribute_modifier - old_attribute_modifier;
+		co_await this->change_attribute_value(attribute, attribute_change);
+	}
+
+	//adjust level-based changes due to character class advancement
+	if (old_character_class != nullptr && this->get_level() > 1) {
 		const int current_level = this->get_level() - 1; //decrement 1 because this occurs right after setting the new level when leveling up, but before the effects of the level up are applied
 
 		//adjust saves
@@ -1846,15 +1855,15 @@ QCoro::Task<void> character_game_data::check_character_class_advancement(const i
 		co_await future;
 	} else {
 		const metternich::character_class *chosen_character_class = vector::get_random(potential_character_classes);
-		this->set_character_class(chosen_character_class);
+		co_await this->set_character_class(chosen_character_class);
 	}
 }
 
-void character_game_data::on_character_class_chosen(const metternich::character_class *character_class)
+QCoro::Task<void> character_game_data::on_character_class_chosen_coro(const metternich::character_class *character_class)
 {
 	const metternich::character_class *old_character_class = this->get_character_class();
 
-	this->set_character_class(character_class);
+	co_await this->set_character_class(character_class);
 
 	const std::string character_class_advancement_modifier_string = character_class->get_character_class_advancement_modifier_string(old_character_class, this->get_level() - 1);
 

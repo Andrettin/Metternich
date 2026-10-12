@@ -13,9 +13,6 @@ merchant = {
 			#as rogue
 			skill_training = find_disarm_traps
 			skill_training = open_locks
-			honest = -2
-			cautious = 2
-			trusting = -2
 			
 			#merchant modifiers
 			burgher_opinion = 5 #urban opinion

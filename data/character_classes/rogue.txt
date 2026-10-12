@@ -36,6 +36,11 @@ rogue = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = {
+		honest = -2
+		cautious = 2
+		trusting = -2
+	}
 	class_skill_groups = {
 		general
 		rogue
@@ -70,9 +75,6 @@ rogue = {
 		1 = {
 			skill_training = find_disarm_traps
 			skill_training = open_locks
-			honest = -2
-			cautious = 2
-			trusting = -2
 		}
 	}
 }

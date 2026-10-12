@@ -26,6 +26,12 @@ mage = {
 	trait_gain_tables = {
 		general_proficiency = mage_general_proficiency_gain
 		affliction = initial_trait_gain
+		past_experience = initial_trait_gain
+	}
+	attribute_modifiers = {
+		courageous = -2
+		cautious = 2
+		trusting = -2
 	}
 	class_skill_groups = {
 		general
@@ -55,13 +61,6 @@ mage = {
 	}
 	min_attribute_values = {
 		intelligence = 9
-	}
-	level_modifiers = {
-		1 = {
-			courageous = -2
-			cautious = 2
-			trusting = -2
-		}
 	}
 	recurring_level_modifiers = {
 		1 = {

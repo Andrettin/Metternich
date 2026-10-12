@@ -289,6 +289,20 @@ public:
 		return nullptr;
 	}
 
+	int get_attribute_modifier(const character_attribute *attribute) const
+	{
+		const auto find_iterator = this->attribute_modifiers.find(attribute);
+		if (find_iterator != this->attribute_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		if (this->get_base_class() != nullptr) {
+			return this->get_base_class()->get_attribute_modifier(attribute);
+		}
+
+		return 0;
+	}
+
 	const data_entry_set<character_attribute> &get_exceptional_attributes() const
 	{
 		if (!this->exceptional_attributes.empty()) {
@@ -447,6 +461,7 @@ private:
 	data_entry_map<skill, const level_value_table *> skill_bonus_tables;
 	data_entry_map<domain_skill, const level_value_table *> domain_skill_bonus_tables;
 	data_entry_map<trait_type, const level_value_table *> trait_gain_tables;
+	data_entry_map<character_attribute, int> attribute_modifiers;
 	data_entry_set<character_attribute> exceptional_attributes;
 	data_entry_set<skill> class_skills;
 	data_entry_set<skill_group> class_skill_groups;

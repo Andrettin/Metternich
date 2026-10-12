@@ -33,6 +33,11 @@ druid = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = { #as Cleric
+		reverent = 3
+		dogmatic = 2
+		loyal = 1
+	}
 	class_skill_groups = {
 		general
 		priest

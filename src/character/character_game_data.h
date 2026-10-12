@@ -253,10 +253,16 @@ public:
 
 	const metternich::character_class *get_character_class() const;
 	const metternich::character_class *get_character_class_for_type(const character_class_type type) const;
-	void set_character_class(const metternich::character_class *character_class);
+	[[nodiscard]] QCoro::Task<void> set_character_class(const metternich::character_class *character_class);
 	const std::string &get_character_class_name() const;
 	[[nodiscard]] QCoro::Task<void> check_character_class_advancement(const int level);
-	Q_INVOKABLE void on_character_class_chosen(const metternich::character_class *character_class);
+	[[nodiscard]] QCoro::Task<void> on_character_class_chosen_coro(const metternich::character_class *character_class);
+
+	Q_INVOKABLE QCoro::QmlTask on_character_class_chosen(const metternich::character_class *character_class)
+	{
+		return this->on_character_class_chosen_coro(character_class);
+	}
+
 
 	int get_level() const;
 	[[nodiscard]] QCoro::Task<void> set_level(const int level);

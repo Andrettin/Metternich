@@ -35,6 +35,10 @@ paladin = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = { #as Warrior
+		courageous = 3
+		cautious = -3
+	}
 	exceptional_attributes = {
 		strength
 		muscle

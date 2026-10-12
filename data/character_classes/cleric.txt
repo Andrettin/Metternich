@@ -30,6 +30,11 @@ cleric = {
 		affliction = initial_trait_gain
 		past_experience = initial_trait_gain
 	}
+	attribute_modifiers = {
+		reverent = 3
+		dogmatic = 2
+		loyal = 1
+	}
 	class_skill_groups = {
 		general
 		priest
@@ -60,13 +65,6 @@ cleric = {
 		canon = 6
 		patriarch = 8
 		high_priest = 9
-	}
-	level_modifiers = {
-		1 = {
-			reverent = 3
-			dogmatic = 2
-			loyal = 1
-		}
 	}
 	recurring_level_modifiers = {
 		1 = {

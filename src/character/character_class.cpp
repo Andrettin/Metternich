@@ -143,6 +143,13 @@ void character_class::process_gsml_scope(const gsml_data &scope)
 
 			this->trait_gain_tables[trait_type::get(key)] = level_value_table::get(value);
 		});
+	} else if (tag == "attribute_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+
+			this->attribute_modifiers[character_attribute::get(key)] = std::stoi(value);
+		});
 	} else if (tag == "exceptional_attributes") {
 		for (const std::string &value : values) {
 			this->exceptional_attributes.insert(character_attribute::get(value));
