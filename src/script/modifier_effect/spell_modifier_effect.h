@@ -65,7 +65,7 @@ public:
 
 		if (this->charges != 0) {
 			const int multiplied_charges = (decimillesimal_int(this->charges) * multiplier).to_int();
-			return std::format("{} {} {} Charges: {}", multiplied_charges > 0 ? "Gain" : "Lose", multiplied_charges, this->get_base_string(scope), this->spell->get_name());
+			return std::format("{} {} {} Charge{}: {}", multiplied_charges > 0 ? "Gain" : "Lose", multiplied_charges, this->get_base_string(scope), std::abs(multiplied_charges) != 1 ? "s" : "", this->spell->get_name());
 		} else {
 			return std::format("{} {}: {}", (this->value * multiplier) > 0 ? "Gain" : "Lose", this->get_base_string(scope), this->spell->get_name());
 		}
