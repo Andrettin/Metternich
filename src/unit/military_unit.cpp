@@ -729,9 +729,9 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 			continue;
 		}
 
-		const bool hit = this->check_to_hit(target_character, weapon, to_hit_modifier);
+		const to_hit_result to_hit_result = this->check_to_hit(target_character, weapon, to_hit_modifier);
 
-		if (!hit) {
+		if (!to_hit_result.hit) {
 			continue;
 		}
 
@@ -744,6 +744,11 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 		weapon_damage += character_game_data->get_damage_bonus();
 		weapon_damage += character_game_data->get_weapon_damage_bonus(weapon->get_type());
 		weapon_damage += damage_modifier;
+
+		if (to_hit_result.critical_hit) {
+			//FIXME: add different critical multipliers for different weapons
+			weapon_damage *= 2;
+		}
 
 		int damage_reduction = 0;
 		for (const auto &[damage_reduction_type, typed_damage_reduction] : target_character->get_game_data()->get_damage_reductions()) {
@@ -773,15 +778,20 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 	const bool ranged = battle_range > 1;
 
 	if (weapons.empty() && this->get_character()->get_monster_type() != nullptr && !this->get_character()->get_monster_type()->get_damage_dice().is_null() && !ranged) {
-		const bool hit = this->check_to_hit(target_character, nullptr, to_hit_modifier);
+		const to_hit_result to_hit_result = this->check_to_hit(target_character, nullptr, to_hit_modifier);
 
-		if (hit) {
+		if (to_hit_result.hit) {
 			any_attack_hit = true;
 
 			dice damage_dice = this->get_character()->get_monster_type()->get_damage_dice();
 			damage_dice.set_count(damage_dice.get_count() * weapon_damage_dice_multiplier);
 
 			int attack_damage = random::get()->roll_dice(damage_dice) + character_game_data->get_damage_bonus() + damage_modifier;
+
+			if (to_hit_result.critical_hit) {
+				//FIXME: add different critical multipliers for different weapons
+				attack_damage *= 2;
+			}
 
 			int damage_reduction = 0;
 			for (const auto &[damage_reduction_type, value] : target_character->get_game_data()->get_damage_reductions()) {
@@ -806,7 +816,7 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 	co_return any_attack_hit;
 }
 
-bool military_unit::check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const
+military_unit::to_hit_result military_unit::check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const
 {
 	assert_throw(this->get_character() != nullptr);
 
@@ -818,17 +828,28 @@ bool military_unit::check_to_hit(const metternich::character *target_character, 
 		to_hit_bonus += character_game_data->get_weapon_to_hit_bonus(weapon->get_type());
 	}
 
+	to_hit_result result;
+
 	static constexpr dice to_hit_dice(1, 20);
+
 	const int to_hit = 20 - to_hit_bonus - to_hit_modifier;
-	const int to_hit_result = to_hit - random::get()->roll_dice(to_hit_dice);
 
 	const int armor_class_bonus = target_character_game_data->get_armor_class_bonus() + target_character_game_data->get_species_armor_class_bonus(this->get_character()->get_species());
 	const int armor_class = 10 - armor_class_bonus;
-	if (to_hit_result > armor_class) {
-		return false;
+
+	const int to_hit_target = to_hit - armor_class;
+	const int to_hit_result = random::get()->roll_dice(to_hit_dice);
+
+	result.hit = to_hit_result >= to_hit_target;
+
+	//FIXME: add critical ranges for specific weapons
+	if (result.hit && to_hit_result == 20) {
+		//confirm the critical hit
+		const int critical_hit_confirmation_result = random::get()->roll_dice(to_hit_dice);
+		result.critical_hit = critical_hit_confirmation_result >= to_hit_target;
 	}
 
-	return true;
+	return result;
 }
 
 QCoro::Task<void> military_unit::receive_damage(const int damage)

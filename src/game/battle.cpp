@@ -558,7 +558,12 @@ QCoro::Task<int64_t> battle::do_unit_spellcast(const military_unit *unit, const 
 		//the attack might have killed the target already
 		target_dead = !vector::contains(target_army->get_military_units(), target);
 	} else {
-		hit = !spell->requires_to_hit_check() || target->get_character() == nullptr || unit->check_to_hit(target->get_character(), nullptr, to_hit_modifier + spell->get_to_hit_modifier());
+		if (spell->requires_to_hit_check() && target->get_character() != nullptr) {
+			const military_unit::to_hit_result to_hit_result = unit->check_to_hit(target->get_character(), nullptr, to_hit_modifier + spell->get_to_hit_modifier());
+			hit = to_hit_result.hit;
+		} else {
+			hit = true;
+		}
 	}
 
 	if (this->scope == game::get()->get_player_domain()) {

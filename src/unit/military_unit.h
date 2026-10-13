@@ -46,6 +46,12 @@ class military_unit final : public QObject
 	Q_PROPERTY(QString stats_string READ get_stats_qstring NOTIFY stats_changed)
 
 public:
+	struct to_hit_result final
+	{
+		bool hit = false;
+		bool critical_hit = false;
+	};
+
 	static constexpr int hit_point_recovery_per_turn = 10;
 
 	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type);
@@ -219,7 +225,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<bool> attack(military_unit *target, const int battle_range, const bool moved, const int to_hit_modifier, const int damage_modifier, const int weapon_damage_dice_multiplier) const;
 	[[nodiscard]] QCoro::Task<bool> attack_character(const metternich::character *target_character, const int battle_range, const int to_hit_modifier, const int damage_modifier, const int weapon_damage_dice_multiplier) const;
-	bool check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const;
+	[[nodiscard]] to_hit_result check_to_hit(const metternich::character *target_character, const item *weapon, const int to_hit_modifier) const;
 	[[nodiscard]] QCoro::Task<void> receive_damage(const int damage);
 	[[nodiscard]] QCoro::Task<void> heal(const int healing);
 	[[nodiscard]] QCoro::Task<void> die();
