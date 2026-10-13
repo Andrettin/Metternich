@@ -35,39 +35,45 @@ DialogBase {
 		height: 1 * scale_factor
 	}
 	
-	TreeView {
-		id: character_data_tree_view
+	Pane {
+		id: character_data_pane
 		anchors.left: parent.left
 		anchors.leftMargin: 1 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 1 * scale_factor
 		anchors.top: character_data_tree_view_top_divisor.bottom
-		height: Math.min(256 * scale_factor, contentHeight)
-		boundsBehavior: Flickable.StopAtBounds
-		clip: true
-		enabled: character_dialog.activeFocus
-		model: CharacterDataModel {
-			character: character_dialog.character
-			
-			onCharacterChanged: {
-				character_data_tree_view.contentY = 0
-			}
-		}
-		delegate: TreeViewDelegate {
-			implicitWidth: character_data_tree_view.width
-			font.family: berenika_font.name
-			font.pixelSize: 10 * scale_factor
-			Material.theme: Material.Dark
-			
-			onHoveredChanged: {
-				var text = model.tooltip
+		padding: 0
+		
+		TreeView {
+			id: character_data_tree_view
+			implicitWidth: character_data_pane.width
+			implicitHeight: Math.min(256 * scale_factor, contentHeight)
+			boundsBehavior: Flickable.StopAtBounds
+			clip: true
+			enabled: character_dialog.activeFocus
+			model: CharacterDataModel {
+				character: character_dialog.character
 				
-				if (typeof status_text !== 'undefined') {
-					if (hovered) {
-						status_text = text
-					} else {
-						if (status_text === text) {
-							status_text = ""
+				onCharacterChanged: {
+					character_data_tree_view.contentY = 0
+				}
+			}
+			delegate: TreeViewDelegate {
+				implicitWidth: character_data_tree_view.width
+				font.family: berenika_font.name
+				font.pixelSize: 10 * scale_factor
+				Material.theme: Material.Dark
+				
+				onHoveredChanged: {
+					var text = model.tooltip
+					
+					if (typeof status_text !== 'undefined') {
+						if (hovered) {
+							status_text = text
+						} else {
+							if (status_text === text) {
+								status_text = ""
+							}
 						}
 					}
 				}
@@ -80,7 +86,7 @@ DialogBase {
 		color: "gray"
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.top: character_data_tree_view.bottom
+		anchors.top: character_data_pane.bottom
 		height: 1 * scale_factor
 	}
 	
