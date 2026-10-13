@@ -3,6 +3,7 @@ spear = {
 	item_class = spear
 	icon = saber
 	price = 8sp
+	critical_damage_multiplier = 3
 	damage_dice_per_target_size = {
 		small = 1d6
 		medium = 1d6

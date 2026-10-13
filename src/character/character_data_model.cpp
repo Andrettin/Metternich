@@ -682,14 +682,21 @@ void character_data_model::update_critical_hit_chance_row()
 
 	const character_game_data *character_game_data = this->get_character()->get_game_data();
 
-	int best_critical_hit_chance = character_defines::get()->get_default_critical_hit_chance();
+	int critical_hit_chance = 0;
+	centesimal_int critical_damage_multiplier;
 
 	const std::vector<const item *> weapons = character_game_data->get_weapons();
-	for (const item *weapon : weapons) {
-		best_critical_hit_chance = std::max(best_critical_hit_chance, weapon->get_type()->get_critical_hit_chance());
+	if (!weapons.empty()) {
+		for (const item *weapon : weapons) {
+			critical_hit_chance += std::max(weapon->get_type()->get_critical_hit_chance(), character_defines::get()->get_default_critical_hit_chance());
+			critical_damage_multiplier += std::max(weapon->get_type()->get_critical_damage_multiplier(), character_defines::get()->get_default_critical_damage_multiplier());
+		}
+
+		critical_hit_chance /= static_cast<int>(weapons.size());
+		critical_damage_multiplier /= static_cast<int>(weapons.size());
 	}
 
-	this->critical_hit_chance_row->value = std::format("{}%", best_critical_hit_chance);
+	this->critical_hit_chance_row->value = std::format("{}% (x{} Damage)", critical_hit_chance, critical_damage_multiplier.to_string());
 
 	this->on_top_row_changed(this->critical_hit_chance_row);
 }

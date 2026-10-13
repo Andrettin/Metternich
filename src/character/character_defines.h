@@ -27,6 +27,7 @@ class character_defines final : public defines_base, public singleton<character_
 	Q_PROPERTY(int craft_recovery_per_day MEMBER craft_recovery_per_day READ get_craft_recovery_per_day NOTIFY changed)
 	Q_PROPERTY(int battle_hit_point_rate MEMBER battle_hit_point_rate READ get_battle_hit_point_rate NOTIFY changed)
 	Q_PROPERTY(int default_critical_hit_chance MEMBER default_critical_hit_chance READ get_default_critical_hit_chance NOTIFY changed)
+	Q_PROPERTY(int default_critical_damage_multiplier MEMBER default_critical_damage_multiplier READ get_default_critical_damage_multiplier NOTIFY changed)
 	Q_PROPERTY(archimedes::dice ruler_reputation_dice MEMBER ruler_reputation_dice READ get_ruler_reputation_dice NOTIFY changed)
 	Q_PROPERTY(int max_character_normal_level MEMBER max_character_normal_level READ get_max_character_normal_level NOTIFY changed)
 
@@ -75,6 +76,11 @@ public:
 	int get_default_critical_hit_chance() const
 	{
 		return this->default_critical_hit_chance;
+	}
+
+	int get_default_critical_damage_multiplier() const
+	{
+		return this->default_critical_damage_multiplier;
 	}
 
 	const dice &get_ruler_reputation_dice() const
@@ -132,6 +138,7 @@ private:
 	int battle_hit_point_rate = 0; //character health per military unit hit point
 	int battle_movement_rate = 0; //movement in battle per character movement point, in inches
 	int default_critical_hit_chance = 0;
+	int default_critical_damage_multiplier = 0;
 	dice ruler_reputation_dice;
 	int max_character_normal_level = 0;
 	std::map<int, int64_t> experience_award_per_challenge_rating;

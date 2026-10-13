@@ -746,8 +746,7 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 		weapon_damage += damage_modifier;
 
 		if (to_hit_result.critical_hit) {
-			//FIXME: add different critical multipliers for different weapons
-			weapon_damage *= 2;
+			weapon_damage *= std::max(weapon->get_type()->get_critical_damage_multiplier(), character_defines::get()->get_default_critical_damage_multiplier());
 		}
 
 		int damage_reduction = 0;
@@ -789,8 +788,7 @@ QCoro::Task<bool> military_unit::attack_character(const metternich::character *t
 			int attack_damage = random::get()->roll_dice(damage_dice) + character_game_data->get_damage_bonus() + damage_modifier;
 
 			if (to_hit_result.critical_hit) {
-				//FIXME: add different critical multipliers for different weapons
-				attack_damage *= 2;
+				attack_damage *= character_defines::get()->get_default_critical_damage_multiplier();
 			}
 
 			int damage_reduction = 0;

@@ -5,6 +5,7 @@ short_bow = {
 	price = 30gp
 	damage_dice = 1d8
 	range = 50yd
+	critical_damage_multiplier = 3
 	two_handed = true
 	required_technology = short_bow
 }
@@ -16,6 +17,7 @@ long_bow = {
 	price = 75gp
 	damage_dice = 1d8
 	range = 70yd
+	critical_damage_multiplier = 3
 	two_handed = true
 	required_technology = long_bow
 }
@@ -27,6 +29,7 @@ composite_short_bow = {
 	price = 75gp
 	damage_dice = 1d8
 	range = 50yd
+	critical_damage_multiplier = 3
 	two_handed = true
 	required_technology = composite_bow
 }
@@ -38,6 +41,7 @@ composite_long_bow = {
 	price = 100gp
 	damage_dice = 1d8
 	range = 60yd
+	critical_damage_multiplier = 3
 	two_handed = true
 	required_technology = composite_bow
 }

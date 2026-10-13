@@ -3,6 +3,7 @@ warhammer = {
 	item_class = hammer
 	icon = saber
 	price = 2gp
+	critical_damage_multiplier = 3
 	required_technology = warhammer
 	attack_sound = mace
 	damage_dice_per_target_size = {

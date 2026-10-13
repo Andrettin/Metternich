@@ -3,6 +3,7 @@ halberd = {
 	item_class = polearm
 	icon = saber
 	price = 10gp
+	critical_damage_multiplier = 3
 	required_technology = polearm
 	damage_dice_per_target_size = {
 		small = 1d10
