@@ -63,6 +63,7 @@ DialogBase {
 				font.family: berenika_font.name
 				font.pixelSize: 10 * scale_factor
 				Material.theme: Material.Dark
+				focusPolicy: Qt.ClickFocus
 				
 				onHoveredChanged: {
 					var text = model.tooltip
