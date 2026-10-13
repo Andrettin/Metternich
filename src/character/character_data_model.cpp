@@ -154,6 +154,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_critical_hit_chance_row);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
 		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
@@ -186,6 +187,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::weapon_to_hit_bonuses_changed, this, &character_data_model::update_to_hit_bonus_rows);
 		connect(this->character->get_game_data(), &character_game_data::damage_bonus_changed, this, &character_data_model::update_damage_rows);
 		connect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
+		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_critical_hit_chance_row);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
 		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
@@ -215,6 +217,7 @@ void character_data_model::reset_model()
 	this->armor_class_row = nullptr;
 	this->to_hit_bonus_row = nullptr;
 	this->damage_row = nullptr;
+	this->critical_hit_chance_row = nullptr;
 	this->range_row = nullptr;
 	this->movement_row = nullptr;
 	this->initiative_bonus_row = nullptr;
@@ -343,6 +346,7 @@ void character_data_model::reset_model()
 		this->create_armor_class_rows();
 		this->create_to_hit_bonus_rows();
 		this->create_damage_rows();
+		this->create_critical_hit_chance_row();
 		this->create_range_row();
 		this->create_movement_row();
 		this->create_initiative_bonus_row();
@@ -661,6 +665,33 @@ void character_data_model::update_damage_rows()
 	this->on_child_rows_inserted(this->damage_row);
 
 	this->on_top_row_changed(this->damage_row);
+}
+
+void character_data_model::create_critical_hit_chance_row()
+{
+	auto row = std::make_unique<character_data_row>("Critical Hit Chance:");
+	this->critical_hit_chance_row = row.get();
+	this->top_rows.push_back(std::move(row));
+
+	this->update_critical_hit_chance_row();
+}
+
+void character_data_model::update_critical_hit_chance_row()
+{
+	assert_throw(this->critical_hit_chance_row != nullptr);
+
+	const character_game_data *character_game_data = this->get_character()->get_game_data();
+
+	int best_critical_hit_chance = character_defines::get()->get_default_critical_hit_chance();
+
+	const std::vector<const item *> weapons = character_game_data->get_weapons();
+	for (const item *weapon : weapons) {
+		best_critical_hit_chance = std::max(best_critical_hit_chance, weapon->get_type()->get_critical_hit_chance());
+	}
+
+	this->critical_hit_chance_row->value = std::format("{}%", best_critical_hit_chance);
+
+	this->on_top_row_changed(this->critical_hit_chance_row);
 }
 
 void character_data_model::create_range_row()

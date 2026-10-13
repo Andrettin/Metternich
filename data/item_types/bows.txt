@@ -49,6 +49,7 @@ light_crossbow = {
 	price = 35gp
 	damage_dice = 1d4
 	range = 60yd
+	critical_hit_chance = 10
 	two_handed = true
 	required_technology = light_crossbow
 }
@@ -59,6 +60,7 @@ heavy_crossbow = {
 	icon = bow
 	price = 50gp
 	range = 80yd
+	critical_hit_chance = 10
 	two_handed = true
 	required_technology = heavy_crossbow
 	damage_dice_per_target_size = {

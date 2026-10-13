@@ -842,11 +842,16 @@ military_unit::to_hit_result military_unit::check_to_hit(const metternich::chara
 
 	result.hit = to_hit_result >= to_hit_target;
 
-	//FIXME: add critical ranges for specific weapons
-	if (result.hit && to_hit_result == 20) {
-		//confirm the critical hit
-		const int critical_hit_confirmation_result = random::get()->roll_dice(to_hit_dice);
-		result.critical_hit = critical_hit_confirmation_result >= to_hit_target;
+	//check if a critical hit happened
+	if (result.hit) {
+		const int critical_hit_chance = std::max(weapon ? weapon->get_type()->get_critical_hit_chance() : 0, character_defines::get()->get_default_critical_hit_chance());
+		const int critical_hit_target = 21 - (critical_hit_chance / 5);
+
+		if (to_hit_result >= critical_hit_target) {
+			//confirm the critical hit
+			const int critical_hit_confirmation_result = random::get()->roll_dice(to_hit_dice);
+			result.critical_hit = critical_hit_confirmation_result >= to_hit_target;
+		}
 	}
 
 	return result;

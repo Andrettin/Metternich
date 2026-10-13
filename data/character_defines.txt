@@ -4,6 +4,7 @@ default_experience_table = slow_experience
 craft_recovery_per_day = 100
 battle_hit_point_rate = 90 #character health per military unit hit point
 battle_movement_rate = 10yd #movement in battle per character movement point
+default_critical_hit_chance = 5 #in percent
 ruler_reputation_dice = 1d20+15
 max_character_normal_level = 20 #used for calculating character level based on level percentages
 

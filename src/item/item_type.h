@@ -32,6 +32,7 @@ class item_type final : public named_data_entry, public data_type<item_type>
 
 	Q_PROPERTY(metternich::item_class* item_class MEMBER item_class NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
+	Q_PROPERTY(int critical_hit_chance MEMBER critical_hit_chance READ get_critical_hit_chance NOTIFY changed)
 	Q_PROPERTY(bool two_handed MEMBER two_handed READ is_two_handed NOTIFY changed)
 	Q_PROPERTY(bool stackable MEMBER stackable READ is_stackable NOTIFY changed)
 	Q_PROPERTY(bool spell_learnable MEMBER spell_learnable READ is_spell_learnable NOTIFY changed)
@@ -96,6 +97,11 @@ public:
 		return this->range;
 	}
 
+	int get_critical_hit_chance() const
+	{
+		return this->critical_hit_chance;
+	}
+
 	bool is_two_handed() const
 	{
 		return this->two_handed;
@@ -140,6 +146,7 @@ private:
 	int64_t price = 0;
 	creature_size_map<dice> damage_dice_per_target_size;
 	int range = 0; //in inches
+	int critical_hit_chance = 0;
 	bool two_handed = false;
 	bool stackable = false;
 	bool spell_learnable = false;
