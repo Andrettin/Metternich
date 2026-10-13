@@ -1,0 +1,9 @@
+caymis = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 53.
+	name = "Caymis"
+	language = old_prussian
+	type = noun
+	name_generation_word = english:village
+	meaning_words = {
+		village #source gives the German "Dorf" as the meaning
+	}
+}

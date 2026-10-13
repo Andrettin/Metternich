@@ -1,0 +1,11 @@
+tauto = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 99.
+	name = "Tauto"
+	language = old_prussian #source gives Prussian
+	type = noun
+	name_generation_word = english:land_english
+	meanings = {
+		#source gives the German "Land" as the meaning
+		"Land"
+		"Country"
+	}
+}
