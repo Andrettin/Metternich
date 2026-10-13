@@ -1,0 +1,8 @@
+frombork = {
+	name = "Frombork"
+	world = earth
+	geocoordinate = { 19.683333333333334 54.358333333333334 }
+	type = holding
+	holding_type = temple
+	province = east_prussia #Warmian–Masurian Voivodeship
+}

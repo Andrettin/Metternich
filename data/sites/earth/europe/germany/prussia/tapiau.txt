@@ -1,0 +1,8 @@
+tapiau = {
+	name = "Tapiau"
+	world = earth
+	geocoordinate = { 21.066666666667 54.65 } #Gvardeysk
+	type = holding
+	holding_type = castle
+	province = east_prussia
+}

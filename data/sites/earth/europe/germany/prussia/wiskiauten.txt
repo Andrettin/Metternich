@@ -1,0 +1,8 @@
+wiskiauten = {
+	name = "Wiskiauten"
+	world = earth
+	geocoordinate = { 20.47944444 54.92416667 } #Mokhovoye
+	type = holding
+	holding_type = guild
+	province = east_prussia
+}

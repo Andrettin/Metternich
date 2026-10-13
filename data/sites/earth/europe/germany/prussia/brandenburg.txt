@@ -1,0 +1,8 @@
+brandenburg_east_prussia = {
+	name = "Brandenburg"
+	world = earth
+	geocoordinate = { 20.249444444444 54.6125 } #Ushakovo
+	type = holding
+	holding_type = guild
+	province = east_prussia
+}

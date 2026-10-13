@@ -1,0 +1,8 @@
+fischhausen = {
+	name = "Fischhausen"
+	world = earth
+	geocoordinate = { 20 54.733333333333 } #Primorsk
+	type = holding
+	holding_type = temple
+	province = east_prussia
+}

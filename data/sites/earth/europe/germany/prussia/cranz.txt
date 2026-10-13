@@ -1,0 +1,8 @@
+cranz = {
+	name = "Cranz"
+	world = earth
+	geocoordinate = { 20.483333333333 54.95 } #Zelenogradsk
+	type = holding
+	holding_type = castle
+	province = east_prussia
+}

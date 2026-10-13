@@ -1,0 +1,8 @@
+labiau = {
+	name = "Labiau"
+	world = earth
+	geocoordinate = { 21.1 54.866666666667 } #Polessk
+	type = holding
+	holding_type = castle
+	province = east_prussia
+}
