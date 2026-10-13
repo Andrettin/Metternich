@@ -35,46 +35,40 @@ DialogBase {
 		height: 1 * scale_factor
 	}
 	
-	Pane {
-		id: character_data_pane
+	TreeView {
+		id: character_data_tree_view
 		anchors.left: parent.left
 		anchors.leftMargin: 1 * scale_factor
 		anchors.right: parent.right
 		anchors.rightMargin: 1 * scale_factor
 		anchors.top: character_data_tree_view_top_divisor.bottom
-		padding: 0
-		
-		TreeView {
-			id: character_data_tree_view
-			implicitWidth: character_data_pane.width
-			implicitHeight: Math.min(256 * scale_factor, contentHeight)
-			boundsBehavior: Flickable.StopAtBounds
-			clip: true
-			enabled: character_dialog.activeFocus
-			model: CharacterDataModel {
-				character: character_dialog.character
-				
-				onCharacterChanged: {
-					character_data_tree_view.contentY = 0
-				}
+		height: Math.min(256 * scale_factor, contentHeight)
+		boundsBehavior: Flickable.StopAtBounds
+		clip: true
+		enabled: character_dialog.activeFocus
+		model: CharacterDataModel {
+			character: character_dialog.character
+			
+			onCharacterChanged: {
+				character_data_tree_view.contentY = 0
 			}
-			delegate: TreeViewDelegate {
-				implicitWidth: character_data_tree_view.width
-				font.family: berenika_font.name
-				font.pixelSize: 10 * scale_factor
-				Material.theme: Material.Dark
-				focusPolicy: Qt.ClickFocus
+		}
+		delegate: TreeViewDelegate {
+			implicitWidth: character_data_tree_view.width
+			font.family: berenika_font.name
+			font.pixelSize: 10 * scale_factor
+			Material.theme: Material.Dark
+			focusPolicy: Qt.ClickFocus
+			
+			onHoveredChanged: {
+				var text = model.tooltip
 				
-				onHoveredChanged: {
-					var text = model.tooltip
-					
-					if (typeof status_text !== 'undefined') {
-						if (hovered) {
-							status_text = text
-						} else {
-							if (status_text === text) {
-								status_text = ""
-							}
+				if (typeof status_text !== 'undefined') {
+					if (hovered) {
+						status_text = text
+					} else {
+						if (status_text === text) {
+							status_text = ""
 						}
 					}
 				}
@@ -87,7 +81,7 @@ DialogBase {
 		color: "gray"
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.top: character_data_pane.bottom
+		anchors.top: character_data_tree_view.bottom
 		height: 1 * scale_factor
 	}
 	
