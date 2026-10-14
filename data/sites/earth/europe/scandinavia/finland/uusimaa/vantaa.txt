@@ -1,0 +1,8 @@
+vantaa = {
+	name = "Vantaa"
+	world = earth
+	geocoordinate = { 25.040277777777778 60.294444444444444 }
+	type = holding
+	holding_type = castle
+	province = uusimaa
+}

@@ -3,6 +3,7 @@ helsinki = {
 	world = earth
 	geocoordinate = { 24.93412634150 60.17556337400 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	province = uusimaa
 	cultural_names = {
 		swedish = "Helsingfors"

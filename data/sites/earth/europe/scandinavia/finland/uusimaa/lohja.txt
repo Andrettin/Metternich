@@ -1,0 +1,8 @@
+lohja = {
+	name = "Lohja"
+	world = earth
+	geocoordinate = { 24.066666666666666 60.25 }
+	type = holding
+	holding_type = temple
+	province = uusimaa
+}

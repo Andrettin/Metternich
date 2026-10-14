@@ -1,0 +1,8 @@
+kerava = {
+	name = "Kerava"
+	world = earth
+	geocoordinate = { 25.1 60.40277777777778 }
+	type = holding
+	holding_type = castle
+	province = uusimaa
+}

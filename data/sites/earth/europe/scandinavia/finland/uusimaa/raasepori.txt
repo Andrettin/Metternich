@@ -1,0 +1,8 @@
+raasepori = {
+	name = "Raasepori"
+	world = earth
+	geocoordinate = { 23.43611111111111 59.975 } #Raseborg
+	type = holding
+	holding_type = castle
+	province = uusimaa
+}

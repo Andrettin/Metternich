@@ -1,0 +1,8 @@
+siuntio = {
+	name = "Siuntio"
+	world = earth
+	geocoordinate = { 24.227777777777778 60.1375 }
+	type = holding
+	holding_type = castle
+	province = uusimaa
+}
