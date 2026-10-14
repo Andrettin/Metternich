@@ -102,12 +102,12 @@ void culture::check() const
 		}
 	}
 
-	log_trace(std::format("Culture \"{}\" has {} female given names.", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::female)));
-	log_trace(std::format("Culture \"{}\" has {} male given names.", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::male)));
+	log_trace(std::format("Culture \"{}\" has {} female given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::female), this->get_given_name_generator()->get_markov_name_count(gender::female)));
+	log_trace(std::format("Culture \"{}\" has {} male given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::male), this->get_given_name_generator()->get_markov_name_count(gender::male)));
 
 	if (!this->is_fauna()) {
-		log_trace(std::format("Culture \"{}\" has {} female surnames.", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::female)));
-		log_trace(std::format("Culture \"{}\" has {} male surnames.", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::male)));
+		log_trace(std::format("Culture \"{}\" has {} female surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::female), this->get_surname_generator()->get_markov_name_count(gender::female)));
+		log_trace(std::format("Culture \"{}\" has {} male surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::male), this->get_surname_generator()->get_markov_name_count(gender::male)));
 	}
 
 	culture_base::check();
