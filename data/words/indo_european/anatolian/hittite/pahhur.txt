@@ -1,0 +1,15 @@
+pahhur = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 151.
+	name = "Paḫḫur"
+	language = hittite
+	type = noun
+	gender = neuter
+	name_generation_word = english:fire
+	noun_inflections = {
+		singular = {
+			genitive = "Paḫḫuenaš"
+		}
+	}
+	meaning_words = {
+		fire
+	}
+}

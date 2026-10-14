@@ -1,0 +1,9 @@
+apa_etruscan = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 1.
+	name = "Apa"
+	language = etruscan
+	type = noun
+	name_generation_word = english:father
+	meaning_words = {
+		father
+	}
+}

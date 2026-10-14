@@ -1,0 +1,9 @@
+jund = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 10.
+	name = "Jund"
+	language = arabic #source gives "Arab."
+	type = noun
+	etymon = parthian:gund_parthian
+	meanings = {
+		"Army"
+	}
+}

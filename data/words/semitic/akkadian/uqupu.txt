@@ -1,0 +1,10 @@
+uqupu = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 31.
+	name = "Uqūpu" #source gives the alternative forms "iqūpu" and "aqūpu"
+	language = akkadian
+	type = noun
+	name_generation_word = english:monkey
+	meanings = {
+		"Monkey"
+		"Vel Sim."
+	}
+}

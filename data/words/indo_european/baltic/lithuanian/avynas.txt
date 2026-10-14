@@ -1,0 +1,9 @@
+avynas = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 20.
+	name = "Avýnas"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:uncle
+	meaning_words = {
+		uncle #source gives the German "Oheim" as the meaning
+	}
+}

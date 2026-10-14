@@ -1,0 +1,11 @@
+pattar = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 139.
+	name = "Pattar" #the source also gives the alternative forms "pattan-", "pettar" and "pettan-"
+	language = hittite
+	type = noun
+	gender = neuter
+	name_generation_word = english:wing
+	meanings = {
+		"Feather"
+		"Wing"
+	}
+}

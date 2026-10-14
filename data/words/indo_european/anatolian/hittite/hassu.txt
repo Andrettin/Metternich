@@ -1,0 +1,10 @@
+hassu = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 30.
+	name = "Ḫassu"
+	language = hittite
+	type = noun
+	gender = common
+	name_generation_word = english:king
+	meaning_words = {
+		king
+	}
+}

@@ -1,0 +1,9 @@
+kadis = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 281.
+	name = "Kadīs"
+	language = nubian
+	type = noun
+	name_generation_word = english:cat
+	meaning_words = {
+		cat
+	}
+}

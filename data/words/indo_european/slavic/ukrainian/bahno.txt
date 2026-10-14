@@ -1,0 +1,10 @@
+bahno = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 48.
+	name = "Bahnó"
+	language = ukrainian
+	type = noun
+	name_generation_word = english:marsh
+	meaning_words = {
+		marsh
+		mud
+	}
+}

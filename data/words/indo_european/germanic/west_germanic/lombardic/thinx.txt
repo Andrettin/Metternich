@@ -1,0 +1,10 @@
+thinx = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 542.
+	name = "Thinx"
+	language = lombardic
+	type = noun
+	name_generation_word = english:assembly
+	meanings = {
+		"Legal Procedure"
+		"Assembly"
+	}
+}

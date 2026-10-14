@@ -1,0 +1,10 @@
+assembly = {
+	name = "Assembly"
+	language = english
+	type = noun
+	gender = neuter
+	given_name = true
+	meanings = {
+		"Assembly"
+	}
+}

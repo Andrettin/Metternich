@@ -1,0 +1,9 @@
+veka = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 205.
+	name = "Vëkà"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:strength
+	meaning_words = {
+		strength #source gives the German "Kraft, Stärke" as the meaning
+	}
+}

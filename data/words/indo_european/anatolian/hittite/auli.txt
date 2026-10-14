@@ -1,0 +1,12 @@
+auli = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 42.
+	name = "Auli"
+	language = hittite
+	type = noun
+	gender = common
+	name_generation_word = english:throat
+	meanings = {
+		"Tube-Shaped Organ in the Neck"
+		"Throat"
+		"Windpipe"
+	}
+}

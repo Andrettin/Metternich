@@ -1,0 +1,10 @@
+haran = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 32.
+	name = "Ḫāran"
+	language = hittite
+	type = noun
+	gender = common
+	name_generation_word = english:eagle
+	meaning_words = {
+		eagle
+	}
+}

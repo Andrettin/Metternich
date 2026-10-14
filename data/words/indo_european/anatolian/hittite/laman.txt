@@ -1,0 +1,10 @@
+laman = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 382.
+	name = "Lāman"
+	language = hittite
+	type = noun
+	gender = neuter
+	name_generation_word = english:name
+	meaning_words = {
+		name
+	}
+}

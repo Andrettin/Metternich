@@ -1,0 +1,9 @@
+alwanza = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 24.
+	name = "Alwanza"
+	language = hittite
+	type = noun
+	name_generation_word = english:magic
+	meaning_words = {
+		magic
+	}
+}

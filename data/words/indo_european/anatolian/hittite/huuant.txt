@@ -1,0 +1,10 @@
+huuant = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. xxv.
+	name = "Ḫuu̯ant"
+	anglicized_name = "Huuant"
+	language = hittite
+	type = noun
+	name_generation_word = english:wind
+	meaning_words = {
+		wind
+	}
+}

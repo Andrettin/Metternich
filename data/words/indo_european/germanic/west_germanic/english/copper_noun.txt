@@ -1,0 +1,14 @@
+copper_noun = {
+	name = "Copper"
+	language = english
+	type = noun
+	gender = neuter
+	uncountable = true
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	surname_compound = true
+	df_word = COPPER
+	meanings = {
+		"Copper"
+	}
+}

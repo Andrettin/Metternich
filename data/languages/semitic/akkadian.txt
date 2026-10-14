@@ -1,0 +1,4 @@
+akkadian = {
+	name = "Akkadian"
+	family = semitic
+}

@@ -1,0 +1,8 @@
+gund_parthian = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 10.
+	name = "Gund"
+	language = parthian #source gives "Pahlavi"
+	type = noun
+	meanings = {
+		"Army"
+	}
+}

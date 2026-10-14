@@ -1,0 +1,9 @@
+urud = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 37.
+	name = "Urud" #source gives "urud(u)
+	language = sumerian
+	type = noun
+	name_generation_word = english:copper_noun
+	meaning_words = {
+		copper_noun
+	}
+}

@@ -1,0 +1,9 @@
+onoman = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 382.
+	name = "Onoman"
+	language = phrygian
+	type = noun
+	name_generation_word = english:name
+	meaning_words = {
+		name
+	}
+}

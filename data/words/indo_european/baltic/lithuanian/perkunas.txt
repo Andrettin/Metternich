@@ -1,0 +1,10 @@
+perkunas = { #Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, pp. 26, 34-35.
+	name = "Perkúnas"
+	language = lithuanian
+	type = noun
+	etymon = proto_indo_european:perkuus
+	name_generation_word = english:thunder
+	meaning_words = {
+		thunder
+	}
+}

@@ -1,0 +1,4 @@
+luvian = {
+	name = "Luvian"
+	family = anatolian
+}

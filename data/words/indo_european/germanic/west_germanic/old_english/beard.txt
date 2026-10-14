@@ -1,0 +1,11 @@
+beard_old_english = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 136.
+	name = "Beard"
+	language = old_english
+	type = noun
+	gender = masculine
+	etymon = proto_germanic:barda
+	name_generation_word = english:beard
+	meaning_words = {
+		beard #source gives the German "Bart" as the meaning
+	}
+}

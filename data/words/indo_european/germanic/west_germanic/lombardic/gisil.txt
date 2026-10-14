@@ -1,0 +1,9 @@
+gisil = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 178.
+	name = "Gīsil"
+	language = lombardic
+	type = noun
+	name_generation_word = english:arrow
+	meaning_words = {
+		arrow
+	}
+}

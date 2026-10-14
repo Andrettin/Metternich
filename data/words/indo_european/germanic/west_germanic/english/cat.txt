@@ -1,0 +1,14 @@
+cat = {
+	name = "Cat"
+	language = english
+	type = noun
+	gender = neuter
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = CAT
+	meanings = {
+		"Cat"
+	}
+}

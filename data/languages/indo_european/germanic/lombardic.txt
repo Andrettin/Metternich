@@ -1,0 +1,4 @@
+lombardic = {
+	name = "Lombardic"
+	family = germanic
+}

@@ -1,0 +1,8 @@
+capu = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 197.
+	name = "Capu"
+	language = etruscan
+	type = noun
+	meanings = {
+		"Falcon"
+	}
+}

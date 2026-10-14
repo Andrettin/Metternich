@@ -1,0 +1,10 @@
+atta = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 39.
+	name = "Atta"
+	language = hittite
+	type = noun
+	gender = common
+	name_generation_word = english:father
+	meaning_words = {
+		father
+	}
+}

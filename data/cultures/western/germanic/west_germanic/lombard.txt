@@ -2,7 +2,7 @@ lombard = {
 	name = "Lombard"
 	group = central_germanic
 	color = { 153 153 204 }
-	language = old_high_german
+	language = lombardic
 	species = {
 		human
 		half_elf

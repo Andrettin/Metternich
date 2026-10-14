@@ -1,0 +1,14 @@
+kareivis = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 16.
+	name = "Kareivis"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:soldier
+	meanings = {
+		"One Who Goes to War"
+		"Soldier"
+	}
+	compound_elements = {
+		karas
+		eiti
+	}
+}

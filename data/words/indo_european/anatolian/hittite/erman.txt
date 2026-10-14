@@ -1,0 +1,11 @@
+erman = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 35.
+	name = "Erman"
+	language = hittite
+	type = noun
+	gender = neuter
+	name_generation_word = english:sickness
+	meaning_words = {
+		sickness
+		illness
+	}
+}

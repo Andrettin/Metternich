@@ -1,0 +1,9 @@
+vinum = { #Source: D. H. Green, "From Germania to Europe: the Evidence of Language and History", 1997, p. xxxii.
+	name = "Vinum"
+	language = latin
+	type = noun
+	name_generation_word = english:wine
+	meaning_words = {
+		wine #apparently
+	}
+}

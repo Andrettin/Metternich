@@ -1,0 +1,10 @@
+kemas = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 53.
+	name = "Kë̃mas"
+	anglicized_name = "Kemas"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:farm
+	meaning_words = {
+		farm #source gives the German "Bauernhof" as the meaning
+	}
+}

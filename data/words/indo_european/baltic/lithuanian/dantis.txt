@@ -1,0 +1,11 @@
+dantis = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 84.
+	name = "Dantìs"
+	language = lithuanian
+	type = noun
+	gender = masculine
+	etymon = proto_indo_european:dont
+	name_generation_word = english:tooth
+	meaning_words = {
+		tooth #source gives the German "Zahn" as the meaning
+	}
+}

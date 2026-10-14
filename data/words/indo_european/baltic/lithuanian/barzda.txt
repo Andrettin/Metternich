@@ -1,0 +1,9 @@
+barzda = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 136.
+	name = "Barzdà"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:beard
+	meaning_words = {
+		beard #source gives the German "Bart" as the meaning
+	}
+}

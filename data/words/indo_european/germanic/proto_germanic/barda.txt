@@ -1,0 +1,12 @@
+barda = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 136.
+	name = "Barda"
+	language = proto_germanic
+	type = noun
+	gender = masculine #alternatively also neuter
+	name_generation_word = english:beard
+	meanings = {
+		#source gives the German "Bart, Rand" as the meaning
+		"Beard"
+		"Edge"
+	}
+}

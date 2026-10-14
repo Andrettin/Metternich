@@ -1,0 +1,11 @@
+uitt = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 138.
+	name = "U̯itt"
+	anglicized_name = "Uitt"
+	language = hittite
+	type = noun
+	gender = common
+	name_generation_word = english:year
+	meaning_words = {
+		year
+	}
+}

@@ -1,0 +1,9 @@
+hassina = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 19.
+	name = "Ḥaṣṣīnā"
+	language = aramaic
+	type = noun
+	name_generation_word = english:axe
+	meaning_words = {
+		axe
+	}
+}

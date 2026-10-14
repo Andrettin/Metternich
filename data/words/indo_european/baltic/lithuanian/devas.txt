@@ -1,0 +1,10 @@
+devas = { #Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 39.
+	name = "Dë̂vas"
+	anglicized_name = "Devas"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:god
+	meaning_words = {
+		god
+	}
+}

@@ -1,0 +1,9 @@
+razm_persian = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 5.
+	name = "Razm"
+	language = persian
+	type = noun
+	name_generation_word = english:battle
+	meaning_words = {
+		battle
+	}
+}

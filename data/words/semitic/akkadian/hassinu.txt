@@ -1,0 +1,9 @@
+hassinu = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 19.
+	name = "Ḥaṣṣinu"
+	language = akkadian
+	type = noun
+	name_generation_word = english:axe
+	meaning_words = {
+		axe
+	}
+}

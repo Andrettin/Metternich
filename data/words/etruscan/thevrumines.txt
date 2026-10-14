@@ -1,0 +1,8 @@
+thevrumines = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 540.
+	name = "Thevrumines"
+	language = etruscan
+	type = noun
+	meanings = {
+		"Minotaur"
+	}
+}

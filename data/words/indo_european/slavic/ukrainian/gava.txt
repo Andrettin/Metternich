@@ -1,0 +1,9 @@
+gava = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 283.
+	name = "Gáva"
+	language = ukrainian
+	type = noun
+	name_generation_word = english:crow
+	meaning_words = {
+		crow
+	}
+}
