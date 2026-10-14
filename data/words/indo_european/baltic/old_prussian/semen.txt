@@ -1,0 +1,9 @@
+semen_old_prussian = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapter 2, Section 3.
+	name = "Semen"
+	language = old_prussian
+	type = noun
+	name_generation_word = english:seed
+	meaning_words = {
+		seed
+	}
+}

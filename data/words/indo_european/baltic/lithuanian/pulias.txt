@@ -1,0 +1,15 @@
+pulias = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapter 2, Section 3.
+	name = "Pū́lias" #this is the plural
+	anglicized_name = "Pulias"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:pus
+	noun_inflections = {
+		plural = {
+			nominative = "Pū́lias"
+		}
+	}
+	meaning_words = {
+		pus
+	}
+}
