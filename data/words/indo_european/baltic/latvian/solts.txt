@@ -1,0 +1,9 @@
+solts = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 73.
+	name = "Solts"
+	language = latvian
+	type = noun
+	name_generation_word = english:gold
+	meaning_words = {
+		gold #source gives the German "Gold" as the meaning
+	}
+}

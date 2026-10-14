@@ -1,0 +1,10 @@
+zalnierius = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, pp. 17-18.
+	name = "Żalniėrius"
+	language = lithuanian
+	type = noun
+	etymon = polish:zolnierz
+	name_generation_word = english:soldier
+	meaning_words = {
+		soldier
+	}
+}

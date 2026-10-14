@@ -1,0 +1,9 @@
+saime = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 53.
+	name = "Saime"
+	language = latvian
+	type = noun
+	name_generation_word = english:rabble
+	meaning_words = {
+		rabble #source gives the German "Gesindel" as the meaning
+	}
+}
