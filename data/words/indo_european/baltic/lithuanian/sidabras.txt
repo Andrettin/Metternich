@@ -1,0 +1,9 @@
+sidabras = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 436.
+	name = "Sidãbras"
+	language = lithuanian
+	type = noun
+	name_generation_word = english:silver_noun
+	meaning_words = {
+		silver_noun
+	}
+}
