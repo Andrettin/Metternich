@@ -1,0 +1,8 @@
+tafalla = {
+	name = "Tafalla"
+	world = earth
+	geocoordinate = { -1.704656484 42.51323936 }
+	type = holding
+	holding_type = castle
+	province = navarre
+}

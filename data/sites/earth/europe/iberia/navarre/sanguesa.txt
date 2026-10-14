@@ -1,0 +1,8 @@
+sanguesa = {
+	name = "Sanguesa" #"Sangüesa"
+	world = earth
+	geocoordinate = { -1.28277778 42.57638889 } #Sangüesa/Zangoza
+	type = holding
+	holding_type = guild
+	province = navarre
+}

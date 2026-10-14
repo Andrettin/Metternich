@@ -1,0 +1,8 @@
+estella = {
+	name = "Estella"
+	world = earth
+	geocoordinate = { -2.03226 42.67182 } #Estella-Lizarra
+	type = holding
+	holding_type = castle
+	province = navarre
+}

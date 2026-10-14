@@ -1,0 +1,8 @@
+olite = {
+	name = "Olite"
+	world = earth
+	geocoordinate = { -1.650091089845469 42.48080536100284 } #Olite/Erriberri
+	type = holding
+	holding_type = castle
+	province = navarre
+}

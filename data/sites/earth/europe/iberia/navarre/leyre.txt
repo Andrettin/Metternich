@@ -1,0 +1,8 @@
+leyre = {
+	name = "Leyre"
+	world = earth
+	geocoordinate = { -1.171667 42.635278 } #Monastery of Leyre
+	type = holding
+	holding_type = temple
+	province = navarre
+}

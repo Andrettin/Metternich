@@ -1,0 +1,8 @@
+tudela = {
+	name = "Tudela"
+	world = earth
+	geocoordinate = { -1.6066666666667 42.065277777778 }
+	type = holding
+	holding_type = guild
+	province = navarre
+}
