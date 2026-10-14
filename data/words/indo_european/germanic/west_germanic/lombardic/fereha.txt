@@ -1,0 +1,9 @@
+fereha = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 137.
+	name = "Fereha"
+	language = lombardic
+	type = noun
+	name_generation_word = english:oak
+	meaning_words = {
+		oak
+	}
+}
