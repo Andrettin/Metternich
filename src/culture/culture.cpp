@@ -13,6 +13,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 #include "util/random.h"
 #include "util/vector_util.h"
 
@@ -102,12 +103,12 @@ void culture::check() const
 		}
 	}
 
-	log_trace(std::format("Culture \"{}\" has {} female given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::female), this->get_given_name_generator()->get_markov_name_count(gender::female)));
-	log_trace(std::format("Culture \"{}\" has {} male given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::male), this->get_given_name_generator()->get_markov_name_count(gender::male)));
+	log_trace(std::format("Culture \"{}\" has {} female given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::female), number::to_formatted_string(this->get_given_name_generator()->get_markov_name_count(gender::female))));
+	log_trace(std::format("Culture \"{}\" has {} male given names ({} with Markov generation).", this->get_identifier(), this->get_given_name_generator()->get_name_count(gender::male), number::to_formatted_string(this->get_given_name_generator()->get_markov_name_count(gender::male))));
 
 	if (!this->is_fauna()) {
-		log_trace(std::format("Culture \"{}\" has {} female surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::female), this->get_surname_generator()->get_markov_name_count(gender::female)));
-		log_trace(std::format("Culture \"{}\" has {} male surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::male), this->get_surname_generator()->get_markov_name_count(gender::male)));
+		log_trace(std::format("Culture \"{}\" has {} female surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::female), number::to_formatted_string(this->get_surname_generator()->get_markov_name_count(gender::female))));
+		log_trace(std::format("Culture \"{}\" has {} male surnames ({} with Markov generation).", this->get_identifier(), this->get_surname_generator()->get_name_count(gender::male), number::to_formatted_string(this->get_surname_generator()->get_markov_name_count(gender::male))));
 	}
 
 	culture_base::check();
