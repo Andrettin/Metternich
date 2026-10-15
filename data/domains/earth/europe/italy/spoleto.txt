@@ -1,0 +1,14 @@
+spoleto = {
+	name = "Spoleto"
+	type = polity
+	color = { 217 182 153 }
+	flag = spoleto
+	default_culture = italian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = spoleto
+	core_holdings = {
+		spoleto
+	}
+}

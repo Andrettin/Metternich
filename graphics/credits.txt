@@ -69,6 +69,7 @@
 /graphics/flags/savoy.svg (by Patricia.fidi, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/saxony_royal.svg (by David Liuzzo, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/spain.svg (from the Wikimedia Commons) (in the public domain)
+/graphics/flags/spoleto.svg (by Cineferro, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
 /graphics/flags/strasbourg.svg (by Madden, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/styria.svg (by David Liuzzo and Yaddah, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/sweden.svg (from the Wikimedia Commons) (in the public domain)
