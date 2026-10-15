@@ -1,0 +1,8 @@
+assisi = {
+	name = "Assisi"
+	world = earth
+	geocoordinate = { 12.61499803 43.07081201 }
+	type = holding
+	holding_type = temple
+	province = perugia
+}

@@ -1,0 +1,8 @@
+fratta = {
+	name = "Fratta"
+	world = earth
+	geocoordinate = { 12.3269568 43.30659386 } #Umbertide
+	type = holding
+	holding_type = castle
+	province = perugia
+}

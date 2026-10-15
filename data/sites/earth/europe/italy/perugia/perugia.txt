@@ -4,7 +4,7 @@ perugia = {
 	geocoordinate = { 12.38998246120 43.11037762360 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = rimini #Perugia
+	province = perugia
 	features = {
 		academic #historical university
 		prime_fruit_land

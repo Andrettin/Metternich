@@ -20,6 +20,7 @@ italy = {
 		modena
 		naples
 		parma
+		perugia
 		piedmont
 		ravenna
 		rimini
