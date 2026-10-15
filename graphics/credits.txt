@@ -15,6 +15,7 @@
 /graphics/flags/bavaria.svg (by Jwnabd, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0)
 /graphics/flags/bavaria_ducal.svg (by Sir Iain, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/belgium.svg (by Dbenbenn, from the Wikimedia Commons) (in the public domain)
+/graphics/flags/benevento.svg (from the Wikimedia Commons) (in the public domain)
 /graphics/flags/berry.svg (by Patricia.fidi, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/bohemia.svg (by Jiří Louda, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/brandenburg.svg (from the Wikimedia Commons) (in the public domain)

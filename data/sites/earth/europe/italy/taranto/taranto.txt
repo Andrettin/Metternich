@@ -4,6 +4,7 @@ taranto = {
 	geocoordinate = { 17.22999710970 40.50839174300 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	province = taranto
 	cultural_names = {
 		greek = "Taras" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.
 		roman = "Tarentum" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 5.

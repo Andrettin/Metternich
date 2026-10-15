@@ -1,0 +1,8 @@
+san_angelo = {
+	name = "San Angelo"
+	world = earth
+	geocoordinate = { 15.183333333333 40.933333333333 } #Sant'Angelo dei Lombardi
+	type = holding
+	holding_type = castle
+	province = benevento #Avellino
+}

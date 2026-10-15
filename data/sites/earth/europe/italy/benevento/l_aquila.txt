@@ -4,7 +4,7 @@ l_aquila = {
 	geocoordinate = { 13.39002477890 42.35039817210 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = naples
+	province = benevento #L'Aquila
 	features = {
 		prime_sheep_land
 	}

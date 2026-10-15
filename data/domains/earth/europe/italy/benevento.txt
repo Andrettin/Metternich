@@ -1,0 +1,14 @@
+benevento = {
+	name = "Benevento"
+	type = polity
+	color = { 209 170 75 }
+	flag = benevento
+	default_culture = italian
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = benevento
+	core_holdings = {
+		benevento
+	}
+}

@@ -1,0 +1,8 @@
+ascoli = {
+	name = "Ascoli"
+	world = earth
+	geocoordinate = { 15.557777777778 41.215555555556 } #Ascoli Satriano
+	type = holding
+	holding_type = temple
+	province = benevento #Foggia
+}

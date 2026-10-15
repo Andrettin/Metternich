@@ -17,10 +17,14 @@ cosenza = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
-		1204 = {
-			owner = two_sicilies #part of the Kingdom of the Two Sicilies in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		814 = {
+			owner = benevento #part of the Duchy of Benevento c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
 			culture = italian
 			religion = catholic
+		}
+		
+		1204 = {
+			owner = two_sicilies #part of the Kingdom of the Two Sicilies in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 		}
 		
 		1360 = {

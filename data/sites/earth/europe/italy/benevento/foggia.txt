@@ -5,5 +5,5 @@ foggia = {
 	type = holding
 	holding_type = guild
 	#resource = fish
-	province = naples
+	province = benevento #Foggia
 }

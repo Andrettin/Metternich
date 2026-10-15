@@ -1,0 +1,8 @@
+avellino = {
+	name = "Avellino"
+	world = earth
+	geocoordinate = { 14.789722222222 40.915277777778 }
+	type = holding
+	holding_type = guild
+	province = benevento #Avellino
+}

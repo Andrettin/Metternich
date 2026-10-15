@@ -1,0 +1,8 @@
+conza = {
+	name = "Conza"
+	world = earth
+	geocoordinate = { 15.33645 40.8586 } #Conza della Campania
+	type = holding
+	holding_type = castle
+	province = benevento #Avellino
+}

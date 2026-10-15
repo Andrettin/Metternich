@@ -4,5 +4,5 @@ aversa = {
 	geocoordinate = { 14.2064748 40.973034 }
 	type = holding
 	holding_type = castle
-	province = naples
+	province = naples #Caserta
 }

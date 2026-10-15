@@ -1,0 +1,8 @@
+frigento = {
+	name = "Frigento"
+	world = earth
+	geocoordinate = { 15.099625291819752 41.011792044303505 }
+	type = holding
+	holding_type = castle
+	province = benevento #Avellino
+}

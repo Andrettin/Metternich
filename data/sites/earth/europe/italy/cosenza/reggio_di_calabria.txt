@@ -5,7 +5,7 @@ reggio_di_calabria = {
 	type = holding
 	holding_type = guild
 	#resource = fish
-	province = cosenza
+	province = cosenza #Reggio di Calabria
 	
 	history = {
 		1360 = {

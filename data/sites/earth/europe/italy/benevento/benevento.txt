@@ -1,0 +1,8 @@
+benevento = {
+	name = "Benevento"
+	world = earth
+	geocoordinate = { 14.749993 41.133702 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = benevento
+}

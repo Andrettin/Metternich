@@ -1,0 +1,8 @@
+trevico = {
+	name = "Trevico"
+	world = earth
+	geocoordinate = { 15.233333333333 41.05 }
+	type = holding
+	holding_type = castle
+	province = benevento #Avellino
+}

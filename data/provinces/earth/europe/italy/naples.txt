@@ -21,6 +21,11 @@ naples = {
 			owner = ostrogothia #part of the Kingdom of the East Goths in 526; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
 		}
 		
+		814 = {
+			owner = byzantium #part of the Byzantine Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			religion = orthodox
+		}
+		
 		1204 = {
 			owner = two_sicilies #part of the Kingdom of the Two Sicilies in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = italian

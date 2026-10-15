@@ -1,0 +1,8 @@
+montemarono = {
+	name = "Montemarono"
+	world = earth
+	geocoordinate = { 14.998333333333 40.916111111111 } #Montemarano
+	type = holding
+	holding_type = temple
+	province = benevento #Avellino
+}

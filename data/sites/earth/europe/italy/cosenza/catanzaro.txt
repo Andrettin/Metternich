@@ -5,5 +5,5 @@ catanzaro = {
 	type = holding
 	holding_type = guild
 	#resource = fish
-	province = cosenza
+	province = cosenza #Catanzaro
 }

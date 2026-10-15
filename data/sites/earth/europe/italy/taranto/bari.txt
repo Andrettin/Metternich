@@ -4,7 +4,7 @@ bari = {
 	geocoordinate = { 16.87275793320 41.11422039700 } #from Natural Earth
 	type = holding
 	holding_type = guild
-	province = taranto
+	province = taranto #Bari
 	features = {
 		prime_grain_land
 	}
