@@ -5,4 +5,15 @@ benevento = {
 	type = holding
 	holding_type = castle
 	province = benevento
+	
+	history = {
+		1204 = {
+			developed = true
+			owner = papal_states #part of the States of the Church c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+		}
+		
+		1740 = {
+			owner = papal_states #part of the Papal States c. 1740; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 130-131.
+		}
+	}
 }

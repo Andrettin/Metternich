@@ -16,7 +16,7 @@ limassol = {
 		}
 		
 		1204 = {
-			owner = cyprus #part of the Kingdom of Cyprus in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			owner = cyprus #part of the Kingdom of Cyprus c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = greek
 			religion = orthodox
 		}

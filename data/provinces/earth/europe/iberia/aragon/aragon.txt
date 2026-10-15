@@ -19,7 +19,7 @@ aragon = {
 		}
 		
 		1204 = {
-			owner = aragon #part of Aragon in 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			owner = aragon #part of Aragon c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
 			culture = aragonese
 			religion = catholic
 		}
