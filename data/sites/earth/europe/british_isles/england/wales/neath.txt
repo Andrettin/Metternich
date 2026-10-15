@@ -1,0 +1,8 @@
+neath = {
+	name = "Neath"
+	world = earth
+	geocoordinate = { -3.81 51.66 }
+	type = holding
+	holding_type = castle
+	province = wales
+}

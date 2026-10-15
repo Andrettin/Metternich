@@ -1,0 +1,8 @@
+saint_donats = {
+	name = "Saint Donats"
+	world = earth
+	geocoordinate = { -3.5306 51.4057 }
+	type = holding
+	holding_type = castle
+	province = wales
+}

@@ -1,0 +1,8 @@
+caerphilly = {
+	name = "Caerphilly"
+	world = earth
+	geocoordinate = { -3.218 51.578 }
+	type = holding
+	holding_type = castle
+	province = wales
+}

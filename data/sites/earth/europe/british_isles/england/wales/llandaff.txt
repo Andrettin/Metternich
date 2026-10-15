@@ -1,0 +1,8 @@
+llandaff = {
+	name = "Llandaff"
+	world = earth
+	geocoordinate = { -3.2133333333333 51.493333333333 }
+	type = holding
+	holding_type = temple
+	province = wales
+}

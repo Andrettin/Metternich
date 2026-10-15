@@ -1,0 +1,8 @@
+ogmore = {
+	name = "Ogmore"
+	world = earth
+	geocoordinate = { -3.61131 51.4791 } #Ogmore, Vale of Glamorgan
+	type = holding
+	holding_type = castle
+	province = wales
+}

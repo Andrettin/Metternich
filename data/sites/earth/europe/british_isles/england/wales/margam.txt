@@ -1,0 +1,8 @@
+margam = {
+	name = "Margam"
+	world = earth
+	geocoordinate = { -3.7324 51.5614 }
+	type = holding
+	holding_type = castle
+	province = wales
+}
