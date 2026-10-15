@@ -7,23 +7,6 @@ ostrogothia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = ravenna
-	core_provinces = {
-		ravenna
-		arezzo
-		bologna
-		cosenza
-		ferrara
-		genoa
-		latium
-		lombardy
-		naples
-		piedmont
-		rimini
-		sicily
-		taranto
-		tuscany
-		venetia
-	}
 	
 	history = {
 		453 = {

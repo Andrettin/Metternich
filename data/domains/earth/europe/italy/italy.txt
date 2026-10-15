@@ -11,6 +11,7 @@ italy = {
 	core_provinces = {
 		latium
 		arezzo
+		benevento
 		bologna
 		cosenza
 		ferrara

@@ -29,6 +29,7 @@ appian_way = {
 	path_provinces = {
 		latium
 		naples
+		benevento
 		taranto
 	}
 	conditions = {
