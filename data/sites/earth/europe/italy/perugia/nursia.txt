@@ -1,0 +1,8 @@
+nursia = {
+	name = "Nursia"
+	world = earth
+	geocoordinate = { 13.09317705 42.79259884 } #Norcia
+	type = holding
+	holding_type = castle
+	province = perugia
+}

@@ -1,0 +1,8 @@
+foligno = {
+	name = "Foligno"
+	world = earth
+	geocoordinate = { 12.70328134 42.95576094 }
+	type = holding
+	holding_type = guild
+	province = perugia
+}

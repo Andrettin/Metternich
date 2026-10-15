@@ -1,0 +1,8 @@
+valva = {
+	name = "Valva"
+	world = earth
+	geocoordinate = { 13.8425 42.124722222222 } #Corfinio
+	type = holding
+	holding_type = castle
+	province = benevento #L'Aquila
+}
