@@ -694,6 +694,9 @@ void character_data_model::update_critical_hit_chance_row()
 
 		critical_hit_chance /= static_cast<int>(weapons.size());
 		critical_damage_multiplier /= static_cast<int>(weapons.size());
+	} else {
+		critical_hit_chance = character_defines::get()->get_default_critical_hit_chance();
+		critical_damage_multiplier = centesimal_int(character_defines::get()->get_default_critical_damage_multiplier());
 	}
 
 	this->critical_hit_chance_row->value = std::format("{}% (x{} Damage)", critical_hit_chance, critical_damage_multiplier.to_string());

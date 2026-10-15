@@ -843,7 +843,7 @@ military_unit::to_hit_result military_unit::check_to_hit(const metternich::chara
 	//check if a critical hit happened
 	if (result.hit) {
 		const int critical_hit_chance = std::max(weapon ? weapon->get_type()->get_critical_hit_chance() : 0, character_defines::get()->get_default_critical_hit_chance());
-		const int critical_hit_target = 21 - (critical_hit_chance / 5);
+		const int critical_hit_target = (to_hit_dice.get_sides() + 1) - (critical_hit_chance * to_hit_dice.get_sides() / 100);
 
 		if (to_hit_result >= critical_hit_target) {
 			//confirm the critical hit

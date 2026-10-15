@@ -42,6 +42,7 @@ public:
 
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void check() const override;
 
 	int get_minimum_character_range() const
 	{

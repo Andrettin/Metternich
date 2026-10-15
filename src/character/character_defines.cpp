@@ -134,6 +134,13 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void character_defines::check() const
+{
+	if (this->get_default_critical_damage_multiplier() == 0) {
+		throw std::runtime_error("No default critical damage multiplier has been defined.");
+	}
+}
+
 int character_defines::get_bloodline_strength_category_weight(const bloodline_strength_category category) const
 {
 	const auto find_iterator = this->bloodline_strength_category_weights.find(category);
