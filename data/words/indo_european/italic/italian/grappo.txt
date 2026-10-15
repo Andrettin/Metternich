@@ -1,0 +1,9 @@
+grappo = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 548.
+	name = "Grappo"
+	language = italian
+	type = noun
+	name_generation_word = english:grape
+	meaning_words = {
+		grape
+	}
+}

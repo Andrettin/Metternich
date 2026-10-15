@@ -1,0 +1,9 @@
+stagno = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 517.
+	name = "Stagno"
+	language = italian
+	type = noun
+	name_generation_word = english:tin_noun
+	meaning_words = {
+		tin_noun
+	}
+}

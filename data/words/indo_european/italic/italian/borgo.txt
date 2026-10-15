@@ -1,0 +1,11 @@
+borgo = { #Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Borgo"
+	language = italian
+	type = noun
+	etymon = gothic:baurgs #the source gives it as being of Germanic origin (then going on to list a series of Germanic words including this Gothic one); presumably from the Gothic in Italian since they were the Germanic people who settled in Italy
+	name_generation_word = english:town
+	meanings = {
+		"Small Town"
+		"Borough"
+	}
+}

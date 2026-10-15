@@ -1,0 +1,4 @@
+medieval_latin = {
+	name = "Medieval Latin"
+	family = italic
+}

@@ -1,0 +1,6 @@
+buscus = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 143.
+	name = "Buscus" #source also gives the alternative form "Boscus"
+	language = medieval_latin
+	type = noun
+	etymon = proto_germanic:buska
+}
