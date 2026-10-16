@@ -10,4 +10,20 @@ papal_states = {
 	default_capital = lateran
 	definite_article = true
 	short_name = true
+	
+	history = {
+		814 = {
+			diplomacy_state = { #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+				domain = francia
+				subject_type = vassal
+			}
+		}
+		
+		1204 = {
+			diplomacy_state = { #independent c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+				domain = francia
+				state = peace
+			}
+		}
+	}
 }

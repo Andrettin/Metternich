@@ -14,14 +14,18 @@ ravenna = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = papal_states #part of the Patrimony of St. Peter c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = italian
+			religion = catholic
+		}
+		
 		1130 = {
 			trade_zone = contarini
 		}
 		
 		1204 = {
 			owner = papal_states #part of the Papal States c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
-			culture = italian
-			religion = catholic
 		}
 		
 		1360 = {

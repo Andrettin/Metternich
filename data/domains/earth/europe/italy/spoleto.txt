@@ -11,4 +11,16 @@ spoleto = {
 	core_holdings = {
 		spoleto
 	}
+	
+	history = {
+		814 = {
+			tier = duchy #duchy c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			government_type = monarchy
+			
+			diplomacy_state = { #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+				domain = francia
+				subject_type = vassal
+			}
+		}
+	}
 }
