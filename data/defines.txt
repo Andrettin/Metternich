@@ -169,90 +169,111 @@ battle_resolution_results = {
 			-3 = {
 				hit
 				miss
+				fall_back
 			}
 			-2 = {
 				miss
 				fall_back
+				hit
 			}
 			-1 = {
 				fall_back
 				hit
+				miss
 			}
 			0 = {
 				miss
 				hit
+				rout
 			}
 			1 = {
 				hit
 				fall_back
+				destroy
 			}
 			2 = {
 				miss
 				hit
+				miss
 			}
 			3 = {
 				miss
 				rout
+				hit
 			}
 		}
 		pennant = {
 			-3 = {
 				miss
 				fall_back
+				hit
 			}
 			-2 = {
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				miss
 				miss
+				hit
 			}
 			0 = {
 				miss
+				hit
 				hit
 			}
 			1 = {
 				hit
 				miss
+				hit
 			}
 			2 = {
 				hit
 				rout
+				hit
 			}
 			3 = {
 				destroy
 				hit
+				rout
 			}
 		}
 		crossed_swords = {
 			-3 = {
 				miss
 				fall_back
+				miss
 			}
 			-2 = {
 				hit
 				miss
+				fall_back
 			}
 			-1 = {
 				hit
 				hit
+				miss
 			}
 			0 = {
 				miss
 				fall_back
+				hit
 			}
 			1 = {
 				hit
 				miss
+				rout
 			}
 			2 = {
 				miss
 				hit
+				rout
 			}
 			3 = {
 				hit
 				destroy
+				hit
 			}
 		}
 	}
@@ -261,89 +282,110 @@ battle_resolution_results = {
 			-3 = {
 				fall_back
 				hit
+				miss
 			}
 			-2 = {
 				miss
 				fall_back
+				hit
 			}
 			-1 = {
 				miss
 				fall_back
+				hit
 			}
 			0 = {
 				rout
 				miss
+				hit
 			}
 			1 = {
 				destroy
 				hit
+				fall_back
 			}
 			2 = {
 				hit
 				miss
+				hit
 			}
 			3 = {
 				rout
 				hit
+				miss
 			}
 		}
 		pennant = {
 			-3 = {
 				hit
 				miss
+				fall_back
 			}
 			-2 = {
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				hit
+				miss
 				miss
 			}
 			0 = {
 				hit
 				miss
+				hit
 			}
 			1 = {
 				hit
 				hit
+				miss
 			}
 			2 = {
 				hit
 				hit
+				rout
 			}
 			3 = {
 				hit
 				rout
+				destroy
 			}
 		}
 		crossed_swords = {
 			-3 = {
 				miss
 				miss
+				fall_back
 			}
 			-2 = {
 				hit
 				miss
+				fall_back
 			}
 			-1 = {
 				miss
+				hit
 				hit
 			}
 			0 = {
 				hit
 				miss
+				fall_back
 			}
 			1 = {
 				rout
 				hit
+				miss
 			}
 			2 = {
 				rout
 				miss
+				hit
 			}
 			3 = {
 				destroy
+				hit
 				hit
 			}
 		}
@@ -353,90 +395,111 @@ battle_resolution_results = {
 			-3 = {
 				miss
 				fall_back
+				hit
 			}
 			-2 = {
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				hit
 				miss
+				fall_back
 			}
 			0 = {
 				hit
 				rout
+				miss
 			}
 			1 = {
 				fall_back
 				destroy
+				hit
 			}
 			2 = {
 				destroy
 				rout
+				hit
 			}
 			3 = {
 				hit
 				miss
+				rout
 			}
 		}
 		pennant = {
 			-3 = {
 				fall_back
 				hit
+				miss
 			}
 			-2 = {
 				hit
 				miss
+				fall_back
 			}
 			-1 = {
 				miss
 				hit
+				miss
 			}
 			0 = {
 				hit
 				hit
+				miss
 			}
 			1 = {
 				miss
+				hit
 				hit
 			}
 			2 = {
 				hit
 				destroy
+				miss
 			}
 			3 = {
 				rout
 				destroy
+				hit
 			}
 		}
 		crossed_swords = {
 			-3 = {
 				fall_back
 				miss
+				miss
 			}
 			-2 = {
 				miss
 				fall_back
+				hit
 			}
 			-1 = {
 				hit
 				miss
+				hit
 			}
 			0 = {
 				fall_back
 				hit
+				miss
 			}
 			1 = {
 				miss
 				rout
+				hit
 			}
 			2 = {
 				hit
 				hit
+				rout
 			}
 			3 = {
 				hit
 				hit
+				destroy
 			}
 		}
 	}
