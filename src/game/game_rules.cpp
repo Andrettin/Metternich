@@ -4,6 +4,7 @@
 
 #include "database/database.h"
 #include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "game/game_rule.h"
 #include "game/game_rule_group.h"
 #include "util/assert_util.h"

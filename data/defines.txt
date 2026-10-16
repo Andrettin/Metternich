@@ -162,182 +162,281 @@ military_unit_hit_points_per_hit_dice = { #hit points per monster type hit dice
 	19 = 0.6
 }
 
-battle_resolution_tables = {
-	{
-		crossed_swords = {
-			shield = {
-				-3 = hit
-				-2 = miss
-				-1 = fall_back
-				0 = miss
-				1 = hit
-				2 = miss
-				3 = miss
-			}
-			pennant = {
-				-3 = miss
-				-2 = fall_back
-				-1 = miss
-				0 = miss
-				1 = hit
-				2 = hit
-				3 = destroy
-			}
-			crossed_swords = {
-				-3 = miss
-				-2 = hit
-				-1 = hit
-				0 = miss
-				1 = hit
-				2 = miss
-				3 = hit
-			}
-		}
+#the first resolution type is that of the attacker, and the second that of the defender; the values thereafter are the difference between the attack and defense values
+battle_resolution_results = {
+	crossed_swords = {
 		shield = {
-			shield = {
-				-3 = fall_back
-				-2 = miss
-				-1 = miss
-				0 = rout
-				1 = destroy
-				2 = hit
-				3 = rout
+			-3 = {
+				hit
+				miss
 			}
-			pennant = {
-				-3 = hit
-				-2 = fall_back
-				-1 = hit
-				0 = hit
-				1 = hit
-				2 = hit
-				3 = hit
+			-2 = {
+				miss
+				fall_back
 			}
-			crossed_swords = {
-				-3 = miss
-				-2 = hit
-				-1 = miss
-				0 = hit
-				1 = rout
-				2 = rout
-				3 = destroy
+			-1 = {
+				fall_back
+				hit
+			}
+			0 = {
+				miss
+				hit
+			}
+			1 = {
+				hit
+				fall_back
+			}
+			2 = {
+				miss
+				hit
+			}
+			3 = {
+				miss
+				rout
 			}
 		}
 		pennant = {
-			shield = {
-				-3 = miss
-				-2 = fall_back
-				-1 = hit
-				0 = hit
-				1 = fall_back
-				2 = destroy
-				3 = hit
+			-3 = {
+				miss
+				fall_back
 			}
-			pennant = {
-				-3 = fall_back
-				-2 = hit
-				-1 = miss
-				0 = hit
-				1 = miss
-				2 = hit
-				3 = rout
+			-2 = {
+				fall_back
+				hit
 			}
-			crossed_swords = {
-				-3 = fall_back
-				-2 = miss
-				-1 = hit
-				0 = fall_back
-				1 = miss
-				2 = hit
-				3 = hit
+			-1 = {
+				miss
+				miss
+			}
+			0 = {
+				miss
+				hit
+			}
+			1 = {
+				hit
+				miss
+			}
+			2 = {
+				hit
+				rout
+			}
+			3 = {
+				destroy
+				hit
+			}
+		}
+		crossed_swords = {
+			-3 = {
+				miss
+				fall_back
+			}
+			-2 = {
+				hit
+				miss
+			}
+			-1 = {
+				hit
+				hit
+			}
+			0 = {
+				miss
+				fall_back
+			}
+			1 = {
+				hit
+				miss
+			}
+			2 = {
+				miss
+				hit
+			}
+			3 = {
+				hit
+				destroy
 			}
 		}
 	}
-	{
-		crossed_swords = {
-			shield = {
-				-3 = miss
-				-2 = fall_back
-				-1 = hit
-				0 = hit
-				1 = fall_back
-				2 = hit
-				3 = rout
-			}
-			pennant = {
-				-3 = fall_back
-				-2 = hit
-				-1 = miss
-				0 = hit
-				1 = miss
-				2 = rout
-				3 = hit
-			}
-			crossed_swords = {
-				-3 = fall_back
-				-2 = miss
-				-1 = hit
-				0 = fall_back
-				1 = miss
-				2 = hit
-				3 = destroy
-			}
-		}
+	shield = {
 		shield = {
-			shield = {
-				-3 = hit
-				-2 = fall_back
-				-1 = fall_back
-				0 = miss
-				1 = hit
-				2 = miss
-				3 = hit
+			-3 = {
+				fall_back
+				hit
 			}
-			pennant = {
-				-3 = miss
-				-2 = hit
-				-1 = miss
-				0 = miss
-				1 = hit
-				2 = hit
-				3 = rout
+			-2 = {
+				miss
+				fall_back
 			}
-			crossed_swords = {
-				-3 = miss
-				-2 = miss
-				-1 = hit
-				0 = miss
-				1 = hit
-				2 = miss
-				3 = hit
+			-1 = {
+				miss
+				fall_back
+			}
+			0 = {
+				rout
+				miss
+			}
+			1 = {
+				destroy
+				hit
+			}
+			2 = {
+				hit
+				miss
+			}
+			3 = {
+				rout
+				hit
 			}
 		}
 		pennant = {
-			shield = {
-				-3 = fall_back
-				-2 = hit
-				-1 = miss
-				0 = rout
-				1 = destroy
-				2 = rout
-				3 = miss
+			-3 = {
+				hit
+				miss
 			}
-			pennant = {
-				-3 = hit
-				-2 = miss
-				-1 = hit
-				0 = hit
-				1 = hit
-				2 = destroy
-				3 = destroy
+			-2 = {
+				fall_back
+				hit
 			}
-			crossed_swords = {
-				-3 = miss
-				-2 = fall_back
-				-1 = miss
-				0 = hit
-				1 = rout
-				2 = hit
-				3 = hit
+			-1 = {
+				hit
+				miss
+			}
+			0 = {
+				hit
+				miss
+			}
+			1 = {
+				hit
+				hit
+			}
+			2 = {
+				hit
+				hit
+			}
+			3 = {
+				hit
+				rout
+			}
+		}
+		crossed_swords = {
+			-3 = {
+				miss
+				miss
+			}
+			-2 = {
+				hit
+				miss
+			}
+			-1 = {
+				miss
+				hit
+			}
+			0 = {
+				hit
+				miss
+			}
+			1 = {
+				rout
+				hit
+			}
+			2 = {
+				rout
+				miss
+			}
+			3 = {
+				destroy
+				hit
+			}
+		}
+	}
+	pennant = {
+		shield = {
+			-3 = {
+				miss
+				fall_back
+			}
+			-2 = {
+				fall_back
+				hit
+			}
+			-1 = {
+				hit
+				miss
+			}
+			0 = {
+				hit
+				rout
+			}
+			1 = {
+				fall_back
+				destroy
+			}
+			2 = {
+				destroy
+				rout
+			}
+			3 = {
+				hit
+				miss
+			}
+		}
+		pennant = {
+			-3 = {
+				fall_back
+				hit
+			}
+			-2 = {
+				hit
+				miss
+			}
+			-1 = {
+				miss
+				hit
+			}
+			0 = {
+				hit
+				hit
+			}
+			1 = {
+				miss
+				hit
+			}
+			2 = {
+				hit
+				destroy
+			}
+			3 = {
+				rout
+				destroy
+			}
+		}
+		crossed_swords = {
+			-3 = {
+				fall_back
+				miss
+			}
+			-2 = {
+				miss
+				fall_back
+			}
+			-1 = {
+				hit
+				miss
+			}
+			0 = {
+				fall_back
+				hit
+			}
+			1 = {
+				miss
+				rout
+			}
+			2 = {
+				hit
+				hit
+			}
+			3 = {
+				hit
+				hit
 			}
 		}
 	}

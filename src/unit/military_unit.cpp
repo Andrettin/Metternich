@@ -18,7 +18,6 @@
 #include "economy/commodity.h"
 #include "game/attack_result.h"
 #include "game/battle.h"
-#include "game/battle_resolution_table.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
 #include "item/item.h"
@@ -692,9 +691,7 @@ QCoro::Task<bool> military_unit::attack(military_unit *target, const int battle_
 		defense += target->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
 	}
 
-	const std::unique_ptr<battle_resolution_table> &battle_resolution_table = vector::get_random(defines::get()->get_battle_resolution_tables());
-
-	const attack_result result = battle_resolution_table->get_result(this->get_battle_resolution_type(), target->get_battle_resolution_type(), attack - defense);
+	const attack_result result = vector::get_random(defines::get()->get_battle_resolution_results(this->get_battle_resolution_type(), target->get_battle_resolution_type(), attack - defense));
 
 	switch (result) {
 		case attack_result::miss:

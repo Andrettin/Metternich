@@ -4,6 +4,7 @@
 #include "character/character_game_data.h"
 #include "character/trait.h"
 #include "script/condition/condition.h"
+#include "util/gender.h"
 
 namespace metternich {
 

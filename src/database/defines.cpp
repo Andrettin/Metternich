@@ -7,7 +7,8 @@
 #include "domain/diplomacy_state.h"
 #include "economy/commodity.h"
 #include "economy/province_taxation_type.h"
-#include "game/battle_resolution_table.h"
+#include "game/attack_result.h"
+#include "game/battle_resolution_type.h"
 #include "game/character_event.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
@@ -132,10 +133,27 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->military_unit_hit_points_per_hit_dice[hit_dice_count] = hit_points;
 		});
-	} else if (tag == "battle_resolution_tables") {
+	} else if (tag == "battle_resolution_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
-			auto table = std::make_unique<battle_resolution_table>(child_scope);
-			this->battle_resolution_tables.push_back(std::move(table));
+			const std::string &child_tag = child_scope.get_tag();
+			const battle_resolution_type attacker_resolution_type = magic_enum::enum_cast<battle_resolution_type>(child_tag).value();
+
+			child_scope.for_each_child([this, attacker_resolution_type](const gsml_data &grandchild_scope) {
+				const std::string &grandchild_tag = grandchild_scope.get_tag();
+				const battle_resolution_type defender_resolution_type = magic_enum::enum_cast<battle_resolution_type>(grandchild_tag).value();
+
+				grandchild_scope.for_each_child([this, attacker_resolution_type, defender_resolution_type](const gsml_data &great_grandchild_scope) {
+					const int attack_defense_difference = std::stoi(great_grandchild_scope.get_tag());
+
+					std::vector<attack_result> results;
+					for (const std::string &value : great_grandchild_scope.get_values()) {
+						const attack_result result = magic_enum::enum_cast<attack_result>(value).value();
+						results.push_back(result);
+					}
+
+					this->battle_resolution_results[attacker_resolution_type][defender_resolution_type][attack_defense_difference] = std::move(results);
+				});
+			});
 		});
 	} else if (tag == "river_adjacency_subtiles") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -353,6 +371,33 @@ const centesimal_int &defines::get_military_unit_hit_points_for_hit_dice(const i
 	const auto find_iterator = this->military_unit_hit_points_per_hit_dice.upper_bound(hit_dice_count);
 	assert_throw(find_iterator != this->military_unit_hit_points_per_hit_dice.begin());
 	return std::prev(find_iterator)->second;
+}
+
+const std::vector<attack_result> &defines::get_battle_resolution_results(const battle_resolution_type attacker_resolution_type, const battle_resolution_type defender_resolution_type, const int attack_defense_difference) const
+{
+	const auto attacker_find_iterator = this->battle_resolution_results.find(attacker_resolution_type);
+	assert_throw(attacker_find_iterator != this->battle_resolution_results.end());
+
+	const auto defender_find_iterator = attacker_find_iterator->second.find(defender_resolution_type);
+	assert_throw(defender_find_iterator != attacker_find_iterator->second.end());
+
+	assert_throw(!defender_find_iterator->second.empty());
+
+	const auto find_iterator = defender_find_iterator->second.find(attack_defense_difference);
+	if (find_iterator != defender_find_iterator->second.end()) {
+		return find_iterator->second;
+	}
+
+	if (attack_defense_difference < defender_find_iterator->second.begin()->first) {
+		return defender_find_iterator->second.begin()->second;
+	} else if (attack_defense_difference > defender_find_iterator->second.rbegin()->first) {
+		return defender_find_iterator->second.rbegin()->second;
+	}
+
+	assert_throw(false);
+
+	static const std::vector<attack_result> empty_vector;
+	return empty_vector;
 }
 
 const std::vector<int> &defines::get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const

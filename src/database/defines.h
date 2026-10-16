@@ -26,7 +26,6 @@ namespace archimedes {
 
 namespace metternich {
 
-class battle_resolution_table;
 class building_class;
 class commodity;
 class commodity_unit;
@@ -37,6 +36,8 @@ class office;
 class portrait;
 class sound;
 class terrain_type;
+enum class attack_result;
+enum class battle_resolution_type;
 enum class diplomacy_state;
 enum class event_trigger;
 enum class province_taxation_type;
@@ -426,10 +427,7 @@ public:
 
 	const centesimal_int &get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const;
 
-	const std::vector<std::unique_ptr<battle_resolution_table>> &get_battle_resolution_tables() const
-	{
-		return this->battle_resolution_tables;
-	}
+	const std::vector<attack_result> &get_battle_resolution_results(const battle_resolution_type attacker_resolution_type, const battle_resolution_type defender_resolution_type, const int attack_defense_difference) const;
 
 	const std::vector<int> &get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
@@ -514,7 +512,7 @@ private:
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, int64_t> domain_maintenance_cost_per_domain_size;
 	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
-	std::vector<std::unique_ptr<battle_resolution_table>> battle_resolution_tables;
+	std::map<battle_resolution_type, std::map<battle_resolution_type, std::map<int, std::vector<attack_result>>>> battle_resolution_results;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;
