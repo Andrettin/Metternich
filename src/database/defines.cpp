@@ -151,6 +151,8 @@ void defines::process_gsml_scope(const gsml_data &scope)
 						results.push_back(result);
 					}
 
+					assert_throw(!results.empty());
+
 					this->battle_resolution_results[attacker_resolution_type][defender_resolution_type][attack_defense_difference] = std::move(results);
 				});
 			});
