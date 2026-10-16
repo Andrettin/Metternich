@@ -73,6 +73,7 @@ flaminian_way = {
 	end_site = rimini #Ariminum
 	path_provinces = {
 		latium
+		spoleto
 		perugia
 		rimini
 	}

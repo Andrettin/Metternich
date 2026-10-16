@@ -4,5 +4,5 @@ todi = {
 	geocoordinate = { 12.40692635 42.78200427 }
 	type = holding
 	holding_type = castle
-	province = perugia
+	province = spoleto #Todi
 }

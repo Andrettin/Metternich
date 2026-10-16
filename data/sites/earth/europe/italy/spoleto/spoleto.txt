@@ -4,5 +4,5 @@ spoleto = {
 	geocoordinate = { 12.73846229 42.73440954 }
 	type = holding
 	holding_type = castle
-	province = perugia
+	province = spoleto
 }

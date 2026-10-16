@@ -6,6 +6,7 @@ via_di_francesco = { #Source: "Exploration Map by Map", 2025, p. 50.
 	path_provinces = {
 		arezzo
 		perugia
+		spoleto
 		latium
 	}
 	conditions = {

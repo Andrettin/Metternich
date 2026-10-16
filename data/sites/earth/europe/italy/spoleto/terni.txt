@@ -4,5 +4,5 @@ terni = {
 	geocoordinate = { 12.6467816 42.56077083 }
 	type = holding
 	holding_type = temple
-	province = perugia #Terni
+	province = spoleto #Terni
 }
