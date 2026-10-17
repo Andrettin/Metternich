@@ -1,6 +1,7 @@
 wessex = {
 	name = "Wessex"
 	type = polity
+	flag = wessex
 	default_culture = anglo_saxon
 	default_religion = catholic
 	default_tier = kingdom
