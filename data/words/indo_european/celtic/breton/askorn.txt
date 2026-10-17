@@ -1,0 +1,9 @@
+askorn = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 259.
+	name = "Askorn"
+	language = breton
+	type = noun
+	name_generation_word = english:bone
+	meaning_words = {
+		bone
+	}
+}

@@ -1,0 +1,10 @@
+yezh = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 272.
+	name = "Yezh"
+	language = breton
+	type = noun
+	gender = feminine
+	name_generation_word = english:language
+	meaning_words = {
+		language
+	}
+}

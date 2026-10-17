@@ -1,0 +1,9 @@
+run_breton = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 403.
+	name = "Rūn"
+	language = breton
+	type = noun
+	name_generation_word = english:hill
+	meaning_words = {
+		hill
+	}
+}

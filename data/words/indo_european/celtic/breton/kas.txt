@@ -1,0 +1,10 @@
+kas_breton = { #Source: Guus Kroonen, "Etymological Dictionary of Proto-Germanic", 2013, p. 214.
+	name = "Kas"
+	language = breton
+	type = noun
+	gender = masculine
+	name_generation_word = english:hatred
+	meaning_words = {
+		hatred
+	}
+}
