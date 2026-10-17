@@ -461,3 +461,5 @@ site_map<std::vector<const building_type *>> journal_entry::get_built_settlement
 }
 
 }
+
+#include "moc_journal_entry.cpp"

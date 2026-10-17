@@ -55,3 +55,5 @@ void character_package::process_gsml_scope(const gsml_data &scope)
 }
 
 }
+
+#include "moc_character_package.cpp"

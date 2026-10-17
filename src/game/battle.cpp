@@ -908,3 +908,5 @@ const std::string &battle_unit_info::get_type_name() const
 }
 
 }
+
+#include "moc_battle.cpp"

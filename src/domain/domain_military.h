@@ -6,6 +6,7 @@
 #include "util/centesimal_int.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("unit/military_unit_category.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
 namespace metternich {

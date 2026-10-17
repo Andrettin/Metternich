@@ -120,3 +120,5 @@ const std::string &government_group::get_form_of_address(const domain_tier tier,
 }
 
 }
+
+#include "moc_government_group.cpp"

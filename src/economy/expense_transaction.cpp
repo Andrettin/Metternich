@@ -76,3 +76,5 @@ QString expense_transaction::get_description() const
 }
 
 }
+
+#include "moc_expense_transaction.cpp"

@@ -995,3 +995,5 @@ const sound *military_unit::get_death_sound() const
 }
 
 }
+
+#include "moc_military_unit.cpp"

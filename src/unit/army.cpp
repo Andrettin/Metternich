@@ -318,3 +318,5 @@ const icon *army::get_military_unit_icon() const
 }
 
 }
+
+#include "moc_army.cpp"

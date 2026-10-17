@@ -73,3 +73,5 @@ bool office::is_heir() const
 }
 
 }
+
+#include "moc_office.cpp"

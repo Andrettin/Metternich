@@ -156,3 +156,5 @@ std::string dynasty::get_surname(const metternich::culture *culture, const gende
 }
 
 }
+
+#include "moc_dynasty.cpp"

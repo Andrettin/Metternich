@@ -22,7 +22,7 @@ class population final : public QObject
 	Q_PROPERTY(QVariantList religion_sizes READ get_religion_sizes_qvariant_list NOTIFY religion_sizes_changed)
 	Q_PROPERTY(QVariantList phenotype_sizes READ get_phenotype_sizes_qvariant_list NOTIFY phenotype_sizes_changed)
 	Q_PROPERTY(QString literacy_rate READ get_literacy_rate_qstring NOTIFY literate_size_changed)
-	Q_PROPERTY(int literate_size READ get_literate_size NOTIFY literate_size_changed)
+	Q_PROPERTY(qint64 literate_size READ get_literate_size NOTIFY literate_size_changed)
 
 public:
 	int get_population_unit_count() const

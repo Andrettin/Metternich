@@ -287,3 +287,5 @@ QString spell::get_battle_effects_string(const metternich::character *caster) co
 }
 
 }
+
+#include "moc_spell.cpp"

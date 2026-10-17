@@ -1064,3 +1064,5 @@ QVariantList character::get_tree_characters() const
 }
 
 }
+
+#include "moc_character.cpp"

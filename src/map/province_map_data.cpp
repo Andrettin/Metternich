@@ -360,3 +360,5 @@ QVariantList province_map_data::get_polygon_rects_qvariant_list() const
 }
 
 }
+
+#include "moc_province_map_data.cpp"

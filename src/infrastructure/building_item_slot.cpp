@@ -138,3 +138,5 @@ QCoro::Task<void> building_item_slot::buy_item_coro(const metternich::character 
 }
 
 }
+
+#include "moc_building_item_slot.cpp"

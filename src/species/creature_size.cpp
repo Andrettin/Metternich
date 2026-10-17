@@ -88,3 +88,5 @@ void creature_size::check() const
 }
 
 }
+
+#include "moc_creature_size.cpp"

@@ -5,8 +5,10 @@
 #include "domain/law_group_container.h"
 #include "economy/commodity_container.h"
 
+Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("domain/law.h")
 Q_MOC_INCLUDE("domain/law_group.h")
+Q_MOC_INCLUDE("ui/portrait.h")
 
 namespace metternich {
 

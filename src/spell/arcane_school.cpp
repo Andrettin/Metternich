@@ -16,3 +16,5 @@ void arcane_school::check() const
 }
 
 }
+
+#include "moc_arcane_school.cpp"

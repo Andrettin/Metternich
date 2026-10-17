@@ -114,3 +114,5 @@ QModelIndex technology_model::parent(const QModelIndex &index) const
 }
 
 }
+
+#include "moc_technology_model.cpp"

@@ -31,3 +31,5 @@ void population_defines::process_gsml_scope(const gsml_data &scope)
 }
 
 }
+
+#include "moc_population_defines.cpp"

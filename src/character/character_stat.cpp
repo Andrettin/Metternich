@@ -72,3 +72,5 @@ bool character_stat::affects_military_unit_stats() const
 }
 
 }
+
+#include "moc_character_stat.cpp"

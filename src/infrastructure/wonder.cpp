@@ -146,3 +146,5 @@ bool wonder::is_enabled() const
 }
 
 }
+
+#include "moc_wonder.cpp"

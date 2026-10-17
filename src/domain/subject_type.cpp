@@ -13,3 +13,5 @@ subject_type::~subject_type()
 }
 
 }
+
+#include "moc_subject_type.cpp"

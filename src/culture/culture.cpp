@@ -170,3 +170,5 @@ void culture::cultural_derivation::process_gsml_scope(const gsml_data &scope)
 }
 
 }
+
+#include "moc_culture.cpp"

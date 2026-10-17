@@ -35,3 +35,5 @@ void domain_rank::check() const
 }
 
 }
+
+#include "moc_domain_rank.cpp"

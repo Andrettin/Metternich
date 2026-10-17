@@ -105,3 +105,5 @@ bool resource::is_enabled() const
 }
 
 }
+
+#include "moc_resource.cpp"

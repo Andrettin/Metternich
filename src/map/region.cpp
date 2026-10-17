@@ -108,3 +108,5 @@ bool region::is_part_of(const region *other_region) const
 }
 
 }
+
+#include "moc_region.cpp"

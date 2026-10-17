@@ -614,3 +614,5 @@ QString building_type::get_effects_string(const metternich::site *site, const bo
 }
 
 }
+
+#include "moc_building_type.cpp"

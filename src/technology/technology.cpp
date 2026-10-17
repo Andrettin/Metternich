@@ -997,3 +997,5 @@ bool technology::is_enabled() const
 }
 
 }
+
+#include "moc_technology.cpp"

@@ -54,3 +54,5 @@ bool event_instance::is_in_combat() const
 }
 
 }
+
+#include "moc_event_instance.cpp"

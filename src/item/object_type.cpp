@@ -21,3 +21,5 @@ void object_type::check() const
 }
 
 }
+
+#include "moc_object_type.cpp"

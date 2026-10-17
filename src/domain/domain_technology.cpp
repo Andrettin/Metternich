@@ -993,3 +993,5 @@ void domain_technology::set_technology_category_quarterly_research(const technol
 }
 
 }
+
+#include "moc_domain_technology.cpp"

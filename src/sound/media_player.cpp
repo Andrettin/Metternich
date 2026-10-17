@@ -45,3 +45,5 @@ void media_player::stop_music()
 }
 
 }
+
+#include "moc_media_player.cpp"

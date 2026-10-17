@@ -51,3 +51,5 @@ void portrait::check() const
 }
 
 }
+
+#include "moc_portrait.cpp"

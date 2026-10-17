@@ -6,6 +6,8 @@
 #include <QAbstractItemModel> 
 #pragma warning(pop)
 
+Q_MOC_INCLUDE("character/character.h")
+
 namespace metternich {
 
 class family_tree_model : public QAbstractItemModel

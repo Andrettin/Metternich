@@ -263,3 +263,5 @@ int64_t commodity::wealth_value_to_value(const int64_t wealth_value, const bool 
 }
 
 }
+
+#include "moc_commodity.cpp"

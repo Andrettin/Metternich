@@ -2685,3 +2685,5 @@ QVariantList game::get_active_routes_qvariant_list() const
 }
 
 }
+
+#include "moc_game.cpp"

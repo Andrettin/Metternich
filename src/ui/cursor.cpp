@@ -123,3 +123,5 @@ QCoro::Task<void> cursor::load_image()
 }
 
 }
+
+#include "moc_cursor.cpp"

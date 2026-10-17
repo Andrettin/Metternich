@@ -22,3 +22,5 @@ void opinion_modifier::process_gsml_property(const gsml_property &property)
 }
 
 }
+
+#include "moc_opinion_modifier.cpp"

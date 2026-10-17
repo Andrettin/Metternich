@@ -2793,3 +2793,5 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 }
 
 }
+
+#include "moc_province_game_data.cpp"

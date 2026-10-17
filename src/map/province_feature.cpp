@@ -66,3 +66,5 @@ QString province_feature::get_modifier_string(const metternich::province *provin
 }
 
 }
+
+#include "moc_province_feature.cpp"

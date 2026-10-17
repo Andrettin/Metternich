@@ -189,3 +189,5 @@ QModelIndex family_tree_model::get_character_model_index(const metternich::chara
 }
 
 }
+
+#include "moc_family_tree_model.cpp"

@@ -52,3 +52,5 @@ std::string_view pantheon::get_divine_rank_name(const divine_rank rank) const
 }
 
 }
+
+#include "moc_pantheon.cpp"

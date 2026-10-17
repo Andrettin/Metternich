@@ -31,3 +31,5 @@ void historical_military_unit::reset_history()
 }
 
 }
+
+#include "moc_historical_military_unit.cpp"

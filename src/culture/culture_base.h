@@ -12,6 +12,7 @@
 #include "unit/transporter_class_container.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("culture/cultural_group.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 
 namespace archimedes {

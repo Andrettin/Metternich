@@ -72,3 +72,5 @@ std::chrono::seconds status_effect::get_duration(const std::optional<int> &caste
 }
 
 }
+
+#include "moc_status_effect.cpp"

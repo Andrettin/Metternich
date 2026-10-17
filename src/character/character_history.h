@@ -2,6 +2,7 @@
 
 #include "database/data_entry_history.h"
 
+Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site.h")

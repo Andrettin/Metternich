@@ -49,3 +49,5 @@ QString domain_tier_data::get_modifier_string(metternich::domain *domain) const
 }
 
 }
+
+#include "moc_domain_tier_data.cpp"

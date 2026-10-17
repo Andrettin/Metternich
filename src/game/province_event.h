@@ -3,6 +3,8 @@
 #include "game/event.h"
 #include "game/scoped_event_base.h"
 
+Q_MOC_INCLUDE("technology/technology.h")
+
 namespace metternich {
 
 class province;

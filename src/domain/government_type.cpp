@@ -432,3 +432,5 @@ QString government_type::get_modifier_string(const metternich::domain *domain) c
 }
 
 }
+
+#include "moc_government_type.cpp"

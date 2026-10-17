@@ -44,3 +44,5 @@ const icon *transaction::get_icon() const
 }
 
 }
+
+#include "moc_transaction.cpp"

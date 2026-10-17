@@ -3,6 +3,8 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("species/species.h")
+
 namespace metternich {
 
 class species;

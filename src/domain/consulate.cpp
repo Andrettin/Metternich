@@ -13,3 +13,5 @@ void consulate::check() const
 }
 
 }
+
+#include "moc_consulate.cpp"

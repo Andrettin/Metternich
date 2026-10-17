@@ -36,3 +36,5 @@ void icon_base::set_filepath(const std::filesystem::path &filepath)
 }
 
 }
+
+#include "moc_icon_base.cpp"

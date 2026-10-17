@@ -112,3 +112,5 @@ void character_history::calculate_heir()
 }
 
 }
+
+#include "moc_character_history.cpp"

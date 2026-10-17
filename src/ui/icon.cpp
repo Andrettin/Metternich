@@ -24,3 +24,5 @@ void icon::initialize()
 }
 
 }
+
+#include "moc_icon.cpp"

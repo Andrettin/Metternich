@@ -18,3 +18,5 @@ void save_type::check() const
 }
 
 }
+
+#include "moc_save_type.cpp"

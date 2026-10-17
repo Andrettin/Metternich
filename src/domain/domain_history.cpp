@@ -196,3 +196,5 @@ diplomacy_state domain_history::get_diplomacy_state(const metternich::domain *ot
 }
 
 }
+
+#include "moc_domain_history.cpp"

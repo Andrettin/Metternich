@@ -222,3 +222,5 @@ bool deity::is_available_for_country_slot(const domain *domain, const idea_slot 
 }
 
 }
+
+#include "moc_deity.cpp"

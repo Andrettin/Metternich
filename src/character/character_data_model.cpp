@@ -1028,3 +1028,5 @@ void character_data_model::on_child_rows_inserted(character_data_row *row)
 }
 
 }
+
+#include "moc_character_data_model.cpp"

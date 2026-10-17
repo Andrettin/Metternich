@@ -6,6 +6,9 @@
 #include "species/phenotype_container.h"
 #include "util/color_container.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("language/language.h")
+
 namespace archimedes {
 	class language;
 }

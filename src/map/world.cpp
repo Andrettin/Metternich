@@ -103,3 +103,5 @@ world::province_geodata_map_type world::parse_provinces_geojson_folder() const
 }
 
 }
+
+#include "moc_world.cpp"

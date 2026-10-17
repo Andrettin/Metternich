@@ -239,3 +239,5 @@ bool employment_type::is_available_for_site(const site *site) const
 }
 
 }
+
+#include "moc_employment_type.cpp"

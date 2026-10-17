@@ -17,3 +17,5 @@ void population_class::set_default_population_type(const population_type *popula
 }
 
 }
+
+#include "moc_population_class.cpp"

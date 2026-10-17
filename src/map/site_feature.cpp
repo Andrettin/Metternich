@@ -76,3 +76,5 @@ QString site_feature::get_modifier_string(const metternich::site *site) const
 }
 
 }
+
+#include "moc_site_feature.cpp"

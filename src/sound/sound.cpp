@@ -90,3 +90,5 @@ QCoro::Task<void> sound::play_coro(const std::optional<std::chrono::milliseconds
 }
 
 }
+
+#include "moc_sound.cpp"

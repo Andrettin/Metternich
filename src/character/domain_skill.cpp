@@ -19,3 +19,5 @@ const metternich::icon *domain_skill::get_icon() const
 }
 
 }
+
+#include "moc_domain_skill.cpp"

@@ -35,3 +35,5 @@ void trap_type::check() const
 }
 
 }
+
+#include "moc_trap_type.cpp"

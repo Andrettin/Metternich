@@ -96,3 +96,5 @@ const centesimal_int &holding_defines::get_consumption_for_holding_level(const i
 }
 
 }
+
+#include "moc_holding_defines.cpp"

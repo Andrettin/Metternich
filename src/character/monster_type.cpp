@@ -119,3 +119,5 @@ void monster_type::check() const
 }
 
 }
+
+#include "moc_monster_type.cpp"

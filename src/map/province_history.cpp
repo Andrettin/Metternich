@@ -207,3 +207,5 @@ void province_history::distribute_population()
 }
 
 }
+
+#include "moc_province_history.cpp"

@@ -4548,3 +4548,5 @@ bool domain_game_data::can_visit_site(const metternich::site *site) const
 }
 
 }
+
+#include "moc_domain_game_data.cpp"

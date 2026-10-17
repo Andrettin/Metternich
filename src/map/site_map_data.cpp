@@ -92,3 +92,5 @@ bool site_map_data::is_near_water() const
 }
 
 }
+
+#include "moc_site_map_data.cpp"

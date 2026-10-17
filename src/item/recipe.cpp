@@ -204,3 +204,5 @@ bool recipe_material::matches_item(const item_key &item_key) const
 }
 
 }
+
+#include "moc_recipe.cpp"

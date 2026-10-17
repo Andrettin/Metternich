@@ -109,3 +109,5 @@ QVariant map_grid_model::data(const QModelIndex &index, const int role) const
 }
 
 }
+
+#include "moc_map_grid_model.cpp"

@@ -769,3 +769,5 @@ QString building_slot::get_modifier_string() const
 }
 
 }
+
+#include "moc_building_slot.cpp"

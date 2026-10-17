@@ -6,8 +6,10 @@
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
+Q_MOC_INCLUDE("economy/commodity_unit.h")
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace archimedes {
 	class dice;

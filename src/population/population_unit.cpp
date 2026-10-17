@@ -487,3 +487,5 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 }
 
 }
+
+#include "moc_population_unit.cpp"

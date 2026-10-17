@@ -691,3 +691,5 @@ bool map_template::is_province_ignored(const province *province) const
 }
 
 }
+
+#include "moc_map_template.cpp"

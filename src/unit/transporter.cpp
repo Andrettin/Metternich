@@ -188,3 +188,5 @@ int transporter::get_score() const
 }
 
 }
+
+#include "moc_transporter.cpp"

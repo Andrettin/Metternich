@@ -21,3 +21,5 @@ void building_slot_type::add_building_type(const building_type *building_type)
 }
 
 }
+
+#include "moc_building_slot_type.cpp"

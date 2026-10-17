@@ -74,3 +74,5 @@ void trait_type::add_trait(trait *trait)
 }
 
 }
+
+#include "moc_trait_type.cpp"

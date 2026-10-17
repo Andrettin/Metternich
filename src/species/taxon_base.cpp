@@ -294,3 +294,5 @@ const metternich::sound *taxon_base::get_death_sound() const
 }
 
 }
+
+#include "moc_taxon_base.cpp"

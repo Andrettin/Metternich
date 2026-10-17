@@ -32,3 +32,5 @@ void level_value_table::check() const
 }
 
 }
+
+#include "moc_level_value_table.cpp"

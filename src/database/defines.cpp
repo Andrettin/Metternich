@@ -516,3 +516,5 @@ void defines::set_route_adjacency_tile(const terrain_adjacency &adjacency, const
 }
 
 }
+
+#include "moc_defines.cpp"

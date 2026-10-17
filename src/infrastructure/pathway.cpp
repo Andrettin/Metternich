@@ -233,3 +233,5 @@ QString pathway::get_modifier_string(const province *province, const bool single
 }
 
 }
+
+#include "moc_pathway.cpp"

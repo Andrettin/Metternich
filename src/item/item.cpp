@@ -347,3 +347,5 @@ bool item::is_useful_for(const character *character) const
 }
 
 }
+
+#include "moc_item.cpp"

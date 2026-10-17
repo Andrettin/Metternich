@@ -48,3 +48,5 @@ int event_random_group::get_delay(const int current_year) const
 }
 
 }
+
+#include "moc_event_random_group.cpp"

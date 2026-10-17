@@ -63,3 +63,5 @@ void domain_attribute::check() const
 }
 
 }
+
+#include "moc_domain_attribute.cpp"

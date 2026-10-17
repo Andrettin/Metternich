@@ -6,6 +6,8 @@
 #include <QAbstractItemModel> 
 #pragma warning(pop)
 
+Q_MOC_INCLUDE("character/character.h")
+
 namespace archimedes {
 	class named_data_entry;
 }

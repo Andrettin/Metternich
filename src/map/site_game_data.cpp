@@ -3029,3 +3029,5 @@ bool site_game_data::can_generate_character_of_class(const character_class *char
 }
 
 }
+
+#include "moc_site_game_data.cpp"

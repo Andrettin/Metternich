@@ -235,3 +235,5 @@ combat_tile_base::combat_tile_base(const terrain_type *base_terrain, const terra
 }
 
 }
+
+#include "moc_combat_base.cpp"

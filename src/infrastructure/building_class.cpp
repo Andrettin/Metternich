@@ -15,3 +15,5 @@ void building_class::set_default_building_type(const building_type *building_typ
 }
 
 }
+
+#include "moc_building_class.cpp"

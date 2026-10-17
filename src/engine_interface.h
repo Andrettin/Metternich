@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("map/map_template.h")
 Q_MOC_INCLUDE("map/world.h")
 Q_MOC_INCLUDE("sound/media_player.h")
 Q_MOC_INCLUDE("ui/ui_defines.h")
+Q_MOC_INCLUDE("unit/military_unit_category.h")
 
 namespace metternich {
 

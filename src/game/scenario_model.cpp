@@ -106,3 +106,5 @@ QModelIndex scenario_model::parent(const QModelIndex &index) const
 }
 
 }
+
+#include "moc_scenario_model.cpp"

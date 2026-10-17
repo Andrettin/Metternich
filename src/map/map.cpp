@@ -895,3 +895,5 @@ void map::save_screenshot() const
 }
 
 }
+
+#include "moc_map.cpp"

@@ -44,3 +44,5 @@ QVariantList technology_category::get_technologies_qvariant_list() const
 }
 
 }
+
+#include "moc_technology_category.cpp"

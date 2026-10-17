@@ -19,3 +19,5 @@ idea_type deity_slot::get_idea_type() const
 }
 
 }
+
+#include "moc_deity_slot.cpp"

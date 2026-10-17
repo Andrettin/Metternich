@@ -36,3 +36,5 @@ void celestial_body_type::set_image_filepath(const std::filesystem::path &filepa
 }
 
 }
+
+#include "moc_celestial_body_type.cpp"

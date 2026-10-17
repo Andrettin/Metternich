@@ -57,3 +57,5 @@ event_instance *event::create_instance(const context &ctx) const
 }
 
 }
+
+#include "moc_event.cpp"

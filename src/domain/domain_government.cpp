@@ -933,3 +933,5 @@ const metternich::portrait *domain_government::get_war_minister_portrait() const
 }
 
 }
+
+#include "moc_domain_government.cpp"

@@ -68,3 +68,5 @@ bool site_attribute::affects_skill(const skill *skill) const
 }
 
 }
+
+#include "moc_site_attribute.cpp"

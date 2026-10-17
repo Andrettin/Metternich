@@ -16,3 +16,5 @@ void divine_domain::check() const
 }
 
 }
+
+#include "moc_divine_domain.cpp"

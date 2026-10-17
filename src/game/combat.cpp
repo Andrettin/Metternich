@@ -1004,3 +1004,5 @@ int combat_object::get_disarm_chance(const metternich::character *character) con
 }
 
 }
+
+#include "moc_combat.cpp"

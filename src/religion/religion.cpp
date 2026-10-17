@@ -114,3 +114,5 @@ const std::string &religion::get_office_title_name(const office *office, const g
 }
 
 }
+
+#include "moc_religion.cpp"

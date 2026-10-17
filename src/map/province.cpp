@@ -251,3 +251,5 @@ QVariantList province::get_routes_qvariant_list() const
 }
 
 }
+
+#include "moc_province.cpp"

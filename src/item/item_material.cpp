@@ -51,3 +51,5 @@ bool item_material::is_allowed_for_item_type(const item_type *item_type) const
 }
 
 }
+
+#include "moc_item_material.cpp"

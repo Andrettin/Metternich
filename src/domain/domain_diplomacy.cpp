@@ -953,3 +953,5 @@ void domain_diplomacy::set_free_consulate_count(const consulate *consulate, cons
 }
 
 }
+
+#include "moc_domain_diplomacy.cpp"

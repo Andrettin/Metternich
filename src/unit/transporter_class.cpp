@@ -55,3 +55,5 @@ void transporter_class::set_default_transporter_type(const transporter_type *tra
 }
 
 }
+
+#include "moc_transporter_class.cpp"

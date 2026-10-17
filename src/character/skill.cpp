@@ -111,3 +111,5 @@ std::string_view skill::get_value_suffix() const
 }
 
 }
+
+#include "moc_skill.cpp"

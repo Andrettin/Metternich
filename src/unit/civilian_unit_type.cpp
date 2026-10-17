@@ -87,3 +87,5 @@ QVariantList civilian_unit_type::get_commodity_costs_qvariant_list() const
 }
 
 }
+
+#include "moc_civilian_unit_type.cpp"

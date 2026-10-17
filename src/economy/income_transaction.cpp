@@ -86,3 +86,5 @@ QString income_transaction::get_description() const
 }
 
 }
+
+#include "moc_income_transaction.cpp"

@@ -118,3 +118,5 @@ QString law::get_modifier_string(const metternich::domain *domain) const
 }
 
 }
+
+#include "moc_law.cpp"

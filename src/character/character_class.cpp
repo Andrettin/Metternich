@@ -712,3 +712,5 @@ std::string character_class::get_character_class_advancement_modifier_string(con
 }
 
 }
+
+#include "moc_character_class.cpp"

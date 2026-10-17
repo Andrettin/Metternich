@@ -35,3 +35,5 @@ bool item_class::is_weapon() const
 }
 
 }
+
+#include "moc_item_class.cpp"

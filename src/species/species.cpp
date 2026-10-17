@@ -442,3 +442,5 @@ int species::get_character_class_level_limit(const character_class *character_cl
 }
 
 }
+
+#include "moc_species.cpp"

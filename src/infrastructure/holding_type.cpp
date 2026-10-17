@@ -211,3 +211,5 @@ const dice &holding_type::get_taxation(const int level_difference, const int inc
 }
 
 }
+
+#include "moc_holding_type.cpp"

@@ -95,3 +95,5 @@ QString promotion::get_modifier_string() const
 }
 
 }
+
+#include "moc_promotion.cpp"

@@ -197,3 +197,5 @@ QString trait::get_military_unit_modifier_string() const
 }
 
 }
+
+#include "moc_trait.cpp"

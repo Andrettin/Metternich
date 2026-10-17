@@ -3,6 +3,8 @@
 #include "database/data_type.h"
 #include "culture/culture_base.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
+
 namespace metternich {
 
 class culture;

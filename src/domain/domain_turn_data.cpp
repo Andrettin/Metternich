@@ -77,3 +77,5 @@ void domain_turn_data::add_expense_transaction(const expense_transaction_type tr
 }
 
 }
+
+#include "moc_domain_turn_data.cpp"

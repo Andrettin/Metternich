@@ -18,6 +18,7 @@ Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
+Q_MOC_INCLUDE("unit/military_unit_category.h")
 
 namespace archimedes {
 	class gsml_data;

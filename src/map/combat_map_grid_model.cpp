@@ -155,3 +155,5 @@ void combat_map_grid_model::on_movable_tiles_changed()
 }
 
 }
+
+#include "moc_combat_map_grid_model.cpp"

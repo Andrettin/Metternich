@@ -13,3 +13,5 @@ void terrain_feature::check() const
 }
 
 }
+
+#include "moc_terrain_feature.cpp"

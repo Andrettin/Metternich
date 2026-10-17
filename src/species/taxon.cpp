@@ -26,3 +26,5 @@ void taxon::check() const
 }
 
 }
+
+#include "moc_taxon.cpp"

@@ -16,3 +16,5 @@ void commodity_unit::check() const
 }
 
 }
+
+#include "moc_commodity_unit.cpp"

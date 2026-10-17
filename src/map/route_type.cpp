@@ -55,3 +55,5 @@ bool route_type::has_holding_type(const holding_type *holding_type) const
 }
 
 }
+
+#include "moc_route_type.cpp"

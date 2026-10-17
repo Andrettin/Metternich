@@ -296,3 +296,5 @@ QString terrain_type::get_modifier_string(const province *province) const
 }
 
 }
+
+#include "moc_terrain_type.cpp"

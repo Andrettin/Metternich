@@ -237,3 +237,5 @@ bool item_creation_type::is_mundane() const
 }
 
 }
+
+#include "moc_item_creation_type.cpp"

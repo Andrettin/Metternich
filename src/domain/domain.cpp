@@ -546,3 +546,5 @@ QVariantList domain::get_available_technologies_qvariant_list() const
 }
 
 }
+
+#include "moc_domain.cpp"

@@ -297,3 +297,5 @@ QString route_game_data::get_line_path() const
 }
 
 }
+
+#include "moc_route_game_data.cpp"

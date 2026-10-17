@@ -79,3 +79,5 @@ QVariantList scenario::get_default_domains_qvariant_list() const
 }
 
 }
+
+#include "moc_scenario.cpp"

@@ -44,3 +44,5 @@ QCoro::Task<void> culture_history::apply_to_province(const province *province) c
 }
 
 }
+
+#include "moc_culture_history.cpp"

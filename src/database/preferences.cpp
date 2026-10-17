@@ -152,3 +152,5 @@ void preferences::set_metric_measurements_enabled(const bool enabled)
 }
 
 }
+
+#include "moc_preferences.cpp"

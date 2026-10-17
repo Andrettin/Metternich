@@ -98,3 +98,5 @@ int transporter_type::get_score() const
 }
 
 }
+
+#include "moc_transporter_type.cpp"

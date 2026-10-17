@@ -31,3 +31,5 @@ void historical_civilian_unit::reset_history()
 }
 
 }
+
+#include "moc_historical_civilian_unit.cpp"

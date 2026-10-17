@@ -400,3 +400,5 @@ int military_unit_type::get_score() const
 }
 
 }
+
+#include "moc_military_unit_type.cpp"

@@ -68,3 +68,5 @@ void bloodline::set_founder(character *founder)
 }
 
 }
+
+#include "moc_bloodline.cpp"

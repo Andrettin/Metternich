@@ -12,3 +12,5 @@ void skill_group::check() const
 }
 
 }
+
+#include "moc_skill_group.cpp"

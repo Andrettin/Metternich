@@ -96,3 +96,5 @@ const modifier<const character> *character_attribute::get_exceptional_value_modi
 }
 
 }
+
+#include "moc_character_attribute.cpp"

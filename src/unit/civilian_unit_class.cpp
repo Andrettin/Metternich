@@ -17,3 +17,5 @@ void civilian_unit_class::set_default_unit_type(const civilian_unit_type *unit_t
 }
 
 }
+
+#include "moc_civilian_unit_class.cpp"

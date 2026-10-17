@@ -113,3 +113,5 @@ int64_t route::get_output_multiplier() const
 }
 
 }
+
+#include "moc_route.cpp"

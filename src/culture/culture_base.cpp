@@ -813,3 +813,5 @@ void culture_base::change_phenotype_weight(const phenotype *phenotype, const int
 }
 
 }
+
+#include "moc_culture_base.cpp"

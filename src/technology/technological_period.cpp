@@ -39,3 +39,5 @@ void technological_period::check() const
 }
 
 }
+
+#include "moc_technological_period.cpp"

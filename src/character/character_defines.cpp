@@ -343,3 +343,5 @@ opinion_type character_defines::get_opinion_type(const int opinion) const
 }
 
 }
+
+#include "moc_character_defines.cpp"

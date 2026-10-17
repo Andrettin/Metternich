@@ -78,3 +78,5 @@ std::string mythic_path::get_tier_modifier_string(const int tier, const metterni
 }
 
 }
+
+#include "moc_mythic_path.cpp"

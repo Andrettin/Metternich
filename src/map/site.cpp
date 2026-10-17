@@ -288,3 +288,5 @@ bool site::can_be_generated_on_world(const metternich::world *world) const
 }
 
 }
+
+#include "moc_site.cpp"

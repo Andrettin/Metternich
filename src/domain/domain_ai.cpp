@@ -184,3 +184,5 @@ void domain_ai::assign_trade_orders()
 }
 
 }
+
+#include "moc_domain_ai.cpp"

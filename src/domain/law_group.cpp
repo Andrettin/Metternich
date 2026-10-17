@@ -28,3 +28,5 @@ QVariantList law_group::get_laws_qvariant_list() const
 }
 
 }
+
+#include "moc_law_group.cpp"

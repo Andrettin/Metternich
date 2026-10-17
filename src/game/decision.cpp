@@ -86,3 +86,5 @@ QCoro::Task<void> decision::enact_for_coro(const metternich::domain *domain) con
 }
 
 }
+
+#include "moc_decision.cpp"

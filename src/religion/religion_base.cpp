@@ -58,3 +58,5 @@ const std::string &religion_base::get_office_title_name(const office *office, co
 }
 
 }
+
+#include "moc_religion_base.cpp"

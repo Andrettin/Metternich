@@ -4,6 +4,7 @@
 #include "util/dice.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("character/level_value_table.h")
 Q_MOC_INCLUDE("species/creature_size.h")
 
 namespace metternich {

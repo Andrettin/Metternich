@@ -815,3 +815,5 @@ QCoro::Task<void> civilian_unit::disband(const bool dead)
 }
 
 }
+
+#include "moc_civilian_unit.cpp"

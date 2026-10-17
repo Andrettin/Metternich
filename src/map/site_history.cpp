@@ -138,3 +138,5 @@ bool site_history::is_developed() const
 }
 
 }
+
+#include "moc_site_history.cpp"

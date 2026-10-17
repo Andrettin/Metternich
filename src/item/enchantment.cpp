@@ -139,3 +139,5 @@ std::string enchantment::get_effects_string() const
 }
 
 }
+
+#include "moc_enchantment.cpp"

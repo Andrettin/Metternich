@@ -242,3 +242,5 @@ bool population_type::is_enabled() const
 }
 
 }
+
+#include "moc_population_type.cpp"

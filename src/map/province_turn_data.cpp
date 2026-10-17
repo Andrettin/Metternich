@@ -13,3 +13,5 @@ province_turn_data::~province_turn_data()
 }
 
 }
+
+#include "moc_province_turn_data.cpp"

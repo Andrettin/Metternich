@@ -44,3 +44,5 @@ void phenotype::set_species(metternich::species *species)
 }
 
 }
+
+#include "moc_phenotype.cpp"

@@ -30,3 +30,5 @@ void music::set_filepath(const std::filesystem::path &filepath)
 }
 
 }
+
+#include "moc_music.cpp"

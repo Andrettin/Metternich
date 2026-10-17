@@ -5291,3 +5291,5 @@ const sound *character_game_data::get_attack_sound() const
 }
 
 }
+
+#include "moc_character_game_data.cpp"

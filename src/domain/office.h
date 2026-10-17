@@ -3,6 +3,9 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("domain/domain_attribute.h")
+Q_MOC_INCLUDE("unit/civilian_unit_class.h")
+
 namespace metternich {
 
 class character;

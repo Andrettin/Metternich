@@ -251,3 +251,5 @@ void population::on_population_unit_gained(const population_unit *population_uni
 }
 
 }
+
+#include "moc_population.cpp"

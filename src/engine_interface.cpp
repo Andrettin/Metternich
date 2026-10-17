@@ -355,3 +355,5 @@ QString engine_interface::date_to_string(const QDate &date) const
 }
 
 }
+
+#include "moc_engine_interface.cpp"

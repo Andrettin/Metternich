@@ -27,3 +27,5 @@ void idea_slot::process_gsml_scope(const gsml_data &scope)
 }
 
 }
+
+#include "moc_idea_slot.cpp"

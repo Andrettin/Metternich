@@ -491,3 +491,5 @@ QCoro::Task<void> domain_military::set_free_warship_promotion_count(const promot
 }
 
 }
+
+#include "moc_domain_military.cpp"

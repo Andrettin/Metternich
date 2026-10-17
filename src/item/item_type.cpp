@@ -152,3 +152,5 @@ const dice &item_type::get_damage_dice(const creature_size *target_size) const
 }
 
 }
+
+#include "moc_item_type.cpp"

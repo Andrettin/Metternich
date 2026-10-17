@@ -31,3 +31,5 @@ void historical_transporter::reset_history()
 }
 
 }
+
+#include "moc_historical_transporter.cpp"

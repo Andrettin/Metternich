@@ -132,3 +132,5 @@ bool game_rules::is_rule_available(const game_rule *rule) const
 }
 
 }
+
+#include "moc_game_rules.cpp"

@@ -224,3 +224,5 @@ void region_history::apply_to_provinces() const
 }
 
 }
+
+#include "moc_region_history.cpp"

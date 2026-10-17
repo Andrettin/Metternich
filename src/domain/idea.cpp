@@ -90,3 +90,5 @@ void idea::apply_modifier(const domain *domain, const int multiplier) const
 }
 
 }
+
+#include "moc_idea.cpp"

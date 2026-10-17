@@ -1,6 +1,8 @@
 #pragma once
 
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
 
@@ -13,12 +15,12 @@ class transaction : public QObject
 {
 	Q_OBJECT
 
-		Q_PROPERTY(qint64 amount READ get_amount CONSTANT)
-		Q_PROPERTY(qint64 object_quantity READ get_object_quantity CONSTANT)
-		Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
-		Q_PROPERTY(const metternich::icon *icon READ get_icon CONSTANT)
-		Q_PROPERTY(QString name READ get_name CONSTANT)
-		Q_PROPERTY(QString description READ get_description CONSTANT)
+	Q_PROPERTY(qint64 amount READ get_amount CONSTANT)
+	Q_PROPERTY(qint64 object_quantity READ get_object_quantity CONSTANT)
+	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
+	Q_PROPERTY(QString name READ get_name CONSTANT)
+	Q_PROPERTY(QString description READ get_description CONSTANT)
 
 public:
 	using object_variant = std::variant<std::nullptr_t, const commodity *, const population_type *>;

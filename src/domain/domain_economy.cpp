@@ -1281,3 +1281,5 @@ void domain_economy::change_capital_commodity_bonus_per_population(const commodi
 }
 
 }
+
+#include "moc_domain_economy.cpp"

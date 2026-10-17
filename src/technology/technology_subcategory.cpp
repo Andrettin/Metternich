@@ -55,3 +55,5 @@ void technology_subcategory::add_technology(const technology *technology)
 }
 
 }
+
+#include "moc_technology_subcategory.cpp"

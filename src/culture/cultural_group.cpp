@@ -53,3 +53,5 @@ void cultural_group::add_culture(const culture *culture)
 }
 
 }
+
+#include "moc_cultural_group.cpp"
