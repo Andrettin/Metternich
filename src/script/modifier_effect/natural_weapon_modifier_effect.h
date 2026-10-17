@@ -2,6 +2,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "item/item.h"
 #include "item/item_class.h"
 #include "item/item_type.h"
 #include "script/modifier_effect/modifier_effect.h"
