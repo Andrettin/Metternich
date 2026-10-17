@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 3.18.0)
+cmake_minimum_required(VERSION 3.25.0)
 
 if(CMAKE_HOST_WIN32)
 	set(VCPKG_ROOT "" CACHE PATH "Sets the path to vcpkg.")
 	set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 	set(VCPKG_TARGET_TRIPLET "x64-windows")
 endif()
+
+set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:Embedded>")
 
 project(metternich VERSION 1.0.0)
 
@@ -1054,7 +1056,6 @@ set(metternich_HDRS
 	${xbrz_HDRS}
 	src/engine_interface.h
 	src/metternich.h
-	src/metternich_pch.h
 )
 
 set(metternich_main_SRCS
@@ -1133,7 +1134,7 @@ qt_add_shaders(metternich_main "xbrz_shader"
 		"xbrz.frag.qsb"
 )
 
-target_precompile_headers(metternich PRIVATE src/metternich_pch.h)
+target_precompile_headers(metternich REUSE_FROM archimedes)
 
 if(MSVC)
 	target_compile_options(metternich PRIVATE /FI"metternich.h")
@@ -1155,7 +1156,7 @@ set_target_properties(metternich_test PROPERTIES
 
 target_link_libraries(metternich PUBLIC archimedes ${OpenCV_LIBS})
 
-target_precompile_headers(metternich_test PRIVATE src/metternich_pch.h)
+target_precompile_headers(metternich_test REUSE_FROM archimedes)
 
 if(WIN32)
 	set_target_properties(metternich_main 
@@ -1167,6 +1168,8 @@ set_target_properties(metternich_main PROPERTIES
 	OUTPUT_NAME "metternich"
 	COMPILE_WARNING_AS_ERROR ON
 )
+
+target_precompile_headers(metternich_main REUSE_FROM archimedes)
 
 target_link_libraries(metternich_main PUBLIC metternich Qt6::Charts)
 target_link_libraries(metternich_test PUBLIC metternich Boost::unit_test_framework)
