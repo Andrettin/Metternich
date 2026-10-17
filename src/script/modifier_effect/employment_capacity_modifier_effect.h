@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/defines.h"
 #include "economy/employment_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"

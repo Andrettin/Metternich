@@ -6,10 +6,13 @@
 #include "character/character_game_data.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
+#include "domain/domain.h"
 #include "game/character_event.h"
 #include "game/domain_event.h"
 #include "game/province_event.h"
 #include "game/site_event.h"
+#include "map/province.h"
+#include "map/site.h"
 #include "script/effect/scripted_effect.h"
 #include "util/assert_util.h"
 
