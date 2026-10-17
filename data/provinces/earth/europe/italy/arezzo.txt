@@ -20,6 +20,7 @@ arezzo = {
 		
 		568 = {
 			owner = langobardia #became part of the Kingdom of the Lombards in 568; Source: William R. Shepherd, "Historical Atlas", 1911, p. 52.
+			culture = lombard
 		}
 		
 		814 = {

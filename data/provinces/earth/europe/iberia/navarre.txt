@@ -20,7 +20,6 @@ navarre = {
 		
 		814 = {
 			owner = francia #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
-			culture = frankish
 			religion = catholic
 		}
 		
