@@ -55,6 +55,7 @@ set(character_SRCS
 	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
+set_source_files_properties(src/character/character_game_data.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
 set(culture_SRCS
 	src/culture/cultural_group.cpp
@@ -102,6 +103,7 @@ set(domain_SRCS
 	src/domain/subject_type.cpp
 )
 source_group(domain FILES ${domain_SRCS})
+set_source_files_properties(src/domain/domain_game_data.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
 set(economy_SRCS
 	src/economy/commodity.cpp
