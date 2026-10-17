@@ -16,7 +16,7 @@ alentejo = {
 		
 		814 = {
 			owner = cordoba #part of the Ommiad Emirate of Cordova c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
-			culture = arabic
+			culture = andalusian
 			religion = sunni
 		}
 		

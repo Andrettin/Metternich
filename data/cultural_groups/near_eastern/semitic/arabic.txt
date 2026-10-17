@@ -2,4 +2,19 @@ arabic = {
 	name = "Arabic"
 	rank = subgroup
 	upper_group = semitic
+	title_names = {
+		monarchy = {
+			duchy = "Emirate"
+		}
+	}
+	office_title_names = {
+		ruler = {
+			monarchy = {
+				duchy = {
+					male = "Emir"
+					female = "Emira"
+				}
+			}
+		}
+	}
 }

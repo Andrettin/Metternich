@@ -1,0 +1,10 @@
+andalusian = {
+	name = "Andalusian"
+	group = arabic
+	color = { 102 153 25 }
+	language = arabic
+	primary_domain = cordoba #should be Al-Andalus instead if that is added as a domain later
+	species = {
+		human
+	}
+}
