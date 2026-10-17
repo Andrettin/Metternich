@@ -4,6 +4,8 @@
 #include "database/named_data_entry.h"
 #include "unit/military_unit_class_container.h"
 
+Q_MOC_INCLUDE("unit/military_unit_category.h")
+
 namespace archimedes {
 	class name_generator;
 }

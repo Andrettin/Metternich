@@ -6,6 +6,7 @@
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/bloodline.h")
+Q_MOC_INCLUDE("character/bloodline_strength_category.h")
 Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("character/character_game_data.h")
 Q_MOC_INCLUDE("character/dynasty.h")

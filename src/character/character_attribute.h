@@ -3,6 +3,8 @@
 #include "character/character_stat.h"
 #include "database/data_type.h"
 
+Q_MOC_INCLUDE("character/character_attribute_type.h")
+
 namespace metternich {
 
 class skill;

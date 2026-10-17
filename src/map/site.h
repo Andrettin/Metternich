@@ -11,6 +11,7 @@ Q_MOC_INCLUDE("map/celestial_body_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/site_game_data.h")
 Q_MOC_INCLUDE("map/site_map_data.h")
+Q_MOC_INCLUDE("map/site_type.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("map/world.h")
 

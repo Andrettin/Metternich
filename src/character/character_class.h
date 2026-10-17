@@ -4,9 +4,12 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("character/character_class_type.h")
 Q_MOC_INCLUDE("character/level_value_table.h")
+Q_MOC_INCLUDE("character/starting_age_category.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("unit/civilian_unit_class.h")
+Q_MOC_INCLUDE("unit/military_unit_category.h")
 
 namespace archimedes {
 	enum class gender;

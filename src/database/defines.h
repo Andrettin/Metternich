@@ -18,6 +18,7 @@ Q_MOC_INCLUDE("sound/music.h")
 Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
+Q_MOC_INCLUDE("util/log_level.h")
 
 namespace archimedes {
 	class game_rule;
