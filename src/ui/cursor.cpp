@@ -11,6 +11,8 @@
 #include "xbrz.h"
 
 #pragma warning(push, 0)
+#include <QCursor>
+#include <QGuiApplication>
 #include <QPixmap>
 #pragma warning(pop)
 
@@ -40,11 +42,11 @@ QCoro::Task<void> cursor::set_current_cursor(cursor *cursor)
 		const QPoint hot_pos = cursor->get_hot_pos() * preferences::get()->get_scale_factor();
 		const QCursor qcursor(pixmap, hot_pos.x(), hot_pos.y());
 
-		QMetaObject::invokeMethod(QApplication::instance(), [qcursor] {
-			if (QApplication::overrideCursor() != nullptr) {
-				QApplication::changeOverrideCursor(qcursor);
+		QMetaObject::invokeMethod(QGuiApplication::instance(), [qcursor] {
+			if (QGuiApplication::overrideCursor() != nullptr) {
+				QGuiApplication::changeOverrideCursor(qcursor);
 			} else {
-				QApplication::setOverrideCursor(qcursor);
+				QGuiApplication::setOverrideCursor(qcursor);
 			}
 		}, Qt::QueuedConnection);
 	}

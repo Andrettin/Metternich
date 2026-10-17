@@ -397,7 +397,7 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		//create generated characters first, so that they can be referred to by objects when loading the saved game data
 		data.get_child("generated_characters").for_each_child([this](const gsml_data &character_data) {
 			auto generated_character = make_qunique<character>(character_data.get_tag());
-			generated_character->moveToThread(QApplication::instance()->thread());
+			generated_character->moveToThread(QCoreApplication::instance()->thread());
 			this->add_generated_character(std::move(generated_character));
 		});
 
@@ -452,7 +452,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 		co_await this->on_setup_finished();
 	} catch (...) {
 		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 	}
 }
 
@@ -516,7 +516,7 @@ QCoro::Task<void> game::start_coro()
 	} catch (...) {
 		exception::report(std::current_exception());
 		log::log_error("Failed to start game.");
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 	}
 }
 
@@ -2056,7 +2056,7 @@ QCoro::Task<void> game::do_turn_coro()
 	} catch (...) {
 		exception::report(std::current_exception());
 		log::log_error("Failed to process turn.");
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 	}
 }
 

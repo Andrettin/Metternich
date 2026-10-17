@@ -165,7 +165,7 @@ QCoro::Task<character *> character::generate(const metternich::species *species,
 	assert_throw(species != nullptr);
 
 	auto generated_character = make_qunique<character>(QUuid::createUuid().toString(QUuid::WithoutBraces).toStdString());
-	generated_character->moveToThread(QApplication::instance()->thread());
+	generated_character->moveToThread(QCoreApplication::instance()->thread());
 
 	generated_character->temporary = temporary;
 

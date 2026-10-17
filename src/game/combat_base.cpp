@@ -11,6 +11,11 @@
 #include "util/point_util.h"
 #include "util/vector_random_util.h"
 
+#pragma warning(push, 0)
+#include <QGuiApplication>
+#include <QScreen>
+#pragma warning(pop)
+
 namespace metternich {
 
 combat_base::combat_base()

@@ -116,6 +116,7 @@
 #pragma warning(push, 0)
 #include <QCoroQml>
 
+#include <QApplication>
 #include <QDir>
 #include <QImageReader>
 #include <QQmlApplicationEngine>

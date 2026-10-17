@@ -297,7 +297,7 @@ void map_template::write_province_image()
 		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms).count(), (elapsed_ms.count() / 1000) % 60));
 	} catch (...) {
 		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 	}
 }
 

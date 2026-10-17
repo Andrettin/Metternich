@@ -191,7 +191,7 @@ const domain_tier_data *engine_interface::get_domain_tier_data(const metternich:
 		return domain_tier_data::get(tier);
 	} catch (...) {
 		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 		return nullptr;
 	}
 }

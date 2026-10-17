@@ -100,7 +100,7 @@ QCoro::Task<void> portrait_image_provider::load_image(const std::string id)
 		this->set_image(id, std::move(image));
 	} catch (...) {
 		exception::report(std::current_exception());
-		QApplication::exit(EXIT_FAILURE);
+		QCoreApplication::exit(EXIT_FAILURE);
 	}
 }
 
