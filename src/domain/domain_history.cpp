@@ -18,8 +18,6 @@
 #include "util/map_util.h"
 #include "util/string_conversion_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 domain_history::domain_history(const metternich::domain *domain)

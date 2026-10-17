@@ -12,8 +12,6 @@
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 	
 resource::resource(const std::string &identifier) : named_data_entry(identifier)

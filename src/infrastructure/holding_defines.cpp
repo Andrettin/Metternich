@@ -9,8 +9,6 @@
 #include "script/modifier.h"
 #include "util/assert_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 holding_defines::holding_defines()

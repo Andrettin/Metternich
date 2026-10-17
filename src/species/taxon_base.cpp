@@ -12,8 +12,6 @@
 #include "util/gender.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 taxon_base::taxon_base(const std::string &identifier) : named_data_entry(identifier)

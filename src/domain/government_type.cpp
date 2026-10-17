@@ -20,8 +20,6 @@
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 void government_type::process_title_name_scope(std::map<const culture_base *, std::map<government_variant, title_name_map>> &title_names, const gsml_data &scope)

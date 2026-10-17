@@ -88,8 +88,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 character_game_data::character_game_data(const metternich::character *character)

@@ -10,8 +10,6 @@
 #include "util/number_util.h"
 #include "util/string_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 promotion::promotion(const std::string &identifier)

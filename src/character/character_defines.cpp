@@ -10,8 +10,6 @@
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 character_defines::character_defines()

@@ -30,8 +30,6 @@
 
 #include "xbrz.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 domain_diplomacy::domain_diplomacy(const metternich::domain *domain, const domain_game_data *game_data)

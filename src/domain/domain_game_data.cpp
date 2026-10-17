@@ -104,7 +104,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
 #include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {

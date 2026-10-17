@@ -100,8 +100,6 @@
 #include "script/modifier_effect/weight_modifier_effect.h"
 #include "script/modifier_effect/wonder_cost_efficiency_modifier_effect.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 template <typename scope_type>

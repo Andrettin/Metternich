@@ -5,8 +5,6 @@
 #include "script/condition/condition.h"
 #include "util/string_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class domain_type_condition final : public condition<domain>

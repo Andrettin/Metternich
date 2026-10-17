@@ -34,8 +34,6 @@
 #include "util/number_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 const std::set<std::string> building_type::database_dependencies = {

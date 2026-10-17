@@ -12,8 +12,6 @@
 #include "population/population_type.h"
 #include "util/assert_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 void site_history::process_gsml_property(const gsml_property &property, const QDate &date)

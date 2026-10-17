@@ -72,8 +72,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 site_game_data::site_game_data(const metternich::site *site) : site(site)

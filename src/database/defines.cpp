@@ -21,8 +21,6 @@
 #include "util/path_util.h"
 #include "util/string_conversion_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 defines::defines() : min_log_level(log_level::warning)

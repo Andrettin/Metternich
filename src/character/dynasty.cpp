@@ -8,8 +8,6 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 void dynasty::process_gsml_scope(const gsml_data &scope)

@@ -70,8 +70,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 province_game_data::province_game_data(const metternich::province *province)

@@ -6,8 +6,6 @@
 #include "script/condition/condition.h"
 #include "util/gender.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class character_class_condition final : public condition<character>

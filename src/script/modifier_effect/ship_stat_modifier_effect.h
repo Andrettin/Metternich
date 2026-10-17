@@ -9,8 +9,6 @@
 #include "unit/transporter_type.h"
 #include "util/string_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class ship_stat_modifier_effect final : public modifier_effect<const domain>

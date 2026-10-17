@@ -32,8 +32,6 @@
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 void character_class::process_variant_name_scope(std::map<const taxon_base *, std::map<gender, std::string>> &variant_names, const gsml_data &scope)

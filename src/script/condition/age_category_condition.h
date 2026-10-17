@@ -5,8 +5,6 @@
 #include "character/character_game_data.h"
 #include "script/condition/numerical_condition.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class age_category_condition final : public numerical_condition<character, read_only_context>

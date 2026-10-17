@@ -39,8 +39,6 @@
 #include "util/map_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 domain_economy::domain_economy(const metternich::domain *domain, const domain_game_data *game_data)

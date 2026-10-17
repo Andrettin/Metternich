@@ -13,8 +13,6 @@
 #include "util/map_util.h"
 #include "util/string_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 law::law(const std::string &identifier) : named_data_entry(identifier)

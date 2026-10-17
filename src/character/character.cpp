@@ -45,8 +45,6 @@
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 #include <QUuid>
 
 namespace metternich {

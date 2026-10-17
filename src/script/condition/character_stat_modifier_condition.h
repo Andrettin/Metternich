@@ -7,8 +7,6 @@
 #include "script/condition/numerical_condition.h"
 #include "script/context.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class character_stat_modifier_condition final : public numerical_condition<character, read_only_context>

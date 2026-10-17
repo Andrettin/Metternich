@@ -24,8 +24,6 @@
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 const std::set<std::string> site::database_dependencies = {

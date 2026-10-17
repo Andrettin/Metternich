@@ -14,8 +14,6 @@
 #include "util/gender.h"
 #include "util/string_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class create_character_effect final : public effect<const domain>

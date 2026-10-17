@@ -5,8 +5,6 @@
 #include "database/gsml_data.h"
 #include "religion/divine_rank.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 void pantheon::process_gsml_scope(const gsml_data &scope)

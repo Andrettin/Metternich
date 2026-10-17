@@ -6,8 +6,6 @@
 #include "character/character_stat.h"
 #include "script/modifier_effect/modifier_effect.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 class character_stat_modifier_effect final : public modifier_effect<const character>

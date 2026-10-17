@@ -10,8 +10,6 @@
 #include "script/condition/and_condition.h"
 #include "util/assert_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 idea::idea(const std::string &identifier) : named_data_entry(identifier)

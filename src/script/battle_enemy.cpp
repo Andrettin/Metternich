@@ -10,8 +10,6 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 
-#include <magic_enum/magic_enum.hpp>
-
 namespace metternich {
 
 battle_enemy::battle_enemy() : placement(combat_placement::right)
