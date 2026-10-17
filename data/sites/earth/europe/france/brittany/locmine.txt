@@ -1,0 +1,8 @@
+locmine = {
+	name = "Locmine"
+	world = earth
+	geocoordinate = { -2.8358333333333 47.886666666667 }
+	type = holding
+	holding_type = temple
+	province = brittany #Morbihan
+}

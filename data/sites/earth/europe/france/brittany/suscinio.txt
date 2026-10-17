@@ -1,0 +1,8 @@
+suscinio = {
+	name = "Suscinio"
+	world = earth
+	geocoordinate = { -2.7294444444444 47.512777777778 } #Château de Suscinio
+	type = holding
+	holding_type = guild
+	province = brittany #Morbihan
+}

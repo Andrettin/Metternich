@@ -13,7 +13,7 @@ papal_states = {
 	
 	history = {
 		814 = {
-			diplomacy_state = { #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			diplomacy_state = { #subject to the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
 				domain = francia
 				subject_type = vassal
 			}

@@ -2,9 +2,10 @@ vannes = {
 	name = "Vannes"
 	world = earth
 	geocoordinate = { -2.7616666666667 47.655 }
-	type = resource
-	resource = fish
-	province = brittany
+	type = holding
+	holding_type = castle
+	#resource = fish
+	province = brittany #Morbihan
 	
 	history = {
 		1836 = {

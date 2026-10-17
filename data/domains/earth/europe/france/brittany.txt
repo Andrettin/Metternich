@@ -1,0 +1,23 @@
+brittany = {
+	name = "Brittany"
+	type = polity
+	color = { 118 99 151 }
+	flag = brittany
+	default_culture = breton
+	default_religion = catholic
+	default_tier = duchy
+	default_government_type = monarchy
+	default_capital = vannes
+	core_provinces = {
+		brittany
+	}
+	
+	history = {
+		814 = {
+			diplomacy_state = { #subject to the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+				domain = francia
+				subject_type = vassal
+			}
+		}
+	}
+}

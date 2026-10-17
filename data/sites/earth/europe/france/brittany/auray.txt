@@ -1,0 +1,8 @@
+auray = {
+	name = "Auray"
+	world = earth
+	geocoordinate = { -2.9825 47.667777777778 }
+	type = holding
+	holding_type = guild
+	province = brittany #Morbihan
+}

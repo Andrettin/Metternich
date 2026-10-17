@@ -1,0 +1,8 @@
+pontivy = {
+	name = "Pontivy"
+	world = earth
+	geocoordinate = { -2.9627777777778 48.068611111111 }
+	type = holding
+	holding_type = guild
+	province = brittany #Morbihan
+}

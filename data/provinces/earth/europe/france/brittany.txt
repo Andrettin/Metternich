@@ -19,6 +19,11 @@ brittany = {
 			religion = catholic
 		}
 		
+		814 = {
+			owner = brittany #part of Brittany c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = breton
+		}
+		
 		1188 = {
 			owner = england #English possession in 1188; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
 		}

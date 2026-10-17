@@ -1,0 +1,8 @@
+josselin = {
+	name = "Josselin"
+	world = earth
+	geocoordinate = { -2.5483333333333 47.955833333333 }
+	type = holding
+	holding_type = castle
+	province = brittany #Morbihan
+}

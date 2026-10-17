@@ -1,0 +1,9 @@
+breton = {
+	name = "Breton"
+	group = brythonic
+	color = { 76 127 102 }
+	language = breton
+	species = {
+		human
+	}
+}

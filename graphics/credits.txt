@@ -21,6 +21,7 @@
 /graphics/flags/brandenburg.svg (from the Wikimedia Commons) (in the public domain)
 /graphics/flags/brazil_imperial.svg (by Tonyjeff, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/brazil_royal.svg (by Jsobral, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0)
+/graphics/flags/brittany.svg (by Gryffindor, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/brunswick.svg (by David Liuzzo, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/carinthia.svg (by Jon Harald Søby, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/carniola.svg (by Gryffindor and Yaddah, from the Wikimedia Commons) (released to the public domain)
