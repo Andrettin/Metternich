@@ -53,7 +53,6 @@ set(character_SRCS
 	src/character/trait_type.cpp
 )
 source_group(character FILES ${character_SRCS})
-set_source_files_properties(${character_SRCS} PROPERTIES UNITY_GROUP "character")
 
 set(culture_SRCS
 	src/culture/cultural_group.cpp
@@ -63,7 +62,6 @@ set(culture_SRCS
 	src/culture/culture_history.cpp
 )
 source_group(culture FILES ${culture_SRCS})
-set_source_files_properties(${culture_SRCS} PROPERTIES UNITY_GROUP "culture")
 
 set(database_SRCS
 	src/database/data_entry_container.cpp
@@ -71,7 +69,6 @@ set(database_SRCS
 	src/database/preferences.cpp
 )
 source_group(database FILES ${database_SRCS})
-set_source_files_properties(${database_SRCS} PROPERTIES UNITY_GROUP "database")
 
 set(domain_SRCS
 	src/domain/consulate.cpp
@@ -103,7 +100,6 @@ set(domain_SRCS
 	src/domain/subject_type.cpp
 )
 source_group(domain FILES ${domain_SRCS})
-set_source_files_properties(${domain_SRCS} PROPERTIES UNITY_GROUP "domain")
 
 set(economy_SRCS
 	src/economy/commodity.cpp
@@ -117,7 +113,6 @@ set(economy_SRCS
 	src/economy/transaction.cpp
 )
 source_group(economy FILES ${economy_SRCS})
-set_source_files_properties(${economy_SRCS} PROPERTIES UNITY_GROUP "economy")
 
 set(game_SRCS
 	src/game/battle.cpp
@@ -135,7 +130,6 @@ set(game_SRCS
 	src/game/scoped_event_base.cpp
 )
 source_group(game FILES ${game_SRCS})
-set_source_files_properties(${game_SRCS} PROPERTIES UNITY_GROUP "game")
 
 set(infrastructure_SRCS
 	src/infrastructure/building_class.cpp
@@ -153,7 +147,6 @@ set(infrastructure_SRCS
 	src/infrastructure/wonder.cpp
 )
 source_group(infrastructure FILES ${infrastructure_SRCS})
-set_source_files_properties(${infrastructure_SRCS} PROPERTIES UNITY_GROUP "infrastructure")
 
 set(item_SRCS
 	src/item/enchantment.cpp
@@ -167,13 +160,11 @@ set(item_SRCS
 	src/item/trap_type.cpp
 )
 source_group(item FILES ${item_SRCS})
-set_source_files_properties(${item_SRCS} PROPERTIES UNITY_GROUP "item")
 
 set(language_SRCS
 	src/language/fallback_name_generator.cpp
 )
 source_group(language FILES ${language_SRCS})
-set_source_files_properties(${language_SRCS} PROPERTIES UNITY_GROUP "language")
 
 set(map_SRCS
 	src/map/celestial_body_type.cpp
@@ -213,7 +204,6 @@ set(map_SRCS
 	src/map/world.cpp
 )
 source_group(map FILES ${map_SRCS})
-set_source_files_properties(${map_SRCS} PROPERTIES UNITY_GROUP "map")
 
 set(population_SRCS
 	src/population/population.cpp
@@ -226,7 +216,6 @@ set(population_SRCS
 	src/population/population_unit.cpp
 )
 source_group(population FILES ${population_SRCS})
-set_source_files_properties(${population_SRCS} PROPERTIES UNITY_GROUP "population")
 
 set(religion_SRCS
 	src/religion/deity.cpp
@@ -238,7 +227,6 @@ set(religion_SRCS
 	src/religion/religion_container.cpp
 )
 source_group(religion FILES ${religion_SRCS})
-set_source_files_properties(${religion_SRCS} PROPERTIES UNITY_GROUP "religion")
 
 set(script_SRCS
 	src/script/battle_enemy.cpp
@@ -254,14 +242,12 @@ set(script_SRCS
 	src/script/text_processor.cpp
 )
 source_group(script FILES ${script_SRCS})
-set_source_files_properties(${script_SRCS} PROPERTIES UNITY_GROUP "script")
 
 set(script_condition_SRCS
 	src/script/condition/and_condition.cpp
 	src/script/condition/condition.cpp
 )
 source_group(script\\condition FILES ${script_condition_SRCS})
-set_source_files_properties(${script_condition_SRCS} PROPERTIES UNITY_GROUP "script_condition")
 
 set(script_effect_SRCS
 	src/script/effect/delayed_effect_instance.cpp
@@ -269,13 +255,11 @@ set(script_effect_SRCS
 	src/script/effect/effect_list.cpp
 )
 source_group(script\\effect FILES ${script_effect_SRCS})
-set_source_files_properties(${script_effect_SRCS} PROPERTIES UNITY_GROUP "script_effect")
 
 set(script_modifier_effect_SRCS
 	src/script/modifier_effect/modifier_effect.cpp
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
-set_source_files_properties(${script_modifier_effect_SRCS} PROPERTIES UNITY_GROUP "script_modifier_effect")
 
 set(sound_SRCS
 	src/sound/media_player.cpp
@@ -283,7 +267,6 @@ set(sound_SRCS
 	src/sound/sound.cpp
 )
 source_group(sound FILES ${sound_SRCS})
-set_source_files_properties(${sound_SRCS} PROPERTIES UNITY_GROUP "sound")
 
 set(species_SRCS
 	src/species/creature_size.cpp
@@ -295,7 +278,6 @@ set(species_SRCS
 	src/species/taxon_base.cpp
 )
 source_group(species FILES ${species_SRCS})
-set_source_files_properties(${species_SRCS} PROPERTIES UNITY_GROUP "species")
 
 set(spell_SRCS
 	src/spell/arcane_school.cpp
@@ -303,7 +285,6 @@ set(spell_SRCS
 	src/spell/spell_container.cpp
 )
 source_group(spell FILES ${spell_SRCS})
-set_source_files_properties(${spell_SRCS} PROPERTIES UNITY_GROUP "spell")
 
 set(technology_SRCS
 	src/technology/technological_period.cpp
@@ -314,7 +295,6 @@ set(technology_SRCS
 	src/technology/technology_subcategory.cpp
 )
 source_group(technology FILES ${technology_SRCS})
-set_source_files_properties(${technology_SRCS} PROPERTIES UNITY_GROUP "technology")
 
 set(ui_SRCS
 	src/ui/cursor.cpp
@@ -328,7 +308,6 @@ set(ui_SRCS
 	src/ui/portrait_image_provider.cpp
 )
 source_group(ui FILES ${ui_SRCS})
-set_source_files_properties(${ui_SRCS} PROPERTIES UNITY_GROUP "ui")
 
 set(unit_SRCS
 	src/unit/army.cpp
@@ -353,15 +332,11 @@ set(unit_SRCS
 	src/unit/transporter_type_container.cpp
 )
 source_group(unit FILES ${unit_SRCS})
-set_source_files_properties(${unit_SRCS} PROPERTIES UNITY_GROUP "unit")
 
 set(xbrz_SRCS
 	src/third_party/xbrz/xbrz.cpp
 )
 source_group(third_party\\xbrz FILES ${xbrz_SRCS})
-set_source_files_properties(${xbrz_SRCS} PROPERTIES
-	UNITY_GROUP "xbrz"
-)
 if(MSVC)
 	set_source_files_properties(${xbrz_SRCS} PROPERTIES
 		COMPILE_FLAGS "/wd4100 /wd4828"
@@ -1177,7 +1152,6 @@ set_target_properties(metternich_test PROPERTIES
 	UNITY_BUILD_MODE BATCH
 	COMPILE_WARNING_AS_ERROR ON
 )
-set_source_files_properties(${game_test_SRCS} PROPERTIES UNITY_GROUP "game_test")
 
 target_link_libraries(metternich PUBLIC archimedes ${OpenCV_LIBS})
 
