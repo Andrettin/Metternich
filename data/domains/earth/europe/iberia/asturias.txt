@@ -2,6 +2,7 @@ asturias = {
 	name = "Asturias"
 	type = polity
 	color = { 104 173 230 }
+	flag = asturias
 	default_culture = asturleonese
 	default_religion = catholic
 	default_tier = kingdom

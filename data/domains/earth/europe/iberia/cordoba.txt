@@ -2,6 +2,7 @@ cordoba = {
 	name = "Cordoba"
 	type = polity
 	color = { 60 180 12 }
+	flag = cordoba
 	default_culture = andalusian
 	default_religion = sunni
 	default_tier = duchy #emirate
