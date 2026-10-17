@@ -7,6 +7,7 @@
 /graphics/cursors/red_crosshair.png (by the Bos Wars Team) (licensed under the GPL 2.0)
 /graphics/cursors/teutonic_gauntlet.png (by Exidelo) (licensed under the CC0)
 /graphics/cursors/yellow_crosshair.png (by the Bos Wars Team) (licensed under the GPL 2.0)
+/graphics/flags/arles.svg (by Pce13, from the Wikimedia Commons) (licensed under the CC-BY-SA 4.0)
 /graphics/flags/assyria.svg (by the Assyrian Congress, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/asturias.svg (by Banderas, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/athens.svg (by Designism, from the Wikimedia Commons) (in the public domain)
