@@ -134,6 +134,7 @@ lunt_ater = {
 	pantheon = eastern_european
 	divine_rank = intermediate_deity #correct?
 	religions = {
+		taltosist #correct?
 		turumic
 	}
 	major_domains = {
