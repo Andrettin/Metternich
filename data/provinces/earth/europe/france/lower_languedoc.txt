@@ -13,10 +13,15 @@ lower_languedoc = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = francia #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = frankish
+			religion = catholic
+		}
+		
 		1328 = {
 			owner = france #part of France in 1328; Source: William R. Shepherd, "Historical Atlas", 1911, p. 76.
 			culture = french
-			religion = catholic
 		}
 		
 		1360 = {

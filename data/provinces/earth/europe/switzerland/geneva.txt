@@ -13,10 +13,15 @@ geneva = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = francia #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = frankish
+			religion = catholic
+		}
+		
 		919 = {
 			owner = upper_burgundy #part of Upper Burgundy in 919; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = french
-			religion = catholic
 		}
 		
 		933 = {

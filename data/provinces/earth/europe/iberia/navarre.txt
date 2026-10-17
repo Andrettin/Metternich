@@ -18,9 +18,14 @@ navarre = {
 			religion = era_zaharra
 		}
 		
+		814 = {
+			owner = francia #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = frankish
+			religion = catholic
+		}
+		
 		1360 = {
 			owner = navarre #part of Navarre in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			religion = catholic
 		}
 		
 		1512 = {

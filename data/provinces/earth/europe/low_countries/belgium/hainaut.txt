@@ -17,6 +17,10 @@ hainaut = {
 			religion = catholic
 		}
 		
+		814 = {
+			owner = francia #part of the Carolingian Empire c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
 		911 = {
 			owner = france #became part of France in 911; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 		}
