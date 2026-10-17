@@ -8,6 +8,9 @@ hungary = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = pest
+	short_names = {
+		tribe = "Magyars"
+	}
 	
 	history = {
 		814 = {
