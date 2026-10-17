@@ -250,6 +250,7 @@ set(script_condition_SRCS
 	src/script/condition/condition.cpp
 )
 source_group(script\\condition FILES ${script_condition_SRCS})
+set_source_files_properties(src/script/condition/condition.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
 set(script_effect_SRCS
 	src/script/effect/delayed_effect_instance.cpp
@@ -257,11 +258,13 @@ set(script_effect_SRCS
 	src/script/effect/effect_list.cpp
 )
 source_group(script\\effect FILES ${script_effect_SRCS})
+set_source_files_properties(src/script/effect/effect.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
 set(script_modifier_effect_SRCS
 	src/script/modifier_effect/modifier_effect.cpp
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
+set_source_files_properties(src/script/modifier_effect/modifier_effect.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
 
 set(sound_SRCS
 	src/sound/media_player.cpp
