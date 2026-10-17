@@ -1075,7 +1075,7 @@ set(metternich_test_SRCS
 	test/main.cpp
 )
 
-option(WITH_GEOJSON "Compile with support for generating map data from GeoJSON files" OFF)
+option(WITH_GEOJSON "Compile with support for generating map data from GeoJSON files" ON)
 
 find_package(Boost 1.69.0 REQUIRED COMPONENTS math random unit_test_framework)
 
