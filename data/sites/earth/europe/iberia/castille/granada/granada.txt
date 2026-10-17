@@ -3,6 +3,7 @@ granada = {
 	world = earth
 	geocoordinate = { -3.58501143535 37.16497825020 } #from Natural Earth
 	type = holding
+	province = granada
 	features = {
 		academic #historical university
 	}

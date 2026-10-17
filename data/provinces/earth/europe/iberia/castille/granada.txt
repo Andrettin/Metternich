@@ -18,14 +18,19 @@ granada = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = cordoba #part of the Ommiad Emirate of Cordova c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = arabic
+			religion = sunni
+		}
+		
 		1360 = {
 			owner = granada #part of Granada in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			culture = castillian
-			religion = sunni
 		}
 		
 		1560 = {
 			owner = spain #part of the Kingdom of Spain c. 1560; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 118-119.
+			culture = castillian
 			religion = catholic
 		}
 		

@@ -1,0 +1,14 @@
+cordoba = {
+	name = "Cordoba"
+	type = polity
+	color = { 60 180 12 }
+	default_culture = arabic
+	default_religion = sunni
+	default_tier = duchy #emirate
+	default_government_type = monarchy
+	default_capital = cordoba
+	core_provinces = {
+		andalusia
+		granada
+	}
+}

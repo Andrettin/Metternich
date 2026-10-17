@@ -14,6 +14,12 @@ beira = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = cordoba #part of the Ommiad Emirate of Cordova c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = arabic
+			religion = sunni
+		}
+		
 		1140 = {
 			owner = portugal #became part of the Kingdom of Portugal in 1140; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 82-83.
 			culture = portuguese

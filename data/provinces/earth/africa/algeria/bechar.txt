@@ -5,4 +5,12 @@ bechar = {
 	regions = {
 		algeria
 	}
+	
+	history = {
+		788 = {
+			owner = morocco #became part of the Dominions of the Idrisids in 788; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = arabic
+			religion = sunni
+		}
+	}
 }

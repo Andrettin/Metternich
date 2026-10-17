@@ -18,6 +18,12 @@ castille = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = cordoba #part of the Ommiad Emirate of Cordova c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = arabic
+			religion = sunni
+		}
+		
 		1360 = {
 			owner = castille #part of Castille in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = castillian

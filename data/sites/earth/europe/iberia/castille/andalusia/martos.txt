@@ -1,0 +1,8 @@
+martos = {
+	name = "Martos" #"Martós"
+	world = earth
+	geocoordinate = { -3.97264 37.72107 }
+	type = holding
+	holding_type = temple
+	province = andalusia #Jaén
+}

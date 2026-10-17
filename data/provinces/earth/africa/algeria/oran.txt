@@ -14,14 +14,18 @@ oran = {
 			religion = megalithic
 		}
 		
+		788 = {
+			owner = morocco #became part of the Dominions of the Idrisids in 788; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = arabic
+			religion = sunni
+		}
+		
 		1111 = {
 			trade_zone = embriaco
 		}
 		
 		1360 = {
 			owner = algeria #part of Algeria in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
-			culture = arabic
-			religion = sunni
 		}
 		
 		1740 = {

@@ -1,0 +1,8 @@
+canete_de_las_torres = {
+	name = "Canete de las Torres" #"Cañete de las Torres"
+	world = earth
+	geocoordinate = { -4.31835 37.86717 }
+	type = holding
+	holding_type = castle
+	province = andalusia #Cordoba
+}

@@ -1,0 +1,8 @@
+belalcazar = {
+	name = "Belalcazar" #"Belalcázar"
+	world = earth
+	geocoordinate = { -5.1673512 38.5753011 }
+	type = holding
+	holding_type = castle
+	province = andalusia #Cordoba
+}

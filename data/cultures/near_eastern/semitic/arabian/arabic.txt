@@ -6,9 +6,19 @@ arabic = {
 	species = {
 		human
 	}
+	title_names = {
+		monarchy = {
+			duchy = "Emirate"
+			kingdom = "Sultanate"
+		}
+	}
 	office_title_names = {
 		ruler = {
 			monarchy = {
+				duchy = {
+					male = "Emir"
+					female = "Emira"
+				}
 				kingdom = {
 					male = "Sultan"
 					female = "Sultana"

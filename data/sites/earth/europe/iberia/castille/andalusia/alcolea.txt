@@ -1,0 +1,8 @@
+alcolea = {
+	name = "Alcolea"
+	world = earth
+	geocoordinate = { -4.6729166666667 37.932138888889 } #Alcolea, Córdoba
+	type = holding
+	holding_type = castle
+	province = andalusia #Cordoba
+}

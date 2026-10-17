@@ -1,0 +1,8 @@
+cabra = {
+	name = "Cabra"
+	world = earth
+	geocoordinate = { -4.4335616 37.4718153 }
+	type = holding
+	holding_type = temple
+	province = andalusia #Cordoba
+}
