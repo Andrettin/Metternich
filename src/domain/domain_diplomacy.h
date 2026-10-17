@@ -7,6 +7,11 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/subject_type.h")
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class domain;

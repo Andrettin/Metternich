@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/gsml_data.h"
 #include "item/affix_type.h"
 #include "item/enchantment.h"
 #include "item/item_class.h"

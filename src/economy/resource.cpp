@@ -2,6 +2,7 @@
 
 #include "economy/resource.h"
 
+#include "database/gsml_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rules.h"

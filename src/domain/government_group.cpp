@@ -2,6 +2,7 @@
 
 #include "domain/government_group.h"
 
+#include "database/gsml_data.h"
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "domain/government_type.h"
