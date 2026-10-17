@@ -4,35 +4,21 @@ hungary = {
 	color = { 152 85 92 }
 	flag = hungary
 	default_culture = magyar
-	default_religion = catholic
+	default_religion = taltosist
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = pest
-	core_provinces = {
-		pest
-		banat
-		banska_bystrica
-		bihar
-		buda
-		burgenland
-		feher
-		gemer
-		gyor
-		kaposvar
-		kesmark
-		kosice
-		nitra
-		orava
-		pecs
-		pressburg
-		szekesfehervar
-		transylvania
-		trencin
-		vas
-		zalaegerszeg
-	}
 	
 	history = {
+		814 = {
+			government_type = tribal_despotism #the Magyars were tribal c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+		
+		919 = {
+			government_type = monarchy #existed as a polity in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
+			religion = catholic
+		}
+		
 		1490 = {
 			offices = { #Tamás Bakócz became the leading statesman of Hungary in 1490; Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 				chancellor = tamas_bakocz

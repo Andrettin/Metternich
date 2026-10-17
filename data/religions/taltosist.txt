@@ -1,0 +1,6 @@
+taltosist = {
+	name = "Taltosist"
+	group = pagan
+	color = { 250 120 90 }
+	icon = horses
+}

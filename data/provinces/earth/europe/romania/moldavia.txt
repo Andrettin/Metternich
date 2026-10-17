@@ -7,6 +7,12 @@ moldavia = {
 	}
 	
 	history = {
+		814 = {
+			owner = hungary #Magyar territory c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = magyar
+			religion = taltosist
+		}
+		
 		1360 = {
 			owner = moldavia #part of Moldavia in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
 			culture = romanian
