@@ -1,0 +1,14 @@
+band = {
+	name = "Band"
+	language = english
+	type = noun
+	gender = neuter
+	name_front_compound_element = true
+	name_rear_compound_element = true
+	given_name = true
+	surname_compound = true
+	df_word = "BAND GROUP"
+	meanings = {
+		"Band" #in the sense of a group of people
+	}
+}

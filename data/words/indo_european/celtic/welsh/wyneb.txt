@@ -1,0 +1,9 @@
+wyneb = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 119.
+	name = "Wyneb"
+	language = welsh
+	type = noun
+	name_generation_word = english:honor
+	meaning_words = {
+		honor #source gives the German "Ehre" as the meaning
+	}
+}

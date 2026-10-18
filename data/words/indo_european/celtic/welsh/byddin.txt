@@ -1,0 +1,11 @@
+byddin = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 10.
+	name = "Byddin"
+	language = welsh
+	type = noun
+	name_generation_word = english:band
+	meanings = {
+		"Band"
+		"Troup"
+		"Army"
+	}
+}

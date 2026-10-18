@@ -1,0 +1,9 @@
+troed = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 118.
+	name = "Troed"
+	language = welsh
+	type = noun
+	name_generation_word = english:foot
+	meaning_words = {
+		foot #source gives the German "Fuß" as the meaning
+	}
+}

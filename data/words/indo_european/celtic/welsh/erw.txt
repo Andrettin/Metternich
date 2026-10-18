@@ -1,0 +1,14 @@
+erw = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapter 2, Section 3.
+	name = "Erw" #this is the genitive
+	language = welsh
+	type = noun
+	name_generation_word = english:field
+	noun_inflections = {
+		singular = {
+			genitive = "Erw"
+		}
+	}
+	meaning_words = {
+		field
+	}
+}

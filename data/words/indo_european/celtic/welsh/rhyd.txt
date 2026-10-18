@@ -1,0 +1,9 @@
+rhyd = { #Source: August Fick and Alf Torp, "Wortschatz der Germanischen Spracheinheit", 2006, p. 121.
+	name = "Rhŷd"
+	language = welsh
+	type = noun
+	name_generation_word = english:ford
+	meaning_words = {
+		ford #source gives the German "Furt" as the meaning
+	}
+}

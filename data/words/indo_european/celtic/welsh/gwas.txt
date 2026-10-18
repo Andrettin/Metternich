@@ -1,0 +1,9 @@
+gwas = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 120.
+	name = "Gwas"
+	language = welsh
+	type = noun
+	name_generation_word = english:servant
+	meaning_words = {
+		servant #source gives the German "Diener" as the meaning
+	}
+}

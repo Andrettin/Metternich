@@ -1,0 +1,9 @@
+bryd = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 117.
+	name = "Bryd"
+	language = welsh
+	type = noun
+	name_generation_word = english:mind
+	meaning_words = {
+		mind #source gives the German "Sinn" as the meaning
+	}
+}
