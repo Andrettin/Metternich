@@ -1,7 +1,7 @@
 weavers_house = {
 	name = "Weaver's House"
 	building_class = weavers_house
-	portrait = factory
+	portrait = coal_pit
 	icon = fabric
 	holding_types = {
 		guild
@@ -26,7 +26,7 @@ weavers_house = {
 weavers_shop = {
 	name = "Weaver's Shop"
 	building_class = weavers_shop
-	portrait = factory
+	portrait = coal_pit
 	icon = fabric
 	base_building = weavers_house
 	holding_types = {
@@ -52,7 +52,7 @@ weavers_shop = {
 textile_mill = {
 	name = "Textile Mill"
 	building_class = textile_mill
-	portrait = factory
+	portrait = coal_pit
 	icon = fabric
 	base_building = weavers_shop
 	holding_types = {

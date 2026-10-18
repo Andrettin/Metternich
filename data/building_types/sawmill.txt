@@ -1,7 +1,7 @@
 sawmill = {
 	name = "Sawmill"
 	building_class = sawmill
-	portrait = factory
+	portrait = coal_pit
 	icon = lumber
 	wealth_cost = 3gb
 	holding_types = {

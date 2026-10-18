@@ -1,6 +1,6 @@
 fabrica_militar_de_santa_clara = {
 	name = "Fabrica Militar de Santa Clara" #"Fábrica Militar de Santa Clara"
-	portrait = factory
+	portrait = coal_pit
 	skill = 3
 	required_technology = industrialization
 	conditions = {
@@ -13,7 +13,7 @@ fabrica_militar_de_santa_clara = {
 
 oficinas_gerais_de_material_de_engenharia = {
 	name = "Oficinas Gerais de Material de Engenharia"
-	portrait = factory
+	portrait = coal_pit
 	skill = 3
 	required_technology = industrialization
 	conditions = {

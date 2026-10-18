@@ -1,7 +1,7 @@
 armory = {
 	name = "Armory"
 	building_class = armory
-	portrait = factory
+	portrait = coal_pit
 	icon = tools
 	holding_types = {
 		guild
@@ -27,7 +27,7 @@ armory = {
 magazine = {
 	name = "Magazine"
 	building_class = magazine
-	portrait = factory
+	portrait = coal_pit
 	icon = tools
 	base_building = armory
 	holding_types = {
@@ -54,7 +54,7 @@ magazine = {
 arsenal = {
 	name = "Arsenal"
 	building_class = arsenal
-	portrait = factory
+	portrait = coal_pit
 	icon = tools
 	base_building = magazine
 	holding_types = {

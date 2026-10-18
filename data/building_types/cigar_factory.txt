@@ -1,7 +1,7 @@
 tobacconists_house = {
 	name = "Tobacconist's House"
 	building_class = tobacconists_house
-	portrait = factory
+	portrait = coal_pit
 	icon = tobacco
 	holding_types = {
 		guild
@@ -20,7 +20,7 @@ tobacconists_house = {
 tobacconists_shop = {
 	name = "Tobacconist's Shop"
 	building_class = tobacconists_shop
-	portrait = factory
+	portrait = coal_pit
 	icon = tobacco
 	base_building = tobacconists_house
 	holding_types = {
@@ -40,7 +40,7 @@ tobacconists_shop = {
 cigar_factory = {
 	name = "Cigar Factory"
 	building_class = cigar_factory
-	portrait = factory
+	portrait = coal_pit
 	icon = tobacco
 	base_building = tobacconists_shop
 	holding_types = {

@@ -14,12 +14,12 @@ city = {
 	filepath = "portraits/buildings/city.png"
 }
 
-dock = {
-	filepath = "portraits/buildings/dock.png"
+coal_pit = {
+	filepath = "portraits/buildings/coal_pit.png"
 }
 
-factory = {
-	filepath = "portraits/buildings/factory.png"
+dock = {
+	filepath = "portraits/buildings/dock.png"
 }
 
 fort = {

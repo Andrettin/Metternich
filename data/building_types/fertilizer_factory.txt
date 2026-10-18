@@ -1,7 +1,7 @@
 fertilizer_factory = {
 	name = "Fertilizer Factory"
 	building_class = fertilizer_factory
-	portrait = factory
+	portrait = coal_pit
 	icon = spices_yellow
 	holding_types = {
 		castle

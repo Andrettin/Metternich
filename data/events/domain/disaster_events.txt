@@ -60,7 +60,7 @@ flood_at_cotton_warehouse = {
 
 rusted_iron = {
 	name = "Rusted Iron"
-	portrait = factory
+	portrait = coal_pit
 	description = "[root.form_of_address], a substantial amount of our stores of iron have rusted, rendering them unusable!"
 	random_group = dangerous_domain_events
 	conditions = {

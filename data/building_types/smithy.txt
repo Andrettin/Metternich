@@ -1,7 +1,7 @@
 smithy = {
 	name = "Smithy"
 	building_class = smithy
-	portrait = factory
+	portrait = coal_pit
 	icon = tools
 	wealth_cost = 6gb
 	holding_types = {
@@ -33,7 +33,7 @@ smithy = {
 swordsmithy = {
 	name = "Swordsmithy"
 	building_class = swordsmithy
-	portrait = factory
+	portrait = coal_pit
 	icon = saber
 	wealth_cost = 37500gp
 	required_technology = short_sword

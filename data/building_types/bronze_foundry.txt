@@ -1,7 +1,7 @@
 bronze_foundry = {
 	name = "Bronze Foundry"
 	building_class = bronze_foundry
-	portrait = factory
+	portrait = coal_pit
 	icon = bronze
 	holding_types = {
 		guild

@@ -1,7 +1,7 @@
 bowyer = {
 	name = "Bowyer"
 	building_class = bowyer
-	portrait = factory
+	portrait = coal_pit
 	icon = bow
 	wealth_cost = 22500gp
 	required_technology = short_bow
@@ -30,7 +30,7 @@ bowyer = {
 crossbow_workshop = {
 	name = "Crossbow Workshop"
 	building_class = crossbow_workshop
-	portrait = factory
+	portrait = coal_pit
 	icon = bow
 	base_building = bowyer
 	wealth_cost = 52500gp

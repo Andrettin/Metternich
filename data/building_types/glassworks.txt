@@ -1,7 +1,7 @@
 glassworks = {
 	name = "Glassworks"
 	building_class = glassworks
-	portrait = factory
+	portrait = coal_pit
 	icon = glass
 	required_technology = glassblowing
 	holding_types = {
