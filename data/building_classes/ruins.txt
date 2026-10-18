@@ -1,3 +1,8 @@
+ruined_castle_garden = {
+	name = "Ruined Castle Garden"
+	slot_type = park
+}
+
 ruined_keep = {
 	name = "Ruined Keep"
 	slot_type = keep

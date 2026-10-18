@@ -36,7 +36,10 @@ castle = {
 			has_building_class = donjon
 		}
 		"Ruined Castle" = {
-			has_building_class = ruined_keep
+			or = {
+				has_building_class = ruined_castle_garden
+				has_building_class = ruined_keep
+			}
 		}
 	}
 	tier_levels = {

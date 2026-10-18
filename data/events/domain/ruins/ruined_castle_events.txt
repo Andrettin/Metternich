@@ -7,7 +7,7 @@ castle_garden = {
 	conditions = {
 		saved_building = {
 			name = ruin_building
-			building_type = ruined_keep
+			building_type = ruined_castle_garden
 		}
 	}
 	immediate_effects = {
@@ -25,7 +25,7 @@ castle_garden = {
 						enchantment = of_protection_1
 					}
 					source_site = {
-						buildings -= ruined_keep
+						buildings -= ruined_castle_garden
 					}
 				}
 			}
@@ -43,7 +43,7 @@ castle_garden = {
 						enchantment = of_protection_1
 					}
 					source_site = {
-						buildings -= ruined_keep
+						buildings -= ruined_castle_garden
 					}
 				}
 				on_failure = {
@@ -56,7 +56,7 @@ castle_garden = {
 								enchantment = of_protection_1
 							}
 							source_site = {
-								buildings -= ruined_keep
+								buildings -= ruined_castle_garden
 							}
 						}
 					}

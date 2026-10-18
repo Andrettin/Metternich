@@ -1,3 +1,14 @@
+ruined_castle_garden = {
+	name = "Ruined Castle Garden"
+	building_class = ruined_castle_garden
+	portrait = ruined_castle
+	icon = oasis
+	ruin = true
+	holding_types = {
+		castle
+	}
+}
+
 ruined_keep = {
 	name = "Ruined Keep"
 	building_class = ruined_keep
