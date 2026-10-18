@@ -1,0 +1,9 @@
+hud_welsh = { #Source: Alaric Hall, "The Meanings of Elf and Elves in Medieval England", 2004, p. 121.
+	name = "Hud"
+	language = welsh
+	type = noun #presumably
+	name_generation_word = english:magic
+	meaning_words = {
+		magic
+	}
+}

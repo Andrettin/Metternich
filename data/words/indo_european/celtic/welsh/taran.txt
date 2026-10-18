@@ -1,0 +1,9 @@
+taran = { #Source: H. Munro Chadwick, "The Oak and the Thunder-God", 1900, p. 26.
+	name = "Taran"
+	language = welsh
+	type = noun
+	name_generation_word = english:thunder
+	meaning_words = {
+		thunder
+	}
+}

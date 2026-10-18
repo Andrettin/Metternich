@@ -1,0 +1,11 @@
+arglwydd = { #Source: Bernhard Maier (trans.), "Das Sagenbuch der Walisischen Kelten", 1999, p. 119.
+	name = "Arglwydd"
+	language = welsh
+	type = noun
+	name_generation_word = english:lord
+	meanings = {
+		#source gives the German "Herr, Gebieter" as the meaning
+		"Lord"
+		"Commander"
+	}
+}
