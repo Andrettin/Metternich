@@ -11,6 +11,11 @@ mine = {
 	economy = 2
 }
 
+park = {
+	loyalty = 1
+	unrest = -1
+}
+
 temple = {
 	loyalty = 2
 	stability = 2

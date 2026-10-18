@@ -1,0 +1,37 @@
+castle_garden = {
+	name = "Castle Garden"
+	building_class = castle_garden
+	portrait = aristocratic_palace
+	icon = oasis
+	wealth_cost = 4gb #same as the park
+	holding_types = {
+		castle
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	domain_modifier = {
+		scripted_modifier_effect = park
+	}
+}
+
+park = {
+	name = "Park"
+	building_class = park
+	portrait = aristocratic_palace
+	icon = oasis
+	wealth_cost = 4gb
+	holding_types = {
+		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	domain_modifier = {
+		scripted_modifier_effect = park
+	}
+}
