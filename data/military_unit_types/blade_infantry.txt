@@ -55,21 +55,32 @@ two_handed_swordsmen = {
 	name = "Two-Handed Swordsmen"
 	unit_class = two_handed_swordsmen
 	icon = longswordsmen
+	required_technology = greatsword
 	melee_attack_sound = sword
 	death_sound = human_death
-	required_technology = bastard_sword
 	stats = {
-		melee = 7
-		defense = 6
-		movement = 4
+		hit_points = 3
+		movement = 1
+		defense = 4
+		melee = 4
 		range = 1
+		save = 5
+	}
+	battle_resolution_types = {
+		pennant
+		shield
+		crossed_swords
 	}
 	commodity_costs = {
+		wealth = 4gb
 		heavy_infantry = 200
-		fabric = 1
-		iron = 2
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb
 	}
 	upgrades = {
 		grenadiers
 	}
+	
+	#FIXME: should have +1 to attacks against pikemen and irregulars
 }
