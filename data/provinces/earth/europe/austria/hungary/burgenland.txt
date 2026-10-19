@@ -14,6 +14,12 @@ burgenland = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = avaria #territory of the Avars c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = avar
+			religion = tengri
+		}
+		
 		919 = {
 			owner = hungary #part of Hungary in the 919-1125 period; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 			culture = magyar

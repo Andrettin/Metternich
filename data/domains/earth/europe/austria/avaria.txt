@@ -1,0 +1,19 @@
+avaria = {
+	name = "Avaria"
+	type = polity
+	color = { 250 120 90 }
+	default_culture = avar
+	default_religion = tengri
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = esztergom
+	short_names = {
+		tribe = "Avars"
+	}
+	
+	history = {
+		814 = {
+			government_type = tribal_despotism #the Avars were tribal c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+		}
+	}
+}

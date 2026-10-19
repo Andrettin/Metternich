@@ -14,12 +14,20 @@ bihar = {
 			religion = tuistic
 		}
 		
+		814 = {
+			owner = avaria #territory of the Avars c. 814; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 54-55.
+			culture = avar
+			religion = tengri
+		}
+		
 		high_middle_ages = {
 			#temple_domain = kalocsa #part of the ecclesiastical province of Kalocsa in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 94-95.
 		}
 		
 		1204 = {
 			owner = hungary #part of Hungary c. 1204; Source: William R. Shepherd, "Historical Atlas", 1911, p. 73.
+			culture = magyar
+			religion = catholic
 		}
 		
 		1360 = {

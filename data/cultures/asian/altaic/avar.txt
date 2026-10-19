@@ -1,0 +1,9 @@
+avar = {
+	name = "Avar"
+	group = altaic
+	color = { 178 178 76 }
+	default_phenotype = near_eastern
+	species = {
+		human
+	}
+}
