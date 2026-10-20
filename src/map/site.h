@@ -137,6 +137,7 @@ public:
 		return this->type;
 	}
 
+	bool is_holding() const;
 	bool is_settlement() const;
 	bool is_celestial_body() const;
 

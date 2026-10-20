@@ -181,6 +181,11 @@ void site::reset_game_data()
 	this->game_data = make_qunique<site_game_data>(this);
 }
 
+bool site::is_holding() const
+{
+	return this->get_type() == site_type::holding;
+}
+
 bool site::is_settlement() const
 {
 	return this->get_type() == site_type::holding || this->get_type() == site_type::habitable_world;
