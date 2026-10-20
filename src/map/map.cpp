@@ -143,7 +143,7 @@ QCoro::Task<void> map::initialize(const bool province_post_processing_enabled, s
 		vector::shuffle(tiles_to_check);
 
 		this->do_province_post_processing(tiles_to_check, true);
-		this->do_province_post_processing(tiles_to_check, false);
+		this->do_province_post_processing(std::move(tiles_to_check), false);
 	}
 
 	co_await this->process_border_tiles();
@@ -178,6 +178,11 @@ QCoro::Task<void> map::initialize(const bool province_post_processing_enabled, s
 
 void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const bool only_water_zones)
 {
+	std::vector<bool> queued_tile_indices(static_cast<size_t>(this->get_width()) * static_cast<size_t>(this->get_height()), false);
+	for (const QPoint &tile_pos : tiles_to_check) {
+		queued_tile_indices[this->get_pos_index(tile_pos)] = true;
+	}
+
 	//assign tiles without provinces to the most-adjacent province
 	while (!tiles_to_check.empty()) {
 		std::vector<QPoint> new_tiles_to_check;
@@ -189,17 +194,28 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 					continue;
 				}
 
-				std::map<province *, int, province_compare> adjacent_province_counts;
+				//already processing, remove from queued status
+				queued_tile_indices[this->get_pos_index(tile_pos)] = false;
+
+				//use an array for the adjacent province counts, for the sake of performance
+				//limited to 8 entries since that is the maximum adjacent tiles that a tile can have
+				std::array<std::pair<province *, int>, 8> adjacent_province_counts{};
+
 				std::vector<QPoint> adjacent_without_province;
-				point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones](const QPoint &adjacent_pos) {
+
+				point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones, &queued_tile_indices](const QPoint &adjacent_pos) {
 					if (!this->contains(adjacent_pos)) {
 						return;
 					}
 
-					const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+					const size_t adjacent_index = this->get_pos_index(adjacent_pos);
+					const metternich::tile *adjacent_tile = this->get_tile(adjacent_index);
 
 					if (adjacent_tile->get_province() == nullptr) {
-						adjacent_without_province.push_back(adjacent_pos);
+						if (!queued_tile_indices[adjacent_index]) {
+							queued_tile_indices[adjacent_index] = true;
+							adjacent_without_province.push_back(adjacent_pos);
+						}
 						return;
 					}
 
@@ -207,13 +223,27 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 						return;
 					}
 
-					adjacent_province_counts[adjacent_tile->get_province()]++;
+					for (auto &[count_province, count] : adjacent_province_counts) {
+						if (count_province == adjacent_tile->get_province()) {
+							++count;
+							break;
+						} else if (count_province == nullptr) {
+							//if we reached a null count province, then that means this province doesn't have a count yet
+							count_province = adjacent_tile->get_province();
+							++count;
+							break;
+						}
+					}
 				});
 
 				int best_count = 0;
 				std::vector<province *> best_provinces;
 
 				for (const auto &[province, province_count] : adjacent_province_counts) {
+					if (province == nullptr) {
+						break;
+					}
+
 					if (province_count > best_count) {
 						best_provinces.clear();
 						best_count = province_count;
@@ -258,7 +288,8 @@ QCoro::Task<void> map::process_border_tiles()
 						return;
 					}
 
-					const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+					const size_t adjacent_index = this->get_pos_index(adjacent_pos);
+					const metternich::tile *adjacent_tile = &(*this->tiles)[adjacent_index];
 					const metternich::province *adjacent_province = adjacent_tile->get_province();
 
 					if (province != adjacent_province) {
@@ -549,7 +580,7 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 		image_size = this->get_size();
 	}
 
-	this->ocean_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->ocean_diplomatic_map_image = QImage(image_size, QImage::Format_ARGB32);
 	this->ocean_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_ocean_color();
@@ -634,7 +665,7 @@ QCoro::Task<void> map::create_empty_diplomatic_map_image()
 		image_size = this->get_size();
 	}
 
-	this->empty_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->empty_diplomatic_map_image = QImage(image_size, QImage::Format_ARGB32);
 	this->empty_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_map_blank_color();
@@ -719,7 +750,7 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 		image_size = this->get_size();
 	}
 
-	this->empty_terrain_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->empty_terrain_diplomatic_map_image = QImage(image_size, QImage::Format_ARGB32);
 	this->empty_terrain_diplomatic_map_image.fill(Qt::transparent);
 
 	for (int x = 0; x < image_size.width(); ++x) {
@@ -795,7 +826,7 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 
 void map::create_minimap_image()
 {
-	this->minimap_image = QImage(this->get_size() * this->get_minimap_tile_scale(), QImage::Format_RGBA8888);
+	this->minimap_image = QImage(this->get_size() * this->get_minimap_tile_scale(), QImage::Format_ARGB32);
 	this->minimap_image.fill(Qt::transparent);
 
 	this->update_minimap_rect(QRect(QPoint(0, 0), this->get_size()));

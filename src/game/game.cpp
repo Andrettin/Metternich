@@ -2399,7 +2399,7 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 {
 	if (!map::exploration_enabled) {
-		this->exploration_diplomatic_map_image = QImage(QSize(1, 1), QImage::Format_RGBA8888);
+		this->exploration_diplomatic_map_image = QImage(QSize(1, 1), QImage::Format_ARGB32);
 		this->exploration_diplomatic_map_image.fill(Qt::transparent);
 		co_return;
 	}
@@ -2414,7 +2414,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 		image_size = map->get_size();
 	}
 
-	this->exploration_diplomatic_map_image = QImage(image_size, QImage::Format_RGBA8888);
+	this->exploration_diplomatic_map_image = QImage(image_size, QImage::Format_ARGB32);
 	this->exploration_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();

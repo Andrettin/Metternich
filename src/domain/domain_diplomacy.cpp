@@ -545,7 +545,7 @@ QImage domain_diplomacy::prepare_diplomatic_map_image() const
 		image_size = this->get_game_data()->get_territory_rect().size();
 	}
 
-	QImage image(image_size, QImage::Format_RGBA8888);
+	QImage image(image_size, QImage::Format_ARGB32);
 	image.fill(Qt::transparent);
 
 	return image;
@@ -569,32 +569,30 @@ QImage domain_diplomacy::finalize_diplomatic_map_image(QImage &&image)
 
 	std::vector<QPoint> border_pixels;
 
-	for (int x = 0; x < image.width(); ++x) {
-		for (int y = 0; y < image.height(); ++y) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = image.pixelColor(pixel_pos);
+	const int image_width = image.width();
+	const int image_height = image.height();
 
-			if (pixel_color.alpha() == 0) {
+	for (int y = 0; y < image_height; ++y) {
+		const QRgb *image_data_line = reinterpret_cast<const QRgb *>(image.constScanLine(y));
+		const QRgb *previous_image_data_line = y > 0 ? reinterpret_cast<const QRgb *>(image.constScanLine(y - 1)) : nullptr;
+
+		for (int x = 0; x < image_width; ++x) {
+			const int alpha = qAlpha(image_data_line[x]);
+			if (alpha == 0) {
 				continue;
 			}
 
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (image.width() - 1) || pixel_pos.y() == (image.height() - 1)) {
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			if (pixel_color.alpha() != 255) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			const QPoint north_pos = pixel_pos + QPoint(0, -1);
-			const QPoint east_pos = pixel_pos + QPoint(1, 0);
-			const bool is_border_pixel = image.pixelColor(north_pos).alpha() == 0 || image.pixelColor(east_pos).alpha() == 0;
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
+			if (
+				//whether the pixel is on the edge of the map
+				x == 0 || y == 0 || x == image_width - 1 || y == image_height - 1
+				//whether the pixel has a blended color
+				|| alpha != 255
+				//whether the pixel is a north border pixel
+				|| qAlpha(previous_image_data_line[x]) == 0
+				//whether the pixel is an east border pixel
+				|| qAlpha(image_data_line[x + 1]) == 0
+			) {
+				border_pixels.emplace_back(x, y);
 			}
 		}
 	}
@@ -699,7 +697,7 @@ QImage domain_diplomacy::prepare_realm_diplomatic_map_image() const
 		image_size = this->get_game_data()->get_realm_territory_rect().size();
 	}
 
-	QImage image(image_size, QImage::Format_RGBA8888);
+	QImage image(image_size, QImage::Format_ARGB32);
 	image.fill(Qt::transparent);
 
 	return image;
