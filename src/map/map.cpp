@@ -213,7 +213,6 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 
 					if (adjacent_tile->get_province() == nullptr) {
 						if (!queued_tile_indices[adjacent_index]) {
-							queued_tile_indices[adjacent_index] = true;
 							adjacent_without_province.push_back(adjacent_pos);
 						}
 						return;
@@ -256,6 +255,10 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 
 				if (!best_provinces.empty()) {
 					this->set_tile_province(tile_pos, vector::get_random(best_provinces));
+					for (const QPoint &adjacent_pos : adjacent_without_province) {
+						const size_t adjacent_index = this->get_pos_index(adjacent_pos);
+						queued_tile_indices[adjacent_index] = true;
+					}
 					vector::merge(new_tiles_to_check, std::move(adjacent_without_province));
 				}
 			} catch (...) {
