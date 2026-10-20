@@ -151,6 +151,8 @@ void province_map_data::on_map_created()
 	if (this->get_settlement_sites().size() > province::max_holdings) {
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_settlement_sites().size(), province::max_holdings));
 	}
+
+	emit territory_changed();
 }
 
 void province_map_data::initialize_terrain()
@@ -291,8 +293,6 @@ void province_map_data::process_border_tile(const QPoint &tile_pos)
 			this->territory_rect.setBottom(tile_pos.y());
 		}
 	}
-
-	emit territory_changed();
 }
 
 QVariantList province_map_data::get_sites_qvariant_list() const
