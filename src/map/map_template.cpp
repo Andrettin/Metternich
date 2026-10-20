@@ -329,7 +329,7 @@ QCoro::Task<map_template::application_result> map_template::apply() const
 		for (int y = 0; y < map->get_height(); ++y) {
 			for (int x = 0; x < map->get_width(); ++x) {
 				QPoint tile_pos(x, y);
-				const tile *tile = map::get()->get_tile(tile_pos);
+				const tile *tile = map->get_tile(tile_pos);
 
 				if (tile->get_province() != nullptr) {
 					continue;
