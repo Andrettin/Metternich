@@ -414,25 +414,40 @@ std::vector<std::pair<QPoint, province *>> map_template::apply_provinces_for_map
 	std::vector<std::pair<QPoint, province *>> tile_province_pairs;
 	tile_province_pairs.reserve(map->get_width());
 
+	std::optional<QRgb> previous_rgba;
+	province *previous_province = nullptr;
+
+	const size_t index_offset = static_cast<size_t>(y) * static_cast<size_t>(map->get_width());
+
 	for (int x = 0; x < map->get_width(); ++x) {
-		const QPoint tile_pos(x, y);
-		const size_t tile_index = static_cast<size_t>(y) * static_cast<size_t>(map->get_width()) + static_cast<size_t>(x);
-		const QColor tile_color = QColor::fromRgba(province_image_data[tile_index]);
+		const size_t tile_index = index_offset + static_cast<size_t>(x);
+		const QRgb tile_rgba = province_image_data[tile_index];
 
 		province *province = nullptr;
-		if (tile_color.alpha() != 0) {
-			province = province::get_by_color(tile_color);
 
-			if (this->is_province_ignored(province)) {
-				continue;
+		if (tile_rgba != previous_rgba) {
+			previous_rgba = tile_rgba;
+
+			if (qAlpha(tile_rgba) != 0) {
+				const QColor tile_color = QColor::fromRgba(province_image_data[tile_index]);
+				province = province::get_by_color(tile_color);
+
+				if (this->is_province_ignored(province)) {
+					province = nullptr;
+				}
+
+				previous_province = province;
 			}
+		} else {
+			province = previous_province;
 		}
 
 		if (province == nullptr) {
 			continue;
 		}
 
-		tile_province_pairs.emplace_back(tile_pos, province);
+		QPoint tile_pos(x, y);
+		tile_province_pairs.emplace_back(std::move(tile_pos), province);
 	}
 
 	return tile_province_pairs;
