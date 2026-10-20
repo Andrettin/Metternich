@@ -45,7 +45,7 @@ public:
 	gsml_data to_gsml_data() const;
 
 	void create_tiles();
-	[[nodiscard]] QCoro::Task<void> initialize(const bool province_post_processing_enabled);
+	[[nodiscard]] QCoro::Task<void> initialize(const bool province_post_processing_enabled, std::vector<QPoint> &&provinceless_tiles);
 	void do_province_post_processing(std::vector<QPoint> tiles_to_check, const bool only_water_zones);
 	[[nodiscard]] QCoro::Task<void> process_border_tiles();
 	Q_INVOKABLE void clear();
@@ -86,8 +86,9 @@ public:
 			&& pos.y() < this->get_height());
 	}
 
-	int get_pos_index(const QPoint &pos) const;
+	size_t get_pos_index(const QPoint &pos) const;
 
+	tile *get_tile(const size_t index) const;
 	tile *get_tile(const QPoint &pos) const;
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
 	void set_tile_province(const QPoint &tile_pos, province *province);

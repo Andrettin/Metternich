@@ -135,23 +135,11 @@ void map::create_tiles()
 	this->tiles->resize(tile_quantity, tile());
 }
 
-QCoro::Task<void> map::initialize(const bool province_post_processing_enabled)
+QCoro::Task<void> map::initialize(const bool province_post_processing_enabled, std::vector<QPoint> &&provinceless_tiles)
 {
 	if (province_post_processing_enabled) {
 		//assign tiles without provinces to the most-adjacent province
-		std::vector<QPoint> tiles_to_check;
-		for (int x = 0; x < this->get_width(); ++x) {
-			for (int y = 0; y < this->get_height(); ++y) {
-				QPoint tile_pos(x, y);
-				const tile *tile = this->get_tile(tile_pos);
-
-				if (tile->get_province() != nullptr) {
-					continue;
-				}
-
-				tiles_to_check.push_back(std::move(tile_pos));
-			}
-		}
+		std::vector<QPoint> tiles_to_check = std::move(provinceless_tiles);
 		vector::shuffle(tiles_to_check);
 
 		this->do_province_post_processing(tiles_to_check, true);
@@ -328,15 +316,20 @@ int map::get_map_block_grid_height() const
 	return this->get_height() / defines::get()->get_map_block_size().height();
 }
 
-int map::get_pos_index(const QPoint &pos) const
+size_t map::get_pos_index(const QPoint &pos) const
 {
-	return point::to_index(pos, this->get_width());
+	return point::to_index(pos, static_cast<size_t>(this->get_width()));
+}
+
+tile *map::get_tile(const size_t index) const
+{
+	return &this->tiles->at(index);
 }
 
 tile *map::get_tile(const QPoint &pos) const
 {
-	const int index = this->get_pos_index(pos);
-	return &this->tiles->at(index);
+	const size_t index = this->get_pos_index(pos);
+	return this->get_tile(index);
 }
 
 const metternich::province *map::get_tile_province(const QPoint &tile_pos) const

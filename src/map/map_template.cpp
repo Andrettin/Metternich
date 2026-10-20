@@ -301,7 +301,7 @@ void map_template::write_province_image()
 	}
 }
 
-QCoro::Task<void> map_template::apply() const
+QCoro::Task<map_template::application_result> map_template::apply() const
 {
 	map *map = map::get();
 	map->clear();
@@ -320,18 +320,24 @@ QCoro::Task<void> map_template::apply() const
 		map->set_diplomatic_map_tile_scale(defines::get()->get_default_diplomatic_map_tile_scale());
 	}
 
+	application_result result;
+
 	if (this->is_randomly_generated()) {
 		map_generator map_generator(this);
 		map_generator.generate();
 	} else {
-		co_await this->apply_provinces();
+		result = co_await this->apply_provinces();
 	}
 
 	this->generate_additional_sites();
+
+	co_return result;
 }
 
-QCoro::Task<void> map_template::apply_provinces() const
+QCoro::Task<map_template::application_result> map_template::apply_provinces() const
 {
+	application_result result;
+
 	QImage province_image;
 
 	if (this->get_main_map_template() != nullptr) {
@@ -355,20 +361,22 @@ QCoro::Task<void> map_template::apply_provinces() const
 
 	const std::span<const QRgb> province_image_data{ reinterpret_cast<const QRgb *>(province_image.constBits()), static_cast<size_t>(province_image.sizeInBytes() / 4)};
 
-	std::vector<QFuture<std::vector<std::pair<QPoint, province *>>>> futures;
+	std::vector<QFuture<province_line_application_result>> futures;
 	for (int y = 0; y < map->get_height(); ++y) {
-		QFuture<std::vector<std::pair<QPoint, province *>>> future = QtConcurrent::run([this, y, province_image_data]() -> std::vector<std::pair<QPoint, province *>> {
+		QFuture<province_line_application_result> future = QtConcurrent::run([this, y, province_image_data]() -> province_line_application_result {
 			return this->apply_provinces_for_map_line(y, province_image_data);
 		});
 		futures.push_back(std::move(future));
 	}
 
-	for (QFuture<std::vector<std::pair<QPoint, province *>>> &future : futures) {
-		const std::vector<std::pair<QPoint, province *>> tile_province_pairs = co_await qCoro(future).takeResult();
+	for (QFuture<province_line_application_result> &future : futures) {
+		const province_line_application_result line_result = co_await qCoro(future).takeResult();
 
-		for (const auto &[tile_pos, province] : tile_province_pairs) {
+		for (const auto &[tile_pos, province] : line_result.tile_province_pairs) {
 			map->set_tile_province(tile_pos, province);
 		}
+
+		vector::merge(result.provinceless_tiles, line_result.provinceless_tiles);
 	}
 
 	for (const province *province : province::get_all()) {
@@ -405,19 +413,21 @@ QCoro::Task<void> map_template::apply_provinces() const
 			map->set_tile_site(tile_pos, site);
 		}
 	}
+
+	co_return result;
 }
 
-std::vector<std::pair<QPoint, province *>> map_template::apply_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data) const
+map_template::province_line_application_result map_template::apply_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data) const
 {
 	map *map = map::get();
 
-	std::vector<std::pair<QPoint, province *>> tile_province_pairs;
-	tile_province_pairs.reserve(map->get_width());
+	province_line_application_result result;
+	result.tile_province_pairs.reserve(map->get_width());
 
 	std::optional<QRgb> previous_rgba;
 	province *previous_province = nullptr;
 
-	const size_t index_offset = static_cast<size_t>(y) * static_cast<size_t>(map->get_width());
+	const size_t index_offset = point::to_index(0ull, static_cast<size_t>(y), static_cast<size_t>(map->get_width()));
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		const size_t tile_index = index_offset + static_cast<size_t>(x);
@@ -442,15 +452,17 @@ std::vector<std::pair<QPoint, province *>> map_template::apply_provinces_for_map
 			province = previous_province;
 		}
 
+		QPoint tile_pos(x, y);
+
 		if (province == nullptr) {
+			result.provinceless_tiles.emplace_back(tile_pos);
 			continue;
 		}
 
-		QPoint tile_pos(x, y);
-		tile_province_pairs.emplace_back(std::move(tile_pos), province);
+		result.tile_province_pairs.emplace_back(std::move(tile_pos), province);
 	}
 
-	return tile_province_pairs;
+	return result;
 }
 
 void map_template::generate_additional_sites() const

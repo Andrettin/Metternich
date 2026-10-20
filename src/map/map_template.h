@@ -51,6 +51,17 @@ class map_template final : public named_data_entry, public data_type<map_templat
 	Q_PROPERTY(bool update_province_image MEMBER update_province_image NOTIFY changed)
 
 public:
+	struct application_result final
+	{
+		std::vector<QPoint> provinceless_tiles;
+	};
+
+	struct province_line_application_result final
+	{
+		std::vector<std::pair<QPoint, province *>> tile_province_pairs;
+		std::vector<QPoint> provinceless_tiles;
+	};
+
 	using province_geodata_map_type = province_map<std::vector<std::unique_ptr<QGeoShape>>>;
 
 	static constexpr const char class_identifier[] = "map_template";
@@ -206,9 +217,9 @@ public:
 		return this->diplomatic_map_tile_scale;
 	}
 
-	[[nodiscard]] QCoro::Task<void> apply() const;
-	[[nodiscard]] QCoro::Task<void> apply_provinces() const;
-	std::vector<std::pair<QPoint, province *>> apply_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data) const;
+	[[nodiscard]] QCoro::Task<application_result> apply() const;
+	[[nodiscard]] QCoro::Task<application_result> apply_provinces() const;
+	province_line_application_result apply_provinces_for_map_line(const int y, const std::span<const QRgb> &province_image_data) const;
 	void generate_additional_sites() const;
 	void generate_site(const site *site) const;
 
