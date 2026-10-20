@@ -325,6 +325,19 @@ QCoro::Task<map_template::application_result> map_template::apply() const
 	if (this->is_randomly_generated()) {
 		map_generator map_generator(this);
 		map_generator.generate();
+
+		for (int y = 0; y < map->get_height(); ++y) {
+			for (int x = 0; x < map->get_width(); ++x) {
+				QPoint tile_pos(x, y);
+				const tile *tile = map::get()->get_tile(tile_pos);
+
+				if (tile->get_province() != nullptr) {
+					continue;
+				}
+
+				result.provinceless_tiles.push_back(std::move(tile_pos));
+			}
+		}
 	} else {
 		result = co_await this->apply_provinces();
 	}
@@ -427,7 +440,7 @@ map_template::province_line_application_result map_template::apply_provinces_for
 	std::optional<QRgb> previous_rgba;
 	province *previous_province = nullptr;
 
-	const size_t index_offset = point::to_index(0ull, static_cast<size_t>(y), static_cast<size_t>(map->get_width()));
+	const size_t index_offset = point::to_index(static_cast<size_t>(0), static_cast<size_t>(y), static_cast<size_t>(map->get_width()));
 
 	for (int x = 0; x < map->get_width(); ++x) {
 		const size_t tile_index = index_offset + static_cast<size_t>(x);
