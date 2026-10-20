@@ -7,6 +7,9 @@ visigothia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = toledo
+	short_names = {
+		tribe = "Visigoths"
+	}
 	
 	history = {
 		700 = {

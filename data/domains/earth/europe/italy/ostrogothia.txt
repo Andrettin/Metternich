@@ -7,6 +7,9 @@ ostrogothia = {
 	default_tier = kingdom
 	default_government_type = monarchy
 	default_capital = ravenna
+	short_names = {
+		tribe = "Ostrogoths"
+	}
 	
 	history = {
 		453 = {
