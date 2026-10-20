@@ -429,15 +429,15 @@ std::vector<std::pair<QPoint, province *>> map_template::apply_provinces_for_map
 			previous_rgba = tile_rgba;
 
 			if (qAlpha(tile_rgba) != 0) {
-				const QColor tile_color = QColor::fromRgba(province_image_data[tile_index]);
+				const QColor tile_color = QColor::fromRgba(tile_rgba);
 				province = province::get_by_color(tile_color);
 
 				if (this->is_province_ignored(province)) {
 					province = nullptr;
 				}
-
-				previous_province = province;
 			}
+
+			previous_province = province;
 		} else {
 			province = previous_province;
 		}
