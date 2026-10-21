@@ -351,6 +351,11 @@ public:
 		return !this->get_provinces().empty() || !this->get_sites().empty();
 	}
 
+	bool is_country() const
+	{
+		return !this->get_provinces().empty();
+	}
+
 	bool is_under_anarchy() const
 	{
 		return this->get_capital() == nullptr;

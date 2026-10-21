@@ -623,7 +623,7 @@ QCoro::Task<void> domain_government::check_office_holder(const office *office)
 		this->set_appointed_office_holder(office, nullptr);
 	}
 
-	//if the country has no holder for a non-appointable office, see if there is any character who can become the holder
+	//if the domain has no holder for a non-appointable office, see if there is any character who can become the holder
 	if (this->get_office_holder(office) == nullptr && !office->is_appointable()) {
 		const character *character = this->get_best_office_holder(office);
 		if (character != nullptr) {

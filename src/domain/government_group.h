@@ -60,8 +60,8 @@ signals:
 	void changed();
 
 private:
-	bool tribal = false; //tribal countries do not need to be declared war upon to be attacked, nor is war necessary for them to attack others
-	bool clade = false; //clade countries cannot attack non-clade countries, and do not need war declaration to be attacked
+	bool tribal = false; //tribal domains do not need to be declared war upon to be attacked, nor is war necessary for them to attack others
+	bool clade = false; //clade domains cannot attack non-clade domains, and do not need war declaration to be attacked
 	bool religious = false; //religious government types use the title names from their religion, rather than culture
 	title_name_map title_names;
 	site_title_name_map site_title_names;

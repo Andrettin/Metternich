@@ -988,8 +988,8 @@ void domain_economy::prepare_offers()
 std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority() const
 {
 	//get the known countries and sort them by priority
-	std::vector<const metternich::domain *> countries = container::to_vector(this->domain->get_diplomacy()->get_known_countries());
-	std::sort(countries.begin(), countries.end(), [this](const metternich::domain *lhs, const metternich::domain *rhs) {
+	std::vector<const metternich::domain *> domains = container::to_vector(this->domain->get_diplomacy()->get_known_domains());
+	std::sort(domains.begin(), domains.end(), [this](const metternich::domain *lhs, const metternich::domain *rhs) {
 		if (this->domain->get_diplomacy()->is_vassal_of(lhs) != this->domain->get_diplomacy()->is_vassal_of(rhs)) {
 			return this->domain->get_diplomacy()->is_vassal_of(lhs);
 		}
@@ -1009,7 +1009,7 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	return countries;
+	return domains;
 }
 
 void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int64_t sold_quantity, const bool state_purchase)

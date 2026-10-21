@@ -36,7 +36,7 @@ public:
 
 	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *upper_scope, context &ctx) const override
 	{
-		for (const domain *known_domain : upper_scope->get_diplomacy()->get_known_countries()) {
+		for (const domain *known_domain : upper_scope->get_diplomacy()->get_known_domains()) {
 			if (!this->conditions.check(known_domain, ctx)) {
 				continue;
 			}

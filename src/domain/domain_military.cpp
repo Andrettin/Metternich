@@ -56,7 +56,7 @@ QCoro::Task<void> domain_military::do_military_unit_recruitment()
 			co_await province->get_game_data()->do_military_unit_recruitment();
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\".", this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 

@@ -13,7 +13,7 @@
 #include "script/condition/age_condition.h"
 #include "script/condition/anarchy_condition.h"
 #include "script/condition/any_character_condition.h"
-#include "script/condition/any_known_country_condition.h"
+#include "script/condition/any_known_domain_condition.h"
 #include "script/condition/any_nearby_province_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/any_neighbor_province_condition.h"
@@ -442,8 +442,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	} else if constexpr (std::is_same_v<scope_type, domain>) {
 		if (tag == "any_character") {
 			condition = std::make_unique<any_character_condition>(condition_operator);
-		} else if (tag == "any_known_country") {
-			condition = std::make_unique<any_known_country_condition>(condition_operator);
+		} else if (tag == "any_known_domain") {
+			condition = std::make_unique<any_known_domain_condition>(condition_operator);
 		} else if (tag == "any_neighbor_country") {
 			condition = std::make_unique<any_neighbor_country_condition>(condition_operator);
 		} else if (tag == "any_subject_country") {

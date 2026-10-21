@@ -914,18 +914,28 @@ QCoro::Task<void> domain_technology::gain_free_technologies(const int count)
 
 QCoro::Task<void> domain_technology::gain_technologies_known_by_others()
 {
-	static constexpr int min_countries = 2;
+	static constexpr int min_realms = 2;
 
 	technology_map<int> technology_known_counts;
 
-	for (const metternich::domain *known_country : this->domain->get_diplomacy()->get_known_countries()) {
-		for (const technology *technology : known_country->get_technology()->get_technologies()) {
+	for (const metternich::domain *known_domain : this->domain->get_diplomacy()->get_known_domains()) {
+		//only check whether known countries have the technology, not other domains
+		if (!known_domain->get_game_data()->is_country()) {
+			continue;
+		}
+
+		//only check independent countries, i.e. realms
+		if (!known_domain->get_diplomacy()->is_independent()) {
+			continue;
+		}
+
+		for (const technology *technology : known_domain->get_technology()->get_technologies()) {
 			++technology_known_counts[technology];
 		}
 	}
 
 	for (const auto &[technology, known_count] : technology_known_counts) {
-		if (known_count < min_countries) {
+		if (known_count < min_realms) {
 			continue;
 		}
 

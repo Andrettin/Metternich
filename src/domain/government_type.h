@@ -140,7 +140,7 @@ public:
 		return this->modifier.get();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(const metternich::domain *country) const;
+	Q_INVOKABLE QString get_modifier_string(const metternich::domain *domain) const;
 
 	const std::vector<const monster_type *> &get_ruler_monster_types() const
 	{

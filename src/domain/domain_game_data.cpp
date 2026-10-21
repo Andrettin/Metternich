@@ -547,7 +547,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->check_culture();
 		co_await this->check_religion();
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for country \"{}\".", this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Failed to process turn for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -682,7 +682,7 @@ void domain_game_data::do_civilian_unit_recruitment()
 
 		assert_throw(this->civilian_unit_recruitment_counts.empty());
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing civilian unit recruitment for country \"{}\".", this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing civilian unit recruitment for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -706,7 +706,7 @@ void domain_game_data::do_transporter_recruitment()
 
 		assert_throw(this->transporter_recruitment_counts.empty());
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing transporter recruitment for country \"{}\".", this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing transporter recruitment for domain \"{}\".", this->domain->get_identifier())));
 	}
 }
 
@@ -1235,11 +1235,11 @@ QCoro::Task<void> domain_game_data::set_government_type(const metternich::govern
 
 	if (government_type != nullptr) {
 		if (this->domain->is_tribe() && !government_type->get_group()->is_tribal()) {
-			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal country (\"{}\").", government_type->get_identifier(), this->domain->get_identifier()));
+			throw std::runtime_error(std::format("Tried to set a non-tribal government type (\"{}\") for a tribal domain (\"{}\").", government_type->get_identifier(), this->domain->get_identifier()));
 		}
 
 		if (this->domain->is_clade() && !government_type->get_group()->is_clade()) {
-			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade country (\"{}\").", government_type->get_identifier(), this->domain->get_identifier()));
+			throw std::runtime_error(std::format("Tried to set a non-clade government type (\"{}\") for a clade domain (\"{}\").", government_type->get_identifier(), this->domain->get_identifier()));
 		}
 	}
 
@@ -1389,8 +1389,8 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 			continue;
 		}
 
-		if (!domain->get_diplomacy()->is_country_known(this->domain) && domain->get_game_data()->is_province_discovered(province)) {
-			co_await domain->get_diplomacy()->add_known_country(this->domain);
+		if (!domain->get_diplomacy()->is_domain_known(this->domain) && domain->get_game_data()->is_province_discovered(province)) {
+			co_await domain->get_diplomacy()->add_known_domain(this->domain);
 		}
 	}
 
@@ -1433,18 +1433,18 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		this->calculate_territory_rect();
 	}
 
-	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
+	//remove this as a known domain for other countries, if they no longer have explored tiles in this domain's territory
 	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;
 		}
 
-		if (!domain->get_diplomacy()->is_country_known(this->domain)) {
+		if (!domain->get_diplomacy()->is_domain_known(this->domain)) {
 			continue;
 		}
 
 		if (!domain->get_game_data()->is_province_discovered(province)) {
-			//the other country didn't have this province discovered, so its removal from this country's territory couldn't have impacted its knowability to them anyway
+			//the other domain didn't have this province discovered, so its removal from this domain's territory couldn't have impacted its knowability to them anyway
 			continue;
 		}
 
@@ -1465,7 +1465,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		}
 
 		if (!known_province && !known_site) {
-			domain->get_diplomacy()->remove_known_country(this->domain);
+			domain->get_diplomacy()->remove_known_domain(this->domain);
 		}
 	}
 
@@ -1581,18 +1581,18 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 
 	co_await this->on_site_gained(site, -1);
 
-	//remove this as a known country for other countries, if they no longer have explored tiles in this country's territory
+	//remove this as a known domain for other domains, if they no longer have explored tiles in this domain's territory
 	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;
 		}
 
-		if (!domain->get_diplomacy()->is_country_known(this->domain)) {
+		if (!domain->get_diplomacy()->is_domain_known(this->domain)) {
 			continue;
 		}
 
 		if (!domain->get_game_data()->is_province_discovered(site->get_map_data()->get_province())) {
-			//the other country didn't have this province discovered, so its removal from this country's territory couldn't have impacted its knowability to them anyway
+			//the other domain didn't have this province discovered, so its removal from this domain's territory couldn't have impacted its knowability to them anyway
 			continue;
 		}
 
@@ -1613,7 +1613,7 @@ QCoro::Task<void> domain_game_data::remove_site(const site *site)
 		}
 
 		if (!known_province && !known_site) {
-			domain->get_diplomacy()->remove_known_country(this->domain);
+			domain->get_diplomacy()->remove_known_domain(this->domain);
 		}
 	}
 
@@ -1817,7 +1817,7 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 	if (this->get_holding_count() != 0) {
 		for (const auto &[building, count] : this->settlement_building_counts) {
 			if (building->get_weighted_domain_modifier() != nullptr) {
-				//reapply the settlement building's weighted country modifier with the updated settlement count
+				//reapply the settlement building's weighted domain modifier with the updated settlement count
 				co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 			}
 		}
@@ -2733,7 +2733,7 @@ QCoro::Task<void> domain_game_data::change_settlement_building_count(const build
 	const int count = (this->settlement_building_counts[building] += change);
 
 	if (count < 0) {
-		throw std::runtime_error(std::format("The settlement building count for country \"{}\" for building \"{}\" is negative ({}).", this->domain->get_identifier(), building->get_identifier(), change));
+		throw std::runtime_error(std::format("The settlement building count for domain \"{}\" for building \"{}\" is negative ({}).", this->domain->get_identifier(), building->get_identifier(), change));
 	}
 
 	if (count == 0) {
@@ -2741,7 +2741,7 @@ QCoro::Task<void> domain_game_data::change_settlement_building_count(const build
 	}
 
 	if (building->get_weighted_domain_modifier() != nullptr && this->get_holding_count() != 0) {
-		//reapply the settlement building's weighted country modifier with the updated count
+		//reapply the settlement building's weighted domain modifier with the updated count
 		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(-old_count) / this->get_holding_count());
 		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 	}
@@ -3545,7 +3545,7 @@ bool domain_game_data::can_gain_civilian_unit(const civilian_unit_type *civilian
 		return false;
 	}
 
-	//FIXME: check whether the country has a building capable of training the civilian unit type
+	//FIXME: check whether the domain has a building capable of training the civilian unit type
 
 	return true;
 }
@@ -3599,7 +3599,7 @@ void domain_game_data::increase_civilian_unit_recruitment(const civilian_unit_ty
 
 		this->change_civilian_unit_recruitment_count(civilian_unit_type, 1);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" civilian unit type for country \"{}\".", civilian_unit_type->get_identifier(), this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" civilian unit type for domain \"{}\".", civilian_unit_type->get_identifier(), this->domain->get_identifier())));
 	}
 }
 
@@ -3619,7 +3619,7 @@ void domain_game_data::decrease_civilian_unit_recruitment(const civilian_unit_ty
 
 		this->change_civilian_unit_recruitment_count(civilian_unit_type, -1, restore_inputs);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" civilian unit type for country \"{}\".", civilian_unit_type->get_identifier(), this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" civilian unit type for domain \"{}\".", civilian_unit_type->get_identifier(), this->domain->get_identifier())));
 	}
 }
 
@@ -3749,7 +3749,7 @@ void domain_game_data::increase_transporter_recruitment(const transporter_type *
 
 		this->change_transporter_recruitment_count(transporter_type, 1);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" transporter type for country \"{}\".", transporter_type->get_identifier(), this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" transporter type for domain \"{}\".", transporter_type->get_identifier(), this->domain->get_identifier())));
 	}
 }
 
@@ -3769,7 +3769,7 @@ void domain_game_data::decrease_transporter_recruitment(const transporter_type *
 
 		this->change_transporter_recruitment_count(transporter_type, -1, restore_inputs);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" transporter type for country \"{}\".", transporter_type->get_identifier(), this->domain->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" transporter type for domain \"{}\".", transporter_type->get_identifier(), this->domain->get_identifier())));
 	}
 }
 
@@ -4016,15 +4016,15 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 	const metternich::domain *province_owner = province_game_data->get_owner();
 
-	if (province_owner != nullptr && province_owner != this->domain && !this->get_diplomacy()->is_country_known(province_owner)) {
-		co_await this->get_diplomacy()->add_known_country(province_owner);
+	if (province_owner != nullptr && province_owner != this->domain && !this->get_diplomacy()->is_domain_known(province_owner)) {
+		co_await this->get_diplomacy()->add_known_domain(province_owner);
 	}
 
 	for (const site *site : province_game_data->get_sites()) {
 		const metternich::domain *site_owner = site->get_game_data()->get_owner();
 
-		if (site_owner != nullptr && site_owner != this->domain && !this->get_diplomacy()->is_country_known(site_owner)) {
-			co_await this->get_diplomacy()->add_known_country(site_owner);
+		if (site_owner != nullptr && site_owner != this->domain && !this->get_diplomacy()->is_domain_known(site_owner)) {
+			co_await this->get_diplomacy()->add_known_domain(site_owner);
 		}
 	}
 

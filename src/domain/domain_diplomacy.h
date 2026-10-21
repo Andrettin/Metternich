@@ -77,21 +77,21 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_subject_type(const metternich::subject_type *subject_type);
 
-	const domain_set &get_known_countries() const
+	const domain_set &get_known_domains() const
 	{
-		return this->known_countries;
+		return this->known_domains;
 	}
 
-	bool is_country_known(const metternich::domain *other_domain) const
+	bool is_domain_known(const metternich::domain *other_domain) const
 	{
-		return this->get_known_countries().contains(other_domain);
+		return this->get_known_domains().contains(other_domain);
 	}
 
-	[[nodiscard]] QCoro::Task<void> add_known_country(const metternich::domain *other_domain);
+	[[nodiscard]] QCoro::Task<void> add_known_domain(const metternich::domain *other_domain);
 
-	void remove_known_country(const metternich::domain *other_domain)
+	void remove_known_domain(const metternich::domain *other_domain)
 	{
-		this->known_countries.erase(other_domain);
+		this->known_domains.erase(other_domain);
 	}
 
 	diplomacy_state get_diplomacy_state(const metternich::domain *other_domain) const;
@@ -295,7 +295,7 @@ private:
 	const metternich::domain *domain = nullptr;
 	const metternich::domain *overlord = nullptr;
 	const metternich::subject_type *subject_type = nullptr;
-	domain_set known_countries;
+	domain_set known_domains;
 	domain_map<diplomacy_state> diplomacy_states;
 	std::map<diplomacy_state, int> diplomacy_state_counts;
 	domain_map<diplomacy_state> offered_diplomacy_states;

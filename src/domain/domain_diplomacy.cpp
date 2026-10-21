@@ -110,13 +110,13 @@ QCoro::Task<void> domain_diplomacy::apply_diplomatic_history()
 		co_await other_domain->get_diplomacy()->set_diplomacy_state(this->domain, get_diplomacy_state_counterpart(diplomacy_state));
 	}
 
-	for (const auto &[other_country, consulate] : domain_history->get_consulates()) {
-		if (!other_country->get_game_data()->is_alive()) {
+	for (const auto &[other_domain, consulate] : domain_history->get_consulates()) {
+		if (!other_domain->get_game_data()->is_alive()) {
 			continue;
 		}
 
-		this->set_consulate(other_country, consulate);
-		other_country->get_diplomacy()->set_consulate(this->domain, consulate);
+		this->set_consulate(other_domain, consulate);
+		other_domain->get_diplomacy()->set_consulate(this->domain, consulate);
 	}
 }
 
@@ -213,9 +213,9 @@ QCoro::Task<void> domain_diplomacy::set_subject_type(const metternich::subject_t
 	co_await this->get_game_data()->check_government_type();
 }
 
-QCoro::Task<void> domain_diplomacy::add_known_country(const metternich::domain *other_domain)
+QCoro::Task<void> domain_diplomacy::add_known_domain(const metternich::domain *other_domain)
 {
-	this->known_countries.insert(other_domain);
+	this->known_domains.insert(other_domain);
 
 	const consulate *current_consulate = this->get_consulate(other_domain);
 
@@ -464,7 +464,7 @@ void domain_diplomacy::decrement_opinion_modifiers()
 {
 	domain_map<std::vector<const opinion_modifier *>> opinion_modifiers_to_remove;
 
-	for (auto &[country, opinion_modifier_map] : this->opinion_modifiers) {
+	for (auto &[domain, opinion_modifier_map] : this->opinion_modifiers) {
 		for (auto &[modifier, duration] : opinion_modifier_map) {
 			if (duration == -1) {
 				//eternal
@@ -474,14 +474,14 @@ void domain_diplomacy::decrement_opinion_modifiers()
 			--duration;
 
 			if (duration == 0) {
-				opinion_modifiers_to_remove[country].push_back(modifier);
+				opinion_modifiers_to_remove[domain].push_back(modifier);
 			}
 		}
 	}
 
-	for (const auto &[country, opinion_modifiers] : opinion_modifiers_to_remove) {
+	for (const auto &[domain, opinion_modifiers] : opinion_modifiers_to_remove) {
 		for (const opinion_modifier *modifier : opinion_modifiers) {
-			this->remove_opinion_modifier(country, modifier);
+			this->remove_opinion_modifier(domain, modifier);
 		}
 	}
 }
@@ -508,10 +508,10 @@ QVariantList domain_diplomacy::get_subject_type_counts_qvariant_list() const
 {
 	std::map<const metternich::subject_type *, int> subject_type_counts;
 
-	for (const auto &[country, diplomacy_state] : this->diplomacy_states) {
+	for (const auto &[domain, diplomacy_state] : this->diplomacy_states) {
 		if (is_overlordship_diplomacy_state(diplomacy_state)) {
-			assert_throw(country->get_diplomacy()->get_subject_type() != nullptr);
-			++subject_type_counts[country->get_diplomacy()->get_subject_type()];
+			assert_throw(domain->get_diplomacy()->get_subject_type() != nullptr);
+			++subject_type_counts[domain->get_diplomacy()->get_subject_type()];
 		}
 	}
 
@@ -941,10 +941,10 @@ void domain_diplomacy::set_free_consulate_count(const consulate *consulate, cons
 	} else if (old_value == 0) {
 		this->free_consulate_counts[consulate] = value;
 
-		for (const metternich::domain *known_country : this->get_known_countries()) {
-			const metternich::consulate *current_consulate = this->get_consulate(known_country);
+		for (const metternich::domain *known_domain : this->get_known_domains()) {
+			const metternich::consulate *current_consulate = this->get_consulate(known_domain);
 			if (current_consulate == nullptr || current_consulate->get_level() < consulate->get_level()) {
-				this->set_consulate(known_country, consulate);
+				this->set_consulate(known_domain, consulate);
 			}
 		}
 	}
