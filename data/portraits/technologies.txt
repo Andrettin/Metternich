@@ -6,18 +6,6 @@ engineering = {
 	filepath = "portraits/engineering.png"
 }
 
-helmet = {
-	filepath = "portraits/helmet.png"
-}
-
-oil_lamp = {
-	filepath = "portraits/roman_oil_lamp.png"
-}
-
-red_potion = {
-	filepath = "portraits/potion_red.png"
-}
-
 unload = {
 	filepath = "portraits/unload.png"
 }
