@@ -797,25 +797,8 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	this->initialize_patron_deity();
 
 	const character_package *package = nullptr;
-	if (this->is_alive() || this->is_deity()) {
-		if (this->character->get_monster_type() == nullptr) {
-			std::vector<const character_package *> potential_packages;
-
-			for (const character_package *potential_package : character_package::get_all()) {
-				if (potential_package->get_conditions() != nullptr && !potential_package->get_conditions()->check(this->character)) {
-					continue;
-				}
-
-				potential_packages.push_back(potential_package);
-			}
-
-			if (!potential_packages.empty()) {
-				package = vector::get_random(potential_packages);
-			}
-		}
-
-		this->add_starting_wealth(package);
-		co_await this->add_starting_items(package);
+	if (this->is_alive_or_unborn() || this->is_deity()) {
+		package = co_await this->apply_starting_package();
 	}
 
 	const metternich::character_class *character_class = this->get_character_class();
@@ -871,7 +854,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
-	if (this->is_alive() || this->is_deity()) {
+	if (this->is_alive_or_unborn() || this->is_deity()) {
 		this->add_starting_spells(package);
 	}
 
@@ -1068,6 +1051,32 @@ QCoro::Task<void> character_game_data::apply_bloodline_inheritance_investiture()
 
 		co_await this->inherit_bloodline_from(predecessor);
 	}
+}
+
+QCoro::Task<const character_package *> character_game_data::apply_starting_package()
+{
+	const character_package *package = nullptr;
+
+	if (this->character->get_monster_type() == nullptr) {
+		std::vector<const character_package *> potential_packages;
+
+		for (const character_package *potential_package : character_package::get_all()) {
+			if (potential_package->get_conditions() != nullptr && !potential_package->get_conditions()->check(this->character)) {
+				continue;
+			}
+
+			potential_packages.push_back(potential_package);
+		}
+
+		if (!potential_packages.empty()) {
+			package = vector::get_random(potential_packages);
+		}
+	}
+
+	this->add_starting_wealth(package);
+	co_await this->add_starting_items(package);
+
+	co_return package;
 }
 
 void character_game_data::add_starting_wealth(const character_package *package)
@@ -3783,7 +3792,7 @@ QCoro::Task<void> character_game_data::set_office(const metternich::office *offi
 	}
 
 	if (office != nullptr) {
-		assert_throw(this->is_alive());
+		assert_throw(this->exists());
 	}
 
 	const civilian_unit_type *old_deployable_civilian_unit_type = this->get_deployable_civilian_unit_type();

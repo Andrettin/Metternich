@@ -137,6 +137,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_bloodline(const bool apply_history);
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_from_parents();
 	[[nodiscard]] QCoro::Task<void> apply_bloodline_inheritance_investiture();
+	[[nodiscard]] QCoro::Task<const character_package *> apply_starting_package();
 	void add_starting_wealth(const character_package *package);
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const character_package *package);
 	[[nodiscard]] QCoro::Task<void> add_starting_items(const std::vector<const item_type *> &starting_items, data_entry_set<item_slot> &filled_item_slots);
@@ -192,7 +193,7 @@ public:
 	void set_dead(const bool dead);
 	[[nodiscard]] QCoro::Task<void> die();
 
-	bool is_alive() const
+	bool is_alive_or_unborn() const
 	{
 		return !this->is_dead();
 	}
