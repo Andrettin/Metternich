@@ -23,7 +23,7 @@ class transporter final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(const metternich::transporter_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain CONSTANT)
 
 public:
 	explicit transporter(const transporter_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
@@ -65,7 +65,7 @@ public:
 
 	const icon *get_icon() const;
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}

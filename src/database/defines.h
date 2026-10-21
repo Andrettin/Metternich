@@ -79,7 +79,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::portrait* war_minister_portrait MEMBER war_minister_portrait READ get_war_minister_portrait NOTIFY changed)
 	Q_PROPERTY(QColor map_blank_color MEMBER map_blank_color READ get_map_blank_color NOTIFY changed)
 	Q_PROPERTY(QColor country_border_color MEMBER country_border_color READ get_country_border_color NOTIFY changed)
-	Q_PROPERTY(QColor selected_country_color MEMBER selected_country_color READ get_selected_country_color NOTIFY changed)
+	Q_PROPERTY(QColor selected_domain_color MEMBER selected_domain_color READ get_selected_domain_color NOTIFY changed)
 	Q_PROPERTY(QColor ocean_color MEMBER ocean_color READ get_ocean_color NOTIFY changed)
 	Q_PROPERTY(QColor minimap_ocean_color MEMBER minimap_ocean_color READ get_minimap_ocean_color NOTIFY changed)
 	Q_PROPERTY(QColor route_color MEMBER route_color READ get_route_color NOTIFY changed)
@@ -335,9 +335,9 @@ public:
 		return this->country_border_color;
 	}
 
-	const QColor &get_selected_country_color() const
+	const QColor &get_selected_domain_color() const
 	{
-		return this->selected_country_color;
+		return this->selected_domain_color;
 	}
 
 	const QColor &get_ocean_color() const
@@ -494,7 +494,7 @@ private:
 	const portrait *war_minister_portrait = nullptr;
 	QColor map_blank_color;
 	QColor country_border_color;
-	QColor selected_country_color;
+	QColor selected_domain_color;
 	QColor ocean_color;
 	QColor minimap_ocean_color;
 	QColor route_color;

@@ -14,10 +14,10 @@ Item {
 		DomainHistory
 	}
 	
-	property var country: null
-	readonly property var country_game_data: country ? country.game_data : null
-	readonly property var domain_turn_data: country ? country.turn_data : null
-	readonly property var ruler: country_game_data ? country_game_data.government.ruler : null
+	property var domain: null
+	readonly property var domain_game_data: domain ? domain.game_data : null
+	readonly property var domain_turn_data: domain ? domain.turn_data : null
+	readonly property var ruler: domain_game_data ? domain_game_data.government.ruler : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	property string right_status_text: ""

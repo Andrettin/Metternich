@@ -36,7 +36,7 @@ Item {
 				
 				ShapePath {
 					strokeColor: fillColor
-					fillColor: selected ? metternich.defines.selected_country_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province, change_count)) //the change count is there to force a re-evaluation of the binding if a relevant property has changed
+					fillColor: selected ? metternich.defines.selected_domain_color : (interactive ? "darkGreen" : get_map_mode_color(province_map.mode, province, change_count)) //the change count is there to force a re-evaluation of the binding if a relevant property has changed
 					startX: 0
 					startY: 0
 					
@@ -212,7 +212,7 @@ Item {
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : get_holding_map_mode_color(province_map.mode, site, change_count)
+				color: selected ? metternich.defines.selected_domain_color : get_holding_map_mode_color(province_map.mode, site, change_count)
 				visible: site && (selected || color !== get_map_mode_color(province_map.mode, site.game_data.province, change_count))
 				
 				property int change_count: 0

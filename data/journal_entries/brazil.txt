@@ -4,7 +4,7 @@ barony_of_paty_do_alferes = {
 	preconditions = {
 		or = {
 			owns_site = paty_do_alferes
-			any_subject_country = {
+			any_subject_domain = {
 				owns_site = paty_do_alferes
 			}
 		}
@@ -23,7 +23,7 @@ barony_of_vassouras = {
 	preconditions = {
 		or = {
 			owns_site = vassouras
-			any_subject_country = {
+			any_subject_domain = {
 				owns_site = vassouras
 			}
 		}

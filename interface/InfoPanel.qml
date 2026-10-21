@@ -54,7 +54,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("TransportView.qml", {
-					country: metternich.game.player_domain
+					domain: metternich.game.player_domain
 				})
 			}
 			
@@ -74,7 +74,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("IndustryView.qml", {
-					country: metternich.game.player_domain,
+					domain: metternich.game.player_domain,
 					interface_style: map_view.interface_style
 				})
 			}

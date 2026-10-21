@@ -254,7 +254,7 @@ void engine_interface::change_selected_military_unit_category_count(const metter
 		int added_count = 0;
 
 		for (military_unit *military_unit : province_game_data->get_military_units()) {
-			if (military_unit->get_country() != game::get()->get_player_domain()) {
+			if (military_unit->get_owner() != game::get()->get_player_domain()) {
 				continue;
 			}
 
@@ -328,7 +328,7 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 
 	if (!std::holds_alternative<std::monostate>(target)) {
 		auto army = make_qunique<metternich::army>(this->get_selected_military_units(), std::move(target));
-		this->get_selected_military_units().front()->get_country()->get_military()->add_army(std::move(army));
+		this->get_selected_military_units().front()->get_owner()->get_military()->add_army(std::move(army));
 	}
 
 	this->clear_selected_military_units();

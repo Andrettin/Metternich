@@ -12,9 +12,9 @@ MenuBase {
 	property var map_template_loaded: false
 	property var previous_selected_scenario: null
 	property var selected_scenario: null
-	readonly property var selected_country: diplomatic_map.selected_country
-	readonly property var selected_country_game_data: selected_country ? selected_country.game_data : null
-	readonly property var selected_country_population: selected_country_game_data ? (selected_country_game_data.provinces.length > 0 ? selected_country_game_data.country_population : selected_country_game_data.population) : null
+	readonly property var selected_domain: diplomatic_map.selected_domain
+	readonly property var selected_domain_game_data: selected_domain ? selected_domain.game_data : null
+	readonly property var selected_domain_population: selected_domain_game_data ? (selected_domain_game_data.provinces.length > 0 ? selected_domain_game_data.country_population : selected_domain_game_data.population) : null
 	property int setup_count: 0
 	readonly property var scenarios: metternich.get_top_level_scenarios()
 	property string status_text: ""
@@ -98,8 +98,8 @@ MenuBase {
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
-				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.diplomacy.is_independent()) {
-					diplomatic_map.selected_country = null
+				if (diplomatic_map.selected_domain !== null && !diplomatic_map.selected_domain.game_data.diplomacy.is_independent()) {
+					diplomatic_map.selected_domain = null
 				}
 			}
 			
@@ -306,13 +306,13 @@ MenuBase {
 		anchors.bottom: domain_text_area.top
 		anchors.bottomMargin: 6 * scale_factor
 		height: 26 * scale_factor
-		visible: selected_country !== null
+		visible: selected_domain !== null
 		
 		FlagButton {
 			id: domain_flag
 			anchors.top: parent.top
 			anchors.left: parent.left
-			flag: selected_country ? selected_country.game_data.flag : ""
+			flag: selected_domain ? selected_domain.game_data.flag : ""
 			enabled: false
 			visible: flag.length > 0
 		}
@@ -322,7 +322,7 @@ MenuBase {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: domain_flag.visible ? domain_flag.right : parent.left
 			anchors.leftMargin: domain_flag.visible ? 6 * scale_factor : 0
-			text: selected_country ? selected_country.game_data.name : ""
+			text: selected_domain ? selected_domain.game_data.name : ""
 		}
 	}
 	
@@ -348,21 +348,21 @@ MenuBase {
 				id: domain_text
 				width: parent.width
 				wrapMode: Text.WordWrap
-				text: selected_country && selected_country_game_data && selected_country_population ? format_text(
-					selected_country.game_data.type_name
-					+ (selected_country.game_data.diplomacy.overlord ? (
-						"\n" + selected_country.game_data.diplomacy.subject_type.name + " of " + (selected_country.game_data.diplomacy.overlord.definite_article ? "the " : "") + selected_country.game_data.diplomacy.overlord.name
+				text: selected_domain && selected_domain_game_data && selected_domain_population ? format_text(
+					selected_domain.game_data.type_name
+					+ (selected_domain.game_data.diplomacy.overlord ? (
+						"\n" + selected_domain.game_data.diplomacy.subject_type.name + " of " + (selected_domain.game_data.diplomacy.overlord.definite_article ? "the " : "") + selected_domain.game_data.diplomacy.overlord.name
 					) : "")
-					+ "\n" + selected_country.game_data.title_name
-					+ (selected_country.game_data.anarchy ? "\nAnarchy" : "")
-					+ (selected_country.game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_country.game_data.diplomacy.vassals.length) + " " + (selected_country.game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
-					+ (selected_country.game_data.provinces.length > 0 ? ("\n" + number_string(selected_country.game_data.provinces.length) + " " + (selected_country.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
-					+ "\n" + number_string(selected_country.game_data.holding_count) + " " + (selected_country.game_data.holding_count !== 1 ? "Holdings" : "Holding")
-					+ (!selected_country.game_data.anarchy ? ("\nScore: " + number_string(selected_country.game_data.score) + " (#" + (selected_country.game_data.score_rank + 1) + ")") : "")
-					+ ("\nDomain Power: " + number_string(selected_country.game_data.domain_power))
-					+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
-					+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
-					+ get_resource_counts_string(selected_country.game_data.economy.resource_counts)
+					+ "\n" + selected_domain.game_data.title_name
+					+ (selected_domain.game_data.anarchy ? "\nAnarchy" : "")
+					+ (selected_domain.game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_domain.game_data.diplomacy.vassals.length) + " " + (selected_domain.game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
+					+ (selected_domain.game_data.provinces.length > 0 ? ("\n" + number_string(selected_domain.game_data.provinces.length) + " " + (selected_domain.game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
+					+ "\n" + number_string(selected_domain.game_data.holding_count) + " " + (selected_domain.game_data.holding_count !== 1 ? "Holdings" : "Holding")
+					+ (!selected_domain.game_data.anarchy ? ("\nScore: " + number_string(selected_domain.game_data.score) + " (#" + (selected_domain.game_data.score_rank + 1) + ")") : "")
+					+ ("\nDomain Power: " + number_string(selected_domain.game_data.domain_power))
+					+ (population_visible ? ("\nPopulation: " + number_string(selected_domain_population.size)) : "")
+					+ "\nLiteracy: " + selected_domain_population.literacy_rate + "%"
+					+ get_resource_counts_string(selected_domain.game_data.economy.resource_counts)
 				) : ""
 				
 				function get_resource_counts_string(resource_counts) {
@@ -392,7 +392,7 @@ MenuBase {
 			
 			DomainAttributeGrid {
 				id: domain_attribute_grid
-				domain: selected_country
+				domain: selected_domain
 			}
 		}
 	}
@@ -426,7 +426,7 @@ MenuBase {
 		
 		onHoveredChanged: {
 			if (hovered) {
-				status_text = ruler && selected_country ? ruler.game_data.titled_name : ""
+				status_text = ruler && selected_domain ? ruler.game_data.titled_name : ""
 			} else {
 				status_text = ""
 			}
@@ -439,12 +439,12 @@ MenuBase {
 		anchors.top: ruler_portrait.bottom
 		anchors.topMargin: 6 * scale_factor
 		text: qsTr("View History")
-		visible: ruler_portrait.visible && selected_country && selected_country.game_data.historical_rulers.length > 1
+		visible: ruler_portrait.visible && selected_domain && selected_domain.game_data.historical_rulers.length > 1
 		
 		onClicked: {
 			domestic_view_mode = DomesticView.Mode.DomainHistory
 			menu_stack.push("../DomesticView.qml", {
-				country: selected_country,
+				domain: selected_domain,
 				show_buttons: false
 			})
 		}
@@ -561,9 +561,9 @@ MenuBase {
 				}
 				metternich.game.setup_scenario(selected_scenario).then(() => {
 					if (previous_selected_scenario === null || previous_selected_scenario.map_template !== selected_scenario.map_template) {
-						select_random_country()
+						select_random_domain()
 					}
-					update_selected_country_data(diplomatic_map.selected_country)
+					update_selected_domain_data(diplomatic_map.selected_domain)
 					loading_scenario = false
 					map_template_loaded = true
 				})
@@ -587,13 +587,13 @@ MenuBase {
 			text: qsTr("Start Game")
 			width: 96 * scale_factor
 			height: 24 * scale_factor
-			enabled: !loading_scenario && selected_country !== null && selected_country.game_data.playable
+			enabled: !loading_scenario && selected_domain !== null && selected_domain.game_data.playable
 			tooltip: enabled ? "" : small_text(
-				selected_country === null ? "You must select a domain to play" : selected_country.game_data.get_unplayable_reason()
+				selected_domain === null ? "You must select a domain to play" : selected_domain.game_data.get_unplayable_reason()
 			)
 			
 			onClicked: {
-				metternich.game.player_domain = selected_country
+				metternich.game.player_domain = selected_domain
 				metternich.game.start()
 			}
 		}
@@ -660,11 +660,11 @@ MenuBase {
 				diplomatic_map.ocean_suffix = selected_scenario.map_template.identifier
 			}
 			
-			if (selected_country !== null && !metternich.game.domains.includes(selected_country)) {
-				diplomatic_map.selected_country = null
+			if (selected_domain !== null && !metternich.game.domains.includes(selected_domain)) {
+				diplomatic_map.selected_domain = null
 			}
 			
-			diplomatic_map.country_suffix = scenario_menu.setup_count
+			diplomatic_map.domain_suffix = scenario_menu.setup_count
 			
 			scenario_menu.setup_count += 1
 		}
@@ -684,22 +684,22 @@ MenuBase {
 		adjust_scenario_list_position(scenario_index)
 		
 		metternich.game.setup_scenario(selected_scenario).then(() => {
-			select_random_country()
+			select_random_domain()
 			loading_scenario = false
 			map_template_loaded = true
 		})
 	}
 	
-	function select_random_country() {
+	function select_random_domain() {
 		if (selected_scenario.default_domains.length > 0) {
-			diplomatic_map.selected_country = selected_scenario.default_domains[random(selected_scenario.default_domains.length)]
+			diplomatic_map.selected_domain = selected_scenario.default_domains[random(selected_scenario.default_domains.length)]
 		} else {
-			diplomatic_map.selected_country = metternich.game.domains[random(metternich.game.domains.length)]
+			diplomatic_map.selected_domain = metternich.game.domains[random(metternich.game.domains.length)]
 		}
-		if (diplomatic_map.selected_country.game_data.diplomacy.overlord !== null) {
+		if (diplomatic_map.selected_domain.game_data.diplomacy.overlord !== null) {
 			diplomatic_map.mode = DiplomaticMap.Mode.Political
 		}
-		diplomatic_map.center_on_selected_country_capital()
+		diplomatic_map.center_on_selected_domain_capital()
 	}
 	
 	function adjust_scenario_list_position(scenario_index) {
@@ -716,22 +716,22 @@ MenuBase {
 		}
 	}
 	
-	function update_selected_country_data(country) {
-		ruler_portrait.ruler = country ? country.game_data.government.ruler : null
+	function update_selected_domain_data(domain) {
+		ruler_portrait.ruler = domain ? domain.game_data.government.ruler : null
 		if (ruler_portrait.ruler !== null) {
 			ruler_portrait.portrait = ruler_portrait.ruler.game_data.portrait
-			ruler_label.text = ruler_portrait.ruler.game_data.get_full_name_for_domain_qstring(country)
+			ruler_label.text = ruler_portrait.ruler.game_data.get_full_name_for_domain_qstring(domain)
 		}
 		
-		var country_population = country ? (country.game_data.provinces.length > 0 ? country.game_data.country_population : country.game_data.population) : null
+		var domain_population = domain ? (domain.game_data.provinces.length > 0 ? domain.game_data.country_population : domain.game_data.population) : null
 		
-		population_type_chart.population_data = country_population ? country_population.type_sizes : null
-		culture_chart.population_data = country_population ? country_population.culture_sizes : null
-		religion_chart.population_data = country_population ? country_population.religion_sizes : null
-		phenotype_chart.population_data = country_population ? country_population.phenotype_sizes : null
+		population_type_chart.population_data = domain_population ? domain_population.type_sizes : null
+		culture_chart.population_data = domain_population ? domain_population.culture_sizes : null
+		religion_chart.population_data = domain_population ? domain_population.religion_sizes : null
+		phenotype_chart.population_data = domain_population ? domain_population.phenotype_sizes : null
 	}
 	
-	onSelected_countryChanged: {
-		update_selected_country_data(selected_country)
+	onSelected_domainChanged: {
+		update_selected_domain_data(selected_domain)
 	}
 }

@@ -1433,7 +1433,7 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 		this->calculate_territory_rect();
 	}
 
-	//remove this as a known domain for other countries, if they no longer have explored tiles in this domain's territory
+	//remove this as a known domain for other domains, if they no longer have explored tiles in this domain's territory
 	for (const metternich::domain *domain : game::get()->get_domains()) {
 		if (domain == this->domain) {
 			continue;

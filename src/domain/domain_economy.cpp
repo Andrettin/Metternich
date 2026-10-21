@@ -987,7 +987,7 @@ void domain_economy::prepare_offers()
 
 std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority() const
 {
-	//get the known countries and sort them by priority
+	//get the known domains and sort them by priority
 	std::vector<const metternich::domain *> domains = container::to_vector(this->domain->get_diplomacy()->get_known_domains());
 	std::sort(domains.begin(), domains.end(), [this](const metternich::domain *lhs, const metternich::domain *rhs) {
 		if (this->domain->get_diplomacy()->is_vassal_of(lhs) != this->domain->get_diplomacy()->is_vassal_of(rhs)) {
@@ -1035,7 +1035,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 		other_domain_economy->change_bid(commodity, -sold_quantity);
 	}
 
-	//improve relations between the two countries after they traded (even if it was not a state purchase)
+	//improve relations between the two domains after they traded (even if it was not a state purchase)
 	if (this->domain != other_domain) {
 		this->domain->get_diplomacy()->change_base_opinion(other_domain, 1);
 		other_domain_diplomacy->change_base_opinion(this->domain, 1);

@@ -1,6 +1,6 @@
 french_carracks = {
 	type = carrack
-	country = france
+	domain = france
 	quantity = 3
 	
 	history = {
@@ -16,7 +16,7 @@ french_carracks = {
 
 french_indiamen = {
 	type = indiaman
-	country = france
+	domain = france
 	quantity = 2
 	
 	history = {

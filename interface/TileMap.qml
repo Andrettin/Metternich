@@ -30,8 +30,8 @@ TableView {
 		tile_map.contentY = Math.min(Math.max(pixel_y, 0), tile_map.contentHeight - tile_map.height)
 	}
 	
-	function center_on_country_capital(country) {
-		var capital = country.game_data.capital
+	function center_on_domain_capital(domain) {
+		var capital = domain.game_data.capital
 		
 		if (capital === null) {
 			return

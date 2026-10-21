@@ -1,6 +1,6 @@
 prussian_traders = {
 	type = trader
-	country = prussia
+	domain = prussia
 	quantity = 3
 	
 	history = {

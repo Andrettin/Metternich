@@ -1,6 +1,6 @@
 english_carracks = {
 	type = carrack
-	country = england
+	domain = england
 	quantity = 3
 	
 	history = {

@@ -1,6 +1,6 @@
 portuguese_carracks = {
 	type = carrack
-	country = portugal
+	domain = portugal
 	quantity = 3
 	
 	history = {

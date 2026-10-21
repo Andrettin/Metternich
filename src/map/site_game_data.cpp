@@ -713,7 +713,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 	this->owner = owner;
 
 	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
-		population_unit->set_country(owner);
+		population_unit->set_domain(owner);
 	}
 
 	if (this->get_owner() != nullptr) {

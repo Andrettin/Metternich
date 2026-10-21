@@ -57,19 +57,19 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 {
 	auto military_unit = co_await metternich::military_unit::create(type);
 
-	military_unit->domain = domain;
+	military_unit->owner = domain;
 	military_unit->phenotype = phenotype;
 
 	military_unit->generate_name();
 
 	assert_throw(military_unit->get_phenotype() != nullptr);
 
-	if (military_unit->get_country() != nullptr) {
-		military_unit->get_country()->get_game_data()->change_military_score(military_unit->get_score());
+	if (military_unit->get_owner() != nullptr) {
+		military_unit->get_owner()->get_game_data()->change_military_score(military_unit->get_score());
 
 		for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
 			const military_unit_stat stat = static_cast<military_unit_stat>(i);
-			const centesimal_int type_stat_value = type->get_stat_for_domain(stat, military_unit->get_country());
+			const centesimal_int type_stat_value = type->get_stat_for_domain(stat, military_unit->get_owner());
 			military_unit->change_stat(stat, type_stat_value - type->get_stat(stat));
 		}
 	}
@@ -179,7 +179,7 @@ void military_unit::generate_name(const std::map<std::string, int> &used_name_co
 
 void military_unit::generate_name()
 {
-	const std::map<std::string, int> &used_name_counts = this->get_country() ? this->get_country()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
+	const std::map<std::string, int> &used_name_counts = this->get_owner() ? this->get_owner()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
 	this->generate_name(used_name_counts);
 }
 
@@ -198,7 +198,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : old_type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, cost);
+			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, cost);
 		}
 	}
 
@@ -214,8 +214,8 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (int i = 0; i < static_cast<int>(military_unit_stat::count); ++i) {
 		const military_unit_stat stat = static_cast<military_unit_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
-		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_owner());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_owner());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}
@@ -231,7 +231,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->get_country()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
 		}
 	}
 
@@ -240,8 +240,8 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	emit type_changed();
 
-	if (this->get_country() != nullptr && type->get_maintenance_commodity_costs() != old_type->get_maintenance_commodity_costs()) {
-		emit this->get_country()->get_game_data()->maintenance_cost_changed();
+	if (this->get_owner() != nullptr && type->get_maintenance_commodity_costs() != old_type->get_maintenance_commodity_costs()) {
+		emit this->get_owner()->get_game_data()->maintenance_cost_changed();
 	}
 }
 
@@ -269,8 +269,8 @@ const icon *military_unit::get_icon() const
 
 const metternich::culture *military_unit::get_culture() const
 {
-	if (this->get_country() != nullptr) {
-		return this->get_country()->get_game_data()->get_culture();
+	if (this->get_owner() != nullptr) {
+		return this->get_owner()->get_game_data()->get_culture();
 	}
 
 	if (this->get_type()->get_culture() != nullptr) {
@@ -296,8 +296,8 @@ const metternich::cultural_group *military_unit::get_cultural_group() const
 
 const metternich::religion *military_unit::get_religion() const
 {
-	if (this->get_country() != nullptr) {
-		return this->get_country()->get_game_data()->get_religion();
+	if (this->get_owner() != nullptr) {
+		return this->get_owner()->get_game_data()->get_religion();
 	}
 
 	return nullptr;
@@ -343,11 +343,11 @@ QCoro::Task<void> military_unit::set_province(const metternich::province *provin
 		//when ships move to a water zone, explore all adjacent water zones and coasts as well
 		if (this->get_province()->is_water_zone()) {
 			for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
-				if (this->get_country()->get_game_data()->is_province_explored(neighbor_province)) {
+				if (this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
 					continue;
 				}
 
-				co_await this->get_country()->get_game_data()->explore_province(neighbor_province);
+				co_await this->get_owner()->get_game_data()->explore_province(neighbor_province);
 			}
 		}
 	}
@@ -418,15 +418,15 @@ bool military_unit::can_move_to(const metternich::province *province) const
 		const metternich::domain *province_owner = province->get_game_data()->get_owner();
 
 		if (province_owner != nullptr) {
-			if (province_owner == this->get_country()) {
+			if (province_owner == this->get_owner()) {
 				return true;
 			}
 
-			if (province_owner->get_diplomacy()->is_any_vassal_of(this->get_country())) {
+			if (province_owner->get_diplomacy()->is_any_vassal_of(this->get_owner())) {
 				return true;
 			}
 
-			return this->get_country()->get_diplomacy()->can_attack(province_owner);
+			return this->get_owner()->get_diplomacy()->can_attack(province_owner);
 		}
 	}
 
@@ -435,7 +435,7 @@ bool military_unit::can_move_to(const metternich::province *province) const
 
 bool military_unit::is_hostile_to(const metternich::domain *domain) const
 {
-	return this->get_country()->get_diplomacy()->can_attack(domain);
+	return this->get_owner()->get_diplomacy()->can_attack(domain);
 }
 
 QCoro::Task<void> military_unit::set_hit_points(const int hit_points)
@@ -475,8 +475,8 @@ void military_unit::set_stat(const military_unit_stat stat, const centesimal_int
 		return;
 	}
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_military_score(-this->get_score());
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_military_score(-this->get_score());
 	}
 
 	if (value == 0) {
@@ -485,8 +485,8 @@ void military_unit::set_stat(const military_unit_stat stat, const centesimal_int
 		this->stats[stat] = value;
 	}
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_military_score(this->get_score());
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_military_score(this->get_score());
 	}
 
 	emit stats_changed();
@@ -612,15 +612,15 @@ QCoro::Task<void> military_unit::check_free_promotions()
 	}
 
 	const promotion_map<int> *free_promotion_map = nullptr;
-	if (this->get_country() != nullptr) {
+	if (this->get_owner() != nullptr) {
 		if (this->get_type()->is_infantry()) {
-			free_promotion_map = &this->get_country()->get_military()->get_free_infantry_promotion_counts();
+			free_promotion_map = &this->get_owner()->get_military()->get_free_infantry_promotion_counts();
 		} else if (this->get_type()->is_cavalry()) {
-			free_promotion_map = &this->get_country()->get_military()->get_free_cavalry_promotion_counts();
+			free_promotion_map = &this->get_owner()->get_military()->get_free_cavalry_promotion_counts();
 		} else if (this->get_type()->is_artillery()) {
-			free_promotion_map = &this->get_country()->get_military()->get_free_artillery_promotion_counts();
+			free_promotion_map = &this->get_owner()->get_military()->get_free_artillery_promotion_counts();
 		} else if (this->get_type()->is_ship()) {
-			free_promotion_map = &this->get_country()->get_military()->get_free_warship_promotion_counts();
+			free_promotion_map = &this->get_owner()->get_military()->get_free_warship_promotion_counts();
 		}
 	}
 
@@ -897,9 +897,9 @@ QCoro::Task<void> military_unit::disband(const bool dead)
 		this->get_province()->get_game_data()->remove_military_unit(this);
 	}
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->change_military_score(-this->get_score());
-		co_await this->get_country()->get_military()->remove_military_unit(this);
+	if (this->get_owner() != nullptr) {
+		this->get_owner()->get_game_data()->change_military_score(-this->get_score());
+		co_await this->get_owner()->get_military()->remove_military_unit(this);
 	}
 }
 

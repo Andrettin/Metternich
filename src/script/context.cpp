@@ -23,7 +23,7 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 
 	if (key == "root_character") {
 		this->root_scope = game::get()->get_character(value);
-	} else if (key == "root_country") {
+	} else if (key == "root_domain") {
 		this->root_scope = domain::get(value);
 	} else if (key == "root_province") {
 		this->root_scope = province::get(value);
@@ -31,7 +31,7 @@ void context_base<read_only>::process_gsml_property(const gsml_property &propert
 		this->root_scope = site::get(value);
 	} else if (key == "source_character") {
 		this->source_scope = game::get()->get_character(value);
-	} else if (key == "source_country") {
+	} else if (key == "source_domain") {
 		this->source_scope = domain::get(value);
 	} else if (key == "source_province") {
 		this->source_scope = province::get(value);
@@ -60,7 +60,7 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 	if (std::holds_alternative<const character *>(this->root_scope)) {
 		data.add_property("root_character", std::get<const character *>(this->root_scope)->get_identifier());
 	} else if (std::holds_alternative<const domain *>(this->root_scope)) {
-		data.add_property("root_country", std::get<const domain *>(this->root_scope)->get_identifier());
+		data.add_property("root_domain", std::get<const domain *>(this->root_scope)->get_identifier());
 	} else if (std::holds_alternative<const province *>(this->root_scope)) {
 		data.add_property("root_province", std::get<const province *>(this->root_scope)->get_identifier());
 	} else if (std::holds_alternative<const site *>(this->root_scope)) {
@@ -72,7 +72,7 @@ gsml_data context_base<read_only>::to_gsml_data(const std::string &tag) const
 	if (std::holds_alternative<const character *>(this->source_scope)) {
 		data.add_property("source_character", std::get<const character *>(this->source_scope)->get_identifier());
 	} else if (std::holds_alternative<const domain *>(this->source_scope)) {
-		data.add_property("source_country", std::get<const domain *>(this->source_scope)->get_identifier());
+		data.add_property("source_domain", std::get<const domain *>(this->source_scope)->get_identifier());
 	} else if (std::holds_alternative<const province *>(this->source_scope)) {
 		data.add_property("source_province", std::get<const province *>(this->source_scope)->get_identifier());
 	} else if (std::holds_alternative<const site *>(this->source_scope)) {

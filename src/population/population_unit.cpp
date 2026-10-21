@@ -43,8 +43,8 @@ population_unit::population_unit(const population_type *type, const metternich::
 		throw std::runtime_error(std::format("Tried to create a population unit with a species (\"{}\") which is not allowed for its culture (\"{}\").", this->get_species()->get_identifier(), this->get_culture()->get_identifier()));
 	}
 
-	this->set_country(site->get_game_data()->get_owner());
-	assert_throw(this->get_country() != nullptr);
+	this->set_domain(site->get_game_data()->get_owner());
+	assert_throw(this->get_domain() != nullptr);
 
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
@@ -53,7 +53,7 @@ QCoro::Task<void> population_unit::do_cultural_change()
 {
 	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);
 	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
-	assert_throw(this->get_country()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_domain()->get_game_data()->get_population()->get_size() > 0);
 
 	for (const std::unique_ptr<const culture::cultural_derivation> &cultural_derivation : this->get_culture()->get_cultural_derivations()) {
 		decimillesimal_int derivation_rate(0);
@@ -96,7 +96,7 @@ QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 {
 	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);
 	assert_throw(this->get_province()->get_game_data()->get_population()->get_size() > 0);
-	assert_throw(this->get_country()->get_game_data()->get_population()->get_size() > 0);
+	assert_throw(this->get_domain()->get_game_data()->get_population()->get_size() > 0);
 
 	decimillesimal_int promotion_rate = population_defines::get()->get_base_monthly_promotion_rate() * game::get()->get_current_months_per_turn();
 
@@ -265,23 +265,23 @@ const icon *population_unit::get_small_icon() const
 	return this->get_type()->get_phenotype_small_icon(this->get_phenotype());
 }
 
-void population_unit::set_country(const metternich::domain *domain)
+void population_unit::set_domain(const metternich::domain *domain)
 {
-	if (domain == this->get_country()) {
+	if (domain == this->get_domain()) {
 		return;
 	}
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->remove_population_unit(this);
+	if (this->get_domain() != nullptr) {
+		this->get_domain()->get_game_data()->remove_population_unit(this);
 	}
 
 	this->domain = domain;
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->add_population_unit(this);
+	if (this->get_domain() != nullptr) {
+		this->get_domain()->get_game_data()->add_population_unit(this);
 	}
 
-	emit country_changed();
+	emit domain_changed();
 }
 
 const province *population_unit::get_province() const
@@ -312,7 +312,7 @@ void population_unit::set_site(const metternich::site *site)
 	}
 
 	const metternich::domain *domain = site ? site->get_game_data()->get_owner() : nullptr;
-	this->set_country(domain);
+	this->set_domain(domain);
 }
 
 [[nodiscard]] QCoro::Task<void> population_unit::set_size(const int64_t size, const bool change_input_storage)

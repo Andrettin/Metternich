@@ -43,7 +43,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 {
 	assert_throw(!this->get_military_units().empty());
 
-	this->domain = this->get_military_units().at(0)->get_country();
+	this->domain = this->get_military_units().at(0)->get_owner();
 
 	for (military_unit *military_unit : this->get_military_units()) {
 		assert_throw(military_unit->get_army() == nullptr);

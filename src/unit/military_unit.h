@@ -36,7 +36,7 @@ class military_unit final : public QObject
 	Q_PROPERTY(QString name READ get_name_qstring NOTIFY name_changed)
 	Q_PROPERTY(const metternich::military_unit_type* type READ get_type NOTIFY type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* owner READ get_owner CONSTANT)
 	Q_PROPERTY(const metternich::character* character READ get_character CONSTANT)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(bool moving READ is_moving NOTIFY army_changed)
@@ -96,9 +96,9 @@ public:
 
 	const icon *get_icon() const;
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_owner() const
 	{
-		return this->domain;
+		return this->owner;
 	}
 
 	const metternich::culture *get_culture() const;
@@ -263,7 +263,7 @@ signals:
 private:
 	std::string name;
 	const military_unit_type *type = nullptr;
-	const metternich::domain *domain = nullptr;
+	const metternich::domain *owner = nullptr;
 	const metternich::phenotype *phenotype = nullptr;
 	const metternich::character *character = nullptr;
 	const metternich::province *province = nullptr; //the province the unit is in

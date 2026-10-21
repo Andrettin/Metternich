@@ -21,11 +21,11 @@ Flickable {
 	}
 	
 	property string ocean_suffix: ""
-	property string country_suffix: "0"
-	property var selected_country: null
+	property string domain_suffix: "0"
+	property var selected_domain: null
 	property int mode: DiplomaticMap.Mode.Realm
 	property bool show_landless_domains: false
-	readonly property var reference_country: selected_country ? selected_country : (metternich.game.player_domain ? metternich.game.player_domain : null)
+	readonly property var reference_domain: selected_domain ? selected_domain : (metternich.game.player_domain ? metternich.game.player_domain : null)
 	
 	Item {
 		id: unscaled_diplomatic_map
@@ -41,7 +41,7 @@ Flickable {
 		
 		Image {
 			id: empty_image //ownerless land
-			source: ocean_suffix.length > 0 ? ("image://diplomatic_map/" + (diplomatic_map.mode === DiplomaticMap.Mode.Terrain ? "empty_terrain" : "empty") + "/" + country_suffix) : "image://empty/"
+			source: ocean_suffix.length > 0 ? ("image://diplomatic_map/" + (diplomatic_map.mode === DiplomaticMap.Mode.Terrain ? "empty_terrain" : "empty") + "/" + domain_suffix) : "image://empty/"
 			cache: false
 		}
 		
@@ -49,16 +49,16 @@ Flickable {
 			model: metternich.game.countries
 			
 			Image {
-				id: country_image
+				id: domain_image
 				x: diplomatic_map_image_rect.x
 				y: diplomatic_map_image_rect.y
-				source: visible ? ("image://diplomatic_map/" + country.identifier + (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? "/realm" : "") + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, country)) + "/" + country_suffix) : "image://empty/"
+				source: visible ? ("image://diplomatic_map/" + domain.identifier + (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? "/realm" : "") + (selected ? "/selected" : get_map_mode_suffix(diplomatic_map.mode, domain)) + "/" + domain_suffix) : "image://empty/"
 				cache: false
-				visible: country && country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
+				visible: domain && domain.game_data.provinces.length > 0 && (domain.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm)
 				
-				readonly property var country: model.modelData
-				readonly property bool selected: selected_country === country
-				readonly property var diplomatic_map_image_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
+				readonly property var domain: model.modelData
+				readonly property bool selected: selected_domain === domain
+				readonly property var diplomatic_map_image_rect: domain ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? domain.game_data.diplomacy.realm_diplomatic_map_image_rect : domain.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
 			}
 		}
 		
@@ -80,8 +80,8 @@ Flickable {
 		model: metternich.game.countries
 		
 		TinyText {
-			id: country_label
-			text: country ? country.game_data.name : ""
+			id: domain_label
+			text: domain ? domain.game_data.name : ""
 			x: Math.floor(text_rect.x * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			y: Math.floor(text_rect.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			width: Math.floor(text_rect_width)
@@ -90,11 +90,11 @@ Flickable {
 			horizontalAlignment: contentWidth <= width ? Text.AlignHCenter : (diplomatic_map_image_rect.x === 0 ? Text.AlignLeft : ((diplomatic_map_image_rect.x + diplomatic_map_image_rect.width) >= metternich.map.diplomatic_map_image_size.width ? Text.AlignRight : Text.AlignHCenter))
 			verticalAlignment: contentHeight <= height ? Text.AlignVCenter : (diplomatic_map_image_rect.y === 0 ? Text.AlignTop : ((diplomatic_map_image_rect.y + diplomatic_map_image_rect.height) >= metternich.map.diplomatic_map_image_size.height ? Text.AlignBottom : Text.AlignVCenter))
 			font.pixelSize: Math.min(Math.max(Math.floor(width * 3 / 4 / text.length), 8 * scale_factor), 12 * scale_factor)
-			visible: country && country.game_data.provinces.length > 0 && (country.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || country.game_data.provinces.length > 1) && (metternich.game.player_domain === null || (country.game_data.capital !== null && metternich.game.player_domain.game_data.is_tile_explored(country.game_data.capital)))
+			visible: domain && domain.game_data.provinces.length > 0 && (domain.game_data.diplomacy.is_independent() || diplomatic_map.mode !== DiplomaticMap.Mode.Realm) && (diplomatic_map.mode === DiplomaticMap.Mode.Realm || diplomatic_map.mode === DiplomaticMap.Mode.Political || diplomatic_map.mode === DiplomaticMap.Mode.Diplomatic) && !diplomatic_map.show_landless_domains && (contentWidth <= (width * 2) || domain.game_data.provinces.length > 1) && (metternich.game.player_domain === null || (domain.game_data.capital !== null && metternich.game.player_domain.game_data.is_tile_explored(domain.game_data.capital)))
 					
-			readonly property var country: model.modelData
-			readonly property var diplomatic_map_image_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.diplomacy.realm_diplomatic_map_image_rect : country.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
-			readonly property var text_rect: country ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? country.game_data.realm_text_rect : country.game_data.text_rect) : Qt.rect(0, 0, 0, 0)
+			readonly property var domain: model.modelData
+			readonly property var diplomatic_map_image_rect: domain ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? domain.game_data.diplomacy.realm_diplomatic_map_image_rect : domain.game_data.diplomacy.diplomatic_map_image_rect) : Qt.rect(0, 0, 0, 0)
+			readonly property var text_rect: domain ? (diplomatic_map.mode === DiplomaticMap.Mode.Realm ? domain.game_data.realm_text_rect : domain.game_data.text_rect) : Qt.rect(0, 0, 0, 0)
 			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.map.diplomatic_map_tile_scale_double * scale_factor)
 		}
@@ -111,12 +111,12 @@ Flickable {
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_scale_double / scale_factor)))
 			
 			if (province === null) {
-				diplomatic_map.selected_country = null
+				diplomatic_map.selected_domain = null
 				return
 			}
 			
 			if (metternich.game.player_domain !== null && !metternich.game.player_domain.game_data.is_province_explored(province)) {
-				diplomatic_map.selected_country = null
+				diplomatic_map.selected_domain = null
 				return
 			}
 			
@@ -125,10 +125,10 @@ Flickable {
 				domain = domain.game_data.realm
 			}
 			
-			if (diplomatic_map.selected_country === domain) {
-				diplomatic_map.selected_country = null
+			if (diplomatic_map.selected_domain === domain) {
+				diplomatic_map.selected_domain = null
 			} else {
-				diplomatic_map.selected_country = domain
+				diplomatic_map.selected_domain = domain
 			}
 		}
 		
@@ -159,7 +159,7 @@ Flickable {
 			
 			readonly property var domain: model.modelData
 			readonly property var site: domain ? domain.game_data.capital : null
-			readonly property bool selected: selected_country === domain
+			readonly property bool selected: selected_domain === domain
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			
 			Rectangle {
@@ -167,7 +167,7 @@ Flickable {
 				width: site_icon_area.width
 				height: site_icon_area.height
 				radius: width / 2
-				color: selected ? metternich.defines.selected_country_color : (site && site.game_data.owner ? site.game_data.owner.color : "transparent")
+				color: selected ? metternich.defines.selected_domain_color : (site && site.game_data.owner ? site.game_data.owner.color : "transparent")
 			}
 			
 			Image {
@@ -186,9 +186,9 @@ Flickable {
 					metternich.defines.click_sound.play()
 					
 					if (selected) {
-						diplomatic_map.selected_country = null
+						diplomatic_map.selected_domain = null
 					} else {
-						diplomatic_map.selected_country = domain
+						diplomatic_map.selected_domain = domain
 					}
 				}
 				
@@ -210,17 +210,17 @@ Flickable {
 	}
 	
 	Repeater {
-		model: reference_country ? reference_country.game_data.diplomacy.consulates : []
+		model: reference_domain ? reference_domain.game_data.diplomacy.consulates : []
 		
 		Image {
 			id: consulate_icon
-			x: other_country_capital ? Math.floor(other_country_capital.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_scale_double * scale_factor - width / 2) : 0
-			y: other_country_capital ? Math.floor(other_country_capital.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor - height / 2) : 0
+			x: other_domain_capital ? Math.floor(other_domain_capital.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_scale_double * scale_factor - width / 2) : 0
+			y: other_domain_capital ? Math.floor(other_domain_capital.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor - height / 2) : 0
 			source: "image://icon/" + consulate.icon.identifier
-			visible: !reference_country.game_data.anarchy && !other_country.game_data.anarchy && diplomatic_map.mode === DiplomaticMap.Mode.Treaty
+			visible: !reference_domain.game_data.anarchy && !other_domain.game_data.anarchy && diplomatic_map.mode === DiplomaticMap.Mode.Treaty
 			
-			readonly property var other_country: model.modelData.key
-			readonly property var other_country_capital: other_country.game_data.capital
+			readonly property var other_domain: model.modelData.key
+			readonly property var other_domain_capital: other_domain.game_data.capital
 			readonly property var consulate: model.modelData.value
 			
 			MouseArea {
@@ -230,7 +230,7 @@ Flickable {
 				
 				onClicked: {
 					metternich.defines.click_sound.play()
-					diplomatic_map.selected_country = other_country
+					diplomatic_map.selected_domain = other_domain
 				}
 			}
 			
@@ -249,8 +249,8 @@ Flickable {
 		diplomatic_map.contentY = Math.min(Math.max(pixel_y, 0), diplomatic_map.contentHeight - diplomatic_map.height)
 	}
 	
-	function center_on_selected_country_capital() {
-		var capital = selected_country.game_data.capital
+	function center_on_selected_domain_capital() {
+		var capital = selected_domain.game_data.capital
 		
 		if (capital === null) {
 			return
@@ -262,11 +262,11 @@ Flickable {
 		center_on_tile(capital_x, capital_y)
 	}
 	
-	function get_map_mode_suffix(mode, country) {
+	function get_map_mode_suffix(mode, domain) {
 		switch (mode) {
 			case DiplomaticMap.Mode.Treaty:
-				if (reference_country !== null) {
-					return "/diplomatic/" + reference_country.game_data.diplomacy.get_diplomacy_state_diplomatic_map_suffix(country)
+				if (reference_domain !== null) {
+					return "/diplomatic/" + reference_domain.game_data.diplomacy.get_diplomacy_state_diplomatic_map_suffix(domain)
 				}
 				break
 			case DiplomaticMap.Mode.Terrain:

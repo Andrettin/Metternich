@@ -630,19 +630,19 @@ QCoro::Task<void> battle::on_unit_killed(const battle_unit_info *dead_unit_info,
 {
 	assert_throw(dead_unit_info != nullptr);
 
-	if (killer->get_country() != nullptr) {
+	if (killer->get_owner() != nullptr) {
 		if (dead_unit_info->get_kill_effects() != nullptr) {
 			context ctx = this->ctx;
-			ctx.root_scope = killer->get_country();
+			ctx.root_scope = killer->get_owner();
 
-			if (killer->get_country() == game::get()->get_player_domain()) {
-				const portrait *war_minister_portrait = killer->get_country()->get_government()->get_war_minister_portrait();
-				const std::string effects_string = dead_unit_info->get_kill_effects()->get_effects_string(killer->get_country(), ctx);
+			if (killer->get_owner() == game::get()->get_player_domain()) {
+				const portrait *war_minister_portrait = killer->get_owner()->get_government()->get_war_minister_portrait();
+				const std::string effects_string = dead_unit_info->get_kill_effects()->get_effects_string(killer->get_owner(), ctx);
 
 				engine_interface::get()->add_combat_notification(std::format("{} Killed", dead_unit_character != nullptr && dead_unit_character->get_monster_type() == nullptr ? dead_unit_character->get_game_data()->get_full_name() : dead_unit_type_name), war_minister_portrait, effects_string);
 			}
 
-			co_await dead_unit_info->get_kill_effects()->do_effects(killer->get_country(), ctx);
+			co_await dead_unit_info->get_kill_effects()->do_effects(killer->get_owner(), ctx);
 		}
 	}
 
@@ -890,12 +890,12 @@ const character *battle_unit_info::get_character() const
 
 bool battle_unit_info::is_player_unit() const
 {
-	return this->get_unit()->get_country() == game::get()->get_player_domain();
+	return this->get_unit()->get_owner() == game::get()->get_player_domain();
 }
 
 bool battle_unit_info::is_player_enemy() const
 {
-	return this->get_unit()->get_country() != game::get()->get_player_domain();
+	return this->get_unit()->get_owner() != game::get()->get_player_domain();
 }
 
 const std::string &battle_unit_info::get_type_name() const

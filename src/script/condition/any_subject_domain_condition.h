@@ -6,17 +6,17 @@
 
 namespace metternich {
 
-class any_subject_country_condition final : public scope_condition_base<domain, domain, read_only_context, condition<domain>>
+class any_subject_domain_condition final : public scope_condition_base<domain, domain, read_only_context, condition<domain>>
 {
 public:
-	explicit any_subject_country_condition(const gsml_operator condition_operator)
+	explicit any_subject_domain_condition(const gsml_operator condition_operator)
 		: scope_condition_base<domain, domain, read_only_context, condition<domain>>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "any_subject_country";
+		static const std::string class_identifier = "any_subject_domain";
 		return class_identifier;
 	}
 
@@ -33,7 +33,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Any subject country";
+		return "Any subject domain";
 	}
 };
 

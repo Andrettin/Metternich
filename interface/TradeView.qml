@@ -10,9 +10,9 @@ Item {
 		BalanceBook
 	}
 	
-	readonly property var country: metternich.game.player_domain
-	readonly property var country_game_data: country ? country.game_data : null
-	readonly property var domain_turn_data: country ? country.turn_data : null
+	readonly property var domain: metternich.game.player_domain
+	readonly property var domain_game_data: domain ? domain.game_data : null
+	readonly property var domain_turn_data: domain ? domain.turn_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	

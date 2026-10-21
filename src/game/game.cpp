@@ -821,7 +821,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				continue;
 			}
 
-			const domain *domain = historical_transporter->get_country();
+			const domain *domain = historical_transporter->get_domain();
 			assert_throw(domain != nullptr);
 
 			domain_game_data *domain_game_data = domain->get_game_data();

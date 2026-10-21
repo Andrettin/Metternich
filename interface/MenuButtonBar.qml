@@ -46,7 +46,7 @@ Rectangle {
 			
 			onReleased: {
 				menu_stack.push("DomesticView.qml", {
-					country: metternich.game.player_domain
+					domain: metternich.game.player_domain
 				})
 			}
 			

@@ -1,6 +1,6 @@
 dutch_carracks = {
 	type = carrack
-	country = netherlands
+	domain = netherlands
 	quantity = 3
 	
 	history = {

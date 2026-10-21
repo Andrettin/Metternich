@@ -25,7 +25,7 @@ transporter::transporter(const transporter_type *type, const metternich::domain 
 	: type(type), domain(domain), phenotype(phenotype)
 {
 	assert_throw(this->get_type() != nullptr);
-	assert_throw(this->get_country() != nullptr);
+	assert_throw(this->get_domain() != nullptr);
 	assert_throw(this->get_phenotype() != nullptr);
 
 	this->max_hit_points = type->get_hit_points();
@@ -33,7 +33,7 @@ transporter::transporter(const transporter_type *type, const metternich::domain 
 
 	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
 		const transporter_stat stat = static_cast<transporter_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_domain());
 		this->change_stat(stat, type_stat_value - type->get_stat(stat));
 	}
 
@@ -54,7 +54,7 @@ void transporter::do_turn()
 
 void transporter::generate_name()
 {
-	const std::map<std::string, int> &used_name_counts = this->get_country() ? this->get_country()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
+	const std::map<std::string, int> &used_name_counts = this->get_domain() ? this->get_domain()->get_game_data()->get_unit_name_counts() : archimedes::map::empty_string_to_int_map;
 
 	const culture_base *culture = this->get_culture();
 
@@ -85,8 +85,8 @@ void transporter::set_type(const transporter_type *type)
 
 	for (int i = 0; i < static_cast<int>(transporter_stat::count); ++i) {
 		const transporter_stat stat = static_cast<transporter_stat>(i);
-		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_country());
-		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_country());
+		const centesimal_int type_stat_value = type->get_stat_for_domain(stat, this->get_domain());
+		const centesimal_int old_type_stat_value = old_type->get_stat_for_domain(stat, this->get_domain());
 		if (type_stat_value != old_type_stat_value) {
 			this->change_stat(stat, type_stat_value - old_type_stat_value);
 		}
@@ -112,8 +112,8 @@ const icon *transporter::get_icon() const
 
 const metternich::culture_base *transporter::get_culture() const
 {
-	if (this->get_country() != nullptr) {
-		return this->get_country()->get_game_data()->get_culture();
+	if (this->get_domain() != nullptr) {
+		return this->get_domain()->get_game_data()->get_culture();
 	}
 
 	if (this->get_type()->get_culture() != nullptr) {
@@ -172,8 +172,8 @@ void transporter::disband(const bool dead)
 {
 	Q_UNUSED(dead);
 
-	if (this->get_country() != nullptr) {
-		this->get_country()->get_game_data()->remove_transporter(this);
+	if (this->get_domain() != nullptr) {
+		this->get_domain()->get_game_data()->remove_transporter(this);
 	}
 }
 

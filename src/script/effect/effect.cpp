@@ -281,8 +281,10 @@ const domain *effect<scope_type>::get_scope_domain(const scope_type *scope)
 		return scope->get_game_data()->get_domain();
 	} else if constexpr (std::is_same_v<scope_type, const domain>) {
 		return scope;
-	} else if constexpr (std::is_same_v<scope_type, military_unit> || std::is_same_v<scope_type, population_unit>) {
-		return scope->get_country();
+	} else if constexpr (std::is_same_v<scope_type, military_unit>) {
+		return scope->get_owner();
+	} else if constexpr (std::is_same_v<scope_type, population_unit>) {
+		return scope->get_domain();
 	} else if constexpr (std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		return scope->get_game_data()->get_owner();
 	}

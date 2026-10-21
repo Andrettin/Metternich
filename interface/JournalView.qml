@@ -12,12 +12,12 @@ Item {
 	}
 	
 	property int mode: JournalView.Mode.Active
-	readonly property var country: metternich.game.player_domain
-	readonly property var country_game_data: country ? country.game_data : null
+	readonly property var domain: metternich.game.player_domain
+	readonly property var domain_game_data: domain ? domain.game_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	
-	readonly property var journal_entries: journal_view.mode === JournalView.Mode.Finished ? country_game_data.finished_journal_entries : (journal_view.mode === JournalView.Mode.Active ? country_game_data.active_journal_entries : country_game_data.inactive_journal_entries)
+	readonly property var journal_entries: journal_view.mode === JournalView.Mode.Finished ? domain_game_data.finished_journal_entries : (journal_view.mode === JournalView.Mode.Active ? domain_game_data.active_journal_entries : domain_game_data.inactive_journal_entries)
 	
 	TiledBackground {
 		anchors.top: top_bar.bottom

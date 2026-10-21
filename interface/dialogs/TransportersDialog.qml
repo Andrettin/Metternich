@@ -5,5 +5,5 @@ import ".."
 GarrisonDialogBase {
 	id: transporters_dialog
 	title: "Transporters"
-	units_model: country_game_data.transporters
+	units_model: domain_game_data.transporters
 }

@@ -5,10 +5,10 @@ import "./dialogs"
 Item {
 	id: court_view
 	
-	readonly property var minister_offices: get_minister_offices(country_game_data.government.available_offices)
-	readonly property var offices: filter_offices(country_game_data.government.available_offices)
-	readonly property var characters: country_game_data.characters
-	readonly property var heir: country_game_data.government.heir
+	readonly property var minister_offices: get_minister_offices(domain_game_data.government.available_offices)
+	readonly property var offices: filter_offices(domain_game_data.government.available_offices)
+	readonly property var characters: domain_game_data.characters
+	readonly property var heir: domain_game_data.government.heir
 	
 	CharacterPortraitGridItem {
 		id: ruler_portrait
@@ -63,9 +63,9 @@ Item {
 			character: appointed_office_holder ? appointed_office_holder : office_holder
 			
 			readonly property var office: model.modelData
-			readonly property var office_holder: country_game_data.government.get_office_holder(office)
-			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
-			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.government.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.government.get_office_title_name_qstring(office))
+			readonly property var office_holder: domain_game_data.government.get_office_holder(office)
+			readonly property var appointed_office_holder: domain_game_data.government.appointed_office_holders.length > 0 ? domain_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + domain_game_data.government.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : domain_game_data.government.get_office_title_name_qstring(office))
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {
@@ -82,7 +82,7 @@ Item {
 			onHoveredChanged: {
 				if (hovered) {
 					status_text = display_text
-					right_status_text = appointed_office_holder ? appointed_office_holder.game_data.get_office_modifier_qstring(country, office) : (office_holder ? office_holder.game_data.get_office_modifier_qstring(country, office) : "")
+					right_status_text = appointed_office_holder ? appointed_office_holder.game_data.get_office_modifier_qstring(domain, office) : (office_holder ? office_holder.game_data.get_office_modifier_qstring(domain, office) : "")
 				} else {
 					if (status_text === display_text) {
 						status_text = ""
@@ -104,9 +104,9 @@ Item {
 			character: appointed_office_holder ? appointed_office_holder : office_holder
 			
 			readonly property var office: model.modelData
-			readonly property var office_holder: country_game_data.government.get_office_holder(office)
-			readonly property var appointed_office_holder: country_game_data.government.appointed_office_holders.length > 0 ? country_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
-			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + country_game_data.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : country_game_data.get_office_title_name_qstring(office))
+			readonly property var office_holder: domain_game_data.government.get_office_holder(office)
+			readonly property var appointed_office_holder: domain_game_data.government.appointed_office_holders.length > 0 ? domain_game_data.government.get_appointed_office_holder(office) : null //the check here is for the sake of property binding
+			readonly property string display_text: appointed_office_holder ? "Appointing " + appointed_office_holder.full_name + " as " + domain_game_data.get_office_title_name_qstring(office) : (office_holder ? office_holder.game_data.titled_name : domain_game_data.get_office_title_name_qstring(office))
 			
 			onClicked: {
 				if (office_holder !== null || appointed_office_holder !== null) {

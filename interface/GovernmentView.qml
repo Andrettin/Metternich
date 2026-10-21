@@ -18,11 +18,11 @@ Item {
 		anchors.top: government_type_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: country_game_data.government_type.icon.identifier
-		name: country_game_data.government_type.name
+		icon_identifier: domain_game_data.government_type.icon.identifier
+		name: domain_game_data.government_type.name
 		description: modifier_string
 		
-		readonly property string modifier_string: country_game_data.government_type.get_modifier_string(country)
+		readonly property string modifier_string: domain_game_data.government_type.get_modifier_string(domain)
 	}
 	
 	SmallText {
@@ -42,8 +42,8 @@ Item {
 		name: domain_tier_data.name
 		description: modifier_string
 		
-		readonly property var domain_tier_data: metternich.get_domain_tier_data(country_game_data.tier)
-		readonly property string modifier_string: domain_tier_data.get_modifier_string(country)
+		readonly property var domain_tier_data: metternich.get_domain_tier_data(domain_game_data.tier)
+		readonly property string modifier_string: domain_tier_data.get_modifier_string(domain)
 	}
 	
 	SmallText {
@@ -60,8 +60,8 @@ Item {
 		anchors.top: domain_modifiers_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		scope: country
-		visible: country && country.game_data.scripted_modifiers.length > 0
+		scope: domain
+		visible: domain && domain.game_data.scripted_modifiers.length > 0
 	}
 	
 	Grid {
@@ -73,7 +73,7 @@ Item {
 		columns: 3
 		
 		Repeater {
-			model: country_game_data.government.laws
+			model: domain_game_data.government.laws
 			
 			Item {
 				id: law_group_item
@@ -102,14 +102,14 @@ Item {
 						CustomCheckBox {
 							text: law.name
 							checked: law === current_law
-							checkable: !checked && country_game_data.government.laws.length > 0 && country_game_data.government.can_enact_law(law)
-							visible: country_game_data.government.laws.length > 0 && country_game_data.government.can_have_law(law)
+							checkable: !checked && domain_game_data.government.laws.length > 0 && domain_game_data.government.can_enact_law(law)
+							visible: domain_game_data.government.laws.length > 0 && domain_game_data.government.can_have_law(law)
 							onCheckedChanged: {
 								if (law === current_law) {
 									return
 								}
 								
-								country_game_data.government.enact_law(law)
+								domain_game_data.government.enact_law(law)
 							}
 							onHoveredChanged: {
 								if (hovered) {
@@ -124,8 +124,8 @@ Item {
 							}
 							
 							readonly property var law: model.modelData
-							readonly property string costs_string: law !== current_law ? ("Costs: " + costs_to_single_line_string(law.commodity_costs, country_game_data.government.get_total_law_cost_modifier())) : ""
-							readonly property string modifier_string: format_text(law.get_modifier_string(country))
+							readonly property string costs_string: law !== current_law ? ("Costs: " + costs_to_single_line_string(law.commodity_costs, domain_game_data.government.get_total_law_cost_modifier())) : ""
+							readonly property string modifier_string: format_text(law.get_modifier_string(domain))
 						}
 					}
 				}

@@ -6,7 +6,7 @@ ModifierDialog {
 	id: dialog
 	title: idea ? idea.get_cultural_name_qstring(metternich.game.player_domain.culture) : ""
 	portrait_identifier: idea ? (idea.portrait.identifier + (is_appointee ? "/grayscale" : "")) : ""
-	modifier_string: idea ? idea.get_modifier_qstring(country) : ""
+	modifier_string: idea ? idea.get_modifier_qstring(domain) : ""
 	ok_button_top_anchor: appoint_button.bottom
 	ok_button_top_margin: 8 * scale_factor
 	

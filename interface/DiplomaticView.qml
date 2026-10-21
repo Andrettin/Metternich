@@ -20,8 +20,8 @@ Item {
 	
 	property int start_tile_x: 0
 	property int start_tile_y: 0
-	readonly property var selected_country: diplomatic_map.selected_country
-	readonly property var selected_country_game_data: selected_country ? selected_country.game_data : null
+	readonly property var selected_domain: diplomatic_map.selected_domain
+	readonly property var selected_domain_game_data: selected_domain ? selected_domain.game_data : null
 	property int selected_diplomacy_state: -1
 	property var selected_consulate: null
 	property string status_text: ""

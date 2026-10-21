@@ -5,8 +5,8 @@ import "./dialogs"
 Item {
 	id: transport_view
 	
-	property var country: null
-	readonly property var country_game_data: country ? country.game_data : null
+	property var domain: null
+	readonly property var domain_game_data: domain ? domain.game_data : null
 	property string status_text: ""
 	property string middle_status_text: ""
 	

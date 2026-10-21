@@ -37,18 +37,18 @@ public:
 
 	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(const domain *upper_scope, context &ctx) const override
 	{
-		std::vector<const domain *> potential_countries;
+		std::vector<const domain *> potential_domains;
 
 		for (const domain *known_domain : upper_scope->get_diplomacy()->get_known_domains()) {
 			if (!this->conditions.check(known_domain, ctx)) {
 				continue;
 			}
 
-			potential_countries.push_back(known_domain);
+			potential_domains.push_back(known_domain);
 		}
 
-		if (!potential_countries.empty()) {
-			co_await this->do_scope_effect(vector::get_random(potential_countries), upper_scope, ctx);
+		if (!potential_domains.empty()) {
+			co_await this->do_scope_effect(vector::get_random(potential_domains), upper_scope, ctx);
 		}
 	}
 

@@ -1,6 +1,6 @@
 austrian_locomotives = {
 	type = locomotive
-	country = austria
+	domain = austria
 	quantity = 6
 	
 	history = {

@@ -618,7 +618,7 @@ void domain_diplomacy::create_diplomatic_map_image()
 	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
-	const QColor &selected_color = defines::get()->get_selected_country_color();
+	const QColor &selected_color = defines::get()->get_selected_domain_color();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale;
@@ -722,7 +722,7 @@ void domain_diplomacy::create_realm_diplomatic_map_image()
 	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
-	const QColor &selected_color = defines::get()->get_selected_country_color();
+	const QColor &selected_color = defines::get()->get_selected_domain_color();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->get_game_data()->get_realm_territory_rect().topLeft() * tile_scale;

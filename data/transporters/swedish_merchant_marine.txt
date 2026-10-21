@@ -1,6 +1,6 @@
 swedish_carracks = {
 	type = carrack
-	country = sweden
+	domain = sweden
 	quantity = 3
 	
 	history = {

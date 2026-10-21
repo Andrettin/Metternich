@@ -1,6 +1,6 @@
 british_indiamen = {
 	type = indiaman
-	country = great_britain
+	domain = great_britain
 	quantity = 6
 	
 	history = {

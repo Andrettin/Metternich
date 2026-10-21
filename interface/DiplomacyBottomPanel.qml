@@ -7,8 +7,8 @@ Rectangle {
 	height: 192 * scale_factor
 	clip: true
 	
-	readonly property var selected_country_ruler: selected_country_game_data ? selected_country_game_data.government.ruler : null
-	readonly property var selected_country_population: selected_country_game_data ? (selected_country_game_data.provinces.length > 0 ? selected_country_game_data.country_population : selected_country_game_data.population) : null
+	readonly property var selected_domain_ruler: selected_domain_game_data ? selected_domain_game_data.government.ruler : null
+	readonly property var selected_domain_population: selected_domain_game_data ? (selected_domain_game_data.provinces.length > 0 ? selected_domain_game_data.country_population : selected_domain_game_data.population) : null
 	
 	PanelTiledBackground {
 	}
@@ -55,8 +55,8 @@ Rectangle {
 			
 			onClicked: {
 				diplomatic_map.mode = DiplomaticMap.Mode.Realm
-				if (diplomatic_map.selected_country !== null && !diplomatic_map.selected_country.game_data.diplomacy.is_independent()) {
-					diplomatic_map.selected_country = null
+				if (diplomatic_map.selected_domain !== null && !diplomatic_map.selected_domain.game_data.diplomacy.is_independent()) {
+					diplomatic_map.selected_domain = null
 				}
 			}
 			
@@ -240,13 +240,13 @@ Rectangle {
 		anchors.top: bottom_panel.top
 		anchors.topMargin: 16 * scale_factor
 		height: 26 * scale_factor
-		visible: selected_country !== null
+		visible: selected_domain !== null
 		
 		FlagButton {
 			id: domain_flag
 			anchors.top: parent.top
 			anchors.left: parent.left
-			flag: selected_country ? selected_country.game_data.flag : ""
+			flag: selected_domain ? selected_domain.game_data.flag : ""
 			enabled: false
 			visible: flag.length > 0
 		}
@@ -256,7 +256,7 @@ Rectangle {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: domain_flag.visible ? domain_flag.right : parent.left
 			anchors.leftMargin: domain_flag.visible ? 6 * scale_factor : 0
-			text: selected_country ? selected_country.game_data.name : ""
+			text: selected_domain ? selected_domain.game_data.name : ""
 		}
 	}
 	
@@ -281,26 +281,26 @@ Rectangle {
 			
 			SmallText {
 				id: domain_text
-				text: format_text(selected_country && selected_country_game_data && selected_country_population ? (
-					selected_country_game_data.type_name
-					+ (selected_country_game_data.diplomacy.overlord ? (
-						"\n" + selected_country_game_data.diplomacy.subject_type.name + " of " + selected_country_game_data.diplomacy.overlord.name
+				text: format_text(selected_domain && selected_domain_game_data && selected_domain_population ? (
+					selected_domain_game_data.type_name
+					+ (selected_domain_game_data.diplomacy.overlord ? (
+						"\n" + selected_domain_game_data.diplomacy.subject_type.name + " of " + selected_domain_game_data.diplomacy.overlord.name
 					) : "")
-					+ "\n" + selected_country_game_data.title_name
-					+ (selected_country_game_data.anarchy ? "\nAnarchy" : "")
-					+ (selected_country_game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_country_game_data.diplomacy.vassals.length) + " " + (selected_country_game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
-					+ (selected_country_game_data.provinces.length > 0 ? ("\n" + number_string(selected_country_game_data.provinces.length) + " " + (selected_country_game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
-					+ "\n" + number_string(selected_country_game_data.holding_count) + " " + (selected_country_game_data.holding_count !== 1 ? "Holdings" : "Holding")
-					+ (!selected_country_game_data.anarchy ? ("\nScore: " + number_string(selected_country_game_data.score) + " (#" + (selected_country_game_data.score_rank + 1) + ")") : "")
-					+ ("\nDomain Power: " + number_string(selected_country_game_data.domain_power))
-					+ (population_visible ? ("\nPopulation: " + number_string(selected_country_population.size)) : "")
-					+ "\nLiteracy: " + selected_country_population.literacy_rate + "%"
+					+ "\n" + selected_domain_game_data.title_name
+					+ (selected_domain_game_data.anarchy ? "\nAnarchy" : "")
+					+ (selected_domain_game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_domain_game_data.diplomacy.vassals.length) + " " + (selected_domain_game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
+					+ (selected_domain_game_data.provinces.length > 0 ? ("\n" + number_string(selected_domain_game_data.provinces.length) + " " + (selected_domain_game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
+					+ "\n" + number_string(selected_domain_game_data.holding_count) + " " + (selected_domain_game_data.holding_count !== 1 ? "Holdings" : "Holding")
+					+ (!selected_domain_game_data.anarchy ? ("\nScore: " + number_string(selected_domain_game_data.score) + " (#" + (selected_domain_game_data.score_rank + 1) + ")") : "")
+					+ ("\nDomain Power: " + number_string(selected_domain_game_data.domain_power))
+					+ (population_visible ? ("\nPopulation: " + number_string(selected_domain_population.size)) : "")
+					+ "\nLiteracy: " + selected_domain_population.literacy_rate + "%"
 				) : "")
 			}
 			
 			DomainAttributeGrid {
 				id: domain_attribute_grid
-				domain: selected_country
+				domain: selected_domain
 			}
 		}
 	}
@@ -309,7 +309,7 @@ Rectangle {
 		id: ruler_label
 		anchors.verticalCenter: domain_name_area.verticalCenter
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		text: selected_country_ruler && selected_country ? selected_country_ruler.game_data.get_full_name_for_domain_qstring(selected_country) : ""
+		text: selected_domain_ruler && selected_domain ? selected_domain_ruler.game_data.get_full_name_for_domain_qstring(selected_domain) : ""
 		visible: ruler_portrait.visible
 	}
 	
@@ -318,11 +318,11 @@ Rectangle {
 		anchors.top: domain_text_area.top
 		anchors.left: domain_text_area.left
 		anchors.leftMargin: 256 * scale_factor
-		character: selected_country_ruler
+		character: selected_domain_ruler
 			
 		onHoveredChanged: {
 			if (hovered) {
-				status_text = selected_country_ruler ? selected_country_ruler.game_data.titled_name : ""
+				status_text = selected_domain_ruler ? selected_domain_ruler.game_data.titled_name : ""
 			} else {
 				status_text = ""
 			}
@@ -334,8 +334,8 @@ Rectangle {
 		anchors.top: ruler_portrait.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: ruler_portrait.horizontalCenter
-		text: selected_country_ruler && selected_country_ruler !== metternich.game.player_character ? ("Opinion of You: " + selected_country_ruler.game_data.get_opinion_name_of(metternich.game.player_character) + " (" + selected_country_ruler.game_data.get_opinion_of(metternich.game.player_character) + ")") : ""
-		visible: ruler_portrait.visible && selected_country_ruler !== null && metternich.game.player_character !== null && selected_country_ruler !== metternich.game.player_character
+		text: selected_domain_ruler && selected_domain_ruler !== metternich.game.player_character ? ("Opinion of You: " + selected_domain_ruler.game_data.get_opinion_name_of(metternich.game.player_character) + " (" + selected_domain_ruler.game_data.get_opinion_of(metternich.game.player_character) + ")") : ""
+		visible: ruler_portrait.visible && selected_domain_ruler !== null && metternich.game.player_character !== null && selected_domain_ruler !== metternich.game.player_character
 	}
 	
 	TextButton {
@@ -344,12 +344,12 @@ Rectangle {
 		anchors.top: opinion_label.visible ? opinion_label.bottom : ruler_portrait.bottom
 		anchors.topMargin: 16 * scale_factor
 		text: qsTr("View History")
-		visible: ruler_portrait.visible && selected_country && selected_country.game_data.historical_rulers.length > 1
+		visible: ruler_portrait.visible && selected_domain && selected_domain.game_data.historical_rulers.length > 1
 		
 		onClicked: {
 			domestic_view_mode = DomesticView.Mode.DomainHistory
 			menu_stack.push("DomesticView.qml", {
-				country: selected_country,
+				domain: selected_domain,
 				show_buttons: false
 			})
 		}
@@ -368,7 +368,7 @@ Rectangle {
 		anchors.top: culture_chart.top
 		anchors.right: culture_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_population
+		data_source: selected_domain_population
 		visible: population_visible && data_source !== null
 	}
 	
@@ -386,7 +386,7 @@ Rectangle {
 		anchors.topMargin: 4 * scale_factor
 		anchors.right: religion_chart.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_population
+		data_source: selected_domain_population
 		visible: population_visible && data_source !== null
 	}
 	
@@ -403,7 +403,7 @@ Rectangle {
 		anchors.top: population_type_chart.top
 		anchors.right: map_mode_button_grid.left
 		anchors.rightMargin: 16 * scale_factor
-		data_source: selected_country_population
+		data_source: selected_domain_population
 		visible: population_visible && data_source !== null
 	}
 	
@@ -413,7 +413,7 @@ Rectangle {
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		spacing: 8 * scale_factor
-		visible: diplomatic_map.mode === DiplomaticMap.Mode.Treaty && selected_country === null
+		visible: diplomatic_map.mode === DiplomaticMap.Mode.Treaty && selected_domain === null
 		
 		IconButton {
 			id: offer_peace_button

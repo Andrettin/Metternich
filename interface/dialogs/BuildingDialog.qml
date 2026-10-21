@@ -54,10 +54,10 @@ DialogBase {
 				
 				Column {
 					spacing: 2 * scale_factor
-					visible: country_game_data.can_gain_civilian_unit(civilian_unit_type)
+					visible: domain_game_data.can_gain_civilian_unit(civilian_unit_type)
 					
 					readonly property var civilian_unit_type: model.modelData
-					property int civilian_unit_recruitment_count: country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
+					property int civilian_unit_recruitment_count: domain_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
 					
 					IconButton {
 						id: civilian_unit_button
@@ -90,9 +90,9 @@ DialogBase {
 							icon_identifier: "arrow_left"
 							
 							onReleased: {
-								if (country_game_data.can_decrease_civilian_unit_recruitment(civilian_unit_type)) {
-									country_game_data.decrease_civilian_unit_recruitment(civilian_unit_type, true)
-									civilian_unit_recruitment_count = country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
+								if (domain_game_data.can_decrease_civilian_unit_recruitment(civilian_unit_type)) {
+									domain_game_data.decrease_civilian_unit_recruitment(civilian_unit_type, true)
+									civilian_unit_recruitment_count = domain_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
 								}
 							}
 						}
@@ -111,9 +111,9 @@ DialogBase {
 							icon_identifier: "arrow_right"
 							
 							onReleased: {
-								if (country_game_data.can_increase_civilian_unit_recruitment(civilian_unit_type)) {
-									country_game_data.increase_civilian_unit_recruitment(civilian_unit_type)
-									civilian_unit_recruitment_count = country_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
+								if (domain_game_data.can_increase_civilian_unit_recruitment(civilian_unit_type)) {
+									domain_game_data.increase_civilian_unit_recruitment(civilian_unit_type)
+									civilian_unit_recruitment_count = domain_game_data.get_civilian_unit_recruitment_count(civilian_unit_type)
 								}
 							}
 						}
@@ -137,8 +137,8 @@ DialogBase {
 					visible: transporter_type !== null
 					
 					readonly property var transporter_category: model.modelData
-					readonly property var transporter_type: country_game_data.get_best_transporter_category_type(transporter_category)
-					property int transporter_recruitment_count: transporter_type !== null ? country_game_data.get_transporter_recruitment_count(transporter_type) : 0
+					readonly property var transporter_type: domain_game_data.get_best_transporter_category_type(transporter_category)
+					property int transporter_recruitment_count: transporter_type !== null ? domain_game_data.get_transporter_recruitment_count(transporter_type) : 0
 					
 					IconButton {
 						id: transporter_button
@@ -147,7 +147,7 @@ DialogBase {
 						icon_identifier: transporter_type !== null ? transporter_type.icon.identifier : "skull"
 						tooltip: tooltip_string.length > 0 ? format_text(small_text(tooltip_string)) : ""
 						
-						readonly property string costs_string: transporter_type !== null ? costs_to_string(country_game_data.get_transporter_type_commodity_costs_qvariant_list(transporter_type, 1), undefined, "\n\t", country_game_data.get_transporter_type_wealth_cost(transporter_type, 1)) : ""
+						readonly property string costs_string: transporter_type !== null ? costs_to_string(domain_game_data.get_transporter_type_commodity_costs_qvariant_list(transporter_type, 1), undefined, "\n\t", domain_game_data.get_transporter_type_wealth_cost(transporter_type, 1)) : ""
 						readonly property string tooltip_string: costs_string
 						
 						onClicked: {
@@ -171,9 +171,9 @@ DialogBase {
 							icon_identifier: "arrow_left"
 							
 							onReleased: {
-								if (country_game_data.can_decrease_transporter_recruitment(transporter_type)) {
-									country_game_data.decrease_transporter_recruitment(transporter_type, true)
-									transporter_recruitment_count = country_game_data.get_transporter_recruitment_count(transporter_type)
+								if (domain_game_data.can_decrease_transporter_recruitment(transporter_type)) {
+									domain_game_data.decrease_transporter_recruitment(transporter_type, true)
+									transporter_recruitment_count = domain_game_data.get_transporter_recruitment_count(transporter_type)
 								}
 							}
 						}
@@ -192,9 +192,9 @@ DialogBase {
 							icon_identifier: "arrow_right"
 							
 							onReleased: {
-								if (country_game_data.can_increase_transporter_recruitment(transporter_type)) {
-									country_game_data.increase_transporter_recruitment(transporter_type)
-									transporter_recruitment_count = country_game_data.get_transporter_recruitment_count(transporter_type)
+								if (domain_game_data.can_increase_transporter_recruitment(transporter_type)) {
+									domain_game_data.increase_transporter_recruitment(transporter_type)
+									transporter_recruitment_count = domain_game_data.get_transporter_recruitment_count(transporter_type)
 								}
 							}
 						}

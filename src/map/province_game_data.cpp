@@ -391,7 +391,7 @@ void province_game_data::do_ai_turn()
 			std::vector<military_unit *> military_units = this->get_military_units();
 
 			std::erase_if(military_units, [this](const military_unit *military_unit) {
-				if (military_unit->get_country() != this->get_owner()) {
+				if (military_unit->get_owner() != this->get_owner()) {
 					return true;
 				}
 
@@ -2224,7 +2224,7 @@ std::vector<military_unit *> province_game_data::get_domain_military_units(const
 	std::vector<military_unit *> domain_military_units = this->get_military_units();
 
 	std::erase_if(domain_military_units, [domain](const military_unit *military_unit) {
-		return military_unit->get_country() != domain;
+		return military_unit->get_owner() != domain;
 	});
 
 	return domain_military_units;
@@ -2294,7 +2294,7 @@ void province_game_data::change_military_unit_category_count(const military_unit
 bool province_game_data::has_domain_military_unit(const domain *domain) const
 {
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_country() == domain) {
+		if (military_unit->get_owner() == domain) {
 			return true;
 		}
 	}
@@ -2320,7 +2320,7 @@ int province_game_data::get_domain_military_unit_category_count(const metternich
 	int count = 0;
 
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_category() == category && military_unit->get_country() == domain && !military_unit->is_moving()) {
+		if (military_unit->get_category() == category && military_unit->get_owner() == domain && !military_unit->is_moving()) {
 			++count;
 		}
 	}
@@ -2409,7 +2409,7 @@ const icon *province_game_data::get_domain_military_unit_icon(metternich::domain
 	icon_map<int> icon_counts;
 
 	for (const military_unit *military_unit : this->get_military_units()) {
-		if (military_unit->get_country() == domain && !military_unit->is_moving()) {
+		if (military_unit->get_owner() == domain && !military_unit->is_moving()) {
 			++icon_counts[military_unit->get_icon()];
 		}
 	}

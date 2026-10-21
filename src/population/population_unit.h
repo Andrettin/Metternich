@@ -36,7 +36,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::phenotype* phenotype READ get_phenotype NOTIFY phenotype_changed)
 	Q_PROPERTY(const metternich::employment_type* employment_type READ get_employment_type NOTIFY employment_type_changed)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon NOTIFY icon_changed)
-	Q_PROPERTY(const metternich::domain* country READ get_country NOTIFY country_changed)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain NOTIFY domain_changed)
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
@@ -94,12 +94,12 @@ public:
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}
 
-	void set_country(const metternich::domain *domain);
+	void set_domain(const metternich::domain *domain);
 
 	const province *get_province() const;
 
@@ -209,7 +209,7 @@ signals:
 	void phenotype_changed();
 	void employment_type_changed();
 	void icon_changed();
-	void country_changed();
+	void domain_changed();
 	void province_changed();
 	void site_changed();
 	void size_changed();

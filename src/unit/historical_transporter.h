@@ -20,7 +20,7 @@ class historical_transporter final : public named_data_entry, public data_type<h
 	Q_OBJECT
 
 	Q_PROPERTY(metternich::transporter_type* type MEMBER type)
-	Q_PROPERTY(metternich::domain* country MEMBER domain)
+	Q_PROPERTY(metternich::domain* domain MEMBER domain)
 	Q_PROPERTY(metternich::phenotype* phenotype MEMBER phenotype)
 	Q_PROPERTY(int quantity MEMBER quantity READ get_quantity)
 
@@ -48,7 +48,7 @@ public:
 		return this->type;
 	}
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}

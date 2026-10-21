@@ -6,7 +6,7 @@ import "./dialogs"
 Item {
 	id: religion_view
 	
-	readonly property var deity_slots: country_game_data.available_deity_slots
+	readonly property var deity_slots: domain_game_data.available_deity_slots
 	
 	SmallText {
 		id: religion_label
@@ -21,8 +21,8 @@ Item {
 		anchors.top: religion_label.bottom
 		anchors.topMargin: 8 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		icon_identifier: country_game_data.religion.icon.identifier
-		name: country_game_data.religion.name
+		icon_identifier: domain_game_data.religion.icon.identifier
+		name: domain_game_data.religion.name
 	}
 	
 	IdeaSlotGrid {

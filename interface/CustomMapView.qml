@@ -413,7 +413,7 @@ Item {
 	}
 	
 	Component.onCompleted: {
-		province_map.center_on_country_capital(metternich.game.player_domain)
+		province_map.center_on_domain_capital(metternich.game.player_domain)
 		go_to_next_civilian_unit(false)
 	}
 	
