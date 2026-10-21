@@ -496,7 +496,7 @@ std::vector<const building_type *> technology::get_enabled_buildings_for_culture
 	return buildings;
 }
 
-std::vector<const wonder *> technology::get_enabled_wonders_for_country(const domain *domain) const
+std::vector<const wonder *> technology::get_enabled_wonders_for_domain(const domain *domain) const
 {
 	std::vector<const wonder *> wonders;
 
@@ -511,7 +511,7 @@ std::vector<const wonder *> technology::get_enabled_wonders_for_country(const do
 	return wonders;
 }
 
-std::vector<const wonder *> technology::get_disabled_wonders_for_country(const domain *domain) const
+std::vector<const wonder *> technology::get_disabled_wonders_for_domain(const domain *domain) const
 {
 	std::vector<const wonder *> wonders;
 
@@ -650,7 +650,7 @@ void technology::add_enabled_law(const law *law)
 	});
 }
 
-std::vector<const deity *> technology::get_enabled_deities_for_country(const domain *domain) const
+std::vector<const deity *> technology::get_enabled_deities_for_domain(const domain *domain) const
 {
 	std::vector<const deity *> deities;
 
@@ -665,7 +665,7 @@ std::vector<const deity *> technology::get_enabled_deities_for_country(const dom
 	return deities;
 }
 
-std::vector<const deity *> technology::get_disabled_deities_for_country(const domain *domain) const
+std::vector<const deity *> technology::get_disabled_deities_for_domain(const domain *domain) const
 {
 	std::vector<const deity *> deities;
 
@@ -798,7 +798,7 @@ std::string technology::get_effects_string(const domain *domain) const
 		}
 	}
 
-	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_country(domain);
+	const std::vector<const wonder *> enabled_wonders = this->get_enabled_wonders_for_domain(domain);
 	if (!enabled_wonders.empty()) {
 		for (const wonder *wonder : enabled_wonders) {
 			if (!wonder->is_enabled()) {
@@ -813,7 +813,7 @@ std::string technology::get_effects_string(const domain *domain) const
 		}
 	}
 
-	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_country(domain);
+	const std::vector<const wonder *> disabled_wonders = this->get_disabled_wonders_for_domain(domain);
 	if (!disabled_wonders.empty()) {
 		for (const wonder *wonder : disabled_wonders) {
 			if (!wonder->is_enabled()) {
@@ -917,7 +917,7 @@ std::string technology::get_effects_string(const domain *domain) const
 		}
 	}
 
-	const std::vector<const deity *> enabled_deities = this->get_enabled_deities_for_country(domain);
+	const std::vector<const deity *> enabled_deities = this->get_enabled_deities_for_domain(domain);
 	if (!enabled_deities.empty()) {
 		for (const deity *deity : enabled_deities) {
 			if (!str.empty()) {
@@ -928,7 +928,7 @@ std::string technology::get_effects_string(const domain *domain) const
 		}
 	}
 
-	const std::vector<const deity *> disabled_deities = this->get_disabled_deities_for_country(domain);
+	const std::vector<const deity *> disabled_deities = this->get_disabled_deities_for_domain(domain);
 	if (!disabled_deities.empty()) {
 		for (const deity *deity : disabled_deities) {
 			if (!str.empty()) {

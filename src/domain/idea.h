@@ -70,7 +70,7 @@ public:
 		return false;
 	}
 
-	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const;
+	virtual bool is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const;
 
 	const and_condition<domain> *get_conditions() const
 	{

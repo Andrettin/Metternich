@@ -78,14 +78,14 @@ public:
 		return this->wealth_cost;
 	}
 
-	int get_wealth_cost_for_country(const domain *domain) const;
+	int get_wealth_cost_for_domain(const domain *domain) const;
 
 	const commodity_map<int64_t> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int64_t> get_commodity_costs_for_country(const domain *domain) const;
+	commodity_map<int64_t> get_commodity_costs_for_domain(const domain *domain) const;
 
 	const factor<domain> *get_cost_factor() const
 	{
@@ -107,9 +107,9 @@ public:
 		return this->province_modifier.get();
 	}
 
-	const modifier<const domain> *get_country_modifier() const
+	const modifier<const domain> *get_domain_modifier() const
 	{
-		return this->country_modifier.get();
+		return this->domain_modifier.get();
 	}
 
 	bool is_enabled() const;
@@ -128,7 +128,7 @@ private:
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const and_condition<province>> province_conditions;
 	std::unique_ptr<modifier<const province>> province_modifier;
-	std::unique_ptr<modifier<const domain>> country_modifier;
+	std::unique_ptr<modifier<const domain>> domain_modifier;
 	std::vector<const game_rule *> required_game_rules;
 };
 

@@ -347,7 +347,7 @@ bool building_slot::can_build_building(const building_type *building) const
 		}
 	}
 
-	const domain_economy *domain_economy = this->get_country()->get_economy();
+	const domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
@@ -423,11 +423,11 @@ bool building_slot::can_have_wonder(const metternich::wonder *wonder) const
 	}
 
 	if (wonder->get_conditions() != nullptr) {
-		if (this->get_country() == nullptr) {
+		if (this->get_domain() == nullptr) {
 			return false;
 		}
 
-		if (!wonder->get_conditions()->check(this->get_country(), read_only_context(this->get_country()))) {
+		if (!wonder->get_conditions()->check(this->get_domain(), read_only_context(this->get_domain()))) {
 			return false;
 		}
 	}
@@ -445,11 +445,11 @@ bool building_slot::can_gain_wonder(const metternich::wonder *wonder) const
 		return false;
 	}
 
-	if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
+	if (wonder->get_obsolescence_technology() != nullptr && this->get_domain() != nullptr && this->get_domain()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
 		return false;
 	}
 
-	if (game::get()->get_wonder_country(wonder) != nullptr) {
+	if (game::get()->get_wonder_domain(wonder) != nullptr) {
 		return false;
 	}
 
@@ -462,13 +462,13 @@ bool building_slot::can_build_wonder(const metternich::wonder *wonder) const
 		return false;
 	}
 
-	const domain_economy *domain_economy = this->get_country()->get_economy();
-	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
+	const domain_economy *domain_economy = this->get_domain()->get_economy();
+	const int wealth_cost = wonder->get_wealth_cost_for_domain(this->get_domain());
 	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth()) {
 		return false;
 	}
 
-	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
+	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_domain(this->get_domain())) {
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -483,13 +483,13 @@ void building_slot::build_wonder(const metternich::wonder *wonder)
 		this->cancel_construction();
 	}
 
-	domain_economy *domain_economy = this->get_country()->get_economy();
-	const int wealth_cost = wonder->get_wealth_cost_for_country(this->get_country());
+	domain_economy *domain_economy = this->get_domain()->get_economy();
+	const int wealth_cost = wonder->get_wealth_cost_for_domain(this->get_domain());
 	if (wealth_cost > 0) {
 		domain_economy->change_wealth(-wealth_cost);
 	}
 
-	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_country(this->get_country())) {
+	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_domain(this->get_domain())) {
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
@@ -504,7 +504,7 @@ void building_slot::build_building(const building_type *building)
 		this->cancel_construction();
 	}
 
-	domain_economy *domain_economy = this->get_country()->get_economy();
+	domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
 		domain_economy->change_stored_commodity(commodity, -cost);
@@ -516,13 +516,13 @@ void building_slot::build_building(const building_type *building)
 void building_slot::cancel_construction()
 {
 	if (this->get_under_construction_wonder() != nullptr) {
-		domain_economy *domain_economy = this->get_country()->get_economy();
-		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_country(this->get_country());
+		domain_economy *domain_economy = this->get_domain()->get_economy();
+		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_domain(this->get_domain());
 		if (wealth_cost > 0) {
 			domain_economy->change_wealth(wealth_cost);
 		}
 
-		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_country(this->get_country())) {
+		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_domain(this->get_domain())) {
 			domain_economy->change_stored_commodity(commodity, cost);
 		}
 
@@ -534,7 +534,7 @@ void building_slot::cancel_construction()
 		return;
 	}
 
-	domain_economy *domain_economy = this->get_country()->get_economy();
+	domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement())) {
 		domain_economy->change_stored_commodity(commodity, cost);
@@ -566,11 +566,11 @@ const wonder *building_slot::get_buildable_wonder() const
 {
 	for (const metternich::wonder *wonder : this->get_type()->get_wonders()) {
 		if (wonder->get_required_technology() != nullptr) {
-			if (this->get_country() == nullptr) {
+			if (this->get_domain() == nullptr) {
 				continue;
 			}
 
-			if (!this->get_country()->get_technology()->has_technology(wonder->get_required_technology())) {
+			if (!this->get_domain()->get_technology()->has_technology(wonder->get_required_technology())) {
 				continue;
 			}
 		}
@@ -668,7 +668,7 @@ void building_slot::remove_item_slot(const item_creation_type *item_creation_typ
 	}
 }
 
-const domain *building_slot::get_country() const
+const domain *building_slot::get_domain() const
 {
 	return this->get_settlement()->get_game_data()->get_owner();
 }
@@ -700,14 +700,14 @@ bool building_slot::is_available() const
 					continue;
 				}
 
-				if (wonder->get_obsolescence_technology() != nullptr && this->get_country() != nullptr && this->get_country()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
+				if (wonder->get_obsolescence_technology() != nullptr && this->get_domain() != nullptr && this->get_domain()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
 					continue;
 				}
 
-				if (game::get()->get_wonder_country(wonder) != nullptr) {
+				if (game::get()->get_wonder_domain(wonder) != nullptr) {
 					continue;
 				}
-				//FIXME: should check whether any other country has the wonder; if so, the wonder cannot be gained and as such it should not be counted for the purposes of building slot availability
+				//FIXME: should check whether any other domain has the wonder; if so, the wonder cannot be gained and as such it should not be counted for the purposes of building slot availability
 
 				if (!this->can_have_wonder(wonder)) {
 					continue;
@@ -739,12 +739,12 @@ QString building_slot::get_modifier_string() const
 	const province *province = this->get_settlement()->get_game_data()->get_province();
 
 	if (this->get_wonder() != nullptr) {
-		if (this->get_wonder()->get_country_modifier() != nullptr) {
+		if (this->get_wonder()->get_domain_modifier() != nullptr) {
 			if (!str.empty()) {
 				str += "\n";
 			}
 
-			str += this->get_wonder()->get_country_modifier()->get_string(this->get_country());
+			str += this->get_wonder()->get_domain_modifier()->get_string(this->get_domain());
 		}
 
 		if (this->get_wonder()->get_province_modifier() != nullptr) {

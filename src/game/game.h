@@ -262,27 +262,27 @@ public:
 		this->exploration_changed = true;
 	}
 
-	const domain *get_wonder_country(const wonder *wonder) const
+	const domain *get_wonder_domain(const wonder *wonder) const
 	{
-		const auto find_iterator = this->wonder_countries.find(wonder);
+		const auto find_iterator = this->wonder_domains.find(wonder);
 
-		if (find_iterator != this->wonder_countries.end()) {
+		if (find_iterator != this->wonder_domains.end()) {
 			return find_iterator->second;
 		}
 
 		return nullptr;
 	}
 
-	void set_wonder_country(const wonder *wonder, const domain *country)
+	void set_wonder_domain(const wonder *wonder, const domain *domain)
 	{
-		if (country == this->get_wonder_country(wonder)) {
+		if (domain == this->get_wonder_domain(wonder)) {
 			return;
 		}
 
-		if (country == nullptr) {
-			this->wonder_countries.erase(wonder);
+		if (domain == nullptr) {
+			this->wonder_domains.erase(wonder);
 		} else {
-			this->wonder_countries[wonder] = country;
+			this->wonder_domains[wonder] = domain;
 		}
 	}
 
@@ -376,11 +376,11 @@ private:
 	commodity_map<int64_t> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
-	std::map<const wonder *, const domain *> wonder_countries;
+	std::map<const wonder *, const domain *> wonder_domains;
 	std::vector<qunique_ptr<character>> generated_characters;
 	std::map<std::string, character *> generated_characters_by_identifier;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
-	std::vector<std::unique_ptr<delayed_effect_instance<const domain>>> country_delayed_effects;
+	std::vector<std::unique_ptr<delayed_effect_instance<const domain>>> domain_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
 	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
 	std::set<const metternich::event *> fired_events;

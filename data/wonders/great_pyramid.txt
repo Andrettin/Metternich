@@ -10,7 +10,7 @@ great_pyramid = {
 			scripted_condition = is_northern_european
 		}
 	}
-	country_modifier = {
+	domain_modifier = {
 		free_building_class = granary
 	}
 }

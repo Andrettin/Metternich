@@ -103,7 +103,7 @@ public:
 
 	bool can_grant_spell(const spell *spell) const;
 
-	virtual bool is_available_for_country_slot(const domain *domain, const idea_slot *slot) const override;
+	virtual bool is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const override;
 
 signals:
 	void changed();

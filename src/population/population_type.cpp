@@ -211,8 +211,8 @@ QString population_type::get_domain_modifier_string(const metternich::domain *do
 		str += std::format("{}: {}", this->get_output_commodity()->get_name(), string::colored(number::to_signed_string(population_type_count * this->get_output_value()), ui_defines::get()->get_green_text_color()));
 	}
 
-	if (this->get_country_modifier() != nullptr) {
-		const std::string modifier_str = this->get_country_modifier()->get_string(domain, centesimal_int::min(population_type_count * domain_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier()));
+	if (this->get_domain_modifier() != nullptr) {
+		const std::string modifier_str = this->get_domain_modifier()->get_string(domain, centesimal_int::min(population_type_count * domain_game_data->get_population_type_modifier_multiplier(this), this->get_max_modifier_multiplier()));
 		if (!modifier_str.empty()) {
 			if (!str.empty()) {
 				str += "\n";

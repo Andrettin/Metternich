@@ -39,9 +39,9 @@ void resource::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();
 		this->modifier->process_gsml_data(scope);
-	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<metternich::modifier<const domain>>();
-		this->country_modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<metternich::modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

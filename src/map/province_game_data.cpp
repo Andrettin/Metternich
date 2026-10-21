@@ -451,7 +451,7 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 			engine_interface::get()->add_notification(std::format("Military Units Recruited in {}", this->get_current_cultural_name()), war_minister_portrait, std::format("{}, we have recruited new military units for our army in {}.\n{}", this->get_owner()->get_game_data()->get_form_of_address(), this->get_current_cultural_name(), recruitment_counts_str));
 		}
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for country \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error doing military unit recruitment for domain \"{}\" in province \"{}\".", this->get_owner()->get_identifier(), this->province->get_identifier())));
 	}
 }
 
@@ -2538,7 +2538,7 @@ void province_game_data::increase_military_unit_recruitment(const military_unit_
 
 		this->change_military_unit_recruitment_count(military_unit_type, 1);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" military unit type for country \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error increasing recruitment of the \"{}\" military unit type for domain \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
 	}
 }
 
@@ -2558,7 +2558,7 @@ void province_game_data::decrease_military_unit_recruitment(const military_unit_
 
 		this->change_military_unit_recruitment_count(military_unit_type, -1, restore_inputs);
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for country \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
+		std::throw_with_nested(std::runtime_error(std::format("Error decreasing recruitment of the \"{}\" military unit type for domain \"{}\" in province \"{}\".", military_unit_type->get_identifier(), this->get_owner()->get_identifier(), this->province->get_identifier())));
 	}
 }
 

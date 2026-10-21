@@ -17,7 +17,7 @@ class transaction : public QObject
 
 	Q_PROPERTY(qint64 amount READ get_amount CONSTANT)
 	Q_PROPERTY(qint64 object_quantity READ get_object_quantity CONSTANT)
-	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain CONSTANT)
 	Q_PROPERTY(const metternich::icon* icon READ get_icon CONSTANT)
 	Q_PROPERTY(QString name READ get_name CONSTANT)
 	Q_PROPERTY(QString description READ get_description CONSTANT)
@@ -65,7 +65,7 @@ public:
 		this->object_quantity += change;
 	}
 
-	const metternich::domain *get_country() const
+	const metternich::domain *get_domain() const
 	{
 		return this->domain;
 	}

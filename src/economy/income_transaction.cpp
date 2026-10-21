@@ -57,28 +57,28 @@ QString income_transaction::get_description() const
 
 	switch (this->get_type()) {
 		case income_transaction_type::sale:
-			str = std::format("Sold {} {} to {}{} for {}", std::get<const commodity *>(this->get_object())->value_to_string(this->get_object_quantity(), false), std::get<const commodity *>(this->get_object())->get_name(), this->get_country() && this->get_country()->get_game_data()->has_definite_article() ? "the ": "", this->get_country() ? this->get_country()->get_game_data()->get_name() : "the domestic market", amount_str);
+			str = std::format("Sold {} {} to {}{} for {}", std::get<const commodity *>(this->get_object())->value_to_string(this->get_object_quantity(), false), std::get<const commodity *>(this->get_object())->get_name(), this->get_domain() && this->get_domain()->get_game_data()->has_definite_article() ? "the ": "", this->get_domain() ? this->get_domain()->get_game_data()->get_name() : "the domestic market", amount_str);
 			break;
 		case income_transaction_type::liquidated_riches:
 			str = std::format("Converted {} {} into {}", number::to_formatted_string(this->get_object_quantity()), std::get<const commodity *>(this->get_object())->get_name(), amount_str);
 			break;
 		case income_transaction_type::holding_income:
-			str = std::format("Received {} in holding income", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Received {} in holding income", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::income:
-			str = std::format("Received {} in income", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Received {} in income", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::taxation:
-			str = std::format("Collected {} in taxes", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Collected {} in taxes", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::tariff:
-			str = std::format("Collected {} in tariffs from {}", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Collected {} in tariffs from {}", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::treasure_fleet:
-			str = std::format("Received treasure fleet worth {} from {}", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Received treasure fleet worth {} from {}", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::tribute:
-			str = std::format("Collected {} in tribute from {}", amount_str, this->get_country()->get_game_data()->get_name());
+			str = std::format("Collected {} in tribute from {}", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 	}
 

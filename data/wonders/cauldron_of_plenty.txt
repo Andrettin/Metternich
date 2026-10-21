@@ -8,7 +8,7 @@ cauldron_of_plenty = {
 	conditions = {
 		scripted_condition = is_northern_european
 	}
-	country_modifier = {
+	domain_modifier = {
 		free_building_class = granary
 	}
 	

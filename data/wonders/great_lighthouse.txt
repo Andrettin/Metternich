@@ -6,7 +6,7 @@ great_lighthouse = {
 	required_game_rules = {
 		additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		ship_movement_modifier = 1
 	}
 }

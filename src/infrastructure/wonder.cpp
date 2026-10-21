@@ -56,9 +56,9 @@ void wonder::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "province_modifier") {
 		this->province_modifier = std::make_unique<modifier<const province>>();
 		this->province_modifier->process_gsml_data(scope);
-	} else if (tag == "country_modifier") {
-		this->country_modifier = std::make_unique<modifier<const domain>>();
-		this->country_modifier->process_gsml_data(scope);
+	} else if (tag == "domain_modifier") {
+		this->domain_modifier = std::make_unique<modifier<const domain>>();
+		this->domain_modifier->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}
@@ -98,7 +98,7 @@ void wonder::check() const
 	}
 }
 
-int wonder::get_wealth_cost_for_country(const domain *domain) const
+int wonder::get_wealth_cost_for_domain(const domain *domain) const
 {
 	int cost = this->get_wealth_cost();
 
@@ -110,7 +110,7 @@ int wonder::get_wealth_cost_for_country(const domain *domain) const
 	return cost;
 }
 
-commodity_map<int64_t> wonder::get_commodity_costs_for_country(const domain *domain) const
+commodity_map<int64_t> wonder::get_commodity_costs_for_domain(const domain *domain) const
 {
 	commodity_map<int64_t> costs = this->get_commodity_costs();
 

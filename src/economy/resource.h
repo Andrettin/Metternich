@@ -129,9 +129,9 @@ public:
 		return this->modifier.get();
 	}
 
-	const modifier<const domain> *get_country_modifier() const
+	const modifier<const domain> *get_domain_modifier() const
 	{
-		return this->country_modifier.get();
+		return this->domain_modifier.get();
 	}
 
 	bool is_enabled() const;
@@ -153,7 +153,7 @@ private:
 	std::vector<const terrain_type *> terrain_types;
 	std::set<site_type> site_types;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
-	std::unique_ptr<metternich::modifier<const domain>> country_modifier;
+	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
 	const game_rule *required_game_rule = nullptr;
 };
 

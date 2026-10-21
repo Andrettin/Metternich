@@ -296,7 +296,7 @@ public:
 		return this->enabled_wonders;
 	}
 
-	std::vector<const wonder *> get_enabled_wonders_for_country(const domain *domain) const;
+	std::vector<const wonder *> get_enabled_wonders_for_domain(const domain *domain) const;
 
 	void add_enabled_wonder(const wonder *wonder)
 	{
@@ -308,7 +308,7 @@ public:
 		return this->disabled_wonders;
 	}
 
-	std::vector<const wonder *> get_disabled_wonders_for_country(const domain *domain) const;
+	std::vector<const wonder *> get_disabled_wonders_for_domain(const domain *domain) const;
 
 	void add_disabled_wonder(const wonder *wonder)
 	{
@@ -393,7 +393,7 @@ public:
 		return this->enabled_deities;
 	}
 
-	std::vector<const deity *> get_enabled_deities_for_country(const domain *domain) const;
+	std::vector<const deity *> get_enabled_deities_for_domain(const domain *domain) const;
 
 	void add_enabled_deity(const deity *deity)
 	{
@@ -405,7 +405,7 @@ public:
 		return this->disabled_deities;
 	}
 
-	std::vector<const deity *> get_disabled_deities_for_country(const domain *domain) const;
+	std::vector<const deity *> get_disabled_deities_for_domain(const domain *domain) const;
 
 	void add_disabled_deity(const deity *deity)
 	{

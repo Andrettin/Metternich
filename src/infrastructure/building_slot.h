@@ -35,7 +35,7 @@ class building_slot final : public QObject
 	Q_PROPERTY(QString modifier_string READ get_modifier_string NOTIFY modifier_changed)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
 	Q_PROPERTY(QVariantList filled_item_slots READ get_filled_item_slots_qvariant_list NOTIFY items_changed)
-	Q_PROPERTY(const metternich::domain* country READ get_country CONSTANT)
+	Q_PROPERTY(const metternich::domain* domain READ get_domain CONSTANT)
 
 public:
 	explicit building_slot(const building_slot_type *type, const site *settlement);
@@ -120,7 +120,7 @@ public:
 	void add_item_slot(qunique_ptr<building_item_slot> &&item_slot);
 	void remove_item_slot(const item_creation_type *item_creation_type);
 
-	const metternich::domain *get_country() const;
+	const metternich::domain *get_domain() const;
 
 	bool is_available() const;
 

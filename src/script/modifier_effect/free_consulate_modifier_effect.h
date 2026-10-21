@@ -31,7 +31,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return std::format("Free {} with every known country", this->consulate->get_name());
+		return std::format("Free {} with every known domain", this->consulate->get_name());
 	}
 
 	virtual std::string get_string(const domain *scope, const decimillesimal_int &multiplier, const size_t indent, const bool ignore_decimals, const std::string &separator) const override

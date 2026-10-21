@@ -1674,8 +1674,8 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 
 	const resource *site_resource = site->get_game_data()->get_resource();
 	if (site_resource != nullptr) {
-		if (site_resource->get_country_modifier() != nullptr) {
-			co_await site_resource->get_country_modifier()->apply(this->domain, multiplier);
+		if (site_resource->get_domain_modifier() != nullptr) {
+			co_await site_resource->get_domain_modifier()->apply(this->domain, multiplier);
 		}
 	}
 
@@ -2655,14 +2655,14 @@ void domain_game_data::on_population_unit_gained(const population_unit *populati
 	Q_UNUSED(multiplier);
 
 	/*
-	if (type->get_country_modifier() != nullptr) {
+	if (type->get_domain_modifier() != nullptr) {
 		const int population_type_count = this->get_population()->get_type_count(type);
 		const int old_population_type_count = population_type_count - change;
 		const centesimal_int &type_modifier_multiplier = this->get_population_type_modifier_multiplier(type);
 		const centesimal_int &max_total_modifier_multiplier = type->get_max_modifier_multiplier();
 
-		type->get_country_modifier()->apply(this->domain, -centesimal_int::min(old_population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
-		type->get_country_modifier()->apply(this->domain, centesimal_int::min(population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
+		type->get_domain_modifier()->apply(this->domain, -centesimal_int::min(old_population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
+		type->get_domain_modifier()->apply(this->domain, centesimal_int::min(population_type_count * type_modifier_multiplier, max_total_modifier_multiplier));
 	}
 	*/
 }
@@ -2757,14 +2757,14 @@ QCoro::Task<void> domain_game_data::change_settlement_building_count(const build
 
 QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const int multiplier)
 {
-	if (wonder->get_country_modifier() != nullptr) {
-		co_await wonder->get_country_modifier()->apply(this->domain, multiplier);
+	if (wonder->get_domain_modifier() != nullptr) {
+		co_await wonder->get_domain_modifier()->apply(this->domain, multiplier);
 	}
 
 	if (multiplier > 0) {
-		game::get()->set_wonder_country(wonder, this->domain);
-	} else if (multiplier < 0 && game::get()->get_wonder_country(wonder) == this->domain) {
-		game::get()->set_wonder_country(wonder, nullptr);
+		game::get()->set_wonder_domain(wonder, this->domain);
+	} else if (multiplier < 0 && game::get()->get_wonder_domain(wonder) == this->domain) {
+		game::get()->set_wonder_domain(wonder, nullptr);
 	}
 }
 
@@ -3026,7 +3026,7 @@ const idea *domain_game_data::get_best_idea(const idea_slot *slot)
 
 bool domain_game_data::can_have_idea(const idea_slot *slot, const idea *idea) const
 {
-	if (!idea->is_available_for_country_slot(this->domain, slot)) {
+	if (!idea->is_available_for_domain_slot(this->domain, slot)) {
 		return false;
 	}
 
@@ -3930,8 +3930,8 @@ QCoro::Task<void> domain_game_data::set_population_type_modifier_multiplier(cons
 	//const int population_type_count = this->get_population()->get_type_count(type);
 	//const centesimal_int &max_modifier_multiplier = type->get_max_modifier_multiplier();
 
-	//type->get_country_modifier()->apply(this->domain, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
-	//type->get_country_modifier()->apply(this->domain, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
+	//type->get_domain_modifier()->apply(this->domain, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
+	//type->get_domain_modifier()->apply(this->domain, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
 }
 
 void domain_game_data::set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)

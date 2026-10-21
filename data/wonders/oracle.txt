@@ -6,7 +6,7 @@ oracle = {
 	required_game_rules = {
 		additional_buildings
 	}
-	country_modifier = {
+	domain_modifier = {
 		amenities_per_temple = 2
 		amenities_per_cathedral = 2
 	}

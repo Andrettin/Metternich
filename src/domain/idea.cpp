@@ -47,7 +47,7 @@ QString idea::get_cultural_name_qstring(const metternich::culture *culture) cons
 	return QString::fromStdString(this->get_cultural_name(culture));
 }
 
-bool idea::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const
+bool idea::is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const
 {
 	Q_UNUSED(slot);
 

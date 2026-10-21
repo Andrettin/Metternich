@@ -200,9 +200,9 @@ bool deity::can_grant_spell(const spell *spell) const
 	return false;
 }
 
-bool deity::is_available_for_country_slot(const domain *domain, const idea_slot *slot) const
+bool deity::is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const
 {
-	if (!idea::is_available_for_country_slot(domain, slot)) {
+	if (!idea::is_available_for_domain_slot(domain, slot)) {
 		return false;
 	}
 

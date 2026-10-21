@@ -204,7 +204,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 			delayed_effect_data.process(delayed_effect.get());
 			this->add_delayed_effect(std::move(delayed_effect));
 		});
-	} else if (tag == "country_delayed_effects") {
+	} else if (tag == "domain_delayed_effects") {
 		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
 			auto delayed_effect = std::make_unique<delayed_effect_instance<const domain>>();
 			delayed_effect_data.process(delayed_effect.get());
@@ -321,9 +321,9 @@ gsml_data game::to_gsml_data() const
 		data.add_child(std::move(delayed_effects_data));
 	}
 
-	if (!this->country_delayed_effects.empty()) {
-		gsml_data delayed_effects_data("country_delayed_effects");
-		for (const auto &delayed_effect : this->country_delayed_effects) {
+	if (!this->domain_delayed_effects.empty()) {
+		gsml_data delayed_effects_data("domain_delayed_effects");
+		for (const auto &delayed_effect : this->domain_delayed_effects) {
 			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
 		}
 		data.add_child(std::move(delayed_effects_data));
@@ -497,7 +497,7 @@ QCoro::Task<void> game::start_coro()
 
 			domain_game_data->check_ideas();
 
-			//setup journal entries, marking the ones for which the country already fulfills conditions as finished, but without doing the effects
+			//setup journal entries, marking the ones for which the domain already fulfills conditions as finished, but without doing the effects
 			co_await domain_game_data->check_journal_entries(true, true);
 
 			//ensure some item slots will start off filled
@@ -551,7 +551,7 @@ QCoro::Task<void> game::clear_coro()
 		this->scenario = nullptr;
 		this->domains.clear();
 		this->countries.clear();
-		this->wonder_countries.clear();
+		this->wonder_domains.clear();
 		this->prices.clear();
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
@@ -1983,7 +1983,7 @@ QCoro::Task<void> game::do_turn_coro()
 		this->do_trade();
 
 		for (const domain *domain : this->get_domains()) {
-			//do country events after processing the turn for each country, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
+			//do domain events after processing the turn for each domain, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
 			co_await domain->get_game_data()->do_events();
 
 			domain->get_economy()->clear_bids();
@@ -2511,7 +2511,7 @@ void game::remove_generated_character(character *character)
 QCoro::Task<void> game::process_delayed_effects()
 {
 	co_await this->process_delayed_effects(this->character_delayed_effects);
-	co_await this->process_delayed_effects(this->country_delayed_effects);
+	co_await this->process_delayed_effects(this->domain_delayed_effects);
 	co_await this->process_delayed_effects(this->province_delayed_effects);
 	co_await this->process_delayed_effects(this->site_delayed_effects);
 }
@@ -2523,7 +2523,7 @@ void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const char
 
 void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const domain>> &&delayed_effect)
 {
-	this->country_delayed_effects.push_back(std::move(delayed_effect));
+	this->domain_delayed_effects.push_back(std::move(delayed_effect));
 }
 
 void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect)
@@ -2539,7 +2539,7 @@ void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const site
 void game::clear_delayed_effects()
 {
 	this->character_delayed_effects.clear();
-	this->country_delayed_effects.clear();
+	this->domain_delayed_effects.clear();
 	this->province_delayed_effects.clear();
 	this->site_delayed_effects.clear();
 }
