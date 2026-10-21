@@ -1,7 +1,7 @@
 tokugawa_ieyasu = {
 	name = "Ieyasu"
 	surname = "Tokugawa"
-	character_class = warrior
+	character_class = aristocrat
 	culture = japanese
 	religion = shinto
 	portrait = tokugawa_ieyasu

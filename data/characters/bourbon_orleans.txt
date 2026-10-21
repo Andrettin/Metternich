@@ -1,7 +1,7 @@
 philippe_de_bourbon_orleans = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, pp. 15-16.
 	name = "Philippe"
 	dynasty = bourbon_orleans
-	character_class = warrior
+	character_class = aristocrat
 	culture = french
 	religion = catholic
 	home_site = orleans

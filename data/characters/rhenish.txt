@@ -1,6 +1,6 @@
 agnes_von_saarbrucken = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Agnes"
-	character_class = warrior
+	character_class = aristocrat
 	dynasty = saarbrucken
 	culture = rhenish
 	religion = catholic

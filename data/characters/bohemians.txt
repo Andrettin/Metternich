@@ -1,6 +1,6 @@
 ludmila_1150 = {
 	name = "Ludmila"
-	character_class = warrior
+	character_class = aristocrat
 	culture = czech
 	religion = catholic
 	gender = female

@@ -1,7 +1,7 @@
 john_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
 	name = "John"
 	dynasty = angevin
-	character_class = warrior #king
+	character_class = aristocrat #king
 	rank = lord
 	culture = english
 	religion = catholic
@@ -14,7 +14,7 @@ john_i_of_england = { #Source: Hereford B. George, "Genealogical Tables Illustra
 isabella_angevin = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 3.
 	name = "Isabella"
 	dynasty = angevin
-	character_class = warrior
+	character_class = aristocrat
 	culture = english
 	religion = catholic
 	home_site = london

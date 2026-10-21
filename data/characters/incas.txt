@@ -1,7 +1,7 @@
 huayna_capac = {
 	name = "Huayna"
 	surname = "Capac"
-	character_class = warrior #statesman
+	character_class = aristocrat #statesman
 	culture = inca
 	religion = inti
 	home_site = cuzco
@@ -16,7 +16,7 @@ huayna_capac = {
 
 atahualpa = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Atahualpa"
-	character_class = warrior
+	character_class = aristocrat #emperor
 	culture = inca
 	religion = inti
 	home_site = cuzco

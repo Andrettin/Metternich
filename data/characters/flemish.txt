@@ -1,7 +1,7 @@
 robert_i_of_flanders = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Robert"
 	dynasty = vlaanderen
-	character_class = warrior
+	character_class = aristocrat
 	rank = lord
 	culture = flemish
 	religion = catholic
@@ -12,7 +12,7 @@ robert_i_of_flanders = { #Source: Hereford B. George, "Genealogical Tables Illus
 adela_van_vlaanderen = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 13.
 	name = "Adela"
 	dynasty = vlaanderen
-	character_class = warrior
+	character_class = aristocrat
 	culture = flemish
 	religion = catholic
 	home_site = bruges

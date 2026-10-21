@@ -1,7 +1,7 @@
 friederich_von_kageneck = { #Source: "Gothaischer Hofkalender zum Nutzen und Vergnügen auf das Jahr 1815", 1815, p. 84.
 	name = "Friederich"
 	dynasty = kageneck
-	character_class = warrior
+	character_class = aristocrat
 	culture = rhenish
 	religion = catholic
 	home_site = freiburg #correct?

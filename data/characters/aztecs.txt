@@ -1,7 +1,7 @@
 montezuma_ii = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 202.
 	name = "Montezuma"
 	epithet = "II"
-	character_class = warrior
+	character_class = aristocrat
 	culture = aztec
 	religion = nahuatl
 	portrait = montezuma_ii

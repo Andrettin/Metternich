@@ -1,7 +1,7 @@
 alfonso_ii_of_aragon = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 37.
 	name = "Alfonso"
 	dynasty = barcelona
-	character_class = warrior #king
+	character_class = aristocrat #king
 	rank = lord
 	culture = aragonese
 	religion = catholic

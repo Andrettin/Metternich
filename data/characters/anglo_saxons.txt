@@ -261,7 +261,7 @@ elisius = { #Source: William Betham, "Genealogical Tables of the Sovereigns of t
 
 aelle = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
 	name = "Aelle" #"Ælle"
-	character_class = warrior #king
+	character_class = aristocrat #king
 	rank = lord
 	culture = anglo_saxon
 	religion = asatru
@@ -276,7 +276,7 @@ aelle = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 75.
 
 edwin_of_deira = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 78-81, 113, 116.
 	name = "Edwin"
-	character_class = warrior #king
+	character_class = warrior #king; was in battle
 	rank = lord
 	culture = anglo_saxon
 	religion = catholic
@@ -291,7 +291,7 @@ edwin_of_deira = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 78-8
 
 osfrith = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 80-81.
 	name = "Osfrith"
-	character_class = warrior
+	character_class = warrior #was in battle
 	culture = anglo_saxon
 	religion = catholic
 	home_site = york #Deira
@@ -303,7 +303,7 @@ osfrith = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, pp. 80-81.
 ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971, p. 91.
 	name = "Ceolwulf"
 	name_rear_compound_element = wulf_old_english #presumably
-	character_class = warrior #king
+	character_class = aristocrat #king
 	culture = anglo_saxon
 	religion = catholic
 	home_site = york #Northumbria
@@ -320,7 +320,7 @@ ceolwulf_of_northumbria = { #Source: Frank Stenton, "Anglo-Saxon England", 1971,
 
 redburg = { #Source: William Betham, "Genealogical Tables of the Sovereigns of the World", 1795, Table 600.
 	name = "Redburg"
-	character_class = warrior
+	character_class = aristocrat
 	culture = anglo_saxon
 	religion = asatru
 	gender = female
@@ -328,7 +328,7 @@ redburg = { #Source: William Betham, "Genealogical Tables of the Sovereigns of t
 
 oslac = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Oslac"
-	character_class = warrior
+	character_class = aristocrat
 	culture = anglo_saxon
 	religion = catholic
 	gender = male
@@ -338,7 +338,7 @@ oslac = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Mode
 
 osburh = { #Source: Hereford B. George, "Genealogical Tables Illustrative of Modern History", 1875, Table 1.
 	name = "Osburh"
-	character_class = warrior
+	character_class = aristocrat
 	culture = anglo_saxon
 	religion = catholic
 	gender = female

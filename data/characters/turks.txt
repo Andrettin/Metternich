@@ -1,7 +1,7 @@
 selim_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.
 	name = "Selim"
 	epithet = "I"
-	character_class = warrior
+	character_class = aristocrat
 	culture = turkish
 	religion = sunni
 	home_site = amasia
@@ -19,7 +19,7 @@ selim_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciênci
 suleiman_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 205.
 	name = "Suleiman" #"Süleyman"
 	epithet = "I"
-	character_class = warrior
+	character_class = aristocrat
 	culture = turkish
 	religion = sunni
 	home_site = trebizond

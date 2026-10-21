@@ -1,7 +1,7 @@
 ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 80, 83.
 	name = "Ferdinand August" #"Ferdinand August Friedrich"
 	dynasty = wurtemberg
-	character_class = warrior
+	character_class = warrior #field-marshal
 	culture = german #Swabian
 	religion = protestant
 	home_site = stuttgart
@@ -15,13 +15,13 @@ ferdinand_august_von_wurtemberg = { #Source: "Almanach de Gotha pour l'année 18
 		}
 	}
 	
-	#fieldmarshal in the Austrian army
+	#field-marshal in the Austrian army
 }
 
 ludwig_friedrich_von_wurtemberg = { #Duke Ludwig Friedrich Alexander of Württemberg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12, 80-81.
 	name = "Ludwig Friedrich" #"Ludwig Friedrich Alexander"
 	dynasty = wurtemberg
-	character_class = warrior
+	character_class = aristocrat
 	culture = german #Swabian
 	religion = protestant
 	home_site = stuttgart
@@ -42,7 +42,7 @@ ludwig_friedrich_von_wurtemberg = { #Duke Ludwig Friedrich Alexander of Württem
 maria_dorothee_von_wurtemberg = { #Maria Dorothée Wilhelmina von Württemberg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12, 81.
 	name = "Maria Dorothée" #"Maria Dorothée Wilhelmina"
 	dynasty = wurtemberg
-	character_class = warrior
+	character_class = aristocrat
 	culture = german #Swabian
 	religion = protestant
 	home_site = stuttgart
