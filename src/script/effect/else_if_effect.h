@@ -57,7 +57,7 @@ public:
 		co_await this->effects.do_effects(scope, ctx);
 	}
 
-	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string & prefix) const override
+	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
 		if (this->is_previous_branch_taken(scope, ctx)) {
 			return std::string();
