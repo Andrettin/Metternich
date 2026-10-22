@@ -87,7 +87,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/flags/venetia.svg (by F l a n k e r, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/wales.svg (by Tobias Jakobs, from the Wikimedia Commons) (licensed under the CC0)
 /graphics/flags/wallachia.svg (by Alex:D, from the Wikimedia Commons) (in the public domain)
-/graphics/flags/wessex.svg (by Thomas Gun, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0) (commons.wikimedia.org/wiki/File:Flag_of_Wessex.png)
+/graphics/flags/wessex.svg (by Thomas Gun, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0) (commons.wikimedia.org/wiki/File:Flag_of_Wessex.svg)
 /graphics/flags/wurtemberg.svg (by Sir Iain, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/wurtemberg_royal.svg (by David Liuzzo, from the Wikimedia Commons) (in the public domain)
 /graphics/icons/animals/beaver.png (by Jinn) (licensed under the CC0)
