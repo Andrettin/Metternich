@@ -329,8 +329,6 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/interface/dark_wood_boards/tiled_background.png (by Jinn) (licensed under the CC0)
 /graphics/interface/light_wood/tiled_background.png (by Jinn) (licensed under the CC0)
 /graphics/interface/light_wood_boards/tiled_background.png (by Jinn) (licensed under the CC0)
-/graphics/interface/interface_tiles.png (by Jinn) (licensed under the CC0)
-/graphics/interface/interface_tiles_2.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/buildings/aristocratic_palace.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/buildings/aristocratic_palace_full.png (by Jinn) (licensed under the CC0) (reference: the Schönbrunn Palace in Vienna)
 /graphics/portraits/buildings/building_slot.png (by Jinn) (licensed under the CC0)
