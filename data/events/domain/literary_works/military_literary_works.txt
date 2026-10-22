@@ -1,7 +1,7 @@
 vom_kriege = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 467.
 	name = "Vom Kriege"
 	portrait = fort
-	description = "Though Karl von Klausewitz died of cholera in 1831, his widow edited and published his collected works. They contain Clausewitz's masterpiece, \"Vom Kriege\", an exposition of the philosophy of war which is absolutely unrivalled. His philosophy of war became, not only in Germany but in many other countries, the essential basis of all serious study of the art of war." #text based on that of the Encyclopædia Britannica, in the public domain
+	description = "Though Karl von Klausewitz died of cholera in 1831, his widow edited and published his collected works. They contain Clausewitz's masterpiece, \"Vom Kriege\", an exposition of the philosophy of war which is absolutely unrivalled. His philosophy of war became, not only in Germany but in many other countries, the essential basis of all serious study of the art of war." #text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	trigger = per_turn_pulse
 	only_once = true
 	conditions = {

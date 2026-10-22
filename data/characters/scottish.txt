@@ -10,7 +10,7 @@ robert_stevenson = { #Source: "Encyclopædia Britannica", 1911, vol. 25, p. 907.
 	birth_date = 1772.6.8
 	death_date = 1850.7.12
 	
-	#text based on that of the Encyclopædia Britannica, in the public domain
+	#text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	description = "Scottish engineer, he designed and executed a large number of lighthouses, the most important being that on the Bell Rock. For its illumination he introduced an improved apparatus, and he was also the author of various valuable inventions in connexion with lighting, including the intermittent and flashing lights, and the mast lantern for lightships. As a civil engineer he improved the approaches to Edinburgh, constructed harbours, docks and breakwaters, improved river and canal navigation, and constructed several important bridges. He was the inventor of the movable jib and balance cranes."
 	
 	history = {

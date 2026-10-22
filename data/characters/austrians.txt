@@ -25,7 +25,7 @@ ulrich_von_cilli = { #Source: "Encyclopædia Britannica", 1911, vol. 6, p. 366.
 	
 	#count of Cilli
 	
-	#text based on that of the Encyclopædia Britannica, in the public domain
+	#text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	description = "Count of Cilli, his influence in the troubled affairs of Hungary and the Empire early overshadowed that of his father, Frederick II. He established an alliance with the Habsburg king Albert II, who made Ulrich for a short while his lieutenant in Bohemia. After Albert's death in 1439, Ulrich presided at the coronation of his infant son Ladislaus V Posthumus in 1440. Count Ulrich was able to lead a successful crusade, nominally in the Habsburg interest, into Hungary in 1450. In 1452 he forced the emperor Frederick III to hand over the boy king Ladislaus V to his keeping, and became thus practically ruler of Hungary."
 	
 	history = {
@@ -56,7 +56,7 @@ georg_peurbach = { #Source: "Encyclopædia Britannica", 1911, vol. 23, p. 39.
 		#natural_scientist
 	}
 	
-	#text based on that of the Encyclopædia Britannica, in the public domain
+	#text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	description = "Austrian astronomer, Regiomontanus was his pupil at Vienna from 1452, and they jointly undertook a reform of astronomy rendered necessary by the errors they detected in the Alphonsine Tables."
 	
 	history = {

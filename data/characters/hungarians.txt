@@ -89,7 +89,7 @@ tamas_bakocz = { #Source: "Encyclopædia Britannica", 1911, vol. 3, p. 230.
 		#statesman
 	}
 	
-	#text based on that of the Encyclopædia Britannica, in the public domain
+	#text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	description = "Hungarian ecclesiastic and statesman, was the son of a wagoner, adopted by his uncle, who trained him for the priesthood and whom he succeeded as rector of Tétel in 1480. Shortly afterwards he became one of the secretaries of King Matthias I, who made him bishop of Gyor and a member of the royal council in 1490. From 1490 to his death in 1521 he was the leading statesman of Hungary and mainly responsible for her foreign policy. It was solely through his efforts that Hungary did not accede to the league of Cambrai, was consistently friendly with Venice, and formed a family compact with the Habsburgs."
 	
 	history = {

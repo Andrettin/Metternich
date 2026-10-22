@@ -24,7 +24,7 @@ nikolaus_von_kues = { #Source: "Encyclopædia Britannica", 1911, vol. 7, pp. 665
 		#natural_scientist
 	}
 	
-	#text based on that of the Encyclopædia Britannica, in the public domain
+	#text based on that of the Encyclopædia Britannica from 1911, in the public domain
 	description = "Cardinal, theologian and scholar, he was a member of the council of Basel, and was entrusted with various missions in the interests of Catholic unity. In 1448, in recognition of his services, Nicholas V. raised him to the cardinalate; and in 1450 he was appointed bishop of Brixen.\n\nAlthough one of the great leaders in the reform movement of the 15th century, Nikolaus von Kues' interest for later times lies in his philosophical much more than in his political or ecclesiastical activity. In mathematical and physical science Kues was much in advance of his age. He proposed the reform of the calendar after a method resembling that adopted by Gregory. Most noteworthy, however, in this connexion is the fact that he anticipated Copernicus by maintaining the theory of the rotation of the earth."
 	
 	history = {
