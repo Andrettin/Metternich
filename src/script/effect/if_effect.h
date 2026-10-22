@@ -37,8 +37,7 @@ public:
 		}
 	}
 
-	[[nodiscard]]
-	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		if (!this->conditions.check(scope, ctx)) {
 			co_return;

@@ -31,6 +31,7 @@
 #include "script/effect/delayed_effect.h"
 #include "script/effect/domain_effect.h"
 #include "script/effect/else_effect.h"
+#include "script/effect/else_if_effect.h"
 #include "script/effect/event_effect.h"
 #include "script/effect/event_group_effect.h"
 #include "script/effect/experience_effect.h"
@@ -243,6 +244,8 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 		effect = std::make_unique<if_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "else") {
 		effect = std::make_unique<else_effect<scope_type>>(effect_operator, previous_effect);
+	} else if (effect_identifier == "else_if") {
+		effect = std::make_unique<else_if_effect<scope_type>>(effect_operator, previous_effect);
 	} else if (effect_identifier == "random") {
 		effect = std::make_unique<random_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "random_list") {

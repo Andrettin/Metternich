@@ -803,6 +803,7 @@ set(script_effect_HDRS
 	src/script/effect/effect.h
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
+	src/script/effect/else_if_effect.h
 	src/script/effect/event_effect.h
 	src/script/effect/event_group_effect.h
 	src/script/effect/experience_effect.h
