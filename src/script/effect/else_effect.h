@@ -19,7 +19,7 @@ public:
 		} else if (const else_if_effect<scope_type> *else_if_effect = dynamic_cast<const metternich::else_if_effect<scope_type> *>(previous_effect)) {
 			this->previous_effect = else_if_effect;
 		} else {
-			assert_throw(false);
+			throw std::runtime_error("\"else\" effects must have a preceding \"if\" or \"else_if\" effect.");
 		}
 	}
 
@@ -41,16 +41,8 @@ public:
 
 	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
-		if (std::holds_alternative<const if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				co_return;
-			}
-		} else if (std::holds_alternative<const else_if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const else_if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				co_return;
-			}
-		} else {
-			assert_throw(false);
+		if (this->is_previous_branch_taken(scope, ctx)) {
+			co_return;
 		}
 
 		co_await this->effects.do_effects(scope, ctx);
@@ -58,19 +50,18 @@ public:
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
 	{
-		if (std::holds_alternative<const if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				return std::string();
-			}
-		} else if (std::holds_alternative<const else_if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const else_if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				return std::string();
-			}
-		} else {
-			assert_throw(false);
+		if (this->is_previous_branch_taken(scope, ctx)) {
+			return std::string();
 		}
 
 		return this->effects.get_effects_string(scope, ctx, indent, prefix, false);
+	}
+
+	bool is_previous_branch_taken(const scope_type *scope, const read_only_context &ctx) const
+	{
+		return std::visit([&](const auto *previous_effect) {
+			return previous_effect->is_branch_taken(scope, ctx);
+		}, this->previous_effect);
 	}
 
 private:

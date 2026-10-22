@@ -55,9 +55,9 @@ public:
 		return this->effects.get_effects_string(scope, ctx, indent, prefix, false);
 	}
 
-	const and_condition<std::remove_const_t<scope_type>> &get_conditions() const
+	bool is_branch_taken(const scope_type *scope, const read_only_context &ctx) const
 	{
-		return this->conditions;
+		return this->conditions.check(scope, ctx);
 	}
 
 private:

@@ -18,7 +18,7 @@ public:
 		} else if (const else_if_effect<scope_type> *else_if_effect = dynamic_cast<const metternich::else_if_effect<scope_type> *>(previous_effect)) {
 			this->previous_effect = else_if_effect;
 		} else {
-			assert_throw(false);
+			throw std::runtime_error("\"else_if\" effects must have a preceding \"if\" or \"else_if\" effect.");
 		}
 	}
 
@@ -44,18 +44,10 @@ public:
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type * scope, context & ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
-		if (std::holds_alternative<const if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				co_return;
-			}
-		} else if (std::holds_alternative<const else_if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const else_if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				co_return;
-			}
-		} else {
-			assert_throw(false);
+		if (this->is_previous_branch_taken(scope, ctx)) {
+			co_return;
 		}
 
 		if (!this->conditions.check(scope, ctx)) {
@@ -65,18 +57,10 @@ public:
 		co_await this->effects.do_effects(scope, ctx);
 	}
 
-	virtual std::string get_assignment_string(const scope_type * scope, const read_only_context & ctx, const size_t indent, const std::string & prefix) const override
+	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string & prefix) const override
 	{
-		if (std::holds_alternative<const if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				return std::string();
-			}
-		} else if (std::holds_alternative<const else_if_effect<scope_type> *>(this->previous_effect)) {
-			if (std::get<const else_if_effect<scope_type> *>(this->previous_effect)->get_conditions().check(scope, ctx)) {
-				return std::string();
-			}
-		} else {
-			assert_throw(false);
+		if (this->is_previous_branch_taken(scope, ctx)) {
+			return std::string();
 		}
 
 		if (!this->conditions.check(scope, ctx)) {
@@ -86,9 +70,16 @@ public:
 		return this->effects.get_effects_string(scope, ctx, indent, prefix, false);
 	}
 
-	const and_condition<std::remove_const_t<scope_type>> &get_conditions() const
+	bool is_previous_branch_taken(const scope_type *scope, const read_only_context &ctx) const
 	{
-		return this->conditions;
+		return std::visit([&](const auto *previous_effect) {
+			return previous_effect->is_branch_taken(scope, ctx);
+		}, this->previous_effect);
+	}
+
+	bool is_branch_taken(const scope_type *scope, const read_only_context &ctx) const
+	{
+		return this->is_previous_branch_taken(scope, ctx) || this->conditions.check(scope, ctx);
 	}
 
 private:
