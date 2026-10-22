@@ -163,6 +163,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/icons/diplomacy/peace.png (by Jinn) (licensed under the CC0)
 /graphics/icons/diplomacy/trade_consulate.png (by Jinn) (licensed under the CC0)
 /graphics/icons/diplomacy/war.png (by Jinn) (licensed under the CC0)
+/graphics/icons/items/book.png (by Jinn) (licensed under the CC0)
 /graphics/icons/items/book_red.png (by Exidelo) (licensed under the CC0)
 /graphics/icons/items/bow.png (by Jinn) (licensed under the CC0)
 /graphics/icons/items/crossed_sabers.png (by Jinn) (licensed under the CC0)
