@@ -28,12 +28,12 @@ public:
 		return class_identifier;
 	}
 
-	virtual void process_gsml_property(const gsml_property & property) override
+	virtual void process_gsml_property(const gsml_property &property) override
 	{
 		this->effects.process_gsml_property(property);
 	}
 
-	virtual void process_gsml_scope(const gsml_data & scope) override
+	virtual void process_gsml_scope(const gsml_data &scope) override
 	{
 		const std::string &tag = scope.get_tag();
 
