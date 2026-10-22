@@ -153,7 +153,7 @@ jord = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, pp. 241-242.
 	}
 }
 
-loki = { #son of two giants; attractive, mischief-making and ambivalent god; known as the Sly One, the Trickster, the Shape Changer or the Sky Traveller; as time wears on he becomes more evil, culminating in him causing the death of Balder, and Loki is then imprisoned until Ragnarok comes; Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 247. Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 41-42.
+loki = { #Source: Kevin Crossley-Holland, "The Norse Myths", 1980, p. 247. Source: Carolyne Larrington, "The Norse Myths: A Guide to the Gods and Heroes", 2017, pp. 41-42.
 	name = "Loki"
 	pantheon = aesir
 	divine_level = 16
@@ -188,7 +188,12 @@ loki = { #son of two giants; attractive, mischief-making and ambivalent god; kno
 		starting_items = {
 			dagger
 		}
+		
+		#son of two giants
 	}
+	
+	#mentioned as attractive, mischief-making and as being an ambivalent god
+	#known as the Sly One, the Trickster, the Shape Changer or the Sky Traveller
 }
 
 mannus = {
