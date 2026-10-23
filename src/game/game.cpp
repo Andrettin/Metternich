@@ -312,6 +312,14 @@ gsml_data game::to_gsml_data() const
 	}
 	data.add_child(std::move(characters_data));
 
+	if (!this->prices.empty()) {
+		gsml_data prices_data("prices");
+		for (const auto &[commodity, price] : this->prices) {
+			prices_data.add_property(commodity->get_identifier(), std::to_string(price));
+		}
+		data.add_child(std::move(prices_data));
+	}
+
 	gsml_data generated_characters_data("generated_characters");
 	for (const qunique_ptr<character> &character : this->get_generated_characters()) {
 		generated_characters_data.add_child(character->to_gsml_data());

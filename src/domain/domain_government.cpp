@@ -99,8 +99,8 @@ gsml_data domain_government::to_gsml_data() const
 
 	if (!this->laws.empty()) {
 		gsml_data laws_data("laws");
-		for (const auto &[law_group, law] : this->get_laws()) {
-			laws_data.add_property(law_group->get_identifier(), law->get_identifier());
+		for (const auto &[law_group, law] : this->laws) {
+			laws_data.add_property(law_group->get_identifier(), law ? law->get_identifier() : "none");
 		}
 		data.add_child(std::move(laws_data));
 	}
