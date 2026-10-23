@@ -3166,13 +3166,11 @@ bool domain_game_data::has_scripted_modifier(const scripted_domain_modifier *mod
 
 QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_domain_modifier *modifier, const int duration)
 {
-	const read_only_context ctx(this->domain);
-
-	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (modifier->get_modifier() != nullptr) {
+	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
 		co_await this->apply_modifier(modifier->get_modifier(), 1);
 	}
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (game::get()->is_running()) {
 		emit scripted_modifiers_changed();

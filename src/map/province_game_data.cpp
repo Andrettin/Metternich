@@ -2093,13 +2093,11 @@ bool province_game_data::has_scripted_modifier(const scripted_province_modifier 
 
 QCoro::Task<void> province_game_data::add_scripted_modifier(const scripted_province_modifier *modifier, const int duration)
 {
-	const read_only_context ctx(this->province);
+	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
+		co_await this->apply_modifier(modifier->get_modifier(), 1);
+	}
 
 	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (modifier->get_modifier() != nullptr) {
-		co_await this->apply_modifier(modifier->get_modifier());
-	}
 
 	if (game::get()->is_running()) {
 		emit scripted_modifiers_changed();

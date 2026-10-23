@@ -2159,13 +2159,11 @@ bool site_game_data::has_scripted_modifier(const scripted_site_modifier *modifie
 
 QCoro::Task<void> site_game_data::add_scripted_modifier(const scripted_site_modifier *modifier, const int duration)
 {
-	const read_only_context ctx(this->site);
-
-	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (modifier->get_modifier() != nullptr) {
+	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
 		co_await modifier->get_modifier()->apply(this->site);
 	}
+
+	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
 
 	if (game::get()->is_running()) {
 		emit scripted_modifiers_changed();
