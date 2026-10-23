@@ -262,30 +262,6 @@ public:
 		this->exploration_changed = true;
 	}
 
-	const domain *get_wonder_domain(const wonder *wonder) const
-	{
-		const auto find_iterator = this->wonder_domains.find(wonder);
-
-		if (find_iterator != this->wonder_domains.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
-	void set_wonder_domain(const wonder *wonder, const domain *domain)
-	{
-		if (domain == this->get_wonder_domain(wonder)) {
-			return;
-		}
-
-		if (domain == nullptr) {
-			this->wonder_domains.erase(wonder);
-		} else {
-			this->wonder_domains[wonder] = domain;
-		}
-	}
-
 	const character *get_character(const std::string &identifier) const;
 	const character *get_generated_character(const std::string &identifier) const;
 	character *get_generated_character(const std::string &identifier);
@@ -376,7 +352,6 @@ private:
 	commodity_map<int64_t> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
-	std::map<const wonder *, const domain *> wonder_domains;
 	std::vector<qunique_ptr<character>> generated_characters;
 	std::map<std::string, character *> generated_characters_by_identifier;
 	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;

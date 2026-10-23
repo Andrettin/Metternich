@@ -569,7 +569,6 @@ QCoro::Task<void> game::clear_coro()
 		this->scenario = nullptr;
 		this->domains.clear();
 		this->countries.clear();
-		this->wonder_domains.clear();
 		this->prices.clear();
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());

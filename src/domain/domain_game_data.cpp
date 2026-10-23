@@ -2763,12 +2763,6 @@ QCoro::Task<void> domain_game_data::on_wonder_gained(const wonder *wonder, const
 	if (wonder->get_domain_modifier() != nullptr) {
 		co_await wonder->get_domain_modifier()->apply(this->domain, multiplier);
 	}
-
-	if (multiplier > 0) {
-		game::get()->set_wonder_domain(wonder, this->domain);
-	} else if (multiplier < 0 && game::get()->get_wonder_domain(wonder) == this->domain) {
-		game::get()->set_wonder_domain(wonder, nullptr);
-	}
 }
 
 std::vector<building_item_slot *> domain_game_data::get_item_slots() const

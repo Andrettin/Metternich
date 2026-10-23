@@ -449,10 +449,6 @@ bool building_slot::can_gain_wonder(const metternich::wonder *wonder) const
 		return false;
 	}
 
-	if (game::get()->get_wonder_domain(wonder) != nullptr) {
-		return false;
-	}
-
 	return true;
 }
 
@@ -703,11 +699,6 @@ bool building_slot::is_available() const
 				if (wonder->get_obsolescence_technology() != nullptr && this->get_domain() != nullptr && this->get_domain()->get_technology()->has_technology(wonder->get_obsolescence_technology())) {
 					continue;
 				}
-
-				if (game::get()->get_wonder_domain(wonder) != nullptr) {
-					continue;
-				}
-				//FIXME: should check whether any other domain has the wonder; if so, the wonder cannot be gained and as such it should not be counted for the purposes of building slot availability
 
 				if (!this->can_have_wonder(wonder)) {
 					continue;
