@@ -49,6 +49,18 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
+	bool affects_military_unit_stats() const;
+
+	const std::vector<const character_stat *> &get_derived_stats() const
+	{
+		return this->derived_stats;
+	}
+
+	void add_derived_stat(const character_stat *stat)
+	{
+		this->derived_stats.push_back(stat);
+	}
+
 	const modifier<const character> *get_value_modifier(const int value) const
 	{
 		const auto find_iterator = this->value_modifiers.find(value);
@@ -59,13 +71,12 @@ public:
 		return nullptr;
 	}
 
-	bool affects_military_unit_stats() const;
-
 signals:
 	void changed();
 
 private:
 	bool affect_military_unit_stats = false;
+	std::vector<const character_stat *> derived_stats; //stats which have the value of this one as their base value, e.g. subattributes, derived skills or derived save types
 	std::map<int, std::unique_ptr<modifier<const character>>> value_modifiers; //the character modifiers applied for each value; these are cumulative
 };
 

@@ -33,7 +33,7 @@ void skill::process_gsml_scope(const gsml_data &scope)
 void skill::initialize()
 {
 	if (this->base_attribute != nullptr) {
-		this->base_attribute->add_derived_skill(this);
+		this->base_attribute->add_derived_stat(this);
 	}
 
 	if (this->find_traps) {

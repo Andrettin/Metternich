@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_game_data.h"
+#include "character/skill.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "util/assert_util.h"
 
@@ -38,7 +39,12 @@ public:
 		assert_throw(this->attribute != nullptr);
 
 		//FIXME: should grant a bonus not only to skills which have their value based upon that of the attribute, but any skills for which the attribute grants the attribute modifier
-		for (const skill *skill : this->attribute->get_derived_skills()) {
+		for (const character_stat *derived_stat : this->attribute->get_derived_stats()) {
+			const skill *skill = dynamic_cast<const metternich::skill *>(derived_stat);
+			if (skill == nullptr) {
+				continue;
+			}
+
 			co_await scope->get_game_data()->change_skill_value(skill, (this->value * multiplier).to_int());
 		}
 	}

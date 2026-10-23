@@ -7,7 +7,7 @@ namespace metternich {
 void save_type::initialize()
 {
 	if (this->base_save_type != nullptr) {
-		this->base_save_type->derived_save_types.push_back(this);
+		this->base_save_type->add_derived_stat(this);
 	}
 
 	character_stat::initialize();

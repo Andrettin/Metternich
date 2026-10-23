@@ -596,7 +596,6 @@ public:
 	int get_initiative_bonus() const;
 
 	int get_save_bonus(const save_type *type) const;
-	[[nodiscard]] QCoro::Task<void> change_save_bonus(const save_type *type, const int change);
 	bool do_save(const save_type *save_type, const int roll_modifier = 0) const;
 	int get_save_chance(const save_type *save_type, const int roll_modifier = 0) const;
 

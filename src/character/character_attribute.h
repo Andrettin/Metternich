@@ -56,29 +56,7 @@ public:
 		throw std::runtime_error(std::format("Invalid rating for attribute \"{}\": \"{}\".", this->get_identifier(), rating));
 	}
 
-	const std::vector<const character_attribute *> &get_subattributes() const
-	{
-		return this->subattributes;
-	}
-	
-	void add_subattribute(const character_attribute *attribute)
-	{
-		if (this->is_subattribute()) {
-			throw std::runtime_error(std::format("Tried to add a subattribute to subattribute \"{}\". Only main attributes can have subattributes.", this->get_identifier()));
-		}
-
-		this->subattributes.push_back(attribute);
-	}
-
-	const std::vector<const skill *> &get_derived_skills() const
-	{
-		return this->derived_skills;
-	}
-	
-	void add_derived_skill(const skill *skill)
-	{
-		this->derived_skills.push_back(skill);
-	}
+	void add_subattribute(const character_attribute *attribute);
 
 	bool is_value_exceptional(const int value) const
 	{
@@ -94,8 +72,6 @@ private:
 	character_attribute_type type{};
 	character_attribute *base_attribute = nullptr;
 	std::map<std::string, std::pair<int, int>> rating_ranges; //names for particular ranges
-	std::vector<const character_attribute *> subattributes;
-	std::vector<const skill *> derived_skills;
 	std::map<int, std::map<int, std::unique_ptr<modifier<const character>>>> exceptional_value_modifiers; //the character modifiers applied for each exceptional value; these are not cumulative
 };
 

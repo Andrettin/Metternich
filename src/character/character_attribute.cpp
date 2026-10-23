@@ -2,6 +2,7 @@
 
 #include "character/character_attribute.h"
 
+#include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
@@ -81,6 +82,15 @@ void character_attribute::initialize()
 	}
 
 	character_stat::initialize();
+}
+
+void character_attribute::add_subattribute(const character_attribute *attribute)
+{
+	if (this->is_subattribute()) {
+		throw std::runtime_error(std::format("Tried to add a subattribute to subattribute \"{}\". Only main attributes can have subattributes.", this->get_identifier()));
+	}
+
+	this->add_derived_stat(attribute);
 }
 
 const modifier<const character> *character_attribute::get_exceptional_value_modifier(const int value, const int exceptional_value) const

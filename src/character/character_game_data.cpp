@@ -1775,7 +1775,7 @@ QCoro::Task<void> character_game_data::set_character_class(const metternich::cha
 			}
 
 			const int bonus_change = new_bonus - old_bonus;
-			co_await this->change_save_bonus(save_type, bonus_change);
+			co_await this->change_typed_stat_value(save_type, bonus_change);
 		}
 	}
 
@@ -1969,7 +1969,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			save_bonus -= character_class->get_save_bonus_table(save_type->get_base_save_type())->get_value_for_level(affected_level) * multiplier;
 		}
 
-		co_await this->change_save_bonus(save_type, save_bonus);
+		co_await this->change_typed_stat_value(save_type, save_bonus);
 	}
 
 	for (const skill *skill : skill::get_all()) {
@@ -2430,7 +2430,9 @@ QCoro::Task<void> character_game_data::change_stat_value(const character_stat *s
 		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
-	//FIXME: change derived stats here
+	for (const character_stat *derived_stat : stat->get_derived_stats()) {
+		co_await this->change_typed_stat_value(derived_stat, change);
+	}
 
 	if (stat_enabled) {
 		co_await this->on_stat_value_changed(stat, new_value, old_value);
@@ -2445,8 +2447,6 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
-	} else if (const save_type *save_type = dynamic_cast<const metternich::save_type *>(stat)) {
-		co_await this->change_save_bonus(save_type, change);
 	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
 		co_await this->change_skill_value(skill, change);
 	} else {
@@ -2556,14 +2556,6 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		if (value_modifier != nullptr) {
 			co_await value_modifier->apply(this->character);
 		}
-	}
-
-	for (const character_attribute *subattribute : attribute->get_subattributes()) {
-		co_await this->change_attribute_value(subattribute, change);
-	}
-
-	for (const skill *skill : attribute->get_derived_skills()) {
-		co_await this->change_skill_value(skill, change);
 	}
 }
 
@@ -3126,19 +3118,6 @@ int character_game_data::get_initiative_bonus() const
 int character_game_data::get_save_bonus(const save_type *type) const
 {
 	return this->get_stat_value(type);
-}
-
-QCoro::Task<void> character_game_data::change_save_bonus(const save_type *type, const int change)
-{
-	if (change == 0) {
-		co_return;
-	}
-
-	co_await this->change_stat_value(type, change, true, false);
-
-	for (const save_type *derived_type : type->get_derived_save_types()) {
-		co_await this->change_save_bonus(derived_type, change);
-	}
 }
 
 bool character_game_data::do_save(const save_type *save_type, const int roll_modifier) const

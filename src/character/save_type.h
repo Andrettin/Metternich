@@ -28,17 +28,11 @@ public:
 		return this->base_save_type;
 	}
 
-	const std::vector<const save_type *> &get_derived_save_types() const
-	{
-		return this->derived_save_types;
-	}
-
 signals:
 	void changed();
 
 private:
 	save_type *base_save_type = nullptr;
-	std::vector<const save_type *> derived_save_types;
 };
 
 }

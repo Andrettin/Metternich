@@ -28,7 +28,7 @@ public:
 				continue;
 			}
 
-			co_await scope->get_game_data()->change_save_bonus(save_type, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_typed_stat_value(save_type, (this->value * multiplier).to_int());
 		}
 	}
 
