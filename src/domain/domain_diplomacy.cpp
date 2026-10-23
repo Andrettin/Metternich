@@ -59,8 +59,13 @@ void domain_diplomacy::process_gsml_property(const gsml_property &property)
 void domain_diplomacy::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "base_opinions") {
+	if (tag == "known_domains") {
+		for (const std::string &value : values) {
+			this->known_domains.insert(domain::get(value));
+		}
+	} else if (tag == "base_opinions") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->base_opinions[domain::get(property.get_key())] = std::stoi(property.get_value());
 		});
@@ -79,6 +84,14 @@ gsml_data domain_diplomacy::to_gsml_data() const
 
 	if (this->get_subject_type() != nullptr) {
 		data.add_property("subject_type", this->get_subject_type()->get_identifier());
+	}
+
+	if (!this->known_domains.empty()) {
+		gsml_data known_domains_data("known_domains");
+		for (const metternich::domain *known_domain : this->known_domains) {
+			known_domains_data.add_value(known_domain->get_identifier());
+		}
+		data.add_child(std::move(known_domains_data));
 	}
 
 	if (!this->base_opinions.empty()) {

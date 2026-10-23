@@ -21,6 +21,7 @@
 #include "unit/military_unit.h"
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
+#include "unit/promotion.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/map_random_util.h"
@@ -38,6 +39,102 @@ domain_military::domain_military(const metternich::domain *domain)
 
 domain_military::~domain_military()
 {
+}
+
+void domain_military::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "deployment_limit") {
+		this->deployment_limit = std::stoi(value);
+	} else if (key == "infantry_cost_modifier") {
+		this->infantry_cost_modifier = std::stoi(value);
+	} else if (key == "cavalry_cost_modifier") {
+		this->cavalry_cost_modifier = std::stoi(value);
+	} else if (key == "artillery_cost_modifier") {
+		this->artillery_cost_modifier = std::stoi(value);
+	} else if (key == "warship_cost_modifier") {
+		this->warship_cost_modifier = std::stoi(value);
+	} else if (key == "unit_upgrade_cost_modifier") {
+		this->unit_upgrade_cost_modifier = std::stoi(value);
+	} else if (key == "leader_cost_modifier") {
+		this->leader_cost_modifier = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid domain military property: \"{}\".", key));
+	}
+}
+
+void domain_military::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "free_infantry_promotion_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_infantry_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "free_cavalry_promotion_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_cavalry_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "free_artillery_promotion_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_artillery_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "free_warship_promotion_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_warship_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else {
+		throw std::runtime_error(std::format("Invalid domain military scope: \"{}\".", tag));
+	}
+}
+
+gsml_data domain_military::to_gsml_data() const
+{
+	gsml_data data("military");
+
+	data.add_property("deployment_limit", std::to_string(this->deployment_limit));
+	data.add_property("infantry_cost_modifier", std::to_string(this->infantry_cost_modifier));
+	data.add_property("cavalry_cost_modifier", std::to_string(this->cavalry_cost_modifier));
+	data.add_property("artillery_cost_modifier", std::to_string(this->artillery_cost_modifier));
+	data.add_property("warship_cost_modifier", std::to_string(this->warship_cost_modifier));
+	data.add_property("unit_upgrade_cost_modifier", std::to_string(this->unit_upgrade_cost_modifier));
+	data.add_property("leader_cost_modifier", std::to_string(this->leader_cost_modifier));
+
+	if (!this->free_infantry_promotion_counts.empty()) {
+		gsml_data free_promotions_data("free_infantry_promotion_counts");
+		for (const auto &[promotion, promotion_count] : this->free_infantry_promotion_counts) {
+			free_promotions_data.add_property(promotion->get_identifier(), std::to_string(promotion_count));
+		}
+		data.add_child(std::move(free_promotions_data));
+	}
+
+	if (!this->free_cavalry_promotion_counts.empty()) {
+		gsml_data free_promotions_data("free_cavalry_promotion_counts");
+		for (const auto &[promotion, promotion_count] : this->free_cavalry_promotion_counts) {
+			free_promotions_data.add_property(promotion->get_identifier(), std::to_string(promotion_count));
+		}
+		data.add_child(std::move(free_promotions_data));
+	}
+
+	if (!this->free_artillery_promotion_counts.empty()) {
+		gsml_data free_promotions_data("free_artillery_promotion_counts");
+		for (const auto &[promotion, promotion_count] : this->free_artillery_promotion_counts) {
+			free_promotions_data.add_property(promotion->get_identifier(), std::to_string(promotion_count));
+		}
+		data.add_child(std::move(free_promotions_data));
+	}
+
+	if (!this->free_warship_promotion_counts.empty()) {
+		gsml_data free_promotions_data("free_warship_promotion_counts");
+		for (const auto &[promotion, promotion_count] : this->free_warship_promotion_counts) {
+			free_promotions_data.add_property(promotion->get_identifier(), std::to_string(promotion_count));
+		}
+		data.add_child(std::move(free_promotions_data));
+	}
+
+	return data;
 }
 
 domain_game_data *domain_military::get_game_data() const

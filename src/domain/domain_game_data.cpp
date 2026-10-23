@@ -227,6 +227,8 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.process(this->get_economy());
 	} else if (tag == "government") {
 		scope.process(this->get_government());
+	} else if (tag == "military") {
+		scope.process(this->get_military());
 	} else if (tag == "technology") {
 		scope.process(this->get_technology());
 	} else {
@@ -349,6 +351,7 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_child(this->get_diplomacy()->to_gsml_data());
 	data.add_child(this->get_economy()->to_gsml_data());
 	data.add_child(this->get_government()->to_gsml_data());
+	data.add_child(this->get_military()->to_gsml_data());
 	data.add_child(this->get_technology()->to_gsml_data());
 
 	return data;

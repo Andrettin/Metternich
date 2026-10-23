@@ -178,6 +178,10 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->natural_armor_class_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
 		this->damage_bonus = std::stoi(value);
+	} else if (key == "office") {
+		this->office = office::get(value);
+	} else if (key == "wealth") {
+		this->wealth = std::stoll(value);
 	} else if (key == "flat_footed") {
 		this->flat_footed = string::to_bool(value);
 	} else if (key == "general_opinion_modifier") {
@@ -445,6 +449,11 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
+	data.add_property("wealth", std::to_string(this->wealth));
+
+	if (this->get_office() != nullptr) {
+		data.add_property("office", this->get_office()->get_identifier());
+	}
 
 	if (this->is_flat_footed()) {
 		data.add_property("flat_footed", string::from_bool(this->is_flat_footed()));

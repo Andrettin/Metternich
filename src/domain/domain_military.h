@@ -31,6 +31,11 @@ public:
 	explicit domain_military(const metternich::domain *domain);
 	~domain_military();
 
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
+
 	domain_game_data *get_game_data() const;
 
 	[[nodiscard]] QCoro::Task<void> do_military_unit_recruitment();

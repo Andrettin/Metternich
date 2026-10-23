@@ -140,6 +140,8 @@ void game::process_gsml_property(const gsml_property &property)
 		this->turn = std::stoi(value);
 	} else if (key == "scenario") {
 		this->scenario = scenario::get(value);
+	} else if (key == "evolutionary") {
+		this->evolutionary = string::to_bool(value);
 	} else if (key == "player_character") {
 		this->player_character = this->get_character(value);
 	} else if (key == "player_domain") {
@@ -193,6 +195,11 @@ void game::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &character_data) {
 			const character *character = character::get(character_data.get_tag());
 			character_data.process(character->get_game_data());
+		});
+	} else if (tag == "prices") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const commodity *commodity = commodity::get(property.get_key());
+			this->prices[commodity] = std::stoll(property.get_value());
 		});
 	} else if (tag == "generated_characters") {
 		scope.for_each_child([this](const gsml_data &character_data) {
@@ -257,6 +264,7 @@ gsml_data game::to_gsml_data() const
 
 	data.add_property("date", date::to_string(this->get_date()));
 	data.add_property("turn", std::to_string(this->turn));
+	data.add_property("evolutionary", string::from_bool(this->evolutionary));
 
 	if (this->get_scenario() != nullptr) {
 		data.add_property("scenario", this->get_scenario()->get_identifier());
@@ -337,6 +345,14 @@ gsml_data game::to_gsml_data() const
 		data.add_child(std::move(delayed_effects_data));
 	}
 
+	if (!this->site_delayed_effects.empty()) {
+		gsml_data delayed_effects_data("site_delayed_effects");
+		for (const auto &delayed_effect : this->site_delayed_effects) {
+			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+		}
+		data.add_child(std::move(delayed_effects_data));
+	}
+
 	if (!this->fired_events.empty()) {
 		gsml_data fired_events_data("fired_events");
 		for (const metternich::event *fired_event : this->fired_events) {
@@ -402,6 +418,8 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		});
 
 		data.process(this);
+
+		this->loaded = true;
 
 		for (const domain *domain : this->get_domains()) {
 			domain->get_game_data()->calculate_territory_rect();

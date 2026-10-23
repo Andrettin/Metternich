@@ -72,7 +72,11 @@ void domain_government::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
 
-	if (tag == "office_holders") {
+	if (tag == "laws") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->laws[law_group::get(property.get_key())] = law::get(property.get_value());
+		});
+	} else if (tag == "office_holders") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->office_holders[office::get(property.get_key())] = game::get()->get_character(property.get_value());
 		});
@@ -91,6 +95,14 @@ gsml_data domain_government::to_gsml_data() const
 
 	if (this->get_succession_gender_type() != succession_gender_type::none) {
 		data.add_property("succession_gender_type", std::string(magic_enum::enum_name(this->get_succession_gender_type())));
+	}
+
+	if (!this->laws.empty()) {
+		gsml_data laws_data("laws");
+		for (const auto &[law_group, law] : this->get_laws()) {
+			laws_data.add_property(law_group->get_identifier(), law->get_identifier());
+		}
+		data.add_child(std::move(laws_data));
 	}
 
 	if (!this->get_office_holders().empty()) {
