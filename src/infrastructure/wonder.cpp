@@ -116,11 +116,6 @@ commodity_map<int64_t> wonder::get_commodity_costs_for_domain(const domain *doma
 
 	for (auto &[commodity, cost] : costs) {
 		if (cost > 0) {
-			if (domain->get_game_data()->get_wonder_cost_efficiency_modifier() != 0) {
-				cost *= 100;
-				cost /= 100 + domain->get_game_data()->get_wonder_cost_efficiency_modifier();
-			}
-
 			if (this->get_cost_factor() != nullptr) {
 				cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
 			}

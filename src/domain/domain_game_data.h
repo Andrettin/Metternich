@@ -912,16 +912,6 @@ public:
 		this->set_building_class_cost_efficiency_modifier(building_class, this->get_building_class_cost_efficiency_modifier(building_class) + value);
 	}
 
-	int get_wonder_cost_efficiency_modifier() const
-	{
-		return this->wonder_cost_efficiency_modifier;
-	}
-
-	void change_wonder_cost_efficiency_modifier(const int change)
-	{
-		this->wonder_cost_efficiency_modifier += change;
-	}
-
 	Q_INVOKABLE bool is_tile_explored(const QPoint &tile_pos) const;
 	bool is_province_discovered(const province *province) const;
 
@@ -1120,7 +1110,6 @@ private:
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	int building_cost_efficiency_modifier = 0;
 	building_class_map<int> building_class_cost_efficiency_modifiers;
-	int wonder_cost_efficiency_modifier = 0;
 	province_set explored_provinces;
 	point_set prospected_tiles;
 	std::vector<const journal_entry *> active_journal_entries;
