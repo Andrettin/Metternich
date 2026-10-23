@@ -5,7 +5,6 @@
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
-#include "util/assert_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
