@@ -68,6 +68,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
@@ -99,6 +100,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_type_name = value;
 	} else if (key == "ruin_building_count") {
 		this->ruin_building_count = std::stoi(value);
+	} else if (key == "resource_discovered") {
+		this->resource_discovered = string::to_bool(value);
 	} else if (key == "base_population_capacity") {
 		this->base_population_capacity = std::stoll(value);
 	} else if (key == "population_capacity_modifier") {
@@ -107,6 +110,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->population_capacity = std::stoll(value);
 	} else if (key == "quarterly_population_growth_rate") {
 		this->quarterly_population_growth_rate = decimillesimal_int(value);
+	} else if (key == "output_modifier") {
+		this->output_modifier = centesimal_int(value);
 	} else if (key == "holding_level_income") {
 		this->holding_level_income = std::stoll(value);
 	} else {
@@ -234,6 +239,8 @@ gsml_data site_game_data::to_gsml_data() const
 	if (this->ruin_building_count != 0) {
 		data.add_property("ruin_building_count", std::to_string(this->ruin_building_count));
 	}
+
+	data.add_property("resource_discovered", string::from_bool(this->resource_discovered));
 
 	if (this->get_holding_level() != 0) {
 		data.add_property("holding_level", this->get_holding_level().to_string());
@@ -363,6 +370,10 @@ gsml_data site_game_data::to_gsml_data() const
 			commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
 		}
 		data.add_child(std::move(commodity_outputs_data));
+	}
+
+	if (this->output_modifier != 0) {
+		data.add_property("output_modifier", this->output_modifier.to_string());
 	}
 
 	if (!this->get_commodity_output_modifiers().empty()) {
