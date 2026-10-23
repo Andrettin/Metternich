@@ -4,6 +4,11 @@
 #include "infrastructure/building_type_container.h"
 #include "map/site_container.h"
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class domain;
@@ -18,6 +23,11 @@ class domain_ai final : public QObject
 public:
 	explicit domain_ai(const metternich::domain *domain);
 	~domain_ai();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	domain_game_data *get_game_data() const;
 
@@ -59,11 +69,11 @@ public:
 		this->set_building_desire_modifier(building, this->get_building_desire_modifier(building) + value);
 	}
 
-	int get_settlement_building_desire_modifier(const site *settlement, const building_type *building) const
+	int get_holding_building_desire_modifier(const site *holding, const building_type *building) const
 	{
-		const auto find_iterator = this->settlement_building_desire_modifiers.find(settlement);
+		const auto find_iterator = this->holding_building_desire_modifiers.find(holding);
 
-		if (find_iterator != this->settlement_building_desire_modifiers.end()) {
+		if (find_iterator != this->holding_building_desire_modifiers.end()) {
 			const auto sub_find_iterator = find_iterator->second.find(building);
 
 			if (sub_find_iterator != find_iterator->second.end()) {
@@ -74,32 +84,32 @@ public:
 		return 0;
 	}
 
-	void set_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
+	void set_holding_building_desire_modifier(const site *holding, const building_type *building, const int value)
 	{
-		if (value == this->get_settlement_building_desire_modifier(settlement, building)) {
+		if (value == this->get_holding_building_desire_modifier(holding, building)) {
 			return;
 		}
 
 		if (value == 0) {
-			this->settlement_building_desire_modifiers[settlement].erase(building);
+			this->holding_building_desire_modifiers[holding].erase(building);
 
-			if (this->settlement_building_desire_modifiers[settlement].empty()) {
-				this->settlement_building_desire_modifiers.erase(settlement);
+			if (this->holding_building_desire_modifiers[holding].empty()) {
+				this->holding_building_desire_modifiers.erase(holding);
 			}
 		} else {
-			this->settlement_building_desire_modifiers[settlement][building] = value;
+			this->holding_building_desire_modifiers[holding][building] = value;
 		}
 	}
 
-	void change_settlement_building_desire_modifier(const site *settlement, const building_type *building, const int value)
+	void change_holding_building_desire_modifier(const site *holding, const building_type *building, const int value)
 	{
-		this->set_settlement_building_desire_modifier(settlement, building, this->get_settlement_building_desire_modifier(settlement, building) + value);
+		this->set_holding_building_desire_modifier(holding, building, this->get_holding_building_desire_modifier(holding, building) + value);
 	}
 
 private:
 	const metternich::domain *domain = nullptr;
 	building_type_map<int> building_desire_modifiers;
-	site_map<building_type_map<int>> settlement_building_desire_modifiers;
+	site_map<building_type_map<int>> holding_building_desire_modifiers;
 };
 
 }

@@ -221,6 +221,8 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->finished_journal_entries.push_back(journal_entry::get(value));
 		}
+	} else if (tag == "ai") {
+		scope.process(this->get_ai());
 	} else if (tag == "diplomacy") {
 		scope.process(this->get_diplomacy());
 	} else if (tag == "economy") {
@@ -348,6 +350,7 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_child(std::move(flags_data));
 	}
 
+	data.add_child(this->get_ai()->to_gsml_data());
 	data.add_child(this->get_diplomacy()->to_gsml_data());
 	data.add_child(this->get_economy()->to_gsml_data());
 	data.add_child(this->get_government()->to_gsml_data());
@@ -4099,7 +4102,7 @@ QCoro::Task<void> domain_game_data::add_active_journal_entry(const journal_entry
 
 	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->get_ai()->change_settlement_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_holding_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
@@ -4118,7 +4121,7 @@ QCoro::Task<void> domain_game_data::remove_active_journal_entry(const journal_en
 
 	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->get_ai()->change_settlement_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_holding_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
