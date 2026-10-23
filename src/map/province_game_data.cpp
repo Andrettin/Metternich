@@ -148,6 +148,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->technologies.insert(technology::get(value));
 		}
+	} else if (tag == "scripted_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->scripted_modifiers[scripted_province_modifier::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "domain_skill_total_holding_levels") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->domain_skill_total_holding_levels[domain_skill::get(property.get_key())] = centesimal_int(property.get_value());
@@ -281,6 +285,14 @@ gsml_data province_game_data::to_gsml_data() const
 			technologies_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(technologies_data));
+	}
+
+	if (!this->scripted_modifiers.empty()) {
+		gsml_data scripted_modifiers_data("scripted_modifiers");
+		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
+			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
+		}
+		data.add_child(std::move(scripted_modifiers_data));
 	}
 
 	if (!this->population_type_modifier_multipliers.empty()) {

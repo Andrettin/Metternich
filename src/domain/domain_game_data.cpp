@@ -192,6 +192,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->characters.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "scripted_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->scripted_modifiers[scripted_domain_modifier::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "historical_rulers") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->historical_rulers[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
@@ -208,6 +212,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "flags") {
 		for (const std::string &value : values) {
 			this->flags.insert(flag::get(value));
+		}
+	} else if (tag == "explored_provinces") {
+		for (const std::string &value : values) {
+			this->explored_provinces.insert(province::get(value));
 		}
 	} else if (tag == "active_journal_entries") {
 		for (const std::string &value : values) {
@@ -294,6 +302,14 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 	data.add_child(std::move(characters_data));
 
+	if (!this->scripted_modifiers.empty()) {
+		gsml_data scripted_modifiers_data("scripted_modifiers");
+		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
+			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
+		}
+		data.add_child(std::move(scripted_modifiers_data));
+	}
+
 	if (!this->historical_rulers.empty()) {
 		gsml_data historical_rulers_data("historical_rulers");
 		for (const auto &[date, historical_ruler] : this->historical_rulers) {
@@ -316,6 +332,14 @@ gsml_data domain_game_data::to_gsml_data() const
 			civilian_units_data.add_child(civilian_unit->to_gsml_data());
 		}
 		data.add_child(std::move(civilian_units_data));
+	}
+
+	if (!this->explored_provinces.empty()) {
+		gsml_data explored_provinces_data("explored_provinces");
+		for (const province *province : this->explored_provinces) {
+			explored_provinces_data.add_value(province->get_identifier());
+		}
+		data.add_child(std::move(explored_provinces_data));
 	}
 
 	if (!this->active_journal_entries.empty()) {

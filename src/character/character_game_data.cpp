@@ -279,6 +279,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->trait_choices[trait_type].push_back(trait::get(child_value));
 			}
 		});
+	} else if (tag == "scripted_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->scripted_modifiers[scripted_character_modifier::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "learned_spell_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->learned_spell_counts[spell::get(property.get_key())] = std::stoi(property.get_value());
@@ -529,6 +533,14 @@ gsml_data character_game_data::to_gsml_data() const
 			trait_choices_data.add_child(std::move(trait_type_data));
 		}
 		data.add_child(std::move(trait_choices_data));
+	}
+
+	if (!this->scripted_modifiers.empty()) {
+		gsml_data scripted_modifiers_data("scripted_modifiers");
+		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
+			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
+		}
+		data.add_child(std::move(scripted_modifiers_data));
 	}
 
 	if (!this->learned_spell_counts.empty()) {
