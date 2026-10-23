@@ -10,7 +10,7 @@ ice_toad = {
 	modifier = {
 		hit_dice = 5d8
 		natural_armor_class = 6
-		to_hit_bonus = 5
+		to_hit = 5
 		movement = 9
 	}
 }

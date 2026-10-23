@@ -19,7 +19,7 @@ dwarven_defender = {
 		dwarf
 	}
 	conditions = {
-		to_hit_bonus >= 7
+		to_hit >= 7
 		trait = dodge
 		#trait = endurance
 		trait = toughness

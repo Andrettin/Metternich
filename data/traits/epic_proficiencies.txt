@@ -32,7 +32,7 @@ epic_prowess = {
 		epic_proficiency
 	}
 	modifier = {
-		to_hit_bonus = 1
+		to_hit = 1
 	}
 }
 

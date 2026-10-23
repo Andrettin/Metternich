@@ -138,7 +138,7 @@ divine_weapon_specialization_bows = {
 		divine_trait
 	}
 	conditions = {
-		to_hit_bonus >= 20
+		to_hit >= 20
 		trait = divine_weapon_focus_bows
 	}
 	gain_conditions = {
@@ -163,7 +163,7 @@ divine_weapon_specialization_heavy_blades = {
 		divine_trait
 	}
 	conditions = {
-		to_hit_bonus >= 20
+		to_hit >= 20
 		trait = divine_weapon_focus_heavy_blades
 	}
 	gain_conditions = {

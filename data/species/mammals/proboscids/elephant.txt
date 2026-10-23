@@ -23,7 +23,7 @@ elephant = {
 	modifier = {
 		hit_dice = 11d8
 		natural_armor_class = 4
-		to_hit_bonus = 11
+		to_hit = 11
 		movement = 15
 		trait = iron_will
 	}

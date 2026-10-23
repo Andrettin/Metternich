@@ -176,8 +176,6 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->base_armor_class_bonus = std::stoi(value);
 	} else if (key == "natural_armor_class_bonus") {
 		this->natural_armor_class_bonus = std::stoi(value);
-	} else if (key == "to_hit_bonus") {
-		this->to_hit_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
 		this->damage_bonus = std::stoi(value);
 	} else if (key == "movement") {
@@ -454,7 +452,6 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("max_craft", std::to_string(this->get_max_craft()));
 	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
-	data.add_property("to_hit_bonus", std::to_string(this->get_to_hit_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
 	data.add_property("movement", std::to_string(this->get_movement()));
 	data.add_property("initiative_bonus", std::to_string(this->get_initiative_bonus()));
@@ -1974,7 +1971,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 	}
 
 	if (character_class->get_to_hit_bonus_table() != nullptr) {
-		this->change_to_hit_bonus(character_class->get_to_hit_bonus_table()->get_value_for_level(affected_level) * multiplier);
+		co_await this->change_typed_stat_value(character_stat::to_hit.get(), character_class->get_to_hit_bonus_table()->get_value_for_level(affected_level) * multiplier);
 	}
 
 	for (const save_type *save_type : save_type::get_all()) {
@@ -3006,26 +3003,9 @@ void character_game_data::change_species_armor_class_bonus(const species *specie
 	}
 }
 
-void character_game_data::set_to_hit_bonus(const int bonus)
+int character_game_data::get_to_hit_bonus() const
 {
-	if (bonus == this->get_to_hit_bonus()) {
-		return;
-	}
-
-	this->to_hit_bonus = bonus;
-
-	if (this->get_military_unit() != nullptr) {
-		this->update_military_unit_stats();
-	}
-
-	if (game::get()->is_running()) {
-		emit to_hit_bonus_changed();
-	}
-}
-
-void character_game_data::change_to_hit_bonus(const int change)
-{
-	this->set_to_hit_bonus(this->get_to_hit_bonus() + change);
+	return this->get_stat_value(character_stat::to_hit.get());
 }
 
 void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_type, const int change)

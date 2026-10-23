@@ -772,7 +772,6 @@ set(script_condition_HDRS
 	src/script/condition/technology_condition.h
 	src/script/condition/terrain_condition.h
 	src/script/condition/tier_condition.h
-	src/script/condition/to_hit_bonus_condition.h
 	src/script/condition/trait_condition.h
 	src/script/condition/war_condition.h
 	src/script/condition/year_condition.h
@@ -930,7 +929,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/technology_cost_modifier_effect.h
 	src/script/modifier_effect/technology_spread_modifier_effect.h
 	src/script/modifier_effect/throughput_modifier_effect.h
-	src/script/modifier_effect/to_hit_bonus_modifier_effect.h
 	src/script/modifier_effect/trade_efficiency_modifier_effect.h
 	src/script/modifier_effect/trait_modifier_effect.h
 	src/script/modifier_effect/trait_of_type_modifier_effect.h

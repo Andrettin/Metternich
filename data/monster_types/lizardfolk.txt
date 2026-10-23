@@ -9,7 +9,7 @@ lizardfolk = {
 	modifier = {
 		hit_dice = 2d8+1
 		armor_class = 5
-		to_hit_bonus = 1
+		to_hit = 1
 		save_bonus = 3
 		movement = 6
 	}

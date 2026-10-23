@@ -3,37 +3,37 @@ strength = {
 	type = main
 	value_modifiers = {
 		1 = {
-			to_hit_bonus = -5
+			to_hit = -5
 			damage_bonus = -4
 		}
 		2 = {
-			to_hit_bonus = 2
+			to_hit = 2
 			damage_bonus = 2
 		}
 		3 = {
 			damage_bonus = 1
 		}
 		4 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		6 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		8 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		16 = {
 			damage_bonus = 1
 		}
 		17 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		18 = {
 			damage_bonus = 1
 		}
 		19 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		20 = {
@@ -43,7 +43,7 @@ strength = {
 			damage_bonus = 1
 		}
 		22 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		23 = {
@@ -53,66 +53,66 @@ strength = {
 			damage_bonus = 1
 		}
 		25 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		26 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		27 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		27 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		33 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		39 = {
-			to_hit_bonus = 1
+			to_hit = 1
 		}
 		46 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		54 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		63 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		71 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		78 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		84 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		89 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		94 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		97 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		99 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 		100 = {
-			to_hit_bonus = 1
+			to_hit = 1
 			damage_bonus = 1
 		}
 	}
@@ -122,19 +122,19 @@ strength = {
 				damage_bonus = 1
 			}
 			51 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 1
 			}
 			76 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 2
 			}
 			91 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 3
 			}
 			100 = {
-				to_hit_bonus = 2
+				to_hit = 2
 				damage_bonus = 4
 			}
 		}
@@ -148,7 +148,7 @@ strength = {
 				damage_bonus = 2
 			}
 			100 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 3
 			}
 		}
@@ -159,7 +159,7 @@ strength = {
 				damage_bonus = 1
 			}
 			100 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 2
 			}
 		}
@@ -167,7 +167,7 @@ strength = {
 			1 = {
 			}
 			100 = {
-				to_hit_bonus = 1
+				to_hit = 1
 				damage_bonus = 1
 			}
 		}

@@ -7,7 +7,7 @@ weapon_1 = {
 		long_sword
 	}
 	modifier = {
-		to_hit_bonus = 1
+		to_hit = 1
 		damage_bonus = 1
 	}
 }
@@ -20,7 +20,7 @@ weapon_2 = {
 		short_sword
 	}
 	modifier = {
-		to_hit_bonus = 2
+		to_hit = 2
 		damage_bonus = 2
 	}
 }

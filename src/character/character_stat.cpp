@@ -5,8 +5,6 @@
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
-#include "util/assert_util.h"
-#include "util/string_util.h"
 
 namespace metternich {
 
@@ -21,6 +19,13 @@ const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
 	armor_class->value_modifiers[10] = std::move(value_modifier_10);
 
 	return armor_class;
+}();
+
+const std::unique_ptr<const character_stat> character_stat::to_hit = []() {
+	auto to_hit = std::make_unique<character_stat>("to_hit");
+	to_hit->set_name("To Hit");
+	to_hit->affect_military_unit_stats = true;
+	return to_hit;
 }();
 
 character_stat::character_stat(const std::string &identifier) : named_data_entry(identifier)

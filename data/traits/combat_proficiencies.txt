@@ -79,7 +79,7 @@ weapon_focus_bows = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {
@@ -101,7 +101,7 @@ weapon_focus_claw = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {
@@ -123,7 +123,7 @@ weapon_focus_heavy_blades = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {
@@ -145,7 +145,7 @@ weapon_focus_light_blades = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {
@@ -167,7 +167,7 @@ weapon_focus_maces = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {
@@ -189,7 +189,7 @@ weapon_focus_tail = {
 		combat_proficiency
 	}
 	conditions = {
-		to_hit_bonus >= 1
+		to_hit >= 1
 	}
 	gain_conditions = {
 		item = {

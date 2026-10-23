@@ -88,7 +88,6 @@
 #include "script/modifier_effect/technology_cost_modifier_effect.h"
 #include "script/modifier_effect/technology_spread_modifier_effect.h"
 #include "script/modifier_effect/throughput_modifier_effect.h"
-#include "script/modifier_effect/to_hit_bonus_modifier_effect.h"
 #include "script/modifier_effect/trade_efficiency_modifier_effect.h"
 #include "script/modifier_effect/trait_modifier_effect.h"
 #include "script/modifier_effect/trait_of_type_modifier_effect.h"
@@ -156,8 +155,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<skill_training_modifier_effect>(value);
 		} else if (key == "spell") {
 			return std::make_unique<spell_modifier_effect>(value);
-		} else if (key == "to_hit_bonus") {
-			return std::make_unique<to_hit_bonus_modifier_effect>(value);
 		} else if (key == "trait") {
 			return std::make_unique<trait_modifier_effect>(value);
 		} else if (key == "trait_of_type") {

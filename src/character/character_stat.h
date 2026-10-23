@@ -40,6 +40,7 @@ private:
 
 public:
 	static const std::unique_ptr<const character_stat> armor_class;
+	static const std::unique_ptr<const character_stat> to_hit;
 
 	explicit character_stat(const std::string &identifier);
 	~character_stat();

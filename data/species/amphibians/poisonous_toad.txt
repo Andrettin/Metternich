@@ -10,7 +10,7 @@ poisonous_toad = {
 	modifier = {
 		hit_dice = 2d8
 		natural_armor_class = 3
-		to_hit_bonus = 1
+		to_hit = 1
 		movement = 6
 		#FIXME: should cause poison when attacking
 	}

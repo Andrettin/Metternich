@@ -96,7 +96,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int max_mana READ get_max_mana NOTIFY max_mana_changed)
 	Q_PROPERTY(int craft READ get_craft NOTIFY craft_changed)
 	Q_PROPERTY(int max_craft READ get_max_craft NOTIFY max_craft_changed)
-	Q_PROPERTY(int to_hit_bonus READ get_to_hit_bonus NOTIFY to_hit_bonus_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
 	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
 	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
@@ -547,13 +546,7 @@ public:
 
 	void change_species_armor_class_bonus(const species *species, const int change);
 
-	int get_to_hit_bonus() const
-	{
-		return this->to_hit_bonus;
-	}
-
-	void set_to_hit_bonus(const int bonus);
-	void change_to_hit_bonus(const int change);
+	int get_to_hit_bonus() const;
 
 	const data_entry_map<item_type, int> &get_weapon_to_hit_bonuses() const
 	{
@@ -1160,7 +1153,6 @@ signals:
 	void base_armor_class_bonus_changed();
 	void natural_armor_class_bonus_changed();
 	void species_armor_class_bonuses_changed();
-	void to_hit_bonus_changed();
 	void weapon_to_hit_bonuses_changed();
 	void damage_bonus_changed();
 	void weapon_damage_bonuses_changed();
@@ -1224,7 +1216,6 @@ private:
 	int base_armor_class_bonus = 0; //armor class from body armor
 	int natural_armor_class_bonus = 0;
 	data_entry_map<species, int> species_armor_class_bonuses; //armor class bonuses when attacked by certain species
-	int to_hit_bonus = 0;
 	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
 	data_entry_map<item_type, int> weapon_damage_bonuses;
