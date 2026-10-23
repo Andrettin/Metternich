@@ -155,8 +155,6 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trait_of_type_modifier_effect>(value);
 		} else if (key == "weight") {
 			return std::make_unique<weight_modifier_effect>(value);
-		} else if (save_type::try_get(key) != nullptr) {
-			return std::make_unique<save_modifier_effect>(save_type::get(key), value);
 		} else if (character_stat::try_get_stat(key) != nullptr) {
 			return std::make_unique<character_stat_modifier_effect>(character_stat::get_stat(key), value);
 		} else if (damage_reduction_type::try_get(key) != nullptr) {

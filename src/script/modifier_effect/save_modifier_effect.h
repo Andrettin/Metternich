@@ -10,13 +10,8 @@ namespace metternich {
 class save_modifier_effect final : public modifier_effect<const character>
 {
 public:
-	explicit save_modifier_effect(const save_type *type, const std::string &value)
-		: modifier_effect<const character>(value), type(type)
-	{
-	}
-
 	explicit save_modifier_effect(const std::string &value)
-		: modifier_effect<const character>(value), type(nullptr)
+		: modifier_effect<const character>(value)
 	{
 	}
 
@@ -26,18 +21,14 @@ public:
 		return identifier;
 	}
 
-	virtual void apply(const character *scope, const decimillesimal_int &multiplier) const override
+	[[nodiscard]] virtual QCoro::Task<void> apply_coro(const character *scope, const decimillesimal_int &multiplier) const override
 	{
-		if (this->type == nullptr) {
-			for (const save_type *save_type : save_type::get_all()) {
-				if (save_type->get_base_save_type() != nullptr) {
-					continue;
-				}
-
-				scope->get_game_data()->change_save_bonus(save_type, (this->value * multiplier).to_int());
+		for (const save_type *save_type : save_type::get_all()) {
+			if (save_type->get_base_save_type() != nullptr) {
+				continue;
 			}
-		} else {
-			scope->get_game_data()->change_save_bonus(this->type, (this->value * multiplier).to_int());
+
+			co_await scope->get_game_data()->change_save_bonus(save_type, (this->value * multiplier).to_int());
 		}
 	}
 
@@ -45,15 +36,8 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		if (this->type == nullptr) {
-			return "Save Bonus";
-		}
-
-		return this->type->get_name();
+		return "Save Bonus";
 	}
-
-private:
-	const save_type *type = nullptr;
 };
 
 }

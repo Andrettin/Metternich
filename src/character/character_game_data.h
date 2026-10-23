@@ -97,7 +97,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int craft READ get_craft NOTIFY craft_changed)
 	Q_PROPERTY(int max_craft READ get_max_craft NOTIFY max_craft_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
-	Q_PROPERTY(QVariantList save_bonuses READ get_save_bonuses_qvariant_list NOTIFY save_bonuses_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(bool ruler READ is_ruler NOTIFY ruler_changed)
@@ -596,24 +595,8 @@ public:
 	int get_combat_movement() const;
 	int get_initiative_bonus() const;
 
-	const data_entry_map<save_type, int> &get_save_bonuses() const
-	{
-		return this->save_bonuses;
-	}
-
-	QVariantList get_save_bonuses_qvariant_list() const;
-
-	int get_save_bonus(const save_type *type) const
-	{
-		const auto find_iterator = this->save_bonuses.find(type);
-		if (find_iterator != this->save_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_save_bonus(const save_type *type, const int change);
+	int get_save_bonus(const save_type *type) const;
+	[[nodiscard]] QCoro::Task<void> change_save_bonus(const save_type *type, const int change);
 	bool do_save(const save_type *save_type, const int roll_modifier = 0) const;
 	int get_save_chance(const save_type *save_type, const int roll_modifier = 0) const;
 
@@ -1140,7 +1123,6 @@ signals:
 	void weapon_to_hit_bonuses_changed();
 	void damage_bonus_changed();
 	void weapon_damage_bonuses_changed();
-	void save_bonuses_changed();
 	void skill_trainings_changed();
 	void damage_reductions_changed();
 	void traits_changed();
@@ -1201,7 +1183,6 @@ private:
 	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
 	data_entry_map<item_type, int> weapon_damage_bonuses;
-	data_entry_map<save_type, int> save_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<damage_reduction_type, int> damage_reductions;
 	data_entry_map<trait, int> trait_counts;

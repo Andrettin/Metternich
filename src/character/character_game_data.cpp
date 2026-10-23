@@ -253,10 +253,6 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->weapon_damage_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
 		});
-	} else if (tag == "save_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->save_bonuses[save_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
 	} else if (tag == "skill_trainings") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
@@ -488,14 +484,6 @@ gsml_data character_game_data::to_gsml_data() const
 			weapon_damage_bonuses_data.add_property(weapon_type->get_identifier(), std::to_string(bonus));
 		}
 		data.add_child(std::move(weapon_damage_bonuses_data));
-	}
-
-	if (!this->save_bonuses.empty()) {
-		gsml_data save_bonuses_data("save_bonuses");
-		for (const auto &[save_type, bonus] : this->save_bonuses) {
-			save_bonuses_data.add_property(save_type->get_identifier(), std::to_string(bonus));
-		}
-		data.add_child(std::move(save_bonuses_data));
 	}
 
 	if (!this->skill_trainings.empty()) {
@@ -1787,7 +1775,7 @@ QCoro::Task<void> character_game_data::set_character_class(const metternich::cha
 			}
 
 			const int bonus_change = new_bonus - old_bonus;
-			this->change_save_bonus(save_type, bonus_change);
+			co_await this->change_save_bonus(save_type, bonus_change);
 		}
 	}
 
@@ -1981,7 +1969,7 @@ QCoro::Task<void> character_game_data::on_level_gained(const int affected_level,
 			save_bonus -= character_class->get_save_bonus_table(save_type->get_base_save_type())->get_value_for_level(affected_level) * multiplier;
 		}
 
-		this->change_save_bonus(save_type, save_bonus);
+		co_await this->change_save_bonus(save_type, save_bonus);
 	}
 
 	for (const skill *skill : skill::get_all()) {
@@ -2457,6 +2445,8 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
+	} else if (const save_type *save_type = dynamic_cast<const metternich::save_type *>(stat)) {
+		co_await this->change_save_bonus(save_type, change);
 	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
 		co_await this->change_skill_value(skill, change);
 	} else {
@@ -3133,28 +3123,21 @@ int character_game_data::get_initiative_bonus() const
 	return this->get_stat_value(character_stat::initiative.get());
 }
 
-QVariantList character_game_data::get_save_bonuses_qvariant_list() const
+int character_game_data::get_save_bonus(const save_type *type) const
 {
-	return archimedes::map::to_qvariant_list(this->get_save_bonuses());
+	return this->get_stat_value(type);
 }
 
-void character_game_data::change_save_bonus(const save_type *type, const int change)
+QCoro::Task<void> character_game_data::change_save_bonus(const save_type *type, const int change)
 {
 	if (change == 0) {
-		return;
+		co_return;
 	}
 
-	const int new_value = (this->save_bonuses[type] += change);
-	if (new_value == 0) {
-		this->save_bonuses.erase(type);
-	}
+	co_await this->change_stat_value(type, change, true, false);
 
 	for (const save_type *derived_type : type->get_derived_save_types()) {
-		this->change_save_bonus(derived_type, change);
-	}
-
-	if (game::get()->is_running()) {
-		emit save_bonuses_changed();
+		co_await this->change_save_bonus(derived_type, change);
 	}
 }
 

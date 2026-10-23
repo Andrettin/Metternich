@@ -10,11 +10,12 @@ void save_type::initialize()
 		this->base_save_type->derived_save_types.push_back(this);
 	}
 
-	named_data_entry::initialize();
+	character_stat::initialize();
 }
 
 void save_type::check() const
 {
+	character_stat::check();
 }
 
 }

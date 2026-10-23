@@ -1,11 +1,11 @@
 #pragma once
 
+#include "character/character_stat.h"
 #include "database/data_type.h"
-#include "database/named_data_entry.h"
 
 namespace metternich {
 
-class save_type final : public named_data_entry, public data_type<save_type>
+class save_type final : public character_stat, public data_type<save_type>
 {
 	Q_OBJECT
 
@@ -16,7 +16,7 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::save_type*";
 	static constexpr const char database_folder[] = "save_types";
 
-	explicit save_type(const std::string &identifier) : named_data_entry(identifier)
+	explicit save_type(const std::string &identifier) : character_stat(identifier)
 	{
 	}
 

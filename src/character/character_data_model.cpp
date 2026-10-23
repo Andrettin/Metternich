@@ -159,7 +159,7 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_movement_row);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_initiative_bonus_row);
 		disconnect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
-		disconnect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_save_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
@@ -192,7 +192,7 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_movement_row);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_initiative_bonus_row);
 		connect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
-		connect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_save_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_skill_rows);
 		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_domain_skill_rows);
@@ -817,8 +817,13 @@ void character_data_model::update_save_rows()
 
 	data_entry_map<save_type, character_data_row *> save_type_rows;
 
-	for (const auto &[save_type, bonus] : character_game_data->get_save_bonuses()) {
-		this->create_save_row(save_type, bonus, save_type_rows);
+	for (const auto &[stat, value] : character_game_data->get_stat_values()) {
+		const save_type *save_type = dynamic_cast<const metternich::save_type *>(stat);
+		if (save_type == nullptr) {
+			continue;
+		}
+
+		this->create_save_row(save_type, value, save_type_rows);
 	}
 
 	this->on_child_rows_inserted(this->save_row);
