@@ -156,8 +156,8 @@ void character_data_model::set_character(const metternich::character *character)
 		disconnect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_critical_hit_chance_row);
 		disconnect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
-		disconnect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
-		disconnect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_movement_row);
+		disconnect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_initiative_bonus_row);
 		disconnect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		disconnect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);
@@ -189,8 +189,8 @@ void character_data_model::set_character(const metternich::character *character)
 		connect(this->character->get_game_data(), &character_game_data::weapon_damage_bonuses_changed, this, &character_data_model::update_damage_rows);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_critical_hit_chance_row);
 		connect(this->character->get_game_data(), &character_game_data::equipped_items_changed, this, &character_data_model::update_range_row);
-		connect(this->character->get_game_data(), &character_game_data::movement_changed, this, &character_data_model::update_movement_row);
-		connect(this->character->get_game_data(), &character_game_data::initiative_bonus_changed, this, &character_data_model::update_initiative_bonus_row);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_movement_row);
+		connect(this->character->get_game_data(), &character_game_data::stat_values_changed, this, &character_data_model::update_initiative_bonus_row);
 		connect(this->character->get_game_data(), &character_game_data::damage_reductions_changed, this, &character_data_model::update_damage_reduction_rows);
 		connect(this->character->get_game_data(), &character_game_data::save_bonuses_changed, this, &character_data_model::update_save_rows);
 		connect(this->character->get_game_data(), &character_game_data::skill_trainings_changed, this, &character_data_model::update_skill_rows);

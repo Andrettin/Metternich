@@ -891,7 +891,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/industrial_output_modifier_effect.h
 	src/script/modifier_effect/industrial_throughput_modifier_effect.h
 	src/script/modifier_effect/infantry_cost_modifier_effect.h
-	src/script/modifier_effect/initiative_modifier_effect.h
 	src/script/modifier_effect/law_cost_modifier_effect.h
 	src/script/modifier_effect/leader_cost_modifier_effect.h
 	src/script/modifier_effect/level_adjustment_modifier_effect.h
@@ -904,7 +903,6 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/monthly_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/monthly_technology_category_research_modifier_effect.h
 	src/script/modifier_effect/movement_cost_modifier_effect.h
-	src/script/modifier_effect/movement_modifier_effect.h
 	src/script/modifier_effect/natural_armor_class_modifier_effect.h
 	src/script/modifier_effect/natural_weapon_modifier_effect.h
 	src/script/modifier_effect/output_modifier_effect.h

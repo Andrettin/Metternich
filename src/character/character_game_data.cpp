@@ -178,10 +178,6 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->natural_armor_class_bonus = std::stoi(value);
 	} else if (key == "damage_bonus") {
 		this->damage_bonus = std::stoi(value);
-	} else if (key == "movement") {
-		this->movement = std::stoi(value);
-	} else if (key == "initiative_bonus") {
-		this->initiative_bonus = std::stoi(value);
 	} else if (key == "flat_footed") {
 		this->flat_footed = string::to_bool(value);
 	} else if (key == "general_opinion_modifier") {
@@ -453,8 +449,6 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
-	data.add_property("movement", std::to_string(this->get_movement()));
-	data.add_property("initiative_bonus", std::to_string(this->get_initiative_bonus()));
 
 	if (this->is_flat_footed()) {
 		data.add_property("flat_footed", string::from_bool(this->is_flat_footed()));
@@ -3118,26 +3112,9 @@ int character_game_data::get_best_range() const
 	return range;
 }
 
-void character_game_data::set_movement(const int movement)
+int character_game_data::get_movement() const
 {
-	if (movement == this->get_movement()) {
-		return;
-	}
-
-	this->movement = movement;
-
-	if (this->get_military_unit() != nullptr) {
-		this->update_military_unit_stats();
-	}
-
-	if (game::get()->is_running()) {
-		emit movement_changed();
-	}
-}
-
-void character_game_data::change_movement(const int change)
-{
-	this->set_movement(this->get_movement() + change);
+	return this->get_stat_value(character_stat::movement.get());
 }
 
 int character_game_data::get_combat_movement() const
@@ -3151,22 +3128,9 @@ int character_game_data::get_combat_movement() const
 	return movement;
 }
 
-void character_game_data::set_initiative_bonus(const int initiative_bonus)
+int character_game_data::get_initiative_bonus() const
 {
-	if (initiative_bonus == this->get_initiative_bonus()) {
-		return;
-	}
-
-	this->initiative_bonus = initiative_bonus;
-
-	if (game::get()->is_running()) {
-		emit initiative_bonus_changed();
-	}
-}
-
-void character_game_data::change_initiative_bonus(const int change)
-{
-	this->set_initiative_bonus(this->get_initiative_bonus() + change);
+	return this->get_stat_value(character_stat::initiative.get());
 }
 
 QVariantList character_game_data::get_save_bonuses_qvariant_list() const

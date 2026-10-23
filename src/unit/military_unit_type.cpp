@@ -17,7 +17,6 @@
 #include "script/modifier_effect/character_stat_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/hit_dice_modifier_effect.h"
-#include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
 #include "script/modifier_effect/save_modifier_effect.h"
 #include "species/species.h"
@@ -283,6 +282,8 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 		if (const character_stat_modifier_effect *character_stat_modifier_effect = dynamic_cast<const metternich::character_stat_modifier_effect *>(modifier_effect)) {
 			if (character_stat_modifier_effect->get_stat() == character_stat::armor_class.get()) {
 				armor_class += character_stat_modifier_effect->get_value();
+			} else if (character_stat_modifier_effect->get_stat() == character_stat::movement.get()) {
+				movement += character_stat_modifier_effect->get_value();
 			} else if (character_stat_modifier_effect->get_stat() == character_stat::to_hit.get()) {
 				to_hit_bonus += character_stat_modifier_effect->get_value();
 			}
@@ -291,8 +292,6 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 			max_ranged_damage += damage_bonus_modifier_effect->get_value();
 		} else if (const hit_dice_modifier_effect *hit_dice_modifier_effect = dynamic_cast<const metternich::hit_dice_modifier_effect *>(modifier_effect)) {
 			hit_dice_count += hit_dice_modifier_effect->get_hit_dice().get_count();
-		} else if (const movement_modifier_effect *movement_modifier_effect = dynamic_cast<const metternich::movement_modifier_effect *>(modifier_effect)) {
-			movement += movement_modifier_effect->get_value();
 		} else if (const natural_armor_class_modifier_effect *natural_armor_class_modifier_effect = dynamic_cast<const metternich::natural_armor_class_modifier_effect *>(modifier_effect)) {
 			natural_armor_class += natural_armor_class_modifier_effect->get_value();
 		} else if (const save_modifier_effect *save_modifier_effect = dynamic_cast<const metternich::save_modifier_effect *>(modifier_effect)) {

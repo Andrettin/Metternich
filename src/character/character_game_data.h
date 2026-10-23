@@ -97,9 +97,6 @@ class character_game_data final : public QObject
 	Q_PROPERTY(int craft READ get_craft NOTIFY craft_changed)
 	Q_PROPERTY(int max_craft READ get_max_craft NOTIFY max_craft_changed)
 	Q_PROPERTY(int damage_bonus READ get_damage_bonus NOTIFY damage_bonus_changed)
-	Q_PROPERTY(int movement READ get_movement NOTIFY movement_changed)
-	Q_PROPERTY(int combat_movement READ get_combat_movement NOTIFY movement_changed)
-	Q_PROPERTY(int initiative_bonus READ get_initiative_bonus NOTIFY initiative_bonus_changed)
 	Q_PROPERTY(QVariantList save_bonuses READ get_save_bonuses_qvariant_list NOTIFY save_bonuses_changed)
 	Q_PROPERTY(QVariantList traits READ get_traits_qvariant_list NOTIFY traits_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
@@ -595,22 +592,9 @@ public:
 
 	int get_best_range() const;
 
-	int get_movement() const
-	{
-		return this->movement;
-	}
-
-	void set_movement(const int movement);
-	void change_movement(const int change);
+	int get_movement() const;
 	int get_combat_movement() const;
-
-	int get_initiative_bonus() const
-	{
-		return this->initiative_bonus;
-	}
-
-	void set_initiative_bonus(const int initiative_bonus);
-	void change_initiative_bonus(const int change);
+	int get_initiative_bonus() const;
 
 	const data_entry_map<save_type, int> &get_save_bonuses() const
 	{
@@ -1156,8 +1140,6 @@ signals:
 	void weapon_to_hit_bonuses_changed();
 	void damage_bonus_changed();
 	void weapon_damage_bonuses_changed();
-	void movement_changed();
-	void initiative_bonus_changed();
 	void save_bonuses_changed();
 	void skill_trainings_changed();
 	void damage_reductions_changed();
@@ -1219,8 +1201,6 @@ private:
 	data_entry_map<item_type, int> weapon_to_hit_bonuses;
 	int damage_bonus = 0;
 	data_entry_map<item_type, int> weapon_damage_bonuses;
-	int movement = 0;
-	int initiative_bonus = 0;
 	data_entry_map<save_type, int> save_bonuses;
 	data_entry_map<skill, int> skill_trainings;
 	data_entry_map<damage_reduction_type, int> damage_reductions;

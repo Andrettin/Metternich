@@ -21,6 +21,19 @@ const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
 	return armor_class;
 }();
 
+const std::unique_ptr<const character_stat> character_stat::initiative = []() {
+	auto initiative = std::make_unique<character_stat>("initiative");
+	initiative->set_name("Initiative");
+	return initiative;
+}();
+
+const std::unique_ptr<const character_stat> character_stat::movement = []() {
+	auto movement = std::make_unique<character_stat>("movement");
+	movement->set_name("Movement");
+	movement->affect_military_unit_stats = true;
+	return movement;
+}();
+
 const std::unique_ptr<const character_stat> character_stat::to_hit = []() {
 	auto to_hit = std::make_unique<character_stat>("to_hit");
 	to_hit->set_name("To Hit");

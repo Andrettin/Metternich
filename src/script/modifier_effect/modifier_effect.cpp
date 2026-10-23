@@ -52,7 +52,6 @@
 #include "script/modifier_effect/industrial_output_modifier_effect.h"
 #include "script/modifier_effect/industrial_throughput_modifier_effect.h"
 #include "script/modifier_effect/infantry_cost_modifier_effect.h"
-#include "script/modifier_effect/initiative_modifier_effect.h"
 #include "script/modifier_effect/law_cost_modifier_effect.h"
 #include "script/modifier_effect/leader_cost_modifier_effect.h"
 #include "script/modifier_effect/level_adjustment_modifier_effect.h"
@@ -64,7 +63,6 @@
 #include "script/modifier_effect/monthly_commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/monthly_technology_category_research_modifier_effect.h"
 #include "script/modifier_effect/movement_cost_modifier_effect.h"
-#include "script/modifier_effect/movement_modifier_effect.h"
 #include "script/modifier_effect/natural_armor_class_modifier_effect.h"
 #include "script/modifier_effect/natural_weapon_modifier_effect.h"
 #include "script/modifier_effect/output_modifier_effect.h"
@@ -135,12 +133,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<health_per_hit_dice_modifier_effect>(value);
 		} else if (key == "hit_dice") {
 			return std::make_unique<hit_dice_modifier_effect>(value);
-		} else if (key == "initiative") {
-			return std::make_unique<initiative_modifier_effect>(value);
 		} else if (key == "level_adjustment") {
 			return std::make_unique<level_adjustment_modifier_effect>(value);
-		} else if (key == "movement") {
-			return std::make_unique<movement_modifier_effect>(value);
 		} else if (key == "natural_armor_class") {
 			return std::make_unique<natural_armor_class_modifier_effect>(value);
 		} else if (key == "natural_weapon") {
