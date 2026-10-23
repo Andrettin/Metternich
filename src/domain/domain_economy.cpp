@@ -79,6 +79,10 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 		this->province_taxation_type = magic_enum::enum_cast<metternich::province_taxation_type>(value).value();
 	} else if (key == "attribute_taxation") {
 		this->attribute_taxation = std::stoll(value);
+	} else if (key == "output_modifier") {
+		this->output_modifier = centesimal_int(value);
+	} else if (key == "throughput_modifier") {
+		this->throughput_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
 	}
@@ -136,6 +140,8 @@ gsml_data domain_economy::to_gsml_data() const
 	data.add_property("storage_capacity", std::to_string(this->get_storage_capacity()));
 	data.add_property("province_taxation_type", std::string(magic_enum::enum_name(this->get_province_taxation_type())));
 	data.add_property("attribute_taxation", std::to_string(this->attribute_taxation));
+	data.add_property("output_modifier", this->output_modifier.to_string());
+	data.add_property("throughput_modifier", std::to_string(this->throughput_modifier));
 
 	if (!this->get_stored_commodities().empty()) {
 		gsml_data stored_commodities_data("stored_commodities");

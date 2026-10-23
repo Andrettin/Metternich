@@ -51,6 +51,8 @@ void domain_diplomacy::process_gsml_property(const gsml_property &property)
 		this->overlord = domain::get(value);
 	} else if (key == "subject_type") {
 		this->subject_type = subject_type::get(value);
+	} else if (key == "diplomatic_penalty_for_expansion_modifier") {
+		this->diplomatic_penalty_for_expansion_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain diplomacy property: \"{}\".", key));
 	}
@@ -85,6 +87,8 @@ gsml_data domain_diplomacy::to_gsml_data() const
 	if (this->get_subject_type() != nullptr) {
 		data.add_property("subject_type", this->get_subject_type()->get_identifier());
 	}
+
+	data.add_property("diplomatic_penalty_for_expansion_modifier", std::to_string(this->diplomatic_penalty_for_expansion_modifier));
 
 	if (!this->known_domains.empty()) {
 		gsml_data known_domains_data("known_domains");

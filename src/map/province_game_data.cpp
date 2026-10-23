@@ -126,6 +126,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->holding_count = std::stoi(value);
 	} else if (key == "total_holding_level") {
 		this->total_holding_level = centesimal_int(value);
+	} else if (key == "output_modifier") {
+		this->output_modifier = centesimal_int(value);
 	} else if (key == "province_level_taxation") {
 		this->province_level_taxation = std::stoll(value);
 	} else if (key == "trade_efficiency_modifier") {
@@ -249,6 +251,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_total_holding_level() != 0) {
 		data.add_property("total_holding_level", this->get_total_holding_level().to_string());
+	}
+
+	if (this->output_modifier != 0) {
+		data.add_property("output_modifier", this->output_modifier.to_string());
 	}
 
 	data.add_property("province_level_taxation", std::to_string(this->province_level_taxation));
