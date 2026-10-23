@@ -80,13 +80,17 @@ gsml_data domain_ai::to_gsml_data() const
 	}
 
 	if (!this->holding_building_desire_modifiers.empty()) {
-		gsml_data desire_modifiers_data("holding_building_desire_modifiers");
+		gsml_data holding_desire_modifiers_data("holding_building_desire_modifiers");
+
 		for (const auto &[holding_site, building_desire_modifiers] : this->holding_building_desire_modifiers) {
+			gsml_data desire_modifiers_data(holding_site->get_identifier());
 			for (const auto &[building_type, desire_modifier] : building_desire_modifiers) {
 				desire_modifiers_data.add_property(building_type->get_identifier(), std::to_string(desire_modifier));
 			}
+			holding_desire_modifiers_data.add_child(std::move(desire_modifiers_data));
 		}
-		data.add_child(std::move(desire_modifiers_data));
+
+		data.add_child(std::move(holding_desire_modifiers_data));
 	}
 
 	return data;
