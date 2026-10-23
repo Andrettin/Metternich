@@ -68,8 +68,13 @@ void domain_military::process_gsml_property(const gsml_property &property)
 void domain_military::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "free_infantry_promotion_counts") {
+	if (tag == "leaders") {
+		for (const std::string &value : values) {
+			this->leaders.push_back(game::get()->get_character(value));
+		}
+	} else if (tag == "free_infantry_promotion_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->free_infantry_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
 		});
@@ -101,6 +106,14 @@ gsml_data domain_military::to_gsml_data() const
 	data.add_property("warship_cost_modifier", std::to_string(this->warship_cost_modifier));
 	data.add_property("unit_upgrade_cost_modifier", std::to_string(this->unit_upgrade_cost_modifier));
 	data.add_property("leader_cost_modifier", std::to_string(this->leader_cost_modifier));
+
+	if (!this->leaders.empty()) {
+		gsml_data leaders_data("leaders");
+		for (const character *leader : this->leaders) {
+			leaders_data.add_value(leader->get_identifier());
+		}
+		data.add_child(std::move(leaders_data));
+	}
 
 	if (!this->free_infantry_promotion_counts.empty()) {
 		gsml_data free_promotions_data("free_infantry_promotion_counts");
