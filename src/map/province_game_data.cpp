@@ -122,6 +122,8 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 		this->under_construction_pathway = pathway::get(value);
 	} else if (key == "pathway_construction_progress") {
 		this->pathway_construction_progress = decimillesimal_int(value);
+	} else if (key == "holding_count") {
+		this->holding_count = std::stoi(value);
 	} else if (key == "total_holding_level") {
 		this->total_holding_level = centesimal_int(value);
 	} else if (key == "province_level_taxation") {
@@ -239,6 +241,10 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (this->get_pathway_construction_progress() != 0) {
 		data.add_property("pathway_construction_progress", this->get_pathway_construction_progress().to_string());
+	}
+
+	if (this->holding_count != 0) {
+		data.add_property("holding_count", std::to_string(this->holding_count));
 	}
 
 	if (this->get_total_holding_level() != 0) {

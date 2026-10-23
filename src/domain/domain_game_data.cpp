@@ -192,6 +192,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->characters.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "holding_building_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->holding_building_counts[building_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "scripted_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->scripted_modifiers[scripted_domain_modifier::get(property.get_key())] = std::stoi(property.get_value());
@@ -208,6 +212,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto civilian_unit = make_qunique<metternich::civilian_unit>(child_scope);
 			this->add_civilian_unit(std::move(civilian_unit));
+		});
+	} else if (tag == "free_building_class_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_building_class_counts[building_class::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else if (tag == "flags") {
 		for (const std::string &value : values) {
@@ -302,6 +310,14 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 	data.add_child(std::move(characters_data));
 
+	if (!this->holding_building_counts.empty()) {
+		gsml_data holding_building_counts_data("holding_building_counts");
+		for (const auto &[building_type, count] : this->holding_building_counts) {
+			holding_building_counts_data.add_property(building_type->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(holding_building_counts_data));
+	}
+
 	if (!this->scripted_modifiers.empty()) {
 		gsml_data scripted_modifiers_data("scripted_modifiers");
 		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
@@ -364,6 +380,14 @@ gsml_data domain_game_data::to_gsml_data() const
 			finished_journal_entries_data.add_value(journal_entry->get_identifier());
 		}
 		data.add_child(std::move(finished_journal_entries_data));
+	}
+
+	if (!this->free_building_class_counts.empty()) {
+		gsml_data free_building_class_counts_data("free_building_class_counts");
+		for (const auto &[building_class, count] : this->free_building_class_counts) {
+			free_building_class_counts_data.add_property(building_class->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(free_building_class_counts_data));
 	}
 
 	if (!this->flags.empty()) {
