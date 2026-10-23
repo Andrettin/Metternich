@@ -243,7 +243,7 @@ public:
 
 	const std::vector<QPoint> &get_resource_tiles() const;
 	const std::vector<const site *> &get_sites() const;
-	const std::vector<const site *> &get_settlement_sites() const;
+	const std::vector<const site *> &get_holding_sites() const;
 
 	const data_entry_set<province_feature> &get_features() const
 	{
@@ -271,12 +271,12 @@ public:
 	void calculate_text_rect();
 	QRect calculate_text_rect_for_pos(const QPoint &center_pos) const;
 
-	int get_settlement_count() const
+	int get_holding_count() const
 	{
-		return this->settlement_count;
+		return this->holding_count;
 	}
 
-	void change_settlement_count(const int change);
+	void change_holding_count(const int change);
 
 	const centesimal_int &get_total_holding_level() const
 	{
@@ -746,7 +746,7 @@ private:
 	decimillesimal_int pathway_construction_progress;
 	data_entry_set<province_feature> features;
 	QRect text_rect;
-	int settlement_count = 0; //only includes built settlements
+	int holding_count = 0; //only includes built holdings
 	centesimal_int total_holding_level;
 	data_entry_map<domain_skill, centesimal_int> domain_skill_total_holding_levels;
 	data_entry_map<site_feature, int> site_feature_counts;

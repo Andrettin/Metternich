@@ -722,7 +722,7 @@ void province_game_data::check_trade_zone_domain()
 	}
 
 	domain_map<centesimal_int> domain_economic_holding_levels;
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
 			continue;
@@ -748,7 +748,7 @@ void province_game_data::check_trade_zone_domain()
 				continue;
 			}
 
-			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_holding_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
 					continue;
@@ -819,7 +819,7 @@ void province_game_data::check_temple_domain()
 	}
 
 	domain_map<centesimal_int> domain_religious_holding_levels;
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
 			continue;
@@ -845,7 +845,7 @@ void province_game_data::check_temple_domain()
 				continue;
 			}
 
-			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_holding_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
 					continue;
@@ -916,7 +916,7 @@ void province_game_data::check_cultural_society_domain()
 	}
 
 	domain_map<centesimal_int> domain_cultural_holding_levels;
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 		if (holding_site_owner == nullptr) {
 			continue;
@@ -942,7 +942,7 @@ void province_game_data::check_cultural_society_domain()
 				continue;
 			}
 
-			for (const site *holding_site : nearby_province->get_game_data()->get_settlement_sites()) {
+			for (const site *holding_site : nearby_province->get_game_data()->get_holding_sites()) {
 				const domain *holding_site_owner = holding_site->get_game_data()->get_owner();
 				if (holding_site_owner == nullptr) {
 					continue;
@@ -1000,7 +1000,7 @@ void province_game_data::set_level(const int level)
 		return;
 	}
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1022,7 +1022,7 @@ void province_game_data::set_level(const int level)
 
 	this->update_province_level_taxation();
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1148,7 +1148,7 @@ void province_game_data::choose_provincial_capital()
 	bool found_preferred_holding_type = false;
 	centesimal_int best_holding_level;
 
-	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+	for (const site *site : this->province->get_map_data()->get_holding_sites()) {
 		if (!site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1213,7 +1213,7 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 	bool found_preferred_holding_type = false;
 	centesimal_int best_holding_level;
 
-	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+	for (const site *site : this->province->get_map_data()->get_holding_sites()) {
 		if (site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1475,9 +1475,9 @@ const std::vector<const site *> &province_game_data::get_sites() const
 	return this->province->get_map_data()->get_sites();
 }
 
-const std::vector<const site *> &province_game_data::get_settlement_sites() const
+const std::vector<const site *> &province_game_data::get_holding_sites() const
 {
-	return this->province->get_map_data()->get_settlement_sites();
+	return this->province->get_map_data()->get_holding_sites();
 }
 
 QVariantList province_game_data::get_features_qvariant_list() const
@@ -1738,13 +1738,13 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 	return text_rect;
 }
 
-void province_game_data::change_settlement_count(const int change)
+void province_game_data::change_holding_count(const int change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1752,9 +1752,9 @@ void province_game_data::change_settlement_count(const int change)
 		holding_site->get_game_data()->change_population_capacity(-this->get_population_capacity_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 	}
 
-	this->settlement_count += change;
+	this->holding_count += change;
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1820,7 +1820,7 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 
 	const centesimal_int old_total_holding_level = this->get_total_holding_level();
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1830,7 +1830,7 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 
 	this->total_holding_level += change;
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1852,7 +1852,7 @@ void province_game_data::change_domain_skill_total_holding_level(const domain_sk
 	}
 
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (!holding_site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1867,7 +1867,7 @@ void province_game_data::change_domain_skill_total_holding_level(const domain_sk
 
 int64_t province_game_data::get_population_capacity_for_holding_level(const centesimal_int &holding_level) const
 {
-	const centesimal_int divisor = centesimal_int::max(centesimal_int::max(this->get_total_holding_level(), this->get_settlement_count()), 1);
+	const centesimal_int divisor = centesimal_int::max(centesimal_int::max(this->get_total_holding_level(), this->get_holding_count()), 1);
 	assert_throw(divisor > 0);
 
 	return (defines::get()->get_province_population_for_level(this->get_level()) * centesimal_int::max(holding_level, 1) / divisor).to_int64();
@@ -1893,7 +1893,7 @@ bool province_game_data::produces_commodity(const commodity *commodity) const
 		}
 	}
 
-	for (const site *site : this->province->get_map_data()->get_settlement_sites()) {
+	for (const site *site : this->province->get_map_data()->get_holding_sites()) {
 		if (!site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -1921,7 +1921,7 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 
 	co_await this->on_technology_gained(technology, 1);
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (holding_site->get_game_data()->is_capital()) {
 			co_await holding_site->get_game_data()->get_owner()->get_technology()->on_technology_added(technology);
 		}
@@ -1960,7 +1960,7 @@ QCoro::Task<void> province_game_data::remove_technology(const technology *techno
 
 	co_await this->on_technology_gained(technology, -1);
 
-	for (const site *holding_site : this->get_settlement_sites()) {
+	for (const site *holding_site : this->get_holding_sites()) {
 		if (holding_site->get_game_data()->is_capital()) {
 			co_await holding_site->get_game_data()->get_owner()->get_technology()->on_technology_lost(technology);
 		}
@@ -1983,7 +1983,7 @@ bool province_game_data::can_have_technology(const technology *technology) const
 	assert_throw(technology != nullptr);
 
 	if (!technology->get_cultures().empty() || !technology->get_cultural_groups().empty() || !technology->get_religions().empty() || !technology->get_religious_groups().empty()) {
-		for (const site *holding_site : this->get_settlement_sites()) {
+		for (const site *holding_site : this->get_holding_sites()) {
 			const site_game_data *holding_game_data = holding_site->get_game_data();
 
 			if (!holding_game_data->is_built()) {
@@ -2219,7 +2219,7 @@ void province_game_data::set_employment_capacity_modifier(const employment_type 
 	}
 
 	//recalculate the affected employment capacity for holdings in this province
-	for (const site *site : this->get_settlement_sites()) {
+	for (const site *site : this->get_holding_sites()) {
 		site->get_game_data()->calculate_employment_capacity(employment_type);
 	}
 }
@@ -2605,7 +2605,7 @@ void province_game_data::remove_civilian_unit(civilian_unit *civilian_unit)
 void province_game_data::calculate_site_commodity_outputs()
 {
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
+		if (!site->is_holding() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
 			continue;
 		}
 
@@ -2616,7 +2616,7 @@ void province_game_data::calculate_site_commodity_outputs()
 void province_game_data::calculate_site_commodity_output(const commodity *commodity)
 {
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
+		if (!site->is_holding() && site->get_type() != site_type::resource && site->get_type() != site_type::celestial_body) {
 			continue;
 		}
 
@@ -2736,7 +2736,7 @@ int64_t province_game_data::process_taxable_target_income(const int64_t income, 
 	int64_t taxed_income = income;
 
 	if (income_in_domain_units > 0) {
-		for (const metternich::site *holding : this->get_settlement_sites()) {
+		for (const metternich::site *holding : this->get_holding_sites()) {
 			if (!holding->get_game_data()->is_built()) {
 				continue;
 			}

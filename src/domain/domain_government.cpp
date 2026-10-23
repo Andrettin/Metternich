@@ -63,6 +63,8 @@ void domain_government::process_gsml_property(const gsml_property &property)
 		this->succession_type = magic_enum::enum_cast<metternich::succession_type>(value).value();
 	} else if (key == "succession_gender_type") {
 		this->succession_gender_type = magic_enum::enum_cast<metternich::succession_gender_type>(value).value();
+	} else if (key == "law_cost_modifier") {
+		this->law_cost_modifier = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
 	}
@@ -88,6 +90,8 @@ void domain_government::process_gsml_scope(const gsml_data &scope)
 gsml_data domain_government::to_gsml_data() const
 {
 	gsml_data data("government");
+
+	data.add_property("law_cost_modifier", std::to_string(this->law_cost_modifier));
 
 	if (this->get_succession_type() != succession_type::none) {
 		data.add_property("succession_type", std::string(magic_enum::enum_name(this->get_succession_type())));

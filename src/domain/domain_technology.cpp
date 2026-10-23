@@ -61,6 +61,10 @@ void domain_technology::process_gsml_property(const gsml_property &property)
 		this->max_current_researches = std::stoi(value);
 	} else if (key == "free_technology_count") {
 		this->free_technology_count = std::stoi(value);
+	} else if (key == "technology_cost_modifier") {
+		this->technology_cost_modifier = centesimal_int(value);
+	} else if (key == "gain_technologies_known_by_others_count") {
+		this->gain_technologies_known_by_others_count = std::stoi(value);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain technology property: \"{}\".", key));
 	}
@@ -92,12 +96,20 @@ gsml_data domain_technology::to_gsml_data() const
 {
 	gsml_data data("technology");
 
+	if (this->max_current_researches != 0) {
+		data.add_property("max_current_researches", std::to_string(this->max_current_researches));
+	}
+
 	if (this->free_technology_count != 0) {
 		data.add_property("free_technology_count", std::to_string(this->free_technology_count));
 	}
 
-	if (this->max_current_researches != 0) {
-		data.add_property("max_current_researches", std::to_string(this->max_current_researches));
+	if (this->technology_cost_modifier != 0) {
+		data.add_property("technology_cost_modifier", this->technology_cost_modifier.to_string());
+	}
+
+	if (this->gain_technologies_known_by_others_count != 0) {
+		data.add_property("gain_technologies_known_by_others_count", std::to_string(this->gain_technologies_known_by_others_count));
 	}
 
 	if (!this->get_current_researches().empty()) {

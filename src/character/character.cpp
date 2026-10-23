@@ -56,7 +56,7 @@ const std::set<std::string> character::database_dependencies = {
 	character_class::class_identifier,
 	//characters need the mythic path rank tiers to be defined first
 	mythic_path::class_identifier,
-	//characters must be initialized after provinces, as their initialization results in settlements being assigned to their provinces, which is necessary for getting the provinces for home sites
+	//characters must be initialized after provinces, as their initialization results in holdings being assigned to their provinces, which is necessary for getting the provinces for home sites
 	province::class_identifier
 };
 

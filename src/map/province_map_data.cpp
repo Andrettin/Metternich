@@ -148,8 +148,8 @@ void province_map_data::on_map_created()
 	this->calculate_territory_rect_center();
 	this->calculate_center_tile_pos();
 
-	if (this->get_settlement_sites().size() > province::max_holdings) {
-		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_settlement_sites().size(), province::max_holdings));
+	if (this->get_holding_sites().size() > province::max_holdings) {
+		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_holding_sites().size(), province::max_holdings));
 	}
 
 	emit territory_changed();
@@ -271,8 +271,8 @@ void province_map_data::process_site_tile(const QPoint &tile_pos)
 
 		this->sites.push_back(tile->get_site());
 
-		if (tile->get_site()->is_settlement()) {
-			this->settlement_sites.push_back(tile->get_site());
+		if (tile->get_site()->is_holding()) {
+			this->holding_sites.push_back(tile->get_site());
 		}
 	}
 }

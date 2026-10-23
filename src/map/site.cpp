@@ -98,7 +98,7 @@ void site::initialize()
 void site::check() const
 {
 	if (this->get_type() != site_type::resource && this->get_type() != site_type::holding) {
-		//resource and settlement sites can also have a terrain type
+		//resource and holding sites can also have a terrain type
 		assert_throw(this->get_terrain_type() == nullptr);
 	}
 

@@ -27,7 +27,7 @@ class building_slot final : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::building_slot_type* type READ get_type CONSTANT)
-	Q_PROPERTY(const metternich::site* holding READ get_settlement CONSTANT)
+	Q_PROPERTY(const metternich::site* holding READ get_holding CONSTANT)
 	Q_PROPERTY(const metternich::building_type* building READ get_building NOTIFY building_changed)
 	Q_PROPERTY(const metternich::building_type* under_construction_building READ get_under_construction_building WRITE set_under_construction_building NOTIFY under_construction_building_changed)
 	Q_PROPERTY(const metternich::wonder* wonder READ get_wonder NOTIFY wonder_changed)
@@ -38,8 +38,8 @@ class building_slot final : public QObject
 	Q_PROPERTY(const metternich::domain* domain READ get_domain CONSTANT)
 
 public:
-	explicit building_slot(const building_slot_type *type, const site *settlement);
-	explicit building_slot(const gsml_data &scope, const site *settlement);
+	explicit building_slot(const building_slot_type *type, const site *holding);
+	explicit building_slot(const gsml_data &scope, const site *holding);
 	~building_slot();
 
 	void process_gsml_property(const gsml_property &property);
@@ -52,9 +52,9 @@ public:
 		return this->type;
 	}
 
-	const site *get_settlement() const
+	const site *get_holding() const
 	{
-		return this->settlement;
+		return this->holding;
 	}
 
 	const building_type *get_building() const
@@ -136,7 +136,7 @@ signals:
 
 private:
 	const building_slot_type *type = nullptr;
-	const site *settlement = nullptr;
+	const site *holding = nullptr;
 	const building_type *building = nullptr;
 	const building_type *under_construction_building = nullptr;
 	const metternich::wonder *wonder = nullptr;

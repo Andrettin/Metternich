@@ -50,6 +50,7 @@ class site final : public named_data_entry, public data_type<site>
 	Q_PROPERTY(archimedes::geocoordinate astrocoordinate MEMBER astrocoordinate READ get_astrocoordinate)
 	Q_PROPERTY(std::optional<archimedes::centesimal_int> astrodistance MEMBER astrodistance READ get_astrodistance)
 	Q_PROPERTY(metternich::site_type type MEMBER type READ get_type)
+	Q_PROPERTY(bool holding READ is_holding NOTIFY changed)
 	Q_PROPERTY(bool settlement READ is_settlement NOTIFY changed)
 	Q_PROPERTY(bool celestial_body READ is_celestial_body NOTIFY changed)
 	Q_PROPERTY(const metternich::celestial_body_type* celestial_body_type MEMBER celestial_body_type READ get_celestial_body_type)

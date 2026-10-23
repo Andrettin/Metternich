@@ -581,6 +581,7 @@ QCoro::Task<void> game::clear_coro()
 
 		this->date = game::normalize_date(defines::get()->get_default_start_date());
 		this->turn = 1;
+		this->loaded = false;
 		this->evolutionary = true;
 
 		this->exploration_diplomatic_map_image = QImage();
@@ -763,10 +764,10 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		co_await this->apply_sites();
 
 		for (const province *province : map::get()->get_provinces()) {
-			for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-				site_game_data *settlement_game_data = settlement->get_game_data();
-				if (settlement_game_data->is_built()) {
-					co_await settlement_game_data->check_free_buildings();
+			for (const site *holding : province->get_game_data()->get_holding_sites()) {
+				site_game_data *holding_game_data = holding->get_game_data();
+				if (holding_game_data->is_built()) {
+					co_await holding_game_data->check_free_buildings();
 				}
 			}
 		}
@@ -1023,7 +1024,7 @@ QCoro::Task<void> game::apply_sites()
 				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} else if (site_history->get_holding_type() != nullptr) {
-			if (!site->is_settlement()) {
+			if (!site->is_holding()) {
 				throw std::runtime_error(std::format("Site \"{}\" has a holding type in history, but is not a holding.", site->get_identifier()));
 			}
 
@@ -1194,7 +1195,7 @@ QCoro::Task<void> game::apply_sites()
 			}
 
 			if (site_history->is_resource_discovered()) {
-				assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_settlement());
+				assert_throw(site->get_type() == site_type::resource || site->get_type() == site_type::celestial_body || site->is_holding());
 				co_await map::get()->set_tile_resource_discovered(site_game_data->get_tile_pos(), true);
 			}
 		} catch (...) {
@@ -1229,7 +1230,7 @@ QCoro::Task<void> game::apply_sites()
 
 		std::map<const holding_type *, centesimal_int> holding_type_levels;
 
-		for (const site *holding_site : province->get_map_data()->get_settlement_sites()) {
+		for (const site *holding_site : province->get_map_data()->get_holding_sites()) {
 			if (!holding_site->get_game_data()->is_built()) {
 				continue;
 			}
@@ -1389,7 +1390,7 @@ QCoro::Task<void> game::apply_free_on_start_buildings()
 {
 	//build free on start buildings
 	for (const site *site : map::get()->get_sites()) {
-		if (!site->is_settlement()) {
+		if (!site->is_holding()) {
 			continue;
 		}
 
@@ -1442,7 +1443,7 @@ QCoro::Task<void> game::apply_population_history()
 
 		province_game_data *province_game_data = province->get_game_data();
 
-		if (province_game_data->get_settlement_count() == 0) {
+		if (province_game_data->get_holding_count() == 0) {
 			continue;
 		}
 
@@ -1478,7 +1479,7 @@ QCoro::Task<void> game::apply_population_history()
 			province_game_data->set_level(province->get_history()->get_level());
 		}
 
-		if (province_game_data->get_settlement_count() == 0) {
+		if (province_game_data->get_holding_count() == 0) {
 			continue;
 		}
 
@@ -1637,7 +1638,7 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 		co_return population;
 	}
 
-	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for settlement \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", number::to_formatted_string(population), site->get_identifier()));
+	log_trace(std::format("Applying historical population group of type \"{}\", culture \"{}\", religion \"{}\" and size {} for holding \"{}\".", population_type ? population_type->get_identifier() : "none", group_key.culture ? group_key.culture->get_identifier() : "none", group_key.religion ? group_key.religion->get_identifier() : "none", number::to_formatted_string(population), site->get_identifier()));
 
 	const domain *domain = site_game_data->get_owner();
 
@@ -1924,7 +1925,7 @@ QCoro::Task<void> game::on_setup_finished()
 		co_await domain_game_data->check_religion();
 
 		for (const province *province : domain_game_data->get_provinces()) {
-			for (const site *site : province->get_game_data()->get_settlement_sites()) {
+			for (const site *site : province->get_game_data()->get_holding_sites()) {
 				co_await site->get_game_data()->check_building_conditions();
 
 				//check employment here because it can affect the population type charts via equivalent population types for employment

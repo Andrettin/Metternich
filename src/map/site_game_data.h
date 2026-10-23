@@ -354,7 +354,7 @@ public:
 	bool can_gain_free_building(const building_type *building, const bool check_required_buildings, const bool check_required_technologies) const;
 	[[nodiscard]] QCoro::Task<bool> check_free_building(const building_type *building);
 
-	[[nodiscard]] QCoro::Task<void> on_settlement_built(const int multiplier);
+	[[nodiscard]] QCoro::Task<void> on_holding_built(const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_building_gained(const building_type *building, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
 

@@ -38,14 +38,14 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const site *settlement = nullptr;
+		const site *holding = nullptr;
 		const domain *domain = nullptr;
 
 		if constexpr (std::is_same_v<scope_type, const metternich::domain>) {
-			settlement = this->value;
+			holding = this->value;
 			domain = scope;
 		} else {
-			settlement = scope;
+			holding = scope;
 			domain = scope->get_game_data()->get_owner();
 		}
 
@@ -53,15 +53,15 @@ public:
 			co_return;
 		}
 
-		if (settlement->get_game_data()->get_owner() != domain) {
+		if (holding->get_game_data()->get_owner() != domain) {
 			co_return;
 		}
 
-		if (!settlement->get_game_data()->can_be_capital()) {
+		if (!holding->get_game_data()->can_be_capital()) {
 			co_return;
 		}
 
-		co_await domain->get_game_data()->set_capital(settlement);
+		co_await domain->get_game_data()->set_capital(holding);
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

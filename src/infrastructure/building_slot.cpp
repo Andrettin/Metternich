@@ -26,17 +26,17 @@
 
 namespace metternich {
 
-building_slot::building_slot(const building_slot_type *type, const site *settlement)
-	: type(type), settlement(settlement)
+building_slot::building_slot(const building_slot_type *type, const site *holding)
+	: type(type), holding(holding)
 {
 	assert_throw(this->get_type() != nullptr);
-	assert_throw(this->get_settlement() != nullptr);
+	assert_throw(this->get_holding() != nullptr);
 
 	connect(this, &building_slot::building_changed, this, &building_slot::modifier_changed);
 }
 
-building_slot::building_slot(const gsml_data &scope, const site *settlement)
-	: building_slot(building_slot_type::get(scope.get_tag()), settlement)
+building_slot::building_slot(const gsml_data &scope, const site *holding)
+	: building_slot(building_slot_type::get(scope.get_tag()), holding)
 {
 	scope.process(this);
 }
@@ -124,8 +124,8 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 		assert_throw(building->get_slot_type() == this->get_type());
 	}
 
-	const centesimal_int holding_level_change = this->get_settlement()->get_game_data()->get_building_holding_level_change(building, this->get_type());
-	const std::map<construction_type, centesimal_int> construction_level_changes = this->get_settlement()->get_game_data()->get_building_construction_level_changes(building, this->get_type());
+	const centesimal_int holding_level_change = this->get_holding()->get_game_data()->get_building_holding_level_change(building, this->get_type());
+	const std::map<construction_type, centesimal_int> construction_level_changes = this->get_holding()->get_game_data()->get_building_construction_level_changes(building, this->get_type());
 
 	const building_type *old_building = this->get_building();
 
@@ -140,13 +140,13 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 	}
 
 	if (holding_level_change != 0) {
-		this->get_settlement()->get_game_data()->change_holding_level(holding_level_change);
+		this->get_holding()->get_game_data()->change_holding_level(holding_level_change);
 	}
 
 	for (const auto &[construction_type, construction_level_change] : construction_level_changes) {
 		assert_throw(construction_level_change != 0);
 
-		co_await this->get_settlement()->get_game_data()->change_construction_level(construction_type, construction_level_change);
+		co_await this->get_holding()->get_game_data()->change_construction_level(construction_type, construction_level_change);
 	}
 
 	if (old_building == nullptr || this->get_building() == nullptr || old_building->get_item_creation_types() != this->get_building()->get_item_creation_types()) {
@@ -179,17 +179,17 @@ QCoro::Task<void> building_slot::set_building(const building_type *building)
 	const bool is_ruin = building != nullptr && building->is_ruin();
 	if (is_ruin != was_ruin) {
 		if (was_ruin) {
-			this->get_settlement()->get_game_data()->change_ruin_building_count(-1);
+			this->get_holding()->get_game_data()->change_ruin_building_count(-1);
 		} else if (is_ruin) {
-			this->get_settlement()->get_game_data()->change_ruin_building_count(1);
+			this->get_holding()->get_game_data()->change_ruin_building_count(1);
 		}
 	}
 
 	//update the holding's type name, since it can depend on buildings
-	this->get_settlement()->get_game_data()->update_holding_type_name();
+	this->get_holding()->get_game_data()->update_holding_type_name();
 
 	//check building conditions, in case the holding's buildings have conditions that ultimately rely on other buildings being present
-	co_await this->get_settlement()->get_game_data()->check_building_conditions();
+	co_await this->get_holding()->get_game_data()->check_building_conditions();
 
 	if (game::get()->is_running()) {
 		emit building_changed();
@@ -215,27 +215,27 @@ bool building_slot::can_have_building(const building_type *building) const
 {
 	assert_throw(building != nullptr);
 
-	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
+	const site_game_data *holding_game_data = this->get_holding()->get_game_data();
 
-	if (settlement_game_data->get_culture()->get_building_class_type(building->get_building_class()) != building) {
+	if (holding_game_data->get_culture()->get_building_class_type(building->get_building_class()) != building) {
 		return false;
 	}
 
-	if (building->get_min_holding_level() > 0 && this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_max_level() < building->get_min_holding_level()) {
+	if (building->get_min_holding_level() > 0 && this->get_holding()->get_game_data()->get_province()->get_game_data()->get_max_level() < building->get_min_holding_level()) {
 		return false;
 	}
 
-	if (building->get_holding_level() > 0 && this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_max_level() < building->get_holding_level()) {
+	if (building->get_holding_level() > 0 && this->get_holding()->get_game_data()->get_province()->get_game_data()->get_max_level() < building->get_holding_level()) {
 		return false;
 	}
 
 	if (building->is_ruin()) {
 		//ruins can be present in unbuilt holdings
-		if (!vector::contains(building->get_holding_types(), this->get_settlement()->get_holding_type())) {
+		if (!vector::contains(building->get_holding_types(), this->get_holding()->get_holding_type())) {
 			return false;
 		}
 	} else {
-		if (!vector::contains(building->get_holding_types(), settlement_game_data->get_holding_type())) {
+		if (!vector::contains(building->get_holding_types(), holding_game_data->get_holding_type())) {
 			return false;
 		}
 	}
@@ -251,12 +251,12 @@ bool building_slot::can_have_building(const building_type *building) const
 	}
 
 	if (building->get_conditions() != nullptr) {
-		if (!building->get_conditions()->check(this->get_settlement(), read_only_context(this->get_settlement()))) {
+		if (!building->get_conditions()->check(this->get_holding(), read_only_context(this->get_holding()))) {
 			return false;
 		}
 	}
 
-	if (building->is_capitol() && !this->get_settlement()->get_game_data()->can_be_capital()) {
+	if (building->is_capitol() && !this->get_holding()->get_game_data()->can_be_capital()) {
 		return false;
 	}
 
@@ -265,11 +265,11 @@ bool building_slot::can_have_building(const building_type *building) const
 
 bool building_slot::can_maintain_building(const building_type *building) const
 {
-	if (building->is_capitol() && !this->get_settlement()->get_game_data()->is_capital()) {
+	if (building->is_capitol() && !this->get_holding()->get_game_data()->is_capital()) {
 		return false;
 	}
 
-	if (building->is_provincial_capitol() && !this->get_settlement()->get_game_data()->is_provincial_capital()) {
+	if (building->is_provincial_capitol() && !this->get_holding()->get_game_data()->is_provincial_capital()) {
 		return false;
 	}
 
@@ -292,8 +292,8 @@ bool building_slot::can_gain_building(const building_type *building) const
 	}
 
 	if (building->get_holding_level() > 0) {
-		const centesimal_int total_holding_level = this->get_settlement()->get_game_data()->get_holding_level() + this->get_settlement()->get_game_data()->get_building_holding_level_change(building, this->get_type());
-		if (total_holding_level > this->get_settlement()->get_game_data()->get_province()->get_game_data()->get_max_level()) {
+		const centesimal_int total_holding_level = this->get_holding()->get_game_data()->get_holding_level() + this->get_holding()->get_game_data()->get_building_holding_level_change(building, this->get_type());
+		if (total_holding_level > this->get_holding()->get_game_data()->get_province()->get_game_data()->get_max_level()) {
 			return false;
 		}
 	}
@@ -332,24 +332,24 @@ bool building_slot::can_build_building(const building_type *building) const
 	}
 
 	for (const building_type *required_building : building->get_required_buildings()) {
-		if (!this->get_settlement()->get_game_data()->has_building_or_better(required_building)) {
+		if (!this->get_holding()->get_game_data()->has_building_or_better(required_building)) {
 			return false;
 		}
 	}
 
-	if (building->get_min_holding_level() > 0 && this->get_settlement()->get_game_data()->get_holding_level() < building->get_min_holding_level()) {
+	if (building->get_min_holding_level() > 0 && this->get_holding()->get_game_data()->get_holding_level() < building->get_min_holding_level()) {
 		return false;
 	}
 
 	if (building->get_build_conditions() != nullptr) {
-		if (!building->get_build_conditions()->check(this->get_settlement(), read_only_context(this->get_settlement()))) {
+		if (!building->get_build_conditions()->check(this->get_holding(), read_only_context(this->get_holding()))) {
 			return false;
 		}
 	}
 
 	const domain_economy *domain_economy = this->get_domain()->get_economy();
 
-	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
+	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_holding())) {
 		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
@@ -360,8 +360,8 @@ bool building_slot::can_build_building(const building_type *building) const
 
 QCoro::Task<void> building_slot::on_building_gained(const building_type *building, const int multiplier)
 {
-	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
-	co_await settlement_game_data->on_building_gained(building, multiplier);
+	site_game_data *holding_game_data = this->get_holding()->get_game_data();
+	co_await holding_game_data->on_building_gained(building, multiplier);
 }
 
 QCoro::Task<void> building_slot::set_wonder(const metternich::wonder *wonder)
@@ -374,16 +374,16 @@ QCoro::Task<void> building_slot::set_wonder(const metternich::wonder *wonder)
 		assert_throw(wonder->get_building()->get_slot_type() == this->get_type());
 	}
 
-	site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
+	site_game_data *holding_game_data = this->get_holding()->get_game_data();
 
 	if (this->get_wonder() != nullptr) {
-		co_await settlement_game_data->on_wonder_gained(this->get_wonder(), -1);
+		co_await holding_game_data->on_wonder_gained(this->get_wonder(), -1);
 	}
 
 	this->wonder = wonder;
 
 	if (this->get_wonder() != nullptr) {
-		co_await settlement_game_data->on_wonder_gained(this->get_wonder(), 1);
+		co_await holding_game_data->on_wonder_gained(this->get_wonder(), 1);
 
 		if (this->get_building() == nullptr || this->get_wonder()->get_building()->is_any_base_building(this->get_building())) {
 			co_await this->set_building(this->get_wonder()->get_building());
@@ -414,10 +414,10 @@ bool building_slot::can_have_wonder(const metternich::wonder *wonder) const
 		return false;
 	}
 
-	const site_game_data *settlement_game_data = this->get_settlement()->get_game_data();
+	const site_game_data *holding_game_data = this->get_holding()->get_game_data();
 
 	if (wonder->get_province_conditions() != nullptr) {
-		if (!wonder->get_province_conditions()->check(settlement_game_data->get_province(), read_only_context(settlement_game_data->get_province()))) {
+		if (!wonder->get_province_conditions()->check(holding_game_data->get_province(), read_only_context(holding_game_data->get_province()))) {
 			return false;
 		}
 	}
@@ -502,7 +502,7 @@ void building_slot::build_building(const building_type *building)
 
 	domain_economy *domain_economy = this->get_domain()->get_economy();
 
-	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_settlement())) {
+	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_holding())) {
 		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
@@ -532,7 +532,7 @@ void building_slot::cancel_construction()
 
 	domain_economy *domain_economy = this->get_domain()->get_economy();
 
-	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_settlement())) {
+	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_holding())) {
 		domain_economy->change_stored_commodity(commodity, cost);
 	}
 
@@ -541,9 +541,9 @@ void building_slot::cancel_construction()
 
 const building_type *building_slot::get_buildable_building() const
 {
-	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_settlement()->get_game_data()->get_holding_type())) {
+	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_holding()->get_game_data()->get_holding_type())) {
 		if (building->get_required_technology() != nullptr) {
-			if (!this->get_settlement()->get_game_data()->get_province()->get_game_data()->has_technology(building->get_required_technology())) {
+			if (!this->get_holding()->get_game_data()->get_province()->get_game_data()->has_technology(building->get_required_technology())) {
 				continue;
 			}
 		}
@@ -666,7 +666,7 @@ void building_slot::remove_item_slot(const item_creation_type *item_creation_typ
 
 const domain *building_slot::get_domain() const
 {
-	return this->get_settlement()->get_game_data()->get_owner();
+	return this->get_holding()->get_game_data()->get_owner();
 }
 
 bool building_slot::is_available() const
@@ -675,7 +675,7 @@ bool building_slot::is_available() const
 		return true;
 	}
 
-	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_settlement()->get_game_data()->get_holding_type())) {
+	for (const building_type *building : this->get_type()->get_building_types_for_holding_type(this->get_holding()->get_game_data()->get_holding_type())) {
 		if (building->is_ruin()) {
 			continue;
 		}
@@ -727,7 +727,7 @@ QString building_slot::get_modifier_string() const
 
 	std::string str;
 
-	const province *province = this->get_settlement()->get_game_data()->get_province();
+	const province *province = this->get_holding()->get_game_data()->get_province();
 
 	if (this->get_wonder() != nullptr) {
 		if (this->get_wonder()->get_domain_modifier() != nullptr) {
@@ -747,7 +747,7 @@ QString building_slot::get_modifier_string() const
 		}
 	}
 
-	std::string building_modifier_str = this->get_building()->get_modifier_string(this->get_settlement(), false);
+	std::string building_modifier_str = this->get_building()->get_modifier_string(this->get_holding(), false);
 	if (!building_modifier_str.empty()) {
 		if (!str.empty()) {
 			str += "\n";

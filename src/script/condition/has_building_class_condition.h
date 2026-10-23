@@ -33,12 +33,12 @@ public:
 
 		if constexpr (std::is_same_v<scope_type, domain>) {
 			for (const province *province : scope->get_game_data()->get_provinces()) {
-				for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-					if (!settlement->get_game_data()->is_built()) {
+				for (const site *holding : province->get_game_data()->get_holding_sites()) {
+					if (!holding->get_game_data()->is_built()) {
 						continue;
 					}
 
-					if (settlement->get_game_data()->has_building_class_or_better(this->building_class)) {
+					if (holding->get_game_data()->has_building_class_or_better(this->building_class)) {
 						return true;
 					}
 				}
@@ -46,12 +46,12 @@ public:
 
 			return false;
 		} else if constexpr (std::is_same_v<scope_type, province>) {
-			for (const site *settlement : scope->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
+			for (const site *holding : scope->get_game_data()->get_holding_sites()) {
+				if (!holding->get_game_data()->is_built()) {
 					continue;
 				}
 
-				if (settlement->get_game_data()->has_building_class_or_better(this->building_class)) {
+				if (holding->get_game_data()->has_building_class_or_better(this->building_class)) {
 					return true;
 				}
 			}

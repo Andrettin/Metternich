@@ -237,7 +237,7 @@ QString route_game_data::get_line_path() const
 
 		const QPoint &next_province_point = end_province ? end_point : this->route->get_path_provinces().at(i + 1)->get_map_data()->get_center_tile_pos();
 
-		std::vector<const site *> province_holding_sites = path_province->get_map_data()->get_settlement_sites();
+		std::vector<const site *> province_holding_sites = path_province->get_map_data()->get_holding_sites();
 
 		bool first = true;
 

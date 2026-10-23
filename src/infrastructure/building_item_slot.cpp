@@ -4,6 +4,7 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "infrastructure/building_slot.h"
@@ -90,7 +91,7 @@ void building_item_slot::create_item()
 		}
 	}
 
-	auto created_item = this->get_item_creation_type()->create_item(this->get_building_slot()->get_settlement());
+	auto created_item = this->get_item_creation_type()->create_item(this->get_building_slot()->get_holding());
 
 	if (created_item == nullptr) {
 		return;
@@ -120,7 +121,7 @@ bool building_item_slot::can_buy_item(const metternich::character *buyer)
 		return false;
 	}
 
-	if (!this->get_building_slot()->get_settlement()->get_game_data()->is_accessible_for_character(buyer)) {
+	if (!this->get_building_slot()->get_holding()->get_game_data()->is_accessible_for_character(buyer)) {
 		return false;
 	}
 	

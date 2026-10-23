@@ -39,7 +39,7 @@ const std::set<std::string> map_template::database_dependencies = {
 	//map templates must be initialized after sites, as sites add themselves to the world site list in their initialization function, and during map template initialization the sites are then added to the map template's site position map
 	site::class_identifier,
 
-	//map templates must also be initialized after provinces, as they set their settlements to have them as their provinces, which is needed for site position initialization
+	//map templates must also be initialized after provinces, as they set their holdings to have them as their provinces, which is needed for site position initialization
 	province::class_identifier
 };
 
@@ -530,7 +530,7 @@ void map_template::generate_site(const site *site) const
 			continue;
 		}
 
-		if (province_map_data->get_settlement_sites().size() >= province::max_holdings) {
+		if (province_map_data->get_holding_sites().size() >= province::max_holdings) {
 			continue;
 		}
 

@@ -1272,7 +1272,7 @@ void map_generator::generate_sites()
 			map->set_tile_site(zone.seed, province->get_primary_star());
 		}
 
-		//place capital settlement
+		//place capital holding
 		if (province->get_default_provincial_capital() != nullptr) {
 			this->generate_site(province->get_default_provincial_capital(), zone);
 

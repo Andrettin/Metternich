@@ -285,7 +285,7 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_child(std::move(attribute_roll_results_data));
 	}
 
-	if (this->site->is_settlement()) {
+	if (this->site->is_holding()) {
 		gsml_data building_slots_data("building_slots");
 		for (const auto &building_slot : this->get_building_slots()) {
 			building_slots_data.add_child(building_slot->to_gsml_data());
@@ -405,7 +405,7 @@ QCoro::Task<void> site_game_data::initialize()
 	//multiplying by 3 is not entirely accurate, but a good enough approximation
 	this->change_quarterly_population_growth_rate(population_defines::get()->get_base_monthly_population_growth_rate() * 3);
 
-	if (this->site->is_settlement()) {
+	if (this->site->is_holding()) {
 		this->initialize_building_slots();
 	}
 
@@ -458,7 +458,7 @@ QCoro::Task<void> site_game_data::do_turn()
 
 QCoro::Task<void> site_game_data::do_events()
 {
-	if (!this->site->is_settlement() || !this->is_built()) {
+	if (!this->site->is_holding() || !this->is_built()) {
 		co_return;
 	}
 
@@ -596,7 +596,7 @@ bool site_game_data::is_capital() const
 
 bool site_game_data::can_be_capital() const
 {
-	if (!this->site->is_settlement()) {
+	if (!this->site->is_holding()) {
 		return false;
 	}
 
@@ -846,7 +846,7 @@ void site_game_data::on_population_main_religion_changed(const metternich::relig
 
 QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_type *holding_type)
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	if (holding_type == this->get_holding_type()) {
 		co_return;
@@ -875,7 +875,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	}
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
-		co_await this->on_settlement_built(1);
+		co_await this->on_holding_built(1);
 
 		for (const site_feature *feature : this->site->get_features()) {
 			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), holding_type)) {
@@ -889,7 +889,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 			}
 		}
 	} else if (old_holding_type != nullptr && this->get_holding_type() == nullptr) {
-		co_await this->on_settlement_built(-1);
+		co_await this->on_holding_built(-1);
 
 		for (const site_feature *feature : this->site->get_features()) {
 			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), old_holding_type)) {
@@ -915,7 +915,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	if ((old_holding_type != nullptr && old_holding_type->can_tax()) || (holding_type != nullptr && holding_type->can_tax())) {
 		this->get_province()->get_game_data()->update_province_level_taxation();
 
-		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
+		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_holding_sites()) {
 			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
 				continue;
 			}
@@ -972,7 +972,7 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 {
 	province_game_data *province_game_data = this->get_province()->get_game_data();
 
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 	assert_throw(level <= province_game_data->get_max_level());
 
 	if (level == this->get_holding_level()) {
@@ -1130,7 +1130,7 @@ void site_game_data::set_weighted_holding_level(const centesimal_int &level)
 {
 	province_game_data *province_game_data = this->get_province()->get_game_data();
 
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 	assert_throw(level <= province_game_data->get_max_level());
 
 	if (level == this->get_weighted_holding_level()) {
@@ -1144,7 +1144,7 @@ void site_game_data::set_weighted_holding_level(const centesimal_int &level)
 	if (this->get_holding_type() != nullptr && this->get_holding_type()->can_tax()) {
 		this->get_province()->get_game_data()->update_province_level_taxation();
 
-		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_settlement_sites()) {
+		for (const metternich::site *other_holding : this->get_province()->get_game_data()->get_holding_sites()) {
 			if (other_holding == this->site || !other_holding->get_game_data()->is_built()) {
 				continue;
 			}
@@ -1192,7 +1192,7 @@ QVariantList site_game_data::get_construction_levels_qvariant_list() const
 
 QCoro::Task<void> site_game_data::set_construction_level(const construction_type construction_type, const centesimal_int &level)
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	const centesimal_int old_level = this->get_construction_level(construction_type);
 	if (level == old_level) {
@@ -1306,7 +1306,7 @@ void site_game_data::update_holding_type_name()
 
 bool site_game_data::is_built() const
 {
-	if (this->site->is_settlement()) {
+	if (this->site->is_holding()) {
 		return this->get_holding_type() != nullptr;
 	}
 
@@ -1467,7 +1467,7 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 
 QCoro::Task<void> site_game_data::generate_features()
 {
-	if (this->site->is_settlement()) {
+	if (this->site->is_holding()) {
 		if (this->site->get_holding_type() != nullptr && this->site->get_holding_type()->has_resource()) {
 			bool has_resource_feature = false;
 			for (const site_feature *feature : this->get_features()) {
@@ -1625,7 +1625,7 @@ void site_game_data::add_building_slot(qunique_ptr<building_slot> &&building_slo
 
 void site_game_data::initialize_building_slots()
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	//initialize building slots, placing them in random order
 	std::vector<building_slot_type *> building_slot_types = building_slot_type::get_all();
@@ -1828,7 +1828,7 @@ QCoro::Task<void> site_game_data::clear_buildings()
 
 QCoro::Task<void> site_game_data::check_building_conditions()
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 		const building_type *building = building_slot->get_building();
@@ -1917,7 +1917,7 @@ QCoro::Task<void> site_game_data::check_building_conditions()
 
 QCoro::Task<void> site_game_data::check_free_buildings()
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	const domain *owner = this->get_owner();
 	if (owner == nullptr) {
@@ -2024,9 +2024,9 @@ QCoro::Task<bool> site_game_data::check_free_building(const building_type *build
 	co_return true;
 }
 
-QCoro::Task<void> site_game_data::on_settlement_built(const int multiplier)
+QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 {
-	this->get_province()->get_game_data()->change_settlement_count(multiplier);
+	this->get_province()->get_game_data()->change_holding_count(multiplier);
 
 	if (this->get_owner() != nullptr) {
 		co_await this->get_owner()->get_game_data()->change_holding_count(multiplier);
@@ -2071,7 +2071,7 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 	if (this->get_owner() != nullptr) {
 		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
 		domain_economy *domain_economy = this->get_owner()->get_economy();
-		co_await domain_game_data->change_settlement_building_count(building, multiplier);
+		co_await domain_game_data->change_holding_building_count(building, multiplier);
 
 		for (const auto &[commodity, bonus] : domain_economy->get_building_commodity_bonuses(building)) {
 			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);
@@ -2185,7 +2185,7 @@ QCoro::Task<void> site_game_data::remove_scripted_modifier(const scripted_site_m
 
 bool site_game_data::can_have_population() const
 {
-	return this->site->is_settlement() || this->site->get_type() == site_type::resource || (this->site->get_type() == site_type::celestial_body && this->get_resource() != nullptr);
+	return this->site->is_holding() || this->site->get_type() == site_type::resource || (this->site->get_type() == site_type::celestial_body && this->get_resource() != nullptr);
 }
 
 bool site_game_data::can_have_population_type(const population_type *type) const
@@ -2193,7 +2193,7 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 	assert_throw(this->can_have_population());
 	assert_throw(this->is_built());
 
-	if (this->site->is_settlement()) {
+	if (this->site->is_holding()) {
 		return this->get_holding_type()->can_have_population_type(type);
 	}
 
@@ -2872,7 +2872,7 @@ int site_game_data::get_total_commodity_throughput_modifier(const commodity *com
 
 void site_game_data::update_holding_level_income()
 {
-	assert_throw(this->site->is_settlement());
+	assert_throw(this->site->is_holding());
 
 	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->holding_level_income));
 
@@ -3016,7 +3016,7 @@ bool site_game_data::is_accessible_for_domain(const domain *domain) const
 		return true;
 	}
 
-	for (const metternich::site *holding_site : this->get_province()->get_game_data()->get_settlement_sites()) {
+	for (const metternich::site *holding_site : this->get_province()->get_game_data()->get_holding_sites()) {
 		if (holding_site->get_game_data()->get_owner() == domain) {
 			return true;
 		}

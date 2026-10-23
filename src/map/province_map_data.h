@@ -104,9 +104,9 @@ public:
 
 	QVariantList get_sites_qvariant_list() const;
 
-	const std::vector<const site *> &get_settlement_sites() const
+	const std::vector<const site *> &get_holding_sites() const
 	{
-		return this->settlement_sites;
+		return this->holding_sites;
 	}
 
 	const resource_map<int> &get_resource_counts() const
@@ -139,7 +139,7 @@ private:
 	std::vector<QPoint> tiles;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
-	std::vector<const site *> settlement_sites; //includes all settlements, even if unbuilt
+	std::vector<const site *> holding_sites; //includes all holdings, even if unbuilt
 	resource_map<int> resource_counts;
 	std::vector<QPolygon> polygons;
 };

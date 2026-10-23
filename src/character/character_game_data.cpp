@@ -4944,7 +4944,7 @@ std::vector<building_item_slot *> character_game_data::get_accessible_building_i
 		//characters which have an office and are not deployed have access to items across their entire domain
 		accessible_item_slots = this->get_domain()->get_game_data()->get_item_slots();
 	} else {
-		for (const site *holding_site : province->get_game_data()->get_settlement_sites()) {
+		for (const site *holding_site : province->get_game_data()->get_holding_sites()) {
 			if (!holding_site->get_game_data()->is_built()) {
 				continue;
 			}

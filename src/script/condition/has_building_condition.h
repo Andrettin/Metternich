@@ -34,12 +34,12 @@ public:
 		if constexpr (std::is_same_v<scope_type, domain>) {
 			return scope->get_game_data()->has_building_or_better(this->building);
 		} else if constexpr (std::is_same_v<scope_type, province>) {
-			for (const site *settlement : scope->get_game_data()->get_settlement_sites()) {
-				if (!settlement->get_game_data()->is_built()) {
+			for (const site *holding : scope->get_game_data()->get_holding_sites()) {
+				if (!holding->get_game_data()->is_built()) {
 					continue;
 				}
 
-				if (settlement->get_game_data()->has_building_or_better(this->building)) {
+				if (holding->get_game_data()->has_building_or_better(this->building)) {
 					return true;
 				}
 			}

@@ -55,7 +55,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_pathway_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::sites_changed, this, &civilian_unit::buildable_provinces_changed);
-	connect(this->get_owner()->get_game_data(), &domain_game_data::settlement_building_counts_changed, this, &civilian_unit::buildable_provinces_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::holding_building_counts_changed, this, &civilian_unit::buildable_provinces_changed);
 	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::buildable_provinces_changed);
 
 	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
@@ -369,7 +369,7 @@ void civilian_unit::cancel_move()
 
 std::vector<const building_type *> civilian_unit::get_buildable_buildings_for_site(const site *site) const
 {
-	assert_throw(site->is_settlement());
+	assert_throw(site->is_holding());
 	assert_throw(site->get_game_data()->is_built());
 
 	std::vector<const building_type *> holding_buildable_buildings;
@@ -400,7 +400,7 @@ std::vector<const building_type *> civilian_unit::get_buildable_buildings_for_si
 
 bool civilian_unit::has_buildable_buildings_for_site(const site *site) const
 {
-	assert_throw(site->is_settlement());
+	assert_throw(site->is_holding());
 	assert_throw(site->get_game_data()->is_built());
 
 	for (const qunique_ptr<building_slot> &building_slot : site->get_game_data()->get_building_slots()) {
@@ -435,7 +435,7 @@ site_map<std::vector<const building_type *>> civilian_unit::get_buildable_buildi
 
 	site_map<std::vector<const building_type *>> buildable_buildings;
 
-	for (const site *site : this->get_province()->get_game_data()->get_settlement_sites()) {
+	for (const site *site : this->get_province()->get_game_data()->get_holding_sites()) {
 		if (!site->get_game_data()->is_built()) {
 			continue;
 		}
@@ -478,7 +478,7 @@ std::vector<const metternich::province *> civilian_unit::get_buildable_provinces
 	}
 
 	for (const site *site : this->get_owner()->get_game_data()->get_sites()) {
-		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+		if (!site->is_holding() || !site->get_game_data()->is_built()) {
 			continue;
 		}
 

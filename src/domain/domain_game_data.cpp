@@ -597,7 +597,7 @@ void domain_game_data::collect_regency()
 
 	data_entry_map<holding_type, centesimal_int> total_holding_type_levels;
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() || site->get_holding_type() == nullptr) {
+		if (!site->is_holding() || site->get_holding_type() == nullptr) {
 			continue;
 		}
 
@@ -684,7 +684,7 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 void domain_game_data::check_item_slots()
 {
 	for (const site *holding_site : this->get_sites()) {
-		if (!holding_site->is_settlement() || !holding_site->get_game_data()->is_built()) {
+		if (!holding_site->is_holding() || !holding_site->get_game_data()->is_built()) {
 			continue;
 		}
 
@@ -781,7 +781,7 @@ QCoro::Task<void> domain_game_data::do_population_promotion()
 QCoro::Task<void> domain_game_data::do_population_employment()
 {
 	for (const site *site : this->get_sites()) {
-		if (site->is_settlement() && site->get_game_data()->is_built()) {
+		if (site->is_holding() && site->get_game_data()->is_built()) {
 			co_await site->get_game_data()->check_employment();
 		}
 	}
@@ -1560,7 +1560,7 @@ std::vector<const province *> domain_game_data::get_accessible_provinces() const
 	std::vector<const province *> accessible_provinces = this->get_provinces();
 
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement()) {
+		if (!site->is_holding()) {
 			continue;
 		}
 
@@ -1660,7 +1660,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 {
 	const site_game_data *site_game_data = site->get_game_data();
 
-	if (site->is_settlement() && site_game_data->is_built()) {
+	if (site->is_holding() && site_game_data->is_built()) {
 		co_await this->change_holding_count(1 * multiplier);
 		this->change_score((site_game_data->get_holding_level() * 100).to_int() * multiplier);
 		this->change_domain_power(site_game_data->get_holding_level().to_int() * multiplier);
@@ -1686,7 +1686,7 @@ QCoro::Task<void> domain_game_data::on_site_gained(const site *site, const int m
 		for (const qunique_ptr<building_slot> &building_slot : site_game_data->get_building_slots()) {
 			const building_type *building = building_slot->get_building();
 			if (building != nullptr) {
-				co_await this->change_settlement_building_count(building, 1 * multiplier);
+				co_await this->change_holding_building_count(building, 1 * multiplier);
 			}
 
 			const wonder *wonder = building_slot->get_wonder();
@@ -1719,7 +1719,7 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 	}
 
 	if (capital != nullptr) {
-		assert_throw(capital->is_settlement());
+		assert_throw(capital->is_holding());
 		assert_throw(this->get_provinces().empty() || capital->get_game_data()->get_province()->get_game_data()->get_owner() == this->domain);
 		assert_throw(capital->get_game_data()->is_built());
 	}
@@ -1838,16 +1838,16 @@ QCoro::Task<void> domain_game_data::change_holding_count(const int change)
 
 	this->holding_count += change;
 
-	for (const auto &[building, count] : this->settlement_building_counts) {
+	for (const auto &[building, count] : this->holding_building_counts) {
 		if (building->get_weighted_domain_modifier() != nullptr) {
 			co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(-count) / old_holding_count);
 		}
 	}
 
 	if (this->get_holding_count() != 0) {
-		for (const auto &[building, count] : this->settlement_building_counts) {
+		for (const auto &[building, count] : this->holding_building_counts) {
 			if (building->get_weighted_domain_modifier() != nullptr) {
-				//reapply the settlement building's weighted domain modifier with the updated settlement count
+				//reapply the holding building's weighted domain modifier with the updated holding count
 				co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 			}
 		}
@@ -2450,7 +2450,7 @@ QCoro::Task<void> domain_game_data::change_site_attribute_value(const site_attri
 	}
 
 	for (const site *site : this->get_sites()) {
-		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+		if (!site->is_holding() || !site->get_game_data()->is_built()) {
 			continue;
 		}
 
@@ -2734,7 +2734,7 @@ const icon *domain_game_data::get_population_type_small_icon(const population_ty
 
 bool domain_game_data::has_building(const building_type *building) const
 {
-	return this->get_settlement_building_count(building) > 0;
+	return this->get_holding_building_count(building) > 0;
 }
 
 bool domain_game_data::has_building_or_better(const building_type *building) const
@@ -2752,26 +2752,26 @@ bool domain_game_data::has_building_or_better(const building_type *building) con
 	return false;
 }
 
-QCoro::Task<void> domain_game_data::change_settlement_building_count(const building_type *building, const int change)
+QCoro::Task<void> domain_game_data::change_holding_building_count(const building_type *building, const int change)
 {
 	if (change == 0) {
 		co_return;
 	}
 
-	const int old_count = this->get_settlement_building_count(building);
+	const int old_count = this->get_holding_building_count(building);
 
-	const int count = (this->settlement_building_counts[building] += change);
+	const int count = (this->holding_building_counts[building] += change);
 
 	if (count < 0) {
-		throw std::runtime_error(std::format("The settlement building count for domain \"{}\" for building \"{}\" is negative ({}).", this->domain->get_identifier(), building->get_identifier(), change));
+		throw std::runtime_error(std::format("The holding building count for domain \"{}\" for building \"{}\" is negative ({}).", this->domain->get_identifier(), building->get_identifier(), change));
 	}
 
 	if (count == 0) {
-		this->settlement_building_counts.erase(building);
+		this->holding_building_counts.erase(building);
 	}
 
 	if (building->get_weighted_domain_modifier() != nullptr && this->get_holding_count() != 0) {
-		//reapply the settlement building's weighted domain modifier with the updated count
+		//reapply the holding building's weighted domain modifier with the updated count
 		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(-old_count) / this->get_holding_count());
 		co_await building->get_weighted_domain_modifier()->apply(this->domain, decimillesimal_int(count) / this->get_holding_count());
 	}
@@ -2781,7 +2781,7 @@ QCoro::Task<void> domain_game_data::change_settlement_building_count(const build
 	}
 
 	if (game::get()->is_running()) {
-		emit settlement_building_counts_changed();
+		emit holding_building_counts_changed();
 	}
 }
 
@@ -2797,7 +2797,7 @@ std::vector<building_item_slot *> domain_game_data::get_item_slots() const
 	std::vector<building_item_slot *> item_slots;
 
 	for (const province *accessible_province : this->get_accessible_provinces()) {
-		for (const site *site : accessible_province->get_game_data()->get_settlement_sites()) {
+		for (const site *site : accessible_province->get_game_data()->get_holding_sites()) {
 			vector::merge(item_slots, site->get_game_data()->get_item_slots());
 		}
 	}
@@ -4309,7 +4309,7 @@ QCoro::Task<void> domain_game_data::set_free_building_class_count(const building
 		this->free_building_class_counts[building_class] = value;
 
 		for (const site *site : this->get_sites()) {
-			if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+			if (!site->is_holding() || !site->get_game_data()->is_built()) {
 				continue;
 			}
 

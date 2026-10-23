@@ -630,24 +630,24 @@ public:
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
 
-	int get_settlement_building_count(const building_type *building) const
+	int get_holding_building_count(const building_type *building) const
 	{
-		const auto find_iterator = this->settlement_building_counts.find(building);
+		const auto find_iterator = this->holding_building_counts.find(building);
 
-		if (find_iterator != this->settlement_building_counts.end()) {
+		if (find_iterator != this->holding_building_counts.end()) {
 			return find_iterator->second;
 		}
 
 		return 0;
 	}
 
-	Q_INVOKABLE int get_settlement_building_count(metternich::building_type *building) const
+	Q_INVOKABLE int get_holding_building_count(metternich::building_type *building) const
 	{
 		const metternich::building_type *const_building = building;
-		return this->get_settlement_building_count(const_building);
+		return this->get_holding_building_count(const_building);
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_settlement_building_count(const building_type *building, const int change);
+	[[nodiscard]] QCoro::Task<void> change_holding_building_count(const building_type *building, const int change);
 
 	[[nodiscard]] QCoro::Task<void> on_wonder_gained(const wonder *wonder, const int multiplier);
 
@@ -1052,7 +1052,7 @@ signals:
 	void population_units_changed();
 	void population_type_inputs_changed();
 	void population_type_outputs_changed();
-	void settlement_building_counts_changed();
+	void holding_building_counts_changed();
 	void building_built(const building_type *building, const site *site);
 	void pathway_built(const pathway *pathway, const province *province);
 	void item_slots_changed();
@@ -1104,7 +1104,7 @@ private:
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
-	building_type_map<int> settlement_building_counts;
+	building_type_map<int> holding_building_counts;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
 	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_domain_modifier_map<int> scripted_modifiers;

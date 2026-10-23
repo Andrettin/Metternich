@@ -60,7 +60,7 @@ public:
 		const std::vector<const site *> &scope_sites = this->global ? map::get()->get_sites() : upper_scope->get_game_data()->get_sites();
 
 		for (const site *holding : scope_sites) {
-			if (!holding->is_settlement()) {
+			if (!holding->is_holding()) {
 				continue;
 			}
 

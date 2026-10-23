@@ -700,7 +700,7 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 	assert_throw(decrease >= 0);
 
 	for (const site *site : this->get_game_data()->get_sites()) {
-		if (!site->is_settlement() || !site->get_game_data()->is_built()) {
+		if (!site->is_holding() || !site->get_game_data()->is_built()) {
 			continue;
 		}
 
@@ -1157,13 +1157,13 @@ void domain_economy::change_building_commodity_bonus(const building_type *buildi
 	}
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *holding : province->get_game_data()->get_holding_sites()) {
+			if (!holding->get_game_data()->is_built()) {
 				continue;
 			}
 
-			if (settlement->get_game_data()->has_building(building)) {
-				settlement->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
+			if (holding->get_game_data()->has_building(building)) {
+				holding->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
 			}
 		}
 	}
@@ -1232,12 +1232,12 @@ void domain_economy::change_settlement_commodity_bonus(const commodity *commodit
 	}
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
-		for (const site *settlement : province->get_game_data()->get_settlement_sites()) {
-			if (!settlement->get_game_data()->is_built()) {
+		for (const site *holding : province->get_game_data()->get_holding_sites()) {
+			if (!holding->get_game_data()->is_built()) {
 				continue;
 			}
 
-			settlement->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
+			holding->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
 		}
 	}
 }

@@ -29,7 +29,7 @@ public:
 	{
 		if constexpr (std::is_same_v<upper_scope_type, domain>) {
 			for (const province *province : upper_scope->get_game_data()->get_provinces()) {
-				for (const site *settlement_site : province->get_game_data()->get_settlement_sites()) {
+				for (const site *settlement_site : province->get_game_data()->get_holding_sites()) {
 					if (!settlement_site->get_game_data()->is_built()) {
 						continue;
 					}
@@ -40,7 +40,7 @@ public:
 				}
 			}
 		} else if constexpr (std::is_same_v<upper_scope_type, province>) {
-			for (const site *settlement_site : upper_scope->get_game_data()->get_settlement_sites()) {
+			for (const site *settlement_site : upper_scope->get_game_data()->get_holding_sites()) {
 				if (!settlement_site->get_game_data()->is_built()) {
 					continue;
 				}

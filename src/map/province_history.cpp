@@ -187,10 +187,10 @@ void province_history::distribute_population()
 			continue;
 		}
 
-		//apply the remaining population to settlements
-		const int64_t population_per_settlement = remaining_population / populatable_site_count;
+		//apply the remaining population to holdings
+		const int64_t population_per_holding = remaining_population / populatable_site_count;
 
-		if (population_per_settlement == 0) {
+		if (population_per_holding == 0) {
 			continue;
 		}
 
@@ -201,7 +201,7 @@ void province_history::distribute_population()
 
 			site_history *site_history = site->get_history();
 			const int64_t site_group_population = site_history->get_group_population(group_key);
-			site_history->set_group_population(group_key, population_per_settlement + site_group_population);
+			site_history->set_group_population(group_key, population_per_holding + site_group_population);
 		}
 	}
 }
