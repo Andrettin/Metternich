@@ -213,6 +213,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 			auto civilian_unit = make_qunique<metternich::civilian_unit>(child_scope);
 			this->add_civilian_unit(std::move(civilian_unit));
 		});
+	} else if (tag == "civilian_unit_recruitment_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->civilian_unit_recruitment_counts[civilian_unit_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
 	} else if (tag == "free_building_class_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->free_building_class_counts[building_class::get(property.get_key())] = std::stoi(property.get_value());
@@ -380,6 +384,14 @@ gsml_data domain_game_data::to_gsml_data() const
 			finished_journal_entries_data.add_value(journal_entry->get_identifier());
 		}
 		data.add_child(std::move(finished_journal_entries_data));
+	}
+
+	if (!this->civilian_unit_recruitment_counts.empty()) {
+		gsml_data civilian_unit_recruitment_counts_data("civilian_unit_recruitment_counts");
+		for (const auto &[civilian_unit_type, count] : this->civilian_unit_recruitment_counts) {
+			civilian_unit_recruitment_counts_data.add_property(civilian_unit_type->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(civilian_unit_recruitment_counts_data));
 	}
 
 	if (!this->free_building_class_counts.empty()) {

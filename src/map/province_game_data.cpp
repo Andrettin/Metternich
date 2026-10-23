@@ -172,6 +172,14 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "military_unit_recruitment_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->military_unit_recruitment_counts[military_unit_type::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "local_commodity_outputs") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->local_commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "commodity_output_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
@@ -179,6 +187,15 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_throughput_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "commodity_bonuses_for_tile_thresholds") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const commodity *commodity = commodity::get(child_tag);
+
+			child_scope.for_each_property([this, commodity](const gsml_property &property) {
+				this->commodity_bonuses_for_tile_thresholds[commodity][std::stoi(property.get_key())] = std::stoi(property.get_value());
+			});
 		});
 	} else if (tag == "taxes_by_holding") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -323,6 +340,22 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_child(std::move(employment_capacity_modifiers_data));
 	}
 
+	if (!this->military_unit_recruitment_counts.empty()) {
+		gsml_data military_unit_recruitment_counts_data("military_unit_recruitment_counts");
+		for (const auto &[military_unit_type, count] : this->military_unit_recruitment_counts) {
+			military_unit_recruitment_counts_data.add_property(military_unit_type->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(military_unit_recruitment_counts_data));
+	}
+
+	if (!this->local_commodity_outputs.empty()) {
+		gsml_data local_commodity_outputs_data("local_commodity_outputs");
+		for (const auto &[commodity, output] : this->local_commodity_outputs) {
+			local_commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
+		}
+		data.add_child(std::move(local_commodity_outputs_data));
+	}
+
 	if (!this->get_commodity_output_modifiers().empty()) {
 		gsml_data commodity_output_modifiers_data("commodity_output_modifiers");
 		for (const auto &[commodity, output_modifier] : this->get_commodity_output_modifiers()) {
@@ -337,6 +370,18 @@ gsml_data province_game_data::to_gsml_data() const
 			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
 		}
 		data.add_child(std::move(commodity_throughput_modifiers_data));
+	}
+
+	if (!this->commodity_bonuses_for_tile_thresholds.empty()) {
+		gsml_data commodity_bonuses_for_tile_thresholds_data("commodity_bonuses_for_tile_thresholds");
+		for (const auto &[commodity, tile_thresold_bonuses] : this->commodity_bonuses_for_tile_thresholds) {
+			gsml_data tile_thresold_bonuses_data(commodity->get_identifier());
+			for (const auto &[threshold, threshold_bonus] : tile_thresold_bonuses) {
+				tile_thresold_bonuses_data.add_property(std::to_string(threshold), std::to_string(threshold_bonus));
+			}
+			commodity_bonuses_for_tile_thresholds_data.add_child(std::move(tile_thresold_bonuses_data));
+		}
+		data.add_child(std::move(commodity_bonuses_for_tile_thresholds_data));
 	}
 
 	if (!this->taxes_by_holding.empty()) {
