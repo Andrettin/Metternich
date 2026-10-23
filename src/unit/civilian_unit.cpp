@@ -108,6 +108,12 @@ void civilian_unit::process_gsml_property(const gsml_property &property)
 		this->set_province(province::get(value));
 	} else if (key == "original_province") {
 		this->original_province = province::get(value);
+	} else if (key == "under_construction_building") {
+		this->under_construction_building = building_type::get(value);
+	} else if (key == "under_construction_building_site") {
+		this->under_construction_building_site = site::get(value);
+	} else if (key == "under_construction_pathway") {
+		this->under_construction_pathway = pathway::get(value);
 	} else if (key == "exploring") {
 		this->exploring = string::to_bool(value);
 	} else if (key == "prospecting") {
@@ -143,6 +149,16 @@ gsml_data civilian_unit::to_gsml_data() const
 
 	if (this->original_province != nullptr) {
 		data.add_property("original_province", this->original_province->get_identifier());
+	}
+
+	if (this->under_construction_building != nullptr) {
+		data.add_property("under_construction_building", this->under_construction_building->get_identifier());
+	}
+	if (this->under_construction_building_site != nullptr) {
+		data.add_property("under_construction_building_site", this->under_construction_building_site->get_identifier());
+	}
+	if (this->under_construction_pathway != nullptr) {
+		data.add_property("under_construction_pathway", this->under_construction_pathway->get_identifier());
 	}
 
 	data.add_property("exploring", string::from_bool(this->exploring));
