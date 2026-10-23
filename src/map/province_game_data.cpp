@@ -374,12 +374,12 @@ gsml_data province_game_data::to_gsml_data() const
 
 	if (!this->commodity_bonuses_for_tile_thresholds.empty()) {
 		gsml_data commodity_bonuses_for_tile_thresholds_data("commodity_bonuses_for_tile_thresholds");
-		for (const auto &[commodity, tile_thresold_bonuses] : this->commodity_bonuses_for_tile_thresholds) {
-			gsml_data tile_thresold_bonuses_data(commodity->get_identifier());
-			for (const auto &[threshold, threshold_bonus] : tile_thresold_bonuses) {
-				tile_thresold_bonuses_data.add_property(std::to_string(threshold), std::to_string(threshold_bonus));
+		for (const auto &[commodity, tile_threshold_bonuses] : this->commodity_bonuses_for_tile_thresholds) {
+			gsml_data tile_threshold_bonuses_data(commodity->get_identifier());
+			for (const auto &[threshold, threshold_bonus] : tile_threshold_bonuses) {
+				tile_threshold_bonuses_data.add_property(std::to_string(threshold), std::to_string(threshold_bonus));
 			}
-			commodity_bonuses_for_tile_thresholds_data.add_child(std::move(tile_thresold_bonuses_data));
+			commodity_bonuses_for_tile_thresholds_data.add_child(std::move(tile_threshold_bonuses_data));
 		}
 		data.add_child(std::move(commodity_bonuses_for_tile_thresholds_data));
 	}
