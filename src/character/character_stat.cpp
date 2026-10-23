@@ -5,6 +5,8 @@
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
+#include "util/assert_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -87,6 +89,15 @@ void character_stat::process_gsml_scope(const gsml_data &scope)
 bool character_stat::affects_military_unit_stats() const
 {
 	return this->affect_military_unit_stats;
+}
+
+void character_stat::add_derived_stat(const character_stat *stat)
+{
+	if (vector::contains(this->derived_stats, stat)) {
+		throw std::runtime_error(std::format("Tried to add derived character stat \"{}\" to stat \"{}\", but it is already set as a derived stat of the latter.", stat->get_identifier(), this->get_identifier()));
+	}
+
+	this->derived_stats.push_back(stat);
 }
 
 }

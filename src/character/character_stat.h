@@ -56,10 +56,7 @@ public:
 		return this->derived_stats;
 	}
 
-	void add_derived_stat(const character_stat *stat)
-	{
-		this->derived_stats.push_back(stat);
-	}
+	void add_derived_stat(const character_stat *stat);
 
 	const modifier<const character> *get_value_modifier(const int value) const
 	{
