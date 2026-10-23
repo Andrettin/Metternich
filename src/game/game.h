@@ -111,10 +111,10 @@ public:
 
 	Q_INVOKABLE QCoro::QmlTask start()
 	{
-		return this->start_coro();
+		return this->start_coro(true);
 	}
 
-	[[nodiscard]] QCoro::Task<void> start_coro();
+	[[nodiscard]] QCoro::Task<void> start_coro(const bool is_new_game);
 
 	[[nodiscard]] QCoro::Task<void> stop_coro();
 

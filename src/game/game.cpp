@@ -435,7 +435,7 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 
 		co_await this->create_map_images();
 
-		co_await this->start_coro();
+		co_await this->start_coro(false);
 	} catch (...) {
 		exception::report(std::current_exception());
 	}
@@ -482,7 +482,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 	}
 }
 
-QCoro::Task<void> game::start_coro()
+QCoro::Task<void> game::start_coro(const bool is_new_game)
 {
 	try {
 		if (this->is_running()) {
@@ -505,34 +505,36 @@ QCoro::Task<void> game::start_coro()
 			co_await future;
 		}
 
-		for (const site *site : map::get()->get_sites()) {
-			assert_throw(site->get_game_data()->is_on_map());
+		if (is_new_game) {
+			for (const site *site : map::get()->get_sites()) {
+				assert_throw(site->get_game_data()->is_on_map());
 
-			co_await site->get_game_data()->check_holding_type();
-			co_await site->get_game_data()->check_employment();
-			site->get_game_data()->calculate_commodity_outputs();
-		}
-
-		for (const domain *domain : this->get_domains()) {
-			domain_game_data *domain_game_data = domain->get_game_data();
-			domain_government *domain_government = domain->get_government();
-
-			for (const office *office : office::get_all()) {
-				co_await domain_government->check_office_holder(office);
+				co_await site->get_game_data()->check_holding_type();
+				co_await site->get_game_data()->check_employment();
+				site->get_game_data()->calculate_commodity_outputs();
 			}
 
-			domain_game_data->check_ideas();
+			for (const domain *domain : this->get_domains()) {
+				domain_game_data *domain_game_data = domain->get_game_data();
+				domain_government *domain_government = domain->get_government();
 
-			//setup journal entries, marking the ones for which the domain already fulfills conditions as finished, but without doing the effects
-			co_await domain_game_data->check_journal_entries(true, true);
+				for (const office *office : office::get_all()) {
+					co_await domain_government->check_office_holder(office);
+				}
 
-			//ensure some item slots will start off filled
-			domain_game_data->check_item_slots();
+				domain_game_data->check_ideas();
 
-			//set commodity trade defaults
-			for (const commodity *commodity : domain_game_data->get_economy()->get_tradeable_commodities()) {
-				domain_game_data->get_economy()->set_default_min_commodity_storage(commodity);
-				domain_game_data->get_economy()->set_default_max_commodity_storage(commodity);
+				//setup journal entries, marking the ones for which the domain already fulfills conditions as finished, but without doing the effects
+				co_await domain_game_data->check_journal_entries(true, true);
+
+				//ensure some item slots will start off filled
+				domain_game_data->check_item_slots();
+
+				//set commodity trade defaults
+				for (const commodity *commodity : domain_game_data->get_economy()->get_tradeable_commodities()) {
+					domain_game_data->get_economy()->set_default_min_commodity_storage(commodity);
+					domain_game_data->get_economy()->set_default_max_commodity_storage(commodity);
+				}
 			}
 		}
 

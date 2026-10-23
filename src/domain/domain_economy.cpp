@@ -84,7 +84,7 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 	} else if (key == "throughput_modifier") {
 		this->throughput_modifier = std::stoi(value);
 	} else {
-		throw std::runtime_error(std::format("Invalid domain government property: \"{}\".", key));
+		throw std::runtime_error(std::format("Invalid domain economy property: \"{}\".", key));
 	}
 }
 
@@ -129,7 +129,7 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else {
-		throw std::runtime_error(std::format("Invalid domain government scope: \"{}\".", tag));
+		throw std::runtime_error(std::format("Invalid domain economy scope: \"{}\".", tag));
 	}
 }
 
