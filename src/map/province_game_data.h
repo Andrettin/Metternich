@@ -436,7 +436,7 @@ public:
 	std::vector<military_unit *> get_domain_military_units(const domain *domain) const;
 	Q_INVOKABLE QVariantList get_domain_military_units_qvariant_list(const metternich::domain *domain) const;
 
-	void add_military_unit(military_unit *military_unit);
+	void add_military_unit(military_unit *military_unit, const bool update_count);
 	void remove_military_unit(military_unit *military_unit);
 	void clear_military_units();
 

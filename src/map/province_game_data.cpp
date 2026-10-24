@@ -2318,11 +2318,11 @@ QVariantList province_game_data::get_domain_military_units_qvariant_list(const d
 	return container::to_qvariant_list(this->get_domain_military_units(domain));
 }
 
-void province_game_data::add_military_unit(military_unit *military_unit)
+void province_game_data::add_military_unit(military_unit *military_unit, const bool update_count)
 {
 	this->military_units.push_back(military_unit);
 
-	if (!military_unit->is_moving()) {
+	if (update_count && !military_unit->is_moving()) {
 		this->change_military_unit_category_count(military_unit->get_category(), 1);
 	}
 

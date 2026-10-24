@@ -147,7 +147,8 @@ void military_unit::process_gsml_property(const gsml_property &property)
 		this->character = game::get()->get_character(value);
 		this->character->get_game_data()->set_military_unit(this);
 	} else if (key == "province") {
-		this->set_province(province::get(value));
+		this->province = province::get(value);
+		this->province->get_game_data()->add_military_unit(this, false);
 	} else if (key == "hit_points") {
 		this->hit_points = std::stoi(value);
 	} else if (key == "max_hit_points") {
