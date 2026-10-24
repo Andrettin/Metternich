@@ -587,6 +587,14 @@ gsml_data character_game_data::to_gsml_data() const
 		data.add_child(std::move(items_data));
 	}
 
+	if (!this->commanded_military_unit_stat_modifiers.empty()) {
+		gsml_data commanded_military_unit_stat_modifiers_data("commanded_military_unit_stat_modifiers");
+		for (const auto &[military_unit_stat, modifier] : this->commanded_military_unit_stat_modifiers) {
+			commanded_military_unit_stat_modifiers_data.add_property(std::string(magic_enum::enum_name(military_unit_stat)), modifier.to_string());
+		}
+		data.add_child(std::move(commanded_military_unit_stat_modifiers_data));
+	}
+
 	if (!this->status_effect_durations.empty()) {
 		gsml_data status_effect_durations_data("status_effect_durations");
 		for (const auto &[status_effect, duration] : this->status_effect_durations) {
