@@ -123,11 +123,11 @@ public:
 		return this->stop_coro();
 	}
 
-	[[nodiscard]] QCoro::Task<void> clear_coro();
+	[[nodiscard]] QCoro::Task<void> clear_coro(const bool clear_map);
 
-	Q_INVOKABLE QCoro::QmlTask clear()
+	Q_INVOKABLE QCoro::QmlTask clear(const bool clear_map)
 	{
-		return this->clear_coro();
+		return this->clear_coro(clear_map);
 	}
 
 	[[nodiscard]] QCoro::Task<void> reset_game_data();

@@ -416,7 +416,7 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		if (this->is_running()) {
 			co_await this->stop_coro();
 		} else {
-			co_await this->reset_game_data();
+			co_await this->clear_coro(true);
 		}
 
 		co_await this->initialize();
@@ -454,7 +454,7 @@ QCoro::Task<void> game::setup_scenario_coro(const metternich::scenario *scenario
 	try {
 		const metternich::scenario *old_scenario = this->scenario;
 
-		co_await this->clear_coro();
+		co_await this->clear_coro(false);
 		this->scenario = scenario;
 
 		QDate start_date = scenario->get_start_date();
@@ -559,19 +559,17 @@ QCoro::Task<void> game::stop_coro()
 			co_return;
 		}
 
-		this->set_running(false);
-		co_await this->clear_coro();
-		map::get()->clear();
-		this->set_player_character(nullptr);
-		this->set_player_domain(nullptr);
+		co_await this->clear_coro(true);
 	} catch (...) {
 		exception::report(std::current_exception());
 	}
 }
 
-QCoro::Task<void> game::clear_coro()
+QCoro::Task<void> game::clear_coro(const bool clear_map)
 {
 	try {
+		this->set_running(false);
+
 		this->rules = preferences::get()->get_game_rules()->duplicate();
 
 		this->clear_delayed_effects();
@@ -591,6 +589,13 @@ QCoro::Task<void> game::clear_coro()
 
 		this->exploration_diplomatic_map_image = QImage();
 		this->exploration_changed = false;
+
+		this->set_player_character(nullptr);
+		this->set_player_domain(nullptr);
+
+		if (clear_map) {
+			map::get()->clear();
+		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}

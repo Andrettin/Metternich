@@ -620,8 +620,7 @@ MenuBase {
 			
 			onClicked: {
 				menu_stack.pop()
-				metternich.game.clear()
-				metternich.map.clear()
+				metternich.game.clear(true)
 			}
 		}
 	}
