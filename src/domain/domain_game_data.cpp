@@ -155,6 +155,16 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 		this->consumption = centesimal_int(value);
 	} else if (key == "unrest") {
 		this->unrest = std::stoi(value);
+	} else if (key == "score") {
+		this->score = std::stoi(value);
+	} else if (key == "rank") {
+		this->rank = domain_rank::get(value);
+	} else if (key == "score_rank") {
+		this->score_rank = std::stoi(value);
+	} else if (key == "economic_score") {
+		this->economic_score = std::stoi(value);
+	} else if (key == "military_score") {
+		this->military_score = std::stoi(value);
 	} else if (key == "domain_size") {
 		this->domain_size = std::stoi(value);
 	} else if (key == "domain_power") {
@@ -292,6 +302,15 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_property("holding_count", std::to_string(this->get_holding_count()));
 	data.add_property("consumption", this->get_consumption().to_string());
 	data.add_property("unrest", std::to_string(this->get_unrest()));
+	data.add_property("score", std::to_string(this->score));
+
+	if (this->rank != nullptr) {
+		data.add_property("rank", this->rank->get_identifier());
+	}
+
+	data.add_property("score_rank", std::to_string(this->score_rank));
+	data.add_property("economic_score", std::to_string(this->economic_score));
+	data.add_property("military_score", std::to_string(this->military_score));
 	data.add_property("domain_size", std::to_string(this->get_domain_size()));
 	data.add_property("domain_power", std::to_string(this->get_domain_power()));
 	data.add_property("building_cost_efficiency_modifier", std::to_string(this->building_cost_efficiency_modifier));

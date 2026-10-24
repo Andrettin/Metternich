@@ -132,6 +132,22 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "commodity_bonuses_per_population") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commodity_bonuses_per_population[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "settlement_commodity_bonuses") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->settlement_commodity_bonuses[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "capital_commodity_bonuses") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->capital_commodity_bonuses[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "capital_commodity_bonuses_per_population") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->capital_commodity_bonuses_per_population[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain economy scope: \"{}\".", tag));
 	}
@@ -219,12 +235,44 @@ gsml_data domain_economy::to_gsml_data() const
 		data.add_child(std::move(capital_commodity_output_modifiers_data));
 	}
 
-	if (!this->get_commodity_throughput_modifiers().empty()) {
+	if (!this->commodity_throughput_modifiers.empty()) {
 		gsml_data commodity_throughput_modifiers_data("commodity_throughput_modifiers");
-		for (const auto &[commodity, throughput_modifier] : this->get_commodity_throughput_modifiers()) {
+		for (const auto &[commodity, throughput_modifier] : this->commodity_throughput_modifiers) {
 			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
 		}
 		data.add_child(std::move(commodity_throughput_modifiers_data));
+	}
+
+	if (!this->commodity_bonuses_per_population.empty()) {
+		gsml_data commodity_bonuses_per_population_data("commodity_bonuses_per_population");
+		for (const auto &[commodity, bonus] : this->commodity_bonuses_per_population) {
+			commodity_bonuses_per_population_data.add_property(commodity->get_identifier(), bonus.to_string());
+		}
+		data.add_child(std::move(commodity_bonuses_per_population_data));
+	}
+
+	if (!this->settlement_commodity_bonuses.empty()) {
+		gsml_data settlement_commodity_bonuses_data("settlement_commodity_bonuses");
+		for (const auto &[commodity, bonus] : this->settlement_commodity_bonuses) {
+			settlement_commodity_bonuses_data.add_property(commodity->get_identifier(), bonus.to_string());
+		}
+		data.add_child(std::move(settlement_commodity_bonuses_data));
+	}
+
+	if (!this->capital_commodity_bonuses.empty()) {
+		gsml_data capital_commodity_bonuses_data("capital_commodity_bonuses");
+		for (const auto &[commodity, bonus] : this->capital_commodity_bonuses) {
+			capital_commodity_bonuses_data.add_property(commodity->get_identifier(), bonus.to_string());
+		}
+		data.add_child(std::move(capital_commodity_bonuses_data));
+	}
+
+	if (!this->capital_commodity_bonuses_per_population.empty()) {
+		gsml_data capital_commodity_bonuses_per_population_data("capital_commodity_bonuses_per_population");
+		for (const auto &[commodity, bonus] : this->capital_commodity_bonuses_per_population) {
+			capital_commodity_bonuses_per_population_data.add_property(commodity->get_identifier(), bonus.to_string());
+		}
+		data.add_child(std::move(capital_commodity_bonuses_per_population_data));
 	}
 
 	return data;

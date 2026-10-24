@@ -310,6 +310,10 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				this->equipped_items[item_ptr->get_slot()].push_back(item_ptr);
 			}
 		});
+	} else if (tag == "commanded_military_unit_stat_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->commanded_military_unit_stat_modifiers[magic_enum::enum_cast<military_unit_stat>(property.get_key()).value()] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "status_effect_durations") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->status_effect_durations[status_effect::get(property.get_key())] = std::chrono::seconds(std::stoll(property.get_value()));
