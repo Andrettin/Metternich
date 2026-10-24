@@ -74,6 +74,11 @@ void domain_military::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->leaders.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "armies") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto army = make_qunique<metternich::army>(child_scope);
+			this->add_army(std::move(army));
+		});
 	} else if (tag == "military_units") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto military_unit = make_qunique<metternich::military_unit>(child_scope);
@@ -119,6 +124,14 @@ gsml_data domain_military::to_gsml_data() const
 			leaders_data.add_value(leader->get_identifier());
 		}
 		data.add_child(std::move(leaders_data));
+	}
+
+	if (!this->armies.empty()) {
+		gsml_data armies_data("armies");
+		for (const auto &army : this->armies) {
+			armies_data.add_child(army->to_gsml_data());
+		}
+		data.add_child(std::move(armies_data));
 	}
 
 	if (!this->military_units.empty()) {

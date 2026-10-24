@@ -154,6 +154,11 @@ void military_unit::process_gsml_property(const gsml_property &property)
 		this->max_hit_points = std::stoi(value);
 	} else if (key == "battle_resolution_type") {
 		this->battle_resolution_type = magic_enum::enum_cast<metternich::battle_resolution_type>(value).value();
+	} else if (key == "army_index") {
+		assert_throw(this->owner != nullptr);
+		const size_t index = std::stoull(value);
+		this->army = this->owner->get_military()->get_armies().at(index).get();
+		this->army->add_military_unit(this);
 	} else {
 		throw std::runtime_error(std::format("Invalid military unit property: \"{}\".", key));
 	}
@@ -194,6 +199,15 @@ gsml_data military_unit::to_gsml_data() const
 	data.add_property("hit_points", std::to_string(this->hit_points));
 	data.add_property("max_hit_points", std::to_string(this->max_hit_points));
 	data.add_property("battle_resolution_type", std::string(magic_enum::enum_name(battle_resolution_type)));
+
+	if (this->army != nullptr) {
+		for (size_t i = 0; i < this->get_owner()->get_military()->get_armies().size(); ++i) {
+			if (this->get_owner()->get_military()->get_armies().at(i).get() == this->army) {
+				data.add_property("army_index", std::to_string(i));
+				break;
+			}
+		}
+	}
 
 	if (!this->stats.empty()) {
 		gsml_data stats_data("stats");
@@ -438,7 +452,7 @@ void military_unit::set_province(const metternich::province *province)
 	this->province = province;
 
 	if (this->get_province() != nullptr) {
-		this->get_province()->get_game_data()->add_military_unit(this);
+		this->get_province()->get_game_data()->add_military_unit(this, true);
 	}
 
 	emit province_changed();

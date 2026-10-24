@@ -34,7 +34,13 @@ public:
 	static std::vector<const character *> get_characters(const std::vector<military_unit *> &military_units);
 
 	explicit army(const std::vector<military_unit *> &military_units, target_variant &&target);
+	explicit army(const gsml_data &scope);
 	~army();
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	void clear();
 
@@ -62,6 +68,8 @@ public:
 
 		return nullptr;
 	}
+
+	void set_target(target_variant &&target);
 
 	const std::vector<military_unit *> &get_military_units() const
 	{

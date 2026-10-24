@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/party.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_government.h"
@@ -41,7 +42,7 @@ std::vector<const character *> army::get_characters(const std::vector<military_u
 }
 
 army::army(const std::vector<military_unit *> &military_units, target_variant &&target)
-	: military_units(military_units), target(std::move(target))
+	: military_units(military_units)
 {
 	assert_throw(!this->get_military_units().empty());
 
@@ -52,19 +53,7 @@ army::army(const std::vector<military_unit *> &military_units, target_variant &&
 		military_unit->set_army(this);
 	}
 
-	std::visit([this](auto &&target_value) {
-		using target_type = std::decay_t<decltype(target_value)>;
-
-		static_assert(std::is_same_v<target_type, std::monostate> || std::is_same_v<target_type, const province *> || std::is_same_v<target_type, const site *>, "Invalid target variant type.");
-
-		if constexpr (std::is_same_v<target_type, const province *>) {
-			target_value->get_game_data()->add_entering_army(this);
-		} else if constexpr (std::is_same_v<target_type, const site *>) {
-			assert_throw(target_value->get_game_data()->can_be_visited_by(this->get_domain()));
-
-			target_value->get_game_data()->add_visiting_army(this);
-		}
-	}, this->target);
+	this->set_target(std::move(target));
 }
 
 army::~army()
@@ -74,6 +63,49 @@ army::~army()
 	}
 
 	assert_log(std::holds_alternative<std::monostate>(this->target));
+}
+
+army::army(const gsml_data &scope)
+{
+	scope.process(this);
+}
+
+void army::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "domain") {
+		this->domain = domain::get(value);
+	} else if (key == "target_province") {
+		this->target = province::get(value);
+	} else if (key == "target_site") {
+		this->target = site::get(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid army property: \"{}\".", key));
+	}
+}
+
+void army::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	throw std::runtime_error(std::format("Invalid army scope: \"{}\".", tag));
+}
+
+gsml_data army::to_gsml_data() const
+{
+	gsml_data data;
+
+	data.add_property("domain", this->domain->get_identifier());
+
+	if (this->get_target_province() != nullptr) {
+		data.add_property("target_province", this->get_target_province()->get_identifier());
+	} else if (this->get_target_site() != nullptr) {
+		data.add_property("target_site", this->get_target_site()->get_identifier());
+	}
+
+	return data;
 }
 
 void army::clear()
@@ -185,6 +217,25 @@ QCoro::Task<void> army::do_turn()
 			}
 		}
 	}
+}
+
+void army::set_target(target_variant &&target)
+{
+	this->target = std::move(target);
+
+	std::visit([this](auto &&target_value) {
+		using target_type = std::decay_t<decltype(target_value)>;
+
+		static_assert(std::is_same_v<target_type, std::monostate> || std::is_same_v<target_type, const province *> || std::is_same_v<target_type, const site *>, "Invalid target variant type.");
+
+		if constexpr (std::is_same_v<target_type, const province *>) {
+			target_value->get_game_data()->add_entering_army(this);
+		} else if constexpr (std::is_same_v<target_type, const site *>) {
+			assert_throw(target_value->get_game_data()->can_be_visited_by(this->get_domain()));
+
+			target_value->get_game_data()->add_visiting_army(this);
+		}
+	}, this->target);
 }
 
 QVariantList army::get_military_units_qvariant_list() const
