@@ -20,6 +20,7 @@
 #include "unit/army.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_class.h"
+#include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "unit/promotion.h"
 #include "util/assert_util.h"
@@ -85,6 +86,15 @@ void domain_military::process_gsml_scope(const gsml_data &scope)
 			this->get_game_data()->add_unit_name(military_unit->get_name());
 			this->military_units.push_back(std::move(military_unit));
 		});
+	} else if (tag == "military_unit_type_stat_modifiers") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const std::string &child_tag = child_scope.get_tag();
+			const military_unit_type *type = military_unit_type::get(child_tag);
+
+			child_scope.for_each_property([this, type](const gsml_property &property) {
+				this->military_unit_type_stat_modifiers[type][magic_enum::enum_cast<military_unit_stat>(property.get_key()).value()] = centesimal_int(property.get_value());
+			});
+		});
 	} else if (tag == "free_infantry_promotion_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->free_infantry_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
@@ -140,6 +150,18 @@ gsml_data domain_military::to_gsml_data() const
 			military_units_data.add_child(military_unit->to_gsml_data());
 		}
 		data.add_child(std::move(military_units_data));
+	}
+
+	if (!this->military_unit_type_stat_modifiers.empty()) {
+		gsml_data military_unit_type_stat_modifiers_data("military_unit_type_stat_modifiers");
+		for (const auto &[type, stat_modifiers] : this->military_unit_type_stat_modifiers) {
+			gsml_data stat_modifiers_data(type->get_identifier());
+			for (const auto &[stat, stat_modifier] : stat_modifiers) {
+				stat_modifiers_data.add_property(std::string(magic_enum::enum_name(stat)), stat_modifier.to_string());
+			}
+			military_unit_type_stat_modifiers_data.add_child(std::move(stat_modifiers_data));
+		}
+		data.add_child(std::move(military_unit_type_stat_modifiers_data));
 	}
 
 	if (!this->free_infantry_promotion_counts.empty()) {
