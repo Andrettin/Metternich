@@ -86,6 +86,9 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "owner") {
 		this->owner = domain::get(value);
+		if (this->can_have_population()) {
+			this->population->add_upper_population(this->owner->get_game_data()->get_population());
+		}
 	} else if (key == "culture") {
 		this->culture = culture::get(value);
 	} else if (key == "religion") {
@@ -173,6 +176,8 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 			this->get_province()->get_game_data()->add_population_unit(population_unit.get());
 			this->population_units.push_back(std::move(population_unit));
 		});
+	} else if (tag == "population") {
+		scope.process(this->population.get());
 	} else if (tag == "employment_sizes") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_sizes[employment_type::get(property.get_key())] = std::stoll(property.get_value());
@@ -321,6 +326,8 @@ gsml_data site_game_data::to_gsml_data() const
 		}
 		data.add_child(std::move(population_units_data));
 	}
+
+	data.add_child(this->population->to_gsml_data());
 
 	if (this->get_base_population_capacity() != 0) {
 		data.add_property("base_population_capacity", std::to_string(this->get_base_population_capacity()));

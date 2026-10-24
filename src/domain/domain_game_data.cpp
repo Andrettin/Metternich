@@ -192,6 +192,10 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->characters.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "population") {
+		scope.process(this->population.get());
+	} else if (tag == "country_population") {
+		scope.process(this->country_population.get());
 	} else if (tag == "holding_building_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->holding_building_counts[building_type::get(property.get_key())] = std::stoi(property.get_value());
@@ -313,6 +317,9 @@ gsml_data domain_game_data::to_gsml_data() const
 		characters_data.add_value(character->get_identifier());
 	}
 	data.add_child(std::move(characters_data));
+
+	data.add_child(this->population->to_gsml_data());
+	data.add_child(this->country_population->to_gsml_data("country_population"));
 
 	if (!this->holding_building_counts.empty()) {
 		gsml_data holding_building_counts_data("holding_building_counts");

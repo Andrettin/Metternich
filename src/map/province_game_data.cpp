@@ -98,6 +98,7 @@ void province_game_data::process_gsml_property(const gsml_property &property)
 
 	if (key == "domain") {
 		this->owner = domain::get(value);
+		this->population->add_upper_population(this->owner->get_game_data()->get_country_population());
 	} else if (key == "culture") {
 		this->culture = culture::get(value);
 	} else if (key == "religion") {
@@ -156,6 +157,8 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->scripted_modifiers[scripted_province_modifier::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "population") {
+		scope.process(this->population.get());
 	} else if (tag == "domain_skill_total_holding_levels") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->domain_skill_total_holding_levels[domain_skill::get(property.get_key())] = centesimal_int(property.get_value());
@@ -323,6 +326,8 @@ gsml_data province_game_data::to_gsml_data() const
 		}
 		data.add_child(std::move(scripted_modifiers_data));
 	}
+
+	data.add_child(this->population->to_gsml_data());
 
 	if (!this->population_type_modifier_multipliers.empty()) {
 		gsml_data population_type_modifier_multipliers_data("population_type_modifier_multipliers");

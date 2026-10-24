@@ -251,6 +251,8 @@ void game::process_gsml_scope(const gsml_data &scope)
 				this->fired_events.insert(event);
 			}
 		});
+	} else if (tag == "population") {
+		scope.process(this->population.get());
 	} else {
 		throw std::runtime_error(std::format("Invalid game data scope: \"{}\".", tag));
 	}
@@ -374,6 +376,8 @@ gsml_data game::to_gsml_data() const
 		}
 		data.add_child(std::move(fired_events_data));
 	}
+
+	data.add_child(this->population->to_gsml_data());
 
 	return data;
 }

@@ -4,6 +4,7 @@
 
 #include "culture/culture.h"
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "game/game.h"
 #include "population/population_strata.h"
 #include "population/population_type.h"
@@ -15,6 +16,96 @@
 #include "util/vector_util.h"
 
 namespace metternich {
+
+void population::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "population_unit_count") {
+		this->population_unit_count = std::stoi(value);
+	} else if (key == "size") {
+		this->size = std::stoll(value);
+	} else if (key == "main_culture") {
+		this->main_culture = culture::get(value);
+	} else if (key == "main_religion") {
+		this->main_religion = religion::get(value);
+	} else if (key == "literate_size") {
+		this->literate_size = std::stoll(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid population property: \"{}\".", key));
+	}
+}
+
+void population::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	if (tag == "type_sizes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->type_sizes[population_type::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else if (tag == "culture_sizes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->culture_sizes[culture::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else if (tag == "religion_sizes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->religion_sizes[religion::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else if (tag == "phenotype_sizes") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->phenotype_sizes[phenotype::get(property.get_key())] = std::stoll(property.get_value());
+		});
+	} else {
+		throw std::runtime_error(std::format("Invalid population scope: \"{}\".", tag));
+	}
+}
+
+gsml_data population::to_gsml_data(const std::string_view tag) const
+{
+	gsml_data data(!tag.empty() ? std::string(tag) : "population");
+
+	data.add_property("population_unit_count", std::to_string(this->population_unit_count));
+	data.add_property("size", std::to_string(this->size));
+	data.add_property("main_culture", this->main_culture->get_identifier());
+	data.add_property("main_religion", this->main_religion->get_identifier());
+	data.add_property("literate_size", std::to_string(this->literate_size));
+
+	if (!this->type_sizes.empty()) {
+		gsml_data type_sizes_data("type_sizes");
+		for (const auto &[population_type, type_size] : this->type_sizes) {
+			type_sizes_data.add_property(population_type->get_identifier(), std::to_string(type_size));
+		}
+		data.add_child(std::move(type_sizes_data));
+	}
+
+	if (!this->culture_sizes.empty()) {
+		gsml_data culture_sizes_data("culture_sizes");
+		for (const auto &[culture, culture_size] : this->culture_sizes) {
+			culture_sizes_data.add_property(culture->get_identifier(), std::to_string(culture_size));
+		}
+		data.add_child(std::move(culture_sizes_data));
+	}
+
+	if (!this->religion_sizes.empty()) {
+		gsml_data religion_sizes_data("religion_sizes");
+		for (const auto &[religion, religion_size] : this->religion_sizes) {
+			religion_sizes_data.add_property(religion->get_identifier(), std::to_string(religion_size));
+		}
+		data.add_child(std::move(religion_sizes_data));
+	}
+
+	if (!this->phenotype_sizes.empty()) {
+		gsml_data phenotype_sizes_data("phenotype_sizes");
+		for (const auto &[phenotype, phenotype_size] : this->phenotype_sizes) {
+			phenotype_sizes_data.add_property(phenotype->get_identifier(), std::to_string(phenotype_size));
+		}
+		data.add_child(std::move(phenotype_sizes_data));
+	}
+
+	return data;
+}
 
 void population::change_population_unit_count(const int change)
 {

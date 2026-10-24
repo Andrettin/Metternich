@@ -25,6 +25,11 @@ class population final : public QObject
 	Q_PROPERTY(qint64 literate_size READ get_literate_size NOTIFY literate_size_changed)
 
 public:
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data(const std::string_view tag = "") const;
+
 	int get_population_unit_count() const
 	{
 		return this->population_unit_count;
