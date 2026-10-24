@@ -404,14 +404,6 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 			co_return;
 		}
 
-		if (this->is_running()) {
-			co_await this->stop_coro();
-		} else {
-			co_await this->reset_game_data();
-		}
-
-		co_await this->initialize();
-
 		gsml_parser parser;
 		gsml_data data;
 
@@ -420,6 +412,14 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		} catch (...) {
 			std::throw_with_nested(std::runtime_error(std::format("Failed to parse save file: {}", path::to_string(filepath))));
 		}
+
+		if (this->is_running()) {
+			co_await this->stop_coro();
+		} else {
+			co_await this->reset_game_data();
+		}
+
+		co_await this->initialize();
 
 		//create generated characters first, so that they can be referred to by objects when loading the saved game data
 		data.get_child("generated_characters").for_each_child([this](const gsml_data &character_data) {
