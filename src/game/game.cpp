@@ -575,6 +575,10 @@ QCoro::Task<void> game::clear_coro(const bool clear_map)
 		this->clear_delayed_effects();
 		this->fired_events.clear();
 
+		if (clear_map) {
+			map::get()->clear();
+		}
+
 		co_await this->reset_game_data();
 
 		this->scenario = nullptr;
@@ -592,10 +596,6 @@ QCoro::Task<void> game::clear_coro(const bool clear_map)
 
 		this->set_player_character(nullptr);
 		this->set_player_domain(nullptr);
-
-		if (clear_map) {
-			map::get()->clear();
-		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error("Failed to clear the game."));
 	}
