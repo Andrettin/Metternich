@@ -77,6 +77,24 @@ namespace metternich {
 
 site_game_data::site_game_data(const metternich::site *site) : site(site)
 {
+	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::title_name_changed);
+
+	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
+	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
+
+	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
+
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::icon_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::icon_changed);
+
+	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
+	connect(this, &site_game_data::ruin_changed, this, &site_game_data::portrait_changed);
+
+	this->population = make_qunique<metternich::population>();
+	connect(this->get_population(), &population::type_size_changed, this, &site_game_data::on_population_type_size_changed);
+	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
+	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 }
 
 void site_game_data::process_gsml_property(const gsml_property &property)
@@ -454,27 +472,9 @@ QCoro::Task<void> site_game_data::initialize()
 		this->set_resource_discovered(true);
 	}
 
-	this->population = make_qunique<metternich::population>();
-	connect(this->get_population(), &population::type_size_changed, this, &site_game_data::on_population_type_size_changed);
-	connect(this->get_population(), &population::main_culture_changed, this, &site_game_data::on_population_main_culture_changed);
-	connect(this->get_population(), &population::main_religion_changed, this, &site_game_data::on_population_main_religion_changed);
 	if (this->get_province() != nullptr) {
 		this->get_population()->add_upper_population(this->get_province()->get_game_data()->get_population());
 	}
-
-	connect(this, &site_game_data::holding_type_name_changed, this, &site_game_data::title_name_changed);
-	connect(this, &site_game_data::ruin_changed, this, &site_game_data::title_name_changed);
-
-	connect(this, &site_game_data::title_name_changed, this, &site_game_data::titled_name_changed);
-	connect(this, &site_game_data::culture_changed, this, &site_game_data::titled_name_changed);
-
-	connect(this, &site_game_data::titled_name_changed, this, &site_game_data::display_text_changed);
-
-	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::icon_changed);
-	connect(this, &site_game_data::ruin_changed, this, &site_game_data::icon_changed);
-
-	connect(this, &site_game_data::holding_type_changed, this, &site_game_data::portrait_changed);
-	connect(this, &site_game_data::ruin_changed, this, &site_game_data::portrait_changed);
 
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
 		co_await resource->get_modifier()->apply(this->site);

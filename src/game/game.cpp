@@ -162,9 +162,6 @@ void game::process_gsml_scope(const gsml_data &scope)
 		this->rules = std::move(rules);
 	} else if (tag == "map") {
 		scope.process(map::get());
-
-		//initialize after the map is loaded
-		co_await this->initialize();
 	} else if (tag == "domains") {
 		scope.for_each_child([this](const gsml_data &domain_data) {
 			domain *domain = domain::get(domain_data.get_tag());
