@@ -29,9 +29,22 @@
 
 namespace metternich {
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site)
-	: type(type), culture(culture), religion(religion), phenotype(phenotype), employment_type(employment_type), size(size), literacy_rate(literacy_rate), site(site)
+population_unit::population_unit()
 {
+	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
+}
+
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site) : population_unit()
+{
+	this->type = type;
+	this->culture = culture;
+	this->religion = religion;
+	this->phenotype = phenotype;
+	this->employment_type = employment_type;
+	this->size = size;
+	this->literacy_rate = literacy_rate;
+	this->site = site;
+
 	assert_throw(this->get_type() != nullptr);
 	assert_throw(this->get_culture() != nullptr);
 	assert_throw(this->get_religion() != nullptr);
@@ -49,7 +62,7 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
-population_unit::population_unit(const gsml_data &scope)
+population_unit::population_unit(const gsml_data &scope) : population_unit()
 {
 	scope.process(this);
 

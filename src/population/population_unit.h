@@ -51,6 +51,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(int fulfilled_luxury_needs_percent READ get_fulfilled_luxury_needs_percent NOTIFY fulfilled_luxury_needs_percent_changed)
 
 public:
+	explicit population_unit();
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
 	explicit population_unit(const gsml_data &scope);
 
