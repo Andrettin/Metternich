@@ -78,9 +78,9 @@ void army::process_gsml_property(const gsml_property &property)
 	if (key == "domain") {
 		this->domain = domain::get(value);
 	} else if (key == "target_province") {
-		this->target = province::get(value);
+		this->set_target(province::get(value));
 	} else if (key == "target_site") {
-		this->target = site::get(value);
+		this->set_target(site::get(value));
 	} else {
 		throw std::runtime_error(std::format("Invalid army property: \"{}\".", key));
 	}
