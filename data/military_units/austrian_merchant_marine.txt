@@ -5,7 +5,7 @@ austrian_traders = {
 	
 	history = {
 		1820 = {
-			active = true
+			province = istria
 		}
 	}
 }

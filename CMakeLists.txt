@@ -324,7 +324,6 @@ set(unit_SRCS
 	src/unit/civilian_unit_type.cpp
 	src/unit/historical_civilian_unit.cpp
 	src/unit/historical_military_unit.cpp
-	src/unit/historical_transporter.cpp
 	src/unit/military_unit.cpp
 	src/unit/military_unit_class.cpp
 	src/unit/military_unit_class_container.cpp
@@ -332,11 +331,6 @@ set(unit_SRCS
 	src/unit/military_unit_type_container.cpp
 	src/unit/promotion.cpp
 	src/unit/promotion_container.cpp
-	src/unit/transporter.cpp
-	src/unit/transporter_class.cpp
-	src/unit/transporter_class_container.cpp
-	src/unit/transporter_type.cpp
-	src/unit/transporter_type_container.cpp
 )
 source_group(unit FILES ${unit_SRCS})
 
@@ -794,7 +788,6 @@ set(script_effect_HDRS
 	src/script/effect/create_character_effect.h
 	src/script/effect/create_enemy_effect.h
 	src/script/effect/create_military_unit_effect.h
-	src/script/effect/create_transporter_effect.h
 	src/script/effect/damage_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
@@ -1002,8 +995,6 @@ set(unit_HDRS
 	src/unit/historical_civilian_unit_history.h
 	src/unit/historical_military_unit.h
 	src/unit/historical_military_unit_history.h
-	src/unit/historical_transporter.h
-	src/unit/historical_transporter_history.h
 	src/unit/military_unit.h
 	src/unit/military_unit_class.h
 	src/unit/military_unit_class_container.h
@@ -1014,13 +1005,6 @@ set(unit_HDRS
 	src/unit/military_unit_type_container.h
 	src/unit/promotion.h
 	src/unit/promotion_container.h
-	src/unit/transporter.h
-	src/unit/transporter_category.h
-	src/unit/transporter_class.h
-	src/unit/transporter_class_container.h
-	src/unit/transporter_stat.h
-	src/unit/transporter_type.h
-	src/unit/transporter_type_container.h
 )
 source_group(unit FILES ${unit_HDRS})
 

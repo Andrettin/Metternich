@@ -1,12 +1,12 @@
 wagon = {
 	name = "Wagon"
-	transporter_class = wagon
+	unit_class = wagon
 	icon = carrack
-	hit_points = 10
 	stats = {
+		hit_points = 10
+		cargo = 2
 		movement = 2
 	}
-	cargo = 2
 	commodity_costs = {
 		lumber = 2
 		fabric = 2
@@ -15,12 +15,12 @@ wagon = {
 
 locomotive = {
 	name = "Locomotive"
-	transporter_class = locomotive
+	unit_class = locomotive
 	icon = paddlewheeler
-	hit_points = 10
-	cargo = 2
 	required_technology = industrialization
 	stats = {
+		hit_points = 10
+		cargo = 2
 		movement = 2
 	}
 	commodity_costs = {

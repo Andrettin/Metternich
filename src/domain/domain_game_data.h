@@ -9,7 +9,6 @@
 #include "population/population_type_container.h"
 #include "script/scripted_modifier_container.h"
 #include "species/phenotype_container.h"
-#include "unit/transporter_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 #include "util/point_container.h"
@@ -33,7 +32,6 @@ Q_MOC_INCLUDE("population/population.h")
 Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("ui/portrait.h")
-Q_MOC_INCLUDE("unit/transporter_type.h")
 
 namespace archimedes {
 	class gsml_data;
@@ -79,14 +77,10 @@ class religion;
 class scripted_domain_modifier;
 class site;
 class site_attribute;
-class transporter;
-class transporter_type;
 class wonder;
 enum class domain_tier;
 enum class event_trigger;
 enum class idea_type;
-enum class transporter_category;
-enum class transporter_stat;
 struct read_only_context;
 
 template <typename scope_type>
@@ -145,7 +139,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(QVariantList historical_rulers READ get_historical_rulers_qvariant_list NOTIFY characters_changed)
-	Q_PROPERTY(QVariantList transporters READ get_transporters_qvariant_list NOTIFY transporters_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -174,7 +167,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> pay_maintenance();
 	void check_item_slots();
 	void do_civilian_unit_recruitment();
-	void do_transporter_recruitment();
 	[[nodiscard]] QCoro::Task<void> do_population_growth();
 	void do_population_literacy_change();
 	[[nodiscard]] QCoro::Task<void> do_population_cultural_change();
@@ -794,36 +786,6 @@ public:
 	Q_INVOKABLE bool can_decrease_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type) const;
 	Q_INVOKABLE void decrease_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type, const bool restore_inputs);
 
-	QVariantList get_transporters_qvariant_list() const;
-	bool create_transporter(const transporter_type *transporter_type, const phenotype *phenotype);
-	void add_transporter(qunique_ptr<transporter> &&transporter);
-	void remove_transporter(transporter *transporter);
-
-	Q_INVOKABLE int get_transporter_recruitment_count(const metternich::transporter_type *transporter_type) const
-	{
-		const auto find_iterator = this->transporter_recruitment_counts.find(transporter_type);
-
-		if (find_iterator != this->transporter_recruitment_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
-	void change_transporter_recruitment_count(const transporter_type *transporter_type, const int change, const bool change_input_storage = true);
-	Q_INVOKABLE bool can_increase_transporter_recruitment(const metternich::transporter_type *transporter_type) const;
-	Q_INVOKABLE void increase_transporter_recruitment(const metternich::transporter_type *transporter_type);
-	Q_INVOKABLE bool can_decrease_transporter_recruitment(const metternich::transporter_type *transporter_type) const;
-	Q_INVOKABLE void decrease_transporter_recruitment(const metternich::transporter_type *transporter_type, const bool restore_inputs);
-
-	int get_transporter_type_cost_modifier(const transporter_type *transporter_type) const;
-	Q_INVOKABLE int get_transporter_type_wealth_cost(const metternich::transporter_type *transporter_type, const int quantity) const;
-	commodity_map<int64_t> get_transporter_type_commodity_costs(const transporter_type *transporter_type, const int quantity) const;
-	Q_INVOKABLE QVariantList get_transporter_type_commodity_costs_qvariant_list(const metternich::transporter_type *transporter_type, const int quantity) const;
-
-	const transporter_type *get_best_transporter_category_type(const transporter_category category, const culture *culture) const;
-	Q_INVOKABLE const metternich::transporter_type *get_best_transporter_category_type(const metternich::transporter_category category) const;
-
 	const std::map<std::string, int> &get_unit_name_counts() const
 	{
 		return this->unit_name_counts;
@@ -840,29 +802,6 @@ public:
 		if (count == 0) {
 			this->unit_name_counts.erase(name);
 		}
-	}
-
-	const centesimal_int &get_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat) const
-	{
-		const auto find_iterator = this->transporter_type_stat_modifiers.find(type);
-
-		if (find_iterator != this->transporter_type_stat_modifiers.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(stat);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
-	void set_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &value);
-
-	void change_transporter_type_stat_modifier(const transporter_type *type, const transporter_stat stat, const centesimal_int &change)
-	{
-		this->set_transporter_type_stat_modifier(type, stat, this->get_transporter_type_stat_modifier(type, stat) + change);
 	}
 
 	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const
@@ -1051,7 +990,6 @@ signals:
 	void available_idea_slots_changed();
 	void scripted_modifiers_changed();
 	void characters_changed();
-	void transporters_changed();
 	void prospected_tiles_changed();
 	void journal_entries_changed();
 	void journal_entry_completed(const journal_entry *journal_entry);
@@ -1103,10 +1041,7 @@ private:
 	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers
 	std::vector<qunique_ptr<civilian_unit>> civilian_units;
 	data_entry_map<civilian_unit_type, int> civilian_unit_recruitment_counts;
-	std::vector<qunique_ptr<transporter>> transporters;
-	transporter_type_map<int> transporter_recruitment_counts;
 	std::map<std::string, int> unit_name_counts;
-	transporter_type_map<std::map<transporter_stat, centesimal_int>> transporter_type_stat_modifiers;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
 	int building_cost_efficiency_modifier = 0;
 	building_class_map<int> building_class_cost_efficiency_modifiers;

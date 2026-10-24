@@ -103,7 +103,6 @@
 #include "unit/military_unit_category.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
-#include "unit/transporter_category.h"
 #include "util/empty_image_provider.h"
 #include "util/exception_util.h"
 #include "util/gender.h"
@@ -222,7 +221,6 @@ int main(int argc, char **argv)
 		database_util::register_enum<succession_type>();
 		database_util::register_enum<taxonomic_rank>();
 		database_util::register_enum<temperature_type>();
-		database_util::register_enum<transporter_category>();
 		database_util::register_enum<word_type>();
 
 		QCoro::Qml::registerTypes();

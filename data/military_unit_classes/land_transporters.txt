@@ -1,9 +1,11 @@
 wagon = {
 	name = "Wagon"
+	domain = land
 	category = land_transporter
 }
 
 locomotive = {
 	name = "Locomotive"
+	domain = land
 	category = land_transporter
 }

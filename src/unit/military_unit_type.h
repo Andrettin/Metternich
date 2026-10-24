@@ -73,6 +73,7 @@ public:
 	bool is_cavalry() const;
 	bool is_artillery() const;
 	bool is_ship() const;
+	bool is_transporter() const;
 	bool is_character() const;
 	bool is_monster() const;
 

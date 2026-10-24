@@ -1,11 +1,11 @@
-prussian_traders = {
+sardinian_traders = {
 	type = trader
-	domain = prussia
+	domain = sardinia
 	quantity = 3
 	
 	history = {
 		1820 = {
-			active = true
+			province = genoa
 		}
 	}
 }

@@ -77,12 +77,9 @@
 #include "unit/historical_civilian_unit_history.h"
 #include "unit/historical_military_unit.h"
 #include "unit/historical_military_unit_history.h"
-#include "unit/historical_transporter.h"
-#include "unit/historical_transporter_history.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
-#include "unit/transporter_type.h"
 #include "util/aggregate_exception.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -847,42 +844,6 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		}
 
 		co_await this->apply_military_units();
-
-		for (const historical_transporter *historical_transporter : historical_transporter::get_all()) {
-			const historical_transporter_history *historical_transporter_history = historical_transporter->get_history();
-
-			if (!historical_transporter_history->is_active()) {
-				continue;
-			}
-
-			const domain *domain = historical_transporter->get_domain();
-			assert_throw(domain != nullptr);
-
-			domain_game_data *domain_game_data = domain->get_game_data();
-			domain_technology *domain_technology = domain->get_technology();
-
-			if (!domain_game_data->is_alive()) {
-				continue;
-			}
-
-			if (domain_game_data->is_under_anarchy()) {
-				continue;
-			}
-
-			const transporter_type *type = historical_transporter->get_type();
-			assert_throw(type != nullptr);
-
-			if (type->get_required_technology() != nullptr) {
-				co_await domain_technology->add_technology_with_prerequisites(type->get_required_technology());
-			}
-
-			const phenotype *phenotype = historical_transporter->get_phenotype();
-
-			for (int i = 0; i < historical_transporter->get_quantity(); ++i) {
-				const bool created = domain_game_data->create_transporter(type, phenotype);
-				assert_throw(created);
-			}
-		}
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to apply history for scenario \"{}\".", this->scenario->get_identifier())));
 	}

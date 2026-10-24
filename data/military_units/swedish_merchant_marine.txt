@@ -5,7 +5,7 @@ swedish_carracks = {
 	
 	history = {
 		1492 = {
-			active = true
+			province = uppland
 		}
 	}
 }

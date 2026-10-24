@@ -5,7 +5,7 @@ portuguese_carracks = {
 	
 	history = {
 		1492 = {
-			active = true
+			province = estremadura
 		}
 	}
 }

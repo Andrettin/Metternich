@@ -47,8 +47,4 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 	}
-	
-	TransportersDialog {
-		id: transporters_dialog
-	}
 }

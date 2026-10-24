@@ -252,7 +252,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			} else if (key.starts_with(merchant_ship_stat_modifier_prefix)) {
 				const std::string stat_name = key.substr(merchant_ship_stat_modifier_prefix.size(), key.size() - merchant_ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
 
-				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<transporter_stat>(stat_name).value(), value);
+				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<military_unit_stat>(stat_name).value(), value);
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const province>) {

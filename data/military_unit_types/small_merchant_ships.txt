@@ -1,12 +1,11 @@
 carrack = {
 	name = "Carrack"
-	transporter_class = carrack
+	unit_class = carrack
 	icon = carrack
-	hit_points = 25
-	cargo = 3
 	required_technology = colonialism
 	stats = {
-		resistance = 5
+		hit_points = 25
+		cargo = 3
 		movement = 3
 	}
 	commodity_costs = {
@@ -21,13 +20,12 @@ carrack = {
 
 trader = {
 	name = "Trader"
-	transporter_class = trader
+	unit_class = trader
 	icon = carrack
-	hit_points = 30
-	cargo = 4
 	required_technology = global_trade
 	stats = {
-		resistance = 10
+		hit_points = 30
+		cargo = 4
 		movement = 4
 	}
 	commodity_costs = {
@@ -41,13 +39,12 @@ trader = {
 
 clipper = {
 	name = "Clipper"
-	transporter_class = clipper
+	unit_class = clipper
 	icon = carrack
-	hit_points = 35
-	cargo = 6
 	required_technology = global_trade
 	stats = {
-		resistance = 10
+		hit_points = 35
+		cargo = 6
 		movement = 7
 	}
 	commodity_costs = {

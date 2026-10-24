@@ -83,7 +83,7 @@ public:
 			return std::string();
 		}
 
-		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->is_ship() ? "warship" : "regiment");
+		return std::format("Gain {} {} {}", this->count, string::highlight(type->get_name()), type->is_ship() ? (type->is_transporter() ? "merchant ship" : "warship") : (type->is_transporter() ? "transporter" : "regiment"));
 	}
 
 	const military_unit_type *get_type(const domain *scope) const

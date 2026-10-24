@@ -1,14 +1,17 @@
 carrack = {
 	name = "Carrack"
+	domain = water
 	category = small_merchant_ship
 }
 
 trader = {
 	name = "Trader"
+	domain = water
 	category = small_merchant_ship
 }
 
 clipper = {
 	name = "Clipper"
+	domain = water
 	category = small_merchant_ship
 }

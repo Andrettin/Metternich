@@ -5,8 +5,6 @@
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
-#include "unit/transporter_stat.h"
-#include "unit/transporter_type.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -14,7 +12,7 @@ namespace metternich {
 class merchant_ship_stat_modifier_effect final : public modifier_effect<const domain>
 {
 public:
-	explicit merchant_ship_stat_modifier_effect(const transporter_stat stat, const std::string &value)
+	explicit merchant_ship_stat_modifier_effect(const military_unit_stat stat, const std::string &value)
 		: modifier_effect(value), stat(stat)
 	{
 	}
@@ -27,9 +25,9 @@ public:
 
 	virtual void apply(const domain *scope, const decimillesimal_int &multiplier) const override
 	{
-		for (const transporter_type *transporter_type : transporter_type::get_all()) {
-			if (transporter_type->is_ship()) {
-				scope->get_game_data()->change_transporter_type_stat_modifier(transporter_type, this->stat, centesimal_int(this->value * multiplier));
+		for (const military_unit_type *military_unit_type : military_unit_type::get_all()) {
+			if (military_unit_type->is_ship() && military_unit_type->is_transporter()) {
+				scope->get_military()->change_military_unit_type_stat_modifier(military_unit_type, this->stat, centesimal_int(this->value * multiplier));
 			}
 		}
 	}
@@ -38,7 +36,7 @@ public:
 	{
 		Q_UNUSED(scope);
 
-		return std::format("Merchant Ship {}", get_transporter_stat_name(this->stat));
+		return std::format("Merchant Ship {}", get_military_unit_stat_name(this->stat));
 	}
 
 	virtual bool are_decimals_relevant() const override
@@ -48,11 +46,11 @@ public:
 
 	virtual bool is_percent() const override
 	{
-		return is_percent_transporter_stat(this->stat);
+		return is_percent_military_unit_stat(this->stat);
 	}
 
 private:
-	transporter_stat stat{};
+	military_unit_stat stat{};
 };
 
 }

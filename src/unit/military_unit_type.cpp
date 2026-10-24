@@ -213,6 +213,11 @@ bool military_unit_type::is_ship() const
 	return this->get_unit_class()->is_ship();
 }
 
+bool military_unit_type::is_transporter() const
+{
+	return is_transporter_military_unit_category(this->get_category());
+}
+
 bool military_unit_type::is_character() const
 {
 	if (this->get_unit_class() == nullptr) {

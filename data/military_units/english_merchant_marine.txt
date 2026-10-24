@@ -5,11 +5,11 @@ english_carracks = {
 	
 	history = {
 		1492 = {
-			active = true
+			province = middlesex
 		}
 		
 		1820 = {
-			active = false
+			province = none
 		}
 	}
 }

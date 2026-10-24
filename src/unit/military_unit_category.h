@@ -4,6 +4,7 @@ namespace metternich {
 
 enum class military_unit_category {
 	none,
+	land_transporter,
 	militia,
 	mace_infantry,
 	spear_infantry,
@@ -19,6 +20,8 @@ enum class military_unit_category {
 	heavy_artillery,
 	combat_engineers,
 	general,
+	small_merchant_ship,
+	large_merchant_ship,
 	light_warship,
 	heavy_warship,
 	medium_herd_animals,
@@ -33,6 +36,8 @@ enum class military_unit_category {
 inline std::string_view get_military_unit_category_name(const military_unit_category category)
 {
 	switch (category) {
+		case military_unit_category::land_transporter:
+			return "Land Transporter";
 		case military_unit_category::militia:
 			return "Militia";
 		case military_unit_category::mace_infantry:
@@ -106,8 +111,22 @@ inline bool is_animal_military_unit_category(const military_unit_category catego
 inline bool is_ship_military_unit_category(const military_unit_category category)
 {
 	switch (category) {
+		case military_unit_category::small_merchant_ship:
+		case military_unit_category::large_merchant_ship:
 		case military_unit_category::light_warship:
 		case military_unit_category::heavy_warship:
+			return true;
+		default:
+			return false;
+	}
+}
+
+inline bool is_transporter_military_unit_category(const military_unit_category category)
+{
+	switch (category) {
+		case military_unit_category::land_transporter:
+		case military_unit_category::small_merchant_ship:
+		case military_unit_category::large_merchant_ship:
 			return true;
 		default:
 			return false;
@@ -129,6 +148,7 @@ inline bool is_military_unit_category_selectable(const military_unit_category ca
 {
 	switch (category) {
 		case military_unit_category::militia:
+		case military_unit_category::land_transporter:
 			return false;
 		default:
 			return true;

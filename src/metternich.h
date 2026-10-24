@@ -48,7 +48,6 @@ namespace metternich {
 	class site_game_data;
 	class technology;
 	class terrain_type;
-	class transporter_class;
 	class wonder;
 	class world;
 }

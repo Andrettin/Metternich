@@ -5,7 +5,6 @@
 #include "language/gendered_name_generator.h"
 #include "language/name_generator.h"
 #include "unit/military_unit_class.h"
-#include "unit/transporter_class.h"
 #include "util/gender.h"
 #include "util/vector_util.h"
 
@@ -80,33 +79,6 @@ void fallback_name_generator::add_military_unit_class_names(const military_unit_
 	}
 
 	military_unit_class::propagate_names(unit_class_names, this->ship_name_generator);
-}
-
-const name_generator *fallback_name_generator::get_transporter_class_name_generator(const transporter_class *transporter_class) const
-{
-	const auto find_iterator = this->transporter_class_name_generators.find(transporter_class);
-	if (find_iterator != this->transporter_class_name_generators.end()) {
-		return find_iterator->second.get();
-	}
-
-	if (transporter_class->is_ship() && this->ship_name_generator != nullptr) {
-		return this->ship_name_generator.get();
-	}
-
-	return nullptr;
-}
-
-void fallback_name_generator::add_transporter_class_names(const transporter_class_map<std::unique_ptr<name_generator>> &transporter_class_names)
-{
-	for (const auto &kv_pair : transporter_class_names) {
-		if (!this->transporter_class_name_generators.contains(kv_pair.first)) {
-			this->transporter_class_name_generators[kv_pair.first] = std::make_unique<name_generator>();
-		}
-
-		this->transporter_class_name_generators[kv_pair.first]->add_names_from(kv_pair.second);
-	}
-
-	transporter_class::propagate_names(transporter_class_names, this->ship_name_generator);
 }
 
 void fallback_name_generator::add_ship_names_from(const std::unique_ptr<name_generator> &source_name_generator)

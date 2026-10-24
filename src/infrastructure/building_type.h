@@ -30,7 +30,6 @@ class site;
 class technology;
 enum class construction_type;
 enum class military_unit_category;
-enum class transporter_category;
 
 template <typename scope_type>
 class and_condition;
@@ -55,7 +54,6 @@ class building_type final : public named_data_entry, public data_type<building_t
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_civilian_unit_types READ get_recruited_civilian_unit_types_qvariant_list NOTIFY changed)
 	Q_PROPERTY(QVariantList recruited_military_unit_categories READ get_recruited_military_unit_categories_qvariant_list NOTIFY changed)
-	Q_PROPERTY(QVariantList recruited_transporter_categories READ get_recruited_transporter_categories_qvariant_list NOTIFY changed)
 	Q_PROPERTY(bool capitol MEMBER capitol READ is_capitol NOTIFY changed)
 	Q_PROPERTY(bool provincial_capitol MEMBER provincial_capitol READ is_provincial_capitol NOTIFY changed)
 	Q_PROPERTY(bool free_in_capital MEMBER free_in_capital READ is_free_in_capital NOTIFY changed)
@@ -149,13 +147,6 @@ public:
 	}
 
 	QVariantList get_recruited_military_unit_categories_qvariant_list() const;
-
-	const std::vector<transporter_category> &get_recruited_transporter_categories() const
-	{
-		return this->recruited_transporter_categories;
-	}
-
-	QVariantList get_recruited_transporter_categories_qvariant_list() const;
 
 	bool is_capitol() const
 	{
@@ -342,7 +333,6 @@ private:
 	std::vector<const civilian_unit_type *> builder_civilian_unit_types;
 	std::vector<const civilian_unit_type *> recruited_civilian_unit_types;
 	std::vector<military_unit_category> recruited_military_unit_categories;
-	std::vector<transporter_category> recruited_transporter_categories;
 	bool capitol = false;
 	bool provincial_capitol = false;
 	bool free_in_capital = false;

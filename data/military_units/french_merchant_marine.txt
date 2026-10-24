@@ -5,11 +5,11 @@ french_carracks = {
 	
 	history = {
 		1492 = {
-			active = true
+			province = normandy
 		}
 		
 		1820 = {
-			active = false
+			province = none
 		}
 	}
 }
@@ -21,7 +21,7 @@ french_indiamen = {
 	
 	history = {
 		1820 = {
-			active = true
+			active = normandy
 		}
 	}
 }

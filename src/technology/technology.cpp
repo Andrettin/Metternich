@@ -45,7 +45,6 @@
 #include "unit/civilian_unit_type.h"
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
-#include "unit/transporter_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
@@ -376,7 +375,6 @@ void technology::check() const
 		&& this->get_enabled_resources().empty()
 		&& this->get_enabled_river_crossing_pathways().empty()
 		&& this->get_enabled_spells().empty()
-		&& this->get_enabled_transporters().empty()
 		&& this->get_enabled_wonders().empty()
 		&& this->get_shared_commodities().empty()
 	) {
@@ -589,41 +587,6 @@ void technology::add_enabled_military_unit(const military_unit_type *military_un
 	this->enabled_military_units.push_back(military_unit);
 
 	std::sort(this->enabled_military_units.begin(), this->enabled_military_units.end(), [](const military_unit_type *lhs, const military_unit_type *rhs) {
-		if (lhs->get_category() != rhs->get_category()) {
-			return lhs->get_category() < rhs->get_category();
-		}
-
-		return lhs->get_identifier() < rhs->get_identifier();
-	});
-}
-
-QVariantList technology::get_enabled_transporters_qvariant_list() const
-{
-	return container::to_qvariant_list(this->get_enabled_transporters());
-}
-
-std::vector<const transporter_type *> technology::get_enabled_transporters_for_culture(const culture *culture) const
-{
-	std::vector<const transporter_type *> transporters;
-
-	for (const transporter_type *transporter : this->get_enabled_transporters()) {
-		assert_throw(transporter->get_transporter_class() != nullptr);
-
-		if (transporter != culture->get_transporter_class_type(transporter->get_transporter_class())) {
-			continue;
-		}
-
-		transporters.push_back(transporter);
-	}
-
-	return transporters;
-}
-
-void technology::add_enabled_transporter(const transporter_type *transporter)
-{
-	this->enabled_transporters.push_back(transporter);
-
-	std::sort(this->enabled_transporters.begin(), this->enabled_transporters.end(), [](const transporter_type *lhs, const transporter_type *rhs) {
 		if (lhs->get_category() != rhs->get_category()) {
 			return lhs->get_category() < rhs->get_category();
 		}
@@ -878,18 +841,7 @@ std::string technology::get_effects_string(const domain *domain) const
 				str += "\n";
 			}
 
-			str += std::format("Enables {} {}", military_unit->get_name(), military_unit->get_domain() == military_unit_domain::water ? "warship" : "regiment");
-		}
-	}
-
-	const std::vector<const transporter_type *> transporters = get_enabled_transporters_for_culture(domain->get_game_data()->get_culture());
-	if (!transporters.empty()) {
-		for (const transporter_type *transporter : transporters) {
-			if (!str.empty()) {
-				str += "\n";
-			}
-
-			str += std::format("Enables {} {}", transporter->get_name(), transporter->is_ship() ? "merchant ship" : "transporter");
+			str += std::format("Enables {} {}", military_unit->get_name(), military_unit->is_ship() ? (military_unit->is_transporter() ? "merchant ship" : "warship") : (military_unit->is_transporter() ? "transporter" : "regiment"));
 		}
 	}
 

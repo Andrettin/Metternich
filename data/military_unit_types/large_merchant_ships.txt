@@ -1,12 +1,11 @@
 fluyte = {
 	name = "Fluyte"
-	transporter_class = fluyte
+	unit_class = fluyte
 	icon = fluyte
-	hit_points = 35
-	cargo = 4
 	required_technology = colonialism
 	stats = {
-		resistance = 5
+		hit_points = 35
+		cargo = 4
 		movement = 2
 	}
 	commodity_costs = {
@@ -21,13 +20,12 @@ fluyte = {
 
 indiaman = {
 	name = "Indiaman"
-	transporter_class = indiaman
+	unit_class = indiaman
 	icon = indiaman
-	hit_points = 55
-	cargo = 8
 	required_technology = global_trade
 	stats = {
-		resistance = 10
+		hit_points = 55
+		cargo = 8
 		movement = 3
 	}
 	commodity_costs = {
@@ -41,13 +39,12 @@ indiaman = {
 
 paddlewheeler = {
 	name = "Paddlewheeler"
-	transporter_class = paddlewheeler
+	unit_class = paddlewheeler
 	icon = paddlewheeler
-	hit_points = 60
-	cargo = 10
 	required_technology = steamer_transport
 	stats = {
-		resistance = 10
+		hit_points = 60
+		cargo = 10
 		movement = 6
 	}
 	commodity_costs = {
@@ -62,13 +59,12 @@ paddlewheeler = {
 
 freighter = {
 	name = "Freighter"
-	transporter_class = freighter
+	unit_class = freighter
 	icon = freighter
-	hit_points = 45
-	cargo = 16
 	required_technology = steamer_transport
 	stats = {
-		resistance = 25
+		hit_points = 45
+		cargo = 16
 		movement = 7
 	}
 	commodity_costs = {

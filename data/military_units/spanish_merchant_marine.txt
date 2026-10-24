@@ -1,11 +1,11 @@
-dutch_carracks = {
+spanish_carracks = {
 	type = carrack
-	domain = netherlands
+	domain = spain
 	quantity = 3
 	
 	history = {
 		1492 = {
-			active = true
+			province = andalusia
 		}
 	}
 }

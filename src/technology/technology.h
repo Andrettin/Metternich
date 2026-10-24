@@ -45,7 +45,6 @@ class technological_period;
 class technology_category;
 class technology_subcategory;
 class terrain_type;
-class transporter_type;
 class wonder;
 
 template <typename scope_type>
@@ -365,15 +364,6 @@ public:
 	std::vector<const military_unit_type *> get_enabled_military_units_for_culture(const culture *culture) const;
 	void add_enabled_military_unit(const military_unit_type *military_unit);
 
-	const std::vector<const transporter_type *> &get_enabled_transporters() const
-	{
-		return this->enabled_transporters;
-	}
-
-	QVariantList get_enabled_transporters_qvariant_list() const;
-	std::vector<const transporter_type *> get_enabled_transporters_for_culture(const culture *culture) const;
-	void add_enabled_transporter(const transporter_type *transporter);
-
 	const std::vector<const government_type *> &get_enabled_government_types() const
 	{
 		return this->enabled_government_types;
@@ -568,7 +558,6 @@ private:
 	pathway_map<std::vector<const terrain_type *>> enabled_pathway_terrains;
 	std::vector<const civilian_unit_type *> enabled_civilian_units;
 	std::vector<const military_unit_type *> enabled_military_units;
-	std::vector<const transporter_type *> enabled_transporters;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
 	std::vector<const deity *> enabled_deities;

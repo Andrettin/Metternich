@@ -1,0 +1,11 @@
+prussian_traders = {
+	type = trader
+	domain = prussia
+	quantity = 3
+	
+	history = {
+		1820 = {
+			province = hither_pomerania #Pomerania
+		}
+	}
+}

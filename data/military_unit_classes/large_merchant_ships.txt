@@ -1,19 +1,23 @@
 fluyte = {
 	name = "Fluyte"
+	domain = water
 	category = large_merchant_ship
 }
 
 indiaman = {
 	name = "Indiaman"
+	domain = water
 	category = large_merchant_ship
 }
 
 paddlewheeler = {
 	name = "Paddlewheeler"
+	domain = water
 	category = large_merchant_ship
 }
 
 freighter = {
 	name = "Freighter"
+	domain = water
 	category = large_merchant_ship
 }
