@@ -2,7 +2,6 @@ galleon = {
 	name = "Galleon"
 	unit_class = galleon
 	icon = galleon
-	#cargo = 6
 	required_technology = colonialism
 	stats = {
 		hit_points = 4
@@ -10,6 +9,7 @@ galleon = {
 		melee = 5
 		movement = 2
 		range = 3
+		cargo = 6
 	}
 	commodity_costs = {
 		wealth = 15gb
