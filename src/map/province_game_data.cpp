@@ -176,6 +176,10 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
 		});
+	} else if (tag == "military_unit_category_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->military_unit_category_counts[magic_enum::enum_cast<military_unit_category>(property.get_key()).value()] = std::stoi(property.get_value());
+		});
 	} else if (tag == "military_unit_recruitment_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->military_unit_recruitment_counts[military_unit_type::get(property.get_key())] = std::stoi(property.get_value());
@@ -345,6 +349,14 @@ gsml_data province_game_data::to_gsml_data() const
 			employment_capacity_modifiers_data.add_property(employment_type->get_identifier(), std::to_string(modifier));
 		}
 		data.add_child(std::move(employment_capacity_modifiers_data));
+	}
+
+	if (!this->military_unit_category_counts.empty()) {
+		gsml_data military_unit_category_counts_data("military_unit_category_counts");
+		for (const auto &[military_unit_category, count] : this->military_unit_category_counts) {
+			military_unit_category_counts_data.add_property(std::string(magic_enum::enum_name(military_unit_category)), std::to_string(count));
+		}
+		data.add_child(std::move(military_unit_category_counts_data));
 	}
 
 	if (!this->military_unit_recruitment_counts.empty()) {
