@@ -21,6 +21,7 @@
 #include "ui/portrait.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_domain.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
@@ -107,6 +108,11 @@ QCoro::Task<void> army::do_turn()
 
 		std::vector<military_unit *> garrison;
 		for (military_unit *military_unit : province_military_units) {
+			if (military_unit->get_type()->is_transporter()) {
+				//transporters cannot be used to defend provinces
+				continue;
+			}
+
 			if (!target_province->is_water_zone() && military_unit->get_domain() == military_unit_domain::water) {
 				//ships anchored in land provinces cannot be used to defend them
 				continue;
