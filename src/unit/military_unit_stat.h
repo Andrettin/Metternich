@@ -13,6 +13,7 @@ enum class military_unit_stat {
 	save,
 	melee_vs_mounted,
 	defense_vs_mounted,
+	cargo, //the cargo capacity of the military unit/transporter
 
 	count
 };
@@ -40,11 +41,13 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:
 			return "Defense vs. Mounted";
+		case military_unit_stat::cargo:
+			return "Cargo";
 		default:
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", static_cast<int>(stat)));
+	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", std::to_underlying(stat)));
 }
 
 inline std::string_view get_military_unit_stat_short_name(const military_unit_stat stat)
@@ -70,11 +73,13 @@ inline std::string_view get_military_unit_stat_short_name(const military_unit_st
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:
 			return "Defense vs. Mounted";
+		case military_unit_stat::cargo:
+			return "Cargo";
 		default:
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", static_cast<int>(stat)));
+	throw std::runtime_error(std::format("Invalid military unit stat: \"{}\".", std::to_underlying(stat)));
 }
 
 inline bool is_percent_military_unit_stat(const military_unit_stat stat)

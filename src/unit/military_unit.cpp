@@ -927,6 +927,11 @@ int military_unit::get_score() const
 	int score = 0;
 
 	for (const auto &[stat, stat_value] : this->stats) {
+		if (stat == military_unit_stat::cargo) {
+			//cargo does not affect military unit score
+			continue;
+		}
+
 		if (is_percent_military_unit_stat(stat)) {
 			score += stat_value.to_int() / 10;
 		} else {
