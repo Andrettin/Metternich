@@ -231,6 +231,7 @@ gsml_data site_game_data::to_gsml_data() const
 	data.add_child("tile_pos", gsml_data::from_point(this->get_tile_pos()));
 
 	if (this->get_owner() != nullptr) {
+		//this must be written before the population, since otherwise when adding the owner's population as an upper population will duplicate the impact of this site's population on the owner's
 		data.add_property("owner", this->get_owner()->get_identifier());
 	}
 

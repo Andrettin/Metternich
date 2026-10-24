@@ -218,6 +218,7 @@ gsml_data province_game_data::to_gsml_data() const
 	gsml_data data(this->province->get_identifier());
 
 	if (this->get_owner() != nullptr) {
+		//this must be written before the population, since otherwise when adding the country's population as an upper population will duplicate the impact of this province's population on the country's
 		data.add_property("domain", this->get_owner()->get_identifier());
 	}
 
