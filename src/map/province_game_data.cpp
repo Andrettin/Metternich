@@ -60,6 +60,7 @@
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
+#include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -474,7 +475,12 @@ void province_game_data::do_ai_turn()
 					return true;
 				}
 
-				if (military_unit->get_type()->is_selectable()) {
+				if (!military_unit->get_type()->is_selectable()) {
+					return true;
+				}
+
+				if (military_unit->get_domain() == military_unit_domain::water) {
+					//ships shouldn't be used to visit sites
 					return true;
 				}
 
