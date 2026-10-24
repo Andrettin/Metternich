@@ -474,6 +474,10 @@ void province_game_data::do_ai_turn()
 					return true;
 				}
 
+				if (military_unit->get_type()->is_selectable()) {
+					return true;
+				}
+
 				return false;
 			});
 

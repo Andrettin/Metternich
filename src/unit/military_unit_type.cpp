@@ -231,6 +231,12 @@ bool military_unit_type::is_monster() const
 	return this->get_unit_class()->is_monster();
 }
 
+bool military_unit_type::is_selectable() const
+{
+	//whether this military unit type can be selected to be commanded to e.g. move to another province
+	return is_military_unit_category_selectable(this->get_category());
+}
+
 void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 {
 	assert_throw(this->monster_type != nullptr);

@@ -148,6 +148,8 @@ public:
 
 	Q_INVOKABLE void move_selected_military_units_to(const QPoint &tile_pos);
 
+	Q_INVOKABLE bool is_military_unit_category_selectable(const metternich::military_unit_category category);
+
 	const std::vector<civilian_unit *> &get_active_civilian_units() const
 	{
 		return this->active_civilian_units;

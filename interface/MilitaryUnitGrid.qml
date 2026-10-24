@@ -15,6 +15,7 @@ Grid {
 			readonly property var military_unit_category: model.modelData.key
 			readonly property int military_unit_count: model.modelData.value
 			readonly property int domain_military_unit_count: selected_province.game_data.get_domain_military_unit_category_count(military_unit_category, metternich.game.player_domain)
+			readonly property bool selectable: metternich.is_military_unit_category_selectable(military_unit_category)
 			
 			Image {
 				id: military_unit_icon
@@ -44,7 +45,7 @@ Grid {
 				anchors.bottom: military_unit_selected_count_label.top
 				anchors.bottomMargin: 4 * scale_factor
 				source: "image://icon/arrow_up"
-				visible: domain_military_unit_count > 0
+				visible: domain_military_unit_count > 0 && selectable
 				
 				MouseArea {
 					anchors.fill: parent
@@ -65,7 +66,7 @@ Grid {
 				anchors.rightMargin: 4 * scale_factor
 				anchors.bottom: military_unit_down_arrow_icon.top
 				anchors.bottomMargin: 4 * scale_factor
-				visible: domain_military_unit_count > 0
+				visible: domain_military_unit_count > 0 && selectable
 			}
 			
 			Image {
@@ -75,7 +76,7 @@ Grid {
 				anchors.bottom: military_unit_count_label.top
 				anchors.bottomMargin: 4 * scale_factor
 				source: "image://icon/arrow_down"
-				visible: domain_military_unit_count > 0
+				visible: domain_military_unit_count > 0 && selectable
 				
 				MouseArea {
 					anchors.fill: parent

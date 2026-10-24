@@ -85,7 +85,7 @@ inline std::string_view get_military_unit_category_name(const military_unit_cate
 			break;
 	}
 
-	throw std::runtime_error(std::format("Invalid military unit category: \"{}\".", std::to_string(std::to_underlying(category))));
+	throw std::runtime_error(std::format("Invalid military unit category: \"{}\".", std::to_underlying(category)));
 }
 
 inline bool is_animal_military_unit_category(const military_unit_category category)
@@ -122,6 +122,16 @@ inline bool is_character_military_unit_category(const military_unit_category cat
 			return true;
 		default:
 			return false;
+	}
+}
+
+inline bool is_military_unit_category_selectable(const military_unit_category category)
+{
+	switch (category) {
+		case military_unit_category::militia:
+			return false;
+		default:
+			return true;
 	}
 }
 

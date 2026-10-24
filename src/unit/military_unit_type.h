@@ -91,6 +91,8 @@ public:
 		return this->icon;
 	}
 
+	bool is_selectable() const;
+
 	void initialize_stats_from_monster_type(int &hit_dice_count);
 
 	const std::vector<battle_resolution_type> &get_battle_resolution_types() const

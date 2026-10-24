@@ -37,6 +37,8 @@
 #include "unit/army.h"
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
+#include "unit/military_unit_category.h"
+#include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/date_util.h"
@@ -232,6 +234,7 @@ QVariantList engine_interface::get_selected_military_units_qvariant_list() const
 
 void engine_interface::add_selected_military_unit(military_unit *military_unit)
 {
+	assert_throw(military_unit->get_type()->is_selectable());
 	assert_throw(!vector::contains(this->selected_military_units, military_unit));
 
 	this->selected_military_units.push_back(military_unit);
@@ -348,6 +351,11 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 	}
 
 	this->clear_selected_military_units();
+}
+
+bool engine_interface::is_military_unit_category_selectable(const metternich::military_unit_category category)
+{
+	return metternich::is_military_unit_category_selectable(category);
 }
 
 QVariantList engine_interface::get_active_civilian_units_qvariant_list() const
