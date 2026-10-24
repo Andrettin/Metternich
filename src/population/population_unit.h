@@ -13,6 +13,11 @@ Q_MOC_INCLUDE("religion/religion.h")
 Q_MOC_INCLUDE("species/phenotype.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class culture;
@@ -47,6 +52,12 @@ class population_unit final : public QObject
 
 public:
 	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
+	explicit population_unit(const gsml_data &scope);
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	[[nodiscard]] QCoro::Task<void> do_cultural_change();
 	[[nodiscard]] QCoro::Task<void> do_promotion();

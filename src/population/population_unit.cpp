@@ -49,6 +49,85 @@ population_unit::population_unit(const population_type *type, const metternich::
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
+population_unit::population_unit(const gsml_data &scope)
+{
+	scope.process(this);
+
+	assert_throw(this->get_type() != nullptr);
+	assert_throw(this->get_culture() != nullptr);
+	assert_throw(this->get_religion() != nullptr);
+	assert_throw(this->get_phenotype() != nullptr);
+	assert_throw(this->get_domain() != nullptr);
+	assert_throw(this->get_site() != nullptr);
+}
+
+void population_unit::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "type") {
+		this->type = population_type::get(value);
+	} else if (key == "culture") {
+		this->culture = culture::get(value);
+	} else if (key == "religion") {
+		this->religion = religion::get(value);
+	} else if (key == "phenotype") {
+		this->phenotype = phenotype::get(value);
+	} else if (key == "employment_type") {
+		this->employment_type = employment_type::get(value);
+	} else if (key == "domain") {
+		this->set_domain(domain::get(value));
+	} else if (key == "site") {
+		this->site = site::get(value);
+	} else if (key == "size") {
+		this->size = std::stoll(value);
+	} else if (key == "literacy_rate") {
+		this->literacy_rate = decimillesimal_int(value);
+	} else if (key == "wealth") {
+		this->wealth = std::stoll(value);
+	} else if (key == "fulfilled_life_needs_percent") {
+		this->fulfilled_life_needs_percent = std::stoi(value);
+	} else if (key == "fulfilled_everyday_needs_percent") {
+		this->fulfilled_everyday_needs_percent = std::stoi(value);
+	} else if (key == "fulfilled_luxury_needs_percent") {
+		this->fulfilled_luxury_needs_percent = std::stoi(value);
+	} else {
+		throw std::runtime_error(std::format("Invalid population unit property: \"{}\".", key));
+	}
+}
+
+void population_unit::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+
+	throw std::runtime_error(std::format("Invalid population unit scope: \"{}\".", tag));
+}
+
+gsml_data population_unit::to_gsml_data() const
+{
+	gsml_data data;
+
+	data.add_property("type", this->type->get_identifier());
+	data.add_property("culture", this->culture->get_identifier());
+	data.add_property("religion", this->religion->get_identifier());
+	data.add_property("phenotype", this->phenotype->get_identifier());
+	data.add_property("domain", this->domain->get_identifier());
+	data.add_property("site", this->site->get_identifier());
+	data.add_property("size", std::to_string(this->size));
+	data.add_property("literacy_rate", this->literacy_rate.to_string());
+	data.add_property("wealth", std::to_string(this->wealth));
+	data.add_property("fulfilled_life_needs_percent", std::to_string(this->fulfilled_life_needs_percent));
+	data.add_property("fulfilled_everyday_needs_percent", std::to_string(this->fulfilled_everyday_needs_percent));
+	data.add_property("fulfilled_luxury_needs_percent", std::to_string(this->fulfilled_luxury_needs_percent));
+
+	if (this->employment_type != nullptr) {
+		data.add_property("employment_type", this->employment_type->get_identifier());
+	}
+
+	return data;
+}
+
 QCoro::Task<void> population_unit::do_cultural_change()
 {
 	assert_throw(this->get_site()->get_game_data()->get_population()->get_size() > 0);

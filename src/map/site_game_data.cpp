@@ -167,6 +167,12 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->scripted_modifiers[scripted_site_modifier::get(property.get_key())] = std::stoi(property.get_value());
 		});
+	} else if (tag == "population_units") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto population_unit = make_qunique<metternich::population_unit>(child_scope);
+			this->get_province()->get_game_data()->add_population_unit(population_unit.get());
+			this->population_units.push_back(std::move(population_unit));
+		});
 	} else if (tag == "employment_sizes") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->employment_sizes[employment_type::get(property.get_key())] = std::stoll(property.get_value());
@@ -306,6 +312,14 @@ gsml_data site_game_data::to_gsml_data() const
 			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
 		}
 		data.add_child(std::move(scripted_modifiers_data));
+	}
+
+	if (!this->population_units.empty()) {
+		gsml_data population_units_data("population_units");
+		for (const auto &population_unit : this->population_units) {
+			population_units_data.add_child(population_unit->to_gsml_data());
+		}
+		data.add_child(std::move(population_units_data));
 	}
 
 	if (this->get_base_population_capacity() != 0) {
