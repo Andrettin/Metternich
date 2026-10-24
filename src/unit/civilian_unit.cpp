@@ -40,34 +40,29 @@
 
 namespace metternich {
 
-civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype)
-	: type(type), owner(owner), phenotype(phenotype)
+civilian_unit::civilian_unit()
 {
-	assert_throw(this->get_type() != nullptr);
-	assert_throw(this->get_owner() != nullptr);
-	assert_throw(this->get_phenotype() != nullptr);
-
-	this->generate_name();
-
 	connect(this, &civilian_unit::type_changed, this, &civilian_unit::icon_changed);
 
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_buildings_changed);
 	connect(this, &civilian_unit::province_changed, this, &civilian_unit::buildable_pathway_changed);
 
-	connect(this->get_owner()->get_game_data(), &domain_game_data::sites_changed, this, &civilian_unit::buildable_provinces_changed);
-	connect(this->get_owner()->get_game_data(), &domain_game_data::holding_building_counts_changed, this, &civilian_unit::buildable_provinces_changed);
-	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::buildable_provinces_changed);
-
-	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
-	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
-	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
-
-	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_provinces_changed);
-	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_provinces_changed);
-	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::prospectable_provinces_changed);
-
 	connect(this, &civilian_unit::original_province_changed, this, &civilian_unit::busy_changed);
 	connect(this, &civilian_unit::work_progress_changed, this, &civilian_unit::busy_changed);
+}
+
+civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype)
+	: civilian_unit()
+{
+	this->type = type;
+	this->set_owner(owner);
+	this->phenotype = phenotype;
+
+	assert_throw(this->get_type() != nullptr);
+	assert_throw(this->get_owner() != nullptr);
+	assert_throw(this->get_phenotype() != nullptr);
+
+	this->generate_name();
 }
 
 civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character)
@@ -79,7 +74,7 @@ civilian_unit::civilian_unit(const civilian_unit_type *type, const domain *owner
 	character->get_game_data()->set_civilian_unit(this);
 }
 
-civilian_unit::civilian_unit(const gsml_data &scope)
+civilian_unit::civilian_unit(const gsml_data &scope) : civilian_unit()
 {
 	scope.process(this);
 
@@ -98,7 +93,7 @@ void civilian_unit::process_gsml_property(const gsml_property &property)
 	} else if (key == "type") {
 		this->type = civilian_unit_type::get(value);
 	} else if (key == "owner") {
-		this->owner = domain::get(value);
+		this->set_owner(domain::get(value));
 	} else if (key == "phenotype") {
 		this->phenotype = phenotype::get(value);
 	} else if (key == "character") {
@@ -249,6 +244,27 @@ void civilian_unit::generate_name()
 const icon *civilian_unit::get_icon() const
 {
 	return this->get_type()->get_icon();
+}
+
+void civilian_unit::set_owner(const domain *domain)
+{
+	//should only set the owner during construction
+	assert_throw(domain != nullptr);
+	assert_throw(this->get_owner() == nullptr);
+
+	this->owner = domain;
+
+	connect(this->get_owner()->get_game_data(), &domain_game_data::sites_changed, this, &civilian_unit::buildable_provinces_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::holding_building_counts_changed, this, &civilian_unit::buildable_provinces_changed);
+	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::buildable_provinces_changed);
+
+	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_economy(), &domain_economy::commodity_outputs_changed, this, &civilian_unit::improvable_resources_changed);
+	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::improvable_resources_changed);
+
+	connect(this->get_owner()->get_game_data(), &domain_game_data::provinces_changed, this, &civilian_unit::prospectable_provinces_changed);
+	connect(this->get_owner()->get_game_data(), &domain_game_data::prospected_tiles_changed, this, &civilian_unit::prospectable_provinces_changed);
+	connect(this->get_owner()->get_technology(), &domain_technology::technologies_changed, this, &civilian_unit::prospectable_provinces_changed);
 }
 
 const metternich::culture *civilian_unit::get_culture() const

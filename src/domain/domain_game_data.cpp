@@ -350,9 +350,9 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_child(std::move(historical_monarchs_data));
 	}
 
-	if (!this->get_civilian_units().empty()) {
+	if (!this->civilian_units.empty()) {
 		gsml_data civilian_units_data("civilian_units");
-		for (const auto &civilian_unit : this->get_civilian_units()) {
+		for (const auto &civilian_unit : this->civilian_units) {
 			civilian_units_data.add_child(civilian_unit->to_gsml_data());
 		}
 		data.add_child(std::move(civilian_units_data));

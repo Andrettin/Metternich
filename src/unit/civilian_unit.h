@@ -49,6 +49,7 @@ public:
 	static constexpr int exploration_turns = 1;
 	static constexpr int prospection_turns = 1;
 
+	civilian_unit();
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::phenotype *phenotype);
 	explicit civilian_unit(const civilian_unit_type *type, const domain *owner, const metternich::character *character);
 	explicit civilian_unit(const gsml_data &scope);
@@ -95,6 +96,10 @@ public:
 		return this->owner;
 	}
 
+private:
+	void set_owner(const domain *domain);
+
+public:
 	const metternich::culture *get_culture() const;
 	const metternich::cultural_group *get_cultural_group() const;
 
