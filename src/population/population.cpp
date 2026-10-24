@@ -68,9 +68,15 @@ gsml_data population::to_gsml_data(const std::string_view tag) const
 
 	data.add_property("population_unit_count", std::to_string(this->population_unit_count));
 	data.add_property("size", std::to_string(this->size));
-	data.add_property("main_culture", this->main_culture->get_identifier());
-	data.add_property("main_religion", this->main_religion->get_identifier());
 	data.add_property("literate_size", std::to_string(this->literate_size));
+
+	if (this->main_culture != nullptr) {
+		data.add_property("main_culture", this->main_culture->get_identifier());
+	}
+
+	if (this->main_religion != nullptr) {
+		data.add_property("main_religion", this->main_religion->get_identifier());
+	}
 
 	if (!this->type_sizes.empty()) {
 		gsml_data type_sizes_data("type_sizes");
