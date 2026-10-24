@@ -331,6 +331,26 @@ void population::change_literate_size(const int64_t change)
 	}
 }
 
+void population::add_upper_population(population *upper_population)
+{
+	assert_throw(upper_population != nullptr);
+	assert_throw(!vector::contains(this->upper_populations, upper_population));
+	
+	upper_population->change_from(this, 1);
+
+	this->upper_populations.push_back(upper_population);
+}
+
+void population::remove_upper_population(population *upper_population)
+{
+	assert_throw(upper_population != nullptr);
+	assert_throw(vector::contains(this->upper_populations, upper_population));
+
+	upper_population->change_from(this, -1);
+
+	std::erase(this->upper_populations, upper_population);
+}
+
 void population::on_population_unit_gained(const population_unit *population_unit, const int multiplier)
 {
 	this->change_population_unit_count(multiplier);

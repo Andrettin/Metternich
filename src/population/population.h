@@ -172,23 +172,8 @@ public:
 		return QString::fromStdString(this->get_literacy_rate().to_string());
 	}
 
-	void add_upper_population(population *upper_population)
-	{
-		if (upper_population != nullptr) {
-			upper_population->change_from(this, 1);
-		}
-
-		this->upper_populations.push_back(upper_population);
-	}
-
-	void remove_upper_population(population *upper_population)
-	{
-		if (upper_population != nullptr) {
-			upper_population->change_from(this, -1);
-		}
-
-		std::erase(this->upper_populations, upper_population);
-	}
+	void add_upper_population(population *upper_population);
+	void remove_upper_population(population *upper_population);
 
 	void change_from(population *other_population, const int change)
 	{
