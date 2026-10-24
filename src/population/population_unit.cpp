@@ -58,8 +58,6 @@ population_unit::population_unit(const population_type *type, const metternich::
 
 	this->set_domain(site->get_game_data()->get_owner());
 	assert_throw(this->get_domain() != nullptr);
-
-	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
 population_unit::population_unit(const gsml_data &scope) : population_unit()
