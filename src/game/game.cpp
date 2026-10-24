@@ -418,8 +418,7 @@ QCoro::Task<void> game::load(const std::filesystem::path &filepath)
 		try {
 			data = parser.parse(filepath);
 		} catch (...) {
-			exception::report(std::current_exception());
-			log::log_error(std::format("Failed to parse save file: {}", path::to_string(filepath)));
+			std::throw_with_nested(std::runtime_error(std::format("Failed to parse save file: {}", path::to_string(filepath))));
 		}
 
 		//create generated characters first, so that they can be referred to by objects when loading the saved game data
