@@ -177,6 +177,11 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 			this->population_units.push_back(std::move(population_unit));
 		});
 	} else if (tag == "population") {
+		if (this->get_province() != nullptr) {
+			//add province population as an upper population here, since when loading a game that won't be done during initialization
+			this->population->add_upper_population(this->get_province()->get_game_data()->get_population());
+		}
+
 		scope.process(this->population.get());
 	} else if (tag == "employment_sizes") {
 		scope.for_each_property([this](const gsml_property &property) {
