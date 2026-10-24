@@ -230,6 +230,22 @@ QVariantList engine_interface::get_selected_military_units_qvariant_list() const
 	return container::to_qvariant_list(this->get_selected_military_units());
 }
 
+void engine_interface::add_selected_military_unit(military_unit *military_unit)
+{
+	assert_throw(!vector::contains(this->selected_military_units, military_unit));
+
+	this->selected_military_units.push_back(military_unit);
+	emit selected_military_units_changed();
+}
+
+void engine_interface::remove_selected_military_unit(const military_unit *military_unit)
+{
+	assert_throw(vector::contains(this->selected_military_units, military_unit));
+
+	std::erase(this->selected_military_units, military_unit);
+	emit selected_military_units_changed();
+}
+
 int engine_interface::get_selected_military_unit_category_count(const metternich::military_unit_category category)
 {
 	int count = 0;

@@ -134,18 +134,8 @@ public:
 	}
 
 	QVariantList get_selected_military_units_qvariant_list() const;
-
-	void add_selected_military_unit(military_unit *military_unit)
-	{
-		this->selected_military_units.push_back(military_unit);
-		emit selected_military_units_changed();
-	}
-
-	void remove_selected_military_unit(const military_unit *military_unit)
-	{
-		std::erase(this->selected_military_units, military_unit);
-		emit selected_military_units_changed();
-	}
+	void add_selected_military_unit(military_unit *military_unit);
+	void remove_selected_military_unit(const military_unit *military_unit);
 
 	Q_INVOKABLE void clear_selected_military_units()
 	{
