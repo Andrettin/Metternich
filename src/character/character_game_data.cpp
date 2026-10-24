@@ -3863,20 +3863,17 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	}
 }
 
-QCoro::Task<void> character_game_data::set_military_unit(metternich::military_unit *military_unit)
+void character_game_data::set_military_unit(metternich::military_unit *military_unit)
 {
 	if (military_unit == this->get_military_unit()) {
-		co_return;
+		return;
 	}
 
 	this->military_unit = military_unit;
 
-	if (military_unit != nullptr) {
-		co_await this->update_military_unit_hit_points();
-		this->update_military_unit_stats();
+	if (game::get()->is_running()) {
+		emit military_unit_changed();
 	}
-
-	emit military_unit_changed();
 }
 
 QCoro::Task<void> character_game_data::update_military_unit_hit_points()
@@ -3942,7 +3939,7 @@ QCoro::Task<void> character_game_data::deploy_as_military_unit_coro(const provin
 
 	assert_throw(military_unit->can_move_to(province));
 
-	co_await military_unit->set_province(province);
+	co_await military_unit->move_to_province(province);
 
 	co_await this->get_domain()->get_military()->add_military_unit(std::move(military_unit));
 }

@@ -173,7 +173,7 @@ QCoro::Task<void> army::do_turn()
 			const std::vector<military_unit *> military_units = this->get_military_units();
 			for (military_unit *military_unit : military_units) {
 				this->remove_military_unit(military_unit);
-				co_await military_unit->set_province(target_province);
+				co_await military_unit->move_to_province(target_province);
 			}
 		}
 	} else if (this->get_target_site() != nullptr) {

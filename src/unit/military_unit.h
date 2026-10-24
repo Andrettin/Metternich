@@ -7,6 +7,11 @@ Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 Q_MOC_INCLUDE("unit/military_unit_type.h")
 
+namespace archimedes {
+	class gsml_data;
+	class gsml_property;
+}
+
 namespace metternich {
 
 class army;
@@ -58,7 +63,14 @@ public:
 	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type, const metternich::domain *domain, const metternich::phenotype *phenotype);
 	[[nodiscard]] static QCoro::Task<qunique_ptr<military_unit>> create(const military_unit_type *type, const metternich::domain *domain, const metternich::character *character);
 
+	military_unit();
 	explicit military_unit(const military_unit_type *type);
+	explicit military_unit(const gsml_data &scope);
+
+	void process_gsml_property(const gsml_property &property);
+	void process_gsml_scope(const gsml_data &scope);
+
+	gsml_data to_gsml_data() const;
 
 	[[nodiscard]] QCoro::Task<void> do_turn();
 	void do_ai_turn();
@@ -123,7 +135,8 @@ public:
 		return this->province;
 	}
 
-	[[nodiscard]] QCoro::Task<void> set_province(const metternich::province *province);
+	void set_province(const metternich::province *province);
+	[[nodiscard]] QCoro::Task<void> move_to_province(const metternich::province *province);
 
 	const metternich::army *get_army() const
 	{

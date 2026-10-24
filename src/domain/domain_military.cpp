@@ -74,6 +74,12 @@ void domain_military::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->leaders.push_back(game::get()->get_character(value));
 		}
+	} else if (tag == "military_units") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			auto military_unit = make_qunique<metternich::military_unit>(child_scope);
+			this->get_game_data()->add_unit_name(military_unit->get_name());
+			this->military_units.push_back(std::move(military_unit));
+		});
 	} else if (tag == "free_infantry_promotion_counts") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->free_infantry_promotion_counts[promotion::get(property.get_key())] = std::stoi(property.get_value());
@@ -113,6 +119,14 @@ gsml_data domain_military::to_gsml_data() const
 			leaders_data.add_value(leader->get_identifier());
 		}
 		data.add_child(std::move(leaders_data));
+	}
+
+	if (!this->military_units.empty()) {
+		gsml_data military_units_data("military_units");
+		for (const auto &military_unit : this->military_units) {
+			military_units_data.add_child(military_unit->to_gsml_data());
+		}
+		data.add_child(std::move(military_units_data));
 	}
 
 	if (!this->free_infantry_promotion_counts.empty()) {
@@ -282,7 +296,7 @@ QCoro::Task<bool> domain_military::create_military_unit(const military_unit_type
 
 	assert_throw(military_unit != nullptr);
 
-	co_await military_unit->set_province(deployment_province);
+	co_await military_unit->move_to_province(deployment_province);
 
 	for (const promotion *promotion : promotions) {
 		co_await military_unit->add_promotion(promotion);

@@ -86,7 +86,12 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 	military_unit->character = character;
 	military_unit->name.clear();
 
-	co_await character->get_game_data()->set_military_unit(military_unit.get());
+	character->get_game_data()->set_military_unit(military_unit.get());
+
+	//update stats in accordance with the character stats
+	co_await character->get_game_data()->update_military_unit_hit_points();
+	character->get_game_data()->update_military_unit_stats();
+
 	co_await character->get_game_data()->apply_military_unit_modifier(military_unit.get(), 1);
 
 	//character military units do not have any province set as their home province, since they don't consume food
@@ -94,9 +99,15 @@ QCoro::Task<qunique_ptr<military_unit>> military_unit::create(const military_uni
 	co_return military_unit;
 }
 
-
-military_unit::military_unit(const military_unit_type *type) : type(type)
+military_unit::military_unit()
 {
+	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
+}
+
+military_unit::military_unit(const military_unit_type *type) : military_unit()
+{
+	this->type = type;
+
 	assert_throw(this->get_type() != nullptr);
 
 	this->max_hit_points = type->get_stat(military_unit_stat::hit_points).to_int();
@@ -110,8 +121,97 @@ military_unit::military_unit(const military_unit_type *type) : type(type)
 	} else {
 		this->battle_resolution_type = static_cast<metternich::battle_resolution_type>(random::get()->generate_in_range(1, static_cast<int>(battle_resolution_type::count) - 1));
 	}
+}
 
-	connect(this, &military_unit::type_changed, this, &military_unit::icon_changed);
+military_unit::military_unit(const gsml_data &scope) : military_unit()
+{
+	scope.process(this);
+
+	assert_throw(this->get_type() != nullptr);
+}
+
+void military_unit::process_gsml_property(const gsml_property &property)
+{
+	const std::string &key = property.get_key();
+	const std::string &value = property.get_value();
+
+	if (key == "name") {
+		this->name = value;
+	} else if (key == "type") {
+		this->type = military_unit_type::get(value);
+	} else if (key == "owner") {
+		this->owner = domain::get(value);
+	} else if (key == "phenotype") {
+		this->phenotype = phenotype::get(value);
+	} else if (key == "character") {
+		this->character = game::get()->get_character(value);
+		this->character->get_game_data()->set_military_unit(this);
+	} else if (key == "province") {
+		this->set_province(province::get(value));
+	} else if (key == "hit_points") {
+		this->hit_points = std::stoi(value);
+	} else if (key == "max_hit_points") {
+		this->max_hit_points = std::stoi(value);
+	} else if (key == "battle_resolution_type") {
+		this->battle_resolution_type = magic_enum::enum_cast<metternich::battle_resolution_type>(value).value();
+	} else {
+		throw std::runtime_error(std::format("Invalid military unit property: \"{}\".", key));
+	}
+}
+
+void military_unit::process_gsml_scope(const gsml_data &scope)
+{
+	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
+
+	if (tag == "stats") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->stats[magic_enum::enum_cast<military_unit_stat>(property.get_key()).value()] = centesimal_int(property.get_value());
+		});
+	} else if (tag == "promotions") {
+		for (const std::string &value : values) {
+			this->promotions.push_back(promotion::get(value));
+		}
+	} else {
+		throw std::runtime_error(std::format("Invalid military unit scope: \"{}\".", tag));
+	}
+}
+
+gsml_data military_unit::to_gsml_data() const
+{
+	gsml_data data;
+
+	data.add_property("name", std::format("\"{}\"", this->get_name()));
+	data.add_property("type", this->get_type()->get_identifier());
+	data.add_property("owner", this->get_owner()->get_identifier());
+	data.add_property("phenotype", this->get_phenotype()->get_identifier());
+
+	if (this->get_character() != nullptr) {
+		data.add_property("character", this->get_character()->get_identifier());
+	}
+
+	data.add_property("province", this->get_province()->get_identifier());
+	data.add_property("hit_points", std::to_string(this->hit_points));
+	data.add_property("max_hit_points", std::to_string(this->max_hit_points));
+	data.add_property("battle_resolution_type", std::string(magic_enum::enum_name(battle_resolution_type)));
+
+	if (!this->stats.empty()) {
+		gsml_data stats_data("stats");
+		for (const auto &[stat, stat_value] : this->stats) {
+			stats_data.add_property(std::string(magic_enum::enum_name(stat)), stat_value.to_string());
+		}
+		data.add_child(std::move(stats_data));
+	}
+
+	if (!this->promotions.empty()) {
+		gsml_data promotions_data("promotions");
+		for (const promotion *promotion : this->promotions) {
+			promotions_data.add_value(promotion->get_identifier());
+		}
+		data.add_child(std::move(promotions_data));
+	}
+
+	return data;
 }
 
 QCoro::Task<void> military_unit::do_turn()
@@ -325,10 +425,10 @@ const creature_size *military_unit::get_creature_size() const
 	return this->get_species()->get_default_creature_size();
 }
 
-QCoro::Task<void> military_unit::set_province(const metternich::province *province)
+void military_unit::set_province(const metternich::province *province)
 {
 	if (province == this->get_province()) {
-		co_return;
+		return;
 	}
 
 	if (this->get_province() != nullptr) {
@@ -339,7 +439,16 @@ QCoro::Task<void> military_unit::set_province(const metternich::province *provin
 
 	if (this->get_province() != nullptr) {
 		this->get_province()->get_game_data()->add_military_unit(this);
+	}
 
+	emit province_changed();
+}
+
+QCoro::Task<void> military_unit::move_to_province(const metternich::province *province)
+{
+	this->set_province(province);
+
+	if (this->get_province() != nullptr) {
 		//when ships move to a water zone, explore all adjacent water zones and coasts as well
 		if (this->get_province()->is_water_zone()) {
 			for (const metternich::province *neighbor_province : this->get_province()->get_game_data()->get_neighbor_provinces()) {
@@ -351,8 +460,6 @@ QCoro::Task<void> military_unit::set_province(const metternich::province *provin
 			}
 		}
 	}
-
-	emit province_changed();
 }
 
 void military_unit::set_army(metternich::army *army)
@@ -882,7 +989,7 @@ QCoro::Task<void> military_unit::disband(const bool dead)
 {
 	if (this->get_character() != nullptr) {
 		character_game_data *character_game_data = this->get_character()->get_game_data();
-		co_await character_game_data->set_military_unit(nullptr);
+		character_game_data->set_military_unit(nullptr);
 
 		if (dead) {
 			co_await character_game_data->die();

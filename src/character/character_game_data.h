@@ -698,7 +698,7 @@ public:
 		return this->military_unit;
 	}
 	
-	[[nodiscard]] QCoro::Task<void> set_military_unit(metternich::military_unit *military_unit);
+	void set_military_unit(metternich::military_unit *military_unit);
 	[[nodiscard]] QCoro::Task<void> update_military_unit_hit_points();
 	void update_military_unit_stats();
 
