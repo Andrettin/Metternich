@@ -124,6 +124,10 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
 		});
+	} else if (tag == "capital_commodity_output_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->capital_commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
+		});
 	} else if (tag == "commodity_throughput_modifiers") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
@@ -199,12 +203,20 @@ gsml_data domain_economy::to_gsml_data() const
 		data.add_child(std::move(population_strata_tax_rates_data));
 	}
 
-	if (!this->get_commodity_output_modifiers().empty()) {
+	if (!this->commodity_output_modifiers.empty()) {
 		gsml_data commodity_output_modifiers_data("commodity_output_modifiers");
-		for (const auto &[commodity, output_modifier] : this->get_commodity_output_modifiers()) {
+		for (const auto &[commodity, output_modifier] : this->commodity_output_modifiers) {
 			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
 		}
 		data.add_child(std::move(commodity_output_modifiers_data));
+	}
+
+	if (!this->capital_commodity_output_modifiers.empty()) {
+		gsml_data capital_commodity_output_modifiers_data("capital_commodity_output_modifiers");
+		for (const auto &[commodity, output_modifier] : this->capital_commodity_output_modifiers) {
+			capital_commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
+		}
+		data.add_child(std::move(capital_commodity_output_modifiers_data));
 	}
 
 	if (!this->get_commodity_throughput_modifiers().empty()) {
