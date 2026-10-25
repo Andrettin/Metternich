@@ -244,13 +244,7 @@ QCoro::Task<void> battle::do_round(std::unordered_map<const military_unit *, int
 	std::unordered_map<const military_unit *, int> initiative_results;
 	for (const military_unit *military_unit : all_units) {
 		int initiative_result = random::get()->roll_dice(battle::initiative_dice);
-		if (military_unit->get_character() != nullptr) {
-			initiative_result -= military_unit->get_character()->get_game_data()->get_initiative_bonus();
-		} else {
-			//for non-character military units, use movement as their initiative modifier
-			//FIXME: add initiative stat for military units
-			initiative_result -= military_unit->get_stat(military_unit_stat::movement).to_int();
-		}
+		initiative_result -= military_unit->get_effective_stat(military_unit_stat::initiative).to_int();
 		initiative_result += next_round_initiative_modifiers[military_unit];
 		initiative_results[military_unit] = initiative_result;
 	}

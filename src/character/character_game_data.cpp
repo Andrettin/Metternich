@@ -3830,6 +3830,7 @@ void character_game_data::update_military_unit_stats()
 	military_unit->set_stat(military_unit_stat::defense, centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
 	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
 	military_unit->set_stat(military_unit_stat::range, battle_range);
+	military_unit->set_stat(military_unit_stat::initiative, centesimal_int(this->get_initiative_bonus()));
 }
 
 const metternich::military_unit_type *character_game_data::get_deployable_military_unit_type() const

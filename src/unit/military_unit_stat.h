@@ -11,6 +11,7 @@ enum class military_unit_stat {
 	missile,
 	range,
 	save,
+	initiative,
 	melee_vs_mounted,
 	defense_vs_mounted,
 	cargo, //the cargo capacity of the military unit/transporter
@@ -37,6 +38,8 @@ inline std::string_view get_military_unit_stat_name(const military_unit_stat sta
 			return "Range";
 		case military_unit_stat::save:
 			return "Save";
+		case military_unit_stat::initiative:
+			return "Initiative";
 		case military_unit_stat::melee_vs_mounted:
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:
@@ -69,6 +72,8 @@ inline std::string_view get_military_unit_stat_short_name(const military_unit_st
 			return "Range";
 		case military_unit_stat::save:
 			return "Save";
+		case military_unit_stat::initiative:
+			return "Initiative";
 		case military_unit_stat::melee_vs_mounted:
 			return "Melee vs. Mounted";
 		case military_unit_stat::defense_vs_mounted:

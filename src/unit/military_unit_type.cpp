@@ -266,6 +266,7 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 
 	decimillesimal_int armor_class;
 	hit_dice_count = 0;
+	decimillesimal_int initiative;
 	decimillesimal_int movement;
 	decimillesimal_int natural_armor_class;
 	decimillesimal_int range(1);
@@ -293,6 +294,8 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 		if (const character_stat_modifier_effect *character_stat_modifier_effect = dynamic_cast<const metternich::character_stat_modifier_effect *>(modifier_effect)) {
 			if (character_stat_modifier_effect->get_stat() == character_stat::armor_class.get()) {
 				armor_class += character_stat_modifier_effect->get_value();
+			} else if (character_stat_modifier_effect->get_stat() == character_stat::initiative.get()) {
+				initiative += character_stat_modifier_effect->get_value();
 			} else if (character_stat_modifier_effect->get_stat() == character_stat::movement.get()) {
 				movement += character_stat_modifier_effect->get_value();
 			} else if (character_stat_modifier_effect->get_stat() == character_stat::to_hit.get()) {
@@ -341,6 +344,9 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 		this->commodity_costs[this->manpower_commodity] = manpower_needed;
 	}
 
+	if (initiative != 0) {
+		this->stats[military_unit_stat::initiative] = centesimal_int(initiative);
+	}
 	if (movement != 0) {
 		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);
 	}

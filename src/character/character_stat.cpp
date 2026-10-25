@@ -25,6 +25,7 @@ const std::unique_ptr<const character_stat> character_stat::armor_class = []() {
 const std::unique_ptr<const character_stat> character_stat::initiative = []() {
 	auto initiative = std::make_unique<character_stat>("initiative");
 	initiative->set_name("Initiative");
+	initiative->affect_military_unit_stats = true;
 	return initiative;
 }();
 
