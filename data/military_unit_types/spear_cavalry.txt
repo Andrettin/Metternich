@@ -5,13 +5,20 @@ chariots = {
 	required_technology = chariotry
 	death_sound = human_death
 	stats = {
-		melee = 5
-		defense = 5
-		movement = 4
+		hit_points = 3 #as knights
+		movement = 2 #as knights
+		defense = 2 #50% of knights
+		melee = 3 #75% of knights
+		charge = 4.5 #75% of knights
 		range = 1
+		save = 6 #as knights
 	}
 	commodity_costs = {
-		manpower = 1
+		wealth = 4.5gb #75% of knights
+		heavy_cavalry = 200
+	}
+	maintenance_commodity_costs = {
+		wealth = 2gb #as knights
 	}
 	upgrades = {
 		knights
