@@ -77,6 +77,8 @@ void domain_diplomacy::process_gsml_scope(const gsml_data &scope)
 		scope.to_map(this->consulates);
 	} else if (tag == "base_opinions") {
 		scope.to_map(this->base_opinions);
+	} else if (tag == "opinion_modifiers") {
+		scope.to_map(this->opinion_modifiers);
 	} else if (tag == "free_consulate_counts") {
 		scope.to_map(this->free_consulate_counts);
 	} else {
@@ -124,6 +126,10 @@ gsml_data domain_diplomacy::to_gsml_data() const
 
 	if (!this->base_opinions.empty()) {
 		data.add_child(gsml_data::from_map(this->base_opinions, "base_opinions"));
+	}
+
+	if (!this->opinion_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->opinion_modifiers, "opinion_modifiers"));
 	}
 
 	if (!this->free_consulate_counts.empty()) {
