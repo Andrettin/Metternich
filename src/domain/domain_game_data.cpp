@@ -178,13 +178,9 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "attributes") {
-		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->attribute_values[domain_attribute::get(attribute_property.get_key())] = decimillesimal_int(attribute_property.get_value());
-		});
+		scope.to_map(this->attribute_values);
 	} else if (tag == "site_attributes") {
-		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->site_attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
-		});
+		scope.to_map(this->site_attribute_values);
 	} else if (tag == "provinces") {
 		for (const std::string &value : values) {
 			this->provinces.push_back(province::get(value));
@@ -202,13 +198,9 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "country_population") {
 		scope.process(this->country_population.get());
 	} else if (tag == "holding_building_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->holding_building_counts[building_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->holding_building_counts);
 	} else if (tag == "scripted_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->scripted_modifiers[scripted_domain_modifier::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->scripted_modifiers);
 	} else if (tag == "historical_rulers") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->historical_rulers[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
@@ -223,21 +215,13 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 			this->add_civilian_unit(std::move(civilian_unit));
 		});
 	} else if (tag == "civilian_unit_recruitment_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->civilian_unit_recruitment_counts[civilian_unit_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->civilian_unit_recruitment_counts);
 	} else if (tag == "population_type_modifier_multipliers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->population_type_modifier_multipliers[population_type::get(property.get_key())] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->population_type_modifier_multipliers);
 	} else if (tag == "building_class_cost_efficiency_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->building_class_cost_efficiency_modifiers[building_class::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->building_class_cost_efficiency_modifiers);
 	} else if (tag == "free_building_class_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->free_building_class_counts[building_class::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->free_building_class_counts);
 	} else if (tag == "flags") {
 		for (const std::string &value : values) {
 			this->flags.insert(flag::get(value));
@@ -312,19 +296,11 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_property("building_cost_efficiency_modifier", std::to_string(this->building_cost_efficiency_modifier));
 
 	if (!this->attribute_values.empty()) {
-		gsml_data attributes_data("attributes");
-		for (const auto &[attribute, value] : this->attribute_values) {
-			attributes_data.add_property(attribute->get_identifier(), value.to_string());
-		}
-		data.add_child(std::move(attributes_data));
+		data.add_child(gsml_data::from_map(this->attribute_values, "attributes"));
 	}
 
 	if (!this->site_attribute_values.empty()) {
-		gsml_data attributes_data("site_attributes");
-		for (const auto &[attribute, value] : this->site_attribute_values) {
-			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(attributes_data));
+		data.add_child(gsml_data::from_map(this->site_attribute_values, "site_attributes"));
 	}
 
 	gsml_data provinces_data("provinces");
@@ -349,19 +325,11 @@ gsml_data domain_game_data::to_gsml_data() const
 	data.add_child(this->country_population->to_gsml_data("country_population"));
 
 	if (!this->holding_building_counts.empty()) {
-		gsml_data holding_building_counts_data("holding_building_counts");
-		for (const auto &[building_type, count] : this->holding_building_counts) {
-			holding_building_counts_data.add_property(building_type->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(holding_building_counts_data));
+		data.add_child(gsml_data::from_map(this->holding_building_counts, "holding_building_counts"));
 	}
 
 	if (!this->scripted_modifiers.empty()) {
-		gsml_data scripted_modifiers_data("scripted_modifiers");
-		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
-			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
-		}
-		data.add_child(std::move(scripted_modifiers_data));
+		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
 	}
 
 	if (!this->historical_rulers.empty()) {
@@ -429,35 +397,19 @@ gsml_data domain_game_data::to_gsml_data() const
 	}
 
 	if (!this->civilian_unit_recruitment_counts.empty()) {
-		gsml_data civilian_unit_recruitment_counts_data("civilian_unit_recruitment_counts");
-		for (const auto &[civilian_unit_type, count] : this->civilian_unit_recruitment_counts) {
-			civilian_unit_recruitment_counts_data.add_property(civilian_unit_type->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(civilian_unit_recruitment_counts_data));
+		data.add_child(gsml_data::from_map(this->civilian_unit_recruitment_counts, "civilian_unit_recruitment_counts"));
 	}
 
 	if (!this->population_type_modifier_multipliers.empty()) {
-		gsml_data population_type_modifier_multipliers_data("population_type_modifier_multipliers");
-		for (const auto &[population_type, multiplier] : this->population_type_modifier_multipliers) {
-			population_type_modifier_multipliers_data.add_property(population_type->get_identifier(), multiplier.to_string());
-		}
-		data.add_child(std::move(population_type_modifier_multipliers_data));
+		data.add_child(gsml_data::from_map(this->population_type_modifier_multipliers, "population_type_modifier_multipliers"));
 	}
 
 	if (!this->building_class_cost_efficiency_modifiers.empty()) {
-		gsml_data building_class_cost_efficiency_modifiers_data("building_class_cost_efficiency_modifiers");
-		for (const auto &[building_class, count] : this->building_class_cost_efficiency_modifiers) {
-			building_class_cost_efficiency_modifiers_data.add_property(building_class->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(building_class_cost_efficiency_modifiers_data));
+		data.add_child(gsml_data::from_map(this->building_class_cost_efficiency_modifiers, "building_class_cost_efficiency_modifiers"));
 	}
 
 	if (!this->free_building_class_counts.empty()) {
-		gsml_data free_building_class_counts_data("free_building_class_counts");
-		for (const auto &[building_class, count] : this->free_building_class_counts) {
-			free_building_class_counts_data.add_property(building_class->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(free_building_class_counts_data));
+		data.add_child(gsml_data::from_map(this->free_building_class_counts, "free_building_class_counts"));
 	}
 
 	if (!this->flags.empty()) {

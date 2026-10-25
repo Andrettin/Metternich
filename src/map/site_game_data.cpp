@@ -152,17 +152,13 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		tile *tile = map::get()->get_tile(tile_pos);
 		tile->set_site(this->site);
 	} else if (tag == "construction_levels") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->construction_levels[magic_enum::enum_cast<construction_type>(property.get_key()).value()] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->construction_levels);
 	} else if (tag == "features") {
 		for (const std::string &value : values) {
 			this->features.insert(site_feature::get(value));
 		}
 	} else if (tag == "attributes") {
-		scope.for_each_property([this](const gsml_property &attribute_property) {
-			this->attribute_values[site_attribute::get(attribute_property.get_key())] = std::stoi(attribute_property.get_value());
-		});
+		scope.to_map(this->attribute_values);
 	} else if (tag == "attribute_roll_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -185,9 +181,7 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 			this->add_building_slot(make_qunique<building_slot>(child_scope, this->site));
 		});
 	} else if (tag == "scripted_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->scripted_modifiers[scripted_site_modifier::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->scripted_modifiers);
 	} else if (tag == "population_units") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto population_unit = make_qunique<metternich::population_unit>(child_scope);
@@ -202,41 +196,23 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 
 		scope.process(this->population.get());
 	} else if (tag == "employment_sizes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->employment_sizes[employment_type::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->employment_sizes);
 	} else if (tag == "base_employment_capacities") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->base_employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->base_employment_capacities);
 	} else if (tag == "employment_capacity_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->employment_capacity_modifiers[employment_type::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->employment_capacity_modifiers);
 	} else if (tag == "employment_capacities") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->employment_capacities[employment_type::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->employment_capacities);
 	} else if (tag == "base_commodity_outputs") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->base_commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->base_commodity_outputs);
 	} else if (tag == "commodity_outputs") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->commodity_outputs[commodity::get(property.get_key())] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->commodity_outputs);
 	} else if (tag == "commodity_output_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->commodity_output_modifiers[commodity::get(property.get_key())] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->commodity_output_modifiers);
 	} else if (tag == "commodity_throughput_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->commodity_throughput_modifiers[commodity::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->commodity_throughput_modifiers);
 	} else if (tag == "taxes_by_holding") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->taxes_by_holding[site::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->taxes_by_holding);
 	} else if (tag == "homed_characters") {
 		for (const std::string &value : values) {
 			this->homed_characters.push_back(game::get()->get_character(value));
@@ -288,11 +264,7 @@ gsml_data site_game_data::to_gsml_data() const
 	data.add_property("holding_level_income", std::to_string(this->holding_level_income));
 
 	if (!this->get_construction_levels().empty()) {
-		gsml_data construction_levels_data("construction_levels");
-		for (const auto &[construction_type, construction_level] : this->get_construction_levels()) {
-			construction_levels_data.add_property(std::string(magic_enum::enum_name(construction_type)), construction_level.to_string());
-		}
-		data.add_child(std::move(construction_levels_data));
+		data.add_child(gsml_data::from_map(this->construction_levels, "construction_levels"));
 	}
 
 	if (!this->get_features().empty()) {
@@ -303,12 +275,8 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_child(std::move(features_data));
 	}
 
-	if (!this->get_attribute_values().empty()) {
-		gsml_data attributes_data("attributes");
-		for (const auto &[attribute, value] : this->get_attribute_values()) {
-			attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(attributes_data));
+	if (!this->attribute_values.empty()) {
+		data.add_child(gsml_data::from_map(this->attribute_values, "attributes"));
 	}
 
 	if (!this->attribute_roll_results.empty()) {
@@ -336,11 +304,7 @@ gsml_data site_game_data::to_gsml_data() const
 	}
 
 	if (!this->scripted_modifiers.empty()) {
-		gsml_data scripted_modifiers_data("scripted_modifiers");
-		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
-			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
-		}
-		data.add_child(std::move(scripted_modifiers_data));
+		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
 	}
 
 	if (!this->population_units.empty()) {
@@ -370,79 +334,43 @@ gsml_data site_game_data::to_gsml_data() const
 	}
 
 	if (!this->get_employment_sizes().empty()) {
-		gsml_data employment_sizes_data("employment_sizes");
-		for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
-			employment_sizes_data.add_property(employment_type->get_identifier(), std::to_string(employment_size));
-		}
-		data.add_child(std::move(employment_sizes_data));
+		data.add_child(gsml_data::from_map(this->employment_sizes, "employment_sizes"));
 	}
 
 	if (!this->base_employment_capacities.empty()) {
-		gsml_data base_employment_capacities_data("base_employment_capacities");
-		for (const auto &[employment_type, employment_capacity] : this->base_employment_capacities) {
-			base_employment_capacities_data.add_property(employment_type->get_identifier(), std::to_string(employment_capacity));
-		}
-		data.add_child(std::move(base_employment_capacities_data));
+		data.add_child(gsml_data::from_map(this->base_employment_capacities, "base_employment_capacities"));
 	}
 
 	if (!this->employment_capacity_modifiers.empty()) {
-		gsml_data employment_capacity_modifiers_data("employment_capacity_modifiers");
-		for (const auto &[employment_type, modifier] : this->employment_capacity_modifiers) {
-			employment_capacity_modifiers_data.add_property(employment_type->get_identifier(), std::to_string(modifier));
-		}
-		data.add_child(std::move(employment_capacity_modifiers_data));
+		data.add_child(gsml_data::from_map(this->employment_capacity_modifiers, "employment_capacity_modifiers"));
 	}
 
-	if (!this->get_employment_capacities().empty()) {
-		gsml_data employment_capacities_data("employment_capacities");
-		for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
-			employment_capacities_data.add_property(employment_type->get_identifier(), std::to_string(employment_capacity));
-		}
-		data.add_child(std::move(employment_capacities_data));
+	if (!this->employment_capacities.empty()) {
+		data.add_child(gsml_data::from_map(this->employment_capacities, "employment_capacities"));
 	}
 
-	if (!this->get_base_commodity_outputs().empty()) {
-		gsml_data base_commodity_outputs_data("base_commodity_outputs");
-		for (const auto &[commodity, base_output] : this->get_base_commodity_outputs()) {
-			base_commodity_outputs_data.add_property(commodity->get_identifier(), base_output.to_string());
-		}
-		data.add_child(std::move(base_commodity_outputs_data));
+	if (!this->base_commodity_outputs.empty()) {
+		data.add_child(gsml_data::from_map(this->base_commodity_outputs, "base_commodity_outputs"));
 	}
 
-	if (!this->get_commodity_outputs().empty()) {
-		gsml_data commodity_outputs_data("commodity_outputs");
-		for (const auto &[commodity, output] : this->get_commodity_outputs()) {
-			commodity_outputs_data.add_property(commodity->get_identifier(), output.to_string());
-		}
-		data.add_child(std::move(commodity_outputs_data));
+	if (!this->commodity_outputs.empty()) {
+		data.add_child(gsml_data::from_map(this->commodity_outputs, "commodity_outputs"));
 	}
 
 	if (this->output_modifier != 0) {
 		data.add_property("output_modifier", this->output_modifier.to_string());
 	}
 
-	if (!this->get_commodity_output_modifiers().empty()) {
-		gsml_data commodity_output_modifiers_data("commodity_output_modifiers");
-		for (const auto &[commodity, output_modifier] : this->get_commodity_output_modifiers()) {
-			commodity_output_modifiers_data.add_property(commodity->get_identifier(), output_modifier.to_string());
-		}
-		data.add_child(std::move(commodity_output_modifiers_data));
+	if (!this->commodity_output_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->commodity_output_modifiers, "commodity_output_modifiers"));
 	}
 
-	if (!this->get_commodity_throughput_modifiers().empty()) {
-		gsml_data commodity_throughput_modifiers_data("commodity_throughput_modifiers");
-		for (const auto &[commodity, throughput_modifier] : this->get_commodity_throughput_modifiers()) {
-			commodity_throughput_modifiers_data.add_property(commodity->get_identifier(), std::to_string(throughput_modifier));
-		}
-		data.add_child(std::move(commodity_throughput_modifiers_data));
+	if (!this->commodity_throughput_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->commodity_throughput_modifiers, "commodity_throughput_modifiers"));
 	}
 
 	if (!this->taxes_by_holding.empty()) {
-		gsml_data taxes_by_holding_data("taxes_by_holding");
-		for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
-			taxes_by_holding_data.add_property(taxing_holding->get_identifier(), std::to_string(taxes));
-		}
-		data.add_child(std::move(taxes_by_holding_data));
+		data.add_child(gsml_data::from_map(this->taxes_by_holding, "taxes_by_holding"));
 	}
 
 	if (!this->get_homed_characters().empty()) {
