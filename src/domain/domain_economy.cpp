@@ -22,6 +22,7 @@
 #include "economy/province_taxation_type.h"
 #include "economy/resource.h"
 #include "game/game.h"
+#include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
@@ -112,6 +113,10 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.to_map(this->capital_commodity_output_modifiers);
 	} else if (tag == "commodity_throughput_modifiers") {
 		scope.to_map(this->commodity_throughput_modifiers);
+	} else if (tag == "building_commodity_bonuses") {
+		scope.to_map(this->building_commodity_bonuses);
+	} else if (tag == "commodity_bonuses_for_tile_thresholds") {
+		scope.to_map(this->commodity_bonuses_for_tile_thresholds);
 	} else if (tag == "commodity_bonuses_per_population") {
 		scope.to_map(this->commodity_bonuses_per_population);
 	} else if (tag == "settlement_commodity_bonuses") {
@@ -173,6 +178,14 @@ gsml_data domain_economy::to_gsml_data() const
 
 	if (!this->commodity_throughput_modifiers.empty()) {
 		data.add_child(gsml_data::from_map(this->commodity_throughput_modifiers, "commodity_throughput_modifiers"));
+	}
+
+	if (!this->building_commodity_bonuses.empty()) {
+		data.add_child(gsml_data::from_map(this->building_commodity_bonuses, "building_commodity_bonuses"));
+	}
+
+	if (!this->commodity_bonuses_for_tile_thresholds.empty()) {
+		data.add_child(gsml_data::from_map(this->commodity_bonuses_for_tile_thresholds, "commodity_bonuses_for_tile_thresholds"));
 	}
 
 	if (!this->commodity_bonuses_per_population.empty()) {
