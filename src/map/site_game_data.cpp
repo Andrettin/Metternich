@@ -754,7 +754,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				continue;
 			}
 
-			old_owner->get_economy()->change_commodity_output(commodity, -this->get_commodity_output(commodity));
+			old_owner->get_economy()->change_commodity_output(commodity, decimillesimal_int(-this->get_commodity_output(commodity)));
 		}
 
 		disconnect(this, &site_game_data::item_slots_changed, old_owner->get_game_data(), &domain_game_data::item_slots_changed);
@@ -772,7 +772,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				continue;
 			}
 
-			this->get_owner()->get_economy()->change_commodity_output(commodity, this->get_commodity_output(commodity));
+			this->get_owner()->get_economy()->change_commodity_output(commodity, decimillesimal_int(this->get_commodity_output(commodity)));
 		}
 
 		if (this->can_have_population()) {
@@ -2517,10 +2517,10 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 			}
 
 			if (change_input_storage) {
-				assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, centesimal_int(input_change)));
+				assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, decimillesimal_int(input_change)));
 			}
 
-			this->get_owner()->get_economy()->change_commodity_input(commodity, centesimal_int(input_change), change_input_storage);
+			this->get_owner()->get_economy()->change_commodity_input(commodity, decimillesimal_int(input_change), change_input_storage);
 		}
 	}
 
@@ -2782,7 +2782,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_economy()->change_commodity_output(commodity, output_change);
+			this->get_owner()->get_economy()->change_commodity_output(commodity, decimillesimal_int(output_change));
 		}
 	}
 

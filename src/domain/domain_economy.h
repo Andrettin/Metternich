@@ -4,6 +4,7 @@
 #include "economy/resource_container.h"
 #include "infrastructure/building_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -182,14 +183,14 @@ public:
 	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
 	[[nodiscard]] QCoro::Task<void> decrease_manpower_commodity_usage(const commodity *commodity);
 
-	const commodity_map<centesimal_int> &get_commodity_inputs() const
+	const commodity_map<decimillesimal_int> &get_commodity_inputs() const
 	{
 		return this->commodity_inputs;
 	}
 
 	QVariantList get_commodity_inputs_qvariant_list() const;
 
-	const centesimal_int &get_commodity_input(const commodity *commodity) const
+	const decimillesimal_int &get_commodity_input(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_inputs.find(commodity);
 
@@ -197,23 +198,23 @@ public:
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int zero;
+		static constexpr decimillesimal_int zero;
 		return zero;
 	}
 
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
-	void change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage);
-	bool can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const;
-	[[nodiscard]] QCoro::Task<void> decrease_commodity_input(const commodity *commodity, int64_t decrease);
+	void change_commodity_input(const commodity *commodity, const decimillesimal_int &change, const bool change_input_storage);
+	bool can_change_commodity_input(const commodity *commodity, const decimillesimal_int &change) const;
+	[[nodiscard]] QCoro::Task<void> decrease_commodity_input(const commodity *commodity, decimillesimal_int decrease);
 
-	const commodity_map<centesimal_int> &get_commodity_outputs() const
+	const commodity_map<decimillesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
 	}
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
-	const centesimal_int &get_commodity_output(const commodity *commodity) const
+	const decimillesimal_int &get_commodity_output(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_outputs.find(commodity);
 
@@ -221,16 +222,16 @@ public:
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int zero;
+		static constexpr decimillesimal_int zero;
 		return zero;
 	}
 
 	Q_INVOKABLE qint64 get_commodity_output_int(const metternich::commodity *commodity) const;
-	void change_commodity_output(const commodity *commodity, const centesimal_int &change);
+	void change_commodity_output(const commodity *commodity, const decimillesimal_int &change);
 
-	int get_net_commodity_output(const commodity *commodity) const
+	decimillesimal_int get_net_commodity_output(const commodity *commodity) const
 	{
-		return this->get_commodity_output(commodity).to_int() - this->get_commodity_input(commodity).to_int();
+		return this->get_commodity_output(commodity) - this->get_commodity_input(commodity);
 	}
 
 	void calculate_site_commodity_outputs();
@@ -706,8 +707,8 @@ private:
 	commodity_map<decimillesimal_int> stored_commodities;
 	int64_t storage_capacity = 0;
 	commodity_map<int64_t> commodity_storage_capacities;
-	commodity_map<centesimal_int> commodity_inputs;
-	commodity_map<centesimal_int> commodity_outputs;
+	commodity_map<decimillesimal_int> commodity_inputs;
+	commodity_map<decimillesimal_int> commodity_outputs;
 	metternich::province_taxation_type province_taxation_type {};
 	int64_t attribute_taxation = 0;
 	commodity_map<int64_t> min_commodity_storages; //if storage is below this, import the commodity

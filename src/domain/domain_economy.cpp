@@ -269,34 +269,32 @@ QCoro::Task<void> domain_economy::do_production()
 			this->change_stored_commodity(commodity, decimillesimal_int(recovery_per_turn));
 		}
 
-		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
+		const commodity_map<decimillesimal_int> commodity_inputs = this->get_commodity_inputs();
 		for (const auto &[commodity, input] : commodity_inputs) {
 			if (!commodity->is_storable()) {
 				continue;
 			}
 
-			while (this->get_stored_commodity(commodity).to_int64() < this->get_commodity_input(commodity).to_int64()) {
-				co_await this->decrease_commodity_input(commodity, std::max(1ll, this->get_commodity_input(commodity).to_int64() - this->get_stored_commodity(commodity).to_int64()));
+			while (this->get_stored_commodity(commodity) < this->get_commodity_input(commodity)) {
+				co_await this->decrease_commodity_input(commodity, this->get_commodity_input(commodity) - this->get_stored_commodity(commodity));
 			}
-			assert_throw(this->get_stored_commodity(commodity).to_int64() >= this->get_commodity_input(commodity).to_int64());
+			assert_throw(this->get_stored_commodity(commodity) >= this->get_commodity_input(commodity));
 		}
 
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
 		for (const auto &[commodity, input] : this->get_commodity_inputs()) {
 			try {
-				const int input_int = input.to_int();
-
 				if (!commodity->is_storable()) {
-					const int output = this->get_commodity_output(commodity).to_int();
-					if (input_int > output) {
-						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input_int, output));
+					const decimillesimal_int output = this->get_commodity_output(commodity);
+					if (input > output) {
+						throw std::runtime_error(std::format("Input for non-storable commodity \"{}\" ({}) is greater than its output ({}).", commodity->get_identifier(), input.to_string(), output.to_string()));
 					}
 					continue;
 				}
 				
-				assert_throw(this->get_stored_commodity(commodity) >= input_int);
+				assert_throw(this->get_stored_commodity(commodity) >= input);
 
-				this->change_stored_commodity(commodity, decimillesimal_int(-input_int));
+				this->change_stored_commodity(commodity, -input);
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier() + "\"."));
 			}
@@ -671,19 +669,19 @@ int domain_economy::get_commodity_input(const QString &commodity_identifier) con
 	return this->get_commodity_input(commodity::get(commodity_identifier.toStdString())).to_int();
 }
 
-void domain_economy::change_commodity_input(const commodity *commodity, const centesimal_int &change, const bool change_input_storage)
+void domain_economy::change_commodity_input(const commodity *commodity, const decimillesimal_int &change, const bool change_input_storage)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int old_input = this->get_commodity_input(commodity);
+	const decimillesimal_int old_input = this->get_commodity_input(commodity);
 
 	if (commodity->is_storable() && change_input_storage) {
-		this->change_stored_commodity(commodity, decimillesimal_int(old_input.to_int()));
+		this->change_stored_commodity(commodity, old_input);
 	}
 
-	const centesimal_int new_input = (this->commodity_inputs[commodity] += change);
+	const decimillesimal_int new_input = (this->commodity_inputs[commodity] += change);
 
 	assert_throw(new_input >= 0);
 
@@ -692,7 +690,7 @@ void domain_economy::change_commodity_input(const commodity *commodity, const ce
 	}
 
 	if (commodity->is_storable() && change_input_storage) {
-		this->change_stored_commodity(commodity, decimillesimal_int(-new_input.to_int()));
+		this->change_stored_commodity(commodity, -new_input);
 	}
 
 	if (game::get()->is_running()) {
@@ -700,15 +698,15 @@ void domain_economy::change_commodity_input(const commodity *commodity, const ce
 	}
 }
 
-bool domain_economy::can_change_commodity_input(const commodity *commodity, const centesimal_int &change) const
+bool domain_economy::can_change_commodity_input(const commodity *commodity, const decimillesimal_int &change) const
 {
 	if (change <= 0) {
 		return true;
 	}
 
 	if (commodity->is_storable()) {
-		const centesimal_int current_commodity_input = this->get_commodity_input(commodity);
-		const int storage_change = (current_commodity_input + change).to_int() - current_commodity_input.to_int();
+		const decimillesimal_int current_commodity_input = this->get_commodity_input(commodity);
+		const decimillesimal_int storage_change = (current_commodity_input + change) - current_commodity_input;
 
 		if (this->get_stored_commodity(commodity) < storage_change) {
 			return false;
@@ -723,7 +721,7 @@ bool domain_economy::can_change_commodity_input(const commodity *commodity, cons
 	return true;
 }
 
-QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *commodity, int64_t decrease)
+QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *commodity, decimillesimal_int decrease)
 {
 	assert_throw(decrease >= 0);
 
@@ -743,11 +741,11 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 
 			int64_t employment_input_decrease = 0;
 			int64_t unemployment_size = 0;
-			if (employment_input <= decrease) {
+			if (employment_input <= decrease.to_ceil_int64()) {
 				unemployment_size = employment_size;
 				employment_input_decrease = employment_input;
 			} else {
-				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease, throughput_modifier);
+				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease.to_ceil_int64(), throughput_modifier);
 				unemployment_size = employment_size - new_employment_size;
 				employment_input_decrease = employment_input - employment_type->get_input_for_employment_size(commodity, new_employment_size, throughput_modifier);
 				assert_throw(unemployment_size > 0);
@@ -755,7 +753,7 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 			}
 
 			co_await site->get_game_data()->decrease_employment(employment_type, unemployment_size, false);
-			decrease -= employment_input_decrease;
+			decrease -= decimillesimal_int(employment_input_decrease);
 
 			if (decrease <= 0) {
 				break;
@@ -780,15 +778,15 @@ qint64 domain_economy::get_commodity_output_int(const commodity *commodity) cons
 	return this->get_commodity_output(commodity).to_int64();
 }
 
-void domain_economy::change_commodity_output(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_commodity_output(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int old_output = this->get_commodity_output(commodity);
+	const decimillesimal_int old_output = this->get_commodity_output(commodity);
 
-	const centesimal_int &new_output = (this->commodity_outputs[commodity] += change);
+	const decimillesimal_int &new_output = (this->commodity_outputs[commodity] += change);
 
 	assert_throw(new_output >= 0);
 
@@ -861,7 +859,7 @@ void domain_economy::set_province_taxation_type(const metternich::province_taxat
 
 void domain_economy::update_attribute_taxation()
 {
-	this->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->attribute_taxation));
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(-this->attribute_taxation));
 
 	//update wealth income from attributes
 	this->attribute_taxation = 0;
@@ -889,7 +887,7 @@ void domain_economy::update_attribute_taxation()
 		this->attribute_taxation += average_result;
 	}
 
-	this->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->attribute_taxation));
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(this->attribute_taxation));
 }
 
 QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const

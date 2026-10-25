@@ -2775,7 +2775,7 @@ void province_game_data::update_province_level_taxation()
 		return;
 	}
 
-	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->province_level_taxation));
+	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(-this->province_level_taxation));
 
 	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
 		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-taxes));
@@ -2801,7 +2801,7 @@ void province_game_data::update_province_level_taxation()
 
 	this->province_level_taxation = taxed_income;
 
-	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->province_level_taxation));
+	this->get_owner()->get_economy()->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(this->province_level_taxation));
 
 	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
 		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(taxes));
