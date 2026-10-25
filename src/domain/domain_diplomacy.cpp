@@ -67,9 +67,29 @@ void domain_diplomacy::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->known_domains.insert(domain::get(value));
 		}
+	} else if (tag == "diplomacy_states") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->diplomacy_states[domain::get(property.get_key())] = magic_enum::enum_cast<diplomacy_state>(property.get_value()).value();
+		});
+	} else if (tag == "diplomacy_state_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->diplomacy_state_counts[magic_enum::enum_cast<diplomacy_state>(property.get_key()).value()] = std::stoi(property.get_value());
+		});
+	} else if (tag == "offered_diplomacy_states") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->offered_diplomacy_states[domain::get(property.get_key())] = magic_enum::enum_cast<diplomacy_state>(property.get_value()).value();
+		});
+	} else if (tag == "consulates") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->consulates[domain::get(property.get_key())] = consulate::get(property.get_value());
+		});
 	} else if (tag == "base_opinions") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->base_opinions[domain::get(property.get_key())] = std::stoi(property.get_value());
+		});
+	} else if (tag == "free_consulate_counts") {
+		scope.for_each_property([this](const gsml_property &property) {
+			this->free_consulate_counts[consulate::get(property.get_key())] = std::stoi(property.get_value());
 		});
 	} else {
 		throw std::runtime_error(std::format("Invalid domain diplomacy scope: \"{}\".", tag));
@@ -98,12 +118,52 @@ gsml_data domain_diplomacy::to_gsml_data() const
 		data.add_child(std::move(known_domains_data));
 	}
 
+	if (!this->diplomacy_states.empty()) {
+		gsml_data diplomacy_states_data("diplomacy_states");
+		for (const auto &[domain, diplomacy_state] : this->diplomacy_states) {
+			diplomacy_states_data.add_property(domain->get_identifier(), std::string(magic_enum::enum_name(diplomacy_state)));
+		}
+		data.add_child(std::move(diplomacy_states_data));
+	}
+
+	if (!this->diplomacy_state_counts.empty()) {
+		gsml_data diplomacy_state_counts_data("diplomacy_state_counts");
+		for (const auto &[diplomacy_state, count] : this->diplomacy_state_counts) {
+			diplomacy_state_counts_data.add_property(std::string(magic_enum::enum_name(diplomacy_state)), std::to_string(count));
+		}
+		data.add_child(std::move(diplomacy_state_counts_data));
+	}
+
+	if (!this->offered_diplomacy_states.empty()) {
+		gsml_data offered_diplomacy_states_data("offered_diplomacy_states");
+		for (const auto &[domain, diplomacy_state] : this->offered_diplomacy_states) {
+			offered_diplomacy_states_data.add_property(domain->get_identifier(), std::string(magic_enum::enum_name(diplomacy_state)));
+		}
+		data.add_child(std::move(offered_diplomacy_states_data));
+	}
+
+	if (!this->consulates.empty()) {
+		gsml_data consulates_data("consulates");
+		for (const auto &[domain, consulate] : this->consulates) {
+			consulates_data.add_property(domain->get_identifier(), consulate->get_identifier());
+		}
+		data.add_child(std::move(consulates_data));
+	}
+
 	if (!this->base_opinions.empty()) {
 		gsml_data base_opinions_data("base_opinions");
 		for (const auto &[domain, base_opinion] : this->base_opinions) {
 			base_opinions_data.add_property(domain->get_identifier(), std::to_string(base_opinion));
 		}
 		data.add_child(std::move(base_opinions_data));
+	}
+
+	if (!this->free_consulate_counts.empty()) {
+		gsml_data free_consulate_counts_data("free_consulate_counts");
+		for (const auto &[consulate, count] : this->free_consulate_counts) {
+			free_consulate_counts_data.add_property(consulate->get_identifier(), std::to_string(count));
+		}
+		data.add_child(std::move(free_consulate_counts_data));
 	}
 
 	return data;
