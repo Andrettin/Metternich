@@ -2,6 +2,7 @@
 
 #include "game/combat_base.h"
 #include "script/context.h"
+#include "util/dice.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("unit/military_unit.h")
@@ -83,6 +84,8 @@ class battle final : public combat_base
 	Q_OBJECT
 
 public:
+	static constexpr dice initiative_dice = dice(1, 20);
+
 	struct result final
 	{
 		bool attacker_victory = false;
@@ -156,9 +159,9 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> start_coro();
 
-	[[nodiscard]] QCoro::Task<void> do_round();
+	[[nodiscard]] QCoro::Task<void> do_round(std::unordered_map<const military_unit *, int> &next_round_initiative_modifiers);
 
-	[[nodiscard]] QCoro::Task<int64_t> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier);
+	[[nodiscard]] QCoro::Task<int64_t> do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier, int &next_round_initiative_modifier);
 
 	const military_unit *choose_enemy(const military_unit *unit, const std::vector<military_unit *> &enemies) const;
 

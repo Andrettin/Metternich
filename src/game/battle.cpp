@@ -195,8 +195,10 @@ QCoro::Task<void> battle::start_coro()
 {
 	this->get_promise()->start();
 
+	std::unordered_map<const military_unit *, int> next_round_initiative_modifiers;
+
 	while (!this->attacking_army->get_military_units().empty() && !this->defending_army->get_military_units().empty()) {
-		co_await this->do_round();
+		co_await this->do_round(next_round_initiative_modifiers);
 	}
 
 	std::vector<military_unit *> all_units = this->attacking_army->get_military_units();
@@ -228,7 +230,7 @@ QCoro::Task<void> battle::start_coro()
 	}
 }
 
-QCoro::Task<void> battle::do_round()
+QCoro::Task<void> battle::do_round(std::unordered_map<const military_unit *, int> &next_round_initiative_modifiers)
 {
 	std::vector<military_unit *> all_units = this->attacking_army->get_military_units();
 
@@ -239,13 +241,31 @@ QCoro::Task<void> battle::do_round()
 		vector::merge(all_units, this->defending_army->get_military_units());
 	}
 
-	std::sort(all_units.begin(), all_units.end(), [](const military_unit *lhs, const military_unit *rhs) {
-		if (lhs->get_battle_movement() != rhs->get_battle_movement()) {
-			return lhs->get_battle_movement() > rhs->get_battle_movement();
+	std::unordered_map<const military_unit *, int> initiative_results;
+	for (const military_unit *military_unit : all_units) {
+		int initiative_result = random::get()->roll_dice(battle::initiative_dice);
+		if (military_unit->get_character() != nullptr) {
+			initiative_result -= military_unit->get_character()->get_game_data()->get_initiative_bonus();
+		} else {
+			//for non-character military units, use movement as their initiative modifier
+			//FIXME: add initiative stat for military units
+			initiative_result -= military_unit->get_stat(military_unit_stat::movement).to_int();
+		}
+		initiative_result += next_round_initiative_modifiers[military_unit];
+		initiative_results[military_unit] = initiative_result;
+	}
+
+	std::sort(all_units.begin(), all_units.end(), [&initiative_results](const military_unit *lhs, const military_unit *rhs) {
+		const int lhs_initiative_result = initiative_results.find(lhs)->second;
+		const int rhs_initiative_result = initiative_results.find(rhs)->second;
+		if (lhs_initiative_result != rhs_initiative_result) {
+			return lhs_initiative_result < rhs_initiative_result;
 		}
 
 		return lhs < rhs;
 	});
+
+	next_round_initiative_modifiers.clear();
 
 	std::vector<military_unit *> killed_units;
 	for (military_unit *unit : all_units) {
@@ -258,7 +278,7 @@ QCoro::Task<void> battle::do_round()
 		}
 
 		const bool is_attacker = vector::contains(this->attacking_army->get_military_units(), unit);
-		const int64_t experience_award = co_await this->do_unit_round(unit, killed_units, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier);
+		const int64_t experience_award = co_await this->do_unit_round(unit, killed_units, is_attacker ? this->attacker_to_hit_modifier : this->defender_to_hit_modifier, next_round_initiative_modifiers[unit]);
 
 		if (is_attacker) {
 			this->attacker_experience_award += experience_award;
@@ -272,7 +292,7 @@ QCoro::Task<void> battle::do_round()
 	}
 }
 
-QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier)
+QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<military_unit *> &killed_units, const int to_hit_modifier, int &next_round_initiative_modifier)
 {
 	battle_unit_info *unit_info = this->get_unit_info(unit);
 	army *army = unit_info->is_defender() ? this->defending_army : this->attacking_army;
@@ -281,6 +301,8 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 	if (unit_info->is_defender() && this->defender_neutral && is_ai) {
 		co_return 0;
 	}
+
+	next_round_initiative_modifier = 0;
 
 	bool attacked = false;
 	unit_info->set_remaining_movement(unit->get_battle_movement());
@@ -402,6 +424,10 @@ QCoro::Task<int64_t> battle::do_unit_round(military_unit *unit, std::vector<mili
 						this->defender_neutral = false;
 					}
 				}
+			}
+
+			if (attacked) {
+				next_round_initiative_modifier += this->get_current_spell()->get_casting_time_initiative_modifier();
 			}
 
 			this->set_current_spell(nullptr);

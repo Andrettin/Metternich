@@ -169,8 +169,6 @@ class combat final : public combat_base
 	Q_PROPERTY(QVariantList objects READ get_objects_qvariant_list NOTIFY objects_changed)
 
 public:
-	static constexpr dice initiative_dice = dice(1, 20);
-
 	struct result final
 	{
 		bool attacker_victory = false;
@@ -220,10 +218,10 @@ public:
 	QCoro::Task<void> start_coro();
 
 	[[nodiscard]]
-	QCoro::Task<void> do_round(std::map<const character *, int> &next_round_initiative_modifiers);
+	QCoro::Task<void> do_round();
 
 	[[nodiscard]]
-	QCoro::Task<int64_t> do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier, int &next_round_initiative_modifier);
+	QCoro::Task<int64_t> do_character_round(const character *character, party *party, metternich::party *enemy_party, const int to_hit_modifier);
 
 	const character *choose_enemy(const character *character, const std::vector<const metternich::character *> &enemies) const;
 	const combat_object *choose_target_object(const character *character) const;
