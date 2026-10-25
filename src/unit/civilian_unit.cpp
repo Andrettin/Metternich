@@ -497,7 +497,7 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : building_type->get_commodity_costs_for_site(site)) {
-		domain_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 }
 
@@ -556,7 +556,7 @@ void civilian_unit::build_pathway(const metternich::pathway *pathway)
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->get_province())) {
-		domain_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 }
 
@@ -575,7 +575,7 @@ void civilian_unit::cancel_work()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site)) {
-			domain_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 	}
 
@@ -583,7 +583,7 @@ void civilian_unit::cancel_work()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->under_construction_pathway->get_commodity_costs_for_province(this->get_province())) {
-			domain_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 	}
 

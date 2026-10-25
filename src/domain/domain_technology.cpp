@@ -167,7 +167,7 @@ QCoro::Task<void> domain_technology::do_research()
 		}
 
 		decimillesimal_int generated_research = decimillesimal_int(this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity()));
-		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), 0);
+		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), decimillesimal_int(0));
 
 		data_entry_map<technology_category, decimillesimal_int> generated_research_per_category;
 		for (const auto &[category, category_quarterly_research] : this->technology_category_quarterly_researches) {
@@ -532,7 +532,7 @@ bool domain_technology::can_research_technology(const technology *technology) co
 			continue;
 		}
 
-		if (cost > this->domain->get_economy()->get_stored_commodity(commodity)) {
+		if (cost > this->domain->get_economy()->get_stored_commodity(commodity).to_int64()) {
 			return false;
 		}
 	}
@@ -691,7 +691,7 @@ void domain_technology::add_current_research(const technology *technology)
 			continue;
 		}
 
-		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
+		this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 
 	this->current_researches.insert(technology);
@@ -715,7 +715,7 @@ void domain_technology::remove_current_research(const technology *technology, co
 				continue;
 			}
 
-			this->domain->get_economy()->change_stored_commodity(commodity, cost);
+			this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 	}
 

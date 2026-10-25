@@ -350,7 +350,7 @@ bool building_slot::can_build_building(const building_type *building) const
 	const domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_holding())) {
-		if (cost > domain_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity).to_int64()) {
 			return false;
 		}
 	}
@@ -465,7 +465,7 @@ bool building_slot::can_build_wonder(const metternich::wonder *wonder) const
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_domain(this->get_domain())) {
-		if (cost > domain_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity).to_int64()) {
 			return false;
 		}
 	}
@@ -486,7 +486,7 @@ void building_slot::build_wonder(const metternich::wonder *wonder)
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_domain(this->get_domain())) {
-		domain_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 
 	this->set_under_construction_wonder(wonder);
@@ -503,7 +503,7 @@ void building_slot::build_building(const building_type *building)
 	domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : building->get_commodity_costs_for_site(this->get_holding())) {
-		domain_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 
 	this->set_under_construction_building(building);
@@ -519,7 +519,7 @@ void building_slot::cancel_construction()
 		}
 
 		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_domain(this->get_domain())) {
-			domain_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 
 		this->set_under_construction_wonder(nullptr);
@@ -533,7 +533,7 @@ void building_slot::cancel_construction()
 	domain_economy *domain_economy = this->get_domain()->get_economy();
 
 	for (const auto &[commodity, cost] : this->get_under_construction_building()->get_commodity_costs_for_site(this->get_holding())) {
-		domain_economy->change_stored_commodity(commodity, cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
 	}
 
 	this->set_under_construction_building(nullptr);

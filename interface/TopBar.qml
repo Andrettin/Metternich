@@ -83,7 +83,7 @@ Rectangle {
 				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || commodity_value > 0
 				
 				readonly property var commodity: model.modelData
-				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_int(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
 				
 				Image {
 					id: commodity_icon

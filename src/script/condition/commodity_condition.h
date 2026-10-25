@@ -25,7 +25,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		return scope->get_economy()->get_stored_commodity(this->commodity);
+		return scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
 	}
 
 	virtual std::string get_value_name() const override

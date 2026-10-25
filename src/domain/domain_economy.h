@@ -126,19 +126,20 @@ public:
 		return this->get_tradeable_commodities().contains(commodity);
 	}
 
-	const commodity_map<int64_t> &get_stored_commodities() const
+	const commodity_map<decimillesimal_int> &get_stored_commodities() const
 	{
 		return this->stored_commodities;
 	}
 
 	QVariantList get_stored_commodities_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_stored_commodity(const metternich::commodity *commodity) const;
-	void set_stored_commodity(const commodity *commodity, const int64_t value);
+	const decimillesimal_int &get_stored_commodity(const metternich::commodity *commodity) const;
+	Q_INVOKABLE qint64 get_stored_commodity_int(const metternich::commodity *commodity) const;
+	void set_stored_commodity(const commodity *commodity, const decimillesimal_int &value);
 
-	void change_stored_commodity(const commodity *commodity, const int64_t value)
+	void change_stored_commodity(const commodity *commodity, const decimillesimal_int &change)
 	{
-		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + value);
+		this->set_stored_commodity(commodity, this->get_stored_commodity(commodity) + change);
 	}
 
 	void add_tributable_commodity(const commodity *commodity, const int64_t tributable_quantity, const income_transaction_type tribute_income_type);
@@ -702,7 +703,7 @@ private:
 	resource_map<int> vassal_resource_counts;
 	commodity_set available_commodities;
 	commodity_set tradeable_commodities;
-	commodity_map<int64_t> stored_commodities;
+	commodity_map<decimillesimal_int> stored_commodities;
 	int64_t storage_capacity = 0;
 	commodity_map<int64_t> commodity_storage_capacities;
 	commodity_map<centesimal_int> commodity_inputs;

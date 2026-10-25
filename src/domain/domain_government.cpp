@@ -221,7 +221,7 @@ bool domain_government::can_enact_law(const metternich::law *law) const
 	}
 
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->domain->get_economy()->get_stored_commodity(commodity) < (cost * this->get_total_law_cost_modifier() / 100)) {
+		if (this->domain->get_economy()->get_stored_commodity(commodity).to_int64() < (cost * this->get_total_law_cost_modifier() / 100)) {
 			return false;
 		}
 	}
@@ -232,7 +232,7 @@ bool domain_government::can_enact_law(const metternich::law *law) const
 QCoro::Task<void> domain_government::enact_law_coro(const law *law)
 {
 	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->domain->get_economy()->change_stored_commodity(commodity, -cost * this->get_total_law_cost_modifier() / 100);
+		this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost * this->get_total_law_cost_modifier() / 100));
 	}
 
 	co_await this->set_law(law->get_group(), law);
@@ -616,7 +616,7 @@ void domain_government::set_appointed_office_holder(const office *office, const 
 	if (character != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->domain->get_economy()->change_stored_commodity(commodity, -cost);
+			this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost));
 		}
 
 		this->appointed_office_holders[office] = character;
@@ -627,7 +627,7 @@ void domain_government::set_appointed_office_holder(const office *office, const 
 	if (old_appointee != nullptr) {
 		const commodity_map<int> commodity_costs = this->get_advisor_commodity_costs(office);
 		for (const auto &[commodity, cost] : commodity_costs) {
-			this->domain->get_economy()->change_stored_commodity(commodity, cost);
+			this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 	}
 

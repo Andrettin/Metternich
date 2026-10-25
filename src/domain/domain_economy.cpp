@@ -252,7 +252,7 @@ QCoro::Task<void> domain_economy::do_production()
 				this->add_tributable_commodity(commodity, output.to_int64(), income_transaction_type::treasure_fleet);
 				this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, output.to_int64(), nullptr, 0, this->domain);
 			} else {
-				this->change_stored_commodity(commodity, output.to_int64());
+				this->change_stored_commodity(commodity, decimillesimal_int(output));
 			}
 		}
 
@@ -266,7 +266,7 @@ QCoro::Task<void> domain_economy::do_production()
 
 			const int64_t monthly_recovery = std::max(storage_capacity / 120, 100ll);
 			const int64_t recovery_per_turn = monthly_recovery * game::get()->get_current_months_per_turn();
-			this->change_stored_commodity(commodity, recovery_per_turn);
+			this->change_stored_commodity(commodity, decimillesimal_int(recovery_per_turn));
 		}
 
 		const commodity_map<centesimal_int> commodity_inputs = this->get_commodity_inputs();
@@ -275,10 +275,10 @@ QCoro::Task<void> domain_economy::do_production()
 				continue;
 			}
 
-			while (this->get_stored_commodity(commodity) < this->get_commodity_input(commodity).to_int64()) {
-				co_await this->decrease_commodity_input(commodity, std::max(1ll, this->get_commodity_input(commodity).to_int64() - this->get_stored_commodity(commodity)));
+			while (this->get_stored_commodity(commodity).to_int64() < this->get_commodity_input(commodity).to_int64()) {
+				co_await this->decrease_commodity_input(commodity, std::max(1ll, this->get_commodity_input(commodity).to_int64() - this->get_stored_commodity(commodity).to_int64()));
 			}
-			assert_throw(this->get_stored_commodity(commodity) >= this->get_commodity_input(commodity).to_int64());
+			assert_throw(this->get_stored_commodity(commodity).to_int64() >= this->get_commodity_input(commodity).to_int64());
 		}
 
 		//reduce inputs from the storage for the next turn (for production this turn it had already been subtracted)
@@ -296,7 +296,7 @@ QCoro::Task<void> domain_economy::do_production()
 				
 				assert_throw(this->get_stored_commodity(commodity) >= input_int);
 
-				this->change_stored_commodity(commodity, -input_int);
+				this->change_stored_commodity(commodity, decimillesimal_int(-input_int));
 			} catch (...) {
 				std::throw_with_nested(std::runtime_error("Error processing input storage reduction for commodity \"" + commodity->get_identifier() + "\"."));
 			}
@@ -381,12 +381,12 @@ QVariantList domain_economy::get_vassal_resource_counts_qvariant_list() const
 
 int64_t domain_economy::get_wealth() const
 {
-	return this->get_stored_commodity(defines::get()->get_wealth_commodity());
+	return this->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64();
 }
 
 void domain_economy::set_wealth(const int64_t wealth)
 {
-	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
+	this->set_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(wealth));
 }
 
 QVariantList domain_economy::get_available_commodities_qvariant_list() const
@@ -434,7 +434,7 @@ QVariantList domain_economy::get_stored_commodities_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());
 }
 
-int64_t domain_economy::get_stored_commodity(const commodity *commodity) const
+const decimillesimal_int &domain_economy::get_stored_commodity(const metternich::commodity *commodity) const
 {
 	assert_throw(commodity != nullptr);
 
@@ -444,10 +444,16 @@ int64_t domain_economy::get_stored_commodity(const commodity *commodity) const
 		return find_iterator->second;
 	}
 
-	return 0;
+	static constexpr decimillesimal_int zero;
+	return zero;
 }
 
-void domain_economy::set_stored_commodity(const commodity *commodity, const int64_t value)
+int64_t domain_economy::get_stored_commodity_int(const commodity *commodity) const
+{
+	return this->get_stored_commodity(commodity).to_int64();
+}
+
+void domain_economy::set_stored_commodity(const commodity *commodity, const decimillesimal_int &value)
 {
 	if (!commodity->is_enabled()) {
 		return;
@@ -463,17 +469,17 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const int6
 
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
-		const int64_t wealth_conversion_income = commodity->get_wealth_value() * value;
-		const int64_t gained_wealth = this->add_population_wealth(wealth_conversion_income);
+		const decimillesimal_int wealth_conversion_income = commodity->get_wealth_value() * value;
+		const int64_t gained_wealth = this->add_population_wealth(wealth_conversion_income.to_int64());
 		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::treasure_fleet);
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth, commodity, value);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth, commodity, value.to_int64());
 		return;
 	}
 
 	if (!commodity->is_abstract() || commodity->has_special_storage_capacity()) {
 		const int64_t storage_capacity = this->get_storage_capacity_for_commodity(commodity);
-		if (value > storage_capacity) {
-			this->set_stored_commodity(commodity, storage_capacity);
+		if (value > decimillesimal_int(storage_capacity)) {
+			this->set_stored_commodity(commodity, decimillesimal_int(storage_capacity));
 			return;
 		}
 	}
@@ -484,8 +490,8 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const int6
 		this->stored_commodities[commodity] = value;
 	}
 
-	if (this->get_offer(commodity) > value) {
-		this->set_offer(commodity, value);
+	if (this->get_offer(commodity) > value.to_int64()) {
+		this->set_offer(commodity, value.to_int64());
 	}
 
 	if (commodity == defines::get()->get_wealth_commodity() && this->domain->get_government()->get_ruler() != nullptr) {
@@ -508,7 +514,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 	}
 
 	if (this->domain->get_diplomacy()->get_overlord() == nullptr) {
-		this->change_stored_commodity(commodity, tributable_quantity);
+		this->change_stored_commodity(commodity, decimillesimal_int(tributable_quantity));
 		return;
 	}
 
@@ -522,7 +528,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 	}
 
 	if (tribute_rate == 0) {
-		this->change_stored_commodity(commodity, tributable_quantity);
+		this->change_stored_commodity(commodity, decimillesimal_int(tributable_quantity));
 		return;
 	}
 
@@ -531,7 +537,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 
 	this->domain->get_diplomacy()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
 
-	this->change_stored_commodity(commodity, tributed_quantity);
+	this->change_stored_commodity(commodity, decimillesimal_int(tributed_quantity));
 
 	if (tribute != 0 && commodity == defines::get()->get_wealth_commodity()) {
 		this->domain->get_diplomacy()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
@@ -610,8 +616,8 @@ QCoro::Task<void> domain_economy::change_commodity_storage_capacity(const commod
 		this->commodity_storage_capacities.erase(commodity);
 	}
 
-	if (change < 0 && this->get_stored_commodity(commodity) > new_capacity) {
-		this->set_stored_commodity(commodity, new_capacity);
+	if (change < 0 && this->get_stored_commodity(commodity) > decimillesimal_int(new_capacity)) {
+		this->set_stored_commodity(commodity, decimillesimal_int(new_capacity));
 	}
 
 	if (game::get()->is_running()) {
@@ -674,7 +680,7 @@ void domain_economy::change_commodity_input(const commodity *commodity, const ce
 	const centesimal_int old_input = this->get_commodity_input(commodity);
 
 	if (commodity->is_storable() && change_input_storage) {
-		this->change_stored_commodity(commodity, old_input.to_int());
+		this->change_stored_commodity(commodity, decimillesimal_int(old_input.to_int()));
 	}
 
 	const centesimal_int new_input = (this->commodity_inputs[commodity] += change);
@@ -686,7 +692,7 @@ void domain_economy::change_commodity_input(const commodity *commodity, const ce
 	}
 
 	if (commodity->is_storable() && change_input_storage) {
-		this->change_stored_commodity(commodity, -new_input.to_int());
+		this->change_stored_commodity(commodity, decimillesimal_int(-new_input.to_int()));
 	}
 
 	if (game::get()->is_running()) {
@@ -955,7 +961,7 @@ void domain_economy::prepare_bids()
 {
 	for (const auto &[commodity, base_min_storage] : this->get_min_commodity_storages()) {
 		const int64_t min_storage = domain_economy::get_storage_for_commodity(commodity, base_min_storage);
-		const int64_t stored_quantity = this->get_stored_commodity(commodity);
+		const int64_t stored_quantity = this->get_stored_commodity(commodity).to_int64();
 		if (stored_quantity < min_storage) {
 			const int64_t bid_quantity = min_storage - stored_quantity;
 			log_trace(std::format("Domain \"{}\" is bidding for {} of the \"{}\" commodity, since the stored amount of {} is lower than the minimum storage of {}.", this->domain->get_identifier(), bid_quantity, commodity->get_identifier(), stored_quantity, min_storage));
@@ -977,8 +983,8 @@ void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 
 	assert_throw(value >= 0);
 
-	if (value > this->get_stored_commodity(commodity)) {
-		this->set_offer(commodity, this->get_stored_commodity(commodity));
+	if (value > this->get_stored_commodity(commodity).to_int64()) {
+		this->set_offer(commodity, this->get_stored_commodity(commodity).to_int64());
 		return;
 	}
 
@@ -999,9 +1005,9 @@ void domain_economy::prepare_offers()
 	for (const auto &[commodity, stored_quantity] : this->get_stored_commodities()) {
 		const int64_t base_max_storage = this->get_max_commodity_storage(commodity);
 		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
-		if (stored_quantity > max_storage) {
-			const int64_t offered_quantity = stored_quantity - max_storage;
-			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity, max_storage));
+		if (stored_quantity.to_int64() > max_storage) {
+			const int64_t offered_quantity = stored_quantity.to_int64() - max_storage;
+			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity.to_int64(), max_storage));
 			this->set_offer(commodity, offered_quantity);
 		}
 	}
@@ -1037,7 +1043,7 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int64_t sold_quantity, const bool state_purchase)
 {
 	this->change_offer(commodity, -sold_quantity);
-	this->change_stored_commodity(commodity, -sold_quantity);
+	this->change_stored_commodity(commodity, decimillesimal_int(-sold_quantity));
 
 	const int64_t price = game::get()->get_price(commodity);
 	const int64_t sale_income = price * sold_quantity;
@@ -1049,7 +1055,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	domain_economy *other_domain_economy = other_domain->get_economy();
 
 	if (state_purchase) {
-		other_domain_economy->change_stored_commodity(commodity, sold_quantity);
+		other_domain_economy->change_stored_commodity(commodity, decimillesimal_int(sold_quantity));
 		const int64_t purchase_expense = price * sold_quantity;
 		other_domain_economy->change_wealth(-purchase_expense);
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);

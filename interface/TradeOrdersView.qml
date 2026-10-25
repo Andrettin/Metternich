@@ -67,11 +67,11 @@ ListView {
 			width: 48 * scale_factor
 			height: 24 * scale_factor
 			highlighted: domain_game_data.economy.offers.length > 0 && domain_game_data.economy.get_offer(commodity) > 0
-			visible: domain_game_data.economy.stored_commodities.length > 0 && domain_game_data.economy.get_stored_commodity(commodity)
+			visible: domain_game_data.economy.stored_commodities.length > 0 && domain_game_data.economy.get_stored_commodity_int(commodity)
 			
 			onClicked: {
 				if (domain_game_data.economy.get_offer(commodity) === 0) {
-					domain_game_data.economy.set_offer(commodity, domain_game_data.economy.get_stored_commodity(commodity))
+					domain_game_data.economy.set_offer(commodity, domain_game_data.economy.get_stored_commodity_int(commodity))
 				} else {
 					domain_game_data.economy.set_offer(commodity, 0)
 				}
@@ -121,7 +121,7 @@ ListView {
 			
 			SmallText {
 				id: available_label
-				text: number_string(domain_game_data.economy.get_stored_commodity(commodity))
+				text: number_string(domain_game_data.economy.get_stored_commodity_int(commodity))
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.right: parent.right
 				anchors.rightMargin: 32 * scale_factor
@@ -152,7 +152,7 @@ ListView {
 				anchors.right: parent.right
 				anchors.rightMargin: 16 * scale_factor
 				value: domain_game_data.economy.bids.length > 0 && is_bid ? domain_game_data.economy.get_bid(commodity) : (domain_game_data.economy.offers.length > 0 && is_offer ? domain_game_data.economy.get_offer(commodity) : 0)
-				max_value: is_bid ? 10 : Math.max(10, domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity(commodity) : 0)
+				max_value: is_bid ? 10 : Math.max(10, domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity_int(commodity) : 0)
 				visible: is_bid || is_offer
 				
 				readonly property bool is_bid: domain_game_data.economy.bids.length > 0 && domain_game_data.economy.get_bid(commodity) > 0

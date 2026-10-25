@@ -45,7 +45,7 @@ public:
 			return;
 		}
 
-		scope->get_economy()->set_stored_commodity(this->commodity, this->calculate_quantity());
+		scope->get_economy()->set_stored_commodity(this->commodity, decimillesimal_int(this->calculate_quantity()));
 	}
 
 	virtual void do_addition_effect(const domain *scope) const override
@@ -56,12 +56,12 @@ public:
 
 		int64_t change = this->calculate_quantity();
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
 	}
 
 	virtual void do_subtraction_effect(const domain *scope) const override
@@ -72,12 +72,12 @@ public:
 
 		int64_t change = -this->calculate_quantity();
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
 	}
 
 	int64_t calculate_quantity() const

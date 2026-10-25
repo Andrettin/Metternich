@@ -6,6 +6,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/pathway_container.h"
 #include "religion/religion_container.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("technology/technology_category.h")
@@ -432,12 +433,12 @@ public:
 		this->enabled_spells.push_back(spell);
 	}
 
-	const commodity_map<int64_t> &get_shared_commodities() const
+	const commodity_map<decimillesimal_int> &get_shared_commodities() const
 	{
 		return this->shared_commodities;
 	}
 
-	commodity_map<int64_t> get_shared_commodities_for_domain(const domain *domain) const;
+	commodity_map<decimillesimal_int> get_shared_commodities_for_domain(const domain *domain) const;
 
 	const metternich::modifier<const province> *get_modifier() const
 	{
@@ -565,7 +566,7 @@ private:
 	std::vector<const employment_type *> enabled_employment_types;
 	std::vector<const item_type *> enabled_item_types;
 	std::vector<const spell *> enabled_spells;
-	commodity_map<int64_t> shared_commodities; //grants commodities when discovered, but halving that value for every country that has discovered it before
+	commodity_map<decimillesimal_int> shared_commodities; //grants commodities when discovered, but halving that value for every country that has discovered it before
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
 	bool discover_only_once = false;

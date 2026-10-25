@@ -715,18 +715,18 @@ void domain_game_data::collect_regency()
 
 QCoro::Task<void> domain_game_data::pay_maintenance()
 {
-	const int64_t domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	const int64_t domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64());
 	if (domain_maintenance_cost != 0) {
-		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -domain_maintenance_cost);
+		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(-domain_maintenance_cost));
 
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->domain);
 	}
 
 	const int effective_consumption = std::max(this->get_consumption_int(), 0);
 	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
-	const int64_t paid_consumption_cost = std::min<int64_t>(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
+	const int64_t paid_consumption_cost = std::min<int64_t>(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64());
 	if (paid_consumption_cost != 0) {
-		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), -paid_consumption_cost);
+		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(-paid_consumption_cost));
 
 		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost, nullptr, 0, this->domain);
 
@@ -749,8 +749,8 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
 		for (const auto &[commodity, maintenance_cost] : military_unit->get_type()->get_maintenance_commodity_costs()) {
-			if (this->get_economy()->get_stored_commodity(commodity) >= maintenance_cost) {
-				this->get_economy()->change_stored_commodity(commodity, -maintenance_cost);
+			if (this->get_economy()->get_stored_commodity(commodity).to_int64() >= maintenance_cost) {
+				this->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-maintenance_cost));
 
 				if (commodity == defines::get()->get_wealth_commodity()) {
 					this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, maintenance_cost, nullptr, 0, this->domain);
@@ -3326,7 +3326,7 @@ void domain_game_data::change_civilian_unit_recruitment_count(const civilian_uni
 
 			const int64_t cost_change = cost * change;
 
-			this->get_economy()->change_stored_commodity(commodity, -cost_change);
+			this->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost_change));
 		}
 	}
 }
@@ -3339,7 +3339,7 @@ bool domain_game_data::can_increase_civilian_unit_recruitment(const civilian_uni
 
 	for (const auto &[commodity, cost] : civilian_unit_type->get_commodity_costs()) {
 		assert_throw(commodity->is_storable());
-		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
+		if (this->get_economy()->get_stored_commodity(commodity).to_int64() < cost) {
 			return false;
 		}
 	}

@@ -210,7 +210,7 @@ void domain_ai::assign_trade_orders()
 		const int need = domain_economy->get_commodity_need(commodity);
 
 		if (value > need) {
-			domain_economy->set_offer(commodity, value);
+			domain_economy->set_offer(commodity, value.to_int64());
 		}
 	}
 

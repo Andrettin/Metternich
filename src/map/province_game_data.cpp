@@ -1468,7 +1468,7 @@ bool province_game_data::can_build_pathway(const metternich::pathway *pathway) c
 	const domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		if (cost > domain_economy->get_stored_commodity(commodity)) {
+		if (cost > domain_economy->get_stored_commodity(commodity).to_int64()) {
 			return false;
 		}
 	}
@@ -1489,7 +1489,7 @@ void province_game_data::build_pathway(const metternich::pathway *pathway)
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		domain_economy->change_stored_commodity(commodity, -cost);
+		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
 	}
 
 	this->set_under_construction_pathway(pathway);
@@ -1505,7 +1505,7 @@ void province_game_data::cancel_pathway_construction()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province)) {
-			domain_economy->change_stored_commodity(commodity, cost);
+			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
 		}
 	}
 
@@ -2589,7 +2589,7 @@ void province_game_data::change_military_unit_recruitment_count(const military_u
 
 			const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-			this->get_owner()->get_economy()->change_stored_commodity(commodity, -cost_change);
+			this->get_owner()->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost_change));
 		}
 	}
 
@@ -2618,7 +2618,7 @@ bool province_game_data::can_increase_military_unit_recruitment(const military_u
 
 		const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-		if (this->get_owner()->get_economy()->get_stored_commodity(commodity) < cost_change) {
+		if (this->get_owner()->get_economy()->get_stored_commodity(commodity).to_int64() < cost_change) {
 			return false;
 		}
 	}

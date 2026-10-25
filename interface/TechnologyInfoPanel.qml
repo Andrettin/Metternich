@@ -36,7 +36,7 @@ Rectangle {
 			IndustryCounter {
 				name: commodity.name
 				icon_identifier: commodity.icon.identifier
-				count: domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity(commodity) : 0
+				count: domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity_int(commodity) : 0
 				visible: commodity.enabled
 				
 				readonly property var commodity: model.modelData

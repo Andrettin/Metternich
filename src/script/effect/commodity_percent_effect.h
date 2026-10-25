@@ -29,9 +29,9 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	int64_t get_quantity(const domain *scope) const
+	decimillesimal_int get_quantity(const domain *scope) const
 	{
-		const int64_t stored_commodity = scope->get_economy()->get_stored_commodity(this->commodity);
+		const decimillesimal_int stored_commodity = scope->get_economy()->get_stored_commodity(this->commodity);
 		return stored_commodity * this->percent / 100;
 	}
 
@@ -68,7 +68,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->commodity->value_to_string(this->get_quantity(scope), false));
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->commodity->value_to_string(this->get_quantity(scope).to_int64(), false));
 	}
 
 	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
@@ -76,7 +76,7 @@ public:
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
 
-		const int64_t quantity = this->get_quantity(scope);
+		const int64_t quantity = this->get_quantity(scope).to_int64();
 		if (quantity == 0) {
 			return std::string();
 		}
@@ -88,7 +88,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		const int64_t quantity = this->get_quantity(scope);
+		const int64_t quantity = this->get_quantity(scope).to_int64();
 		if (quantity == 0) {
 			return std::string();
 		}

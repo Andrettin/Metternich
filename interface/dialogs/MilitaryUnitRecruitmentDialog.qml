@@ -149,7 +149,7 @@ DialogBase {
 								width: 48 * scale_factor
 							
 								readonly property var commodity: model.modelData.key
-								readonly property int stored: domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity(commodity) : 0
+								readonly property int stored: domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity_int(commodity) : 0
 								readonly property int commodity_storage_capacity: domain && commodity.special_storage_capacity && domain.game_data.economy.commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
 								
 								CustomIconImage {

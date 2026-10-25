@@ -2616,7 +2616,7 @@ int64_t site_game_data::get_available_employment_input_capacity(const employment
 		}
 
 		const int throughput_modifier = employment_type->get_output_commodity() ? this->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
-		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity), throughput_modifier));
+		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity).to_int64(), throughput_modifier));
 	}
 
 	return input_capacity;

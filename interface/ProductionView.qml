@@ -34,7 +34,7 @@ Item {
 				visible: !commodity.abstract && commodity.wealth_value === 0
 				
 				readonly property var commodity: model.modelData
-				readonly property int stored: domain_economy.get_stored_commodity(commodity)
+				readonly property int stored: domain_economy.get_stored_commodity_int(commodity)
 				readonly property int output: domain_economy.get_commodity_output_int(commodity)
 				
 				Row {

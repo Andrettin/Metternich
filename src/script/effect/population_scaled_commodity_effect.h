@@ -37,31 +37,31 @@ public:
 
 	virtual void do_assignment_effect(const domain *scope) const override
 	{
-		scope->get_economy()->set_stored_commodity(this->commodity, this->get_quantity(scope));
+		scope->get_economy()->set_stored_commodity(this->commodity, decimillesimal_int(this->get_quantity(scope)));
 	}
 
 	virtual void do_addition_effect(const domain *scope) const override
 	{
 		int64_t change = this->get_quantity(scope);
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
 	}
 
 	virtual void do_subtraction_effect(const domain *scope) const override
 	{
 		int64_t change = -this->get_quantity(scope);
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int();
 		if (change < 0 && std::abs(change) > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, change);
+		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
 	}
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
