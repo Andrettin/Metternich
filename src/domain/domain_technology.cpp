@@ -111,28 +111,20 @@ gsml_data domain_technology::to_gsml_data() const
 		data.add_property("gain_technologies_known_by_others_count", std::to_string(this->gain_technologies_known_by_others_count));
 	}
 
-	if (!this->get_current_researches().empty()) {
+	if (!this->current_researches.empty()) {
 		gsml_data current_researches_data("current_researches");
-		for (const technology *technology : this->get_current_researches()) {
+		for (const technology *technology : this->current_researches) {
 			current_researches_data.add_value(technology->get_identifier());
 		}
 		data.add_child(std::move(current_researches_data));
 	}
 
 	if (!this->current_research_progresses.empty()) {
-		gsml_data current_research_progresses_data("current_research_progresses");
-		for (const auto &[technology, progress] : this->current_research_progresses) {
-			current_research_progresses_data.add_property(technology->get_identifier(), progress.to_string());
-		}
-		data.add_child(std::move(current_research_progresses_data));
+		data.add_child(gsml_data::from_map(this->current_research_progresses, "current_research_progresses"));
 	}
 
 	if (!this->technology_category_quarterly_researches.empty()) {
-		gsml_data technology_category_quarterly_researches_data("technology_category_quarterly_researches");
-		for (const auto &[category, quarterly_research] : this->technology_category_quarterly_researches) {
-			technology_category_quarterly_researches_data.add_property(category->get_identifier(), std::to_string(quarterly_research));
-		}
-		data.add_child(std::move(technology_category_quarterly_researches_data));
+		data.add_child(gsml_data::from_map(this->technology_category_quarterly_researches, "technology_category_quarterly_researches"));
 	}
 
 	return data;
