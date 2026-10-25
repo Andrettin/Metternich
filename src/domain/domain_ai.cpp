@@ -50,17 +50,9 @@ void domain_ai::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "building_desire_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->building_desire_modifiers[building_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->building_desire_modifiers);
 	} else if (tag == "holding_building_desire_modifiers") {
-		scope.for_each_child([this](const gsml_data &child_scope) {
-			const site *holding_site = site::get(child_scope.get_tag());
-
-			child_scope.for_each_property([this, holding_site](const gsml_property &property) {
-				this->holding_building_desire_modifiers[holding_site][building_type::get(property.get_key())] = std::stoi(property.get_value());
-			});
-		});
+		scope.to_map(this->holding_building_desire_modifiers);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain AI scope: \"{}\".", tag));
 	}
@@ -71,25 +63,11 @@ gsml_data domain_ai::to_gsml_data() const
 	gsml_data data("ai");
 
 	if (!this->building_desire_modifiers.empty()) {
-		gsml_data desire_modifiers_data("building_desire_modifiers");
-		for (const auto &[building_type, desire_modifier] : this->building_desire_modifiers) {
-			desire_modifiers_data.add_property(building_type->get_identifier(), std::to_string(desire_modifier));
-		}
-		data.add_child(std::move(desire_modifiers_data));
+		data.add_child(gsml_data::from_map(this->building_desire_modifiers, "building_desire_modifiers"));
 	}
 
 	if (!this->holding_building_desire_modifiers.empty()) {
-		gsml_data holding_desire_modifiers_data("holding_building_desire_modifiers");
-
-		for (const auto &[holding_site, building_desire_modifiers] : this->holding_building_desire_modifiers) {
-			gsml_data desire_modifiers_data(holding_site->get_identifier());
-			for (const auto &[building_type, desire_modifier] : building_desire_modifiers) {
-				desire_modifiers_data.add_property(building_type->get_identifier(), std::to_string(desire_modifier));
-			}
-			holding_desire_modifiers_data.add_child(std::move(desire_modifiers_data));
-		}
-
-		data.add_child(std::move(holding_desire_modifiers_data));
+		data.add_child(gsml_data::from_map(this->holding_building_desire_modifiers, "holding_building_desire_modifiers"));
 	}
 
 	return data;

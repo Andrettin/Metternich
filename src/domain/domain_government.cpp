@@ -75,9 +75,7 @@ void domain_government::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "laws") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->laws[law_group::get(property.get_key())] = law::get(property.get_value());
-		});
+		scope.to_map(this->laws);
 	} else if (tag == "office_holders") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->office_holders[office::get(property.get_key())] = game::get()->get_character(property.get_value());
@@ -106,27 +104,15 @@ gsml_data domain_government::to_gsml_data() const
 	}
 
 	if (!this->laws.empty()) {
-		gsml_data laws_data("laws");
-		for (const auto &[law_group, law] : this->laws) {
-			laws_data.add_property(law_group->get_identifier(), law ? law->get_identifier() : "none");
-		}
-		data.add_child(std::move(laws_data));
+		data.add_child(gsml_data::from_map(this->laws, "laws"));
 	}
 
 	if (!this->office_holders.empty()) {
-		gsml_data office_holders_data("office_holders");
-		for (const auto &[office, office_holder] : this->office_holders) {
-			office_holders_data.add_property(office->get_identifier(), office_holder->get_identifier());
-		}
-		data.add_child(std::move(office_holders_data));
+		data.add_child(gsml_data::from_map(this->office_holders, "office_holders"));
 	}
 
 	if (!this->appointed_office_holders.empty()) {
-		gsml_data appointed_office_holders_data("appointed_office_holders");
-		for (const auto &[office, office_holder] : this->appointed_office_holders) {
-			appointed_office_holders_data.add_property(office->get_identifier(), office_holder->get_identifier());
-		}
-		data.add_child(std::move(appointed_office_holders_data));
+		data.add_child(gsml_data::from_map(this->appointed_office_holders, "appointed_office_holders"));
 	}
 
 	return data;

@@ -42,21 +42,13 @@ void population::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "type_sizes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->type_sizes[population_type::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->type_sizes);
 	} else if (tag == "culture_sizes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->culture_sizes[culture::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->culture_sizes);
 	} else if (tag == "religion_sizes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->religion_sizes[religion::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->religion_sizes);
 	} else if (tag == "phenotype_sizes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->phenotype_sizes[phenotype::get(property.get_key())] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->phenotype_sizes);
 	} else {
 		throw std::runtime_error(std::format("Invalid population scope: \"{}\".", tag));
 	}
@@ -79,35 +71,19 @@ gsml_data population::to_gsml_data(const std::string_view tag) const
 	}
 
 	if (!this->type_sizes.empty()) {
-		gsml_data type_sizes_data("type_sizes");
-		for (const auto &[population_type, type_size] : this->type_sizes) {
-			type_sizes_data.add_property(population_type->get_identifier(), std::to_string(type_size));
-		}
-		data.add_child(std::move(type_sizes_data));
+		data.add_child(gsml_data::from_map(this->type_sizes, "type_sizes"));
 	}
 
 	if (!this->culture_sizes.empty()) {
-		gsml_data culture_sizes_data("culture_sizes");
-		for (const auto &[culture, culture_size] : this->culture_sizes) {
-			culture_sizes_data.add_property(culture->get_identifier(), std::to_string(culture_size));
-		}
-		data.add_child(std::move(culture_sizes_data));
+		data.add_child(gsml_data::from_map(this->culture_sizes, "culture_sizes"));
 	}
 
 	if (!this->religion_sizes.empty()) {
-		gsml_data religion_sizes_data("religion_sizes");
-		for (const auto &[religion, religion_size] : this->religion_sizes) {
-			religion_sizes_data.add_property(religion->get_identifier(), std::to_string(religion_size));
-		}
-		data.add_child(std::move(religion_sizes_data));
+		data.add_child(gsml_data::from_map(this->religion_sizes, "religion_sizes"));
 	}
 
 	if (!this->phenotype_sizes.empty()) {
-		gsml_data phenotype_sizes_data("phenotype_sizes");
-		for (const auto &[phenotype, phenotype_size] : this->phenotype_sizes) {
-			phenotype_sizes_data.add_property(phenotype->get_identifier(), std::to_string(phenotype_size));
-		}
-		data.add_child(std::move(phenotype_sizes_data));
+		data.add_child(gsml_data::from_map(this->phenotype_sizes, "phenotype_sizes"));
 	}
 
 	return data;

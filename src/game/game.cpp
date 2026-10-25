@@ -194,10 +194,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 			character_data.process(character->get_game_data());
 		});
 	} else if (tag == "prices") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->prices[commodity] = std::stoll(property.get_value());
-		});
+		scope.to_map(this->prices);
 	} else if (tag == "generated_characters") {
 		scope.for_each_child([this](const gsml_data &character_data) {
 			character_data.process(this->get_generated_character(character_data.get_tag()));
@@ -312,11 +309,7 @@ gsml_data game::to_gsml_data() const
 	data.add_child(std::move(characters_data));
 
 	if (!this->prices.empty()) {
-		gsml_data prices_data("prices");
-		for (const auto &[commodity, price] : this->prices) {
-			prices_data.add_property(commodity->get_identifier(), std::to_string(price));
-		}
-		data.add_child(std::move(prices_data));
+		data.add_child(gsml_data::from_map(this->prices, "prices"));
 	}
 
 	gsml_data generated_characters_data("generated_characters");

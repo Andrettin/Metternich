@@ -171,9 +171,7 @@ void military_unit::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "stats") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->stats[magic_enum::enum_cast<military_unit_stat>(property.get_key()).value()] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->stats);
 	} else if (tag == "promotions") {
 		for (const std::string &value : values) {
 			this->promotions.push_back(promotion::get(value));
@@ -211,11 +209,7 @@ gsml_data military_unit::to_gsml_data() const
 	}
 
 	if (!this->stats.empty()) {
-		gsml_data stats_data("stats");
-		for (const auto &[stat, stat_value] : this->stats) {
-			stats_data.add_property(std::string(magic_enum::enum_name(stat)), stat_value.to_string());
-		}
-		data.add_child(std::move(stats_data));
+		data.add_child(gsml_data::from_map(this->stats, "stats"));
 	}
 
 	if (!this->promotions.empty()) {
