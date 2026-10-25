@@ -92,8 +92,19 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 void domain_economy::process_gsml_scope(const gsml_data &scope)
 {
 	const std::string &tag = scope.get_tag();
+	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "stored_commodities") {
+	if (tag == "available_commodities") {
+		this->available_commodities.clear();
+		for (const std::string &value : values) {
+			this->available_commodities.insert(commodity::get(value));
+		}
+	} else if (tag == "tradeable_commodities") {
+		this->tradeable_commodities.clear();
+		for (const std::string &value : values) {
+			this->tradeable_commodities.insert(commodity::get(value));
+		}
+	} else if (tag == "stored_commodities") {
 		scope.to_map(this->stored_commodities);
 	} else if (tag == "commodity_storage_capacities") {
 		scope.to_map(this->commodity_storage_capacities);
@@ -139,6 +150,22 @@ gsml_data domain_economy::to_gsml_data() const
 	data.add_property("attribute_taxation", std::to_string(this->attribute_taxation));
 	data.add_property("output_modifier", this->output_modifier.to_string());
 	data.add_property("throughput_modifier", std::to_string(this->throughput_modifier));
+
+	if (!this->available_commodities.empty()) {
+		gsml_data available_commodities_data("available_commodities");
+		for (const commodity *commodity : this->available_commodities) {
+			available_commodities_data.add_value(commodity->get_identifier());
+		}
+		data.add_child(std::move(available_commodities_data));
+	}
+
+	if (!this->tradeable_commodities.empty()) {
+		gsml_data tradeable_commodities_data("tradeable_commodities");
+		for (const commodity *commodity : this->tradeable_commodities) {
+			tradeable_commodities_data.add_value(commodity->get_identifier());
+		}
+		data.add_child(std::move(tradeable_commodities_data));
+	}
 
 	if (!this->stored_commodities.empty()) {
 		data.add_child(gsml_data::from_map(this->stored_commodities, "stored_commodities"));
