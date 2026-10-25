@@ -119,51 +119,27 @@ gsml_data domain_diplomacy::to_gsml_data() const
 	}
 
 	if (!this->diplomacy_states.empty()) {
-		gsml_data diplomacy_states_data("diplomacy_states");
-		for (const auto &[domain, diplomacy_state] : this->diplomacy_states) {
-			diplomacy_states_data.add_property(domain->get_identifier(), std::string(magic_enum::enum_name(diplomacy_state)));
-		}
-		data.add_child(std::move(diplomacy_states_data));
+		data.add_child(gsml_data::from_map(this->diplomacy_states, "diplomacy_states"));
 	}
 
 	if (!this->diplomacy_state_counts.empty()) {
-		gsml_data diplomacy_state_counts_data("diplomacy_state_counts");
-		for (const auto &[diplomacy_state, count] : this->diplomacy_state_counts) {
-			diplomacy_state_counts_data.add_property(std::string(magic_enum::enum_name(diplomacy_state)), std::to_string(count));
-		}
-		data.add_child(std::move(diplomacy_state_counts_data));
+		data.add_child(gsml_data::from_map(this->diplomacy_state_counts, "diplomacy_state_counts"));
 	}
 
 	if (!this->offered_diplomacy_states.empty()) {
-		gsml_data offered_diplomacy_states_data("offered_diplomacy_states");
-		for (const auto &[domain, diplomacy_state] : this->offered_diplomacy_states) {
-			offered_diplomacy_states_data.add_property(domain->get_identifier(), std::string(magic_enum::enum_name(diplomacy_state)));
-		}
-		data.add_child(std::move(offered_diplomacy_states_data));
+		data.add_child(gsml_data::from_map(this->offered_diplomacy_states, "offered_diplomacy_states"));
 	}
 
 	if (!this->consulates.empty()) {
-		gsml_data consulates_data("consulates");
-		for (const auto &[domain, consulate] : this->consulates) {
-			consulates_data.add_property(domain->get_identifier(), consulate->get_identifier());
-		}
-		data.add_child(std::move(consulates_data));
+		data.add_child(gsml_data::from_map(this->consulates, "consulates"));
 	}
 
 	if (!this->base_opinions.empty()) {
-		gsml_data base_opinions_data("base_opinions");
-		for (const auto &[domain, base_opinion] : this->base_opinions) {
-			base_opinions_data.add_property(domain->get_identifier(), std::to_string(base_opinion));
-		}
-		data.add_child(std::move(base_opinions_data));
+		data.add_child(gsml_data::from_map(this->base_opinions, "base_opinions"));
 	}
 
 	if (!this->free_consulate_counts.empty()) {
-		gsml_data free_consulate_counts_data("free_consulate_counts");
-		for (const auto &[consulate, count] : this->free_consulate_counts) {
-			free_consulate_counts_data.add_property(consulate->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(free_consulate_counts_data));
+		data.add_child(gsml_data::from_map(this->free_consulate_counts, "free_consulate_counts"));
 	}
 
 	return data;
