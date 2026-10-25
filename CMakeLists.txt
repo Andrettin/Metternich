@@ -93,8 +93,6 @@ set(domain_SRCS
 	src/domain/government_group.cpp
 	src/domain/government_type.cpp
 	src/domain/government_type_container.cpp
-	src/domain/idea.cpp
-	src/domain/idea_slot.cpp
 	src/domain/journal_entry.cpp
 	src/domain/law.cpp
 	src/domain/law_group.cpp
@@ -223,7 +221,6 @@ source_group(population FILES ${population_SRCS})
 
 set(religion_SRCS
 	src/religion/deity.cpp
-	src/religion/deity_slot.cpp
 	src/religion/divine_domain.cpp
 	src/religion/pantheon.cpp
 	src/religion/religion.cpp
@@ -448,9 +445,6 @@ set(domain_HDRS
 	src/domain/government_group.h
 	src/domain/government_type.h
 	src/domain/government_type_container.h
-	src/domain/idea.h
-	src/domain/idea_slot.h
-	src/domain/idea_type.h
 	src/domain/journal_entry.h
 	src/domain/law.h
 	src/domain/law_group.h
@@ -607,7 +601,6 @@ source_group(population FILES ${population_HDRS})
 
 set(religion_HDRS
 	src/religion/deity.h
-	src/religion/deity_slot.h
 	src/religion/divine_domain.h
 	src/religion/divine_rank.h
 	src/religion/pantheon.h

@@ -137,7 +137,6 @@ athena = {
 	name = "Athena"
 	pantheon = olympian
 	divine_level = 17
-	portrait = athena
 	religions = {
 		hellenic
 	}

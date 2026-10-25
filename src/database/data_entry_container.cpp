@@ -16,7 +16,6 @@
 #include "culture/cultural_group.h"
 #include "culture/culture_base.h"
 #include "domain/domain_attribute.h"
-#include "domain/idea_slot.h"
 #include "domain/office.h"
 #include "domain/subject_type.h"
 #include "economy/commodity_unit.h"
@@ -65,7 +64,6 @@ template struct data_entry_compare<employment_type>;
 template struct data_entry_compare<enchantment>;
 template struct data_entry_compare<game_rule>;
 template struct data_entry_compare<holding_type>;
-template struct data_entry_compare<idea_slot>;
 template struct data_entry_compare<item_class>;
 template struct data_entry_compare<item_creation_type>;
 template struct data_entry_compare<item_material>;

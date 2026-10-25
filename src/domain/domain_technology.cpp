@@ -42,10 +42,9 @@
 
 namespace metternich {
 
-domain_technology::domain_technology(const metternich::domain *domain, const domain_game_data *game_data)
+domain_technology::domain_technology(const metternich::domain *domain)
 	: domain(domain)
 {
-	connect(game_data, &domain_game_data::available_idea_slots_changed, this, &domain_technology::available_research_slots_changed);
 }
 
 domain_technology::~domain_technology()

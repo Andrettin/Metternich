@@ -1,6 +1,5 @@
 #pragma once
 
-#include "domain/idea.h"
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 
@@ -13,6 +12,7 @@ namespace metternich {
 class character;
 class culture_base;
 class divine_domain;
+class domain;
 class pantheon;
 class religion;
 class spell;
@@ -22,7 +22,7 @@ enum class divine_rank;
 template <typename scope_type>
 class and_condition;
 
-class deity final : public idea, public data_type<deity>
+class deity final : public named_data_entry, public data_type<deity>
 {
 	Q_OBJECT
 
@@ -49,9 +49,9 @@ public:
 	virtual void initialize() override;
 	virtual void check() const override;
 
-	virtual idea_type get_idea_type() const override;
+	const std::string &get_cultural_name(const culture_base *culture) const;
 
-	virtual const std::string &get_cultural_name(const culture_base *culture) const override;
+	const portrait *get_portrait() const;
 
 	const metternich::pantheon *get_pantheon() const
 	{
@@ -96,14 +96,17 @@ public:
 		return this->traits;
 	}
 
+	const and_condition<domain> *get_domain_conditions() const
+	{
+		return this->domain_conditions.get();
+	}
+
 	const and_condition<character> *get_worshiper_conditions() const
 	{
 		return this->worshiper_conditions.get();
 	}
 
 	bool can_grant_spell(const spell *spell) const;
-
-	virtual bool is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const override;
 
 signals:
 	void changed();
@@ -118,6 +121,7 @@ private:
 	std::vector<const divine_domain *> minor_domains;
 	data_entry_map<culture_base, std::string> cultural_names;
 	std::vector<const trait *> traits;
+	std::unique_ptr<const and_condition<metternich::domain>> domain_conditions; //conditions for this deity to be the patron of a domain
 	std::unique_ptr<const and_condition<metternich::character>> worshiper_conditions;
 };
 

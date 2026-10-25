@@ -5,6 +5,8 @@
 #include "database/named_data_entry.h"
 #include "util/qunique_ptr.h"
 
+Q_MOC_INCLUDE("map/world.h")
+
 namespace metternich {
 
 class province;

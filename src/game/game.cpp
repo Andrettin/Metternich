@@ -520,8 +520,6 @@ QCoro::Task<void> game::start_coro(const bool is_new_game)
 					co_await domain_government->check_office_holder(office);
 				}
 
-				domain_game_data->check_ideas();
-
 				//setup journal entries, marking the ones for which the domain already fulfills conditions as finished, but without doing the effects
 				co_await domain_game_data->check_journal_entries(true, true);
 
@@ -1888,7 +1886,6 @@ QCoro::Task<void> game::on_setup_finished()
 			co_await domain_government->check_office_holder(office);
 		}
 
-		domain_game_data->check_ideas();
 		co_await domain_game_data->check_tier();
 		co_await domain_game_data->check_culture();
 		co_await domain_game_data->check_religion();

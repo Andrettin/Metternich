@@ -618,7 +618,7 @@ std::vector<const deity *> technology::get_enabled_deities_for_domain(const doma
 	std::vector<const deity *> deities;
 
 	for (const deity *deity : this->get_enabled_deities()) {
-		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(domain, read_only_context(domain))) {
+		if (deity->get_domain_conditions() != nullptr && !deity->get_domain_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 
@@ -633,7 +633,7 @@ std::vector<const deity *> technology::get_disabled_deities_for_domain(const dom
 	std::vector<const deity *> deities;
 
 	for (const deity *deity : this->get_disabled_deities()) {
-		if (deity->get_conditions() != nullptr && !deity->get_conditions()->check(domain, read_only_context(domain))) {
+		if (deity->get_domain_conditions() != nullptr && !deity->get_domain_conditions()->check(domain, read_only_context(domain))) {
 			continue;
 		}
 

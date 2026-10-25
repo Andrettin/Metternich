@@ -33,7 +33,7 @@ class domain_technology final : public QObject
 public:
 	static constexpr int base_max_current_researches = 3;
 
-	explicit domain_technology(const metternich::domain *domain, const domain_game_data *game_data);
+	explicit domain_technology(const metternich::domain *domain);
 	~domain_technology();
 
 	void process_gsml_property(const gsml_property &property);

@@ -3,6 +3,7 @@
 #include "map/site_history.h"
 
 #include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "infrastructure/building_class.h"
 #include "infrastructure/building_slot_type.h"
 #include "infrastructure/building_type.h"

@@ -5,6 +5,7 @@
 #include "character/character.h"
 #include "character/character_class.h"
 #include "character/character_defines.h"
+#include "character/character_game_data.h"
 #include "character/mythic_path.h"
 #include "character/trait.h"
 #include "culture/cultural_group.h"
@@ -12,8 +13,6 @@
 #include "database/data_entry_container.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "domain/idea_type.h"
-#include "religion/deity_slot.h"
 #include "religion/divine_domain.h"
 #include "religion/divine_rank.h"
 #include "religion/pantheon.h"
@@ -48,7 +47,7 @@ void deity::process_database(const bool definition, const data_module_map<std::v
 	}
 }
 
-deity::deity(const std::string &identifier) : idea(identifier)
+deity::deity(const std::string &identifier) : named_data_entry(identifier)
 {
 }
 
@@ -102,6 +101,10 @@ void deity::process_gsml_scope(const gsml_data &scope)
 			const trait *trait = trait::get(value);
 			this->traits.push_back(trait);
 		}
+	} else if (tag == "domain_conditions") {
+		auto conditions = std::make_unique<and_condition<metternich::domain>>();
+		conditions->process_gsml_data(scope);
+		this->domain_conditions = std::move(conditions);
 	} else if (tag == "worshiper_conditions") {
 		auto conditions = std::make_unique<and_condition<metternich::character>>();
 		conditions->process_gsml_data(scope);
@@ -109,24 +112,16 @@ void deity::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "character") {
 		this->character->process_gsml_data(scope);
 	} else {
-		idea::process_gsml_scope(scope);
+		named_data_entry::process_gsml_scope(scope);
 	}
 }
 
 void deity::initialize()
 {
-	if (this->get_required_technology() != nullptr) {
-		this->get_required_technology()->add_enabled_deity(this);
-	}
-
-	if (this->get_obsolescence_technology() != nullptr) {
-		this->get_obsolescence_technology()->add_disabled_deity(this);
-	}
-
 	std::sort(this->major_domains.begin(), this->major_domains.end(), data_entry_compare<divine_domain>());
 	std::sort(this->minor_domains.begin(), this->minor_domains.end(), data_entry_compare<divine_domain>());
 
-	idea::initialize();
+	named_data_entry::initialize();
 }
 
 void deity::check() const
@@ -151,12 +146,7 @@ void deity::check() const
 		log::log_error(std::format("Deity \"{}\" has less major domains than the base number of deity major domains ({}).", this->get_identifier(), deity::base_deity_major_domains));
 	}
 
-	idea::check();
-}
-
-idea_type deity::get_idea_type() const
-{
-	return idea_type::deity;
+	named_data_entry::check();
 }
 
 const std::string &deity::get_cultural_name(const culture_base *culture) const
@@ -173,6 +163,11 @@ const std::string &deity::get_cultural_name(const culture_base *culture) const
 	}
 
 	return this->get_name();
+}
+
+const portrait *deity::get_portrait() const
+{
+	return this->get_character()->get_game_data()->get_portrait();
 }
 
 divine_rank deity::get_divine_rank() const
@@ -198,27 +193,6 @@ bool deity::can_grant_spell(const spell *spell) const
 	}
 
 	return false;
-}
-
-bool deity::is_available_for_domain_slot(const domain *domain, const idea_slot *slot) const
-{
-	if (!idea::is_available_for_domain_slot(domain, slot)) {
-		return false;
-	}
-
-	const deity_slot *deity_slot = static_cast<const metternich::deity_slot *>(slot);
-
-	if ((this->get_divine_rank() >= divine_rank::greater_deity) != deity_slot->is_major()) {
-		return false;
-	}
-
-	const domain_game_data *domain_game_data = domain->get_game_data();
-
-	if (!vector::contains(this->get_religions(), domain_game_data->get_religion())) {
-		return false;
-	}
-
-	return true;
 }
 
 }

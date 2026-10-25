@@ -29,9 +29,6 @@
 #include "domain/domain_turn_data.h"
 #include "domain/domain_type.h"
 #include "domain/government_type.h"
-#include "domain/idea.h"
-#include "domain/idea_slot.h"
-#include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/law.h"
 #include "domain/law_group.h"
@@ -205,7 +202,6 @@ int main(int argc, char **argv)
 		database_util::register_enum<gender>();
 		database_util::register_enum<geological_era>();
 		database_util::register_enum<grammatical_gender>();
-		database_util::register_enum<idea_type>();
 		database_util::register_enum<log_level>();
 		database_util::register_enum<military_unit_category>();
 		database_util::register_enum<military_unit_domain>();
@@ -251,8 +247,6 @@ int main(int argc, char **argv)
 		qmlRegisterAnonymousType<game_rules>("", 1);
 		qmlRegisterAnonymousType<government_type>("", 1);
 		qmlRegisterAnonymousType<icon>("", 1);
-		qmlRegisterAnonymousType<idea>("", 1);
-		qmlRegisterAnonymousType<idea_slot>("", 1);
 		qmlRegisterAnonymousType<item>("", 1);
 		qmlRegisterAnonymousType<const item>("", 1);
 		qmlRegisterAnonymousType<item_slot>("", 1);

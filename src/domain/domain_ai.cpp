@@ -10,7 +10,6 @@
 #include "domain/domain_government.h"
 #include "domain/domain_military.h"
 #include "domain/domain_technology.h"
-#include "domain/idea_type.h"
 #include "domain/journal_entry.h"
 #include "domain/office.h"
 #include "infrastructure/building_slot.h"
@@ -108,7 +107,6 @@ QCoro::Task<void> domain_ai::do_turn()
 	//FIXME: add AI for recruiting civilian units
 
 	this->appoint_office_holders();
-	this->appoint_ideas();
 
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->do_ai_turn();
@@ -167,26 +165,6 @@ const technology *domain_ai::get_research_choice(const data_entry_map<technology
 
 	const technology *chosen_technology = vector::get_random(preferred_technologies);
 	return chosen_technology;
-}
-
-void domain_ai::appoint_ideas()
-{
-	magic_enum::enum_for_each<idea_type>([this](const idea_type idea_type) {
-		for (const idea_slot *slot : this->get_game_data()->get_available_idea_slots(idea_type)) {
-			if (this->get_game_data()->get_idea(slot) != nullptr) {
-				continue;
-			}
-
-			if (this->get_game_data()->get_appointed_idea(slot) != nullptr) {
-				continue;
-			}
-
-			const idea *idea = this->get_game_data()->get_best_idea(slot);
-			if (idea != nullptr) {
-				this->get_game_data()->set_appointed_idea(slot, idea);
-			}
-		}
-	});
 }
 
 void domain_ai::appoint_office_holders()

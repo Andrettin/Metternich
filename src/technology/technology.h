@@ -560,8 +560,8 @@ private:
 	std::vector<const military_unit_type *> enabled_military_units;
 	std::vector<const government_type *> enabled_government_types;
 	std::vector<const law *> enabled_laws;
-	std::vector<const deity *> enabled_deities;
-	std::vector<const deity *> disabled_deities;
+	std::vector<const deity *> enabled_deities; //FIXME: either remove this, or add a required technology field for deities
+	std::vector<const deity *> disabled_deities; //FIXME: either remove this, or add an obsolescence technology field for deities
 	std::vector<const employment_type *> enabled_employment_types;
 	std::vector<const item_type *> enabled_item_types;
 	std::vector<const spell *> enabled_spells;

@@ -60,8 +60,6 @@ class dynasty;
 class event;
 class flag;
 class government_type;
-class idea;
-class idea_slot;
 class journal_entry;
 class monster_type;
 class pathway;
@@ -80,7 +78,6 @@ class site_attribute;
 class wonder;
 enum class domain_tier;
 enum class event_trigger;
-enum class idea_type;
 struct read_only_context;
 
 template <typename scope_type>
@@ -133,9 +130,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(metternich::population* population READ get_population CONSTANT)
 	Q_PROPERTY(metternich::population* country_population READ get_country_population CONSTANT)
 	Q_PROPERTY(QVariantList item_slots READ get_item_slots_qvariant_list CONSTANT)
-	Q_PROPERTY(QVariantList ideas READ get_ideas_qvariant_list NOTIFY ideas_changed)
-	Q_PROPERTY(QVariantList appointed_ideas READ get_appointed_ideas_qvariant_list NOTIFY appointed_ideas_changed)
-	Q_PROPERTY(QVariantList available_deity_slots READ get_available_deity_slots_qvariant_list NOTIFY available_idea_slots_changed)
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(QVariantList historical_rulers READ get_historical_rulers_qvariant_list NOTIFY characters_changed)
@@ -646,64 +640,6 @@ public:
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
 
-	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_ideas() const
-	{
-		return this->ideas;
-	}
-
-	const data_entry_map<idea_slot, const idea *> &get_ideas(const idea_type idea_type) const
-	{
-		const auto find_iterator = this->ideas.find(idea_type);
-
-		if (find_iterator != this->ideas.end()) {
-			return find_iterator->second;
-		}
-
-		static const data_entry_map<idea_slot, const idea *> empty_ideas;
-		return empty_ideas;
-	}
-
-	QVariantList get_ideas_qvariant_list() const;
-	Q_INVOKABLE const metternich::idea *get_idea(const metternich::idea_slot *slot) const;
-	void set_idea(const idea_slot *slot, const idea *idea);
-
-	const std::map<idea_type, data_entry_map<idea_slot, const idea *>> &get_appointed_ideas() const
-	{
-		return this->appointed_ideas;
-	}
-
-	const data_entry_map<idea_slot, const idea *> &get_appointed_ideas(const idea_type idea_type) const
-	{
-		const auto find_iterator = this->appointed_ideas.find(idea_type);
-
-		if (find_iterator != this->appointed_ideas.end()) {
-			return find_iterator->second;
-		}
-
-		static const data_entry_map<idea_slot, const idea *> empty_ideas;
-		return empty_ideas;
-	}
-
-	QVariantList get_appointed_ideas_qvariant_list() const;
-	Q_INVOKABLE const metternich::idea *get_appointed_idea(const metternich::idea_slot *slot) const;
-	Q_INVOKABLE void set_appointed_idea(const metternich::idea_slot *slot, const metternich::idea *idea);
-
-	void check_idea(const idea_slot *slot);
-	void check_ideas();
-	std::vector<const idea *> get_appointable_ideas(const idea_slot *slot) const;
-	Q_INVOKABLE QVariantList get_appointable_ideas_qvariant_list(const metternich::idea_slot *slot) const;
-	const idea *get_best_idea(const idea_slot *slot);
-	bool can_have_idea(const idea_slot *slot, const idea *idea) const;
-	bool can_gain_idea(const idea_slot *slot, const idea *idea) const;
-	Q_INVOKABLE bool can_appoint_idea(const metternich::idea_slot *slot, const metternich::idea *idea) const;
-
-	std::vector<const idea_slot *> get_available_idea_slots(const idea_type idea_type) const;
-	QVariantList get_available_deity_slots_qvariant_list() const;
-
-	int get_deity_cost() const;
-	commodity_map<int> get_idea_commodity_costs(const idea *idea) const;
-	Q_INVOKABLE QVariantList get_idea_commodity_costs_qvariant_list(const metternich::idea *idea) const;
-
 	const scripted_domain_modifier_map<int> &get_scripted_modifiers() const
 	{
 		return this->scripted_modifiers;
@@ -985,9 +921,6 @@ signals:
 	void building_built(const building_type *building, const site *site);
 	void pathway_built(const pathway *pathway, const province *province);
 	void item_slots_changed();
-	void ideas_changed();
-	void appointed_ideas_changed();
-	void available_idea_slots_changed();
 	void scripted_modifiers_changed();
 	void characters_changed();
 	void prospected_tiles_changed();
@@ -1033,8 +966,6 @@ private:
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
 	building_type_map<int> holding_building_counts;
-	std::map<idea_type, data_entry_map<idea_slot, const idea *>> ideas;
-	std::map<idea_type, data_entry_map<idea_slot, const idea *>> appointed_ideas;
 	scripted_domain_modifier_map<int> scripted_modifiers;
 	std::vector<const character *> characters;
 	std::map<QDate, const character *> historical_rulers;

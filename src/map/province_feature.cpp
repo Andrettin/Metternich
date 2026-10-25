@@ -2,6 +2,7 @@
 
 #include "map/province_feature.h"
 
+#include "database/gsml_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/terrain_type.h"
