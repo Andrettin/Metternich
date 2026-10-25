@@ -5,4 +5,17 @@ slovene = {
 	species = {
 		human
 	}
+	
+	given_names = {
+		male = {
+			"Primoz" #"Primož"
+			"Kocelj"
+			"Valtunk"
+			"Valuka"
+		}
+	}
+	
+	surnames = {
+		"Trubar"
+	}
 }
