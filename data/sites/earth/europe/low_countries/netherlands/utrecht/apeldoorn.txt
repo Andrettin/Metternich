@@ -1,0 +1,6 @@
+apeldoorn = {
+	name = "Apeldoorn"
+	world = earth
+	geocoordinate = { 5.97 52.21 }
+	province = utrecht #Gelderland
+}

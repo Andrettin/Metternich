@@ -1,0 +1,8 @@
+gorinchem = {
+	name = "Gorinchem"
+	world = earth
+	geocoordinate = { 4.974166666666667 51.830555555555556 }
+	type = holding
+	holding_type = guild
+	province = holland #South Holland
+}

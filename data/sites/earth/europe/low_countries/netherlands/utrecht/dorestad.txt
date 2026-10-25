@@ -1,0 +1,8 @@
+dorestad = {
+	name = "Dorestad"
+	world = earth
+	geocoordinate = { 5.34 51.975 }
+	type = holding
+	holding_type = guild
+	province = utrecht
+}

@@ -1,8 +1,8 @@
 deventer = {
 	name = "Deventer"
 	world = earth
-	#geocoordinate = { 6.16 52.251111111111 }
-	province = utrecht
+	geocoordinate = { 6.16 52.251111111111 }
+	province = overijssel
 	
 	history = {
 		919 = {

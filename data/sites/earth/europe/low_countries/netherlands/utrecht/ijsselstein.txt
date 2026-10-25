@@ -1,0 +1,8 @@
+ijsselstein = {
+	name = "Ijsselstein" #"IJsselstein"
+	world = earth
+	geocoordinate = { 5.0422 52.02 }
+	type = holding
+	holding_type = castle
+	province = utrecht
+}

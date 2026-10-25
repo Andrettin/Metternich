@@ -1,7 +1,7 @@
 rijnsburg = {
 	name = "Rijnsburg"
 	world = earth
-	#geocoordinate = { 4.4408 52.1897 }
+	geocoordinate = { 4.4408 52.1897 }
 	province = holland
 	
 	history = {

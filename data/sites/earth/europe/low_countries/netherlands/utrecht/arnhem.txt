@@ -1,0 +1,6 @@
+arnhem = {
+	name = "Arnhem"
+	world = earth
+	geocoordinate = { 5.92299956246 51.98799603450 } #from Natural Earth
+	province = utrecht #Gelderland
+}

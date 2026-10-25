@@ -1,8 +1,8 @@
 nijmegen = {
 	name = "Nijmegen"
 	world = earth
-	#geocoordinate = { 5.8625 51.8475 }
-	province = utrecht
+	geocoordinate = { 5.8625 51.8475 }
+	province = utrecht #Gelderland
 	cultural_names = {
 		german = "Nimwegen" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 62-63.
 	}

@@ -1,0 +1,8 @@
+woerden = {
+	name = "Woerden"
+	world = earth
+	geocoordinate = { 4.8833333333333 52.085833333333 }
+	type = holding
+	holding_type = castle
+	province = utrecht
+}

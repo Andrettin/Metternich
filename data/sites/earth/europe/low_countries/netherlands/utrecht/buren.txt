@@ -1,0 +1,8 @@
+buren = {
+	name = "Buren"
+	world = earth
+	geocoordinate = { 5.3333 51.9106 }
+	type = holding
+	holding_type = castle
+	province = utrecht #Gelderland
+}

@@ -1,0 +1,8 @@
+zeist = {
+	name = "Zeist"
+	world = earth
+	geocoordinate = { 5.2333333333333 52.083333333333 }
+	type = holding
+	holding_type = castle
+	province = utrecht
+}

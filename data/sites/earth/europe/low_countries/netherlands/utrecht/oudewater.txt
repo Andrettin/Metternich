@@ -1,0 +1,8 @@
+oudewater = {
+	name = "Oudewater"
+	world = earth
+	geocoordinate = { 4.8686 52.0267 }
+	type = holding
+	holding_type = castle
+	province = utrecht
+}

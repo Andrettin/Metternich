@@ -2,7 +2,7 @@ tiel = {
 	name = "Tiel"
 	world = earth
 	geocoordinate = { 5.4333 51.8833 }
-	province = utrecht
+	province = utrecht #Gelderland
 	
 	history = {
 		919 = {
