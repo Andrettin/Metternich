@@ -705,10 +705,7 @@ bool domain_economy::can_change_commodity_input(const commodity *commodity, cons
 	}
 
 	if (commodity->is_storable()) {
-		const decimillesimal_int current_commodity_input = this->get_commodity_input(commodity);
-		const decimillesimal_int storage_change = (current_commodity_input + change) - current_commodity_input;
-
-		if (this->get_stored_commodity(commodity) < storage_change) {
+		if (this->get_stored_commodity(commodity) < change) {
 			return false;
 		}
 	} else {
