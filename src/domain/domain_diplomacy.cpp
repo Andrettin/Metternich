@@ -68,29 +68,17 @@ void domain_diplomacy::process_gsml_scope(const gsml_data &scope)
 			this->known_domains.insert(domain::get(value));
 		}
 	} else if (tag == "diplomacy_states") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->diplomacy_states[domain::get(property.get_key())] = magic_enum::enum_cast<diplomacy_state>(property.get_value()).value();
-		});
+		scope.to_map(this->diplomacy_states);
 	} else if (tag == "diplomacy_state_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->diplomacy_state_counts[magic_enum::enum_cast<diplomacy_state>(property.get_key()).value()] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->diplomacy_state_counts);
 	} else if (tag == "offered_diplomacy_states") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->offered_diplomacy_states[domain::get(property.get_key())] = magic_enum::enum_cast<diplomacy_state>(property.get_value()).value();
-		});
+		scope.to_map(this->offered_diplomacy_states);
 	} else if (tag == "consulates") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->consulates[domain::get(property.get_key())] = consulate::get(property.get_value());
-		});
+		scope.to_map(this->consulates);
 	} else if (tag == "base_opinions") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->base_opinions[domain::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->base_opinions);
 	} else if (tag == "free_consulate_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->free_consulate_counts[consulate::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->free_consulate_counts);
 	} else {
 		throw std::runtime_error(std::format("Invalid domain diplomacy scope: \"{}\".", tag));
 	}
