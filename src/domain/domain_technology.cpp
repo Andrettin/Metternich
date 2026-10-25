@@ -32,6 +32,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "technology/technology_category.h"
+#include "technology/technology_subcategory.h"
 #include "ui/portrait.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -80,6 +81,10 @@ void domain_technology::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "current_research_progresses") {
 		scope.to_map(this->current_research_progresses);
+	} else if (tag == "technology_category_cost_modifiers") {
+		scope.to_map(this->technology_category_cost_modifiers);
+	} else if (tag == "technology_subcategory_cost_modifiers") {
+		scope.to_map(this->technology_subcategory_cost_modifiers);
 	} else if (tag == "technology_category_quarterly_researches") {
 		scope.to_map(this->technology_category_quarterly_researches);
 	} else {
@@ -117,6 +122,14 @@ gsml_data domain_technology::to_gsml_data() const
 
 	if (!this->current_research_progresses.empty()) {
 		data.add_child(gsml_data::from_map(this->current_research_progresses, "current_research_progresses"));
+	}
+
+	if (!this->technology_category_cost_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->technology_category_cost_modifiers, "technology_category_cost_modifiers"));
+	}
+
+	if (!this->technology_subcategory_cost_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->technology_subcategory_cost_modifiers, "technology_subcategory_cost_modifiers"));
 	}
 
 	if (!this->technology_category_quarterly_researches.empty()) {
