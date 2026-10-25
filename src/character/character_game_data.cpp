@@ -290,6 +290,8 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "commanded_military_unit_stat_modifiers") {
 		scope.to_map(this->commanded_military_unit_stat_modifiers);
+	} else if (tag == "commanded_military_unit_type_stat_modifiers") {
+		scope.to_map(this->commanded_military_unit_type_stat_modifiers);
 	} else if (tag == "status_effect_durations") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->status_effect_durations[status_effect::get(property.get_key())] = std::chrono::seconds(std::stoll(property.get_value()));
@@ -505,6 +507,10 @@ gsml_data character_game_data::to_gsml_data() const
 
 	if (!this->commanded_military_unit_stat_modifiers.empty()) {
 		data.add_child(gsml_data::from_map(this->commanded_military_unit_stat_modifiers, "commanded_military_unit_stat_modifiers"));
+	}
+
+	if (!this->commanded_military_unit_type_stat_modifiers.empty()) {
+		data.add_child(gsml_data::from_map(this->commanded_military_unit_type_stat_modifiers, "commanded_military_unit_type_stat_modifiers"));
 	}
 
 	if (!this->status_effect_durations.empty()) {
