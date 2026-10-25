@@ -269,8 +269,8 @@ void building_type::check() const
 		throw std::runtime_error(std::format("Building type \"{}\" does not have any holding types listed for it.", this->get_identifier()));
 	}
 
-	if (this->get_builder_civilian_unit_types().empty()) {
-		log::log_error(std::format("Building type \"{}\" has no builder civilian unit types.", this->get_identifier()));
+	if (this->get_builder_civilian_unit_types().empty() && !this->is_ruin()) {
+		log::log_error(std::format("Non-ruin building type \"{}\" has no builder civilian unit types.", this->get_identifier()));
 	}
 
 	if (this->get_free_on_start_extra_technology().has_value() && this->get_required_technology() == nullptr) {
