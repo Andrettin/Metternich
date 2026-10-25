@@ -1,3 +1,24 @@
+waltger_of_teisterbant = {
+	name = "Waltger"
+	dynasty = gerulfing
+	character_class = aristocrat #count
+	rank = lord
+	culture = dutch
+	religion = catholic
+	home_site = buren #Teisterbant
+	gender = male
+	birth_date = 866
+	death_date = 936.10
+	attribute_ratings = {
+		dogmatic = dogmatic #zealous
+	}
+	traits = {
+		#engineering #architect
+	}
+	
+	#son of Gerulf Gerulfing
+}
+
 william_the_silent_of_the_netherlands = {
 	name = "William"
 	epithet = "the Silent"

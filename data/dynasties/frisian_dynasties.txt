@@ -1,0 +1,4 @@
+gerulfing = {
+	name = "Gerulfing"
+	culture = frisian
+}
