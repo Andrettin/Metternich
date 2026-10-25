@@ -232,9 +232,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			});
 		});
 	} else if (tag == "exceptional_attributes") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->exceptional_attribute_values[character_attribute::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->exceptional_attribute_values);
 	} else if (tag == "hit_dice_roll_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -246,29 +244,17 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "species_armor_class_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->species_armor_class_bonuses[species::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->species_armor_class_bonuses);
 	} else if (tag == "weapon_to_hit_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->weapon_to_hit_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->weapon_to_hit_bonuses);
 	} else if (tag == "weapon_damage_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->weapon_damage_bonuses[item_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->weapon_damage_bonuses);
 	} else if (tag == "skill_trainings") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->skill_trainings[skill::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->skill_trainings);
 	} else if (tag == "damage_reductions") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->damage_reductions[damage_reduction_type::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->damage_reductions);
 	} else if (tag == "trait_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->trait_counts[trait::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->trait_counts);
 	} else if (tag == "trait_choices") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -280,21 +266,13 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "scripted_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->scripted_modifiers[scripted_character_modifier::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->scripted_modifiers);
 	} else if (tag == "learned_spell_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->learned_spell_counts[spell::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->learned_spell_counts);
 	} else if (tag == "spell_charges") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->spell_charges[spell::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->spell_charges);
 	} else if (tag == "max_spell_charges") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->max_spell_charges[spell::get(property.get_key())] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->max_spell_charges);
 	} else if (tag == "recipes") {
 		for (const std::string &value : values) {
 			this->recipes.push_back(recipe::get(value));
@@ -311,9 +289,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "commanded_military_unit_stat_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			this->commanded_military_unit_stat_modifiers[magic_enum::enum_cast<military_unit_stat>(property.get_key()).value()] = centesimal_int(property.get_value());
-		});
+		scope.to_map(this->commanded_military_unit_stat_modifiers);
 	} else if (tag == "status_effect_durations") {
 		scope.for_each_property([this](const gsml_property &property) {
 			this->status_effect_durations[status_effect::get(property.get_key())] = std::chrono::seconds(std::stoll(property.get_value()));
@@ -393,11 +369,7 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->stat_values.empty()) {
-		gsml_data stats_data("stats");
-		for (const auto &[stat, value] : this->stat_values) {
-			stats_data.add_property(stat->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(stats_data));
+		data.add_child(gsml_data::from_map(this->stat_values, "stats"));
 	}
 
 	if (!this->stat_modifiers.empty()) {
@@ -423,27 +395,11 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->stat_modifier_totals.empty()) {
-		gsml_data stat_modifier_totals_data("stat_modifier_totals");
-
-		for (const auto &[stat, specific_stat_modifier_totals] : this->stat_modifier_totals) {
-			gsml_data specific_stat_modifier_totals_data(stat->get_identifier());
-
-			for (const auto &[modifier_type, modifier_total] : specific_stat_modifier_totals) {
-				specific_stat_modifier_totals_data.add_property(std::string(magic_enum::enum_name(modifier_type)), std::to_string(modifier_total));
-			}
-
-			stat_modifier_totals_data.add_child(std::move(specific_stat_modifier_totals_data));
-		}
-
-		data.add_child(std::move(stat_modifier_totals_data));
+		data.add_child(gsml_data::from_map(this->stat_modifier_totals, "stat_modifier_totals"));
 	}
 
 	if (!this->exceptional_attribute_values.empty()) {
-		gsml_data exceptional_attributes_data("exceptional_attributes");
-		for (const auto &[attribute, value] : this->exceptional_attribute_values) {
-			exceptional_attributes_data.add_property(attribute->get_identifier(), std::to_string(value));
-		}
-		data.add_child(std::move(exceptional_attributes_data));
+		data.add_child(gsml_data::from_map(this->exceptional_attribute_values, "exceptional_attributes"));
 	}
 
 	data.add_property("hit_dice_count", std::to_string(this->get_hit_dice_count()));
@@ -480,51 +436,27 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->species_armor_class_bonuses.empty()) {
-		gsml_data species_armor_class_bonuses_data("species_armor_class_bonuses");
-		for (const auto &[species, bonus] : this->species_armor_class_bonuses) {
-			species_armor_class_bonuses_data.add_property(species->get_identifier(), std::to_string(bonus));
-		}
-		data.add_child(std::move(species_armor_class_bonuses_data));
+		data.add_child(gsml_data::from_map(this->species_armor_class_bonuses, "species_armor_class_bonuses"));
 	}
 
 	if (!this->weapon_to_hit_bonuses.empty()) {
-		gsml_data weapon_to_hit_bonuses_data("weapon_to_hit_bonuses");
-		for (const auto &[weapon_type, bonus] : this->weapon_to_hit_bonuses) {
-			weapon_to_hit_bonuses_data.add_property(weapon_type->get_identifier(), std::to_string(bonus));
-		}
-		data.add_child(std::move(weapon_to_hit_bonuses_data));
+		data.add_child(gsml_data::from_map(this->weapon_to_hit_bonuses, "weapon_to_hit_bonuses"));
 	}
 
 	if (!this->weapon_damage_bonuses.empty()) {
-		gsml_data weapon_damage_bonuses_data("weapon_damage_bonuses");
-		for (const auto &[weapon_type, bonus] : this->weapon_damage_bonuses) {
-			weapon_damage_bonuses_data.add_property(weapon_type->get_identifier(), std::to_string(bonus));
-		}
-		data.add_child(std::move(weapon_damage_bonuses_data));
+		data.add_child(gsml_data::from_map(this->weapon_damage_bonuses, "weapon_damage_bonuses"));
 	}
 
 	if (!this->skill_trainings.empty()) {
-		gsml_data skill_trainings_data("skill_trainings");
-		for (const auto &[skill, training] : this->skill_trainings) {
-			skill_trainings_data.add_property(skill->get_identifier(), std::to_string(training));
-		}
-		data.add_child(std::move(skill_trainings_data));
+		data.add_child(gsml_data::from_map(this->skill_trainings, "skill_trainings"));
 	}
 
 	if (!this->damage_reductions.empty()) {
-		gsml_data damage_reductions_data("damage_reductions");
-		for (const auto &[damage_reduction_type, damage_reduction_value] : this->damage_reductions) {
-			damage_reductions_data.add_property(damage_reduction_type->get_identifier(), std::to_string(damage_reduction_value));
-		}
-		data.add_child(std::move(damage_reductions_data));
+		data.add_child(gsml_data::from_map(this->damage_reductions, "damage_reductions"));
 	}
 
 	if (!this->trait_counts.empty()) {
-		gsml_data trait_counts_data("trait_counts");
-		for (const auto &[trait, count] : this->trait_counts) {
-			trait_counts_data.add_property(trait->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(trait_counts_data));
+		data.add_child(gsml_data::from_map(this->trait_counts, "trait_counts"));
 	}
 
 	if (!this->trait_choices.empty()) {
@@ -540,35 +472,19 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->scripted_modifiers.empty()) {
-		gsml_data scripted_modifiers_data("scripted_modifiers");
-		for (const auto &[scripted_modifier, remaining_duration] : this->scripted_modifiers) {
-			scripted_modifiers_data.add_property(scripted_modifier->get_identifier(), std::to_string(remaining_duration));
-		}
-		data.add_child(std::move(scripted_modifiers_data));
+		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
 	}
 
 	if (!this->learned_spell_counts.empty()) {
-		gsml_data learned_spell_counts_data("learned_spell_counts");
-		for (const auto &[spell, count] : this->learned_spell_counts) {
-			learned_spell_counts_data.add_property(spell->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(learned_spell_counts_data));
+		data.add_child(gsml_data::from_map(this->learned_spell_counts, "learned_spell_counts"));
 	}
 
 	if (!this->spell_charges.empty()) {
-		gsml_data spell_charges_data("spell_charges");
-		for (const auto &[spell, count] : this->spell_charges) {
-			spell_charges_data.add_property(spell->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(spell_charges_data));
+		data.add_child(gsml_data::from_map(this->spell_charges, "spell_charges"));
 	}
 
 	if (!this->max_spell_charges.empty()) {
-		gsml_data max_spell_charges_data("max_spell_charges");
-		for (const auto &[spell, count] : this->max_spell_charges) {
-			max_spell_charges_data.add_property(spell->get_identifier(), std::to_string(count));
-		}
-		data.add_child(std::move(max_spell_charges_data));
+		data.add_child(gsml_data::from_map(this->max_spell_charges, "max_spell_charges"));
 	}
 
 	if (!this->recipes.empty()) {
@@ -588,11 +504,7 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->commanded_military_unit_stat_modifiers.empty()) {
-		gsml_data commanded_military_unit_stat_modifiers_data("commanded_military_unit_stat_modifiers");
-		for (const auto &[military_unit_stat, modifier] : this->commanded_military_unit_stat_modifiers) {
-			commanded_military_unit_stat_modifiers_data.add_property(std::string(magic_enum::enum_name(military_unit_stat)), modifier.to_string());
-		}
-		data.add_child(std::move(commanded_military_unit_stat_modifiers_data));
+		data.add_child(gsml_data::from_map(this->commanded_military_unit_stat_modifiers, "commanded_military_unit_stat_modifiers"));
 	}
 
 	if (!this->status_effect_durations.empty()) {
@@ -604,11 +516,7 @@ gsml_data character_game_data::to_gsml_data() const
 	}
 
 	if (!this->base_opinions.empty()) {
-		gsml_data base_opinions_data("base_opinions");
-		for (const auto &[other, base_opinion] : this->base_opinions) {
-			base_opinions_data.add_property(other->get_identifier(), std::to_string(base_opinion));
-		}
-		data.add_child(std::move(base_opinions_data));
+		data.add_child(gsml_data::from_map(this->base_opinions, "base_opinions"));
 	}
 
 	if (!this->get_ruled_domains().empty()) {
