@@ -20,7 +20,6 @@
 #include "script/effect/capital_effect.h"
 #include "script/effect/change_opinion_effect.h"
 #include "script/effect/clear_flag_effect.h"
-#include "script/effect/combat_effect.h"
 #include "script/effect/commodity_effect.h"
 #include "script/effect/commodity_percent_effect.h"
 #include "script/effect/create_character_effect.h"
@@ -184,8 +183,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 			effect = std::make_unique<battle_effect>(effect_operator);
 		} else if (effect_identifier == "change_opinion") {
 			effect = std::make_unique<change_opinion_effect<scope_type>>(effect_operator);
-		} else if (effect_identifier == "combat") {
-			effect = std::make_unique<combat_effect>(effect_operator);
 		} else if (effect_identifier == "create_character") {
 			effect = std::make_unique<create_character_effect>(effect_operator);
 		} else if (effect_identifier == "create_enemy") {
