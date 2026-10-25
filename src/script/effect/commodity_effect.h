@@ -45,7 +45,7 @@ public:
 			return;
 		}
 
-		scope->get_economy()->set_stored_commodity(this->commodity, decimillesimal_int(this->calculate_quantity()));
+		scope->get_economy()->set_stored_commodity(this->commodity, this->calculate_quantity());
 	}
 
 	virtual void do_addition_effect(const domain *scope) const override
@@ -54,14 +54,14 @@ public:
 			return;
 		}
 
-		int64_t change = this->calculate_quantity();
+		decimillesimal_int change = this->calculate_quantity();
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
-		if (change < 0 && std::abs(change) > storage) {
+		const decimillesimal_int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		if (change < 0 && change.abs() > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual void do_subtraction_effect(const domain *scope) const override
@@ -70,27 +70,27 @@ public:
 			return;
 		}
 
-		int64_t change = -this->calculate_quantity();
+		decimillesimal_int change = -this->calculate_quantity();
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
-		if (change < 0 && std::abs(change) > storage) {
+		const decimillesimal_int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		if (change < 0 && change.abs() > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
-	int64_t calculate_quantity() const
+	decimillesimal_int calculate_quantity() const
 	{
-		int64_t quantity = 0;
+		decimillesimal_int quantity;
 
 		if (std::holds_alternative<dice>(this->quantity_variant)) {
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
 
 			const int roll_result = random::get()->roll_dice(dice);
-			quantity = roll_result;
+			quantity = decimillesimal_int(roll_result);
 		} else {
-			quantity = std::get<int64_t>(this->quantity_variant);
+			quantity = decimillesimal_int(std::get<int64_t>(this->quantity_variant));
 		}
 
 		if (this->unit != nullptr) {

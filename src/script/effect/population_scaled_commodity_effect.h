@@ -30,38 +30,38 @@ public:
 		assert_throw(this->commodity != nullptr);
 	}
 
-	int get_quantity(const domain *scope) const
+	decimillesimal_int get_quantity(const domain *scope) const
 	{
-		return (this->base_quantity * scope->get_game_data()->get_population_unit_count()).to_int();
+		return decimillesimal_int(this->base_quantity * scope->get_game_data()->get_population_unit_count());
 	}
 
 	virtual void do_assignment_effect(const domain *scope) const override
 	{
-		scope->get_economy()->set_stored_commodity(this->commodity, decimillesimal_int(this->get_quantity(scope)));
+		scope->get_economy()->set_stored_commodity(this->commodity, this->get_quantity(scope));
 	}
 
 	virtual void do_addition_effect(const domain *scope) const override
 	{
-		int64_t change = this->get_quantity(scope);
+		decimillesimal_int change = this->get_quantity(scope);
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int64();
-		if (change < 0 && std::abs(change) > storage) {
+		const decimillesimal_int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		if (change < 0 && change.abs() > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual void do_subtraction_effect(const domain *scope) const override
 	{
-		int64_t change = -this->get_quantity(scope);
+		decimillesimal_int change = -this->get_quantity(scope);
 
-		const int64_t storage = scope->get_economy()->get_stored_commodity(this->commodity).to_int();
-		if (change < 0 && std::abs(change) > storage) {
+		const decimillesimal_int storage = scope->get_economy()->get_stored_commodity(this->commodity);
+		if (change < 0 && change.abs() > storage) {
 			change = -storage;
 		}
 
-		scope->get_economy()->change_stored_commodity(this->commodity, decimillesimal_int(change));
+		scope->get_economy()->change_stored_commodity(this->commodity, change);
 	}
 
 	virtual std::string get_assignment_string(const domain *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override
@@ -70,7 +70,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), std::to_string(this->get_quantity(scope)));
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->get_quantity(scope).to_int64());
 	}
 
 	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
@@ -78,14 +78,14 @@ public:
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
 
-		return std::format("Gain {} {}", std::to_string(this->get_quantity(scope)), string::highlight(this->commodity->get_name()));
+		return std::format("Gain {} {}", this->get_quantity(scope).to_int64(), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return std::format("Lose {} {}", std::to_string(this->get_quantity(scope)), string::highlight(this->commodity->get_name()));
+		return std::format("Lose {} {}", this->get_quantity(scope).to_int64(), string::highlight(this->commodity->get_name()));
 	}
 
 private:

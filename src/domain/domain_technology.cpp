@@ -166,7 +166,7 @@ QCoro::Task<void> domain_technology::do_research()
 			co_await this->choose_current_research();
 		}
 
-		decimillesimal_int generated_research = decimillesimal_int(this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity()));
+		decimillesimal_int generated_research = this->get_game_data()->get_economy()->get_stored_commodity(defines::get()->get_default_research_commodity());
 		this->get_game_data()->get_economy()->set_stored_commodity(defines::get()->get_default_research_commodity(), decimillesimal_int(0));
 
 		data_entry_map<technology_category, decimillesimal_int> generated_research_per_category;
