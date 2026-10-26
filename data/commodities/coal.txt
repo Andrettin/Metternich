@@ -3,11 +3,11 @@ coal = {
 	type = resource
 	icon = coal
 	mineral = true
-	base_price = 5 #5cp, price of bituminous coal; anthracite coal would be 1gp
+	base_price = 1
 	required_technology = black_coal
 	storage_unit = tn
 	units = {
-		1 = lb
-		2000 = tn
+		0.000025 = lb #5cp per lb, price of bituminous coal; anthracite coal would be 1gp per lb
+		0.05 = tn
 	}
 }

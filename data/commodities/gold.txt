@@ -3,12 +3,12 @@ gold = {
 	type = resource
 	icon = gold
 	mineral = true
-	wealth_value = 5000 #50gp
+	wealth_value = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		14 = st
-		100 = cwt
-		2000 = tn
+		0.025 = lb #50gp per lb
+		0.35 = st
+		2.5 = cwt
+		50 = tn
 	}
 }

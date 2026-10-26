@@ -3,10 +3,10 @@ iron = {
 	type = resource
 	icon = iron
 	mineral = true
-	base_price = 10 #1sp
+	base_price = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		2000 = tn
+		0.00005 = lb #1sp per lb
+		0.1 = tn
 	}
 }

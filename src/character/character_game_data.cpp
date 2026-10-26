@@ -1011,20 +1011,20 @@ void character_game_data::add_starting_wealth(const character_package *package)
 		const auto &wealth_variant = package->get_wealth_variant();
 		const commodity_unit *wealth_unit = package->get_wealth_unit();
 
-		int64_t wealth = 0;
+		decimillesimal_int wealth;
 
 		if (std::holds_alternative<dice>(wealth_variant)) {
 			const dice dice = std::get<archimedes::dice>(wealth_variant);
 
 			const int roll_result = random::get()->roll_dice(dice);
-			wealth = roll_result;
+			wealth = decimillesimal_int(roll_result);
 		} else {
-			wealth = std::get<int64_t>(wealth_variant);
+			wealth = decimillesimal_int(std::get<int64_t>(wealth_variant));
 		}
 
 		wealth *= defines::get()->get_wealth_commodity()->get_unit_value(wealth_unit);
 
-		this->change_wealth(wealth);
+		this->change_wealth(wealth.to_int64());
 	}
 }
 

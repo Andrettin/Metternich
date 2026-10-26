@@ -40,7 +40,7 @@ void spell::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "price") {
-		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value).to_ceil_int64();
 	} else if (key == "range") {
 		if (value == "touch") {
 			this->range = character_defines::get()->get_minimum_character_range();

@@ -3,11 +3,11 @@ wool = {
 	type = resource
 	icon = wool
 	agricultural = true
-	base_price = 600 #6gp
+	base_price = 1
 	storage_unit = tn
 	units = {
-		1 = sq_yd #or pound
-		100 = cwt
-		2000 = tn
+		0.003 = lb #6gp per lb
+		0.3 = cwt
+		6 = tn
 	}
 }

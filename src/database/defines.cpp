@@ -299,7 +299,7 @@ void defines::set_default_menu_background_filepath(const std::filesystem::path &
 
 int64_t defines::get_domain_income_unit_value() const
 {
-	return this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit());
+	return this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit()).to_int64();
 }
 
 int defines::get_province_population_for_level(const int level) const

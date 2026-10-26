@@ -276,7 +276,7 @@ ApplicationWindow {
 			
 			var commodity_unit = commodity.get_unit(cost)
 			if (commodity_unit !== null) {
-				cost = Math.floor(cost / commodity.get_unit_value(commodity_unit))
+				cost = Math.floor(cost / commodity.get_unit_value_int64(commodity_unit))
 			}
 			
 			if (str.length > 0) {

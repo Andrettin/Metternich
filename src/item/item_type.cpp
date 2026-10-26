@@ -31,7 +31,7 @@ void item_type::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "price") {
-		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value).to_ceil_int64();
 	} else if (key == "damage_dice") {
 		assert_throw(character_defines::get()->get_default_creature_size() != nullptr);
 		this->damage_dice_per_target_size[character_defines::get()->get_default_creature_size()] = dice(value);

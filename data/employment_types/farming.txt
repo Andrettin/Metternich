@@ -1,7 +1,7 @@
 cattle_ranching = {
 	name = "Cattle Ranching"
 	output_commodity = cattle
-	monthly_wealth_output_value = 770gp
+	quarterly_wealth_output_value = 1gb
 	base_employment_size = 10000
 	employee_types = {
 		farmers
@@ -13,8 +13,8 @@ cattle_ranching = {
 fruit_farming = {
 	name = "Fruit Farming"
 	output_commodity = fruit
-	monthly_wealth_output_value = 21sp
-	base_employment_size = 3
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		farmers
 		tribesmen
@@ -25,8 +25,8 @@ fruit_farming = {
 grain_farming = {
 	name = "Grain Farming"
 	output_commodity = grain
-	monthly_wealth_output_value = 7sp
-	base_employment_size = 1
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		farmers
 		tribesmen
@@ -37,8 +37,8 @@ grain_farming = {
 sheep_ranching = {
 	name = "Sheep Ranching"
 	output_commodity = wool
-	monthly_wealth_output_value = 462gp
-	base_employment_size = 600
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		farmers
 		tribesmen
@@ -49,8 +49,8 @@ sheep_ranching = {
 tobacco_planting = {
 	name = "Tobacco Planting"
 	output_commodity = tobacco
-	monthly_wealth_output_value = 7gp
-	base_employment_size = 10
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		farmers
 		tribesmen

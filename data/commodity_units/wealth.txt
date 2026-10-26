@@ -2,18 +2,21 @@ cp = {
 	name = "Copper Piece"
 	icon = copper
 	suffix = "cp"
+	displayed = false
 }
 
 sp = {
 	name = "Silver Piece"
 	icon = silver
 	suffix = "sp"
+	displayed = false
 }
 
 gp = {
 	name = "Gold Piece"
 	icon = wealth
 	suffix = "gp"
+	displayed = false
 }
 
 pp = {

@@ -1,8 +1,8 @@
 coal_mining = {
 	name = "Coal Mining"
 	output_commodity = coal
-	monthly_wealth_output_value = 77sp
-	base_employment_size = 10
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		laborers
 		tribesmen
@@ -13,7 +13,7 @@ coal_mining = {
 gold_mining = {
 	name = "Gold Mining"
 	output_commodity = gold
-	monthly_wealth_output_value = 1050gp
+	quarterly_wealth_output_value = 1gb
 	base_employment_size = 10000
 	employee_types = {
 		laborers
@@ -25,8 +25,8 @@ gold_mining = {
 iron_mining = {
 	name = "Iron Mining"
 	output_commodity = iron
-	monthly_wealth_output_value = 77sp
-	base_employment_size = 10
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		laborers
 		tribesmen
@@ -37,8 +37,8 @@ iron_mining = {
 silver_mining = {
 	name = "Silver Mining"
 	output_commodity = silver
-	monthly_wealth_output_value = 105gp
-	base_employment_size = 1000
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		laborers
 		tribesmen
@@ -49,8 +49,8 @@ silver_mining = {
 sulfur_mining = {
 	name = "Sulfur Mining"
 	output_commodity = sulfur
-	monthly_wealth_output_value = 77gp
-	base_employment_size = 1000
+	quarterly_wealth_output_value = 1gb
+	base_employment_size = 10000
 	employee_types = {
 		laborers
 		tribesmen

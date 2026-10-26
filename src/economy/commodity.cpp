@@ -3,6 +3,7 @@
 #include "economy/commodity.h"
 
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
@@ -30,7 +31,11 @@ void commodity::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			const int64_t unit_value = std::stoll(key);
+			decimillesimal_int unit_value = decimillesimal_int(key);
+			unit_value = decimillesimal_int::max(unit_value, decimillesimal_int::from_value(1));
+
+			assert_throw(unit_value > 0);
+
 			const commodity_unit *unit = commodity_unit::get(value);
 
 			this->units[unit_value] = unit;
@@ -60,7 +65,7 @@ void commodity::check() const
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_wealth_value() >= 0);
 
-	if (this->is_storable() && !this->is_abstract() && !this->get_units().empty() && this->get_units().contains(1) && this->get_storage_unit() == nullptr) {
+	if (this->is_storable() && !this->is_abstract() && !this->get_units().empty() && this->get_units().contains(decimillesimal_int(1)) && this->get_storage_unit() == nullptr) {
 		throw std::runtime_error(std::format("Commodity \"{}\" is storable, non-abstract and has units (including a unit for 1), but has no storage unit.", this->get_identifier()));
 	}
 
@@ -123,19 +128,22 @@ const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 			continue;
 		}
 
-		if (std::abs(value) >= unit_value) {
+		if (decimillesimal_int(value).abs() >= unit_value) {
 			return unit;
 		}
 	}
 
-	if (this->units.begin()->second->is_displayed()) {
-		return this->units.begin()->second;
+	//if we couldn't get a unit with a value higher than the given value, use the lowest displayable unit
+	for (const auto &[unit_value, unit] : this->units) {
+		if (unit->is_displayed()) {
+			return unit;
+		}
 	}
 
 	return nullptr;
 }
 
-int64_t commodity::get_unit_value(const commodity_unit *unit) const
+const decimillesimal_int &commodity::get_unit_value(const commodity_unit *unit) const
 {
 	const auto find_iterator = this->unit_values.find(unit);
 
@@ -144,6 +152,11 @@ int64_t commodity::get_unit_value(const commodity_unit *unit) const
 	}
 
 	throw std::runtime_error(std::format("Commodity \"{}\" has no value for unit \"{}\".", this->get_identifier(), unit->get_identifier()));
+}
+
+int64_t commodity::get_unit_value_int64(const commodity_unit *unit) const
+{
+	return this->get_unit_value(unit).to_int64();
 }
 
 std::pair<std::string, const commodity_unit *> commodity::string_to_number_string_and_unit(const std::string &str) const
@@ -193,7 +206,7 @@ std::string commodity::value_to_string(const int64_t value, const bool joined) c
 {
 	const commodity_unit *unit = this->get_unit(value);
 	if (unit != nullptr) {
-		const std::string value_for_unit_str = number::to_formatted_string(value / this->get_unit_value(unit));
+		const std::string value_for_unit_str = (decimillesimal_int(value) / this->get_unit_value(unit)).to_formatted_string();
 		if (joined) {
 			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
 		} else {
@@ -229,7 +242,7 @@ QString commodity::get_units_tooltip() const
 	std::string str;
 
 	const commodity_unit *previous_unit = nullptr;
-	int64_t previous_unit_value = 0;
+	decimillesimal_int previous_unit_value;
 	for (const auto &[unit_value, unit] : this->units) {
 		if (!unit->is_displayed()) {
 			continue;
@@ -240,7 +253,7 @@ QString commodity::get_units_tooltip() const
 				str += ", ";
 			}
 
-			str += std::format("{} {} = 1 {}", number::to_formatted_string(unit_value / previous_unit_value), previous_unit->get_suffix(), unit->get_suffix());
+			str += std::format("{} {} = 1 {}", (unit_value / previous_unit_value).to_formatted_string(), previous_unit->get_suffix(), unit->get_suffix());
 		}
 
 		previous_unit = unit;

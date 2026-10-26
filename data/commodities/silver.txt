@@ -3,12 +3,12 @@ silver = {
 	type = resource
 	icon = silver
 	mineral = true
-	wealth_value = 500 #5gp
+	wealth_value = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		14 = st
-		100 = cwt
-		2000 = tn
+		0.0025 = lb #5gp per lb
+		0.035 = st
+		0.25 = cwt
+		5 = tn
 	}
 }

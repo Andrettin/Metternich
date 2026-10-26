@@ -27,7 +27,7 @@ void enchantment::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "price") {
-		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
+		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value).to_ceil_int64();
 	} else {
 		data_entry::process_gsml_property(property);
 	}

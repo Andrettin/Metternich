@@ -3,12 +3,12 @@ lumber = {
 	type = material
 	icon = lumber
 	industrial = true
-	base_price = 10 #1sp, price of lumber; hardwood would be 1gp
+	base_price = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		2000 = tn
-		2000000 = ktn
-		#2000000000 = Mtn
+		0.00005 = lb #1sp per lb, price of lumber; hardwood would be 1gp per lb
+		0.1 = tn
+		100 = ktn
+		#100000 = Mtn
 	}
 }

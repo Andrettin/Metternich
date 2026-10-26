@@ -3,10 +3,10 @@ sulfur = {
 	type = resource
 	icon = spices_yellow
 	mineral = true
-	base_price = 100 #1gp
+	base_price = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		2000 = tn
+		0.0005 = lb #1gp per lb
+		1 = tn
 	}
 }

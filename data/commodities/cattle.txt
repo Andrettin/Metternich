@@ -4,9 +4,7 @@ cattle = {
 	icon = cattle
 	agricultural = true
 	food_type = meat
-	base_price = 1000 #10gp per cow
-	units = {
-		10 = da
-		100 = h
-	}
+	base_price = 1
+	
+	#10gp per cow
 }

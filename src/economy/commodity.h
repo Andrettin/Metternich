@@ -168,7 +168,7 @@ public:
 
 	bool is_enabled() const;
 
-	const std::map<int64_t, const commodity_unit *> &get_units() const
+	const std::map<decimillesimal_int, const commodity_unit *> &get_units() const
 	{
 		return this->units;
 	}
@@ -179,7 +179,8 @@ public:
 	}
 
 	Q_INVOKABLE const metternich::commodity_unit *get_unit(const qint64 value) const;
-	Q_INVOKABLE qint64 get_unit_value(const metternich::commodity_unit *unit) const;
+	const decimillesimal_int &get_unit_value(const commodity_unit *unit) const;
+	Q_INVOKABLE qint64 get_unit_value_int64(const metternich::commodity_unit *unit) const;
 
 	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
 	decimillesimal_int string_to_fractional_value(const std::string &str) const;
@@ -217,8 +218,8 @@ private:
 	const commodity_unit *storage_unit = nullptr;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
-	std::map<int64_t, const commodity_unit *> units;
-	data_entry_map<commodity_unit, int64_t> unit_values;
+	std::map<decimillesimal_int, const commodity_unit *> units;
+	data_entry_map<commodity_unit, decimillesimal_int> unit_values;
 };
 
 }
