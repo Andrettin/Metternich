@@ -3,7 +3,7 @@ liquor = {
 	type = good
 	icon = wine
 	industrial = true
-	base_price = 9
+	base_price = 6
 	
 	#2sp per lb, price of whiskey
 }

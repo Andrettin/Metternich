@@ -1,7 +1,7 @@
 coal_mining = {
 	name = "Coal Mining"
 	output_commodity = coal
-	quarterly_wealth_output_value = 1gb
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		laborers
@@ -13,7 +13,7 @@ coal_mining = {
 gold_mining = {
 	name = "Gold Mining"
 	output_commodity = gold
-	quarterly_wealth_output_value = 1gb
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		laborers
@@ -25,7 +25,7 @@ gold_mining = {
 iron_mining = {
 	name = "Iron Mining"
 	output_commodity = iron
-	quarterly_wealth_output_value = 1gb
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		laborers
@@ -37,7 +37,7 @@ iron_mining = {
 silver_mining = {
 	name = "Silver Mining"
 	output_commodity = silver
-	quarterly_wealth_output_value = 1gb
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		laborers
@@ -49,7 +49,7 @@ silver_mining = {
 sulfur_mining = {
 	name = "Sulfur Mining"
 	output_commodity = sulfur
-	quarterly_wealth_output_value = 1gb
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		laborers

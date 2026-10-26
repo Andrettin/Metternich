@@ -1,10 +1,10 @@
 fertilizer_making = {
 	name = "Fertilizer Making"
 	input_commodities = {
-		sulfur = 6tn
+		sulfur = 2
 	}
 	output_commodity = fertilizer
-	monthly_output_value = 5
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -14,12 +14,10 @@ fertilizer_making = {
 furniture_making = {
 	name = "Furniture Making"
 	input_commodities = {
-		#lumber = 20tn
-		#timber = 20tn
-		lumber = 40tn
+		lumber = 2
 	}
 	output_commodity = furniture
-	monthly_output_value = 12
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -29,10 +27,10 @@ furniture_making = {
 glass_making = {
 	name = "Glass Making"
 	input_commodities = {
-		coal = 14tn
+		coal = 2
 	}
 	output_commodity = glass
-	monthly_output_value = 18cwt
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -42,11 +40,11 @@ glass_making = {
 liquor_distilling = {
 	name = "Liquor Distilling"
 	input_commodities = {
-		grain = 10tn
-		glass = 8cwt
+		grain = 1
+		glass = 1
 	}
 	output_commodity = liquor
-	monthly_output_value = 10
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -56,10 +54,10 @@ liquor_distilling = {
 lumber_making = {
 	name = "Lumber Making"
 	input_commodities = {
-		timber = 100
+		timber = 2
 	}
 	output_commodity = lumber
-	monthly_output_value = 110tn
+	quarterly_output_value = 1
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
