@@ -271,15 +271,15 @@ austria = {
 		
 		1815 = { #1820 = {
 			commodities = {
-				wealth = 5000gp
+				wealth = 50gb
 				horses = 4
 				canned_food = 20
 				fabric = 3
-				lumber = 15tn
+				lumber = 15
 				paper = 8
 				steel = 10
 				clothing = 3
-				furniture = 3tn
+				furniture = 3
 				tools = 3
 				armament = 2
 			}

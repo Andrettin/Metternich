@@ -30,17 +30,17 @@ great_britain = {
 	history = {
 		1815 = { #1820 = {
 			commodities = {
-				wealth = 10000gp
+				wealth = 100gb
 				cotton = 8
 				wool = 8
 				horses = 2
 				canned_food = 20
 				fabric = 10
-				lumber = 20tn
+				lumber = 20
 				paper = 10
 				steel = 15
 				clothing = 8
-				furniture = 5tn
+				furniture = 5
 				tools = 5
 				armament = 2
 			}

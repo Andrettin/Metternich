@@ -35,11 +35,11 @@ ottoman_empire = {
 	
 		1815 = { #1820 = {
 			commodities = {
-				wealth = 1500gp
+				wealth = 15gb
 				horses = 4
 				canned_food = 20
 				fabric = 3
-				lumber = 15tn
+				lumber = 15
 				paper = 4
 				steel = 4
 				armament = 4

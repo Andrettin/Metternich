@@ -18,15 +18,15 @@ sardinia = {
 	history = {
 		1815 = { #1820 = {
 			commodities = {
-				wealth = 1500gp
+				wealth = 15gb
 				horses = 4
 				canned_food = 20
 				fabric = 3
-				lumber = 15tn
+				lumber = 15
 				paper = 8
 				steel = 10
 				clothing = 2
-				furniture = 2tn
+				furniture = 2
 				tools = 2
 				armament = 2
 			}

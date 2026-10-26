@@ -25,15 +25,15 @@ russia = {
 		
 		1815 = { #1820 = {
 			commodities = {
-				wealth = 1500gp
+				wealth = 15gb
 				horses = 5
 				canned_food = 20
 				fabric = 4
-				lumber = 10tn
+				lumber = 10
 				paper = 2
 				steel = 5
 				clothing = 1
-				furniture = 1tn
+				furniture = 1
 				tools = 1
 				armament = 5
 			}
