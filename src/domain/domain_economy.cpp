@@ -766,7 +766,7 @@ qint64 domain_economy::get_commodity_output_int(const commodity *commodity) cons
 
 QString domain_economy::get_commodity_output_qstring(const metternich::commodity *commodity) const
 {
-	return QString::fromStdString(commodity->value_to_string(centesimal_int(this->get_commodity_output(commodity)), false));
+	return QString::fromStdString(commodity->value_to_string(this->get_commodity_output(commodity), false));
 }
 
 void domain_economy::change_commodity_output(const commodity *commodity, const decimillesimal_int &change)

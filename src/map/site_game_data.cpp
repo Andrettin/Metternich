@@ -2689,7 +2689,7 @@ QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
 
 QString site_game_data::get_commodity_output_qstring(const metternich::commodity *commodity) const
 {
-	return QString::fromStdString(commodity->value_to_string(this->get_commodity_output(commodity), false));
+	return QString::fromStdString(commodity->value_to_string(decimillesimal_int(this->get_commodity_output(commodity)), false));
 }
 
 void site_game_data::set_commodity_output(const commodity *commodity, const centesimal_int &output)

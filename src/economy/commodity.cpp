@@ -11,7 +11,9 @@
 #include "game/game_rules.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/decimal_int.h"
 #include "util/dice.h"
+#include "util/millesimal_int.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 
@@ -232,22 +234,22 @@ std::string commodity::value_to_string(const decimillesimal_int &value, const bo
 {
 	const commodity_unit *unit = this->get_unit(value.to_int());
 	if (unit != nullptr) {
-		const std::string value_for_unit_str = (value / this->get_unit_value(unit)).to_formatted_string();
-		if (joined) {
-			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
+		const decimillesimal_int value_for_unit = value / this->get_unit_value(unit);
+		std::string value_for_unit_str;
+
+		//ensure that at least two significant digits will be displayed, but otherwise try to truncate to as close to integers as possible
+		if (value_for_unit >= 10) {
+			value_for_unit_str = number::to_formatted_string(value_for_unit.to_int64());
+		} else if (value_for_unit >= 1) {
+			value_for_unit_str = decimal_int(value_for_unit).to_formatted_string();
+		} else if (value_for_unit.get_value() >= 1000) {
+			value_for_unit_str = centesimal_int(value_for_unit).to_formatted_string();
+		} else if (value_for_unit.get_value() >= 100) {
+			value_for_unit_str = millesimal_int(value_for_unit).to_formatted_string();
 		} else {
-			return std::format("{} {}", value_for_unit_str, unit->get_suffix());
+			value_for_unit_str = value_for_unit.to_formatted_string();
 		}
-	}
 
-	return value.to_formatted_string();
-}
-
-std::string commodity::value_to_string(const centesimal_int &value, const bool joined) const
-{
-	const commodity_unit *unit = this->get_unit(value.to_int());
-	if (unit != nullptr) {
-		const std::string value_for_unit_str = (value / this->get_unit_value(unit)).to_formatted_string();
 		if (joined) {
 			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
 		} else {
