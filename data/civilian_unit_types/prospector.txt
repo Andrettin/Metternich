@@ -4,7 +4,7 @@ prospector = {
 	icon = prospector
 	prospector = true
 	commodity_costs = {
-		wealth = 500gp
+		wealth = 5gb
 		paper = 2
 	}
 }

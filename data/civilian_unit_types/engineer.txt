@@ -3,7 +3,7 @@ engineer = {
 	unit_class = engineer
 	icon = engineer
 	commodity_costs = {
-		wealth = 2000gp
+		wealth = 20gb
 		paper = 2
 	}
 	buildable_pathways = {

@@ -4,7 +4,7 @@ driller = {
 	icon = miners
 	required_technology = industrialization
 	commodity_costs = {
-		wealth = 5000gp
+		wealth = 50gb
 		paper = 2
 	}
 	improvable_resources = {

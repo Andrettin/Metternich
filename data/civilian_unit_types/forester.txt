@@ -3,7 +3,7 @@ forester = {
 	unit_class = forester
 	icon = forester
 	commodity_costs = {
-		wealth = 1000gp
+		wealth = 10gb
 		paper = 2
 	}
 	improvable_resources = {

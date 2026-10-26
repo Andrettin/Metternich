@@ -4,7 +4,7 @@ merchant = {
 	icon = merchant
 	developer = true
 	commodity_costs = {
-		wealth = 500gp
+		wealth = 5gb
 		paper = 3
 	}
 }

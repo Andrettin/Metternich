@@ -3,7 +3,7 @@ builder = {
 	unit_class = builder
 	icon = craftsmen_light
 	commodity_costs = {
-		wealth = 500gp
+		wealth = 5gb
 		paper = 3
 	}
 }

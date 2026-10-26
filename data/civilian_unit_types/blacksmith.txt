@@ -3,7 +3,7 @@ blacksmith = {
 	unit_class = blacksmith
 	icon = trained_workers
 	commodity_costs = {
-		wealth = 2000gp
+		wealth = 20gb
 		paper = 2
 	}
 }

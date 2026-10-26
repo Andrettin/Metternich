@@ -3,7 +3,7 @@ farmer = {
 	unit_class = farmer
 	icon = slaves_light
 	commodity_costs = {
-		wealth = 1000gp
+		wealth = 10gb
 		paper = 2
 	}
 	improvable_resources = {
