@@ -29,7 +29,7 @@ warehouse = {
 		base_population_capacity = 20
 	}
 	domain_modifier = {
-		storage_capacity = 100
+		storage_capacity = 10
 		economy = 1
 	}
 }
