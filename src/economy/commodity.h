@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
+#include "util/millionesimal_int.h"
 
 Q_MOC_INCLUDE("economy/commodity_unit.h")
 Q_MOC_INCLUDE("game/game_rule.h")
@@ -162,7 +163,7 @@ public:
 
 	bool is_enabled() const;
 
-	const std::map<decimillesimal_int, const commodity_unit *> &get_units() const
+	const std::map<millionesimal_int, const commodity_unit *> &get_units() const
 	{
 		return this->units;
 	}
@@ -173,7 +174,7 @@ public:
 	}
 
 	Q_INVOKABLE const metternich::commodity_unit *get_unit(const qint64 value) const;
-	const decimillesimal_int &get_unit_value(const commodity_unit *unit) const;
+	const millionesimal_int &get_unit_value(const commodity_unit *unit) const;
 	Q_INVOKABLE qint64 get_unit_value_int64(const metternich::commodity_unit *unit) const;
 
 	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
@@ -211,8 +212,8 @@ private:
 	int64_t base_price = 0;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
-	std::map<decimillesimal_int, const commodity_unit *> units;
-	data_entry_map<commodity_unit, decimillesimal_int> unit_values;
+	std::map<millionesimal_int, const commodity_unit *> units;
+	data_entry_map<commodity_unit, millionesimal_int> unit_values;
 };
 
 }

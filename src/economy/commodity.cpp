@@ -31,8 +31,7 @@ void commodity::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			decimillesimal_int unit_value = decimillesimal_int(key);
-			unit_value = decimillesimal_int::max(unit_value, decimillesimal_int::from_value(1));
+			millionesimal_int unit_value = millionesimal_int(key);
 
 			assert_throw(unit_value > 0);
 
@@ -124,13 +123,23 @@ const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 			continue;
 		}
 
-		if (decimillesimal_int(value).abs() >= unit_value) {
+		if (unit_value < 1) {
+			//do not use fractional unit values for display purposes
+			continue;
+		}
+
+		if (std::abs(value) >= unit_value.to_int64()) {
 			return unit;
 		}
 	}
 
 	//if we couldn't get a unit with a value higher than the given value, use the lowest displayable unit
 	for (const auto &[unit_value, unit] : this->units) {
+		if (unit_value < 1) {
+			//do not use fractional unit values for display purposes
+			continue;
+		}
+
 		if (unit->is_displayed()) {
 			return unit;
 		}
@@ -139,7 +148,7 @@ const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 	return nullptr;
 }
 
-const decimillesimal_int &commodity::get_unit_value(const commodity_unit *unit) const
+const millionesimal_int &commodity::get_unit_value(const commodity_unit *unit) const
 {
 	const auto find_iterator = this->unit_values.find(unit);
 
@@ -172,9 +181,13 @@ decimillesimal_int commodity::string_to_fractional_value(const std::string &str)
 {
 	try {
 		const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
-		decimillesimal_int value = decimillesimal_int(number_str);
+		const decimillesimal_int base_value = decimillesimal_int(number_str);
+		decimillesimal_int value = base_value;
 		if (unit != nullptr) {
 			value *= this->get_unit_value(unit);
+		}
+		if (value == 0 && base_value > 0) {
+			value = decimillesimal_int::from_value(1); //ensure very small values don't become zero
 		}
 		return value;
 	} catch (...) {
@@ -238,7 +251,7 @@ QString commodity::get_units_tooltip() const
 	std::string str;
 
 	const commodity_unit *previous_unit = nullptr;
-	decimillesimal_int previous_unit_value;
+	millionesimal_int previous_unit_value;
 	for (const auto &[unit_value, unit] : this->units) {
 		if (!unit->is_displayed()) {
 			continue;
