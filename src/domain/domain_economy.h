@@ -227,6 +227,12 @@ public:
 
 	Q_INVOKABLE qint64 get_commodity_output_int(const metternich::commodity *commodity) const;
 	Q_INVOKABLE QString get_commodity_output_qstring(const metternich::commodity *commodity) const;
+
+	Q_INVOKABLE bool has_commodity_output(const metternich::commodity *commodity) const
+	{
+		return this->get_commodity_output(commodity) != 0;
+	}
+
 	void change_commodity_output(const commodity *commodity, const decimillesimal_int &change);
 
 	decimillesimal_int get_net_commodity_output(const commodity *commodity) const
