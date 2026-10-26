@@ -482,7 +482,7 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 		}
 	}
 
-	if (value <= 0) {
+	if (value == 0) {
 		this->stored_commodities.erase(commodity);
 	} else {
 		this->stored_commodities[commodity] = value;
