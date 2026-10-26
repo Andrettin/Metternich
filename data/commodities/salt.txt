@@ -4,7 +4,6 @@ salt = {
 	icon = salt
 	mineral = true
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.0025 = lb #5gp per lb
 		5 = tn

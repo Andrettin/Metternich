@@ -4,7 +4,6 @@ silver = {
 	icon = silver
 	mineral = true
 	wealth_value = 1
-	storage_unit = tn
 	units = {
 		0.0025 = lb #5gp per lb
 		0.035 = st

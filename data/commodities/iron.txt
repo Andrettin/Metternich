@@ -4,7 +4,6 @@ iron = {
 	icon = iron
 	mineral = true
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.00005 = lb #1sp per lb
 		0.1 = tn

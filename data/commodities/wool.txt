@@ -4,7 +4,6 @@ wool = {
 	icon = wool
 	agricultural = true
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.003 = lb #6gp per lb
 		0.3 = cwt

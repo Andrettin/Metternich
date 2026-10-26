@@ -4,7 +4,6 @@ lumber = {
 	icon = lumber
 	industrial = true
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.00005 = lb #1sp per lb, price of lumber; hardwood would be 1gp per lb
 		0.1 = tn

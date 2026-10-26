@@ -4,7 +4,6 @@ tobacco = {
 	icon = tobacco
 	agricultural = true
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.00025 = lb #5sp per lb
 		0.5 = tn

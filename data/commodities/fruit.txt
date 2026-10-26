@@ -5,7 +5,6 @@ fruit = {
 	agricultural = true
 	food_type = fruit
 	base_price = 1
-	storage_unit = tn
 	units = {
 		0.00015 = lb #3sp per lb, price of figs
 		0.3 = tn

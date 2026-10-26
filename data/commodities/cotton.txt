@@ -4,7 +4,6 @@ cotton = {
 	icon = cotton
 	agricultural = true
 	base_price = 800 #8gp
-	storage_unit = tn
 	required_game_rule = additional_commodities
 	units = {
 		1 = sq_yd #or pound

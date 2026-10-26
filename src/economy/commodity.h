@@ -44,7 +44,6 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
 	Q_PROPERTY(qint64 wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_price MEMBER base_price READ get_base_price NOTIFY changed)
-	Q_PROPERTY(const metternich::commodity_unit* storage_unit MEMBER storage_unit READ get_storage_unit NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
@@ -156,11 +155,6 @@ public:
 
 	Q_INVOKABLE bool is_wealth() const;
 
-	const commodity_unit *get_storage_unit() const
-	{
-		return this->storage_unit;
-	}
-
 	const technology *get_required_technology() const
 	{
 		return this->required_technology;
@@ -215,7 +209,6 @@ private:
 	bool negative_allowed = false;
 	int64_t wealth_value = 0;
 	int64_t base_price = 0;
-	const commodity_unit *storage_unit = nullptr;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
 	std::map<decimillesimal_int, const commodity_unit *> units;

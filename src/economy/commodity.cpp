@@ -65,10 +65,6 @@ void commodity::check() const
 	assert_throw(this->get_icon() != nullptr);
 	assert_throw(this->get_wealth_value() >= 0);
 
-	if (this->is_storable() && !this->is_abstract() && !this->get_units().empty() && this->get_units().contains(decimillesimal_int(1)) && this->get_storage_unit() == nullptr) {
-		throw std::runtime_error(std::format("Commodity \"{}\" is storable, non-abstract and has units (including a unit for 1), but has no storage unit.", this->get_identifier()));
-	}
-
 	if (this->is_local()) {
 		if (!this->is_abstract()) {
 			throw std::runtime_error(std::format("Commodity \"{}\" is local but is not abstract, which is not supported.", this->get_identifier()));

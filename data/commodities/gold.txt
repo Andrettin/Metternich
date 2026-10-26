@@ -4,7 +4,6 @@ gold = {
 	icon = gold
 	mineral = true
 	wealth_value = 1
-	storage_unit = tn
 	units = {
 		0.025 = lb #50gp per lb
 		0.35 = st

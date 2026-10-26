@@ -3,7 +3,6 @@ timber = {
 	type = resource
 	icon = timber
 	base_price = 9 #9cp, 90% of the price of lumber
-	storage_unit = tn
 	required_game_rule = additional_commodities
 	units = {
 		1 = lb
