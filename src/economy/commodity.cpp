@@ -232,32 +232,37 @@ std::string commodity::value_to_string(const int64_t value, const bool joined) c
 
 std::string commodity::value_to_string(const decimillesimal_int &value, const bool joined) const
 {
+	decimillesimal_int display_value = value;
+
 	const commodity_unit *unit = this->get_unit(value.to_int());
 	if (unit != nullptr) {
-		const decimillesimal_int value_for_unit = value / this->get_unit_value(unit);
-		std::string value_for_unit_str;
+		display_value = value / this->get_unit_value(unit);
+	}
 
-		//ensure that at least two significant digits will be displayed, but otherwise try to truncate to as close to integers as possible
-		if (value_for_unit >= 10) {
-			value_for_unit_str = number::to_formatted_string(value_for_unit.to_int64());
-		} else if (value_for_unit >= 1) {
-			value_for_unit_str = decimal_int(value_for_unit).to_formatted_string();
-		} else if (value_for_unit.get_value() >= 1000) {
-			value_for_unit_str = centesimal_int(value_for_unit).to_formatted_string();
-		} else if (value_for_unit.get_value() >= 100) {
-			value_for_unit_str = millesimal_int(value_for_unit).to_formatted_string();
-		} else {
-			value_for_unit_str = value_for_unit.to_formatted_string();
-		}
+	std::string value_str;
 
+	//ensure that at least two significant digits will be displayed, but otherwise try to truncate to as close to integers as possible
+	if (display_value.abs() >= 10) {
+		value_str = number::to_formatted_string(display_value.to_int64());
+	} else if (display_value.abs() >= 1) {
+		value_str = decimal_int(display_value).to_formatted_string();
+	} else if (display_value.abs().get_value() >= 1000) {
+		value_str = centesimal_int(display_value).to_formatted_string();
+	} else if (display_value.abs().get_value() >= 100) {
+		value_str = millesimal_int(display_value).to_formatted_string();
+	} else {
+		value_str = display_value.to_formatted_string();
+	}
+
+	if (unit != nullptr) {
 		if (joined) {
-			return std::format("{}{}", value_for_unit_str, unit->get_suffix());
+			return std::format("{}{}", value_str, unit->get_suffix());
 		} else {
-			return std::format("{} {}", value_for_unit_str, unit->get_suffix());
+			return std::format("{} {}", value_str, unit->get_suffix());
 		}
 	}
 
-	return value.to_formatted_string();
+	return value_str;
 }
 
 QString commodity::value_to_qstring(const int64_t value) const
