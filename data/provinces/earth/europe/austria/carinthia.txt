@@ -3,6 +3,10 @@ carinthia = {
 	color = { 143 128 32 }
 	terrain = mountains
 	default_provincial_capital = klagenfurt
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_sheep_land = 1
+	}
 	regions = {
 		austria
 		imperial_austria_1806

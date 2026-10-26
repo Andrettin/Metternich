@@ -168,9 +168,15 @@ austria_proper = { #Lower Austria and Upper Austria
 	}
 }
 
-ducal_styria = {
+ducal_styria = { #Upper and Lower Styria
 	superregions = {
 		imperial_austria_1806
+	}
+	resource_counts = {
+		prime_cattle_land = 2
+		prime_fruit_land = 2
+		prime_grain_land = 3
+		prime_sheep_land = 1
 	}
 	
 	history = {
