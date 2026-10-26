@@ -75,7 +75,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static commodity_map<int64_t> commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
+	static commodity_map<decimillesimal_int> commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
 
 public:
 	explicit building_type(const std::string &identifier);
@@ -254,7 +254,7 @@ public:
 		return this->min_holding_level;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
@@ -349,7 +349,7 @@ private:
 	std::vector<const building_type *> required_buildings;
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	decimillesimal_int wealth_cost;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<site>> cost_factor;

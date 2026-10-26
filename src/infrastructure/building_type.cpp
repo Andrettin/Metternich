@@ -42,9 +42,9 @@ const std::set<std::string> building_type::database_dependencies = {
 	employment_type::class_identifier
 };
 
-commodity_map<int64_t> building_type::commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights)
+commodity_map<decimillesimal_int> building_type::commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights)
 {
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 
 	int total_weight = 0;
 	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
@@ -53,7 +53,7 @@ commodity_map<int64_t> building_type::commodity_weights_to_costs(const decimille
 
 	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
 		assert_throw(commodity->get_base_price() > 0);
-		commodity_costs[commodity] = (wealth_cost * cost_weight / total_weight / commodity->get_base_price()).to_ceil_int64();
+		commodity_costs[commodity] = wealth_cost * cost_weight / total_weight / commodity->get_base_price();
 	}
 
 	return commodity_costs;
@@ -119,7 +119,7 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+			this->commodity_costs[commodity] = commodity->string_to_fractional_value(property.get_value());
 		});
 	} else if (tag == "commodity_cost_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -401,10 +401,10 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 	}
 
 	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty() && (!this->commodity_cost_weights.contains(defines::get()->get_wealth_commodity()) || this->commodity_cost_weights.size() > 1)) {
-		const commodity_map<int64_t> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
+		const commodity_map<decimillesimal_int> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
 
 		for (const auto &[weighted_commodity, weighted_cost] : weighted_commodity_costs) {
-			costs[weighted_commodity] += decimillesimal_int(weighted_cost);
+			costs[weighted_commodity] += weighted_cost;
 		}
 
 		costs.erase(defines::get()->get_wealth_commodity());
