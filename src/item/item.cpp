@@ -242,7 +242,7 @@ int64_t item::get_price(const item_type *type, const item_material *material, co
 {
 	Q_UNUSED(material);
 
-	int64_t price = type->get_price();
+	decimillesimal_int price = type->get_price();
 
 	if (enchantment != nullptr) {
 		price += enchantment->get_price();
@@ -256,7 +256,7 @@ int64_t item::get_price(const item_type *type, const item_material *material, co
 		price += recipe->get_price();
 	}
 
-	return price;
+	return price.to_ceil_int64();
 }
 
 void item::update_name()

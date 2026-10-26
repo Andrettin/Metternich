@@ -27,7 +27,7 @@ void enchantment::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "price") {
-		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value).to_ceil_int64();
+		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
 	} else {
 		data_entry::process_gsml_property(property);
 	}
@@ -99,13 +99,13 @@ void enchantment::check() const
 	}
 }
 
-int64_t enchantment::get_price() const
+decimillesimal_int enchantment::get_price() const
 {
 	if (this->price != 0) {
 		return this->price;
 	}
 
-	int64_t price = 0;
+	decimillesimal_int price;
 
 	for (const enchantment *subenchantment : this->get_subenchantments()) {
 		price += subenchantment->get_price();

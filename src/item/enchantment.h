@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/decimillesimal_int.h"
 
 namespace metternich {
 
@@ -41,7 +42,7 @@ public:
 		return this->affix_type;
 	}
 
-	int64_t get_price() const;
+	decimillesimal_int get_price() const;
 
 	bool is_allowed_for_item_type(const item_type *item_type) const;
 
@@ -87,7 +88,7 @@ signals:
 
 private:
 	metternich::affix_type affix_type{};
-	int64_t price = 0;
+	decimillesimal_int price;
 	data_entry_set<item_class> item_classes;
 	data_entry_set<item_type> item_types;
 	std::vector<const enchantment *> subenchantments;

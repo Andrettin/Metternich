@@ -2,6 +2,7 @@
 
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "util/decimillesimal_int.h"
 
 namespace metternich {
 
@@ -94,10 +95,10 @@ public:
 		return this->spells;
 	}
 
-	int64_t get_price() const;
+	decimillesimal_int get_price() const;
 
 	int64_t get_price_of_materials() const;
-	int64_t get_result_price() const;
+	decimillesimal_int get_result_price() const;
 
 	int get_craft_cost() const;
 

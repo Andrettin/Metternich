@@ -4214,7 +4214,7 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 
 	if (this->is_ai()) {
 		//for AI characters, they should not craft recipes which are not sure to produce an item of higher value than the recipe materials
-		if (recipe->get_price_of_materials() >= recipe->get_result_price()) {
+		if (decimillesimal_int(recipe->get_price_of_materials()) >= recipe->get_result_price()) {
 			return false;
 		}
 	}

@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "species/creature_size_container.h"
+#include "util/decimillesimal_int.h"
 #include "util/dice.h"
 
 Q_MOC_INCLUDE("item/item_class.h")
@@ -81,7 +82,7 @@ public:
 		return this->icon;
 	}
 
-	int64_t get_price() const
+	const decimillesimal_int &get_price() const
 	{
 		return this->price;
 	}
@@ -149,7 +150,7 @@ signals:
 private:
 	metternich::item_class *item_class = nullptr;
 	const metternich::icon *icon = nullptr;
-	int64_t price = 0;
+	decimillesimal_int price;
 	creature_size_map<dice> damage_dice_per_target_size;
 	int range = 0; //in inches
 	int critical_hit_chance = 0;
