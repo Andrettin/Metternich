@@ -7,6 +7,7 @@
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("domain/domain.h")
@@ -793,8 +794,8 @@ public:
 
 	void sort_recipes();
 
-	int64_t get_wealth() const;
-	void change_wealth(const int64_t change);
+	const decimillesimal_int &get_wealth() const;
+	void change_wealth(const decimillesimal_int &change);
 
 	const std::vector<qunique_ptr<item>> &get_items() const
 	{
@@ -1194,7 +1195,7 @@ private:
 	spell_map<int> spell_charges;
 	spell_map<int> max_spell_charges;
 	std::vector<const recipe *> recipes; //recipes that the character has learned
-	int64_t wealth = 0;
+	decimillesimal_int wealth;
 	std::vector<qunique_ptr<item>> items;
 	data_entry_map<item_slot, std::vector<item *>> equipped_items;
 	std::map<military_unit_stat, centesimal_int> commanded_military_unit_stat_modifiers;

@@ -323,7 +323,7 @@ void domain_economy::do_trade()
 				const int64_t bid = other_domain_economy->get_bid(commodity);
 				if (bid != 0) {
 					int64_t sold_quantity = std::min(offer, bid);
-					sold_quantity = std::min(sold_quantity, other_domain_economy->get_wealth() / price);
+					sold_quantity = std::min(sold_quantity, (other_domain_economy->get_wealth() / price).to_int64());
 
 					if (sold_quantity > 0) {
 						this->do_sale(other_domain, commodity, sold_quantity, true);
@@ -377,14 +377,14 @@ QVariantList domain_economy::get_vassal_resource_counts_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_vassal_resource_counts());
 }
 
-int64_t domain_economy::get_wealth() const
+const decimillesimal_int &domain_economy::get_wealth() const
 {
-	return this->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64();
+	return this->get_stored_commodity(defines::get()->get_wealth_commodity());
 }
 
-void domain_economy::set_wealth(const int64_t wealth)
+void domain_economy::set_wealth(const decimillesimal_int &wealth)
 {
-	this->set_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(wealth));
+	this->set_stored_commodity(defines::get()->get_wealth_commodity(), wealth);
 }
 
 QVariantList domain_economy::get_available_commodities_qvariant_list() const
@@ -1039,7 +1039,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	if (state_purchase) {
 		other_domain_economy->change_stored_commodity(commodity, decimillesimal_int(sold_quantity));
 		const int64_t purchase_expense = price * sold_quantity;
-		other_domain_economy->change_wealth(-purchase_expense);
+		other_domain_economy->change_wealth(decimillesimal_int(-purchase_expense));
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 
 		other_domain_economy->change_bid(commodity, -sold_quantity);

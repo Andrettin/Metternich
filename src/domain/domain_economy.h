@@ -86,10 +86,10 @@ public:
 		}
 	}
 
-	int64_t get_wealth() const;
-	void set_wealth(const int64_t wealth);
+	const decimillesimal_int &get_wealth() const;
+	void set_wealth(const decimillesimal_int &wealth);
 
-	void change_wealth(const int64_t change)
+	void change_wealth(const decimillesimal_int &change)
 	{
 		this->set_wealth(this->get_wealth() + change);
 	}

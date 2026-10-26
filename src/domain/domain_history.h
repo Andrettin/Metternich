@@ -40,7 +40,7 @@ class domain_history final : public data_entry_history
 	Q_PROPERTY(const metternich::domain* owner MEMBER owner READ get_owner)
 	Q_PROPERTY(archimedes::decimillesimal_int literacy_rate MEMBER literacy_rate READ get_literacy_rate)
 	Q_PROPERTY(std::vector<const metternich::technology *> technologies READ get_technologies)
-	Q_PROPERTY(int wealth MEMBER wealth READ get_wealth)
+	Q_PROPERTY(archimedes::decimillesimal_int wealth MEMBER wealth READ get_wealth)
 
 public:
 	explicit domain_history(const metternich::domain *domain);
@@ -120,7 +120,7 @@ public:
 		return this->laws;
 	}
 
-	int get_wealth() const
+	const decimillesimal_int &get_wealth() const
 	{
 		return this->wealth;
 	}
@@ -157,7 +157,7 @@ private:
 	decimillesimal_int literacy_rate;
 	std::vector<const technology *> technologies;
 	law_group_map<const law *> laws;
-	int wealth = 0;
+	decimillesimal_int wealth;
 	commodity_map<decimillesimal_int> commodities;
 	domain_map<diplomacy_state> diplomacy_states;
 	domain_map<const consulate *> consulates;

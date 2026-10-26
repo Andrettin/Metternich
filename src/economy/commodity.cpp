@@ -213,7 +213,7 @@ std::string commodity::value_to_string(const int64_t value, const bool joined) c
 	return number::to_formatted_string(value);
 }
 
-std::string commodity::value_to_string(const centesimal_int &value, const bool joined) const
+std::string commodity::value_to_string(const decimillesimal_int &value, const bool joined) const
 {
 	const commodity_unit *unit = this->get_unit(value.to_int());
 	if (unit != nullptr) {

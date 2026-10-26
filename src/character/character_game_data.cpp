@@ -181,7 +181,7 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "office") {
 		this->office = office::get(value);
 	} else if (key == "wealth") {
-		this->wealth = std::stoll(value);
+		this->wealth = decimillesimal_int(value);
 	} else if (key == "flat_footed") {
 		this->flat_footed = string::to_bool(value);
 	} else if (key == "general_opinion_modifier") {
@@ -415,7 +415,7 @@ gsml_data character_game_data::to_gsml_data() const
 	data.add_property("base_armor_class_bonus", std::to_string(this->get_base_armor_class_bonus()));
 	data.add_property("natural_armor_class_bonus", std::to_string(this->get_natural_armor_class_bonus()));
 	data.add_property("damage_bonus", std::to_string(this->get_damage_bonus()));
-	data.add_property("wealth", std::to_string(this->wealth));
+	data.add_property("wealth", this->wealth.to_string());
 
 	if (this->get_office() != nullptr) {
 		data.add_property("office", this->get_office()->get_identifier());
@@ -560,14 +560,13 @@ QCoro::Task<void> character_game_data::initialize()
 
 void character_game_data::ply_trade()
 {
-	static constexpr int gp_value = 100;
-	static constexpr int gb_value = 2000 * gp_value;
 
 	if (this->get_office() != nullptr) {
 		if (game::get()->is_last_turn_of_quarter()) {
-			//FIXME: this cost should be subtract from the domain wealth, as maintenance
+			//FIXME: this cost should be subtracted from the domain wealth, as maintenance
 			//FIXME: office holders should also cost regency as maintenance
-			const int income = gb_value * std::max(1, this->get_level() / 4);
+			static const decimillesimal_int gb_value = decimillesimal_int(1);
+			const decimillesimal_int income = gb_value * this->get_level() / 4;
 			this->change_wealth(income);
 		}
 		return;
@@ -575,8 +574,10 @@ void character_game_data::ply_trade()
 
 	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
 
+	static const decimillesimal_int gp_value = decimillesimal_int::from_value(5);
+
 	if (this->get_caster_level() > 0) {
-		const int profit = 25 * gp_value * this->get_caster_level() * province_level * game::get()->get_current_months_per_turn();
+		const decimillesimal_int profit = decimillesimal_int(25) * gp_value * this->get_caster_level() * province_level * game::get()->get_current_months_per_turn();
 		this->change_wealth(profit);
 		return;
 	}
@@ -625,7 +626,7 @@ void character_game_data::ply_trade()
 		skill_profitability = static_cast<profession_profitability>(static_cast<int>(skill_profitability) + 1);
 	}
 
-	int profit = 0;
+	decimillesimal_int profit;
 
 	switch (skill_profitability) {
 		case profession_profitability::marginal:
@@ -1024,7 +1025,7 @@ void character_game_data::add_starting_wealth(const character_package *package)
 
 		wealth *= defines::get()->get_wealth_commodity()->get_unit_value(wealth_unit);
 
-		this->change_wealth(wealth.to_int64());
+		this->change_wealth(wealth);
 	}
 }
 
@@ -1448,7 +1449,7 @@ QCoro::Task<void> character_game_data::die()
 			}
 
 			if (!next_of_kin.empty()) {
-				const int64_t wealth_share = this->get_wealth() / static_cast<int64_t>(next_of_kin.size());
+				const decimillesimal_int wealth_share = this->get_wealth() / next_of_kin.size();
 				for (const metternich::character *inheritor : next_of_kin) {
 					inheritor->get_game_data()->change_wealth(wealth_share);
 
@@ -1464,7 +1465,7 @@ QCoro::Task<void> character_game_data::die()
 				}
 			}
 
-			this->wealth = 0;
+			this->wealth = decimillesimal_int(0);
 		}
 
 		assert_throw(this->get_office() == nullptr);
@@ -3652,7 +3653,7 @@ QCoro::Task<void> character_game_data::set_office(const metternich::office *offi
 
 	if (office != nullptr && office->is_ruler()) {
 		this->get_domain()->get_economy()->change_wealth(this->wealth);
-		this->wealth = 0;
+		this->wealth = decimillesimal_int(0);
 	}
 
 	const civilian_unit_type *deployable_civilian_unit_type = this->get_deployable_civilian_unit_type();
@@ -4263,7 +4264,7 @@ void character_game_data::sort_recipes()
 	});
 }
 
-int64_t character_game_data::get_wealth() const
+const decimillesimal_int &character_game_data::get_wealth() const
 {
 	if (this->is_ruler()) {
 		assert_throw(this->wealth == 0);
@@ -4273,7 +4274,7 @@ int64_t character_game_data::get_wealth() const
 	}
 }
 
-void character_game_data::change_wealth(const int64_t change)
+void character_game_data::change_wealth(const decimillesimal_int &change)
 {
 	if (this->is_ruler()) {
 		assert_throw(this->wealth == 0);
@@ -4812,7 +4813,7 @@ bool character_game_data::can_sell_item(const item *item) const
 QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 {
 	qunique_ptr<metternich::item> sold_item = co_await this->take_item(item);
-	this->change_wealth(sold_item->get_sell_price());
+	this->change_wealth(decimillesimal_int(sold_item->get_sell_price()));
 
 	//see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
 

@@ -460,7 +460,7 @@ bool building_slot::can_build_wonder(const metternich::wonder *wonder) const
 
 	const domain_economy *domain_economy = this->get_domain()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_domain(this->get_domain());
-	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth()) {
+	if (wealth_cost > 0 && wealth_cost > domain_economy->get_wealth().to_int()) {
 		return false;
 	}
 
@@ -482,7 +482,7 @@ void building_slot::build_wonder(const metternich::wonder *wonder)
 	domain_economy *domain_economy = this->get_domain()->get_economy();
 	const int wealth_cost = wonder->get_wealth_cost_for_domain(this->get_domain());
 	if (wealth_cost > 0) {
-		domain_economy->change_wealth(-wealth_cost);
+		domain_economy->change_wealth(decimillesimal_int(-wealth_cost));
 	}
 
 	for (const auto &[commodity, cost] : wonder->get_commodity_costs_for_domain(this->get_domain())) {
@@ -515,7 +515,7 @@ void building_slot::cancel_construction()
 		domain_economy *domain_economy = this->get_domain()->get_economy();
 		const int wealth_cost = this->get_under_construction_wonder()->get_wealth_cost_for_domain(this->get_domain());
 		if (wealth_cost > 0) {
-			domain_economy->change_wealth(wealth_cost);
+			domain_economy->change_wealth(decimillesimal_int(wealth_cost));
 		}
 
 		for (const auto &[commodity, cost] : this->get_under_construction_wonder()->get_commodity_costs_for_domain(this->get_domain())) {
