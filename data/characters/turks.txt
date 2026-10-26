@@ -1,3 +1,40 @@
+ali_al_qushji = {
+	name = "Ali"
+	surname = "al-Qushji"
+	character_class = engineer #astronomer/mathematician
+	culture = turkish
+	religion = sunni
+	home_site = adrianople #Edirne
+	gender = male
+	birth_date = 1400
+	death_date = 1474.12.16
+	level_ratio = 3/6
+}
+
+kaygusuz_abdal = {
+	name = "Kaygusuz"
+	surname = "Abdal"
+	character_class = cleric #theologian
+	culture = turkish
+	religion = sunni
+	home_site = attaleia #Antalya
+	gender = male
+	birth_date = 1400
+	death_date = 1480
+	level_ratio = 3/6
+}
+
+hayali = {
+	name = "Hayali" #"Hayâlî"
+	character_class = bard #poet
+	culture = turkish
+	religion = sunni
+	home_site = constantinople
+	gender = male
+	death_date = 1557
+	level_ratio = 1/6
+}
+
 selim_i_of_the_ottoman_empire = { #Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 204.
 	name = "Selim"
 	epithet = "I"
