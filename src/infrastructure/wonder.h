@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("infrastructure/building_type.h")
@@ -38,7 +39,7 @@ class wonder final : public named_data_entry, public data_type<wonder>
 	Q_PROPERTY(metternich::building_type* building MEMBER building NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(metternich::technology* obsolescence_technology MEMBER obsolescence_technology NOTIFY changed)
-	Q_PROPERTY(int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int wealth_cost MEMBER wealth_cost READ get_wealth_cost NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
 
 public:
@@ -73,12 +74,12 @@ public:
 		return this->obsolescence_technology;
 	}
 
-	int get_wealth_cost() const
+	const decimillesimal_int &get_wealth_cost() const
 	{
 		return this->wealth_cost;
 	}
 
-	int get_wealth_cost_for_domain(const domain *domain) const;
+	decimillesimal_int get_wealth_cost_for_domain(const domain *domain) const;
 
 	const commodity_map<int64_t> &get_commodity_costs() const
 	{
@@ -122,7 +123,7 @@ private:
 	building_type *building = nullptr;
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
-	int wealth_cost = 0;
+	decimillesimal_int wealth_cost;
 	commodity_map<int64_t> commodity_costs;
 	std::unique_ptr<const factor<domain>> cost_factor;
 	std::unique_ptr<const and_condition<domain>> conditions;

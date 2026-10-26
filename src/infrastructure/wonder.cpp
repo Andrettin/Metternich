@@ -98,13 +98,13 @@ void wonder::check() const
 	}
 }
 
-int wonder::get_wealth_cost_for_domain(const domain *domain) const
+decimillesimal_int wonder::get_wealth_cost_for_domain(const domain *domain) const
 {
-	int cost = this->get_wealth_cost();
+	decimillesimal_int cost = this->get_wealth_cost();
 
 	if (cost > 0 && this->get_cost_factor() != nullptr) {
-		cost = this->get_cost_factor()->calculate(domain, decimillesimal_int(cost)).to_int();
-		cost = std::max(1, cost);
+		cost = this->get_cost_factor()->calculate(domain, cost);
+		cost = decimillesimal_int::max(decimillesimal_int(1), cost);
 	}
 
 	return cost;
