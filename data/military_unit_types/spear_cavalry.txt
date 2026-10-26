@@ -67,10 +67,13 @@ lancers = {
 	required_technology = renaissance
 	death_sound = human_death
 	stats = {
-		melee = 8
-		defense = 5
-		movement = 6
+		hit_points = 3 #as knights
+		movement = 3 #150% of knights
+		defense = 3.33 #5/6ths of knights
+		melee = 5.33 #4/3rds of knights
+		charge = 8 #4/3rds of knights
 		range = 1
+		save = 6 #as knights
 	}
 	commodity_costs = {
 		manpower = 1
