@@ -919,6 +919,9 @@ QCoro::Task<void> game::generate_site_resource_features()
 QCoro::Task<void> game::generate_site_resource_features(const data_entry_map<site_feature, int> &resource_counts, std::vector<const site *> &available_sites)
 {
 	//generate resource sites
+	std::vector<const site_feature *> resources;
+	data_entry_map<site_feature, std::vector<const site *>> potential_sites_per_resource;
+
 	for (const auto &[resource, count] : resource_counts) {
 		if (count <= 0) {
 			continue;
@@ -947,14 +950,32 @@ QCoro::Task<void> game::generate_site_resource_features(const data_entry_map<sit
 			potential_resource_sites.push_back(site);
 		}
 
-		for (int i = 0; i < count; ++i) {
-			if (potential_resource_sites.empty()) {
-				break;
-			}
+		if (potential_resource_sites.empty()) {
+			continue;
+		}
 
-			const site *resource_site = vector::take_random(potential_resource_sites);
-			co_await resource_site->get_game_data()->add_feature(resource);
-			std::erase(available_sites, resource_site);
+		potential_sites_per_resource[resource] = std::move(potential_resource_sites);
+
+		for (int i = 0; i < count; ++i) {
+			resources.push_back(resource);
+		}
+	}
+
+	vector::shuffle(resources);
+
+	for (const site_feature *resource : resources) {
+		const std::vector<const site *> &potential_resource_sites = potential_sites_per_resource[resource];
+
+		if (potential_resource_sites.empty()) {
+			continue;
+		}
+
+		const site *resource_site = vector::get_random(potential_resource_sites);
+		co_await resource_site->get_game_data()->add_feature(resource);
+		std::erase(available_sites, resource_site);
+
+		for (auto &[loop_resource, loop_potential_sites] : potential_sites_per_resource) {
+			std::erase(loop_potential_sites, resource_site);
 		}
 	}
 }
