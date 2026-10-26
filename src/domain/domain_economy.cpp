@@ -623,24 +623,13 @@ QCoro::Task<void> domain_economy::change_commodity_storage_capacity(const commod
 	}
 }
 
-int64_t domain_economy::get_storage_for_commodity(const commodity *commodity, int64_t storage)
-{
-	if (commodity->get_storage_unit() != nullptr) {
-		const int64_t storage_unit_value = commodity->get_unit_value(commodity->get_storage_unit()).to_int64();
-		storage *= storage_unit_value;
-	}
-
-	return storage;
-}
-
 int64_t domain_economy::get_storage_capacity_for_commodity(const commodity *commodity) const
 {
 	if (commodity->has_special_storage_capacity()) {
 		return this->get_commodity_storage_capacity(commodity);
 	}
 
-	const int64_t storage_capacity = this->get_storage_capacity();
-	return domain_economy::get_storage_for_commodity(commodity, storage_capacity);
+	return this->get_storage_capacity();
 }
 
 QCoro::Task<void> domain_economy::decrease_manpower_commodity_usage(const commodity *commodity)
@@ -954,8 +943,7 @@ void domain_economy::set_bid(const commodity *commodity, const int64_t value)
 
 void domain_economy::prepare_bids()
 {
-	for (const auto &[commodity, base_min_storage] : this->get_min_commodity_storages()) {
-		const int64_t min_storage = domain_economy::get_storage_for_commodity(commodity, base_min_storage);
+	for (const auto &[commodity, min_storage] : this->get_min_commodity_storages()) {
 		const int64_t stored_quantity = this->get_stored_commodity(commodity).to_int64();
 		if (stored_quantity < min_storage) {
 			const int64_t bid_quantity = min_storage - stored_quantity;
@@ -998,8 +986,7 @@ void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 void domain_economy::prepare_offers()
 {
 	for (const auto &[commodity, stored_quantity] : this->get_stored_commodities()) {
-		const int64_t base_max_storage = this->get_max_commodity_storage(commodity);
-		const int64_t max_storage = domain_economy::get_storage_for_commodity(commodity, base_max_storage);
+		const int64_t max_storage = this->get_max_commodity_storage(commodity);
 		if (stored_quantity.to_int64() > max_storage) {
 			const int64_t offered_quantity = stored_quantity.to_int64() - max_storage;
 			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity.to_int64(), max_storage));
