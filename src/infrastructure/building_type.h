@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("culture/cultural_group.h")
 Q_MOC_INCLUDE("culture/culture.h")
@@ -74,7 +75,7 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static commodity_map<int64_t> commodity_weights_to_costs(const int64_t wealth_cost, const commodity_map<int> &commodity_cost_weights);
+	static commodity_map<int64_t> commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
 
 public:
 	explicit building_type(const std::string &identifier);
@@ -349,7 +350,7 @@ private:
 	technology *required_technology = nullptr;
 	int min_holding_level = 0;
 	commodity_map<int64_t> commodity_costs;
-	int64_t wealth_cost = 0;
+	decimillesimal_int wealth_cost;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const factor<site>> cost_factor;
 	std::unique_ptr<and_condition<site>> conditions;
