@@ -10,7 +10,7 @@ wealth = {
 		0.000005 = cp #1 sp = 10 cp
 		0.00005 = sp #1 gp = 10 sp
 		0.0005 = gp #1 GB = 2000 gp
-		0,0025 = £ #value of a pound of silver
+		0.0025 = £ #value of a pound of silver
 		0.005 = pp #1 pp = 10 gp
 		1 = gb
 	}
