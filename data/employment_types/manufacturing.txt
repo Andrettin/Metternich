@@ -4,7 +4,7 @@ fertilizer_making = {
 		sulfur = 6tn
 	}
 	output_commodity = fertilizer
-	monthly_output_value = 5tn
+	monthly_output_value = 5
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen

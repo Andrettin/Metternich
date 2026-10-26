@@ -3,10 +3,10 @@ salt = {
 	type = resource
 	icon = salt
 	mineral = true
-	base_price = 500 #5gp
+	base_price = 1
 	storage_unit = tn
 	units = {
-		1 = lb
-		2000 = tn
+		0.0025 = lb #5gp per lb
+		5 = tn
 	}
 }
