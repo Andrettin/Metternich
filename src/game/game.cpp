@@ -774,7 +774,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 		//set stored commodities from history after the initial buildings have been constructed, so that buildings granting storage capacity (e.g. warehouses) will already be present
 		for (const domain *domain : this->get_domains()) {
 			for (const auto &[commodity, quantity] : domain->get_history()->get_commodities()) {
-				domain->get_economy()->set_stored_commodity(commodity, decimillesimal_int(quantity));
+				domain->get_economy()->set_stored_commodity(commodity, quantity);
 			}
 		}
 
