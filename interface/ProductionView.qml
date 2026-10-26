@@ -35,7 +35,7 @@ Item {
 				
 				readonly property var commodity: model.modelData
 				readonly property int stored: domain_economy.get_stored_commodity_int(commodity)
-				readonly property int output: domain_economy.get_commodity_output_int(commodity)
+				readonly property string output_string: domain_economy.get_commodity_output_qstring(commodity)
 				
 				Row {
 					anchors.horizontalCenter: parent.horizontalCenter
@@ -53,8 +53,8 @@ Item {
 							
 							onEntered: {
 								status_text = commodity.name + " (" + metternich.defines.wealth_commodity.value_to_qstring(metternich.game.get_price(commodity)) + " per " + (commodity.get_unit(1) !== null ? commodity.get_unit(1).suffix : "unit") + ")"
-								if (output > 0) {
-									middle_status_text = "Output: " + commodity.value_to_qstring(output)
+								if (output_string !== "0") {
+									middle_status_text = "Output: " + output_string
 								}
 								right_status_text = commodity.get_units_tooltip()
 							}
