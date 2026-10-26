@@ -572,7 +572,12 @@ void character_game_data::ply_trade()
 		return;
 	}
 
-	const int province_level = this->get_location()->get_game_data()->get_province()->get_game_data()->get_level();
+	const site *character_location = this->get_location();
+	if (character_location == nullptr) {
+		return;
+	}
+
+	const int province_level = character_location->get_game_data()->get_province()->get_game_data()->get_level();
 
 	static const decimillesimal_int gp_value = decimillesimal_int::from_value(5);
 
