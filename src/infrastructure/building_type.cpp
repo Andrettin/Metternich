@@ -315,10 +315,7 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 {
 	assert_throw(site != nullptr);
 
-	commodity_map<decimillesimal_int> costs;
-	for (const auto &[commodity, cost] : this->get_commodity_costs()) {
-		costs[commodity] = decimillesimal_int(cost);
-	}
+	commodity_map<decimillesimal_int> costs = this->get_commodity_costs();
 
 	const holding_type *holding_type = site->get_game_data()->get_holding_type();
 
