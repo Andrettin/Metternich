@@ -1,0 +1,7 @@
+hitotsu = { #Source: Winfred P. Lehmann, "A Grammar of Proto-Germanic", 2005, Chapter 1, Section 6.
+	name = "Hitotsu"
+	language = japanese
+	type = numeral
+	numerical_quantity = 1
+	name_generation_word = english:one_numeral
+}

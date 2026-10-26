@@ -1,0 +1,9 @@
+mozga = { #Source: Sean Crist, "An Analysis of *z loss in West Germanic", 2002, p. 9.
+	name = "Mozga"
+	language = russian
+	type = noun
+	name_generation_word = english:blood
+	meaning_words = {
+		blood
+	}
+}

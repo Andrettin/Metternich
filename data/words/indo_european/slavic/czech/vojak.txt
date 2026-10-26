@@ -1,4 +1,4 @@
-vojak = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 16.
+vojak_czech = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 16.
 	name = "Vojak"
 	language = czech #source gives Bohemian
 	type = noun

@@ -1,0 +1,16 @@
+burgo_castillian = { #Source: T. C. Donkin, "An Etymological Dictionary of the Romance Languages", 1864, p. 84.
+	name = "Burgo"
+	language = castillian
+	type = noun
+	etymon = gothic:baurgs #the source gives it as being of Germanic origin (then going on to list a series of Germanic words including this Gothic one); presumably from the Gothic in Spanish since they were the Germanic people who settled in Spain
+	name_generation_word = english:town
+	noun_inflections = {
+		plural = {
+			nominative = "Burgos"
+		}
+	}
+	meanings = {
+		"Small Town"
+		"Borough"
+	}
+}

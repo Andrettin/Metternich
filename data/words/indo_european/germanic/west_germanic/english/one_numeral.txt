@@ -1,0 +1,9 @@
+one_numeral = {
+	name = "One"
+	language = english
+	type = numeral
+	numerical_quantity = 1
+	name_front_compound_element = true
+	surname_compound = true
+	df_word = ONE_PREF
+}

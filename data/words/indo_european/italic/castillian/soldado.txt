@@ -1,0 +1,10 @@
+soldado_castillian = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 17.
+	name = "Soldado"
+	language = castillian
+	type = noun
+	etymon = latin:solidatus
+	name_generation_word = english:soldier
+	meaning_words = {
+		soldier
+	}
+}

@@ -1,0 +1,8 @@
+vojska = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 15.
+	name = "Vojska"
+	language = serbo_croat
+	type = noun
+	meanings = {
+		"Army"
+	}
+}

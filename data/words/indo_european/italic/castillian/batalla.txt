@@ -1,0 +1,10 @@
+batalla = { #Source: Carl D. Buck, "Words for 'Battle,' 'War,' 'Army,' and 'Soldier'", 1919, p. 3.
+	name = "Batalla"
+	language = castillian
+	type = noun
+	etymon = latin:battalia
+	name_generation_word = english:battle
+	meaning_words = {
+		battle
+	}
+}
