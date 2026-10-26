@@ -2,6 +2,7 @@ lb = {
 	name = "Pound"
 	icon = sack_2
 	suffix = "lb"
+	displayed = false
 }
 
 st = {
@@ -22,6 +23,7 @@ tn = {
 	name = "Ton"
 	icon = sack_2
 	suffix = "tn"
+	displayed = false
 }
 
 datn = {
@@ -35,10 +37,12 @@ ktn = {
 	name = "Kiloton"
 	icon = sack_2
 	suffix = "ktn"
+	displayed = false
 }
 
 Mtn = {
 	name = "Megaton"
 	icon = sack_2
 	suffix = "Mtn"
+	displayed = false
 }
