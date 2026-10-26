@@ -3,6 +3,6 @@ cinnabar = {
 	type = resource
 	icon = copper
 	mineral = true
-	base_price = 100
+	base_price = 1
 	required_game_rule = mercury_commodity
 }

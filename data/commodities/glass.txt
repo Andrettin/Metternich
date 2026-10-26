@@ -3,11 +3,11 @@ glass = {
 	type = material
 	icon = glass
 	industrial = true
-	base_price = 100 #1gp
+	base_price = 3
 	required_technology = glassblowing
 	units = {
-		1 = lb
-		100 = cwt
-		2000 = tn
+		0.0005 = lb #1gp per lb
+		0.05 = cwt
+		1 = tn
 	}
 }

@@ -19,7 +19,7 @@ furniture_making = {
 		lumber = 40tn
 	}
 	output_commodity = furniture
-	monthly_output_value = 12tn
+	monthly_output_value = 12
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -46,7 +46,7 @@ liquor_distilling = {
 		glass = 8cwt
 	}
 	output_commodity = liquor
-	monthly_output_value = 10tn
+	monthly_output_value = 10
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
@@ -56,7 +56,7 @@ liquor_distilling = {
 lumber_making = {
 	name = "Lumber Making"
 	input_commodities = {
-		timber = 100tn
+		timber = 100
 	}
 	output_commodity = lumber
 	monthly_output_value = 110tn

@@ -3,7 +3,7 @@ armament = {
 	type = good
 	icon = cannon
 	industrial = true
-	base_price = 900
+	base_price = 9
 	required_technology = renaissance
 	required_game_rule = additional_commodities
 }

@@ -4,11 +4,11 @@ grain = {
 	icon = grain
 	agricultural = true
 	food_type = starch
-	base_price = 1 #1cp, price of a pound of wheat
+	base_price = 1
 	units = {
-		1 = lb
-		2000 = tn
-		20000 = datn
-		2000000 = ktn
+		0.000005 = lb #1cp, price of a pound of wheat
+		0.01 = tn
+		0.1 = datn
+		10 = ktn
 	}
 }

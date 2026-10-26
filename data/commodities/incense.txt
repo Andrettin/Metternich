@@ -3,6 +3,6 @@ incense = {
 	type = resource
 	icon = spices
 	agricultural = true
-	wealth_value = 25
+	wealth_value = 1 #should be 0.25
 	required_game_rule = additional_commodities
 }

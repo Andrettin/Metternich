@@ -4,6 +4,6 @@ potatoes = {
 	icon = grain
 	agricultural = true
 	food_type = starch
-	base_price = 100
+	base_price = 1
 	required_game_rule = additional_commodities
 }

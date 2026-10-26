@@ -3,6 +3,6 @@ gems = {
 	type = resource
 	icon = gems
 	mineral = true
-	wealth_value = 300
+	wealth_value = 3
 	required_game_rule = additional_commodities
 }
