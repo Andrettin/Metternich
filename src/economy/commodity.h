@@ -184,6 +184,7 @@ public:
 
 	std::string value_to_string(const int64_t value, const bool joined) const;
 	std::string value_to_string(const decimillesimal_int &value, const bool joined) const;
+	std::string value_to_string(const centesimal_int &value, const bool joined) const;
 	Q_INVOKABLE QString value_to_qstring(const qint64 value) const;
 
 	Q_INVOKABLE QString get_units_tooltip() const;

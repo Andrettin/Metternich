@@ -2687,6 +2687,11 @@ QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
 }
 
+QString site_game_data::get_commodity_output_qstring(const metternich::commodity *commodity) const
+{
+	return QString::fromStdString(commodity->value_to_string(this->get_commodity_output(commodity), false));
+}
+
 void site_game_data::set_commodity_output(const commodity *commodity, const centesimal_int &output)
 {
 	assert_throw(output >= 0);
@@ -2790,12 +2795,12 @@ void site_game_data::calculate_commodity_outputs()
 
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
-		int64_t output = employment_type->get_quarterly_output_value() * game::get()->get_current_quarters_per_turn();
+		centesimal_int output = centesimal_int(employment_type->get_quarterly_output_value()) * game::get()->get_current_quarters_per_turn();
 		output *= employment_size;
 		output /= employment_type->get_base_employment_size();
 		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];
 		output /= 100;
-		outputs[employment_type->get_output_commodity()] += centesimal_int(output);
+		outputs[employment_type->get_output_commodity()] += output;
 	}
 
 	for (auto &[commodity, output] : outputs) {

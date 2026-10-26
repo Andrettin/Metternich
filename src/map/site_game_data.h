@@ -572,11 +572,7 @@ public:
 		return zero;
 	}
 
-	Q_INVOKABLE int get_commodity_output(metternich::commodity *commodity)
-	{
-		const metternich::commodity *const_commodity = commodity;
-		return this->get_commodity_output(const_commodity).to_int();
-	}
+	Q_INVOKABLE QString get_commodity_output_qstring(const metternich::commodity *commodity) const;
 
 	void set_commodity_output(const commodity *commodity, const centesimal_int &output);
 	void calculate_commodity_outputs();
