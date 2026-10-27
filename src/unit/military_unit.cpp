@@ -307,7 +307,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : old_type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, cost);
+			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, cost.to_int64());
 		}
 	}
 
@@ -340,7 +340,7 @@ QCoro::Task<void> military_unit::set_type(const military_unit_type *type)
 
 	for (const auto &[commodity, cost] : type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+			co_await this->get_owner()->get_economy()->change_commodity_storage_capacity(commodity, -cost.to_int64());
 		}
 	}
 

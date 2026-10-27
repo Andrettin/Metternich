@@ -136,7 +136,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
-	Q_PROPERTY(qint64 maintenance_cost READ get_maintenance_cost NOTIFY maintenance_cost_changed)
+	Q_PROPERTY(QString maintenance_cost_qstring READ get_maintenance_cost_qstring NOTIFY maintenance_cost_changed)
 
 public:
 	static constexpr int first_deity_cost = 10;
@@ -867,7 +867,8 @@ public:
 	}
 
 	decimillesimal_int get_domain_maintenance_cost() const;
-	int64_t get_maintenance_cost() const;
+	decimillesimal_int get_maintenance_cost() const;
+	QString get_maintenance_cost_qstring() const;
 
 	bool can_form_domain(const metternich::domain *other) const;
 	bool can_form_domain_by_culture(const metternich::domain *other) const;

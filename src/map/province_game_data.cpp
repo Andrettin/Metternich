@@ -2493,15 +2493,15 @@ void province_game_data::change_military_unit_recruitment_count(const military_u
 		assert_throw(this->get_owner() != nullptr);
 
 		const int old_count = count - change;
-		const commodity_map<int64_t> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-		const commodity_map<int64_t> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, count);
+		const commodity_map<decimillesimal_int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+		const commodity_map<decimillesimal_int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, count);
 
 		for (const auto &[commodity, cost] : new_commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
+			const decimillesimal_int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-			this->get_owner()->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost_change));
+			this->get_owner()->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
 	}
 
@@ -2522,15 +2522,15 @@ bool province_game_data::can_increase_military_unit_recruitment(const military_u
 
 	const int old_count = this->get_military_unit_recruitment_count(military_unit_type);
 	const int new_count = old_count + 1;
-	const commodity_map<int64_t> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
-	const commodity_map<int64_t> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, new_count);
+	const commodity_map<decimillesimal_int> old_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, old_count);
+	const commodity_map<decimillesimal_int> new_commodity_costs = this->get_owner()->get_military()->get_military_unit_type_commodity_costs(military_unit_type, new_count);
 
 	for (const auto &[commodity, cost] : new_commodity_costs) {
 		assert_throw(commodity->is_storable());
 
-		const int64_t cost_change = cost - old_commodity_costs.find(commodity)->second;
+		const decimillesimal_int cost_change = cost - old_commodity_costs.find(commodity)->second;
 
-		if (this->get_owner()->get_economy()->get_stored_commodity(commodity).to_int64() < cost_change) {
+		if (this->get_owner()->get_economy()->get_stored_commodity(commodity) < cost_change) {
 			return false;
 		}
 	}

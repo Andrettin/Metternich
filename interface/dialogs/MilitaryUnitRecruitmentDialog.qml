@@ -109,7 +109,7 @@ DialogBase {
 								width: 48 * scale_factor
 							
 								readonly property var commodity: model.modelData.key
-								readonly property int cost: model.modelData.value
+								readonly property string cost_string: model.modelData.value
 								
 								CustomIconImage {
 									id: cost_commodity_icon
@@ -121,7 +121,7 @@ DialogBase {
 								SmallText {
 									id: commodity_cost_label
 									anchors.right: parent.right
-									text: commodity.value_to_qstring(cost)
+									text: cost_string
 								}
 							}
 						}

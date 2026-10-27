@@ -120,7 +120,7 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 		scope.for_each_property([this](const gsml_property &property) {
 			const int domain_size = std::stoi(property.get_key());
-			const int64_t cost = this->get_wealth_commodity()->string_to_value(property.get_value());
+			const decimillesimal_int cost = this->get_wealth_commodity()->string_to_fractional_value(property.get_value());
 
 			this->domain_maintenance_cost_per_domain_size[domain_size] = cost;
 		});

@@ -511,7 +511,7 @@ private:
 	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<int, int> province_population_per_level;
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
-	std::map<int, int64_t> domain_maintenance_cost_per_domain_size;
+	std::map<int, decimillesimal_int> domain_maintenance_cost_per_domain_size;
 	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
 	std::map<battle_resolution_type, std::map<battle_resolution_type, std::map<int, std::vector<attack_result>>>> battle_resolution_results;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;

@@ -5,6 +5,7 @@
 #include "economy/commodity_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("character/monster_type.h")
 Q_MOC_INCLUDE("culture/cultural_group.h")
@@ -131,12 +132,12 @@ public:
 		return this->required_technology;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	const commodity_map<int64_t> &get_maintenance_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_maintenance_commodity_costs() const
 	{
 		return this->maintenance_commodity_costs;
 	}
@@ -182,8 +183,8 @@ private:
 	std::map<military_unit_stat, centesimal_int> stats;
 	int64_t experience_award = 0;
 	technology *required_technology = nullptr;
-	commodity_map<int64_t> commodity_costs;
-	commodity_map<int64_t> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
+	commodity_map<decimillesimal_int> commodity_costs;
+	commodity_map<decimillesimal_int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
 	std::vector<const promotion *> free_promotions;
 	military_unit_type_set upgrades;
 	const sound *melee_attack_sound = nullptr;

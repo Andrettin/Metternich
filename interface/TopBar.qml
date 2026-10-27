@@ -115,11 +115,11 @@ Rectangle {
 					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
 					readonly property var commodity_unit: commodity ? commodity.get_unit(commodity_value) : null
 					readonly property string income_string: is_wealth && commodity && domain && domain.game_data.economy.commodity_outputs.length > 0 ? domain.game_data.economy.get_commodity_output_qstring(commodity) : ""
-					readonly property int maintenance_cost: is_wealth && domain ? domain.game_data.maintenance_cost : 0
+					readonly property string maintenance_cost_string: is_wealth && domain ? domain.game_data.maintenance_cost_qstring : ""
 					readonly property int commodity_storage_capacity: domain && commodity && commodity.special_storage_capacity && commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0
 					readonly property string commodity_status_text: commodity ? ((commodity_unit && is_wealth ? get_plural_form(commodity_unit.name) : commodity.name)
 						+ (is_wealth && income_string.length > 0 ? format_text("\t\tIncome: " + income_string) : "")
-						+ (is_wealth ? format_text("\t\tExpenses: " + commodity.value_to_qstring(maintenance_cost)) : "")
+						+ (is_wealth ? format_text("\t\tExpenses: " + maintenance_cost_string) : "")
 						+ (commodity.special_storage_capacity ? format_text("\t\tMaximum: " + commodity.value_to_qstring(commodity_storage_capacity)) : "")
 						+ (commodity_unit ? format_text("\t\t" + commodity.get_units_tooltip()) : "")) : ""
 					

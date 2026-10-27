@@ -701,7 +701,7 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
 		for (const auto &[commodity, maintenance_cost] : military_unit->get_type()->get_maintenance_commodity_costs()) {
-			if (this->get_economy()->get_stored_commodity(commodity).to_int64() >= maintenance_cost) {
+			if (this->get_economy()->get_stored_commodity(commodity) >= maintenance_cost) {
 				this->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-maintenance_cost));
 
 				if (commodity == defines::get()->get_wealth_commodity()) {
@@ -3723,9 +3723,9 @@ decimillesimal_int domain_game_data::get_domain_maintenance_cost() const
 	return defines::get()->get_domain_maintenance_cost_for_domain_size(domain_size);
 }
 
-int64_t domain_game_data::get_maintenance_cost() const
+decimillesimal_int domain_game_data::get_maintenance_cost() const
 {
-	int64_t maintenance_cost = this->get_domain_maintenance_cost().to_int64();
+	decimillesimal_int maintenance_cost = this->get_domain_maintenance_cost();
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
 		const auto find_iterator = military_unit->get_type()->get_maintenance_commodity_costs().find(defines::get()->get_wealth_commodity());
@@ -3736,9 +3736,14 @@ int64_t domain_game_data::get_maintenance_cost() const
 
 	const int effective_consumption = std::max(this->get_consumption_int(), 0);
 	const decimillesimal_int consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
-	maintenance_cost += consumption_cost.to_int64();
+	maintenance_cost += consumption_cost;
 
 	return maintenance_cost;
+}
+
+QString domain_game_data::get_maintenance_cost_qstring() const
+{
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_maintenance_cost());
 }
 
 bool domain_game_data::can_form_domain(const metternich::domain *other) const

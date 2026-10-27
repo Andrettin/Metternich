@@ -320,7 +320,7 @@ QCoro::Task<void> domain_military::add_military_unit(qunique_ptr<metternich::mil
 
 	for (const auto &[commodity, cost] : military_unit_type->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, -cost);
+			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, -cost.to_int64());
 		}
 	}
 
@@ -333,7 +333,7 @@ QCoro::Task<void> domain_military::remove_military_unit(military_unit *military_
 {
 	for (const auto &[commodity, cost] : military_unit->get_type()->get_commodity_costs()) {
 		if (commodity->is_manpower()) {
-			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, cost);
+			co_await this->domain->get_economy()->change_commodity_storage_capacity(commodity, cost.to_int64());
 		}
 	}
 
@@ -372,14 +372,13 @@ int domain_military::get_military_unit_type_cost_modifier(const military_unit_ty
 	return 0;
 }
 
-commodity_map<int64_t> domain_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
+commodity_map<decimillesimal_int> domain_military::get_military_unit_type_commodity_costs(const military_unit_type *military_unit_type, const int quantity) const
 {
-	commodity_map<int64_t> commodity_costs = military_unit_type->get_commodity_costs();
+	commodity_map<decimillesimal_int> commodity_costs = military_unit_type->get_commodity_costs();
 
-	for (auto &[commodity, cost_int] : commodity_costs) {
+	for (auto &[commodity, cost] : commodity_costs) {
 		assert_throw(commodity->is_storable());
 
-		centesimal_int cost(cost_int);
 		cost *= quantity;
 
 		int cost_modifier = 0;
@@ -389,14 +388,8 @@ commodity_map<int64_t> domain_military::get_military_unit_type_commodity_costs(c
 			cost /= 100;
 		}
 
-		cost_int = cost.to_int64();
-
-		if (cost_modifier < 0 && cost.get_fractional_value() > 0) {
-			cost_int += 1;
-		}
-
 		if (quantity > 0) {
-			cost_int = std::max(cost_int, 1ll);
+			cost = decimillesimal_int::max(cost, decimillesimal_int::from_value(1));
 		}
 	}
 
@@ -405,7 +398,14 @@ commodity_map<int64_t> domain_military::get_military_unit_type_commodity_costs(c
 
 QVariantList domain_military::get_military_unit_type_commodity_costs_qvariant_list(const military_unit_type *military_unit_type, const int quantity) const
 {
-	return archimedes::map::to_qvariant_list(this->get_military_unit_type_commodity_costs(military_unit_type, quantity));
+	const commodity_map<decimillesimal_int> costs = this->get_military_unit_type_commodity_costs(military_unit_type, quantity);
+
+	commodity_map<std::string> cost_strings;
+	for (const auto &[commodity, cost] : costs) {
+		cost_strings[commodity] = commodity->value_to_string(cost, false);
+	}
+
+	return archimedes::map::to_qvariant_list(cost_strings);
 }
 
 const military_unit_type *domain_military::get_best_military_unit_category_type(const military_unit_category category, const culture *culture) const
