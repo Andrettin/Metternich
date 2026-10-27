@@ -137,10 +137,9 @@ const commodity_unit *commodity::get_unit(const decimillesimal_int &value) const
 		}
 	}
 
-	//if we couldn't get a unit with a value higher than the given value, use the lowest displayable unit
+	//if we couldn't get a unit with a value equal to or lower than the given value, use the lowest displayable unit that is not fractional
 	for (const auto &[unit_value, unit] : this->units) {
-		if (unit_value < millionesimal_int(decimillesimal_int::from_value(1))) {
-			//do not use unit values smaller than the smallest possible non-zero decimillesimal int for display purposes
+		if (unit_value < 1) {
 			continue;
 		}
 
@@ -235,7 +234,7 @@ std::string commodity::value_to_string(const decimillesimal_int &value, const bo
 {
 	decimillesimal_int display_value = value;
 
-	const commodity_unit *unit = this->get_unit(value.to_int());
+	const commodity_unit *unit = this->get_unit(value);
 	if (unit != nullptr) {
 		display_value = value / this->get_unit_value(unit);
 	}
