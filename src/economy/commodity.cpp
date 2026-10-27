@@ -298,10 +298,15 @@ QString commodity::get_units_tooltip() const
 
 int64_t commodity::wealth_value_to_value(const int64_t wealth_value) const
 {
+	assert_throw(wealth_value != 0);
+
 	const decimillesimal_int commodity_base_price = decimillesimal_int::max(decimillesimal_int(this->get_base_price()), this->get_wealth_value());
 	assert_throw(commodity_base_price > 0);
 
-	return (wealth_value / commodity_base_price).to_int64();
+	const int64_t result = (wealth_value / commodity_base_price).to_int64();
+	assert_throw(result != 0);
+
+	return result;
 }
 
 }
