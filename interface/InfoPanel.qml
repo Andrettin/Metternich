@@ -266,7 +266,7 @@ Rectangle {
 				+ ((selected_site.holding_type !== null && !is_ruin) ? ("\nHolding Level: " + selected_site_game_data.holding_level + " (" + selected_site.holding_type.domain_skill.name + " " + selected_site_game_data.weighted_holding_level_percent + "%)") : "")
 				+ ((selected_site.holding_type !== null && !is_ruin && selected_site_game_data.construction_levels.length > 0) ? ("\n" + get_construction_levels_string(selected_site_game_data.construction_levels)) : "")
 				+ (holding_type !== null && population_visible ? ("\nPopulation: " + number_string(selected_site_game_data.population.size)) : "")
-				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data)) : "")
+				+ (selected_site_game_data.commodity_outputs.length > 0 ? ("\n" + get_commodity_outputs_string(selected_site_game_data.commodity_outputs)) : "")
 			) : ""
 		)
 		visible: selected_site && !selected_garrison && !viewing_population && !viewing_population_units
@@ -291,12 +291,11 @@ Rectangle {
 			return str
 		}
 		
-		function get_commodity_outputs_string(site_game_data) {
+		function get_commodity_outputs_string(commodity_outputs) {
 			var str = ""
 			
-			for (var kv_pair of site_game_data.commodity_outputs) {
+			for (var kv_pair of commodity_outputs) {
 				var commodity = kv_pair.key
-				var output = kv_pair.value
 				
 				if (str.length > 0) {
 					str += "\n"
@@ -308,7 +307,7 @@ Rectangle {
 					str += commodity.name + " Output"
 				}
 				
-				str += ": " + site_game_data.get_commodity_output_qstring(commodity)
+				str += ": " + selected_site_game_data.get_commodity_output_qstring(commodity)
 			}
 			
 			return str
