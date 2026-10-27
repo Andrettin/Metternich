@@ -11,6 +11,7 @@
 
 Q_MOC_INCLUDE("culture/culture.h")
 Q_MOC_INCLUDE("domain/domain.h")
+Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("infrastructure/holding_type.h")
 Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("population/population.h")

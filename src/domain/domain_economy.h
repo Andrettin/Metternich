@@ -6,6 +6,8 @@
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 
+Q_MOC_INCLUDE("economy/commodity.h")
+
 namespace archimedes {
 	class gsml_data;
 	class gsml_property;
