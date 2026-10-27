@@ -5,6 +5,7 @@
 #include "culture/cultural_group.h"
 #include "culture/culture_history.h"
 #include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "domain/domain_tier.h"
 #include "domain/government_type.h"
 #include "infrastructure/building_class.h"
