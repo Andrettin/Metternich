@@ -304,7 +304,6 @@ int64_t commodity::wealth_value_to_value(const int64_t wealth_value) const
 	assert_throw(commodity_base_price > 0);
 
 	const int64_t result = (wealth_value / commodity_base_price).to_int64();
-	assert_throw(result != 0);
 
 	return result;
 }

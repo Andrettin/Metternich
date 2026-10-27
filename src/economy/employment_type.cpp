@@ -49,16 +49,19 @@ void employment_type::process_gsml_property(const gsml_property &property)
 		assert_throw(this->get_output_commodity() != nullptr);
 		const int64_t daily_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
 		this->quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(daily_wealth_output_value) * 90;
+		assert_throw(this->quarterly_output_value != 0);
 	} else if (key == "monthly_wealth_output_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
 		const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
 		this->quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(monthly_wealth_output_value) * 3;
+		assert_throw(this->quarterly_output_value != 0);
 	} else if (key == "quarterly_wealth_output_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
 		const int64_t quarterly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
 		this->quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(quarterly_wealth_output_value);
+		assert_throw(this->quarterly_output_value != 0);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -202,6 +205,7 @@ int64_t employment_type::get_employment_size_for_output(const int64_t output) co
 int64_t employment_type::get_employment_size_for_wealth_output(const int64_t wealth_output) const
 {
 	const int64_t quarterly_output_value = this->get_output_commodity()->wealth_value_to_value(wealth_output);
+	assert_throw(quarterly_output_value != 0);
 	return this->get_employment_size_for_output(quarterly_output_value);
 }
 
