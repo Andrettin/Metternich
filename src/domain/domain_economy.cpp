@@ -446,6 +446,13 @@ const decimillesimal_int &domain_economy::get_stored_commodity(const metternich:
 	return zero;
 }
 
+QString domain_economy::get_stored_commodity_qstring(const metternich::commodity *commodity) const
+{
+	assert_throw(commodity != nullptr);
+
+	return commodity->value_to_qstring(this->get_stored_commodity(commodity));
+}
+
 int64_t domain_economy::get_stored_commodity_int(const commodity *commodity) const
 {
 	return this->get_stored_commodity(commodity).to_int64();

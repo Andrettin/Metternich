@@ -80,10 +80,11 @@ Rectangle {
 			Item {
 				width: commodity_icon.width + (2 + 96) * scale_factor
 				height: commodities_row.height
-				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || commodity_value > 0
+				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || commodity_value_string !== "0"
 				
 				readonly property var commodity: model.modelData
-				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_int(commodity) : 0 //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				readonly property string commodity_value_string: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_qstring(commodity) : "0" //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
+				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_int(commodity) : 0
 				
 				Image {
 					id: commodity_icon
@@ -96,7 +97,7 @@ Rectangle {
 
 				SmallText {
 					id: commodity_label
-					text: commodity ? commodity.value_to_qstring(commodity_value) : ""
+					text: commodity ? commodity_value_string : ""
 					anchors.top: parent.top
 					anchors.topMargin: 1 * scale_factor
 					anchors.left: commodity_icon.right
