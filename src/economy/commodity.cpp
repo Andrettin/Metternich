@@ -114,7 +114,7 @@ bool commodity::is_enabled() const
 	return true;
 }
 
-const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
+const commodity_unit *commodity::get_unit(const decimillesimal_int &value) const
 {
 	if (this->units.empty()) {
 		return nullptr;
@@ -127,20 +127,20 @@ const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 			continue;
 		}
 
-		if (unit_value < 1) {
-			//do not use fractional unit values for display purposes
+		if (unit_value < millionesimal_int(decimillesimal_int::from_value(1))) {
+			//do not use unit values smaller than the smallest possible non-zero decimillesimal int for display purposes
 			continue;
 		}
 
-		if (std::abs(value) >= unit_value.to_int64()) {
+		if (value.abs() >= decimillesimal_int(unit_value)) {
 			return unit;
 		}
 	}
 
 	//if we couldn't get a unit with a value higher than the given value, use the lowest displayable unit
 	for (const auto &[unit_value, unit] : this->units) {
-		if (unit_value < 1) {
-			//do not use fractional unit values for display purposes
+		if (unit_value < millionesimal_int(decimillesimal_int::from_value(1))) {
+			//do not use unit values smaller than the smallest possible non-zero decimillesimal int for display purposes
 			continue;
 		}
 
@@ -150,6 +150,11 @@ const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
 	}
 
 	return nullptr;
+}
+
+const metternich::commodity_unit *commodity::get_unit(const int64_t value) const
+{
+	return this->get_unit(decimillesimal_int(value));
 }
 
 const millionesimal_int &commodity::get_unit_value(const commodity_unit *unit) const

@@ -7,6 +7,7 @@
 #include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
+Q_MOC_INCLUDE("economy/commodity_unit.h")
 
 namespace archimedes {
 	class gsml_data;
@@ -15,6 +16,7 @@ namespace archimedes {
 
 namespace metternich {
 
+class commodity_unit;
 class domain;
 class domain_game_data;
 enum class income_transaction_type;
@@ -139,6 +141,13 @@ public:
 	const decimillesimal_int &get_stored_commodity(const commodity *commodity) const;
 	Q_INVOKABLE QString get_stored_commodity_qstring(const metternich::commodity *commodity) const;
 	Q_INVOKABLE qint64 get_stored_commodity_int(const metternich::commodity *commodity) const;
+
+	Q_INVOKABLE bool has_stored_commodity(const metternich::commodity *commodity) const
+	{
+		return this->get_stored_commodity(commodity) != 0;
+	}
+
+	Q_INVOKABLE const commodity_unit *get_stored_commodity_unit(const metternich::commodity *commodity) const;
 	void set_stored_commodity(const commodity *commodity, const decimillesimal_int &value);
 
 	void change_stored_commodity(const commodity *commodity, const decimillesimal_int &change)

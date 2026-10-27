@@ -458,6 +458,13 @@ int64_t domain_economy::get_stored_commodity_int(const commodity *commodity) con
 	return this->get_stored_commodity(commodity).to_int64();
 }
 
+const commodity_unit *domain_economy::get_stored_commodity_unit(const metternich::commodity *commodity) const
+{
+	assert_throw(commodity != nullptr);
+
+	return commodity->get_unit(this->get_stored_commodity(commodity));
+}
+
 void domain_economy::set_stored_commodity(const commodity *commodity, const decimillesimal_int &value)
 {
 	if (!commodity->is_enabled()) {

@@ -80,11 +80,11 @@ Rectangle {
 			Item {
 				width: commodity_icon.width + (2 + 96) * scale_factor
 				height: commodities_row.height
-				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || commodity_value_string !== "0"
+				visible: commodity === metternich.defines.wealth_commodity || commodity === metternich.defines.regency_commodity || has_stored_commodity
 				
 				readonly property var commodity: model.modelData
 				readonly property string commodity_value_string: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_qstring(commodity) : "0" //refer to the stored commodities to ensure the counter is updated when the storage value for this commodity changes
-				readonly property var commodity_value: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_int(commodity) : 0
+				readonly property bool has_stored_commodity: commodity && domain !== null && stored_commodities.length > 0 ? domain.game_data.economy.has_stored_commodity(commodity) : false
 				
 				Image {
 					id: commodity_icon
@@ -114,7 +114,7 @@ Rectangle {
 					enabled: commodity && commodity.enabled
 					
 					readonly property bool is_wealth: commodity === metternich.defines.wealth_commodity
-					readonly property var commodity_unit: commodity ? commodity.get_unit(commodity_value) : null
+					readonly property var commodity_unit: commodity && domain && domain.game_data.economy.stored_commodities.length > 0 ? domain.game_data.economy.get_stored_commodity_unit(commodity) : null
 					readonly property string income_string: is_wealth && commodity && domain && domain.game_data.economy.commodity_outputs.length > 0 ? domain.game_data.economy.get_commodity_output_qstring(commodity) : ""
 					readonly property string maintenance_cost_string: is_wealth && domain ? domain.game_data.maintenance_cost_qstring : ""
 					readonly property int commodity_storage_capacity: domain && commodity && commodity.special_storage_capacity && commodity_storage_capacities.length > 0 ? domain.game_data.economy.get_commodity_storage_capacity(commodity) : 0

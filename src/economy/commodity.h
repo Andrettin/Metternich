@@ -173,6 +173,7 @@ public:
 		return this->unit_values.contains(unit);
 	}
 
+	const commodity_unit *get_unit(const decimillesimal_int &value) const;
 	Q_INVOKABLE const metternich::commodity_unit *get_unit(const qint64 value) const;
 	const millionesimal_int &get_unit_value(const commodity_unit *unit) const;
 	Q_INVOKABLE qint64 get_unit_value_int64(const metternich::commodity_unit *unit) const;
