@@ -3,6 +3,8 @@
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
+Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("character/trait_type.h")
 Q_MOC_INCLUDE("database/defines.h")
 Q_MOC_INCLUDE("database/preferences.h")
 Q_MOC_INCLUDE("domain/consulate.h")
