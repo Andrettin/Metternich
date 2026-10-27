@@ -16,7 +16,6 @@ gp = {
 	name = "Gold Piece"
 	icon = wealth
 	suffix = "gp"
-	displayed = false
 }
 
 pp = {
