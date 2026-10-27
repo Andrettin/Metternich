@@ -35,7 +35,7 @@ Flickable {
 						anchors.verticalCenter: parent.verticalCenter
 						icon_identifier: population_unit.icon.identifier
 						name: population_unit.type.name + " (" + population_unit.culture.name + ") (" + population_unit.religion.name + ")"
-						description: "Wealth: " + metternich.defines.wealth_commodity.value_to_qstring(population_unit.wealth)
+						description: "Wealth: " + population_unit.get_wealth_qstring()
 							+ ", Life Needs: " + population_unit.fulfilled_life_needs_percent + "%"
 							+ ", Everyday Needs: " + population_unit.fulfilled_everyday_needs_percent + "%"
 							+ ", Luxury Needs: " + population_unit.fulfilled_luxury_needs_percent + "%"

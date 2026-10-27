@@ -675,18 +675,18 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 	}
 
 	const int effective_consumption = std::max(this->get_consumption_int(), 0);
-	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
-	const int64_t paid_consumption_cost = std::min<int64_t>(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64());
+	const decimillesimal_int consumption_cost = decimillesimal_int(effective_consumption) * defines::get()->get_domain_income_unit_value();
+	const decimillesimal_int paid_consumption_cost = decimillesimal_int::min(consumption_cost, this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
 	if (paid_consumption_cost != 0) {
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(-paid_consumption_cost));
 
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost.to_int64(), nullptr, 0, this->domain);
 
 		//give the wealth spent in consumption to population units, so that they can use to purchase their needs
 		const int64_t weighted_population_size = this->get_population()->get_weighted_size();
 		for (population_unit *population_unit : this->get_population_units()) {
 			const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
-			const int64_t population_unit_paid_consumption_wealth = paid_consumption_cost * population_unit_weighted_size / weighted_population_size;
+			const decimillesimal_int population_unit_paid_consumption_wealth = paid_consumption_cost * population_unit_weighted_size / weighted_population_size;
 			population_unit->change_wealth(population_unit_paid_consumption_wealth);
 		}
 	}

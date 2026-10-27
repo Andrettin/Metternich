@@ -3,6 +3,7 @@
 #include "population/population_unit.h"
 
 #include "culture/culture.h"
+#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
@@ -96,7 +97,7 @@ void population_unit::process_gsml_property(const gsml_property &property)
 	} else if (key == "literacy_rate") {
 		this->literacy_rate = decimillesimal_int(value);
 	} else if (key == "wealth") {
-		this->wealth = std::stoll(value);
+		this->wealth = decimillesimal_int(value);
 	} else if (key == "fulfilled_life_needs_percent") {
 		this->fulfilled_life_needs_percent = std::stoi(value);
 	} else if (key == "fulfilled_everyday_needs_percent") {
@@ -127,7 +128,7 @@ gsml_data population_unit::to_gsml_data() const
 	data.add_property("site", this->site->get_identifier());
 	data.add_property("size", std::to_string(this->size));
 	data.add_property("literacy_rate", this->literacy_rate.to_string());
-	data.add_property("wealth", std::to_string(this->wealth));
+	data.add_property("wealth", this->wealth.to_string());
 	data.add_property("fulfilled_life_needs_percent", std::to_string(this->fulfilled_life_needs_percent));
 	data.add_property("fulfilled_everyday_needs_percent", std::to_string(this->fulfilled_everyday_needs_percent));
 	data.add_property("fulfilled_luxury_needs_percent", std::to_string(this->fulfilled_luxury_needs_percent));
@@ -162,7 +163,7 @@ QCoro::Task<void> population_unit::do_cultural_change()
 		}
 
 		const int64_t derived_size = std::max((this->get_size() * derivation_rate / 100).to_ceil_int64(), 1ll);
-		const int64_t lost_wealth = this->get_wealth() * derived_size / this->get_size();
+		const decimillesimal_int lost_wealth = this->get_wealth() * derived_size / this->get_size();
 
 		const population_type *culture_population_type = cultural_derivation->culture->get_population_class_type(this->get_type()->get_population_class());
 
@@ -236,7 +237,7 @@ QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 	}
 
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
-	const int64_t lost_wealth = this->get_wealth() * promoted_size / this->get_size();
+	const decimillesimal_int lost_wealth = this->get_wealth() * promoted_size / this->get_size();
 
 	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth, true);
 
@@ -468,7 +469,12 @@ void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
 	emit literacy_rate_changed();
 }
 
-void population_unit::set_wealth(const int64_t wealth)
+QString population_unit::get_wealth_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_wealth(), false));
+}
+
+void population_unit::set_wealth(const decimillesimal_int &wealth)
 {
 	if (wealth == this->get_wealth()) {
 		return;
@@ -533,7 +539,7 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			continue;
 		}
 
-		int64_t affordable_commodity_need = std::min(commodity_need, this->get_wealth() / game::get()->get_price(commodity));
+		int64_t affordable_commodity_need = std::min(commodity_need, this->get_wealth().to_int64() / game::get()->get_price(commodity));
 
 		if (affordable_commodity_need == 0) {
 			continue;
@@ -556,7 +562,7 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false);
 
 			const int64_t purchase_price = bought_quantity * game::get()->get_price(commodity);
-			this->change_wealth(-purchase_price);
+			this->change_wealth(decimillesimal_int(-purchase_price));
 
 			affordable_commodity_need -= bought_quantity;
 			fulfilled_commodity_need += bought_quantity;

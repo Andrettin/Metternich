@@ -45,7 +45,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::province* province READ get_province NOTIFY province_changed)
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
-	Q_PROPERTY(qint64 wealth READ get_wealth NOTIFY wealth_changed)
+	Q_PROPERTY(archimedes::decimillesimal_int wealth READ get_wealth NOTIFY wealth_changed)
 	Q_PROPERTY(int fulfilled_life_needs_percent READ get_fulfilled_life_needs_percent NOTIFY fulfilled_life_needs_percent_changed)
 	Q_PROPERTY(int fulfilled_everyday_needs_percent READ get_fulfilled_everyday_needs_percent NOTIFY fulfilled_everyday_needs_percent_changed)
 	Q_PROPERTY(int fulfilled_luxury_needs_percent READ get_fulfilled_luxury_needs_percent NOTIFY fulfilled_luxury_needs_percent_changed)
@@ -149,14 +149,16 @@ public:
 		this->set_literacy_rate(this->get_literacy_rate() + change);
 	}
 
-	int64_t get_wealth() const
+	const decimillesimal_int &get_wealth() const
 	{
 		return this->wealth;
 	}
 
-	void set_wealth(const int64_t wealth);
+	Q_INVOKABLE QString get_wealth_qstring() const;
 
-	void change_wealth(const int64_t change)
+	void set_wealth(const decimillesimal_int &wealth);
+
+	void change_wealth(const decimillesimal_int &change)
 	{
 		this->set_wealth(this->get_wealth() + change);
 	}
@@ -241,7 +243,7 @@ private:
 	const metternich::site *site = nullptr;
 	int64_t size = 0; //number of individuals in this population unit
 	decimillesimal_int literacy_rate; //in percent
-	int64_t wealth = 0;
+	decimillesimal_int wealth;
 	int fulfilled_life_needs_percent = 100;
 	int fulfilled_everyday_needs_percent = 100;
 	int fulfilled_luxury_needs_percent = 100;

@@ -468,9 +468,9 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 	if (commodity->is_convertible_to_wealth()) {
 		assert_throw(value > 0);
 		const decimillesimal_int wealth_conversion_income = commodity->get_wealth_value() * value;
-		const int64_t gained_wealth = this->add_population_wealth(wealth_conversion_income.to_int64());
-		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::treasure_fleet);
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth, commodity, value.to_int64());
+		const decimillesimal_int gained_wealth = this->add_population_wealth(wealth_conversion_income);
+		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth.to_int64(), income_transaction_type::treasure_fleet);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth.to_int64(), commodity, value.to_int64());
 		return;
 	}
 
@@ -543,7 +543,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 	}
 }
 
-int64_t domain_economy::add_population_wealth(const int64_t wealth)
+decimillesimal_int domain_economy::add_population_wealth(const decimillesimal_int & wealth)
 {
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
 
@@ -551,13 +551,13 @@ int64_t domain_economy::add_population_wealth(const int64_t wealth)
 		return wealth;
 	}
 	
-	int64_t remaining_wealth = wealth;
+	decimillesimal_int remaining_wealth = wealth;
 
 	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
 		const population_strata population_unit_strata = population_unit->get_type()->get_strata();
 		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
-		const int64_t population_unit_income = wealth * population_unit_weighted_size / weighted_population_size;
-		const int64_t taxed_population_unit_income = population_unit_income * (100 - this->get_population_strata_tax_rate(population_unit_strata)) / 100;
+		const decimillesimal_int population_unit_income = wealth * population_unit_weighted_size / weighted_population_size;
+		const decimillesimal_int taxed_population_unit_income = population_unit_income * (100 - this->get_population_strata_tax_rate(population_unit_strata)) / 100;
 		population_unit->change_wealth(taxed_population_unit_income);
 		remaining_wealth -= taxed_population_unit_income;
 	}
@@ -1039,7 +1039,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 
 	const int64_t price = game::get()->get_price(commodity);
 	const int64_t sale_income = price * sold_quantity;
-	const int64_t gained_wealth = this->add_population_wealth(sale_income);
+	const int64_t gained_wealth = this->add_population_wealth(decimillesimal_int(sale_income)).to_int64();
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 

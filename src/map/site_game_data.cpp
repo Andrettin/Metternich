@@ -2252,7 +2252,7 @@ void site_game_data::clear_population_units()
 	this->population_units.clear();
 }
 
-QCoro::Task<void> site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage)
+QCoro::Task<void> site_game_data::create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const decimillesimal_int &wealth, const bool change_input_storage)
 {
 	assert_throw(type != nullptr);
 	assert_throw(type->is_enabled());
@@ -2267,7 +2267,7 @@ QCoro::Task<void> site_game_data::create_population_unit(const population_type *
 	co_await this->add_population_unit(std::move(population_unit), change_input_storage);
 }
 
-QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const int64_t wealth, const bool change_input_storage)
+QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const decimillesimal_int &wealth, const bool change_input_storage)
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
@@ -2407,7 +2407,7 @@ QCoro::Task<void> site_game_data::do_population_growth()
 			continue;
 		}
 
-		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, population_growth_size, population_unit->get_literacy_rate(), 0, true);
+		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, population_growth_size, population_unit->get_literacy_rate(), decimillesimal_int(0), true);
 	}
 }
 
@@ -2560,7 +2560,7 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 	}
 	for (population_unit *population_unit : population_units) {
 		const int64_t unemployment_size = std::min(decrease, population_unit->get_size());
-		const int64_t lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
+		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
 
@@ -2615,7 +2615,7 @@ QCoro::Task<void> site_game_data::check_employment()
 			assert_throw(employed_population_type != nullptr);
 
 			const int64_t employee_size = std::min(std::min(available_employment_capacity, available_employment_input_capacity), population_unit->get_size());
-			const int64_t lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
+			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
 			co_await this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_literacy_rate(), lost_wealth, true);
@@ -2689,6 +2689,8 @@ QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
 
 QString site_game_data::get_commodity_output_qstring(const metternich::commodity *commodity) const
 {
+	assert_throw(commodity != nullptr);
+
 	return QString::fromStdString(commodity->value_to_string(decimillesimal_int(this->get_commodity_output(commodity)), false));
 }
 
