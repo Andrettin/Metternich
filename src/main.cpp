@@ -181,143 +181,146 @@ int main(int argc, char **argv)
 		database::get()->add_defines(population_defines::get());
 		database::get()->add_defines(ui_defines::get());
 
-		QQmlApplicationEngine engine;
+		int result = 0;
 
-		database_util::register_enum<affix_type>();
-		database_util::register_enum<attack_result>();
-		database_util::register_enum<battle_resolution_type>();
-		database_util::register_enum<bloodline_strength_category>();
-		database_util::register_enum<character_attribute_type>();
-		database_util::register_enum<character_class_type>();
-		database_util::register_enum<commodity_type>();
-		database_util::register_enum<cultural_group_rank>();
-		database_util::register_enum<decision_type>();
-		database_util::register_enum<diplomacy_state>();
-		database_util::register_enum<domain_tier>();
-		database_util::register_enum<domain_type>();
-		database_util::register_enum<elevation_type>();
-		database_util::register_enum<event_trigger>();
-		database_util::register_enum<food_type>();
-		database_util::register_enum<forestation_type>();
-		database_util::register_enum<gender>();
-		database_util::register_enum<geological_era>();
-		database_util::register_enum<grammatical_gender>();
-		database_util::register_enum<log_level>();
-		database_util::register_enum<military_unit_category>();
-		database_util::register_enum<military_unit_domain>();
-		database_util::register_enum<moisture_type>();
-		database_util::register_enum<population_strata>();
-		database_util::register_enum<profession_profitability>();
-		database_util::register_enum<province_taxation_type>();
-		database_util::register_enum<site_type>();
-		database_util::register_enum<spell_target>();
-		database_util::register_enum<spell_type>();
-		database_util::register_enum<starting_age_category>();
-		database_util::register_enum<succession_gender_type>();
-		database_util::register_enum<succession_type>();
-		database_util::register_enum<taxonomic_rank>();
-		database_util::register_enum<temperature_type>();
-		database_util::register_enum<word_type>();
+		{
+			QQmlApplicationEngine engine;
 
-		QCoro::Qml::registerTypes();
+			database_util::register_enum<affix_type>();
+			database_util::register_enum<attack_result>();
+			database_util::register_enum<battle_resolution_type>();
+			database_util::register_enum<bloodline_strength_category>();
+			database_util::register_enum<character_attribute_type>();
+			database_util::register_enum<character_class_type>();
+			database_util::register_enum<commodity_type>();
+			database_util::register_enum<cultural_group_rank>();
+			database_util::register_enum<decision_type>();
+			database_util::register_enum<diplomacy_state>();
+			database_util::register_enum<domain_tier>();
+			database_util::register_enum<domain_type>();
+			database_util::register_enum<elevation_type>();
+			database_util::register_enum<event_trigger>();
+			database_util::register_enum<food_type>();
+			database_util::register_enum<forestation_type>();
+			database_util::register_enum<gender>();
+			database_util::register_enum<geological_era>();
+			database_util::register_enum<grammatical_gender>();
+			database_util::register_enum<log_level>();
+			database_util::register_enum<military_unit_category>();
+			database_util::register_enum<military_unit_domain>();
+			database_util::register_enum<moisture_type>();
+			database_util::register_enum<population_strata>();
+			database_util::register_enum<profession_profitability>();
+			database_util::register_enum<province_taxation_type>();
+			database_util::register_enum<site_type>();
+			database_util::register_enum<spell_target>();
+			database_util::register_enum<spell_type>();
+			database_util::register_enum<starting_age_category>();
+			database_util::register_enum<succession_gender_type>();
+			database_util::register_enum<succession_type>();
+			database_util::register_enum<taxonomic_rank>();
+			database_util::register_enum<temperature_type>();
+			database_util::register_enum<word_type>();
 
-		qmlRegisterAnonymousType<building_type>("", 1);
-		qmlRegisterAnonymousType<const building_type>("", 1);
-		qmlRegisterAnonymousType<character>("", 1);
-		qmlRegisterAnonymousType<character_attribute>("", 1);
-		qmlRegisterAnonymousType<character_game_data>("", 1);
-		qmlRegisterAnonymousType<civilian_unit_type>("", 1);
-		qmlRegisterAnonymousType<const civilian_unit_type>("", 1);
-		qmlRegisterAnonymousType<commodity_unit>("", 1);
-		qmlRegisterAnonymousType<const commodity_unit>("", 1);
-		qmlRegisterAnonymousType<consulate>("", 1);
-		qmlRegisterAnonymousType<defines>("", 1);
-		qmlRegisterAnonymousType<domain>("", 1);
-		qmlRegisterAnonymousType<domain_attribute>("", 1);
-		qmlRegisterAnonymousType<domain_game_data>("", 1);
-		qmlRegisterAnonymousType<domain_tier_data>("", 1);
-		qmlRegisterAnonymousType<domain_turn_data>("", 1);
-		qmlRegisterAnonymousType<dynasty>("", 1);
-		qmlRegisterAnonymousType<era>("", 1);
-		qmlRegisterAnonymousType<event>("", 1);
-		qmlRegisterAnonymousType<event_instance>("", 1);
-		qmlRegisterAnonymousType<game>("", 1);
-		qmlRegisterAnonymousType<game_rule>("", 1);
-		qmlRegisterAnonymousType<game_rule_group>("", 1);
-		qmlRegisterAnonymousType<game_rules>("", 1);
-		qmlRegisterAnonymousType<government_type>("", 1);
-		qmlRegisterAnonymousType<icon>("", 1);
-		qmlRegisterAnonymousType<item>("", 1);
-		qmlRegisterAnonymousType<const item>("", 1);
-		qmlRegisterAnonymousType<item_slot>("", 1);
-		qmlRegisterAnonymousType<const item_slot>("", 1);
-		qmlRegisterAnonymousType<journal_entry>("", 1);
-		qmlRegisterAnonymousType<law>("", 1);
-		qmlRegisterAnonymousType<law_group>("", 1);
-		qmlRegisterAnonymousType<map>("", 1);
-		qmlRegisterAnonymousType<map_template>("", 1);
-		qmlRegisterAnonymousType<military_unit_type>("", 1);
-		qmlRegisterAnonymousType<const military_unit_type>("", 1);
-		qmlRegisterAnonymousType<pathway>("", 1);
-		qmlRegisterAnonymousType<const pathway>("", 1);
-		qmlRegisterAnonymousType<population>("", 1);
-		qmlRegisterAnonymousType<population_type>("", 1);
-		qmlRegisterAnonymousType<portrait>("", 1);
-		qmlRegisterAnonymousType<preferences>("", 1);
-		qmlRegisterAnonymousType<province>("", 1);
-		qmlRegisterAnonymousType<province_game_data>("", 1);
-		qmlRegisterAnonymousType<scenario>("", 1);
-		qmlRegisterAnonymousType<scripted_character_modifier>("", 1);
-		qmlRegisterAnonymousType<site>("", 1);
-		qmlRegisterAnonymousType<site_attribute>("", 1);
-		qmlRegisterAnonymousType<site_game_data>("", 1);
-		qmlRegisterAnonymousType<technology>("", 1);
-		qmlRegisterAnonymousType<technology_category>("", 1);
-		qmlRegisterAnonymousType<trait>("", 1);
-		qmlRegisterAnonymousType<const trait>("", 1);
-		qmlRegisterAnonymousType<trait_type>("", 1);
-		qmlRegisterAnonymousType<const trait_type>("", 1);
-		qmlRegisterAnonymousType<wonder>("", 1);
+			QCoro::Qml::registerTypes();
 
-		qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");
-		qmlRegisterType<combat_map_grid_model>("combat_map_grid_model", 1, 0, "CombatMapGridModel");
-		qmlRegisterType<family_tree_model>("family_tree_model", 1, 0, "FamilyTreeModel");
-		qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
-		qmlRegisterType<scenario_model>("scenario_model", 1, 0, "ScenarioModel");
-		qmlRegisterType<technology_model>("technology_model", 1, 0, "TechnologyModel");
-		qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
+			qmlRegisterAnonymousType<building_type>("", 1);
+			qmlRegisterAnonymousType<const building_type>("", 1);
+			qmlRegisterAnonymousType<character>("", 1);
+			qmlRegisterAnonymousType<character_attribute>("", 1);
+			qmlRegisterAnonymousType<character_game_data>("", 1);
+			qmlRegisterAnonymousType<civilian_unit_type>("", 1);
+			qmlRegisterAnonymousType<const civilian_unit_type>("", 1);
+			qmlRegisterAnonymousType<commodity_unit>("", 1);
+			qmlRegisterAnonymousType<const commodity_unit>("", 1);
+			qmlRegisterAnonymousType<consulate>("", 1);
+			qmlRegisterAnonymousType<defines>("", 1);
+			qmlRegisterAnonymousType<domain>("", 1);
+			qmlRegisterAnonymousType<domain_attribute>("", 1);
+			qmlRegisterAnonymousType<domain_game_data>("", 1);
+			qmlRegisterAnonymousType<domain_tier_data>("", 1);
+			qmlRegisterAnonymousType<domain_turn_data>("", 1);
+			qmlRegisterAnonymousType<dynasty>("", 1);
+			qmlRegisterAnonymousType<era>("", 1);
+			qmlRegisterAnonymousType<event>("", 1);
+			qmlRegisterAnonymousType<event_instance>("", 1);
+			qmlRegisterAnonymousType<game>("", 1);
+			qmlRegisterAnonymousType<game_rule>("", 1);
+			qmlRegisterAnonymousType<game_rule_group>("", 1);
+			qmlRegisterAnonymousType<game_rules>("", 1);
+			qmlRegisterAnonymousType<government_type>("", 1);
+			qmlRegisterAnonymousType<icon>("", 1);
+			qmlRegisterAnonymousType<item>("", 1);
+			qmlRegisterAnonymousType<const item>("", 1);
+			qmlRegisterAnonymousType<item_slot>("", 1);
+			qmlRegisterAnonymousType<const item_slot>("", 1);
+			qmlRegisterAnonymousType<journal_entry>("", 1);
+			qmlRegisterAnonymousType<law>("", 1);
+			qmlRegisterAnonymousType<law_group>("", 1);
+			qmlRegisterAnonymousType<map>("", 1);
+			qmlRegisterAnonymousType<map_template>("", 1);
+			qmlRegisterAnonymousType<military_unit_type>("", 1);
+			qmlRegisterAnonymousType<const military_unit_type>("", 1);
+			qmlRegisterAnonymousType<pathway>("", 1);
+			qmlRegisterAnonymousType<const pathway>("", 1);
+			qmlRegisterAnonymousType<population>("", 1);
+			qmlRegisterAnonymousType<population_type>("", 1);
+			qmlRegisterAnonymousType<portrait>("", 1);
+			qmlRegisterAnonymousType<preferences>("", 1);
+			qmlRegisterAnonymousType<province>("", 1);
+			qmlRegisterAnonymousType<province_game_data>("", 1);
+			qmlRegisterAnonymousType<scenario>("", 1);
+			qmlRegisterAnonymousType<scripted_character_modifier>("", 1);
+			qmlRegisterAnonymousType<site>("", 1);
+			qmlRegisterAnonymousType<site_attribute>("", 1);
+			qmlRegisterAnonymousType<site_game_data>("", 1);
+			qmlRegisterAnonymousType<technology>("", 1);
+			qmlRegisterAnonymousType<technology_category>("", 1);
+			qmlRegisterAnonymousType<trait>("", 1);
+			qmlRegisterAnonymousType<const trait>("", 1);
+			qmlRegisterAnonymousType<trait_type>("", 1);
+			qmlRegisterAnonymousType<const trait_type>("", 1);
+			qmlRegisterAnonymousType<wonder>("", 1);
 
-		engine.rootContext()->setContextProperty("metternich", engine_interface::get());
+			qmlRegisterType<character_data_model>("character_data_model", 1, 0, "CharacterDataModel");
+			qmlRegisterType<combat_map_grid_model>("combat_map_grid_model", 1, 0, "CombatMapGridModel");
+			qmlRegisterType<family_tree_model>("family_tree_model", 1, 0, "FamilyTreeModel");
+			qmlRegisterType<map_grid_model>("map_grid_model", 1, 0, "MapGridModel");
+			qmlRegisterType<scenario_model>("scenario_model", 1, 0, "ScenarioModel");
+			qmlRegisterType<technology_model>("technology_model", 1, 0, "TechnologyModel");
+			qmlRegisterType<MaskedMouseArea>("MaskedMouseArea", 1, 0, "MaskedMouseArea");
 
-		engine.addImageProvider("diplomatic_map", new diplomatic_map_image_provider);
-		engine.addImageProvider("empty", new empty_image_provider);
-		engine.addImageProvider("icon", new icon_image_provider);
-		engine.addImageProvider("interface", new interface_image_provider);
-		engine.addImageProvider("portrait", new portrait_image_provider);
-		engine.addImageProvider("tile", new tile_image_provider);
+			engine.rootContext()->setContextProperty("metternich", engine_interface::get());
 
-		const QString root_path = path::to_qstring(database::get()->get_root_path());
-		engine.addImportPath(root_path + "/qml");
+			engine.addImageProvider("diplomatic_map", new diplomatic_map_image_provider);
+			engine.addImageProvider("empty", new empty_image_provider);
+			engine.addImageProvider("icon", new icon_image_provider);
+			engine.addImageProvider("interface", new interface_image_provider);
+			engine.addImageProvider("portrait", new portrait_image_provider);
+			engine.addImageProvider("tile", new tile_image_provider);
 
-		QUrl url = QDir(root_path + "/interface/").absoluteFilePath("Main.qml");
-		url.setScheme("file");
+			const QString root_path = path::to_qstring(database::get()->get_root_path());
+			engine.addImportPath(root_path + "/qml");
 
-		QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
-			[url, argc, argv](QObject *obj, const QUrl &objUrl) -> QCoro::Task<void> {
-			if (!obj && url == objUrl) {
-				QCoreApplication::exit(-1);
-			}
+			QUrl url = QDir(root_path + "/interface/").absoluteFilePath("Main.qml");
+			url.setScheme("file");
 
-			co_await initialize();
-		}, Qt::QueuedConnection);
+			QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
+				[url, argc, argv](QObject *obj, const QUrl &objUrl) -> QCoro::Task<void> {
+				if (!obj && url == objUrl) {
+					QCoreApplication::exit(-1);
+				}
 
-		engine.load(url);
+				co_await initialize();
+			}, Qt::QueuedConnection);
 
-		QObject::connect(&app, &QApplication::aboutToQuit, []() {
-			on_exit_cleanup();
-		});
+			engine.load(url);
 
-		const int result = app.exec();
+			result = app.exec();
+		}
+
+		on_exit_cleanup();
+
 		return result;
 	} catch (...) {
 		exception::report(std::current_exception());
