@@ -102,7 +102,7 @@ Item {
 						if (typeof status_text !== 'undefined') {
 							if (hovered) {
 								status_text = item.name
-								middle_status_text = metternich.defines.wealth_commodity.value_to_qstring(item.price)
+								middle_status_text = item.get_price_qstring()
 								right_status_text = item.get_effects_string(metternich.game.player_character)
 							} else {
 								status_text = ""

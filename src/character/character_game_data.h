@@ -848,7 +848,7 @@ public:
 		return static_cast<int>(this->get_equipped_items(slot).size());
 	}
 
-	bool can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const;
+	bool can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<decimillesimal_int> &already_equipped_ignore_price_threshold) const;
 	Q_INVOKABLE bool can_equip_item(const metternich::item *item, const bool ignore_already_equipped) const;
 	[[nodiscard]] QCoro::Task<void> equip_item_coro(item *item);
 

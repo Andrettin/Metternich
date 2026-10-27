@@ -101,7 +101,7 @@ public:
 
 	decimillesimal_int get_price() const;
 
-	int64_t get_price_of_materials() const;
+	decimillesimal_int get_price_of_materials() const;
 	decimillesimal_int get_result_price() const;
 
 	int get_craft_cost() const;

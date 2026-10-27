@@ -4217,7 +4217,7 @@ bool character_game_data::can_craft_recipe(const metternich::recipe *recipe) con
 
 	if (this->is_ai()) {
 		//for AI characters, they should not craft recipes which are not sure to produce an item of higher value than the recipe materials
-		if (decimillesimal_int(recipe->get_price_of_materials()) >= recipe->get_result_price()) {
+		if (recipe->get_price_of_materials() >= recipe->get_result_price()) {
 			return false;
 		}
 	}
@@ -4493,7 +4493,7 @@ const item *character_game_data::get_equipped_item(const item_slot *slot, const 
 	return equipped_items.at(slot_index);
 }
 
-bool character_game_data::can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<int64_t> &already_equipped_ignore_price_threshold) const
+bool character_game_data::can_equip_item(const item_key &item_key, const bool ignore_already_equipped, const std::optional<decimillesimal_int> &already_equipped_ignore_price_threshold) const
 {
 	const item_slot *slot = item_key.type->get_slot();
 	if (slot == nullptr) {
@@ -4589,7 +4589,7 @@ QCoro::Task<void> character_game_data::equip_item_coro(item *item)
 	assert_throw(used_slots <= slot_count);
 	if (used_slots == slot_count) {
 		metternich::item *lowest_price_item = nullptr;
-		int64_t lowest_price = std::numeric_limits<int64_t>::max();
+		decimillesimal_int lowest_price = decimillesimal_int::from_value(std::numeric_limits<int64_t>::max());
 
 		for (metternich::item *other_item : this->get_equipped_items(item->get_slot())) {
 			if (other_item->get_price() < lowest_price) {
@@ -4816,7 +4816,7 @@ bool character_game_data::can_sell_item(const item *item) const
 QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 {
 	qunique_ptr<metternich::item> sold_item = co_await this->take_item(item);
-	this->change_wealth(decimillesimal_int(sold_item->get_sell_price()));
+	this->change_wealth(sold_item->get_sell_price());
 
 	//see if the sold item can be placed in any item slot for an item shop accessible to this character, and if so, place the item there
 
@@ -4829,7 +4829,7 @@ QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 
 	std::vector<building_item_slot *> potential_item_slots;
 	bool found_empty_slot = false;
-	const int64_t sold_item_price = sold_item->get_price();
+	const decimillesimal_int sold_item_price = sold_item->get_price();
 
 	for (building_item_slot *item_slot : accessible_item_slots) {
 		if (!item_slot->get_item_creation_type()->can_create_item_type(sold_item->get_type())) {

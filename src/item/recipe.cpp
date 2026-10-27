@@ -132,12 +132,12 @@ void recipe::add_material(const item_type *item_type, const enchantment *enchant
 
 decimillesimal_int recipe::get_price() const
 {
-	return decimillesimal_int::max(decimillesimal_int(1), this->get_result_price() / 25);
+	return decimillesimal_int::max(decimillesimal_int::from_value(1), this->get_result_price() / 25);
 }
 
-int64_t recipe::get_price_of_materials() const
+decimillesimal_int recipe::get_price_of_materials() const
 {
-	int64_t price = 0;
+	decimillesimal_int price;
 
 	for (const recipe_material &material : this->get_materials()) {
 		price += item::get_price(material.item_type, nullptr, material.enchantment, nullptr, nullptr) * material.quantity;

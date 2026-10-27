@@ -48,15 +48,13 @@ class item final : public QObject
 	Q_PROPERTY(const metternich::enchantment* enchantment READ get_enchantment CONSTANT)
 	Q_PROPERTY(const metternich::spell* spell READ get_spell CONSTANT)
 	Q_PROPERTY(const metternich::recipe* recipe READ get_recipe CONSTANT)
-	Q_PROPERTY(qint64 price READ get_price CONSTANT)
-	Q_PROPERTY(qint64 sell_price READ get_sell_price CONSTANT)
 	Q_PROPERTY(bool equipped READ is_equipped NOTIFY equipped_changed)
 	Q_PROPERTY(int quantity READ get_quantity NOTIFY quantity_changed)
 
 public:
 	static std::string create_name(const std::string &type_name, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	static std::string create_name(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
-	static int64_t get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
+	static decimillesimal_int get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 
 	explicit item(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe);
 	explicit item(const gsml_data &scope);
@@ -138,13 +136,10 @@ public:
 
 	Q_INVOKABLE QString get_effects_string(const metternich::character *character) const;
 
-	int64_t get_price() const;
-
-	int64_t get_sell_price() const
-	{
-		//the price for which a character can sell the item
-		return std::max(this->get_price() / 2, 1ll);
-	}
+	decimillesimal_int get_price() const;
+	Q_INVOKABLE QString get_price_qstring() const;
+	decimillesimal_int get_sell_price() const;
+	Q_INVOKABLE QString get_sell_price_qstring() const;
 
 	bool is_useful_for(const character *character) const;
 

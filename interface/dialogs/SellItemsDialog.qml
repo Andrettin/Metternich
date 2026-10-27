@@ -85,7 +85,7 @@ DialogBase {
 								if (character === metternich.game.player_character) {
 									middle_status_text = "Click to sell"
 								}
-								right_status_text = metternich.defines.wealth_commodity.value_to_qstring(item.sell_price)
+								right_status_text = item.get_sell_price_qstring()
 							} else {
 								status_text = ""
 								middle_status_text = ""

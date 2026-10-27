@@ -4,7 +4,9 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
+#include "database/defines.h"
 #include "database/gsml_data.h"
+#include "economy/commodity.h"
 #include "item/affix_type.h"
 #include "item/enchantment.h"
 #include "item/item_class.h"
@@ -15,6 +17,7 @@
 #include "spell/spell.h"
 #include "ui/ui_defines.h"
 #include "util/assert_util.h"
+#include "util/decimillesimal_int.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
@@ -238,7 +241,7 @@ std::string item::create_name(const item_type *type, const item_material *materi
 	return item::create_name(type->get_name(), material, enchantment, spell, recipe);
 }
 
-int64_t item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
+decimillesimal_int item::get_price(const item_type *type, const item_material *material, const metternich::enchantment *enchantment, const metternich::spell *spell, const metternich::recipe *recipe)
 {
 	Q_UNUSED(material);
 
@@ -256,7 +259,7 @@ int64_t item::get_price(const item_type *type, const item_material *material, co
 		price += recipe->get_price();
 	}
 
-	return price.to_ceil_int64();
+	return price;
 }
 
 void item::update_name()
@@ -336,9 +339,25 @@ QString item::get_effects_string(const character *character) const
 	return QString::fromStdString(str);
 }
 
-int64_t item::get_price() const
+decimillesimal_int item::get_price() const
 {
 	return item::get_price(this->get_type(), this->get_material(), this->get_enchantment(), this->get_spell(), this->get_recipe());
+}
+
+QString item::get_price_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_price(), false));
+}
+
+decimillesimal_int item::get_sell_price() const
+{
+	//the price for which a character can sell the item
+	return decimillesimal_int::max(this->get_price() / 2, decimillesimal_int::from_value(1));
+}
+
+QString item::get_sell_price_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_sell_price(), false));
 }
 
 bool item::is_useful_for(const character *character) const
