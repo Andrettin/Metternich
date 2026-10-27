@@ -2347,6 +2347,9 @@ QString game::get_price_qstring(const metternich::commodity *commodity) const
 
 void game::set_price(const commodity *commodity, const decimillesimal_int &value)
 {
+	assert_throw(commodity != nullptr);
+	assert_throw(commodity->get_base_price() != 0);
+
 	if (value == this->get_price(commodity)) {
 		return;
 	}
