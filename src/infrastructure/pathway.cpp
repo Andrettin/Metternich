@@ -55,7 +55,7 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+			this->commodity_costs[commodity] = commodity->string_to_fractional_value(property.get_value());
 		});
 	} else if (tag == "commodity_cost_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -129,9 +129,9 @@ void pathway::set_image_filepath(const std::filesystem::path &filepath)
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
 }
 
-commodity_map<int64_t> pathway::get_commodity_costs_for_province(const province *province) const
+commodity_map<decimillesimal_int> pathway::get_commodity_costs_for_province(const province *province) const
 {
-	commodity_map<int64_t> costs = this->get_commodity_costs();
+	commodity_map<decimillesimal_int> costs = this->get_commodity_costs();
 
 	//multiply the costs by the province's terrain type movement cost
 	for (auto &[commodity, cost] : costs) {
@@ -145,7 +145,7 @@ QString pathway::get_commodity_costs_string_for_province(const metternich::provi
 {
 	std::string str;
 
-	const commodity_map<int64_t> commodity_costs = this->get_commodity_costs_for_province(province);
+	const commodity_map<decimillesimal_int> commodity_costs = this->get_commodity_costs_for_province(province);
 
 	for (const auto &[commodity, cost] : commodity_costs) {
 		if (cost == 0) {

@@ -315,7 +315,7 @@ void domain_economy::do_trade()
 
 		commodity_map<decimillesimal_int> offers = this->get_offers();
 		for (auto &[commodity, offer] : offers) {
-			const int64_t price = game::get()->get_price(commodity);
+			const decimillesimal_int price = game::get()->get_price(commodity);
 
 			for (const metternich::domain *other_domain : trade_domains) {
 				domain_economy *other_domain_economy = other_domain->get_economy();
@@ -775,7 +775,7 @@ QString domain_economy::get_commodity_output_wealth_value_qstring(const metterni
 {
 	assert_throw(commodity != nullptr);
 
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_commodity_output(commodity) * commodity->get_wealth_value(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_commodity_output(commodity) * commodity->get_wealth_value());
 }
 
 void domain_economy::change_commodity_output(const commodity *commodity, const decimillesimal_int &change)
@@ -1041,7 +1041,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	this->change_offer(commodity, -sold_quantity);
 	this->change_stored_commodity(commodity, -sold_quantity);
 
-	const int64_t price = game::get()->get_price(commodity);
+	const decimillesimal_int price = game::get()->get_price(commodity);
 	const decimillesimal_int sale_income = price * sold_quantity;
 	const decimillesimal_int gained_wealth = this->add_population_wealth(sale_income);
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);

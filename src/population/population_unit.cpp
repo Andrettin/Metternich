@@ -471,7 +471,7 @@ void population_unit::set_literacy_rate(const decimillesimal_int &literacy_rate)
 
 QString population_unit::get_wealth_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_wealth(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_wealth());
 }
 
 void population_unit::set_wealth(const decimillesimal_int &wealth)

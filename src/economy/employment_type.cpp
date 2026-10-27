@@ -112,7 +112,7 @@ void employment_type::initialize()
 		}
 		for (const auto &[commodity, weight] : this->input_commodity_weights) {
 			assert_throw(commodity->get_base_price() > 0);
-			this->input_commodities[commodity] = this->input_wealth_value * weight / total_weight / commodity->get_base_price();
+			this->input_commodities[commodity] = (this->input_wealth_value * weight / total_weight / commodity->get_base_price()).to_int64();
 		}
 
 		this->input_commodity_weights.clear();

@@ -44,7 +44,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
-	Q_PROPERTY(qint64 base_price MEMBER base_price READ get_base_price NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
 	Q_PROPERTY(bool enabled READ is_enabled NOTIFY changed)
@@ -144,7 +144,7 @@ public:
 		return this->get_wealth_value() != 0;
 	}
 
-	int64_t get_base_price() const
+	const decimillesimal_int &get_base_price() const
 	{
 		return this->base_price;
 	}
@@ -184,6 +184,7 @@ public:
 
 	std::string value_to_string(const int64_t value, const bool joined) const;
 	std::string value_to_string(const decimillesimal_int &value, const bool joined) const;
+	QString value_to_qstring(const decimillesimal_int &value) const;
 	Q_INVOKABLE QString value_to_qstring(const qint64 value) const;
 
 	Q_INVOKABLE QString get_units_tooltip() const;
@@ -210,7 +211,7 @@ private:
 	bool provincial = false;
 	bool negative_allowed = false;
 	decimillesimal_int wealth_value;
-	int64_t base_price = 0;
+	decimillesimal_int base_price;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
 	std::map<millionesimal_int, const commodity_unit *> units;

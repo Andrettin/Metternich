@@ -346,7 +346,7 @@ decimillesimal_int item::get_price() const
 
 QString item::get_price_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_price(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_price());
 }
 
 decimillesimal_int item::get_sell_price() const
@@ -357,7 +357,7 @@ decimillesimal_int item::get_sell_price() const
 
 QString item::get_sell_price_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_sell_price(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_sell_price());
 }
 
 bool item::is_useful_for(const character *character) const

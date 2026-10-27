@@ -2691,7 +2691,7 @@ QString site_game_data::get_commodity_output_qstring(const metternich::commodity
 {
 	assert_throw(commodity != nullptr);
 
-	return QString::fromStdString(commodity->value_to_string(decimillesimal_int(this->get_commodity_output(commodity)), false));
+	return commodity->value_to_qstring(decimillesimal_int(this->get_commodity_output(commodity)));
 }
 
 void site_game_data::set_commodity_output(const commodity *commodity, const centesimal_int &output)

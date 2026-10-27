@@ -2106,7 +2106,7 @@ void game::do_trade()
 	for (const auto &[commodity, value] : remaining_demands) {
 		//change the price according to the extra quantity bid/offered
 		//change by 10ths of the base price
-		const int64_t change = number::sign(value.get_value()) * std::max(commodity->get_base_price() / 10, 1ll);
+		const decimillesimal_int change = number::sign(value.get_value()) * decimillesimal_int::max(commodity->get_base_price() / 10, decimillesimal_int::from_value(1));
 
 		if (change == 0) {
 			continue;
@@ -2329,7 +2329,7 @@ void game::set_player_domain(const domain *domain)
 	this->set_player_character(domain ? domain->get_government()->get_ruler() : nullptr);
 }
 
-int64_t game::get_price(const commodity *commodity) const
+const decimillesimal_int &game::get_price(const commodity *commodity) const
 {
 	const auto find_iterator = this->prices.find(commodity);
 
@@ -2340,14 +2340,19 @@ int64_t game::get_price(const commodity *commodity) const
 	return commodity->get_base_price();
 }
 
-void game::set_price(const commodity *commodity, const int64_t value)
+QString game::get_price_qstring(const metternich::commodity *commodity) const
+{
+	return commodity->value_to_qstring(this->get_price(commodity));
+}
+
+void game::set_price(const commodity *commodity, const decimillesimal_int &value)
 {
 	if (value == this->get_price(commodity)) {
 		return;
 	}
 
-	if (value < 1) {
-		this->set_price(commodity, 1);
+	if (value < decimillesimal_int::from_value(1)) {
+		this->set_price(commodity, decimillesimal_int::from_value(1));
 		return;
 	} else if (value < (commodity->get_base_price() * 22 / 100)) {
 		//the price cannot be lower than 22% of the base price

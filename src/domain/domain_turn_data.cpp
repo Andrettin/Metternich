@@ -21,17 +21,17 @@ domain_turn_data::~domain_turn_data()
 
 QString domain_turn_data::get_total_income_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_income(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_total_income());
 }
 
 QString domain_turn_data::get_total_expense_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_expense(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_total_expense());
 }
 
 QString domain_turn_data::get_total_balance_qstring() const
 {
-	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_income() - this->get_total_expense(), false));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_total_income() - this->get_total_expense());
 }
 
 QVariantList domain_turn_data::get_income_transactions_qvariant_list() const

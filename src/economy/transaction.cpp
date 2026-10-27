@@ -25,7 +25,7 @@ const std::string &transaction::get_object_name() const
 
 QString transaction::get_name() const
 {
-	const decimillesimal_int amount_per_unit = decimillesimal_int::max(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : decimillesimal_int(1)), decimillesimal_int(1));
+	const decimillesimal_int amount_per_unit = decimillesimal_int::max(this->get_amount() / (this->get_object_quantity() != 0 ? this->get_object_quantity() : decimillesimal_int(1)), decimillesimal_int::from_value(1));
 
 	return QString::fromStdString(std::format("{} ({})", this->get_object_name(), defines::get()->get_wealth_commodity()->value_to_string(amount_per_unit, false)));
 }

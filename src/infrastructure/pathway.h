@@ -89,12 +89,12 @@ public:
 		return nullptr;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int64_t> get_commodity_costs_for_province(const province *province) const;
+	commodity_map<decimillesimal_int> get_commodity_costs_for_province(const province *province) const;
 	Q_INVOKABLE QString get_commodity_costs_string_for_province(const metternich::province *province, const bool single_line) const;
 
 	const metternich::modifier<const province> *get_modifier() const
@@ -122,7 +122,7 @@ private:
 	technology *required_technology = nullptr;
 	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	int64_t wealth_cost = 0;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;

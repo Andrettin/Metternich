@@ -471,7 +471,6 @@ QCoro::Task<void> province_game_data::do_construction()
 		co_return;
 	}
 
-	const commodity_map<int64_t> commodity_costs = this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province);
 	this->change_pathway_construction_progress(decimillesimal_int(100));
 
 	if (this->get_pathway_construction_progress() >= 100) {
@@ -1381,7 +1380,7 @@ bool province_game_data::can_build_pathway(const metternich::pathway *pathway) c
 	const domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		if (cost > domain_economy->get_stored_commodity(commodity).to_int64()) {
+		if (cost > domain_economy->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -1402,7 +1401,7 @@ void province_game_data::build_pathway(const metternich::pathway *pathway)
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->province)) {
-		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 
 	this->set_under_construction_pathway(pathway);
@@ -1418,7 +1417,7 @@ void province_game_data::cancel_pathway_construction()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->get_under_construction_pathway()->get_commodity_costs_for_province(this->province)) {
-			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
+			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
 

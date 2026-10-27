@@ -556,7 +556,7 @@ void civilian_unit::build_pathway(const metternich::pathway *pathway)
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : pathway->get_commodity_costs_for_province(this->get_province())) {
-		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 }
 
@@ -583,7 +583,7 @@ void civilian_unit::cancel_work()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->under_construction_pathway->get_commodity_costs_for_province(this->get_province())) {
-			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
+			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -810,8 +810,8 @@ void civilian_unit::increment_work_progress()
 	}
 
 	if (this->under_construction_pathway != nullptr) {
-		int64_t wealth_cost = 0;
-		const commodity_map<int64_t> commodity_costs = this->under_construction_pathway->get_commodity_costs_for_province(this->get_province());
+		decimillesimal_int wealth_cost;
+		const commodity_map<decimillesimal_int> commodity_costs = this->under_construction_pathway->get_commodity_costs_for_province(this->get_province());
 		if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
 			wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
 		}
@@ -819,7 +819,7 @@ void civilian_unit::increment_work_progress()
 		static constexpr dice progress_dice(1, 6);
 		const decimillesimal_int wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
 
-		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / std::max(wealth_cost, 1ll));
+		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / decimillesimal_int::max(wealth_cost, decimillesimal_int::from_value(1)));
 	}
 
 	this->set_work_progress(current_progress + progress_change);

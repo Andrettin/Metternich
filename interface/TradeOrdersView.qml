@@ -96,7 +96,7 @@ ListView {
 			
 			SmallText {
 				id: price_label
-				text: "$" + number_string(metternich.game.get_price(commodity))
+				text: metternich.game.get_price_qstring(commodity)
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.right: parent.right
 				anchors.rightMargin: 32 * scale_factor

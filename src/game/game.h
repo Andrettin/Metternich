@@ -2,6 +2,7 @@
 
 #include "database/data_entry_container.h"
 #include "economy/commodity_container.h"
+#include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
 
@@ -241,10 +242,11 @@ public:
 
 	void set_player_domain(const domain *domain);
 
-	Q_INVOKABLE qint64 get_price(const metternich::commodity *commodity) const;
-	void set_price(const commodity *commodity, const int64_t value);
+	const decimillesimal_int &get_price(const commodity *commodity) const;
+	Q_INVOKABLE QString get_price_qstring(const metternich::commodity *commodity) const;
+	void set_price(const commodity *commodity, const decimillesimal_int &value);
 
-	void change_price(const commodity *commodity, const int64_t value)
+	void change_price(const commodity *commodity, const decimillesimal_int &value)
 	{
 		this->set_price(commodity, this->get_price(commodity) + value);
 	}
@@ -351,7 +353,7 @@ private:
 	std::vector<domain *> countries; //the domains which have at least 1 province
 	const character *player_character = nullptr;
 	const domain *player_domain = nullptr;
-	commodity_map<int64_t> prices;
+	commodity_map<decimillesimal_int> prices;
 	QImage exploration_diplomatic_map_image;
 	bool exploration_changed = false;
 	std::vector<qunique_ptr<character>> generated_characters;

@@ -261,6 +261,11 @@ std::string commodity::value_to_string(const decimillesimal_int &value, const bo
 	return value_str;
 }
 
+QString commodity::value_to_qstring(const decimillesimal_int &value) const
+{
+	return QString::fromStdString(this->value_to_string(value, false));
+}
+
 QString commodity::value_to_qstring(const int64_t value) const
 {
 	return QString::fromStdString(this->value_to_string(value, false));
@@ -296,7 +301,7 @@ decimillesimal_int commodity::wealth_value_to_value(const decimillesimal_int &we
 {
 	assert_throw(wealth_value != 0);
 
-	const decimillesimal_int commodity_base_price = decimillesimal_int::max(decimillesimal_int(this->get_base_price()), this->get_wealth_value());
+	const decimillesimal_int commodity_base_price = decimillesimal_int::max(this->get_base_price(), this->get_wealth_value());
 	assert_throw(commodity_base_price > 0);
 
 	const decimillesimal_int result = wealth_value / commodity_base_price;
