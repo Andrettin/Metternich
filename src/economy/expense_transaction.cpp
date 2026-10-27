@@ -68,7 +68,7 @@ QString expense_transaction::get_description() const
 			break;
 		}
 		case expense_transaction_type::tribute:
-			str = std::format("Paid {} in tribute to {}", amount_str, this->get_domain()->get_game_data()->get_name());
+			str = std::format("Paid {} in tribute to {}{}", amount_str, this->get_domain()->get_game_data()->has_definite_article() ? "the " : "", this->get_domain()->get_game_data()->get_name());
 			break;
 	}
 

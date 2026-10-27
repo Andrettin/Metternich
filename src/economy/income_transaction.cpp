@@ -72,13 +72,13 @@ QString income_transaction::get_description() const
 			str = std::format("Collected {} in taxes", amount_str, this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::tariff:
-			str = std::format("Collected {} in tariffs from {}", amount_str, this->get_domain()->get_game_data()->get_name());
+			str = std::format("Collected {} in tariffs from {}{}", amount_str, this->get_domain()->get_game_data()->has_definite_article() ? "the " : "", this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::treasure_fleet:
-			str = std::format("Received treasure fleet worth {} from {}", amount_str, this->get_domain()->get_game_data()->get_name());
+			str = std::format("Received treasure fleet worth {} from {}{}", amount_str, this->get_domain()->get_game_data()->has_definite_article() ? "the " : "", this->get_domain()->get_game_data()->get_name());
 			break;
 		case income_transaction_type::tribute:
-			str = std::format("Collected {} in tribute from {}", amount_str, this->get_domain()->get_game_data()->get_name());
+			str = std::format("Collected {} in tribute from {}{}", amount_str, this->get_domain()->get_game_data()->has_definite_article() ? "the " : "", this->get_domain()->get_game_data()->get_name());
 			break;
 	}
 
