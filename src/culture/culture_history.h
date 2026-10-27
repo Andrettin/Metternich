@@ -2,6 +2,10 @@
 
 #include "database/data_entry_history.h"
 
+Q_MOC_INCLUDE("map/province.h")
+Q_MOC_INCLUDE("map/region.h")
+Q_MOC_INCLUDE("technology/technology.h")
+
 namespace metternich {
 
 class domain;

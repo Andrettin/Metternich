@@ -4,6 +4,10 @@
 #include "database/named_data_entry.h"
 #include "util/decimillesimal_int.h"
 
+Q_MOC_INCLUDE("item/enchantment.h")
+Q_MOC_INCLUDE("item/item_type.h")
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
 class character;

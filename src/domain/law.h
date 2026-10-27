@@ -4,6 +4,7 @@
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/law_group.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")

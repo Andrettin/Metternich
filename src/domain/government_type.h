@@ -5,6 +5,7 @@
 #include "database/named_data_entry.h"
 #include "domain/law_group_container.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/domain_attribute.h")
 Q_MOC_INCLUDE("domain/government_group.h")
 Q_MOC_INCLUDE("technology/technology.h")

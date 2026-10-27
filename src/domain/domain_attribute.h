@@ -4,6 +4,8 @@
 #include "database/named_data_entry.h"
 #include "util/dice.h"
 
+Q_MOC_INCLUDE("ui/icon.h")
+
 namespace metternich {
 
 class domain;

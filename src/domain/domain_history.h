@@ -13,6 +13,7 @@ Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("domain/domain_tier.h")
 Q_MOC_INCLUDE("domain/government_type.h")
 Q_MOC_INCLUDE("religion/religion.h")
+Q_MOC_INCLUDE("technology/technology.h")
 
 namespace metternich {
 

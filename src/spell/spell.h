@@ -5,6 +5,8 @@
 #include "database/named_data_entry.h"
 #include "util/decimillesimal_int.h"
 
+Q_MOC_INCLUDE("character/character.h")
+Q_MOC_INCLUDE("character/character_class.h")
 Q_MOC_INCLUDE("sound/sound.h")
 Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")

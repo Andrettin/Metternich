@@ -5,6 +5,7 @@
 #include "map/terrain_adjacency.h"
 #include "util/color_container.h"
 
+Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {

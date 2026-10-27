@@ -5,13 +5,18 @@
 
 Q_MOC_INCLUDE("database/defines.h")
 Q_MOC_INCLUDE("database/preferences.h")
+Q_MOC_INCLUDE("domain/consulate.h")
+Q_MOC_INCLUDE("domain/domain_tier_data.h")
+Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("game/event_instance.h")
 Q_MOC_INCLUDE("game/game.h")
 Q_MOC_INCLUDE("item/item_slot.h")
 Q_MOC_INCLUDE("map/map.h")
 Q_MOC_INCLUDE("map/map_template.h")
+Q_MOC_INCLUDE("map/province.h")
 Q_MOC_INCLUDE("map/world.h")
 Q_MOC_INCLUDE("sound/media_player.h")
+Q_MOC_INCLUDE("ui/cursor.h")
 Q_MOC_INCLUDE("ui/ui_defines.h")
 Q_MOC_INCLUDE("unit/military_unit_category.h")
 

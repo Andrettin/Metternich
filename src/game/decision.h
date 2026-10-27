@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
@@ -86,7 +87,7 @@ public:
 	Q_INVOKABLE bool can_be_enacted_by(const metternich::domain *domain) const;
 	[[nodiscard]] QCoro::Task<void> enact_for_coro(const metternich::domain *domain) const;
 
-	Q_INVOKABLE [[nodiscard]] QCoro::QmlTask enact_for(const metternich::domain *domain) const
+	Q_INVOKABLE QCoro::QmlTask enact_for(const metternich::domain *domain) const
 	{
 		return this->enact_for_coro(domain);
 	}

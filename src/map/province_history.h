@@ -10,6 +10,7 @@
 Q_MOC_INCLUDE("domain/domain.h")
 Q_MOC_INCLUDE("infrastructure/pathway.h")
 Q_MOC_INCLUDE("religion/religion.h")
+Q_MOC_INCLUDE("technology/technology.h")
 
 namespace metternich {
 

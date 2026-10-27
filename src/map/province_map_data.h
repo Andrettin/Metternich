@@ -3,6 +3,8 @@
 #include "economy/resource_container.h"
 #include "map/terrain_type_container.h"
 
+Q_MOC_INCLUDE("map/terrain_type.h")
+
 namespace metternich {
 
 class province;

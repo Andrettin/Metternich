@@ -1,5 +1,6 @@
 #pragma once
 
+Q_MOC_INCLUDE("character/character.h")
 Q_MOC_INCLUDE("spell/spell.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
