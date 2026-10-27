@@ -28,6 +28,8 @@ void enchantment::process_gsml_property(const gsml_property &property)
 
 	if (key == "price") {
 		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+
+		//ensure the price is above 0, since it can happen for e.g. prices given in copper or silver pieces to become zero
 		this->price = decimillesimal_int::max(this->price, decimillesimal_int::from_value(1));
 	} else {
 		data_entry::process_gsml_property(property);
