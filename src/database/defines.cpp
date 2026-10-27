@@ -297,9 +297,9 @@ void defines::set_default_menu_background_filepath(const std::filesystem::path &
 	this->default_menu_background_filepath = database::get()->get_graphics_filepath(filepath);
 }
 
-int64_t defines::get_domain_income_unit_value() const
+decimillesimal_int defines::get_domain_income_unit_value() const
 {
-	return this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit()).to_int64();
+	return decimillesimal_int(this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit()));
 }
 
 int defines::get_province_population_for_level(const int level) const
@@ -354,7 +354,7 @@ const dice &defines::get_province_taxation_for_level(const province_taxation_typ
 	return null_dice;
 }
 
-int64_t defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) const
+decimillesimal_int defines::get_domain_maintenance_cost_for_domain_size(const int domain_size) const
 {
 	if (domain_size > 100) {
 		//special case for province counts above 100

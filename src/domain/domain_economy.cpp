@@ -79,7 +79,7 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 	} else if (key == "province_taxation_type") {
 		this->province_taxation_type = magic_enum::enum_cast<metternich::province_taxation_type>(value).value();
 	} else if (key == "attribute_taxation") {
-		this->attribute_taxation = std::stoll(value);
+		this->attribute_taxation = decimillesimal_int(value);
 	} else if (key == "output_modifier") {
 		this->output_modifier = centesimal_int(value);
 	} else if (key == "throughput_modifier") {
@@ -147,7 +147,7 @@ gsml_data domain_economy::to_gsml_data() const
 
 	data.add_property("storage_capacity", std::to_string(this->get_storage_capacity()));
 	data.add_property("province_taxation_type", std::string(magic_enum::enum_name(this->get_province_taxation_type())));
-	data.add_property("attribute_taxation", std::to_string(this->attribute_taxation));
+	data.add_property("attribute_taxation", this->attribute_taxation.to_string());
 	data.add_property("output_modifier", this->output_modifier.to_string());
 	data.add_property("throughput_modifier", std::to_string(this->throughput_modifier));
 
@@ -249,8 +249,8 @@ QCoro::Task<void> domain_economy::do_production()
 			}
 
 			if (commodity->is_wealth()) {
-				this->add_tributable_commodity(commodity, output.to_int64(), income_transaction_type::treasure_fleet);
-				this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, output.to_int64(), nullptr, 0, this->domain);
+				this->add_tributable_commodity(commodity, output, income_transaction_type::treasure_fleet);
+				this->domain->get_turn_data()->add_income_transaction(income_transaction_type::income, output, nullptr, decimillesimal_int(0), this->domain);
 			} else {
 				this->change_stored_commodity(commodity, decimillesimal_int(output));
 			}
@@ -313,17 +313,17 @@ void domain_economy::do_trade()
 
 		const std::vector<const metternich::domain *> trade_domains = this->get_known_domains_by_trade_priority();
 
-		commodity_map<int64_t> offers = this->get_offers();
+		commodity_map<decimillesimal_int> offers = this->get_offers();
 		for (auto &[commodity, offer] : offers) {
 			const int64_t price = game::get()->get_price(commodity);
 
 			for (const metternich::domain *other_domain : trade_domains) {
 				domain_economy *other_domain_economy = other_domain->get_economy();
 
-				const int64_t bid = other_domain_economy->get_bid(commodity);
+				const decimillesimal_int bid = other_domain_economy->get_bid(commodity);
 				if (bid != 0) {
-					int64_t sold_quantity = std::min(offer, bid);
-					sold_quantity = std::min(sold_quantity, (other_domain_economy->get_wealth() / price).to_int64());
+					decimillesimal_int sold_quantity = decimillesimal_int::min(offer, bid);
+					sold_quantity = decimillesimal_int::min(sold_quantity, (other_domain_economy->get_wealth() / price));
 
 					if (sold_quantity > 0) {
 						this->do_sale(other_domain, commodity, sold_quantity, true);
@@ -342,7 +342,7 @@ void domain_economy::do_trade()
 	}
 }
 
-void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &remaining_demands)
+void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands)
 {
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
@@ -353,7 +353,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 		return;
 	}
 
-	const int64_t consumption_wealth = std::max(this->get_game_data()->get_consumption_int(), 0) * defines::get()->get_domain_income_unit_value();
+	const decimillesimal_int consumption_wealth = std::max(this->get_game_data()->get_consumption_int(), 0) * defines::get()->get_domain_income_unit_value();
 
 	if (consumption_wealth == 0) {
 		return;
@@ -361,7 +361,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<int64_t> &rema
 
 	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
 		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
-		const int64_t population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
+		const decimillesimal_int population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
 
 		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains, remaining_demands);
 	}
@@ -469,8 +469,8 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 		assert_throw(value > 0);
 		const decimillesimal_int wealth_conversion_income = commodity->get_wealth_value() * value;
 		const decimillesimal_int gained_wealth = this->add_population_wealth(wealth_conversion_income);
-		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth.to_int64(), income_transaction_type::treasure_fleet);
-		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth.to_int64(), commodity, value.to_int64());
+		this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::treasure_fleet);
+		this->domain->get_turn_data()->add_income_transaction(income_transaction_type::liquidated_riches, gained_wealth, commodity, value);
 		return;
 	}
 
@@ -488,8 +488,8 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 		this->stored_commodities[commodity] = value;
 	}
 
-	if (this->get_offer(commodity) > value.to_int64()) {
-		this->set_offer(commodity, value.to_int64());
+	if (this->get_offer(commodity) > value) {
+		this->set_offer(commodity, value);
 	}
 
 	if (commodity == defines::get()->get_wealth_commodity() && this->domain->get_government()->get_ruler() != nullptr) {
@@ -501,7 +501,7 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 	}
 }
 
-void domain_economy::add_tributable_commodity(const commodity *commodity, const int64_t tributable_quantity, const income_transaction_type tribute_income_type)
+void domain_economy::add_tributable_commodity(const commodity *commodity, const decimillesimal_int &tributable_quantity, const income_transaction_type tribute_income_type)
 {
 	assert_throw(commodity != nullptr);
 	assert_throw(tributable_quantity >= 0);
@@ -512,7 +512,7 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 	}
 
 	if (this->domain->get_diplomacy()->get_overlord() == nullptr) {
-		this->change_stored_commodity(commodity, decimillesimal_int(tributable_quantity));
+		this->change_stored_commodity(commodity, tributable_quantity);
 		return;
 	}
 
@@ -530,16 +530,16 @@ void domain_economy::add_tributable_commodity(const commodity *commodity, const 
 		return;
 	}
 
-	const int64_t tribute = tributable_quantity * tribute_rate / 100;
-	const int64_t tributed_quantity = tributable_quantity - tribute;
+	const decimillesimal_int tribute = tributable_quantity * tribute_rate / 100;
+	const decimillesimal_int tributed_quantity = tributable_quantity - tribute;
 
 	this->domain->get_diplomacy()->get_overlord()->get_economy()->add_tributable_commodity(commodity, tribute, tribute_income_type);
 
-	this->change_stored_commodity(commodity, decimillesimal_int(tributed_quantity));
+	this->change_stored_commodity(commodity, tributed_quantity);
 
 	if (tribute != 0 && commodity == defines::get()->get_wealth_commodity()) {
-		this->domain->get_diplomacy()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, 0, this->domain);
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, 0, this->domain->get_diplomacy()->get_overlord());
+		this->domain->get_diplomacy()->get_overlord()->get_turn_data()->add_income_transaction(tribute_income_type, tribute, nullptr, decimillesimal_int(0), this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::tribute, tribute, nullptr, decimillesimal_int(0), this->domain->get_diplomacy()->get_overlord());
 	}
 }
 
@@ -859,10 +859,10 @@ void domain_economy::set_province_taxation_type(const metternich::province_taxat
 
 void domain_economy::update_attribute_taxation()
 {
-	this->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(-this->attribute_taxation));
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), -this->attribute_taxation);
 
 	//update wealth income from attributes
-	this->attribute_taxation = 0;
+	this->attribute_taxation = decimillesimal_int(0);
 
 	for (const auto &[attribute, attribute_value] : this->get_game_data()->get_attribute_values()) {
 		if (!attribute->is_taxable()) {
@@ -871,7 +871,7 @@ void domain_economy::update_attribute_taxation()
 
 		const dice &check_dice = attribute->get_check_dice();
 
-		int64_t average_result = check_dice.get_average(defines::get()->get_domain_income_unit_value());
+		decimillesimal_int average_result = check_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 		average_result += attribute_value.to_int() * defines::get()->get_domain_income_unit_value();
 		average_result -= this->get_game_data()->get_effective_unrest() * defines::get()->get_domain_income_unit_value();
@@ -887,7 +887,7 @@ void domain_economy::update_attribute_taxation()
 		this->attribute_taxation += average_result;
 	}
 
-	this->change_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(this->attribute_taxation));
+	this->change_commodity_output(defines::get()->get_wealth_commodity(), this->attribute_taxation);
 }
 
 QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const
@@ -935,7 +935,7 @@ QVariantList domain_economy::get_bids_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_bids());
 }
 
-void domain_economy::set_bid(const commodity *commodity, const int64_t value)
+void domain_economy::set_bid(const commodity *commodity, const decimillesimal_int &value)
 {
 	if (value == this->get_bid(commodity)) {
 		return;
@@ -946,7 +946,7 @@ void domain_economy::set_bid(const commodity *commodity, const int64_t value)
 	if (value == 0) {
 		this->bids.erase(commodity);
 	} else {
-		this->set_offer(commodity, 0);
+		this->set_offer(commodity, decimillesimal_int(0));
 		this->bids[commodity] = value;
 	}
 
@@ -958,10 +958,10 @@ void domain_economy::set_bid(const commodity *commodity, const int64_t value)
 void domain_economy::prepare_bids()
 {
 	for (const auto &[commodity, min_storage] : this->get_min_commodity_storages()) {
-		const int64_t stored_quantity = this->get_stored_commodity(commodity).to_int64();
-		if (stored_quantity < min_storage) {
-			const int64_t bid_quantity = min_storage - stored_quantity;
-			log_trace(std::format("Domain \"{}\" is bidding for {} of the \"{}\" commodity, since the stored amount of {} is lower than the minimum storage of {}.", this->domain->get_identifier(), bid_quantity, commodity->get_identifier(), stored_quantity, min_storage));
+		const decimillesimal_int stored_quantity = this->get_stored_commodity(commodity);
+		if (stored_quantity < decimillesimal_int(min_storage)) {
+			const decimillesimal_int bid_quantity = decimillesimal_int(min_storage) - stored_quantity;
+			log_trace(std::format("Domain \"{}\" is bidding for {} of the \"{}\" commodity, since the stored amount of {} is lower than the minimum storage of {}.", this->domain->get_identifier(), bid_quantity.to_string(), commodity->get_identifier(), stored_quantity.to_string(), min_storage));
 			this->set_bid(commodity, bid_quantity);
 		}
 	}
@@ -972,7 +972,7 @@ QVariantList domain_economy::get_offers_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_offers());
 }
 
-void domain_economy::set_offer(const commodity *commodity, const int64_t value)
+void domain_economy::set_offer(const commodity *commodity, const decimillesimal_int &value)
 {
 	if (value == this->get_offer(commodity)) {
 		return;
@@ -980,15 +980,15 @@ void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 
 	assert_throw(value >= 0);
 
-	if (value > this->get_stored_commodity(commodity).to_int64()) {
-		this->set_offer(commodity, this->get_stored_commodity(commodity).to_int64());
+	if (value > this->get_stored_commodity(commodity)) {
+		this->set_offer(commodity, this->get_stored_commodity(commodity));
 		return;
 	}
 
 	if (value == 0) {
 		this->offers.erase(commodity);
 	} else {
-		this->set_bid(commodity, 0);
+		this->set_bid(commodity, decimillesimal_int(0));
 		this->offers[commodity] = value;
 	}
 
@@ -1000,10 +1000,10 @@ void domain_economy::set_offer(const commodity *commodity, const int64_t value)
 void domain_economy::prepare_offers()
 {
 	for (const auto &[commodity, stored_quantity] : this->get_stored_commodities()) {
-		const int64_t max_storage = this->get_max_commodity_storage(commodity);
-		if (stored_quantity.to_int64() > max_storage) {
-			const int64_t offered_quantity = stored_quantity.to_int64() - max_storage;
-			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity, commodity->get_identifier(), stored_quantity.to_int64(), max_storage));
+		const decimillesimal_int max_storage = decimillesimal_int(this->get_max_commodity_storage(commodity));
+		if (stored_quantity > max_storage) {
+			const decimillesimal_int offered_quantity = stored_quantity - max_storage;
+			log_trace(std::format("Domain \"{}\" is offering {} of the \"{}\" commodity, since the stored amount of {} is higher than the maximum storage of {}.", this->domain->get_identifier(), offered_quantity.to_string(), commodity->get_identifier(), stored_quantity.to_string(), max_storage.to_string()));
 			this->set_offer(commodity, offered_quantity);
 		}
 	}
@@ -1036,14 +1036,14 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 	return domains;
 }
 
-void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const int64_t sold_quantity, const bool state_purchase)
+void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const decimillesimal_int &sold_quantity, const bool state_purchase)
 {
 	this->change_offer(commodity, -sold_quantity);
-	this->change_stored_commodity(commodity, decimillesimal_int(-sold_quantity));
+	this->change_stored_commodity(commodity, -sold_quantity);
 
 	const int64_t price = game::get()->get_price(commodity);
-	const int64_t sale_income = price * sold_quantity;
-	const int64_t gained_wealth = this->add_population_wealth(decimillesimal_int(sale_income)).to_int64();
+	const decimillesimal_int sale_income = price * sold_quantity;
+	const decimillesimal_int gained_wealth = this->add_population_wealth(sale_income);
 	this->add_tributable_commodity(defines::get()->get_wealth_commodity(), gained_wealth, income_transaction_type::tariff);
 	this->domain->get_turn_data()->add_income_transaction(income_transaction_type::sale, gained_wealth, commodity, sold_quantity, other_domain != this->domain ? other_domain : nullptr);
 
@@ -1052,7 +1052,7 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 
 	if (state_purchase) {
 		other_domain_economy->change_stored_commodity(commodity, decimillesimal_int(sold_quantity));
-		const int64_t purchase_expense = price * sold_quantity;
+		const decimillesimal_int purchase_expense = price * sold_quantity;
 		other_domain_economy->change_wealth(decimillesimal_int(-purchase_expense));
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 

@@ -60,7 +60,7 @@ QString income_transaction::get_description() const
 			str = std::format("Sold {} {} to {}{} for {}", std::get<const commodity *>(this->get_object())->value_to_string(this->get_object_quantity(), false), std::get<const commodity *>(this->get_object())->get_name(), this->get_domain() && this->get_domain()->get_game_data()->has_definite_article() ? "the ": "", this->get_domain() ? this->get_domain()->get_game_data()->get_name() : "the domestic market", amount_str);
 			break;
 		case income_transaction_type::liquidated_riches:
-			str = std::format("Converted {} {} into {}", number::to_formatted_string(this->get_object_quantity()), std::get<const commodity *>(this->get_object())->get_name(), amount_str);
+			str = std::format("Converted {} {} into {}", this->get_object_quantity().to_formatted_string(), std::get<const commodity *>(this->get_object())->get_name(), amount_str);
 			break;
 		case income_transaction_type::holding_income:
 			str = std::format("Received {} in holding income", amount_str, this->get_domain()->get_game_data()->get_name());

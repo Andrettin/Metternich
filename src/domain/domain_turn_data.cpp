@@ -2,6 +2,8 @@
 
 #include "domain/domain_turn_data.h"
 
+#include "database/defines.h"
+#include "economy/commodity.h"
 #include "economy/expense_transaction.h"
 #include "economy/income_transaction.h"
 #include "economy/income_transaction_type.h"
@@ -17,6 +19,21 @@ domain_turn_data::~domain_turn_data()
 {
 }
 
+QString domain_turn_data::get_total_income_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_income(), false));
+}
+
+QString domain_turn_data::get_total_expense_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_expense(), false));
+}
+
+QString domain_turn_data::get_total_balance_qstring() const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_total_income() - this->get_total_expense(), false));
+}
+
 QVariantList domain_turn_data::get_income_transactions_qvariant_list() const
 {
 	return container::to_qvariant_list(this->income_transactions);
@@ -27,7 +44,7 @@ QVariantList domain_turn_data::get_expense_transactions_qvariant_list() const
 	return container::to_qvariant_list(this->expense_transactions);
 }
 
-void domain_turn_data::add_income_transaction(const income_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
+void domain_turn_data::add_income_transaction(const income_transaction_type transaction_type, const decimillesimal_int &amount, const transaction_object_variant &object, const decimillesimal_int &object_quantity, const metternich::domain *other_domain)
 {
 	this->total_income += amount;
 
@@ -49,7 +66,7 @@ void domain_turn_data::add_income_transaction(const income_transaction_type tran
 	this->income_transactions.push_back(std::move(transaction));
 }
 
-void domain_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const int64_t amount, const transaction_object_variant &object, const int64_t object_quantity, const metternich::domain *other_domain)
+void domain_turn_data::add_expense_transaction(const expense_transaction_type transaction_type, const decimillesimal_int &amount, const transaction_object_variant &object, const decimillesimal_int &object_quantity, const metternich::domain *other_domain)
 {
 	this->total_expense += amount;
 

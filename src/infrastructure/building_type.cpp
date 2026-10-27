@@ -349,11 +349,11 @@ commodity_map<int64_t> building_type::get_commodity_costs_for_site(const site *s
 				const int province_level_change = std::min(new_domain_skill_total_holding_level.to_int(), province->get_game_data()->get_max_level()) - province->get_game_data()->get_level();
 				for (int i = 0; i < province_level_change; ++i) {
 					for (const auto &[commodity, base_level_cost_per_level] : defines::get()->get_province_level_commodity_costs_per_level()) {
-						int64_t level_cost_per_level = base_level_cost_per_level;
+						decimillesimal_int level_cost_per_level = decimillesimal_int(base_level_cost_per_level);
 						if (commodity == defines::get()->get_wealth_commodity()) {
 							level_cost_per_level *= defines::get()->get_domain_income_unit_value();
 						}
-						costs[commodity] += decimillesimal_int(level_cost_per_level * (province->get_game_data()->get_level() + 1 + i));
+						costs[commodity] += level_cost_per_level * (province->get_game_data()->get_level() + 1 + i);
 					}
 				}
 			}

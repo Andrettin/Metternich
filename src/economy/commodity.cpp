@@ -185,8 +185,7 @@ decimillesimal_int commodity::string_to_fractional_value(const std::string &str)
 {
 	try {
 		const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
-		const decimillesimal_int base_value = decimillesimal_int(number_str);
-		decimillesimal_int value = base_value;
+		decimillesimal_int value = decimillesimal_int(number_str);
 		if (unit != nullptr) {
 			value *= this->get_unit_value(unit);
 		}
@@ -293,16 +292,20 @@ QString commodity::get_units_tooltip() const
 	return QString::fromStdString(str);
 }
 
-int64_t commodity::wealth_value_to_value(const int64_t wealth_value) const
+decimillesimal_int commodity::wealth_value_to_value(const decimillesimal_int &wealth_value) const
 {
 	assert_throw(wealth_value != 0);
 
 	const decimillesimal_int commodity_base_price = decimillesimal_int::max(decimillesimal_int(this->get_base_price()), this->get_wealth_value());
 	assert_throw(commodity_base_price > 0);
 
-	const int64_t result = (wealth_value / commodity_base_price).to_int64();
-
+	const decimillesimal_int result = wealth_value / commodity_base_price;
 	return result;
+}
+
+int64_t commodity::wealth_value_to_value(const int64_t wealth_value) const
+{
+	return this->wealth_value_to_value(decimillesimal_int(wealth_value)).to_int64();
 }
 
 }

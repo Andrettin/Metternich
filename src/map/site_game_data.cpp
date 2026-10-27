@@ -2873,14 +2873,14 @@ void site_game_data::update_holding_level_income()
 		return;
 	}
 
-	const int64_t average_result = income_dice.get_average(defines::get()->get_domain_income_unit_value());
+	const decimillesimal_int average_result = income_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 	if (average_result < 0) {
 		//ignore negative results
 		return;
 	}
 
-	const int64_t income = average_result;
+	const int64_t income = average_result.to_int64();
 	const int64_t taxed_income = this->get_province()->get_game_data()->process_taxable_target_income(income, this->get_weighted_holding_level().to_int(), this->taxes_by_holding);
 
 	this->holding_level_income = taxed_income;

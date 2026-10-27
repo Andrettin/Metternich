@@ -662,16 +662,16 @@ void domain_game_data::collect_regency()
 	//limit the regency gain to the reputation score
 	collected_regency = std::min(collected_regency, this->get_government()->get_ruler()->get_game_data()->get_reputation());
 
-	this->get_economy()->add_tributable_commodity(defines::get()->get_regency_commodity(), collected_regency, income_transaction_type::tribute);
+	this->get_economy()->add_tributable_commodity(defines::get()->get_regency_commodity(), decimillesimal_int(collected_regency), income_transaction_type::tribute);
 }
 
 QCoro::Task<void> domain_game_data::pay_maintenance()
 {
-	const int64_t domain_maintenance_cost = std::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()).to_int64());
+	const decimillesimal_int domain_maintenance_cost = decimillesimal_int::min(this->get_domain_maintenance_cost(), this->get_economy()->get_stored_commodity(defines::get()->get_wealth_commodity()));
 	if (domain_maintenance_cost != 0) {
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(-domain_maintenance_cost));
 
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::domain_maintenance, domain_maintenance_cost, nullptr, decimillesimal_int(0), this->domain);
 	}
 
 	const int effective_consumption = std::max(this->get_consumption_int(), 0);
@@ -680,7 +680,7 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 	if (paid_consumption_cost != 0) {
 		this->get_economy()->change_stored_commodity(defines::get()->get_wealth_commodity(), decimillesimal_int(-paid_consumption_cost));
 
-		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost.to_int64(), nullptr, 0, this->domain);
+		this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::consumption, paid_consumption_cost, nullptr, decimillesimal_int(0), this->domain);
 
 		//give the wealth spent in consumption to population units, so that they can use to purchase their needs
 		const int64_t weighted_population_size = this->get_population()->get_weighted_size();
@@ -705,9 +705,9 @@ QCoro::Task<void> domain_game_data::pay_maintenance()
 				this->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-maintenance_cost));
 
 				if (commodity == defines::get()->get_wealth_commodity()) {
-					this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, maintenance_cost, nullptr, 0, this->domain);
+					this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, decimillesimal_int(maintenance_cost), nullptr, decimillesimal_int(0), this->domain);
 				} else {
-					this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, 0, commodity, maintenance_cost, this->domain);
+					this->domain->get_turn_data()->add_expense_transaction(expense_transaction_type::military_maintenance, decimillesimal_int(0), commodity, decimillesimal_int(maintenance_cost), this->domain);
 				}
 			} else {
 				military_units_to_disband.push_back(military_unit.get());
@@ -3715,7 +3715,7 @@ QCoro::Task<void> domain_game_data::set_free_building_class_count(const building
 	}
 }
 
-int64_t domain_game_data::get_domain_maintenance_cost() const
+decimillesimal_int domain_game_data::get_domain_maintenance_cost() const
 {
 	const int domain_size = this->get_domain_size();
 	assert_throw(domain_size > 0);
@@ -3725,7 +3725,7 @@ int64_t domain_game_data::get_domain_maintenance_cost() const
 
 int64_t domain_game_data::get_maintenance_cost() const
 {
-	int64_t maintenance_cost = this->get_domain_maintenance_cost();
+	int64_t maintenance_cost = this->get_domain_maintenance_cost().to_int64();
 
 	for (const qunique_ptr<military_unit> &military_unit : this->get_military()->get_military_units()) {
 		const auto find_iterator = military_unit->get_type()->get_maintenance_commodity_costs().find(defines::get()->get_wealth_commodity());
@@ -3735,8 +3735,8 @@ int64_t domain_game_data::get_maintenance_cost() const
 	}
 
 	const int effective_consumption = std::max(this->get_consumption_int(), 0);
-	const int64_t consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
-	maintenance_cost += consumption_cost;
+	const decimillesimal_int consumption_cost = effective_consumption * defines::get()->get_domain_income_unit_value();
+	maintenance_cost += consumption_cost.to_int64();
 
 	return maintenance_cost;
 }

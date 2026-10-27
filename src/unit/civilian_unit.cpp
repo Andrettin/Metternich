@@ -804,9 +804,9 @@ void civilian_unit::increment_work_progress()
 		}
 
 		static constexpr dice progress_dice(1, 6);
-		const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
+		const decimillesimal_int wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
 
-		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
+		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / std::max(wealth_cost, 1ll));
 	}
 
 	if (this->under_construction_pathway != nullptr) {
@@ -817,9 +817,9 @@ void civilian_unit::increment_work_progress()
 		}
 
 		static constexpr dice progress_dice(1, 6);
-		const int64_t wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
+		const decimillesimal_int wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
 
-		progress_change = decimillesimal_int::min(progress_change, decimillesimal_int(wealth_cost_progress) * 100 / std::max(wealth_cost, 1ll));
+		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / std::max(wealth_cost, 1ll));
 	}
 
 	this->set_work_progress(current_progress + progress_change);

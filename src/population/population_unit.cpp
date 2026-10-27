@@ -496,7 +496,7 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::purchase_needs(const int64_t consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
+void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	const int total_need_weight = this->get_type()->get_total_life_need_weight() + this->get_type()->get_total_everyday_need_weight() + this->get_type()->get_total_luxury_need_weight();
 
@@ -509,7 +509,7 @@ void population_unit::purchase_needs(const int64_t consumption_wealth, const std
 	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const int64_t consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<int64_t> &remaining_demands)
+int population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	int fulfilled_percent = 0;
 	int total_need_weight = 0;
@@ -531,30 +531,30 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			continue;
 		}
 
-		const int64_t commodity_wealth_need = consumption_wealth * need_weight / total_need_weight;
+		const decimillesimal_int commodity_wealth_need = consumption_wealth * need_weight / total_need_weight;
 
 		if (commodity_wealth_need == 0) {
 			fulfilled_percent += 100 * need_weight;
 			continue;
 		}
 
-		const int64_t commodity_need = commodity->wealth_value_to_value(commodity_wealth_need);
+		const decimillesimal_int commodity_need = commodity->wealth_value_to_value(commodity_wealth_need);
 
 		if (commodity_need == 0) {
 			fulfilled_percent += 100 * need_weight;
 			continue;
 		}
 
-		int64_t affordable_commodity_need = std::min(commodity_need, this->get_wealth().to_int64() / game::get()->get_price(commodity));
+		decimillesimal_int affordable_commodity_need = decimillesimal_int::min(commodity_need, this->get_wealth() / game::get()->get_price(commodity));
 
 		if (affordable_commodity_need == 0) {
 			continue;
 		}
 
-		int64_t fulfilled_commodity_need = 0;
+		decimillesimal_int fulfilled_commodity_need;
 
 		for (const metternich::domain *trade_domain : trade_domains) {
-			const int64_t domain_offer = trade_domain->get_economy()->get_offer(commodity);
+			const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(commodity);
 			if (domain_offer == 0) {
 				continue;
 			}
@@ -562,13 +562,13 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			assert_throw(domain_offer > 0);
 			assert_throw(affordable_commodity_need > 0);
 
-			const int64_t bought_quantity = std::min(domain_offer, affordable_commodity_need);
+			const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, affordable_commodity_need);
 			assert_throw(bought_quantity > 0);
 
 			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false);
 
-			const int64_t purchase_price = bought_quantity * game::get()->get_price(commodity);
-			this->change_wealth(decimillesimal_int(-purchase_price));
+			const decimillesimal_int purchase_price = bought_quantity * game::get()->get_price(commodity);
+			this->change_wealth(-purchase_price);
 
 			affordable_commodity_need -= bought_quantity;
 			fulfilled_commodity_need += bought_quantity;
@@ -577,7 +577,7 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 			}
 		}
 
-		fulfilled_percent += static_cast<int>(fulfilled_commodity_need * 100 / commodity_need) * need_weight;
+		fulfilled_percent += (fulfilled_commodity_need * 100 / commodity_need).to_int() * need_weight;
 
 		if (fulfilled_commodity_need < affordable_commodity_need) {
 			remaining_demands[commodity] += affordable_commodity_need - fulfilled_commodity_need;

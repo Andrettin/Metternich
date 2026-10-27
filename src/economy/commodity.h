@@ -188,6 +188,7 @@ public:
 
 	Q_INVOKABLE QString get_units_tooltip() const;
 
+	decimillesimal_int wealth_value_to_value(const decimillesimal_int &wealth_value) const;
 	int64_t wealth_value_to_value(const int64_t wealth_value) const;
 
 signals:

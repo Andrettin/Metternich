@@ -161,7 +161,7 @@ Flickable {
 			
 			SmallText {
 				id: total_income_value_label
-				text: metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_income)
+				text: domain_turn_data.get_total_income_qstring()
 				anchors.top: total_income_label.top
 				anchors.right: parent.right
 				anchors.rightMargin: 4 * scale_factor
@@ -177,7 +177,7 @@ Flickable {
 			
 			SmallText {
 				id: total_expense_value_label
-				text: "-" + metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_expense)
+				text: "-" + domain_turn_data.get_total_expense_qstring()
 				anchors.top: total_expense_label.top
 				anchors.right: total_income_value_label.right
 			}
@@ -202,7 +202,7 @@ Flickable {
 			
 			SmallText {
 				id: balance_value_label
-				text: metternich.defines.wealth_commodity.value_to_qstring(domain_turn_data.total_income - domain_turn_data.total_expense)
+				text: domain_turn_data.get_total_balance_qstring()
 				anchors.top: balance_label.top
 				anchors.right: total_income_value_label.right
 			}

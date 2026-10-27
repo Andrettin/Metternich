@@ -2701,7 +2701,7 @@ void province_game_data::update_province_level_taxation()
 	assert_throw(this->get_owner() != nullptr);
 
 	const dice &taxation_dice = defines::get()->get_province_taxation_for_level(this->get_owner()->get_economy()->get_province_taxation_type(), this->get_level());
-	const int64_t average_result = taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
+	const decimillesimal_int average_result = taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 	if (average_result < 0) {
 		//ignore negative results
@@ -2709,7 +2709,7 @@ void province_game_data::update_province_level_taxation()
 		return;
 	}
 
-	const int64_t income = average_result;
+	const int64_t income = average_result.to_int64();
 	const int64_t taxed_income = this->process_taxable_target_income(income, this->get_level(), this->taxes_by_holding);
 
 	this->province_level_taxation = taxed_income;
@@ -2725,7 +2725,7 @@ void province_game_data::update_province_level_taxation()
 
 int64_t province_game_data::process_taxable_target_income(const int64_t income, const int target_level, site_map<int64_t> &taxes_by_holding) const
 {
-	const int income_in_domain_units = static_cast<int>(income / defines::get()->get_domain_income_unit_value());
+	const decimillesimal_int income_in_domain_units = decimillesimal_int(income) / defines::get()->get_domain_income_unit_value();
 
 	if (income_in_domain_units <= 0) {
 		return income;
@@ -2744,16 +2744,16 @@ int64_t province_game_data::process_taxable_target_income(const int64_t income, 
 				continue;
 			}
 
-			const dice &holding_taxation_dice = holding_type->get_taxation(holding->get_game_data()->get_weighted_holding_level().to_int() - target_level, income_in_domain_units);
+			const dice &holding_taxation_dice = holding_type->get_taxation(holding->get_game_data()->get_weighted_holding_level().to_int() - target_level, income_in_domain_units.to_int());
 
-			const int64_t holding_taxation = holding_taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
+			const decimillesimal_int holding_taxation = holding_taxation_dice.get_average(defines::get()->get_domain_income_unit_value());
 
 			if (holding_taxation <= 0) {
 				continue;
 			}
 
-			taxes_by_holding[holding] = holding_taxation;
-			taxed_income -= holding_taxation;
+			taxes_by_holding[holding] = holding_taxation.to_int64();
+			taxed_income -= holding_taxation.to_int64();
 		}
 	}
 

@@ -866,7 +866,7 @@ public:
 		co_await this->set_free_building_class_count(building_class, this->get_free_building_class_count(building_class) + value);
 	}
 
-	int64_t get_domain_maintenance_cost() const;
+	decimillesimal_int get_domain_maintenance_cost() const;
 	int64_t get_maintenance_cost() const;
 
 	bool can_form_domain(const metternich::domain *other) const;

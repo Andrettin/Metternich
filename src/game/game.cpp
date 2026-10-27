@@ -1957,8 +1957,8 @@ QCoro::Task<void> game::do_turn_coro()
 	try {
 		co_await this->process_delayed_effects();
 
-		domain_map<commodity_map<int64_t>> old_bids;
-		domain_map<commodity_map<int64_t>> old_offers;
+		domain_map<commodity_map<decimillesimal_int>> old_bids;
+		domain_map<commodity_map<decimillesimal_int>> old_offers;
 
 		for (province *province : map::get()->get_provinces()) {
 			province->reset_turn_data();
@@ -2082,7 +2082,7 @@ void game::do_trade()
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
 
-	commodity_map<int64_t> remaining_demands;
+	commodity_map<decimillesimal_int> remaining_demands;
 
 	for (const domain *domain : trade_domains) {
 		domain->get_economy()->do_population_needs_purchasing(remaining_demands);
@@ -2106,7 +2106,7 @@ void game::do_trade()
 	for (const auto &[commodity, value] : remaining_demands) {
 		//change the price according to the extra quantity bid/offered
 		//change by 10ths of the base price
-		const int64_t change = number::sign(value) * std::max(commodity->get_base_price() / 10, 1ll);
+		const int64_t change = number::sign(value.get_value()) * std::max(commodity->get_base_price() / 10, 1ll);
 
 		if (change == 0) {
 			continue;

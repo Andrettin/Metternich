@@ -414,7 +414,7 @@ public:
 		return this->domain_income_unit;
 	}
 
-	int64_t get_domain_income_unit_value() const;
+	decimillesimal_int get_domain_income_unit_value() const;
 
 	const commodity_map<int> &get_province_level_commodity_costs_per_level() const
 	{
@@ -424,7 +424,7 @@ public:
 	int get_province_population_for_level(const int level) const;
 	int get_province_level_for_population(const int population) const;
 	const dice &get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const;
-	int64_t get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
+	decimillesimal_int get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
 	const centesimal_int &get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const;
 
