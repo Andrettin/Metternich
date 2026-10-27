@@ -32,6 +32,7 @@ void item_type::process_gsml_property(const gsml_property &property)
 
 	if (key == "price") {
 		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+		this->price = decimillesimal_int::max(this->price, decimillesimal_int::from_value(1));
 	} else if (key == "damage_dice") {
 		assert_throw(character_defines::get()->get_default_creature_size() != nullptr);
 		this->damage_dice_per_target_size[character_defines::get()->get_default_creature_size()] = dice(value);

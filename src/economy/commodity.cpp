@@ -190,9 +190,6 @@ decimillesimal_int commodity::string_to_fractional_value(const std::string &str)
 		if (unit != nullptr) {
 			value *= this->get_unit_value(unit);
 		}
-		if (value == 0 && base_value > 0) {
-			value = decimillesimal_int::from_value(1); //ensure very small values don't become zero
-		}
 		return value;
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to convert string \"{}\" to a value for commodity \"{}\".", str, this->get_identifier())));

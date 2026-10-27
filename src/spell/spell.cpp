@@ -41,6 +41,7 @@ void spell::process_gsml_property(const gsml_property &property)
 
 	if (key == "price") {
 		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+		this->price = decimillesimal_int::max(this->price, decimillesimal_int::from_value(1));
 	} else if (key == "range") {
 		if (value == "touch") {
 			this->range = character_defines::get()->get_minimum_character_range();
