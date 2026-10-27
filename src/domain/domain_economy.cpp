@@ -769,6 +769,11 @@ QString domain_economy::get_commodity_output_qstring(const metternich::commodity
 	return QString::fromStdString(commodity->value_to_string(this->get_commodity_output(commodity), false));
 }
 
+QString domain_economy::get_commodity_output_wealth_value_qstring(const metternich::commodity *commodity) const
+{
+	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_commodity_output(commodity) * commodity->get_wealth_value(), false));
+}
+
 void domain_economy::change_commodity_output(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {

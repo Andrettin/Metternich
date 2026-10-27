@@ -31,7 +31,7 @@ Item {
 			Column {
 				spacing: 4 * scale_factor
 				width: 96 * scale_factor
-				visible: !commodity.abstract && commodity.wealth_value === 0
+				visible: !commodity.abstract && !commodity.is_convertible_to_wealth()
 				
 				readonly property var commodity: model.modelData
 				readonly property int stored: domain_economy.get_stored_commodity_int(commodity)
@@ -167,10 +167,10 @@ Item {
 			Item {
 				width: 32 * scale_factor
 				height: 32 * scale_factor
-				visible: !commodity.abstract && commodity.wealth_value !== 0 && output > 0
+				visible: !commodity.abstract && commodity.is_convertible_to_wealth() && domain_economy.has_commodity_output(commodity)
 				
 				readonly property var commodity: model.modelData
-				readonly property int output: domain_economy.get_commodity_output_int(commodity)
+				readonly property string output_string: domain_economy.get_commodity_output_qstring(commodity)
 				
 				Image {
 					id: commodity_icon
@@ -185,9 +185,9 @@ Item {
 					
 					onEntered: {
 						status_text = commodity.name
-						if (output > 0) {
-							middle_status_text = "Output: " + commodity.value_to_qstring(output)
-							middle_status_text += " (" + metternich.defines.wealth_commodity.value_to_qstring(commodity.wealth_value * output) + ")"
+						if (domain_economy.has_commodity_output(commodity)) {
+							middle_status_text = "Output: " + output_string
+							middle_status_text += " (" + domain_economy.get_commodity_output_wealth_value_qstring(commodity) + ")"
 						}
 						right_status_text = commodity.get_units_tooltip()
 					}

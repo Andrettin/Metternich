@@ -526,7 +526,7 @@ int population_unit::purchase_needs(const int64_t consumption_wealth, const comm
 		}
 
 		const int64_t commodity_wealth_need = consumption_wealth * need_weight / total_need_weight;
-		const int64_t commodity_need = commodity->wealth_value_to_value(commodity_wealth_need, true);
+		const int64_t commodity_need = commodity->wealth_value_to_value(commodity_wealth_need);
 
 		if (commodity_need == 0) {
 			fulfilled_percent += 100 * need_weight;

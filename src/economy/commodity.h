@@ -43,7 +43,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(bool local MEMBER local READ is_local NOTIFY changed)
 	Q_PROPERTY(bool provincial MEMBER provincial READ is_provincial NOTIFY changed)
 	Q_PROPERTY(bool negative_allowed MEMBER negative_allowed READ is_negative_allowed NOTIFY changed)
-	Q_PROPERTY(qint64 wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int wealth_value MEMBER wealth_value READ get_wealth_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_price MEMBER base_price READ get_base_price NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 	Q_PROPERTY(const archimedes::game_rule* required_game_rule MEMBER required_game_rule NOTIFY changed)
@@ -134,12 +134,12 @@ public:
 		return this->negative_allowed;
 	}
 
-	int64_t get_wealth_value() const
+	const decimillesimal_int &get_wealth_value() const
 	{
 		return this->wealth_value;
 	}
 
-	bool is_convertible_to_wealth() const
+	Q_INVOKABLE bool is_convertible_to_wealth() const
 	{
 		return this->get_wealth_value() != 0;
 	}
@@ -188,7 +188,7 @@ public:
 
 	Q_INVOKABLE QString get_units_tooltip() const;
 
-	int64_t wealth_value_to_value(const int64_t wealth_value, const bool ignore_rounding_errors = false) const;
+	int64_t wealth_value_to_value(const int64_t wealth_value) const;
 
 signals:
 	void changed();
@@ -208,7 +208,7 @@ private:
 	bool local = false;
 	bool provincial = false;
 	bool negative_allowed = false;
-	int64_t wealth_value = 0;
+	decimillesimal_int wealth_value;
 	int64_t base_price = 0;
 	technology *required_technology = nullptr;
 	const game_rule *required_game_rule = nullptr;
