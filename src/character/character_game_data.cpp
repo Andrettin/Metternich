@@ -573,9 +573,7 @@ void character_game_data::ply_trade()
 	}
 
 	const site *character_location = this->get_location();
-	if (character_location == nullptr) {
-		return;
-	}
+	assert_throw(character_location != nullptr);
 
 	const int province_level = character_location->get_game_data()->get_province()->get_game_data()->get_level();
 
@@ -4865,7 +4863,10 @@ QCoro::Task<void> character_game_data::sell_item_coro(item *item)
 
 std::vector<building_item_slot *> character_game_data::get_accessible_building_item_slots() const
 {
-	const province *province = this->get_location()->get_game_data()->get_province();
+	const site *character_location = this->get_location();
+	assert_throw(character_location != nullptr);
+
+	const province *province = character_location->get_game_data()->get_province();
 	assert_throw(province != nullptr);
 
 	std::vector<building_item_slot *> accessible_item_slots;
@@ -5097,7 +5098,10 @@ QCoro::Task<void> character_game_data::ai_buy_items()
 		co_return;
 	}
 
-	const province *province = this->get_location()->get_game_data()->get_province();
+	const site *character_location = this->get_location();
+	assert_throw(character_location != nullptr);
+
+	const province *province = character_location->get_game_data()->get_province();
 	assert_throw(province != nullptr);
 
 	const std::vector<building_item_slot *> accessible_item_slots = this->get_accessible_building_item_slots();
