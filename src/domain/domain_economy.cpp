@@ -766,11 +766,15 @@ qint64 domain_economy::get_commodity_output_int(const commodity *commodity) cons
 
 QString domain_economy::get_commodity_output_qstring(const metternich::commodity *commodity) const
 {
+	assert_throw(commodity != nullptr);
+
 	return QString::fromStdString(commodity->value_to_string(this->get_commodity_output(commodity), false));
 }
 
 QString domain_economy::get_commodity_output_wealth_value_qstring(const metternich::commodity *commodity) const
 {
+	assert_throw(commodity != nullptr);
+
 	return QString::fromStdString(defines::get()->get_wealth_commodity()->value_to_string(this->get_commodity_output(commodity) * commodity->get_wealth_value(), false));
 }
 
