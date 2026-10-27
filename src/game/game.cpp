@@ -2342,7 +2342,7 @@ const decimillesimal_int &game::get_price(const commodity *commodity) const
 
 QString game::get_price_qstring(const metternich::commodity *commodity) const
 {
-	return commodity->value_to_qstring(this->get_price(commodity));
+	return defines::get()->get_wealth_commodity()->value_to_qstring(this->get_price(commodity));
 }
 
 void game::set_price(const commodity *commodity, const decimillesimal_int &value)
