@@ -419,10 +419,10 @@ void domain_economy::add_tradeable_commodity(const commodity *commodity)
 
 void domain_economy::remove_tradeable_commodity(const commodity *commodity)
 {
-	this->tradeable_commodities.erase(commodity);
-
 	this->set_min_commodity_storage(commodity, 0);
 	this->set_max_commodity_storage(commodity, 0);
+
+	this->tradeable_commodities.erase(commodity);
 
 	emit tradeable_commodities_changed();
 }
@@ -915,6 +915,8 @@ void domain_economy::set_min_commodity_storage(const commodity *commodity, const
 		return;
 	}
 
+	assert_throw(this->can_trade_commodity(commodity));
+
 	if (value == 0) {
 		this->min_commodity_storages.erase(commodity);
 	} else {
@@ -934,6 +936,8 @@ void domain_economy::set_max_commodity_storage(const commodity *commodity, const
 	if (value == this->get_max_commodity_storage(commodity)) {
 		return;
 	}
+
+	assert_throw(this->can_trade_commodity(commodity));
 
 	if (value == 0) {
 		this->max_commodity_storages.erase(commodity);
@@ -955,6 +959,7 @@ void domain_economy::set_bid(const commodity *commodity, const decimillesimal_in
 		return;
 	}
 
+	assert_throw(this->can_trade_commodity(commodity));
 	assert_throw(value >= 0);
 
 	if (value == 0) {
@@ -992,6 +997,7 @@ void domain_economy::set_offer(const commodity *commodity, const decimillesimal_
 		return;
 	}
 
+	assert_throw(this->can_trade_commodity(commodity));
 	assert_throw(value >= 0);
 
 	if (value > this->get_stored_commodity(commodity)) {
@@ -1014,6 +1020,10 @@ void domain_economy::set_offer(const commodity *commodity, const decimillesimal_
 void domain_economy::prepare_offers()
 {
 	for (const auto &[commodity, stored_quantity] : this->get_stored_commodities()) {
+		if (!this->can_trade_commodity(commodity)) {
+			continue;
+		}
+
 		const decimillesimal_int max_storage = decimillesimal_int(this->get_max_commodity_storage(commodity));
 		if (stored_quantity > max_storage) {
 			const decimillesimal_int offered_quantity = stored_quantity - max_storage;
