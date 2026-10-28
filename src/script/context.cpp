@@ -110,4 +110,45 @@ const typename context_base<read_only>::scope_variant_type &context_base<read_on
 template struct context_base<false>;
 template struct context_base<true>;
 
+read_only_context::scope_variant_type read_only_context::scope_from_mutable(const context_base<false>::scope_variant_type &mutable_scope)
+{
+	scope_variant_type scope;
+
+	std::visit([&scope](auto &&arg) {
+		scope = arg;
+	}, mutable_scope);
+
+	return scope;
+}
+
+read_only_context::read_only_context(const context &ctx)
+	: read_only_context(read_only_context::scope_from_mutable(ctx.root_scope))
+{
+	this->source_scope = read_only_context::scope_from_mutable(ctx.source_scope);
+	this->previous_scope = read_only_context::scope_from_mutable(ctx.previous_scope);
+
+	this->saved_character_scopes = ctx.saved_character_scopes;
+	this->saved_domain_scopes = ctx.saved_domain_scopes;
+	this->saved_province_scopes = ctx.saved_province_scopes;
+	this->saved_site_scopes = ctx.saved_site_scopes;
+	this->saved_strings = ctx.saved_strings;
+	this->saved_buildings = ctx.saved_buildings;
+
+	this->army = ctx.army;
+	this->attacking_army = ctx.attacking_army;
+	this->defending_army = ctx.defending_army;
+
+	this->party = ctx.party;
+	this->enemies = ctx.enemies;
+	this->ruin_site = ctx.ruin_site;
+	this->in_combat = ctx.in_combat;
+
+	for (const auto &[str, military_unit] : ctx.saved_military_unit_scopes) {
+		this->saved_military_unit_scopes[str] = military_unit;
+	}
+	for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
+		this->saved_population_unit_scopes[str] = population_unit;
+	}
+}
+
 }
