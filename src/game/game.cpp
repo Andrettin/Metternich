@@ -1151,6 +1151,10 @@ QCoro::Task<void> game::apply_sites()
 	for (const domain *domain : this->get_domains()) {
 		co_await domain->get_game_data()->set_capital(nullptr);
 		co_await domain->get_game_data()->choose_capital();
+
+		if (domain->get_game_data()->get_capital() == nullptr) {
+			log::log_error(std::format("Domain \"{}\" has no capital.", domain->get_identifier()));
+		}
 	}
 
 	std::vector<std::exception_ptr> exceptions;
@@ -1888,7 +1892,6 @@ QCoro::Task<void> game::on_setup_finished()
 
 	for (const domain *domain : this->get_domains()) {
 		domain_game_data *domain_game_data = domain->get_game_data();
-		//domain_economy *domain_economy = domain->get_economy();
 		domain_government *domain_government = domain->get_government();
 
 		co_await domain_game_data->check_government_type();
