@@ -188,12 +188,12 @@ QCoro::Task<void> domain_technology::do_research()
 			}
 
 			for (const technology *current_research : current_researches) {
-				const commodity_map<int64_t> commodity_costs = current_research->get_commodity_costs_for_domain(this->domain);
+				const commodity_map<decimillesimal_int> commodity_costs = current_research->get_commodity_costs_for_domain(this->domain);
 				if (!commodity_costs.contains(defines::get()->get_default_research_commodity())) {
 					continue;
 				}
 
-				const decimillesimal_int research_cost = decimillesimal_int(commodity_costs.find(defines::get()->get_default_research_commodity())->second);
+				const decimillesimal_int research_cost = commodity_costs.find(defines::get()->get_default_research_commodity())->second;
 				decimillesimal_int remaining_research = research_cost * (100 - this->get_current_research_progress(current_research) / 100);
 
 				const technology_category *category = current_research->get_category();
@@ -532,7 +532,7 @@ bool domain_technology::can_research_technology(const technology *technology) co
 			continue;
 		}
 
-		if (cost > this->domain->get_economy()->get_stored_commodity(commodity).to_int64()) {
+		if (cost > this->domain->get_economy()->get_stored_commodity(commodity)) {
 			return false;
 		}
 	}
@@ -691,7 +691,7 @@ void domain_technology::add_current_research(const technology *technology)
 			continue;
 		}
 
-		this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost));
+		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	this->current_researches.insert(technology);
@@ -715,7 +715,7 @@ void domain_technology::remove_current_research(const technology *technology, co
 				continue;
 			}
 
-			this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(cost));
+			this->domain->get_economy()->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -737,7 +737,7 @@ const decimillesimal_int &domain_technology::get_current_research_progress(const
 
 qint64 domain_technology::get_current_research_progress_commodity_quantity(const technology *technology) const
 {
-	const commodity_map<int64_t> commodity_costs = technology->get_commodity_costs_for_domain(this->domain);
+	const commodity_map<decimillesimal_int> commodity_costs = technology->get_commodity_costs_for_domain(this->domain);
 	if (!commodity_costs.contains(defines::get()->get_default_research_commodity())) {
 		return 0;
 	}

@@ -14,7 +14,7 @@ public:
 	explicit monthly_commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
 		: commodity(commodity)
 	{
-		this->value = this->commodity->string_to_fractional_value(value) * defines::get()->get_default_months_per_turn();
+		this->value = this->commodity->string_to_value(value) * defines::get()->get_default_months_per_turn();
 	}
 
 	virtual const std::string &get_identifier() const override

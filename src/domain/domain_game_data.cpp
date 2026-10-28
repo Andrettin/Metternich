@@ -3272,13 +3272,13 @@ void domain_game_data::change_civilian_unit_recruitment_count(const civilian_uni
 	}
 
 	if (change_input_storage) {
-		const commodity_map<int64_t> &commodity_costs = civilian_unit_type->get_commodity_costs();
+		const commodity_map<decimillesimal_int> &commodity_costs = civilian_unit_type->get_commodity_costs();
 		for (const auto &[commodity, cost] : commodity_costs) {
 			assert_throw(commodity->is_storable());
 
-			const int64_t cost_change = cost * change;
+			const decimillesimal_int cost_change = cost * change;
 
-			this->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost_change));
+			this->get_economy()->change_stored_commodity(commodity, -cost_change);
 		}
 	}
 }
@@ -3291,7 +3291,7 @@ bool domain_game_data::can_increase_civilian_unit_recruitment(const civilian_uni
 
 	for (const auto &[commodity, cost] : civilian_unit_type->get_commodity_costs()) {
 		assert_throw(commodity->is_storable());
-		if (this->get_economy()->get_stored_commodity(commodity).to_int64() < cost) {
+		if (this->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}

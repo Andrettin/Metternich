@@ -185,7 +185,7 @@ std::pair<std::string, const commodity_unit *> commodity::string_to_number_strin
 	return { number_str, unit };
 }
 
-decimillesimal_int commodity::string_to_fractional_value(const std::string &str) const
+decimillesimal_int commodity::string_to_value(const std::string &str) const
 {
 	try {
 		const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
@@ -197,11 +197,6 @@ decimillesimal_int commodity::string_to_fractional_value(const std::string &str)
 	} catch (...) {
 		std::throw_with_nested(std::runtime_error(std::format("Failed to convert string \"{}\" to a value for commodity \"{}\".", str, this->get_identifier())));
 	}
-}
-
-int64_t commodity::string_to_value(const std::string &str) const
-{
-	return this->string_to_fractional_value(str).to_int64();
 }
 
 std::pair<std::variant<int64_t, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const

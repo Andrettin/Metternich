@@ -31,7 +31,7 @@ void pathway::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "wealth_cost") {
-		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -55,7 +55,7 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_fractional_value(property.get_value());
+			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "commodity_cost_weights") {
 		scope.for_each_property([this](const gsml_property &property) {

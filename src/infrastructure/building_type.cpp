@@ -75,7 +75,7 @@ void building_type::process_gsml_property(const gsml_property &property)
 	static const std::string level_suffix = "_level";
 
 	if (key == "wealth_cost") {
-		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
 		const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
 		const centesimal_int construction_level(value);
@@ -119,7 +119,7 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_fractional_value(property.get_value());
+			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "commodity_cost_weights") {
 		scope.for_each_property([this](const gsml_property &property) {

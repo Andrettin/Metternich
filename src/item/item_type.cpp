@@ -31,7 +31,7 @@ void item_type::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "price") {
-		this->price = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+		this->price = defines::get()->get_wealth_commodity()->string_to_value(value);
 
 		//ensure the price is above 0, since it can happen for e.g. prices given in copper or silver pieces to become zero
 		this->price = decimillesimal_int::max(this->price, decimillesimal_int::from_value(1));

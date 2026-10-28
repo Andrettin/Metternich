@@ -158,7 +158,7 @@ void technology::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "shared_commodities") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->shared_commodities[commodity] = commodity->string_to_fractional_value(property.get_value());
+			this->shared_commodities[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
@@ -315,7 +315,7 @@ void technology::initialize()
 	}
 
 	if (this->get_level() > 0 && this->get_commodity_costs().empty() && this->get_discovery_event() == nullptr) {
-		this->commodity_costs[defines::get()->get_default_research_commodity()] = defines::get()->get_research_cost_per_level() * this->get_level();
+		this->commodity_costs[defines::get()->get_default_research_commodity()] = decimillesimal_int(defines::get()->get_research_cost_per_level()) * this->get_level();
 	}
 
 	named_data_entry::initialize();
@@ -440,22 +440,21 @@ void technology::calculate_total_prerequisite_depth()
 	this->total_prerequisite_depth = depth;
 }
 
-commodity_map<int64_t> technology::get_commodity_costs_for_domain(const domain *domain) const
+commodity_map<decimillesimal_int> technology::get_commodity_costs_for_domain(const domain *domain) const
 {
 	assert_throw(domain->get_game_data()->get_capital_province() != nullptr);
 
-	commodity_map<int64_t> costs;
+	commodity_map<decimillesimal_int> costs = this->get_commodity_costs();
 
-	for (const auto &[commodity, base_cost] : this->get_commodity_costs()) {
+	for (auto &[commodity, cost] : costs) {
 		if (!commodity->is_enabled()) {
 			continue;
 		}
 
-		if (base_cost <= 0) {
+		if (cost <= 0) {
 			continue;
 		}
 
-		decimillesimal_int cost(base_cost);
 		cost *= decimillesimal_int(centesimal_int(100) + domain->get_technology()->get_technology_cost_modifier() + domain->get_technology()->get_technology_category_cost_modifier(this->get_category()) + domain->get_technology()->get_technology_subcategory_cost_modifier(this->get_subcategory()));
 		cost /= 100;
 
@@ -463,7 +462,7 @@ commodity_map<int64_t> technology::get_commodity_costs_for_domain(const domain *
 			cost = this->get_cost_factor()->calculate(domain->get_game_data()->get_capital_province(), cost);
 		}
 
-		costs[commodity] = std::max(1ll, cost.to_int64());
+		costs[commodity] = decimillesimal_int::max(decimillesimal_int::from_value(1), cost);
 	}
 
 	return costs;

@@ -97,7 +97,7 @@ public:
 		return this->required_technology;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
@@ -152,7 +152,7 @@ private:
 	bool developer = false;
 	bool spy = false;
 	technology *required_technology = nullptr;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	resource_set improvable_resources;
 	pathway_set buildable_pathways;
 	building_type_set buildable_buildings;

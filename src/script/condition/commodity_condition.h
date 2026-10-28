@@ -11,7 +11,7 @@ class commodity_condition final : public numerical_condition<domain, read_only_c
 {
 public:
 	explicit commodity_condition(const metternich::commodity *commodity, const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<domain, read_only_context, decimillesimal_int>(commodity->string_to_fractional_value(value), condition_operator), commodity(commodity)
+		: numerical_condition<domain, read_only_context, decimillesimal_int>(commodity->string_to_value(value), condition_operator), commodity(commodity)
 	{
 	}
 

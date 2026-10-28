@@ -235,12 +235,12 @@ public:
 		return this->child_technologies;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int64_t> get_commodity_costs_for_domain(const domain *domain) const;
+	commodity_map<decimillesimal_int> get_commodity_costs_for_domain(const domain *domain) const;
 	Q_INVOKABLE QVariantList get_commodity_costs_for_domain_qvariant_list(const metternich::domain *domain) const;
 
 	const factor<province> *get_cost_factor() const
@@ -545,7 +545,7 @@ private:
 	std::vector<const technology *> leads_to;
 	const technology *parent_technology = nullptr;
 	std::vector<const technology *> child_technologies;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	std::unique_ptr<const factor<province>> cost_factor;
 	std::unique_ptr<const factor<province>> spread_mean_time_to_happen_factor;
 	std::unique_ptr<const factor<domain>> weight_factor;

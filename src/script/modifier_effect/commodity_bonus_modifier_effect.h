@@ -13,7 +13,7 @@ public:
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
 		: commodity(commodity)
 	{
-		this->value = this->commodity->string_to_fractional_value(value);
+		this->value = this->commodity->string_to_value(value);
 	}
 
 	virtual const std::string &get_identifier() const override
