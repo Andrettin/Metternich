@@ -19,6 +19,7 @@ k = {
 	icon = sack_2
 	suffix = "k"
 	numerical = true
+	displayed = false
 }
 
 M = {
@@ -26,4 +27,5 @@ M = {
 	icon = sack_2
 	suffix = "M"
 	numerical = true
+	displayed = false
 }

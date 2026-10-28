@@ -2,4 +2,5 @@ sq_yd = {
 	name = "Square Yard"
 	icon = sack_2
 	suffix = "sq yd"
+	displayed = false
 }
