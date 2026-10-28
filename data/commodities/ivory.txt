@@ -2,6 +2,6 @@ ivory = {
 	name = "Ivory"
 	type = resource
 	icon = amber
-	wealth_value = 0.25
+	wealth_value = 0.5
 	required_game_rule = additional_commodities
 }
