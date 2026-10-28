@@ -4,6 +4,8 @@
 #include "script/scripted_modifier.h"
 #include "script/scripted_scoped_modifier.h"
 
+Q_MOC_INCLUDE("domain/domain.h")
+
 namespace metternich {
 
 class domain;
@@ -37,7 +39,7 @@ public:
 		scripted_scoped_modifier::check();
 	}
 
-	Q_INVOKABLE QString get_modifier_string(metternich::domain *scope) const
+	Q_INVOKABLE QString get_modifier_string(const metternich::domain *scope) const
 	{
 		return scripted_scoped_modifier::get_modifier_string(scope);
 	}

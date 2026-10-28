@@ -160,6 +160,10 @@ decimillesimal_int employment_type::get_input_for_employment_size(const commodit
 {
 	assert_throw(this->get_input_commodities().contains(commodity));
 
+	if (employment_size == 0) {
+		return decimillesimal_int(0);
+	}
+
 	decimillesimal_int input = decimillesimal_int(this->get_input_commodities().find(commodity)->second);
 
 	input *= employment_size;

@@ -40,6 +40,7 @@ void commodity::process_gsml_scope(const gsml_data &scope)
 			const commodity_unit *unit = commodity_unit::get(value);
 
 			assert_throw(!this->units.contains(unit_value));
+			assert_throw(!this->unit_values.contains(unit));
 
 			this->units[unit_value] = unit;
 			this->unit_values[unit] = unit_value;
