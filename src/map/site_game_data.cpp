@@ -2439,13 +2439,13 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 	if (this->get_owner() != nullptr) {
 		const int throughput_modifier = employment_type->get_output_commodity() ? this->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
 		for (const auto &[commodity, input] : employment_type->get_input_commodities()) {
-			const int64_t input_change = employment_type->get_input_for_employment_size(commodity, size, throughput_modifier) - employment_type->get_input_for_employment_size(commodity, old_size, throughput_modifier);
+			const decimillesimal_int input_change = employment_type->get_input_for_employment_size(commodity, size, throughput_modifier) - employment_type->get_input_for_employment_size(commodity, old_size, throughput_modifier);
 			if (input_change == 0) {
 				continue;
 			}
 
 			if (change_input_storage) {
-				assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, decimillesimal_int(input_change)));
+				assert_throw(this->get_owner()->get_economy()->can_change_commodity_input(commodity, input_change));
 			}
 
 			this->get_owner()->get_economy()->change_commodity_input(commodity, decimillesimal_int(input_change), change_input_storage);
@@ -2544,7 +2544,7 @@ int64_t site_game_data::get_available_employment_input_capacity(const employment
 		}
 
 		const int throughput_modifier = employment_type->get_output_commodity() ? this->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
-		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity).to_int64(), throughput_modifier));
+		input_capacity = std::min(input_capacity, employment_type->get_employment_size_for_input(commodity, this->get_owner()->get_economy()->get_stored_commodity(commodity), throughput_modifier));
 	}
 
 	return input_capacity;

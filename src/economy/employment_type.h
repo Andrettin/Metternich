@@ -4,6 +4,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "population/population_type_container.h"
+#include "util/decimillesimal_int.h"
 
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("technology/technology.h")
@@ -21,7 +22,7 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::commodity *output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
-	Q_PROPERTY(qint64 quarterly_output_value MEMBER quarterly_output_value READ get_quarterly_output_value NOTIFY changed)
+	Q_PROPERTY(decimillesimal_int quarterly_output_value MEMBER quarterly_output_value READ get_quarterly_output_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_employment_size MEMBER base_employment_size READ get_base_employment_size NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
@@ -45,26 +46,26 @@ public:
 
 	bool can_employ(const population_type *population_type, const metternich::population_type *&employed_population_type) const;
 
-	const commodity_map<int64_t> &get_input_commodities() const
+	const commodity_map<decimillesimal_int> &get_input_commodities() const
 	{
 		return this->input_commodities;
 	}
 
-	int64_t get_input_for_employment_size(const commodity *commodity, const int64_t employment_size, const int throughput_modifier) const;
-	int64_t get_employment_size_for_input(const commodity *commodity, const int64_t input, const int throughput_modifier) const;
+	decimillesimal_int get_input_for_employment_size(const commodity *commodity, const int64_t employment_size, const int throughput_modifier) const;
+	int64_t get_employment_size_for_input(const commodity *commodity, const decimillesimal_int &input, const int throughput_modifier) const;
 
 	const commodity *get_output_commodity() const
 	{
 		return this->output_commodity;
 	}
 
-	int64_t get_quarterly_output_value() const
+	const decimillesimal_int &get_quarterly_output_value() const
 	{
 		return this->quarterly_output_value;
 	}
 
-	int64_t get_employment_size_for_output(const int64_t output) const;
-	int64_t get_employment_size_for_wealth_output(const int64_t wealth_output) const;
+	int64_t get_employment_size_for_output(const decimillesimal_int &output) const;
+	int64_t get_employment_size_for_wealth_output(const decimillesimal_int &wealth_output) const;
 
 	int64_t get_base_employment_size() const
 	{
@@ -93,11 +94,11 @@ signals:
 
 private:
 	population_type_set employee_types;
-	commodity_map<int64_t> input_commodities;
-	int64_t input_wealth_value = 0;
+	commodity_map<decimillesimal_int> input_commodities;
+	decimillesimal_int input_wealth_value;
 	commodity_map<int> input_commodity_weights;
 	const commodity *output_commodity = nullptr;
-	int64_t quarterly_output_value = 0;
+	decimillesimal_int quarterly_output_value;
 	int64_t base_employment_size = 0; //the employment size used for calculating the employee output
 	technology *required_technology = nullptr;
 	std::unique_ptr<metternich::modifier<const site>> modifier;

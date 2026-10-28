@@ -36,12 +36,12 @@ public:
 			this->value = this->employment_type->get_base_employment_size() * multiplier;
 		} else if (key == "monthly_wealth_output_value") {
 			assert_throw(this->employment_type != nullptr);
-			const int64_t monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
-			const int64_t quarterly_wealth_output_value = monthly_wealth_output_value * 3;
+			const decimillesimal_int monthly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
+			const decimillesimal_int quarterly_wealth_output_value = monthly_wealth_output_value * 3;
 			this->value = decimillesimal_int(this->employment_type->get_employment_size_for_wealth_output(quarterly_wealth_output_value));
 		} else if (key == "quarterly_wealth_output_value") {
 			assert_throw(this->employment_type != nullptr);
-			const int64_t quarterly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_value(value);
+			const decimillesimal_int quarterly_wealth_output_value = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
 			this->value = decimillesimal_int(this->employment_type->get_employment_size_for_wealth_output(quarterly_wealth_output_value));
 		} else {
 			modifier_effect::process_gsml_property(property);

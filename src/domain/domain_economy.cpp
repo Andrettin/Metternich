@@ -737,15 +737,15 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 			}
 
 			const int throughput_modifier = employment_type->get_output_commodity() ? site->get_game_data()->get_total_commodity_throughput_modifier(employment_type->get_output_commodity()) : 0;
-			const int64_t employment_input = employment_type->get_input_for_employment_size(commodity, employment_size, throughput_modifier);
+			const decimillesimal_int employment_input = employment_type->get_input_for_employment_size(commodity, employment_size, throughput_modifier);
 
-			int64_t employment_input_decrease = 0;
+			decimillesimal_int employment_input_decrease;
 			int64_t unemployment_size = 0;
-			if (employment_input <= decrease.to_ceil_int64()) {
+			if (employment_input <= decrease) {
 				unemployment_size = employment_size;
 				employment_input_decrease = employment_input;
 			} else {
-				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease.to_ceil_int64(), throughput_modifier);
+				const int64_t new_employment_size = employment_type->get_employment_size_for_input(commodity, employment_input - decrease, throughput_modifier);
 				unemployment_size = employment_size - new_employment_size;
 				employment_input_decrease = employment_input - employment_type->get_input_for_employment_size(commodity, new_employment_size, throughput_modifier);
 				assert_throw(unemployment_size > 0);
@@ -753,7 +753,7 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 			}
 
 			co_await site->get_game_data()->decrease_employment(employment_type, unemployment_size, false);
-			decrease -= decimillesimal_int(employment_input_decrease);
+			decrease -= employment_input_decrease;
 
 			if (decrease <= 0) {
 				break;
