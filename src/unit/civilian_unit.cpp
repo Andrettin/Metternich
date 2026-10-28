@@ -806,7 +806,7 @@ void civilian_unit::increment_work_progress()
 		static constexpr dice progress_dice(1, 6);
 		const decimillesimal_int wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
 
-		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / decimillesimal_int::max(wealth_cost, decimillesimal_int(1)));
+		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / decimillesimal_int::max(wealth_cost, decimillesimal_int::from_value(1)));
 	}
 
 	if (this->under_construction_pathway != nullptr) {
