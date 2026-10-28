@@ -430,7 +430,7 @@ commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(co
 	}
 
 	for (auto &[commodity, cost] : costs) {
-		costs[commodity] = decimillesimal_int::max(cost, decimillesimal_int::from_value(1));
+		cost = decimillesimal_int::max(cost, decimillesimal_int::from_value(1));
 	}
 
 	return costs;
