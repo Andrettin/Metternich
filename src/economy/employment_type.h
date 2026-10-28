@@ -22,7 +22,7 @@ class employment_type final : public named_data_entry, public data_type<employme
 	Q_OBJECT
 
 	Q_PROPERTY(const metternich::commodity *output_commodity MEMBER output_commodity READ get_output_commodity NOTIFY changed)
-	Q_PROPERTY(decimillesimal_int quarterly_output_value MEMBER quarterly_output_value READ get_quarterly_output_value NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int quarterly_output_value MEMBER quarterly_output_value READ get_quarterly_output_value NOTIFY changed)
 	Q_PROPERTY(qint64 base_employment_size MEMBER base_employment_size READ get_base_employment_size NOTIFY changed)
 	Q_PROPERTY(metternich::technology* required_technology MEMBER required_technology NOTIFY changed)
 
