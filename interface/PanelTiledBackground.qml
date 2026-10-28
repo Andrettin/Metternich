@@ -8,6 +8,6 @@ TiledBackground {
 	anchors.left: parent.left
 	anchors.leftMargin: -(parent.x % (32 * scale_factor))
 	anchors.right: parent.right
-	rows: Math.ceil(parent.height / (32 * scale_factor)) + 1
+	row_count: Math.ceil(parent.height / (32 * scale_factor)) + 1
 	columns: Math.ceil(parent.width / (32 * scale_factor)) + 1
 }
