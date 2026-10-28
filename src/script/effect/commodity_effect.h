@@ -90,7 +90,7 @@ public:
 			const int roll_result = random::get()->roll_dice(dice);
 			quantity = decimillesimal_int(roll_result);
 		} else {
-			quantity = decimillesimal_int(std::get<int64_t>(this->quantity_variant));
+			quantity = std::get<decimillesimal_int>(this->quantity_variant);
 		}
 
 		if (this->unit != nullptr) {
@@ -131,7 +131,7 @@ public:
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
 			str = dice.to_display_string();
 		} else {
-			str = number::to_formatted_string(std::get<int64_t>(this->quantity_variant));
+			str = std::get<decimillesimal_int>(this->quantity_variant).to_formatted_string();
 		}
 
 		if (this->unit != nullptr) {
@@ -152,7 +152,7 @@ public:
 
 private:
 	const metternich::commodity *commodity = nullptr;
-	std::variant<int64_t, dice> quantity_variant;
+	std::variant<decimillesimal_int, dice> quantity_variant;
 	const commodity_unit *unit = nullptr;
 };
 

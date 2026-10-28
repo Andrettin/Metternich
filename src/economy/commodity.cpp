@@ -199,14 +199,14 @@ decimillesimal_int commodity::string_to_value(const std::string &str) const
 	}
 }
 
-std::pair<std::variant<int64_t, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const
+std::pair<std::variant<decimillesimal_int, dice>, const commodity_unit *> commodity::string_to_value_variant_with_unit(const std::string &str) const
 {
 	const auto [number_str, unit] = this->string_to_number_string_and_unit(str);
 
 	if (number_str.find("d") != std::string::npos) {
 		return { dice(number_str), unit };
 	} else {
-		return { std::stoll(number_str), unit };
+		return { decimillesimal_int(number_str), unit };
 	}
 }
 

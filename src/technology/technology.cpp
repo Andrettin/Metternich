@@ -470,7 +470,14 @@ commodity_map<decimillesimal_int> technology::get_commodity_costs_for_domain(con
 
 QVariantList technology::get_commodity_costs_for_domain_qvariant_list(const domain *domain) const
 {
-	return archimedes::map::to_qvariant_list(this->get_commodity_costs_for_domain(domain));
+	const commodity_map<decimillesimal_int> costs = this->get_commodity_costs_for_domain(domain);
+
+	commodity_map<std::string> cost_strings;
+	for (const auto &[commodity, cost] : costs) {
+		cost_strings[commodity] = commodity->value_to_string(cost, false);
+	}
+
+	return archimedes::map::to_qvariant_list(cost_strings);
 }
 
 QVariantList technology::get_enabled_buildings_qvariant_list() const

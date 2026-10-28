@@ -515,18 +515,18 @@ public:
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
 
-	const centesimal_int &get_local_commodity_output(const commodity *commodity) const
+	const decimillesimal_int &get_local_commodity_output(const commodity *commodity) const
 	{
 		const auto find_iterator = this->local_commodity_outputs.find(commodity);
 		if (find_iterator != this->local_commodity_outputs.end()) {
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int zero;
+		static constexpr decimillesimal_int zero;
 		return zero;
 	}
 
-	void change_local_commodity_output(const commodity *commodity, const centesimal_int &change);
+	void change_local_commodity_output(const commodity *commodity, const decimillesimal_int &change);
 
 	const centesimal_int &get_output_modifier() const
 	{
@@ -761,7 +761,7 @@ private:
 	std::vector<army *> entering_armies; //armies entering this province
 	military_unit_type_map<int> military_unit_recruitment_counts;
 	std::vector<civilian_unit *> civilian_units;
-	commodity_map<centesimal_int> local_commodity_outputs;
+	commodity_map<decimillesimal_int> local_commodity_outputs;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;

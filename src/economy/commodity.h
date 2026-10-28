@@ -180,7 +180,7 @@ public:
 
 	std::pair<std::string, const commodity_unit *> string_to_number_string_and_unit(const std::string &str) const;
 	decimillesimal_int string_to_value(const std::string &str) const;
-	std::pair<std::variant<int64_t, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
+	std::pair<std::variant<decimillesimal_int, dice>, const commodity_unit *> string_to_value_variant_with_unit(const std::string &str) const;
 
 	std::string value_to_string(const int64_t value, const bool joined) const;
 	std::string value_to_string(const decimillesimal_int &value, const bool joined) const;

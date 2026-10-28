@@ -2625,13 +2625,13 @@ void province_game_data::calculate_site_commodity_output(const commodity *commod
 	}
 }
 
-void province_game_data::change_local_commodity_output(const commodity *commodity, const centesimal_int &change)
+void province_game_data::change_local_commodity_output(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int &output = (this->local_commodity_outputs[commodity] += change);
+	const decimillesimal_int &output = (this->local_commodity_outputs[commodity] += change);
 
 	if (output == 0) {
 		this->local_commodity_outputs.erase(commodity);

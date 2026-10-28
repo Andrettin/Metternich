@@ -2712,7 +2712,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const deci
 
 	if (commodity->is_local()) {
 		if (commodity->is_provincial() && this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->change_local_commodity_output(commodity, centesimal_int(output_change));
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, output_change);
 		}
 	} else {
 		if (this->get_owner() != nullptr) {

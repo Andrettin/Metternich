@@ -124,7 +124,7 @@ Item {
 									visible: researching === false || commodity == metternich.defines.default_research_commodity
 									
 									readonly property var commodity: model.modelData.key
-									readonly property var commodity_cost: model.modelData.value
+									readonly property string commodity_cost_string: model.modelData.value
 									readonly property bool researching: commodity_costs_row.researching
 									
 									Image {
@@ -134,7 +134,7 @@ Item {
 									
 									SmallText {
 										id: cost_label
-										text: (researching ? (number_string(domain_game_data.technology.get_current_research_progress_commodity_quantity(technology)) + "/") : "") + commodity.value_to_qstring(commodity_cost) + (researching ? (" (" + domain_game_data.technology.get_current_research_progress_qstring(technology) + "%)") : "")
+										text: (researching ? (number_string(domain_game_data.technology.get_current_research_progress_commodity_quantity(technology)) + "/") : "") + commodity_cost_string + (researching ? (" (" + domain_game_data.technology.get_current_research_progress_qstring(technology) + "%)") : "")
 										anchors.verticalCenter: commodity_icon.verticalCenter
 									}
 								}

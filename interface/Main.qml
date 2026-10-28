@@ -293,6 +293,29 @@ ApplicationWindow {
 		return str
 	}
 	
+	function cost_strings_to_string(cost_strings, separator = "\n\t") {
+		var str = ""
+		
+		if (separator == "\n\t") {
+			str += "Costs:"
+		}
+		
+		for (var i = 0; i < cost_strings.length; i++) {
+			var commodity = cost_strings[i].key
+			var cost_string = cost_strings[i].value
+			
+			if (str.length > 0) {
+				str += separator
+			}
+			str += cost_string
+			if (commodity !== metternich.defines.wealth_commodity) {
+				str += " " + commodity.name
+			}
+		}
+		
+		return str
+	}
+	
 	function costs_to_single_line_string(costs, modifier, separator = "\n\t", wealth_cost = 0) {
 		return costs_to_string(costs, modifier, ", ", wealth_cost)
 	}

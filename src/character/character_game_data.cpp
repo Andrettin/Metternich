@@ -1023,7 +1023,7 @@ void character_game_data::add_starting_wealth(const character_package *package)
 			const int roll_result = random::get()->roll_dice(dice);
 			wealth = decimillesimal_int(roll_result);
 		} else {
-			wealth = decimillesimal_int(std::get<int64_t>(wealth_variant));
+			wealth = std::get<decimillesimal_int>(wealth_variant);
 		}
 
 		wealth *= defines::get()->get_wealth_commodity()->get_unit_value(wealth_unit);

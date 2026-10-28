@@ -28,7 +28,7 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const std::variant<int64_t, dice> &get_wealth_variant() const
+	const std::variant<decimillesimal_int, dice> &get_wealth_variant() const
 	{
 		return this->wealth_variant;
 	}
@@ -57,7 +57,7 @@ signals:
 	void changed();
 
 private:
-	std::variant<int64_t, dice> wealth_variant = 0;
+	std::variant<decimillesimal_int, dice> wealth_variant = decimillesimal_int(0);
 	const commodity_unit *wealth_unit = nullptr;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::vector<const item_type *> items;

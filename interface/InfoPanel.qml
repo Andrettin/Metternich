@@ -537,7 +537,6 @@ Rectangle {
 			
 			for (var i = 0; i < commodity_outputs.length; i++) {
 				var commodity = commodity_outputs[i].key
-				var output = commodity_outputs[i].value
 				
 				if (commodity.local) {
 					continue
@@ -547,7 +546,7 @@ Rectangle {
 					str += "\n"
 				}
 				
-				str += commodity.name + (commodity.storable ? " Output" : "") + ": " + output
+				str += commodity.name + (commodity.storable ? " Output" : "") + ": " + selected_site_game_data.get_commodity_output_qstring(commodity)
 			}
 			
 			return str

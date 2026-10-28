@@ -42,7 +42,7 @@ DialogBase {
 				tooltip: format_text(small_text((costs_string.length > 0 ? (costs_string + "\n") : "") + (effects_string.length > 0 ? effects_string : "No effect")))
 				
 				readonly property var technology: model.modelData
-				readonly property string costs_string: "Costs: " + costs_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_domain), 0, ", ")
+				readonly property string costs_string: "Costs: " + cost_strings_to_string(technology.get_commodity_costs_for_domain_qvariant_list(metternich.game.player_domain), ", ")
 				readonly property string effects_string: technology.get_effects_qstring(metternich.game.player_domain)
 				
 				onClicked: {
