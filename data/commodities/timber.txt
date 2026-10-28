@@ -3,5 +3,4 @@ timber = {
 	type = resource
 	icon = timber
 	base_price = 1
-	required_game_rule = additional_commodities
 }
