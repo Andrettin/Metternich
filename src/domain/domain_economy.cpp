@@ -1201,7 +1201,7 @@ void domain_economy::change_building_commodity_bonus(const building_type *buildi
 			}
 
 			if (holding->get_game_data()->has_building(building)) {
-				holding->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
+				holding->get_game_data()->change_base_commodity_output(commodity, decimillesimal_int(change));
 			}
 		}
 	}
@@ -1275,7 +1275,7 @@ void domain_economy::change_settlement_commodity_bonus(const commodity *commodit
 				continue;
 			}
 
-			holding->get_game_data()->change_base_commodity_output(commodity, centesimal_int(change));
+			holding->get_game_data()->change_base_commodity_output(commodity, decimillesimal_int(change));
 		}
 	}
 }

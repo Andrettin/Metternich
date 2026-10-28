@@ -147,15 +147,15 @@ void route_game_data::check_active()
 	this->set_active(true);
 }
 
-centesimal_int route_game_data::get_output() const
+decimillesimal_int route_game_data::get_output() const
 {
 	if (this->route->get_start_site() == nullptr || this->route->get_end_site() == nullptr) {
-		return centesimal_int(0);
+		return decimillesimal_int(0);
 	}
 
 	const centesimal_int total_holding_level = this->route->get_start_site()->get_game_data()->get_holding_level() + this->route->get_end_site()->get_game_data()->get_holding_level();
 
-	centesimal_int output(this->route->get_output_multiplier());
+	decimillesimal_int output(this->route->get_output_multiplier());
 	output *= total_holding_level;
 
 	if (this->route->get_output_commodity()->is_wealth()) {
@@ -189,7 +189,7 @@ void route_game_data::apply_output(const int multiplier)
 		return;
 	}
 
-	const centesimal_int output = this->get_output();
+	const decimillesimal_int output = this->get_output();
 	if (output == 0) {
 		return;
 	}
@@ -205,7 +205,7 @@ QString route_game_data::get_site_modifier_string() const
 	std::string str;
 
 	if (this->route->get_output_commodity() != nullptr) {
-		const centesimal_int output = this->get_output();
+		const decimillesimal_int output = this->get_output();
 		const std::string number_str = "+" + this->route->get_output_commodity()->value_to_string(output.to_int(), false);
 		const QColor &number_color = ui_defines::get()->get_green_text_color();
 		const std::string colored_number_str = string::colored(number_str, number_color);

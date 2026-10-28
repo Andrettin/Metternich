@@ -1,6 +1,6 @@
 #pragma once
 
-#include <util/centesimal_int.h>
+#include "util/decimillesimal_int.h"
 
 namespace archimedes {
 	class gsml_data;
@@ -42,7 +42,7 @@ public:
 		return this->map_rect;
 	}
 
-	centesimal_int get_output() const;
+	decimillesimal_int get_output() const;
 	void apply_output(const int multiplier);
 
 	Q_INVOKABLE QString get_site_modifier_string() const;

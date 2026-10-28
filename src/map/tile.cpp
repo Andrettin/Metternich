@@ -67,9 +67,9 @@ bool tile::is_resource_discovered() const
 	return false;
 }
 
-const commodity_map<centesimal_int> &tile::get_commodity_outputs() const
+const commodity_map<decimillesimal_int> &tile::get_commodity_outputs() const
 {
-	static commodity_map<centesimal_int> empty_map;
+	static commodity_map<decimillesimal_int> empty_map;
 
 	if (this->get_site() != nullptr) {
 		return this->get_site()->get_game_data()->get_commodity_outputs();

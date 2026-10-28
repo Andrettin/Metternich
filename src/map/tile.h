@@ -40,7 +40,7 @@ public:
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;
 
-	const commodity_map<centesimal_int> &get_commodity_outputs() const;
+	const commodity_map<decimillesimal_int> &get_commodity_outputs() const;
 	void calculate_commodity_outputs();
 
 	bool produces_commodity(const commodity *commodity) const;

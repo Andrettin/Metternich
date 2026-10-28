@@ -28,7 +28,7 @@ public:
 			return;
 		}
 
-		scope->get_game_data()->change_base_commodity_output(this->commodity, centesimal_int(this->value * multiplier));
+		scope->get_game_data()->change_base_commodity_output(this->commodity, this->value * multiplier);
 	}
 
 	virtual std::string get_base_string(const site *scope) const override

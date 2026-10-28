@@ -660,7 +660,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 
 		if (this->site->is_settlement()) {
 			for (const auto &[commodity, bonus] : old_owner->get_economy()->get_settlement_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, -bonus);
+				this->change_base_commodity_output(commodity, decimillesimal_int(-bonus));
 			}
 
 			for (const auto &[building, commodity_bonuses] : old_owner->get_economy()->get_building_commodity_bonuses()) {
@@ -669,7 +669,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				}
 
 				for (const auto &[commodity, bonus] : commodity_bonuses) {
-					this->change_base_commodity_output(commodity, -centesimal_int(bonus));
+					this->change_base_commodity_output(commodity, -decimillesimal_int(bonus));
 				}
 			}
 		}
@@ -681,7 +681,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				continue;
 			}
 
-			old_owner->get_economy()->change_commodity_output(commodity, decimillesimal_int(-this->get_commodity_output(commodity)));
+			old_owner->get_economy()->change_commodity_output(commodity, -this->get_commodity_output(commodity));
 		}
 
 		disconnect(this, &site_game_data::item_slots_changed, old_owner->get_game_data(), &domain_game_data::item_slots_changed);
@@ -699,7 +699,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				continue;
 			}
 
-			this->get_owner()->get_economy()->change_commodity_output(commodity, decimillesimal_int(this->get_commodity_output(commodity)));
+			this->get_owner()->get_economy()->change_commodity_output(commodity, this->get_commodity_output(commodity));
 		}
 
 		if (this->can_have_population()) {
@@ -708,7 +708,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 
 		if (this->site->is_settlement()) {
 			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_settlement_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, bonus);
+				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 			}
 
 			for (const auto &[building, commodity_bonuses] : this->get_owner()->get_economy()->get_building_commodity_bonuses()) {
@@ -717,7 +717,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 				}
 
 				for (const auto &[commodity, bonus] : commodity_bonuses) {
-					this->change_base_commodity_output(commodity, centesimal_int(bonus));
+					this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 				}
 			}
 		}
@@ -2010,18 +2010,18 @@ QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 
 	if (this->get_province() != nullptr) {
 		for (const auto &[commodity, bonus] : defines::get()->get_settlement_commodity_bonuses()) {
-			this->change_base_commodity_output(commodity, centesimal_int(bonus));
+			this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 		}
 
 		if (this->site->get_map_data()->has_river()) {
 			for (const auto &[commodity, bonus] : defines::get()->get_river_settlement_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, centesimal_int(bonus));
+				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 			}
 		}
 
 		if (this->get_owner() != nullptr) {
 			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_settlement_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, bonus);
+				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 			}
 		}
 	}
@@ -2039,7 +2039,7 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 		co_await domain_game_data->change_holding_building_count(building, multiplier);
 
 		for (const auto &[commodity, bonus] : domain_economy->get_building_commodity_bonuses(building)) {
-			this->change_base_commodity_output(commodity, centesimal_int(bonus) * multiplier);
+			this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
 		}
 	}
 
@@ -2298,7 +2298,7 @@ void site_game_data::on_population_type_size_changed(const population_type *popu
 		const decimillesimal_int new_output = population_type->get_output_value() * new_population_type_size * (100 + population_type->get_output_modifier()) / 100;
 		const decimillesimal_int output_change = new_output - old_output;
 
-		this->change_base_commodity_output(population_type->get_output_commodity(), centesimal_int(output_change));
+		this->change_base_commodity_output(population_type->get_output_commodity(), output_change);
 	}
 }
 
@@ -2664,13 +2664,13 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 	}
 }
 
-void site_game_data::change_base_commodity_output(const commodity *commodity, const centesimal_int &change)
+void site_game_data::change_base_commodity_output(const commodity *commodity, const decimillesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int &count = (this->base_commodity_outputs[commodity] += change);
+	const decimillesimal_int &count = (this->base_commodity_outputs[commodity] += change);
 
 	assert_throw(count >= 0);
 
@@ -2690,14 +2690,14 @@ QString site_game_data::get_commodity_output_qstring(const metternich::commodity
 {
 	assert_throw(commodity != nullptr);
 
-	return commodity->value_to_qstring(decimillesimal_int(this->get_commodity_output(commodity)));
+	return commodity->value_to_qstring(this->get_commodity_output(commodity));
 }
 
-void site_game_data::set_commodity_output(const commodity *commodity, const centesimal_int &output)
+void site_game_data::set_commodity_output(const commodity *commodity, const decimillesimal_int &output)
 {
 	assert_throw(output >= 0);
 
-	const centesimal_int old_output = this->get_commodity_output(commodity);
+	const decimillesimal_int old_output = this->get_commodity_output(commodity);
 	if (output == old_output) {
 		return;
 	}
@@ -2708,15 +2708,15 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 		this->commodity_outputs[commodity] = output;
 	}
 
-	const centesimal_int output_change = output - old_output;
+	const decimillesimal_int output_change = output - old_output;
 
 	if (commodity->is_local()) {
 		if (commodity->is_provincial() && this->get_province() != nullptr) {
-			this->get_province()->get_game_data()->change_local_commodity_output(commodity, output_change);
+			this->get_province()->get_game_data()->change_local_commodity_output(commodity, centesimal_int(output_change));
 		}
 	} else {
 		if (this->get_owner() != nullptr) {
-			this->get_owner()->get_economy()->change_commodity_output(commodity, decimillesimal_int(output_change));
+			this->get_owner()->get_economy()->change_commodity_output(commodity, output_change);
 		}
 	}
 
@@ -2725,7 +2725,7 @@ void site_game_data::set_commodity_output(const commodity *commodity, const cent
 
 void site_game_data::calculate_commodity_outputs()
 {
-	commodity_map<centesimal_int> outputs = this->base_commodity_outputs;
+	commodity_map<decimillesimal_int> outputs = this->base_commodity_outputs;
 
 	for (const auto &[commodity, output] : this->get_commodity_outputs()) {
 		//ensure the current outputs are in the new map, so that they get removed if no longer present
@@ -2738,16 +2738,16 @@ void site_game_data::calculate_commodity_outputs()
 
 	if (this->get_owner() != nullptr) {
 		for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_commodity_bonuses_per_population()) {
-			outputs[commodity] += (value * this->get_population_unit_count());
+			outputs[commodity] += decimillesimal_int(value * this->get_population_unit_count());
 		}
 
 		if (this->is_capital()) {
 			for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_capital_commodity_bonuses()) {
-				outputs[commodity] += value;
+				outputs[commodity] += decimillesimal_int(value);
 			}
 
 			for (const auto &[commodity, value] : this->get_owner()->get_economy()->get_capital_commodity_bonuses_per_population()) {
-				outputs[commodity] += (value * this->get_population_unit_count());
+				outputs[commodity] += decimillesimal_int(value * this->get_population_unit_count());
 			}
 
 			for (const auto &[commodity, modifier] : this->get_owner()->get_economy()->get_capital_commodity_output_modifiers()) {
@@ -2796,7 +2796,7 @@ void site_game_data::calculate_commodity_outputs()
 
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
-		centesimal_int output = centesimal_int(employment_type->get_quarterly_output_value()) * game::get()->get_current_quarters_per_turn();
+		decimillesimal_int output = employment_type->get_quarterly_output_value() * game::get()->get_current_quarters_per_turn();
 		output *= employment_size;
 		output /= employment_type->get_base_employment_size();
 		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];
@@ -2846,10 +2846,10 @@ void site_game_data::update_holding_level_income()
 {
 	assert_throw(this->site->is_holding());
 
-	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-this->holding_level_income));
+	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(-this->holding_level_income));
 
 	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
-		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(-taxes));
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(-taxes));
 	}
 
 	//update income from the holding's level
@@ -2884,10 +2884,10 @@ void site_game_data::update_holding_level_income()
 
 	this->holding_level_income = taxed_income;
 
-	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(this->holding_level_income));
+	this->change_base_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(this->holding_level_income));
 
 	for (const auto &[taxing_holding, taxes] : this->taxes_by_holding) {
-		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), centesimal_int(taxes));
+		taxing_holding->get_game_data()->change_base_commodity_output(defines::get()->get_wealth_commodity(), decimillesimal_int(taxes));
 	}
 }
 

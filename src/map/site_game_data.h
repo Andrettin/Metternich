@@ -549,34 +549,34 @@ public:
 	[[nodiscard]] QCoro::Task<void> check_employment();
 	[[nodiscard]] QCoro::Task<void> check_employment_capacities_overflow();
 
-	const commodity_map<centesimal_int> &get_base_commodity_outputs() const
+	const commodity_map<decimillesimal_int> &get_base_commodity_outputs() const
 	{
 		return this->base_commodity_outputs;
 	}
 
-	void change_base_commodity_output(const commodity *commodity, const centesimal_int &change);
+	void change_base_commodity_output(const commodity *commodity, const decimillesimal_int &change);
 
-	const commodity_map<centesimal_int> &get_commodity_outputs() const
+	const commodity_map<decimillesimal_int> &get_commodity_outputs() const
 	{
 		return this->commodity_outputs;
 	}
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
-	const centesimal_int &get_commodity_output(const commodity *commodity) const
+	const decimillesimal_int &get_commodity_output(const commodity *commodity) const
 	{
 		const auto find_iterator = this->commodity_outputs.find(commodity);
 		if (find_iterator != this->commodity_outputs.end()) {
 			return find_iterator->second;
 		}
 
-		static constexpr centesimal_int zero;
+		static constexpr decimillesimal_int zero;
 		return zero;
 	}
 
 	Q_INVOKABLE QString get_commodity_output_qstring(const metternich::commodity *commodity) const;
 
-	void set_commodity_output(const commodity *commodity, const centesimal_int &output);
+	void set_commodity_output(const commodity *commodity, const decimillesimal_int &output);
 	void calculate_commodity_outputs();
 
 	const centesimal_int &get_output_modifier() const
@@ -762,8 +762,8 @@ private:
 	data_entry_map<employment_type, int64_t> base_employment_capacities;
 	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	data_entry_map<employment_type, int64_t> employment_capacities;
-	commodity_map<centesimal_int> base_commodity_outputs;
-	commodity_map<centesimal_int> commodity_outputs;
+	commodity_map<decimillesimal_int> base_commodity_outputs;
+	commodity_map<decimillesimal_int> commodity_outputs;
 	centesimal_int output_modifier;
 	commodity_map<centesimal_int> commodity_output_modifiers;
 	commodity_map<int> commodity_throughput_modifiers;
