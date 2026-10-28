@@ -78,12 +78,14 @@ public:
 		return this->required_technology;
 	}
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
 	QVariantList get_commodity_costs_qvariant_list() const;
+	commodity_map<decimillesimal_int> get_commodity_costs_for_domain(const domain *domain) const;
+	Q_INVOKABLE QString get_commodity_costs_for_domain_qstring(const metternich::domain *domain) const;
 
 	const and_condition<domain> *get_conditions() const
 	{
@@ -107,7 +109,7 @@ private:
 	metternich::succession_type succession_type {};
 	metternich::succession_gender_type succession_gender_type {};
 	technology *required_technology = nullptr;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const modifier<const domain>> modifier;
 };

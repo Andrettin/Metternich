@@ -124,7 +124,7 @@ Item {
 							}
 							
 							readonly property var law: model.modelData
-							readonly property string costs_string: law !== current_law ? ("Costs: " + costs_to_single_line_string(law.commodity_costs, domain_game_data.government.get_total_law_cost_modifier())) : ""
+							readonly property string costs_string: law !== current_law ? ("Costs: " + law.get_commodity_costs_for_domain_qstring(domain)) : ""
 							readonly property string modifier_string: format_text(law.get_modifier_string(domain))
 						}
 					}

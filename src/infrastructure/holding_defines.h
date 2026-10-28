@@ -33,25 +33,25 @@ public:
 
 	const centesimal_int &get_consumption_for_holding_level(const int holding_level) const;
 
-	const commodity_map<int64_t> &get_construction_level_commodity_costs(const construction_type construction_type) const
+	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs(const construction_type construction_type) const
 	{
 		const auto find_iterator = this->construction_level_commodity_costs.find(construction_type);
 		if (find_iterator != this->construction_level_commodity_costs.end()) {
 			return find_iterator->second;
 		}
 
-		static const commodity_map<int64_t> empty_map;
+		static const commodity_map<decimillesimal_int> empty_map;
 		return empty_map;
 	}
 
-	const commodity_map<int64_t> &get_construction_level_commodity_costs_per_level(const construction_type construction_type) const
+	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs_per_level(const construction_type construction_type) const
 	{
 		const auto find_iterator = this->construction_level_commodity_costs_per_level.find(construction_type);
 		if (find_iterator != this->construction_level_commodity_costs_per_level.end()) {
 			return find_iterator->second;
 		}
 
-		static const commodity_map<int64_t> empty_map;
+		static const commodity_map<decimillesimal_int> empty_map;
 		return empty_map;
 	}
 
@@ -86,8 +86,8 @@ signals:
 
 private:
 	std::map<int, centesimal_int> consumption_per_holding_level;
-	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs;
-	std::map<construction_type, commodity_map<int64_t>> construction_level_commodity_costs_per_level;
+	std::map<construction_type, commodity_map<decimillesimal_int>> construction_level_commodity_costs;
+	std::map<construction_type, commodity_map<decimillesimal_int>> construction_level_commodity_costs_per_level;
 	std::map<construction_type, std::map<int, std::unique_ptr<const modifier<const site>>>> construction_level_modifiers;
 	std::map<construction_type, std::map<int, std::unique_ptr<const modifier<const domain>>>> construction_level_domain_modifiers;
 };

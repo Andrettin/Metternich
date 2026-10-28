@@ -483,7 +483,6 @@ QCoro::Task<void> site_game_data::do_construction()
 {
 	for (const auto &building_slot : this->get_building_slots()) {
 		if (building_slot->get_under_construction_building() != nullptr) {
-			const commodity_map<int64_t> commodity_costs = building_slot->get_under_construction_building()->get_commodity_costs_for_site(this->site);
 			building_slot->change_construction_progress(decimillesimal_int(100));
 
 			if (building_slot->get_construction_progress() >= 100) {
@@ -2295,9 +2294,9 @@ void site_game_data::on_population_type_size_changed(const population_type *popu
 	if (population_type->get_output_commodity() != nullptr) {
 		const int64_t new_population_type_size = this->get_population()->get_type_size(population_type);
 		const int64_t old_population_type_size = new_population_type_size - change;
-		const int64_t old_output = population_type->get_output_value() * old_population_type_size * (100 + population_type->get_output_modifier()) / 100;
-		const int64_t new_output = population_type->get_output_value() * new_population_type_size * (100 + population_type->get_output_modifier()) / 100;
-		const int64_t output_change = new_output - old_output;
+		const decimillesimal_int old_output = population_type->get_output_value() * old_population_type_size * (100 + population_type->get_output_modifier()) / 100;
+		const decimillesimal_int new_output = population_type->get_output_value() * new_population_type_size * (100 + population_type->get_output_modifier()) / 100;
+		const decimillesimal_int output_change = new_output - old_output;
 
 		this->change_base_commodity_output(population_type->get_output_commodity(), centesimal_int(output_change));
 	}

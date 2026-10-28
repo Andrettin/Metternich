@@ -81,12 +81,12 @@ public:
 
 	decimillesimal_int get_wealth_cost_for_domain(const domain *domain) const;
 
-	const commodity_map<int64_t> &get_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{
 		return this->commodity_costs;
 	}
 
-	commodity_map<int64_t> get_commodity_costs_for_domain(const domain *domain) const;
+	commodity_map<decimillesimal_int> get_commodity_costs_for_domain(const domain *domain) const;
 
 	const factor<domain> *get_cost_factor() const
 	{
@@ -124,7 +124,7 @@ private:
 	technology *required_technology = nullptr;
 	technology *obsolescence_technology = nullptr;
 	decimillesimal_int wealth_cost;
-	commodity_map<int64_t> commodity_costs;
+	commodity_map<decimillesimal_int> commodity_costs;
 	std::unique_ptr<const factor<domain>> cost_factor;
 	std::unique_ptr<const and_condition<domain>> conditions;
 	std::unique_ptr<const and_condition<province>> province_conditions;

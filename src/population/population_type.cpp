@@ -51,7 +51,7 @@ void population_type::process_gsml_property(const gsml_property &property)
 	if (key == "output_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		assert_throw(this->get_output_commodity() != nullptr);
-		this->output_value = this->get_output_commodity()->string_to_value(value);
+		this->output_value = this->get_output_commodity()->string_to_fractional_value(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}

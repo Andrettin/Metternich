@@ -2,6 +2,7 @@
 
 #include "map/route_type.h"
 
+#include "database/gsml_data.h"
 #include "economy/commodity.h"
 #include "infrastructure/holding_type.h"
 #include "util/assert_util.h"
@@ -16,7 +17,7 @@ void route_type::process_gsml_property(const gsml_property &property)
 
 	if (key == "output_multiplier") {
 		assert_throw(this->get_output_commodity() != nullptr);
-		this->output_multiplier = this->get_output_commodity()->string_to_value(value);
+		this->output_multiplier = this->get_output_commodity()->string_to_fractional_value(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}

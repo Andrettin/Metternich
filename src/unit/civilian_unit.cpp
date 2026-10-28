@@ -497,7 +497,7 @@ void civilian_unit::build_building(const building_type *building_type, const sit
 	domain_economy *domain_economy = this->get_owner()->get_economy();
 
 	for (const auto &[commodity, cost] : building_type->get_commodity_costs_for_site(site)) {
-		domain_economy->change_stored_commodity(commodity, decimillesimal_int(-cost));
+		domain_economy->change_stored_commodity(commodity, -cost);
 	}
 }
 
@@ -575,7 +575,7 @@ void civilian_unit::cancel_work()
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 
 		for (const auto &[commodity, cost] : this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site)) {
-			domain_economy->change_stored_commodity(commodity, decimillesimal_int(cost));
+			domain_economy->change_stored_commodity(commodity, cost);
 		}
 	}
 
@@ -797,8 +797,8 @@ void civilian_unit::increment_work_progress()
 	}
 
 	if (this->under_construction_building != nullptr) {
-		int64_t wealth_cost = 0;
-		const commodity_map<int64_t> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
+		decimillesimal_int wealth_cost;
+		const commodity_map<decimillesimal_int> commodity_costs = this->under_construction_building->get_commodity_costs_for_site(this->under_construction_building_site);
 		if (commodity_costs.contains(defines::get()->get_wealth_commodity())) {
 			wealth_cost = commodity_costs.find(defines::get()->get_wealth_commodity())->second;
 		}
@@ -806,7 +806,7 @@ void civilian_unit::increment_work_progress()
 		static constexpr dice progress_dice(1, 6);
 		const decimillesimal_int wealth_cost_progress = random::get()->roll_dice(progress_dice) * defines::get()->get_domain_income_unit_value();
 
-		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / std::max(wealth_cost, 1ll));
+		progress_change = decimillesimal_int::min(progress_change, wealth_cost_progress * 100 / decimillesimal_int::max(wealth_cost, decimillesimal_int(1)));
 	}
 
 	if (this->under_construction_pathway != nullptr) {

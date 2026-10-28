@@ -37,7 +37,7 @@ public:
 		return this->output_commodity;
 	}
 
-	int64_t get_output_multiplier() const
+	const decimillesimal_int &get_output_multiplier() const
 	{
 		return this->output_multiplier;
 	}
@@ -54,7 +54,7 @@ signals:
 
 private:
 	const commodity *output_commodity = nullptr;
-	int64_t output_multiplier = 0;
+	decimillesimal_int output_multiplier;
 	std::vector<const holding_type *> holding_types; //the holding types that can be connected by this route type
 };
 

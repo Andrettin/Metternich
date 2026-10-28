@@ -206,8 +206,8 @@ bool domain_government::can_enact_law(const metternich::law *law) const
 		return false;
 	}
 
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		if (this->domain->get_economy()->get_stored_commodity(commodity).to_int64() < (cost * this->get_total_law_cost_modifier() / 100)) {
+	for (const auto &[commodity, cost] : law->get_commodity_costs_for_domain(this->domain)) {
+		if (this->domain->get_economy()->get_stored_commodity(commodity) < cost) {
 			return false;
 		}
 	}
@@ -217,8 +217,8 @@ bool domain_government::can_enact_law(const metternich::law *law) const
 
 QCoro::Task<void> domain_government::enact_law_coro(const law *law)
 {
-	for (const auto &[commodity, cost] : law->get_commodity_costs()) {
-		this->domain->get_economy()->change_stored_commodity(commodity, decimillesimal_int(-cost * this->get_total_law_cost_modifier() / 100));
+	for (const auto &[commodity, cost] : law->get_commodity_costs_for_domain(this->domain)) {
+		this->domain->get_economy()->change_stored_commodity(commodity, -cost);
 	}
 
 	co_await this->set_law(law->get_group(), law);

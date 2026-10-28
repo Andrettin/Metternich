@@ -2,6 +2,8 @@
 
 #include "domain/law.h"
 
+#include "domain/domain.h"
+#include "domain/domain_government.h"
 #include "domain/law_group.h"
 #include "domain/succession_gender_type.h"
 #include "domain/succession_type.h"
@@ -30,7 +32,7 @@ void law::process_gsml_scope(const gsml_data &scope)
 	if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
+			this->commodity_costs[commodity] = commodity->string_to_fractional_value(property.get_value());
 		});
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<domain>>();
@@ -80,6 +82,35 @@ void law::check() const
 QVariantList law::get_commodity_costs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_costs());
+}
+
+commodity_map<decimillesimal_int> law::get_commodity_costs_for_domain(const domain *domain) const
+{
+	commodity_map<decimillesimal_int> costs = this->get_commodity_costs();
+
+	for (auto &[commodity, cost] : costs) {
+		cost *= domain->get_government()->get_total_law_cost_modifier();
+		cost /= 100;
+	}
+
+	return costs;
+}
+
+QString law::get_commodity_costs_for_domain_qstring(const metternich::domain *domain) const
+{
+	const commodity_map<decimillesimal_int> costs = this->get_commodity_costs_for_domain(domain);
+
+	std::string str;
+
+	for (const auto &[commodity, cost] : costs) {
+		if (!str.empty()) {
+			str += ", ";
+		}
+
+		str += commodity->value_to_string(cost, false);
+	}
+
+	return QString::fromStdString(str);
 }
 
 QString law::get_modifier_string(const metternich::domain *domain) const

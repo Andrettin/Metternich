@@ -103,10 +103,11 @@ const commodity *route::get_output_commodity() const
 	return this->get_type()->get_output_commodity();
 }
 
-int64_t route::get_output_multiplier() const
+const decimillesimal_int &route::get_output_multiplier() const
 {
 	if (this->get_type() == nullptr) {
-		return 0;
+		static constexpr decimillesimal_int zero;
+		return zero;
 	}
 
 	return this->get_type()->get_output_multiplier();

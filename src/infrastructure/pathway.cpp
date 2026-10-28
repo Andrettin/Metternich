@@ -31,7 +31,7 @@ void pathway::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "wealth_cost") {
-		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
+		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_fractional_value(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -94,7 +94,7 @@ void pathway::initialize()
 		}
 
 		this->commodity_cost_weights.clear();
-		this->wealth_cost = 0;
+		this->wealth_cost = decimillesimal_int(0);
 	}
 
 	if (this->required_technology != nullptr) {

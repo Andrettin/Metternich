@@ -63,7 +63,7 @@ public:
 	}
 
 	const commodity *get_output_commodity() const;
-	int64_t get_output_multiplier() const;
+	const decimillesimal_int &get_output_multiplier() const;
 
 	const site *get_start_site() const
 	{

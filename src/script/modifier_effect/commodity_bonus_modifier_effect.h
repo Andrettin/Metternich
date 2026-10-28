@@ -13,7 +13,7 @@ public:
 	explicit commodity_bonus_modifier_effect(const metternich::commodity *commodity, const std::string &value)
 		: commodity(commodity)
 	{
-		this->value = decimillesimal_int(this->commodity->string_to_value(value));
+		this->value = this->commodity->string_to_fractional_value(value);
 	}
 
 	virtual const std::string &get_identifier() const override
@@ -47,7 +47,7 @@ public:
 		Q_UNUSED(ignore_decimals);
 
 		const decimillesimal_int value = this->get_multiplied_value(multiplier);
-		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value.to_int64(), false);
+		return (value >= 0 ? "+" : "") + this->commodity->value_to_string(value, false);
 	}
 
 	virtual bool is_hidden(const site *scope) const override

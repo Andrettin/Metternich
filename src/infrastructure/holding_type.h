@@ -106,12 +106,12 @@ public:
 		return this->resource;
 	}
 
-	const commodity_map<int64_t> &get_level_commodity_costs() const
+	const commodity_map<decimillesimal_int> &get_level_commodity_costs() const
 	{
 		return this->level_commodity_costs;
 	}
 
-	const commodity_map<int64_t> &get_level_commodity_costs_per_level() const
+	const commodity_map<decimillesimal_int> &get_level_commodity_costs_per_level() const
 	{
 		return this->level_commodity_costs_per_level;
 	}
@@ -187,8 +187,8 @@ private:
 	bool cultural = false;
 	const metternich::domain_skill *domain_skill = nullptr;
 	bool resource = false;
-	commodity_map<int64_t> level_commodity_costs;
-	commodity_map<int64_t> level_commodity_costs_per_level;
+	commodity_map<decimillesimal_int> level_commodity_costs;
+	commodity_map<decimillesimal_int> level_commodity_costs_per_level;
 	std::map<std::string, std::unique_ptr<const and_condition<site>>> conditional_names;
 	std::map<std::string, int> tier_levels; //identifiers for particular levels
 	std::vector<const population_class *> population_classes;

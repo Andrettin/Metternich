@@ -123,7 +123,7 @@ private:
 	technology *river_crossing_required_technology = nullptr;
 	terrain_type_map<const technology *> terrain_required_technologies;
 	commodity_map<decimillesimal_int> commodity_costs;
-	int64_t wealth_cost = 0;
+	decimillesimal_int wealth_cost;
 	commodity_map<int> commodity_cost_weights;
 	std::unique_ptr<const metternich::modifier<const province>> modifier;
 	std::unique_ptr<const metternich::modifier<const domain>> domain_modifier;
