@@ -355,7 +355,7 @@ public:
 
 	void set_bid(const commodity *commodity, const decimillesimal_int &value);
 
-	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const int64_t value)
+	Q_INVOKABLE void set_bid(const metternich::commodity *commodity, const qint64 value)
 	{
 		this->set_bid(commodity, decimillesimal_int(value));
 	}
@@ -365,7 +365,7 @@ public:
 		this->set_bid(commodity, this->get_bid(commodity) + change);
 	}
 
-	Q_INVOKABLE void change_bid(const metternich::commodity *commodity, const int64_t change)
+	Q_INVOKABLE void change_bid(const metternich::commodity *commodity, const qint64 change)
 	{
 		this->change_bid(commodity, decimillesimal_int(change));
 	}
@@ -404,7 +404,7 @@ public:
 
 	void set_offer(const commodity *commodity, const decimillesimal_int &value);
 
-	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const int64_t value)
+	Q_INVOKABLE void set_offer(const metternich::commodity *commodity, const qint64 value)
 	{
 		this->set_offer(commodity, decimillesimal_int(value));
 	}
@@ -414,7 +414,7 @@ public:
 		this->set_offer(commodity, this->get_offer(commodity) + change);
 	}
 
-	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const int64_t change)
+	Q_INVOKABLE void change_offer(const metternich::commodity *commodity, const qint64 change)
 	{
 		this->change_offer(commodity, decimillesimal_int(change));
 	}
