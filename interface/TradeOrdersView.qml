@@ -47,10 +47,10 @@ ListView {
 			text: qsTr("Bid")
 			width: 48 * scale_factor
 			height: 24 * scale_factor
-			highlighted: domain_game_data.economy.bids.length > 0 && domain_game_data.economy.get_bid(commodity) > 0
+			highlighted: domain_game_data.economy.bids.length > 0 && domain_game_data.economy.get_bid_int(commodity) > 0
 			
 			onClicked: {
-				if (domain_game_data.economy.get_bid(commodity) === 0) {
+				if (domain_game_data.economy.get_bid_int(commodity) === 0) {
 					domain_game_data.economy.set_bid(commodity, 10)
 				} else {
 					domain_game_data.economy.set_bid(commodity, 0)
@@ -66,11 +66,11 @@ ListView {
 			text: qsTr("Offer")
 			width: 48 * scale_factor
 			height: 24 * scale_factor
-			highlighted: domain_game_data.economy.offers.length > 0 && domain_game_data.economy.get_offer(commodity) > 0
+			highlighted: domain_game_data.economy.offers.length > 0 && domain_game_data.economy.get_offer_int(commodity) > 0
 			visible: domain_game_data.economy.stored_commodities.length > 0 && domain_game_data.economy.get_stored_commodity_int(commodity)
 			
 			onClicked: {
-				if (domain_game_data.economy.get_offer(commodity) === 0) {
+				if (domain_game_data.economy.get_offer_int(commodity) === 0) {
 					domain_game_data.economy.set_offer(commodity, domain_game_data.economy.get_stored_commodity_int(commodity))
 				} else {
 					domain_game_data.economy.set_offer(commodity, 0)
@@ -151,22 +151,22 @@ ListView {
 				anchors.leftMargin: 16 * scale_factor
 				anchors.right: parent.right
 				anchors.rightMargin: 16 * scale_factor
-				value: domain_game_data.economy.bids.length > 0 && is_bid ? domain_game_data.economy.get_bid(commodity) : (domain_game_data.economy.offers.length > 0 && is_offer ? domain_game_data.economy.get_offer(commodity) : 0)
+				value: domain_game_data.economy.bids.length > 0 && is_bid ? domain_game_data.economy.get_bid_int(commodity) : (domain_game_data.economy.offers.length > 0 && is_offer ? domain_game_data.economy.get_offer_int(commodity) : 0)
 				max_value: is_bid ? 10 : Math.max(10, domain_game_data.economy.stored_commodities.length > 0 ? domain_game_data.economy.get_stored_commodity_int(commodity) : 0)
 				visible: is_bid || is_offer
 				
-				readonly property bool is_bid: domain_game_data.economy.bids.length > 0 && domain_game_data.economy.get_bid(commodity) > 0
-				readonly property bool is_offer: domain_game_data.economy.offers.length > 0 && domain_game_data.economy.get_offer(commodity) > 0
+				readonly property bool is_bid: domain_game_data.economy.bids.length > 0 && domain_game_data.economy.get_bid_int(commodity) > 0
+				readonly property bool is_offer: domain_game_data.economy.offers.length > 0 && domain_game_data.economy.get_offer_int(commodity) > 0
 				
 				onDecremented: {
 					if (is_bid) {
-						if (domain_game_data.economy.get_bid(commodity) == 1) {
+						if (domain_game_data.economy.get_bid_int(commodity) == 1) {
 							return
 						}
 						
 						domain_game_data.economy.change_bid(commodity, -1)
 					} else if (is_offer) {
-						if (domain_game_data.economy.get_offer(commodity) == 1) {
+						if (domain_game_data.economy.get_offer_int(commodity) == 1) {
 							return
 						}
 						
