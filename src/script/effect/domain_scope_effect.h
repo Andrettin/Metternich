@@ -7,10 +7,10 @@ namespace metternich {
 class domain;
 
 template <typename upper_scope_type>
-class domain_effect final : public scope_effect<upper_scope_type, const domain>
+class domain_scope_effect final : public scope_effect<upper_scope_type, const domain>
 {
 public:
-	explicit domain_effect(const gsml_operator effect_operator)
+	explicit domain_scope_effect(const gsml_operator effect_operator)
 		: scope_effect<upper_scope_type, const domain>(effect_operator)
 	{
 	}

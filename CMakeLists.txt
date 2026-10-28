@@ -253,11 +253,24 @@ set_source_files_properties(src/script/condition/condition.cpp PROPERTIES SKIP_U
 
 set(script_effect_SRCS
 	src/script/effect/delayed_effect_instance.cpp
-	src/script/effect/effect.cpp
+	src/script/effect/character_effect.cpp
+	src/script/effect/domain_effect.cpp
 	src/script/effect/effect_list.cpp
+	src/script/effect/military_unit_effect.cpp
+	src/script/effect/population_unit_effect.cpp
+	src/script/effect/province_effect.cpp
+	src/script/effect/site_effect.cpp
 )
 source_group(script\\effect FILES ${script_effect_SRCS})
-set_source_files_properties(src/script/effect/effect.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+set_source_files_properties(
+	src/script/effect/character_effect.cpp
+	src/script/effect/domain_effect.cpp
+	src/script/effect/military_unit_effect.cpp
+	src/script/effect/population_unit_effect.cpp
+	src/script/effect/province_effect.cpp
+	src/script/effect/site_effect.cpp
+	PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
+)
 
 set(script_modifier_effect_SRCS
 	src/script/modifier_effect/modifier_effect.cpp
@@ -784,8 +797,9 @@ set(script_effect_HDRS
 	src/script/effect/damage_effect.h
 	src/script/effect/delayed_effect.h
 	src/script/effect/delayed_effect_instance.h
-	src/script/effect/domain_effect.h
+	src/script/effect/domain_scope_effect.h
 	src/script/effect/effect.h
+	src/script/effect/effect.ipp
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
 	src/script/effect/else_if_effect.h

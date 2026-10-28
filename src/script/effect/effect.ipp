@@ -1,5 +1,3 @@
-#include "metternich.h"
-
 #include "script/effect/effect.h"
 
 #include "character/character.h"
@@ -27,7 +25,7 @@
 #include "script/effect/create_military_unit_effect.h"
 #include "script/effect/damage_effect.h"
 #include "script/effect/delayed_effect.h"
-#include "script/effect/domain_effect.h"
+#include "script/effect/domain_scope_effect.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/else_if_effect.h"
 #include "script/effect/event_effect.h"
@@ -227,7 +225,7 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_scope(const gs
 	}
 
 	if (effect_identifier == "domain") {
-		effect = std::make_unique<domain_effect<scope_type>>(effect_operator);
+		effect = std::make_unique<domain_scope_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "for") {
 		effect = std::make_unique<for_effect<scope_type>>(effect_operator);
 	} else if (effect_identifier == "hidden") {
@@ -297,12 +295,5 @@ const province *effect<scope_type>::get_scope_province(const scope_type *scope)
 		return nullptr;
 	}
 }
-
-template class effect<const character>;
-template class effect<const domain>;
-template class effect<military_unit>;
-template class effect<population_unit>;
-template class effect<const province>;
-template class effect<const site>;
 
 }
