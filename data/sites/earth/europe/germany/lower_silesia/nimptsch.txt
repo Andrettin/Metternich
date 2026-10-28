@@ -1,9 +1,12 @@
-wartha = {
-	name = "Wartha" #also known as Warthe
+nimptsch = {
+	name = "Nimptsch"
 	world = earth
-	#geocoordinate = { 16.733333333333 50.516666666667 }
+	geocoordinate = { 16.833333333333 50.716666666667 }
+	type = holding
+	holding_type = castle
+	province = lower_silesia
 	cultural_names = {
-		polish = "Bardo"
+		polish = "Niemcza"
 	}
 	
 	history = {

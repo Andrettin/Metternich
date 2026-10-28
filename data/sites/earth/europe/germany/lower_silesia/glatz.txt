@@ -1,9 +1,10 @@
-schweidnitz = {
-	name = "Schweidnitz"
+glatz = {
+	name = "Glatz"
 	world = earth
-	geocoordinate = { 16.48859 50.84378 }
+	geocoordinate = { 16.652777777778 50.437777777778 }
+	province = lower_silesia
 	cultural_names = {
-		polish = "Swidnica" #"Świdnica"
+		polish = "Klodzko" #"Kłodzko"
 	}
 	
 	history = {

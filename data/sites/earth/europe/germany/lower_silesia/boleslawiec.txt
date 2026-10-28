@@ -1,0 +1,8 @@
+boleslawiec = {
+	name = "Boleslawiec"
+	world = earth
+	geocoordinate = { 15.566666666667 51.266666666667 }
+	type = holding
+	holding_type = castle
+	province = lower_silesia
+}

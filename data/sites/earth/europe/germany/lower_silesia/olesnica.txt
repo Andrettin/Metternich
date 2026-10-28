@@ -1,0 +1,8 @@
+olesnica = {
+	name = "Olesnica"
+	world = earth
+	geocoordinate = { 17.383055555555554 51.21277777777778 }
+	type = holding
+	holding_type = castle
+	province = lower_silesia
+}

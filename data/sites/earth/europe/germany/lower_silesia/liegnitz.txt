@@ -1,9 +1,12 @@
-glatz = {
-	name = "Glatz"
+liegnitz = {
+	name = "Liegnitz"
 	world = earth
-	geocoordinate = { 16.652777777778 50.437777777778 }
+	geocoordinate = { 16.1619 51.21006 }
+	type = holding
+	holding_type = guild
+	province = lower_silesia
 	cultural_names = {
-		polish = "Klodzko" #"Kłodzko"
+		polish = "Legnica"
 	}
 	
 	history = {

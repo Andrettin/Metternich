@@ -2,6 +2,7 @@ sagan = {
 	name = "Sagan"
 	world = earth
 	geocoordinate = { 15.316666666667 51.616666666667 }
+	province = lower_silesia
 	cultural_names = {
 		polish = "Zagan" #"Żagań"
 	}

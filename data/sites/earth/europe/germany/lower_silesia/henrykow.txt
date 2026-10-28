@@ -1,0 +1,8 @@
+henrykow = {
+	name = "Henrykow"
+	world = earth
+	geocoordinate = { 17.01666667 50.66666667 } #Henryków, Lower Silesia
+	type = holding
+	holding_type = castle
+	province = lower_silesia
+}

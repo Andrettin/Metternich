@@ -1,7 +1,11 @@
-gorlitz = {
-	name = "Gorlitz" #"Görlitz"
+schweidnitz = {
+	name = "Schweidnitz"
 	world = earth
-	geocoordinate = { 14.987222222222 51.152777777778 }
+	geocoordinate = { 16.48859 50.84378 }
+	province = lower_silesia
+	cultural_names = {
+		polish = "Swidnica" #"Świdnica"
+	}
 	
 	history = {
 		919 = {

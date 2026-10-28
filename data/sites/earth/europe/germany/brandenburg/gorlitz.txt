@@ -1,10 +1,8 @@
-nimptsch = {
-	name = "Nimptsch"
+gorlitz = {
+	name = "Gorlitz" #"Görlitz"
 	world = earth
-	geocoordinate = { 16.833333333333 50.716666666667 }
-	cultural_names = {
-		polish = "Niemcza"
-	}
+	geocoordinate = { 14.987222222222 51.152777777778 }
+	province = brandenburg
 	
 	history = {
 		919 = {

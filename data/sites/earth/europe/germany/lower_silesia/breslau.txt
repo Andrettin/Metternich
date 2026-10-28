@@ -4,6 +4,7 @@ breslau = {
 	geocoordinate = { 17.03000931670 51.11043194490 } #from Natural Earth
 	type = holding
 	holding_type = guild #important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	#holding_type = castle
 	cultural_names = {
 		polish = "Wroclaw" #"Wrocław"
 	}
