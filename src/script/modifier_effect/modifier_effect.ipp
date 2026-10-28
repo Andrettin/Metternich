@@ -1,5 +1,3 @@
-#include "metternich.h"
-
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"
@@ -421,11 +419,5 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	return modifier_effect;
 }
-
-template class modifier_effect<const character>;
-template class modifier_effect<const domain>;
-template class modifier_effect<military_unit>;
-template class modifier_effect<const province>;
-template class modifier_effect<const site>;
 
 }

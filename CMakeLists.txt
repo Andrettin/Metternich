@@ -273,10 +273,21 @@ set_source_files_properties(
 )
 
 set(script_modifier_effect_SRCS
-	src/script/modifier_effect/modifier_effect.cpp
+	src/script/modifier_effect/character_modifier_effect.cpp
+	src/script/modifier_effect/domain_modifier_effect.cpp
+	src/script/modifier_effect/military_unit_modifier_effect.cpp
+	src/script/modifier_effect/province_modifier_effect.cpp
+	src/script/modifier_effect/site_modifier_effect.cpp
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
-set_source_files_properties(src/script/modifier_effect/modifier_effect.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+set_source_files_properties(
+	src/script/modifier_effect/character_modifier_effect.cpp
+	src/script/modifier_effect/domain_modifier_effect.cpp
+	src/script/modifier_effect/military_unit_modifier_effect.cpp
+	src/script/modifier_effect/province_modifier_effect.cpp
+	src/script/modifier_effect/site_modifier_effect.cpp
+	PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
+)
 
 set(sound_SRCS
 	src/sound/media_player.cpp
@@ -900,6 +911,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/military_unit_stat_modifier_effect.h
 	src/script/modifier_effect/mineral_output_modifier_effect.h
 	src/script/modifier_effect/modifier_effect.h
+	src/script/modifier_effect/modifier_effect.ipp
 	src/script/modifier_effect/monthly_commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/monthly_technology_category_research_modifier_effect.h
 	src/script/modifier_effect/movement_cost_modifier_effect.h
