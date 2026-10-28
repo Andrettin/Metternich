@@ -1,4 +1,4 @@
-#include "script/effect/metternich.cpp"
+#include "metternich.h"
 
 #include "script/effect/effect.ipp"
 
