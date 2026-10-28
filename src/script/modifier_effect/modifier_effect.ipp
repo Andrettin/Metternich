@@ -1,3 +1,5 @@
+#pragma once
+
 #include "script/modifier_effect/modifier_effect.h"
 
 #include "character/character.h"

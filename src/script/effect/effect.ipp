@@ -1,3 +1,5 @@
+#pragma once
+
 #include "script/effect/effect.h"
 
 #include "character/character.h"

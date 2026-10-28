@@ -262,15 +262,6 @@ set(script_effect_SRCS
 	src/script/effect/site_effect.cpp
 )
 source_group(script\\effect FILES ${script_effect_SRCS})
-set_source_files_properties(
-	src/script/effect/character_effect.cpp
-	src/script/effect/domain_effect.cpp
-	src/script/effect/military_unit_effect.cpp
-	src/script/effect/population_unit_effect.cpp
-	src/script/effect/province_effect.cpp
-	src/script/effect/site_effect.cpp
-	PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
-)
 
 set(script_modifier_effect_SRCS
 	src/script/modifier_effect/character_modifier_effect.cpp
@@ -280,14 +271,6 @@ set(script_modifier_effect_SRCS
 	src/script/modifier_effect/site_modifier_effect.cpp
 )
 source_group(script\\modifier_effect FILES ${script_modifier_effect_SRCS})
-set_source_files_properties(
-	src/script/modifier_effect/character_modifier_effect.cpp
-	src/script/modifier_effect/domain_modifier_effect.cpp
-	src/script/modifier_effect/military_unit_modifier_effect.cpp
-	src/script/modifier_effect/province_modifier_effect.cpp
-	src/script/modifier_effect/site_modifier_effect.cpp
-	PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
-)
 
 set(sound_SRCS
 	src/sound/media_player.cpp
