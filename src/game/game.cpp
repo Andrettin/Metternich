@@ -2000,10 +2000,18 @@ QCoro::Task<void> game::do_turn_coro()
 
 			//restore old bids and offers, if possible
 			for (const auto &[commodity, bid] : old_bids[domain]) {
+				if (!domain->get_economy()->can_trade_commodity(commodity)) {
+					continue;
+				}
+
 				domain->get_economy()->set_bid(commodity, bid);
 			}
 
 			for (const auto &[commodity, offer] : old_offers[domain]) {
+				if (!domain->get_economy()->can_trade_commodity(commodity)) {
+					continue;
+				}
+
 				domain->get_economy()->set_offer(commodity, offer);
 			}
 		}

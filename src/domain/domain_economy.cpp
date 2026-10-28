@@ -421,6 +421,8 @@ void domain_economy::remove_tradeable_commodity(const commodity *commodity)
 {
 	this->set_min_commodity_storage(commodity, 0);
 	this->set_max_commodity_storage(commodity, 0);
+	this->set_bid(commodity, decimillesimal_int(0));
+	this->set_offer(commodity, decimillesimal_int(0));
 
 	this->tradeable_commodities.erase(commodity);
 
