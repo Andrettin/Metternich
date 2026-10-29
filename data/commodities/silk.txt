@@ -3,7 +3,7 @@ silk = {
 	type = resource
 	icon = silk
 	agricultural = true
-	wealth_value = 1
+	base_price = 1
 	units = {
 		0.005 = sq_yd #10gp per sq yd
 	}
