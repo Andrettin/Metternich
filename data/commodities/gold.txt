@@ -5,9 +5,9 @@ gold = {
 	mineral = true
 	wealth_value = 2
 	units = {
-		0.025 = lb #50gp per lb
-		0.35 = st
-		2.5 = cwt
-		50 = tn
+		0.0125 = lb #50gp per lb
+		0.175 = st
+		1.25 = cwt
+		25 = tn
 	}
 }
