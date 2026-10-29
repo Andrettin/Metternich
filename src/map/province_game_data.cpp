@@ -1867,9 +1867,7 @@ centesimal_int province_game_data::get_population_capacity_level_for_holding_lev
 	const centesimal_int divisor = centesimal_int::max(centesimal_int::max(this->get_total_holding_level(), this->get_holding_count()), 1);
 	assert_throw(divisor > 0);
 
-	static constexpr int province_capacity_level_per_province_level = 2;
-
-	return province_capacity_level_per_province_level * centesimal_int::max(holding_level, 1) / divisor;
+	return defines::get()->get_province_population_capacity_level_per_level() * this->get_level() * centesimal_int::max(holding_level, 1) / divisor;
 }
 
 const resource_map<int> &province_game_data::get_resource_counts() const
