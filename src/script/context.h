@@ -31,13 +31,8 @@ struct context_base
 	using population_unit_ptr = population_unit_type *;
 	using scope_variant_type = std::variant<std::monostate, const character *, const domain *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
 
-	context_base()
-	{
-	}
-
-	explicit context_base(const scope_variant_type &root_scope) : root_scope(root_scope)
-	{
-	}
+	context_base();
+	explicit context_base(const scope_variant_type &root_scope);
 
 	void process_gsml_property(const gsml_property &property);
 	void process_gsml_scope(const gsml_data &scope);
@@ -107,28 +102,8 @@ struct context_base
 		return nullptr;
 	}
 
-	const std::string &get_saved_string(const std::string &name) const
-	{
-		const auto find_iterator = this->saved_strings.find(name);
-
-		if (find_iterator != this->saved_strings.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::string empty_str;
-		return empty_str;
-	}
-
-	const building_type *get_saved_building(const std::string &name) const
-	{
-		const auto find_iterator = this->saved_buildings.find(name);
-
-		if (find_iterator != this->saved_buildings.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	const std::string &get_saved_string(const std::string &name) const;
+	const building_type *get_saved_building(const std::string &name) const;
 
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
@@ -155,13 +130,8 @@ extern template struct context_base<true>;
 
 struct context final : context_base<false>
 {
-	context()
-	{
-	}
-
-	explicit context(const scope_variant_type &root_scope) : context_base(root_scope)
-	{
-	}
+	context();
+	explicit context(const scope_variant_type &root_scope);
 
 	template <typename scope_type>
 	bool is_root_scope(scope_type *scope) const
@@ -175,14 +145,8 @@ struct read_only_context final : context_base<true>
 public:
 	static scope_variant_type scope_from_mutable(const context_base<false>::scope_variant_type &mutable_scope);
 
-	read_only_context()
-	{
-	}
-
-	explicit read_only_context(const scope_variant_type &root_scope) : context_base(root_scope)
-	{
-	}
-
+	read_only_context();
+	explicit read_only_context(const scope_variant_type &root_scope);
 	read_only_context(const context &ctx);
 
 	template <typename scope_type>

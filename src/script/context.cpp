@@ -16,6 +16,16 @@
 namespace metternich {
 
 template <bool read_only>
+context_base<read_only>::context_base()
+{
+}
+
+template <bool read_only>
+context_base<read_only>::context_base(const scope_variant_type &root_scope) : root_scope(root_scope)
+{
+}
+
+template <bool read_only>
 void context_base<read_only>::process_gsml_property(const gsml_property &property)
 {
 	const std::string &key = property.get_key();
@@ -107,8 +117,41 @@ const typename context_base<read_only>::scope_variant_type &context_base<read_on
 	}
 }
 
+template <bool read_only>
+const std::string &context_base<read_only>::get_saved_string(const std::string &name) const
+{
+	const auto find_iterator = this->saved_strings.find(name);
+
+	if (find_iterator != this->saved_strings.end()) {
+		return find_iterator->second;
+	}
+
+	static const std::string empty_str;
+	return empty_str;
+}
+
+template <bool read_only>
+const building_type *context_base<read_only>::get_saved_building(const std::string &name) const
+{
+	const auto find_iterator = this->saved_buildings.find(name);
+
+	if (find_iterator != this->saved_buildings.end()) {
+		return find_iterator->second;
+	}
+
+	return nullptr;
+}
+
 template struct context_base<false>;
 template struct context_base<true>;
+
+context::context()
+{
+}
+
+context::context(const scope_variant_type &root_scope) : context_base(root_scope)
+{
+}
 
 read_only_context::scope_variant_type read_only_context::scope_from_mutable(const context_base<false>::scope_variant_type &mutable_scope)
 {
@@ -119,6 +162,14 @@ read_only_context::scope_variant_type read_only_context::scope_from_mutable(cons
 	}, mutable_scope);
 
 	return scope;
+}
+
+read_only_context::read_only_context()
+{
+}
+
+read_only_context::read_only_context(const scope_variant_type &root_scope) : context_base(root_scope)
+{
 }
 
 read_only_context::read_only_context(const context &ctx)
