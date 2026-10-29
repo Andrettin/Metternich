@@ -509,7 +509,7 @@ private:
 	decimillesimal_int default_diplomatic_map_tile_scale = decimillesimal_int(1);
 	int province_map_tile_scale = 2;
 	const commodity_unit *domain_income_unit = nullptr;
-	int province_population_capacity_level_per_level;
+	int province_population_capacity_level_per_level = 0;
 	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, decimillesimal_int> domain_maintenance_cost_per_domain_size;
