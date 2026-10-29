@@ -90,6 +90,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(archimedes::decimillesimal_int default_diplomatic_map_tile_scale MEMBER default_diplomatic_map_tile_scale READ get_default_diplomatic_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(int province_map_tile_scale MEMBER province_map_tile_scale READ get_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
+	Q_PROPERTY(int province_population_capacity_level_per_level MEMBER province_population_capacity_level_per_level READ get_province_population_capacity_level_per_level NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* click_sound MEMBER click_sound READ get_click_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* error_sound MEMBER error_sound READ get_error_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::music* main_menu_music MEMBER main_menu_music READ get_main_menu_music NOTIFY changed)
@@ -421,8 +422,8 @@ public:
 		return this->province_level_commodity_costs_per_level;
 	}
 
-	int get_province_population_for_level(const int level) const;
-	int get_province_level_for_population(const int population) const;
+	int get_province_population_capacity_level_per_level() const;
+	int get_province_level_for_population(const int64_t population) const;
 	const dice &get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const;
 	decimillesimal_int get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
@@ -508,8 +509,8 @@ private:
 	decimillesimal_int default_diplomatic_map_tile_scale = decimillesimal_int(1);
 	int province_map_tile_scale = 2;
 	const commodity_unit *domain_income_unit = nullptr;
+	int province_population_capacity_level_per_level;
 	commodity_map<int> province_level_commodity_costs_per_level;
-	std::map<int, int> province_population_per_level;
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, decimillesimal_int> domain_maintenance_cost_per_domain_size;
 	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;

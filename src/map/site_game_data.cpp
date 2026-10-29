@@ -123,6 +123,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->ruin_building_count = std::stoi(value);
 	} else if (key == "resource_discovered") {
 		this->resource_discovered = string::to_bool(value);
+	} else if (key == "population_capacity_level") {
+		this->population_capacity_level = centesimal_int(value);
 	} else if (key == "base_population_capacity") {
 		this->base_population_capacity = std::stoll(value);
 	} else if (key == "population_capacity_modifier") {
@@ -316,6 +318,10 @@ gsml_data site_game_data::to_gsml_data() const
 	}
 
 	data.add_child(this->population->to_gsml_data());
+
+	if (this->get_population_capacity_level() != 0) {
+		data.add_property("population_capacity_level", this->get_population_capacity_level().to_string());
+	}
 
 	if (this->get_base_population_capacity() != 0) {
 		data.add_property("base_population_capacity", std::to_string(this->get_base_population_capacity()));
@@ -828,7 +834,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 			co_await old_holding_type->get_modifier()->apply(this->site, -1);
 		}
 
-		this->change_population_capacity(-this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity_level(-this->get_province()->get_game_data()->get_population_capacity_level_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_type = holding_type;
@@ -836,7 +842,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	if (this->get_holding_type() != nullptr) {
 		assert_throw(this->get_holding_type() == this->site->get_holding_type());
 
-		this->change_population_capacity(this->get_province()->get_game_data()->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity_level(this->get_province()->get_game_data()->get_population_capacity_level_for_holding_level(this->get_holding_level()));
 	}
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
@@ -959,14 +965,14 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	}
 
 	if (this->get_holding_type() != nullptr) {
-		this->change_population_capacity(-province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity_level(-province_game_data->get_population_capacity_level_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_level = level;
 
 	if (this->get_holding_type() != nullptr) {
 		//need to do this before changing the province's level or its total holding level, since those update the province's holdings' population capacity based on their holding level
-		this->change_population_capacity(province_game_data->get_population_capacity_for_holding_level(this->get_holding_level()));
+		this->change_population_capacity_level(province_game_data->get_population_capacity_level_for_holding_level(this->get_holding_level()));
 	}
 
 	//use the site's holding type, rather than the constructed holding type, in case the holding type is being lost
@@ -2318,6 +2324,19 @@ const population_type *site_game_data::get_default_population_type() const
 {
 	assert_throw(this->get_culture() != nullptr);
 	return this->get_culture()->get_population_class_type(this->get_default_population_class());
+}
+
+void site_game_data::set_population_capacity_level(const centesimal_int &capacity_level)
+{
+	if (capacity_level == this->get_population_capacity_level()) {
+		return;
+	}
+
+	this->change_population_capacity(-(this->get_population_capacity_level() * population_defines::get()->get_base_population_size()).to_int64());
+
+	this->population_capacity_level = capacity_level;
+
+	this->change_population_capacity((this->get_population_capacity_level() * population_defines::get()->get_base_population_size()).to_int64());
 }
 
 void site_game_data::set_base_population_capacity(const int64_t capacity)

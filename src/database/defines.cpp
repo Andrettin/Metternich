@@ -16,6 +16,7 @@
 #include "map/direction.h"
 #include "map/terrain_adjacency_type.h"
 #include "map/tile_image_provider.h"
+#include "population/population_defines.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
@@ -93,13 +94,6 @@ void defines::process_gsml_scope(const gsml_data &scope)
 			const int cost = std::stoi(property.get_value());
 
 			this->province_level_commodity_costs_per_level[commodity] = cost;
-		});
-	} else if (tag == "province_population_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			const int population = std::stoi(property.get_value());
-
-			this->province_population_per_level[level] = population;
 		});
 	} else if (tag == "province_taxation_per_level") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -302,30 +296,16 @@ decimillesimal_int defines::get_domain_income_unit_value() const
 	return decimillesimal_int(this->get_wealth_commodity()->get_unit_value(this->get_domain_income_unit()));
 }
 
-int defines::get_province_population_for_level(const int level) const
+int defines::get_province_population_capacity_level_per_level() const
 {
-	const auto find_iterator = this->province_population_per_level.find(level);
-	if (find_iterator != this->province_population_per_level.end()) {
-		return find_iterator->second;
-	}
-
-	//as a fallback, use the square of the province level * 1000
-	return level * level * 1000;
+	return this->province_population_capacity_level_per_level;
 }
 
-int defines::get_province_level_for_population(const int population) const
+int defines::get_province_level_for_population(const int64_t population) const
 {
-	int best_province_level = 0;
+	const centesimal_int population_capacity_level = centesimal_int(population) / population_defines::get()->get_base_population_size();
 
-	for (const auto &[province_level, province_level_population] : this->province_population_per_level) {
-		if (population >= province_level_population) {
-			best_province_level = province_level;
-		} else {
-			break;
-		}
-	}
-
-	return best_province_level;
+	return (population_capacity_level / this->get_province_population_capacity_level_per_level()).to_rounded_int();
 }
 
 const dice &defines::get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const

@@ -407,6 +407,18 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_type *get_default_population_type() const;
 
+	const centesimal_int &get_population_capacity_level() const
+	{
+		return this->population_capacity_level;
+	}
+
+	void set_population_capacity_level(const centesimal_int &capacity_level);
+
+	void change_population_capacity_level(const centesimal_int &change)
+	{
+		this->set_population_capacity_level(this->get_population_capacity_level() + change);
+	}
+
 	int64_t get_base_population_capacity() const
 	{
 		return this->base_population_capacity;
@@ -754,6 +766,7 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
+	centesimal_int population_capacity_level;
 	int64_t base_population_capacity = 0;
 	centesimal_int population_capacity_modifier;
 	int64_t population_capacity = 0;

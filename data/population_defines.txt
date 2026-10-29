@@ -1,5 +1,6 @@
 default_population_class = laborers
 default_tribal_population_class = tribesmen
+base_population_size = 10000 #population size used as a base for food consumption, population capacity, etc.
 base_population_needs_size = 200000
 base_monthly_population_growth_rate = 0.01 #0.01%
 base_monthly_promotion_rate = 0.2 #0.2%

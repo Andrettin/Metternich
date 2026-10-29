@@ -16,6 +16,7 @@
 #include "infrastructure/holding_defines.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_creation_type.h"
+#include "population/population_defines.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
 #include "script/condition/provincial_capital_condition.h"
@@ -308,7 +309,7 @@ QVariantList building_type::get_recruited_military_unit_categories_qvariant_list
 
 int64_t building_type::get_population_capacity_for_province_level(const int province_level, const centesimal_int &province_total_holding_level) const
 {
-	return (defines::get()->get_province_population_for_level(province_level) * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1)).to_int64();
+	return (defines::get()->get_province_population_capacity_level_per_level() * province_level * population_defines::get()->get_base_population_size() * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1)).to_int64();
 }
 
 commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(const site *site) const
