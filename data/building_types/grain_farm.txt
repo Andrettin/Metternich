@@ -1,0 +1,152 @@
+grain_farm = {
+	name = "Grain Farm"
+	building_class = grain_farm
+	portrait = stable
+	icon = grain
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = grain_farming
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+grain_estate = {
+	name = "Grain Estate"
+	building_class = grain_estate
+	portrait = stable
+	icon = grain
+	base_building = grain_farm
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 8gb #4x the Grain Farm cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = grain_farming
+			multiplier = 2
+		}
+	}
+}
+
+mechanized_grain_estate = {
+	name = "Mechanized Grain Estate"
+	building_class = mechanized_grain_estate
+	portrait = stable
+	icon = grain
+	base_building = grain_estate
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 16gb #8x the Grain Farm cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = grain_farming
+			multiplier = 3
+		}
+	}
+}
+
+industrial_grain_estate = {
+	name = "Industrial Grain Estate"
+	building_class = industrial_grain_estate
+	portrait = stable
+	icon = grain
+	base_building = mechanized_grain_estate
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_grain_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 32gb #16x the Grain Farm cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = grain_farming
+			multiplier = 4
+		}
+	}
+}

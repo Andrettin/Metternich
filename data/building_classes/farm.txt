@@ -3,11 +3,6 @@ cattle_ranch = {
 	slot_type = resource
 }
 
-grain_farm = {
-	name = "Grain Farm"
-	slot_type = resource
-}
-
 orchard = {
 	name = "Orchard"
 	slot_type = resource

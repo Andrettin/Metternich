@@ -1,0 +1,19 @@
+grain_farm = {
+	name = "Grain Farm"
+	slot_type = resource
+}
+
+grain_estate = {
+	name = "Grain Estate"
+	slot_type = resource
+}
+
+mechanized_grain_estate = {
+	name = "Mechanized Grain Estate"
+	slot_type = resource
+}
+
+industrial_grain_estate = {
+	name = "Industrial Grain Estate"
+	slot_type = resource
+}

@@ -35,49 +35,8 @@ cattle_ranch = {
 	modifier = {
 		employment_capacity = {
 			employment_type = cattle_ranching
-			quarterly_wealth_output_value = 3gb
+			multiplier = 1
 		}
-		base_population_capacity = 100
-	}
-	free_on_start_conditions = {
-	}
-}
-
-grain_farm = {
-	name = "Grain Farm"
-	building_class = grain_farm
-	portrait = stable
-	icon = grain
-	holding_types = {
-		castle
-		guild
-		temple
-	}
-	conditions = {
-		feature = prime_grain_land
-		not = {
-			scripted_condition = is_lair
-		}
-	}
-	commodity_costs = {
-		wealth = 2gb
-	}
-	cost_factor = {
-		modifier = {
-			factor = 2
-			terrain = hills
-		}
-		modifier = {
-			factor = 4
-			terrain = desert
-		}
-	}
-	modifier = {
-		employment_capacity = {
-			employment_type = grain_farming
-			quarterly_wealth_output_value = 3gb
-		}
-		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -115,9 +74,8 @@ orchard = {
 	modifier = {
 		employment_capacity = {
 			employment_type = fruit_farming
-			quarterly_wealth_output_value = 3gb
+			multiplier = 1
 		}
-		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -155,9 +113,8 @@ sheep_ranch = {
 	modifier = {
 		employment_capacity = {
 			employment_type = sheep_ranching
-			quarterly_wealth_output_value = 3gb
+			multiplier = 1
 		}
-		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
@@ -195,9 +152,8 @@ tobacco_plantation = {
 	modifier = {
 		employment_capacity = {
 			employment_type = tobacco_planting
-			quarterly_wealth_output_value = 3gb
+			multiplier = 1
 		}
-		base_population_capacity = 100
 	}
 	free_on_start_conditions = {
 	}
