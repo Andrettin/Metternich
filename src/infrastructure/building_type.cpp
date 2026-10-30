@@ -309,7 +309,9 @@ QVariantList building_type::get_recruited_military_unit_categories_qvariant_list
 
 int64_t building_type::get_population_capacity_for_province_level(const int province_level, const centesimal_int &province_total_holding_level) const
 {
-	return (defines::get()->get_province_population_capacity_level_per_level() * province_level * population_defines::get()->get_base_population_size() * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1)).to_int64();
+	assert_throw(this->get_holding_level() > 0);
+
+	return (defines::get()->get_province_population_capacity_level_per_level() * province_level * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1) * population_defines::get()->get_base_population_size()).to_int64();
 }
 
 commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(const site *site) const

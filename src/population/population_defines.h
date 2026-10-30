@@ -38,6 +38,7 @@ public:
 	}
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
+	virtual void check() const override;
 
 	const population_class *get_default_population_class() const
 	{

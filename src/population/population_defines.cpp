@@ -30,6 +30,13 @@ void population_defines::process_gsml_scope(const gsml_data &scope)
 	}
 }
 
+void population_defines::check() const
+{
+	if (this->get_base_population_size() == 0) {
+		throw std::runtime_error("No base population size has been defined.");
+	}
+}
+
 }
 
 #include "moc_population_defines.cpp"
