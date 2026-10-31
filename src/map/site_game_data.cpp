@@ -2417,18 +2417,26 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 
 	for (population_unit *population_unit : population_units) {
-		int64_t population_growth_size = (population_unit->get_size() * population_growth_rate / 100).to_int64();
+		const decimillesimal_int unit_population_growth_rate = population_growth_rate;
+		//FIXME: starvation should affect the unit's population growth rate
 
-		if (population_growth_size > 0) {
+		int64_t population_growth_size = (population_unit->get_size() * unit_population_growth_rate / 100).to_int64();
+
+		if (unit_population_growth_rate > 0) {
 			population_growth_size = std::max(population_growth_size, 1ll);
 			population_growth_size = std::min(population_growth_size, this->get_available_population_capacity());
+		} else if (unit_population_growth_rate < 0) {
+			population_growth_size = std::min(population_growth_size, -1ll);
+
+			//don't remove more population than there is available
+			population_growth_size = std::max(population_growth_size, -population_unit->get_size());
 		}
 
 		if (population_growth_size == 0) {
 			continue;
 		}
 
-		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, population_growth_size, population_unit->get_literacy_rate(), decimillesimal_int(0), true);
+		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), population_growth_size > 0 ? nullptr : population_unit->get_employment_type(), population_growth_size, population_unit->get_literacy_rate(), decimillesimal_int(0), true);
 	}
 }
 
