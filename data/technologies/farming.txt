@@ -220,6 +220,7 @@ seed_drill = {
 	icon = grain
 	period = enlightenment_age
 	prerequisites = {
+		padded_horse_collar #previous farming equipment technology
 		land_enclosure
 		
 		manufactories #to place it in the appropriate period
@@ -260,6 +261,7 @@ commercial_fertilizer = {
 	icon = fruit
 	period = industrial_age
 	prerequisites = {
+		land_enclosure #previous farming techniques technology
 		steel_plow
 	}
 }
