@@ -31,7 +31,7 @@ void population_defines::process_gsml_scope(const gsml_data &scope)
 				throw std::runtime_error("A food type of none is not accepted for the population food consumption define.");
 			}
 
-			this->population_food_consumption[food_type] = centesimal_int(value);
+			this->population_food_consumption[food_type] = decimillesimal_int(value);
 		});
 	} else if (tag == "promotion_chance") {
 		this->promotion_chance = std::make_unique<factor<population_unit>>();

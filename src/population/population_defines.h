@@ -87,7 +87,7 @@ public:
 		return this->max_literacy_educator_percent;
 	}
 
-	const std::map<food_type, centesimal_int> &get_population_food_consumption() const
+	const std::map<food_type, decimillesimal_int> &get_population_food_consumption() const
 	{
 		return this->population_food_consumption;
 	}
@@ -115,7 +115,7 @@ private:
 	decimillesimal_int base_monthly_literacy_change_rate;
 	decimillesimal_int base_literacy_educator_percent;
 	decimillesimal_int max_literacy_educator_percent;
-	std::map<food_type, centesimal_int> population_food_consumption;
+	std::map<food_type, decimillesimal_int> population_food_consumption;
 	std::unique_ptr<factor<population_unit>> promotion_chance;
 	std::unique_ptr<factor<population_unit>> demotion_chance;
 };
