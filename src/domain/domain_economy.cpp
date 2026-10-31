@@ -38,6 +38,7 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -359,7 +360,23 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 		return;
 	}
 
-	for (population_unit *population_unit : this->get_game_data()->get_population_units()) {
+	const std::vector<population_unit *> &domain_population_units = this->get_game_data()->get_population_units();
+
+	std::vector<population_unit *> sorted_population_units = this->get_game_data()->get_population_units();
+	std::sort(sorted_population_units.begin(), sorted_population_units.end(), [&domain_population_units](const population_unit *lhs, const population_unit *rhs) {
+		if (lhs->get_type()->get_strata() != rhs->get_type()->get_strata()) {
+			//higher stratas consume food first
+			return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
+		}
+
+		return std::find(domain_population_units.begin(), domain_population_units.end(), lhs) < std::find(domain_population_units.begin(), domain_population_units.end(), rhs);
+	});
+
+	for (population_unit *population_unit : sorted_population_units) {
+		population_unit->consume_food(trade_domains);
+	}
+
+	for (population_unit *population_unit : domain_population_units) {
 		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
 		const decimillesimal_int population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
 

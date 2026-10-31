@@ -19,7 +19,7 @@ inline int64_t get_population_strata_income_weight(const population_strata strat
 			return 25;
 	}
 
-	throw std::runtime_error(std::format("Invalid population strata: \"{}\".", static_cast<int>(strata)));
+	throw std::runtime_error(std::format("Invalid population strata: \"{}\".", std::to_underlying(strata)));
 }
 
 }

@@ -60,6 +60,10 @@ void commodity::initialize()
 		this->local = true;
 	}
 
+	if (this->get_food_type() != food_type::none) {
+		commodity::food_type_commodities[this->get_food_type()].push_back(this);
+	}
+
 	named_data_entry::initialize();
 }
 

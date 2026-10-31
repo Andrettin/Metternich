@@ -500,6 +500,61 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
+void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains)
+{
+	if (this->is_food_producer()) {
+		//food producers don't need to consume food
+		return;
+	}
+
+	std::map<food_type, decimillesimal_int> food_consumption = population_defines::get()->get_population_food_consumption();
+
+	for (auto &[food_type, consumption] : food_consumption) {
+		consumption *= this->get_size();
+		consumption /= population_defines::get()->get_base_population_size();
+
+		if (consumption == 0) {
+			continue;
+		}
+
+		std::vector<const commodity *> food_type_commodities = commodity::get_food_type_commodities(food_type);
+		std::sort(food_type_commodities.begin(), food_type_commodities.end(), [](const commodity *lhs, const commodity *rhs) {
+			if (game::get()->get_price(lhs) != game::get()->get_price(rhs)) {
+				//prefer consuming cheaper food commodities
+				return game::get()->get_price(lhs) < game::get()->get_price(rhs);
+			}
+
+			return lhs->get_index() < rhs->get_index();
+		});
+
+		for (const commodity *food_commodity : food_type_commodities) {
+			const decimillesimal_int &stored_commodity = this->get_domain()->get_economy()->get_stored_commodity(food_commodity);
+			if (stored_commodity == 0) {
+				continue;
+			}
+
+			const decimillesimal_int consumed_quantity = decimillesimal_int::min(stored_commodity, consumption);
+			this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -consumed_quantity);
+			consumption -= consumed_quantity;
+
+			if (consumption == 0) {
+				break;
+			}
+		}
+
+		if (consumption == 0) {
+			continue;
+		}
+
+		for (const metternich::domain *trade_domain : trade_domains) {
+			//FIXME: import remaining consumption
+			Q_UNUSED(trade_domain);
+		}
+	}
+
+	//FIXME: add starvation if not all food consumption could be fulfilled
+}
+
 void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	const int total_need_weight = this->get_type()->get_total_life_need_weight() + this->get_type()->get_total_everyday_need_weight() + this->get_type()->get_total_luxury_need_weight();
