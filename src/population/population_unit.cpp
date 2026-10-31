@@ -542,13 +542,13 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		}
 
 		//import remaining consumption for this food type
-		for (const metternich::domain *trade_domain : trade_domains) {
-			if (trade_domain == this->get_domain()) {
+		for (const commodity *food_commodity : food_commodities) {
+			if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
 				continue;
 			}
 
-			for (const commodity *food_commodity : food_commodities) {
-				if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
+			for (const metternich::domain *trade_domain : trade_domains) {
+				if (trade_domain == this->get_domain()) {
 					continue;
 				}
 
@@ -557,10 +557,22 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 					continue;
 				}
 
-				const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
+				decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
+
+				//ensure that we have enough storage for the purchase
+				bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_storage_capacity_for_commodity(food_commodity));
+
 				assert_throw(bought_quantity > 0);
 
-				trade_domain->get_economy()->do_sale(this->domain, food_commodity, bought_quantity, true, false);
+				//ensure that we can afford to purchase the food commodity
+				bought_quantity = decimillesimal_int::min(bought_quantity, this->get_wealth() / game::get()->get_price(food_commodity));
+
+				if (bought_quantity == 0) {
+					//cannot afford to buy the commodity, so there's no point in doing the same process for other domains
+					break;
+				}
+
+				trade_domain->get_economy()->do_sale(this->get_domain(), food_commodity, bought_quantity, true, false);
 
 				this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -bought_quantity);
 				consumption -= bought_quantity;
