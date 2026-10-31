@@ -226,14 +226,17 @@ seed_drill = {
 	}
 }
 
-moldboard_plow = {
-	name = "Moldboard Plow"
+rotherham_plow = {
+	name = "Rotherham Plow" #improved the moldboard
 	subcategory = farming
 	portrait = engineering
 	icon = grain
 	period = revolutionary_age #should be in the Enlightenment Age, but moved here so that it can have the Seed Drill as a prerequisite
 	prerequisites = {
 		seed_drill
+	}
+	modifier = {
+		agricultural_output_modifier = 2
 	}
 }
 
@@ -244,7 +247,7 @@ steel_plow = {
 	icon = grain
 	period = steam_age
 	prerequisites = {
-		moldboard_plow
+		rotherham_plow
 		
 		mechanized_slaughtering_block #to place it in the appropriate period
 	}
