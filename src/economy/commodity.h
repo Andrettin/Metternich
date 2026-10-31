@@ -160,7 +160,7 @@ public:
 
 	bool is_tradeable() const
 	{
-		return !this->is_abstract() && this->is_storable() && !this->is_convertible_to_wealth();
+		return !this->is_abstract() && this->is_storable() && !this->is_convertible_to_wealth() && !this->is_wealth();
 	}
 
 	Q_INVOKABLE bool is_wealth() const;

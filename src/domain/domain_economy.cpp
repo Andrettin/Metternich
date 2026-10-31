@@ -516,8 +516,10 @@ void domain_economy::set_stored_commodity(const commodity *commodity, const deci
 		this->stored_commodities[commodity] = value;
 	}
 
-	if (this->get_offer(commodity) > value) {
-		this->set_offer(commodity, value);
+	if (this->can_trade_commodity(commodity)) {
+		if (this->get_offer(commodity) > value) {
+			this->set_offer(commodity, decimillesimal_int::max(decimillesimal_int(0), value));
+		}
 	}
 
 	if (commodity == defines::get()->get_wealth_commodity() && this->domain->get_government()->get_ruler() != nullptr) {
