@@ -70,7 +70,7 @@ public:
 		Q_UNUSED(indent);
 		Q_UNUSED(prefix);
 
-		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->get_quantity(scope).to_int64());
+		return std::format("Set {} to {}", string::highlight(this->commodity->get_name()), this->get_quantity(scope).to_string());
 	}
 
 	virtual std::string get_addition_string(const domain *scope, const read_only_context &ctx, const size_t indent) const override
@@ -78,14 +78,14 @@ public:
 		Q_UNUSED(ctx);
 		Q_UNUSED(indent);
 
-		return std::format("Gain {} {}", this->get_quantity(scope).to_int64(), string::highlight(this->commodity->get_name()));
+		return std::format("Gain {} {}", this->get_quantity(scope).to_string(), string::highlight(this->commodity->get_name()));
 	}
 
 	virtual std::string get_subtraction_string(const domain *scope, const read_only_context &ctx) const override
 	{
 		Q_UNUSED(ctx);
 
-		return std::format("Lose {} {}", this->get_quantity(scope).to_int64(), string::highlight(this->commodity->get_name()));
+		return std::format("Lose {} {}", this->get_quantity(scope).to_string(), string::highlight(this->commodity->get_name()));
 	}
 
 private:
