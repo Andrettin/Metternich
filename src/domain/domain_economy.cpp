@@ -38,7 +38,6 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -348,6 +347,18 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
 
+	const std::vector<population_unit *> &domain_population_units = this->get_game_data()->get_population_units();
+
+	std::vector<population_unit *> sorted_population_units = this->get_game_data()->get_population_units();
+	std::stable_sort(sorted_population_units.begin(), sorted_population_units.end(), [&domain_population_units](const population_unit *lhs, const population_unit *rhs) {
+		//higher stratas consume food first
+		return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
+	});
+
+	for (population_unit *population_unit : sorted_population_units) {
+		population_unit->consume_food(trade_domains);
+	}
+
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
 
 	if (weighted_population_size == 0) {
@@ -358,22 +369,6 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 
 	if (consumption_wealth == 0) {
 		return;
-	}
-
-	const std::vector<population_unit *> &domain_population_units = this->get_game_data()->get_population_units();
-
-	std::vector<population_unit *> sorted_population_units = this->get_game_data()->get_population_units();
-	std::sort(sorted_population_units.begin(), sorted_population_units.end(), [&domain_population_units](const population_unit *lhs, const population_unit *rhs) {
-		if (lhs->get_type()->get_strata() != rhs->get_type()->get_strata()) {
-			//higher stratas consume food first
-			return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
-		}
-
-		return std::find(domain_population_units.begin(), domain_population_units.end(), lhs) < std::find(domain_population_units.begin(), domain_population_units.end(), rhs);
-	});
-
-	for (population_unit *population_unit : sorted_population_units) {
-		population_unit->consume_food(trade_domains);
 	}
 
 	for (population_unit *population_unit : domain_population_units) {
