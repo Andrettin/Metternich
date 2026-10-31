@@ -131,7 +131,7 @@ public:
 			const dice dice = std::get<archimedes::dice>(this->quantity_variant);
 			str = dice.to_display_string();
 		} else {
-			str = this->commodity->value_to_string(std::get<decimillesimal_int>(this->quantity_variant), false);
+			str = std::get<decimillesimal_int>(this->quantity_variant).to_formatted_string();
 		}
 
 		if (this->unit != nullptr) {
