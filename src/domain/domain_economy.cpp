@@ -326,7 +326,7 @@ void domain_economy::do_trade()
 					sold_quantity = decimillesimal_int::min(sold_quantity, (other_domain_economy->get_wealth() / price));
 
 					if (sold_quantity > 0) {
-						this->do_sale(other_domain, commodity, sold_quantity, true);
+						this->do_sale(other_domain, commodity, sold_quantity, true, true);
 
 						offer -= sold_quantity;
 
@@ -1076,7 +1076,7 @@ std::vector<const domain *> domain_economy::get_known_domains_by_trade_priority(
 	return domains;
 }
 
-void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const decimillesimal_int &sold_quantity, const bool state_purchase)
+void domain_economy::do_sale(const metternich::domain *other_domain, const commodity *commodity, const decimillesimal_int &sold_quantity, const bool state_purchase, const bool is_bid)
 {
 	this->change_offer(commodity, -sold_quantity);
 	this->change_stored_commodity(commodity, -sold_quantity);
@@ -1096,7 +1096,9 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 		other_domain_economy->change_wealth(decimillesimal_int(-purchase_expense));
 		other_domain->get_turn_data()->add_expense_transaction(expense_transaction_type::purchase, purchase_expense, commodity, sold_quantity, this->domain);
 
-		other_domain_economy->change_bid(commodity, -sold_quantity);
+		if (is_bid) {
+			other_domain_economy->change_bid(commodity, -sold_quantity);
+		}
 	}
 
 	//improve relations between the two domains after they traded (even if it was not a state purchase)

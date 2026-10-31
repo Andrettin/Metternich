@@ -429,7 +429,7 @@ public:
 	}
 
 	std::vector<const domain *> get_known_domains_by_trade_priority() const;
-	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const decimillesimal_int &sold_quantity, const bool state_purchase);
+	void do_sale(const metternich::domain *other_domain, const commodity *commodity, const decimillesimal_int &sold_quantity, const bool state_purchase, const bool is_bid);
 
 	const commodity_map<int> &get_commodity_needs() const
 	{

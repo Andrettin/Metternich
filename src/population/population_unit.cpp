@@ -541,9 +541,38 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 			continue;
 		}
 
+		//import remaining consumption for this food type
 		for (const metternich::domain *trade_domain : trade_domains) {
-			//FIXME: import remaining consumption
-			Q_UNUSED(trade_domain);
+			if (trade_domain == this->get_domain()) {
+				continue;
+			}
+
+			for (const commodity *food_commodity : food_commodities) {
+				if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
+					continue;
+				}
+
+				const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(food_commodity);
+				if (domain_offer == 0) {
+					continue;
+				}
+
+				const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
+				assert_throw(bought_quantity > 0);
+
+				trade_domain->get_economy()->do_sale(this->domain, food_commodity, bought_quantity, true, false);
+
+				this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -bought_quantity);
+				consumption -= bought_quantity;
+
+				if (consumption == 0) {
+					break;
+				}
+			}
+
+			if (consumption == 0) {
+				break;
+			}
 		}
 	}
 
@@ -569,7 +598,7 @@ int population_unit::purchase_needs(const decimillesimal_int &consumption_wealth
 	int total_need_weight = 0;
 
 	for (const auto &[commodity, need_weight] : need_weights) {
-		if (!this->domain->get_economy()->get_available_commodities().contains(commodity)) {
+		if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
 			continue;
 		}
 
@@ -581,7 +610,7 @@ int population_unit::purchase_needs(const decimillesimal_int &consumption_wealth
 	}
 
 	for (const auto &[commodity, need_weight] : need_weights) {
-		if (!this->domain->get_economy()->get_available_commodities().contains(commodity)) {
+		if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
 			continue;
 		}
 
@@ -619,7 +648,7 @@ int population_unit::purchase_needs(const decimillesimal_int &consumption_wealth
 			const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, affordable_commodity_need);
 			assert_throw(bought_quantity > 0);
 
-			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false);
+			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false, false);
 
 			const decimillesimal_int purchase_price = bought_quantity * game::get()->get_price(commodity);
 			this->change_wealth(-purchase_price);
