@@ -231,11 +231,33 @@ moldboard_plow = {
 	subcategory = farming
 	portrait = engineering
 	icon = grain
-	period = steam_age
+	period = revolutionary_age #should be in the Enlightenment Age, but moved here so that it can have the Seed Drill as a prerequisite
 	prerequisites = {
 		seed_drill
+	}
+}
+
+steel_plow = {
+	name = "Steel Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = steam_age
+	prerequisites = {
+		moldboard_plow
 		
 		mechanized_slaughtering_block #to place it in the appropriate period
+	}
+}
+
+commercial_fertilizer = {
+	name = "Commercial Fertilizer"
+	subcategory = farming
+	portrait = stable
+	icon = fruit
+	period = industrial_age
+	prerequisites = {
+		steel_plow
 	}
 }
 
@@ -246,6 +268,6 @@ mechanical_reaper = {
 	icon = grain
 	period = industrial_age
 	prerequisites = {
-		moldboard_plow
+		steel_plow
 	}
 }

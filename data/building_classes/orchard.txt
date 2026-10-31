@@ -1,0 +1,19 @@
+orchard = {
+	name = "Orchard"
+	slot_type = resource
+}
+
+improved_orchard = {
+	name = "Improved Orchard"
+	slot_type = resource
+}
+
+mechanized_orchard = {
+	name = "Mechanized Orchard"
+	slot_type = resource
+}
+
+industrial_orchard = {
+	name = "Industrial Orchard"
+	slot_type = resource
+}

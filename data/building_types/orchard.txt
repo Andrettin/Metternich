@@ -1,0 +1,155 @@
+orchard = {
+	name = "Orchard"
+	building_class = orchard
+	portrait = stable
+	icon = fruit
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_fruit_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fruit_farming
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+improved_orchard = {
+	name = "Improved Orchard"
+	building_class = improved_orchard
+	portrait = stable
+	icon = fruit
+	base_building = orchard
+	required_technology = seed_drill
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_fruit_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 8gb #4x the Orchard cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fruit_farming
+			multiplier = 2
+		}
+	}
+}
+
+mechanized_orchard = {
+	name = "Mechanized Orchard"
+	building_class = mechanized_orchard
+	portrait = stable
+	icon = fruit
+	base_building = improved_orchard
+	required_technology = steel_plow
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_fruit_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 16gb #8x the Orchard cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fruit_farming
+			multiplier = 3
+		}
+	}
+}
+
+industrial_orchard = {
+	name = "Industrial Orchard"
+	building_class = industrial_orchard
+	portrait = stable
+	icon = fruit
+	base_building = mechanized_orchard
+	required_technology = commercial_fertilizer
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_fruit_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 32gb #16x the Orchard cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			employment_type = fruit_farming
+			multiplier = 4
+		}
+	}
+}
