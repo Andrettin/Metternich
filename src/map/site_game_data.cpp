@@ -2417,9 +2417,12 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 
 	for (population_unit *population_unit : population_units) {
-		int64_t population_growth_size = (population_unit->get_size() * (decimillesimal_int(100) + population_growth_rate) / 100).to_int64();
-		population_growth_size = std::max(population_growth_size, 1ll);
-		population_growth_size = std::min(population_growth_size, this->get_available_population_capacity());
+		int64_t population_growth_size = (population_unit->get_size() * population_growth_rate / 100).to_int64();
+
+		if (population_growth_size > 0) {
+			population_growth_size = std::max(population_growth_size, 1ll);
+			population_growth_size = std::min(population_growth_size, this->get_available_population_capacity());
+		}
 
 		if (population_growth_size == 0) {
 			continue;
