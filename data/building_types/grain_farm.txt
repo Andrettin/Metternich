@@ -43,6 +43,7 @@ grain_estate = {
 	portrait = stable
 	icon = grain
 	base_building = grain_farm
+	required_technology = land_enclosure
 	holding_types = {
 		castle
 		guild
@@ -81,6 +82,7 @@ mechanized_grain_estate = {
 	portrait = stable
 	icon = grain
 	base_building = grain_estate
+	required_technology = seed_drill
 	holding_types = {
 		castle
 		guild
@@ -119,6 +121,7 @@ industrial_grain_estate = {
 	portrait = stable
 	icon = grain
 	base_building = mechanized_grain_estate
+	required_technology = mechanical_reaper
 	holding_types = {
 		castle
 		guild

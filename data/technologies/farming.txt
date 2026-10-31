@@ -184,7 +184,7 @@ pitchforks_and_harrows = {
 padded_horse_collar = {
 	name = "Padded Horse Collar"
 	subcategory = farming
-	portrait = engineering
+	portrait = stable
 	icon = horses
 	period = renaissance_age
 	prerequisites = {
@@ -198,5 +198,54 @@ padded_horse_collar = {
 	}
 	spread_mean_time_to_happen = {
 		months = 10000
+	}
+}
+
+land_enclosure = {
+	name = "Land Enclosure"
+	subcategory = farming
+	portrait = stable
+	icon = grain
+	period = gunpowder_age
+	prerequisites = {
+		rooting_out #previous farming technology
+		padded_horse_collar #previous farming technology
+	}
+}
+
+seed_drill = {
+	name = "Seed Drill"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = enlightenment_age
+	prerequisites = {
+		land_enclosure
+		
+		manufactories #to place it in the appropriate period
+	}
+}
+
+moldboard_plow = {
+	name = "Moldboard Plow"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = steam_age
+	prerequisites = {
+		seed_drill
+		
+		mechanized_slaughtering_block #to place it in the appropriate period
+	}
+}
+
+mechanical_reaper = {
+	name = "Mechanical Reaper"
+	subcategory = farming
+	portrait = engineering
+	icon = grain
+	period = industrial_age
+	prerequisites = {
+		moldboard_plow
 	}
 }
