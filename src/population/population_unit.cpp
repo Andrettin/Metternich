@@ -565,7 +565,7 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 				//ensure that we can afford to purchase the food commodity
 				bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
 
-				if (bought_quantity == 0) {
+				if (bought_quantity <= 0) {
 					//cannot afford to buy the commodity, or does not have storage capacity for it, so there's no point in doing the same process for other domains
 					break;
 				}
