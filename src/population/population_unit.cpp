@@ -489,8 +489,12 @@ void population_unit::set_wealth(const decimillesimal_int &wealth)
 
 bool population_unit::is_food_producer() const
 {
-	if (this->get_type()->get_output_commodity() != nullptr) {
-		return this->get_type()->get_output_commodity()->is_food();
+	if (this->get_type()->get_output_commodity() != nullptr && this->get_type()->get_output_commodity()->is_food()) {
+		return true;
+	}
+
+	if (this->get_employment_type() != nullptr && this->get_employment_type()->get_output_commodity() != nullptr && this->get_employment_type()->get_output_commodity()->is_food()) {
+		return true;
 	}
 
 	return false;
