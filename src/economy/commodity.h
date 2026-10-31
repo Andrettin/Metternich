@@ -56,16 +56,9 @@ public:
 
 	static constexpr int abstract_commodity_value = 100; //used for e.g. score calculation
 
-	static const std::vector<const commodity *> &get_food_type_commodities(const food_type food_type)
+	static const std::map<food_type, std::vector<const commodity *>> &get_food_type_commodities()
 	{
-		const auto find_iterator = commodity::food_type_commodities.find(food_type);
-
-		if (find_iterator != commodity::food_type_commodities.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<const commodity *> empty_vector;
-		return empty_vector;
+		return commodity::food_type_commodities;
 	}
 
 private:

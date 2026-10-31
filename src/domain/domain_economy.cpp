@@ -342,7 +342,7 @@ void domain_economy::do_trade()
 	}
 }
 
-void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands)
+void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
 {
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
@@ -356,7 +356,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 	});
 
 	for (population_unit *population_unit : sorted_population_units) {
-		population_unit->consume_food(trade_domains);
+		population_unit->consume_food(trade_domains, food_type_commodities);
 	}
 
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();

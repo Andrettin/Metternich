@@ -30,6 +30,7 @@ class province;
 class religion;
 class site;
 class species;
+enum class food_type;
 
 class population_unit final : public QObject
 {
@@ -213,7 +214,7 @@ public:
 
 	bool is_food_producer() const;
 
-	void consume_food(const std::vector<const metternich::domain *> &trade_domains);
+	void consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities);
 	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 

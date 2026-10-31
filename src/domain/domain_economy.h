@@ -19,6 +19,7 @@ namespace metternich {
 class commodity_unit;
 class domain;
 class domain_game_data;
+enum class food_type;
 enum class income_transaction_type;
 enum class population_strata;
 enum class province_taxation_type;
@@ -56,7 +57,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_production();
 	void do_trade();
-	void do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands);
+	void do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities);
 
 	const resource_map<int> &get_resource_counts() const
 	{

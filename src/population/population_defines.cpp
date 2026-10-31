@@ -3,6 +3,7 @@
 #include "population/population_defines.h"
 
 #include "database/gsml_data.h"
+#include "economy/commodity.h"
 #include "economy/food_type.h"
 #include "script/factor.h"
 #include "util/string_conversion_util.h"
@@ -48,6 +49,12 @@ void population_defines::check() const
 {
 	if (this->get_base_population_size() == 0) {
 		throw std::runtime_error("No base population size has been defined.");
+	}
+
+	for (const auto &[food_type, consumption] : this->population_food_consumption) {
+		if (!commodity::get_food_type_commodities().contains(food_type)) {
+			throw std::runtime_error(std::format("Food type \"{}\" has consumption in the population food consumption define, but there are no commodities of that food type.", magic_enum::enum_name(food_type)));
+		}
 	}
 }
 

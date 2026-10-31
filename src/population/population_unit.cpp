@@ -500,7 +500,7 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains)
+void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
 {
 	if (this->is_food_producer()) {
 		//food producers don't need to consume food
@@ -517,17 +517,12 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 			continue;
 		}
 
-		std::vector<const commodity *> food_type_commodities = commodity::get_food_type_commodities(food_type);
-		std::sort(food_type_commodities.begin(), food_type_commodities.end(), [](const commodity *lhs, const commodity *rhs) {
-			if (game::get()->get_price(lhs) != game::get()->get_price(rhs)) {
-				//prefer consuming cheaper food commodities
-				return game::get()->get_price(lhs) < game::get()->get_price(rhs);
-			}
+		const auto commodities_find_iterator = food_type_commodities.find(food_type);
+		assert_throw(commodities_find_iterator != food_type_commodities.end());
 
-			return lhs->get_index() < rhs->get_index();
-		});
+		const std::vector<const commodity *> &food_commodities = commodities_find_iterator->second;
 
-		for (const commodity *food_commodity : food_type_commodities) {
+		for (const commodity *food_commodity : food_commodities) {
 			const decimillesimal_int &stored_commodity = this->get_domain()->get_economy()->get_stored_commodity(food_commodity);
 			if (stored_commodity == 0) {
 				continue;
