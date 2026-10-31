@@ -72,15 +72,6 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
-	} else if (tag == "life_need_weights") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-			const commodity *commodity = commodity::get(key);
-			this->life_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
-		});
-
-		this->total_life_need_weight = archimedes::map::get_total_value(this->get_life_need_weights());
 	} else if (tag == "everyday_need_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -172,12 +163,6 @@ void population_type::check() const
 
 		if (this->get_max_modifier_multiplier() == 0) {
 			throw std::runtime_error(std::format("Population type \"{}\" has a domain or province modifier, but has no maximum modifier multiplier.", this->get_identifier()));
-		}
-	}
-
-	for (const auto &[commodity, need] : this->get_life_need_weights()) {
-		if (!commodity->is_tradeable()) {
-			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
 

@@ -98,8 +98,6 @@ void population_unit::process_gsml_property(const gsml_property &property)
 		this->literacy_rate = decimillesimal_int(value);
 	} else if (key == "wealth") {
 		this->wealth = decimillesimal_int(value);
-	} else if (key == "fulfilled_life_needs_percent") {
-		this->fulfilled_life_needs_percent = std::stoi(value);
 	} else if (key == "fulfilled_everyday_needs_percent") {
 		this->fulfilled_everyday_needs_percent = std::stoi(value);
 	} else if (key == "fulfilled_luxury_needs_percent") {
@@ -129,7 +127,6 @@ gsml_data population_unit::to_gsml_data() const
 	data.add_property("size", std::to_string(this->size));
 	data.add_property("literacy_rate", this->literacy_rate.to_string());
 	data.add_property("wealth", this->wealth.to_string());
-	data.add_property("fulfilled_life_needs_percent", std::to_string(this->fulfilled_life_needs_percent));
 	data.add_property("fulfilled_everyday_needs_percent", std::to_string(this->fulfilled_everyday_needs_percent));
 	data.add_property("fulfilled_luxury_needs_percent", std::to_string(this->fulfilled_luxury_needs_percent));
 
@@ -591,13 +588,12 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 
 void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
-	const int total_need_weight = this->get_type()->get_total_life_need_weight() + this->get_type()->get_total_everyday_need_weight() + this->get_type()->get_total_luxury_need_weight();
+	const int total_need_weight = this->get_type()->get_total_everyday_need_weight() + this->get_type()->get_total_luxury_need_weight();
 
 	if (total_need_weight == 0) {
 		return;
 	}
 
-	this->set_fulfilled_life_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_life_need_weight() / total_need_weight, this->get_type()->get_life_need_weights(), trade_domains, remaining_demands));
 	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_everyday_need_weight() / total_need_weight, this->get_type()->get_everyday_need_weights(), trade_domains, remaining_demands));
 	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(consumption_wealth * this->get_type()->get_total_luxury_need_weight() / total_need_weight, this->get_type()->get_luxury_need_weights(), trade_domains, remaining_demands));
 }

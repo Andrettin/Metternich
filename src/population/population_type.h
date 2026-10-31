@@ -180,16 +180,6 @@ public:
 		return this->equivalent_population_types;
 	}
 
-	const commodity_map<int> &get_life_need_weights() const
-	{
-		return this->life_need_weights;
-	}
-
-	int get_total_life_need_weight() const
-	{
-		return this->total_life_need_weight;
-	}
-
 	const commodity_map<int> &get_everyday_need_weights() const
 	{
 		return this->everyday_need_weights;
@@ -240,8 +230,6 @@ private:
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const domain>> domain_modifier;
 	std::vector<const population_type *> equivalent_population_types;
-	commodity_map<int> life_need_weights;
-	int total_life_need_weight = 0;
 	commodity_map<int> everyday_need_weights;
 	int total_everyday_need_weight = 0;
 	commodity_map<int> luxury_need_weights;
