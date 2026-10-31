@@ -349,8 +349,8 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 
 	const std::vector<population_unit *> &domain_population_units = this->get_game_data()->get_population_units();
 
-	std::vector<population_unit *> sorted_population_units = this->get_game_data()->get_population_units();
-	std::stable_sort(sorted_population_units.begin(), sorted_population_units.end(), [&domain_population_units](const population_unit *lhs, const population_unit *rhs) {
+	std::vector<population_unit *> sorted_population_units = domain_population_units;
+	std::stable_sort(sorted_population_units.begin(), sorted_population_units.end(), [](const population_unit *lhs, const population_unit *rhs) {
 		//higher stratas consume food first
 		return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
 	});
