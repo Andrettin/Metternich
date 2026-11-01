@@ -57,6 +57,7 @@ class site_feature;
 class technology;
 class tile;
 enum class construction_type;
+enum class food_type;
 
 class site_game_data final : public QObject
 {
@@ -468,6 +469,8 @@ public:
 	{
 		this->set_free_food_consumption(this->get_free_food_consumption() + change);
 	}
+
+	std::map<food_type, decimillesimal_int> get_food_consumption() const;
 
 	decimillesimal_int get_population_growth_rate() const;
 	decimillesimal_int get_effective_population_growth_rate() const;

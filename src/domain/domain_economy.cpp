@@ -895,10 +895,14 @@ QString domain_economy::get_food_type_consumption_qstring(const QString &food_ty
 
 		decimillesimal_int total_food_type_consumption;
 
-		for (const population_unit *population_unit : this->get_game_data()->get_population_units()) {
-			const std::map<metternich::food_type, decimillesimal_int> unit_food_consumption = population_unit->get_food_consumption();
-			const auto find_iterator = unit_food_consumption.find(food_type);
-			if (find_iterator != unit_food_consumption.end()) {
+		for (const site *site : this->get_game_data()->get_sites()) {
+			if (!site->is_holding() || !site->get_game_data()->is_built()) {
+				continue;
+			}
+
+			const std::map<metternich::food_type, decimillesimal_int> holding_food_consumption = site->get_game_data()->get_food_consumption();
+			const auto find_iterator = holding_food_consumption.find(food_type);
+			if (find_iterator != holding_food_consumption.end()) {
 				total_food_type_consumption += find_iterator->second;
 			}
 		}
