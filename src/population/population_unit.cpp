@@ -500,7 +500,7 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 		}
 
 		//starvation affects the unit's population growth rate
-		population_growth_rate += population_defines::get()->get_quarterly_starvation_mortality_rate() * this->get_starving_percent() / 100 * -1;
+		population_growth_rate += population_defines::get()->get_quarterly_starvation_mortality_rate() * game::get()->get_current_quarters_per_turn() * this->get_starving_percent() / 100 * -1;
 	}
 
 	return population_growth_rate;
