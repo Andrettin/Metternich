@@ -9,6 +9,7 @@ Item {
 	property string name: ""
 	property string icon_identifier: ""
 	property int count: 0
+	property string count_string: number_string(count)
 	property string tooltip: ""
 	
 	Image {
@@ -19,7 +20,7 @@ Item {
 	}
 	
 	SmallText {
-		text: number_string(count)
+		text: count_string
 		anchors.top: icon_image.bottom
 		anchors.topMargin: 4 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter

@@ -33,8 +33,7 @@ Rectangle {
 			IndustryCounter {
 				name: String(food_type_identifier[0]).toUpperCase() + String(food_type_identifier).slice(1) + " Consumption"
 				icon_identifier: get_icon_identifier()
-				count: domain_game_data.economy.get_food_type_consumption_qstring(food_type_identifier)
-				visible: count > 0
+				count_string: domain_game_data.economy.get_food_type_consumption_qstring(food_type_identifier)
 				
 				readonly property string food_type_identifier: model.modelData
 				
