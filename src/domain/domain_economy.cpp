@@ -344,7 +344,7 @@ void domain_economy::do_trade()
 	}
 }
 
-void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
+void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities)
 {
 	assert_throw(!this->get_game_data()->is_under_anarchy());
 
@@ -373,7 +373,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 	}
 
 	for (population_unit *population_unit : sorted_population_units) {
-		population_unit->consume_food(trade_domains, food_type_commodities, remaining_free_food_consumption_per_holding);
+		population_unit->consume_food(trade_domains, food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding);
 	}
 
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();

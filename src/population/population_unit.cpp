@@ -605,7 +605,60 @@ std::map<food_type, decimillesimal_int> population_unit::get_food_consumption_af
 	return food_consumption;
 }
 
-void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
+void population_unit::consume_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption)
+{
+	const decimillesimal_int &stored_commodity = this->get_domain()->get_economy()->get_stored_commodity(food_commodity);
+	if (stored_commodity == 0) {
+		return;
+	}
+
+	const decimillesimal_int consumed_quantity = decimillesimal_int::min(stored_commodity, consumption);
+	this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -consumed_quantity);
+
+	consumption -= consumed_quantity;
+}
+
+void population_unit::consume_imported_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption, const std::vector<const metternich::domain *> &trade_domains)
+{
+	if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
+		return;
+	}
+
+	for (const metternich::domain *trade_domain : trade_domains) {
+		if (trade_domain == this->get_domain()) {
+			continue;
+		}
+
+		const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(food_commodity);
+		if (domain_offer == 0) {
+			continue;
+		}
+
+		decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
+
+		//ensure that we have enough storage for the purchase
+		bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_storage_capacity_for_commodity(food_commodity));
+
+		//ensure that we can afford to purchase the food commodity
+		bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
+
+		if (bought_quantity <= 0) {
+			//cannot afford to buy the commodity, or does not have storage capacity for it, so there's no point in doing the same process for other domains
+			break;
+		}
+
+		trade_domain->get_economy()->do_sale(this->get_domain(), food_commodity, bought_quantity, true, false);
+
+		this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -bought_quantity);
+		consumption -= bought_quantity;
+
+		if (consumption == 0) {
+			break;
+		}
+	}
+}
+
+void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
 {
 	this->set_sick_percent(decimillesimal_int(0));
 	this->set_starving_percent(decimillesimal_int(0));
@@ -620,6 +673,7 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 	decimillesimal_int total_food_consumption;
 	std::map<food_type, decimillesimal_int> food_consumption = this->get_food_consumption_after_free_consumption(total_food_consumption, remaining_holding_free_consumption);
 
+	decimillesimal_int total_wrong_food_consumption;
 	decimillesimal_int total_remaining_food_consumption;
 
 	if (total_food_consumption == 0) {
@@ -634,18 +688,11 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		const auto commodities_find_iterator = food_type_commodities.find(food_type);
 		assert_throw(commodities_find_iterator != food_type_commodities.end());
 
-		const std::vector<const commodity *> &food_commodities = commodities_find_iterator->second;
+		const std::vector<const commodity *> &food_type_commodity_vector = commodities_find_iterator->second;
 
 		//do food consumption
-		for (const commodity *food_commodity : food_commodities) {
-			const decimillesimal_int &stored_commodity = this->get_domain()->get_economy()->get_stored_commodity(food_commodity);
-			if (stored_commodity == 0) {
-				continue;
-			}
-
-			const decimillesimal_int consumed_quantity = decimillesimal_int::min(stored_commodity, consumption);
-			this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -consumed_quantity);
-			consumption -= consumed_quantity;
+		for (const commodity *food_commodity : food_type_commodity_vector) {
+			this->consume_food_commodity(food_commodity, consumption);
 
 			if (consumption == 0) {
 				break;
@@ -657,50 +704,59 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		}
 
 		//import remaining consumption for this food type
-		for (const commodity *food_commodity : food_commodities) {
-			if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
-				continue;
-			}
-
-			for (const metternich::domain *trade_domain : trade_domains) {
-				if (trade_domain == this->get_domain()) {
-					continue;
-				}
-
-				const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(food_commodity);
-				if (domain_offer == 0) {
-					continue;
-				}
-
-				decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
-
-				//ensure that we have enough storage for the purchase
-				bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_storage_capacity_for_commodity(food_commodity));
-
-				//ensure that we can afford to purchase the food commodity
-				bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
-
-				if (bought_quantity <= 0) {
-					//cannot afford to buy the commodity, or does not have storage capacity for it, so there's no point in doing the same process for other domains
-					break;
-				}
-
-				trade_domain->get_economy()->do_sale(this->get_domain(), food_commodity, bought_quantity, true, false);
-
-				this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -bought_quantity);
-				consumption -= bought_quantity;
-
-				if (consumption == 0) {
-					break;
-				}
-			}
+		for (const commodity *food_commodity : food_type_commodity_vector) {
+			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains);
 
 			if (consumption == 0) {
 				break;
 			}
 		}
 
+		if (consumption == 0) {
+			continue;
+		}
+
+		total_wrong_food_consumption = consumption;
+
+		//try to consume food of the wrong type if possible (better than suffering starvation)
+		for (const commodity *food_commodity : food_commodities) {
+			if (food_commodity->get_food_type() == food_type) {
+				//already checked
+				continue;
+			}
+
+			this->consume_food_commodity(food_commodity, consumption);
+
+			if (consumption == 0) {
+				break;
+			}
+		}
+
+		if (consumption == 0) {
+			continue;
+		}
+
+		//try to import food of the wrong type if possible
+		for (const commodity *food_commodity : food_commodities) {
+			if (food_commodity->get_food_type() == food_type) {
+				//already checked
+				continue;
+			}
+
+			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains);
+
+			if (consumption == 0) {
+				break;
+			}
+		}
+
+		total_wrong_food_consumption -= consumption;
 		total_remaining_food_consumption += consumption;
+	}
+
+	//set how many people in this population unit are sick because of not having a balanced enough diet
+	if (total_wrong_food_consumption > 0) {
+		this->set_sick_percent(100 * total_wrong_food_consumption / total_food_consumption);
 	}
 
 	//set how many people in this population unit are starving if not all food consumption could be fulfilled

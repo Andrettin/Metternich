@@ -19,6 +19,11 @@
 
 namespace metternich {
 
+bool commodity::commodity_price_compare(const commodity *lhs, const commodity *rhs)
+{
+	return game::get()->get_price(lhs) < game::get()->get_price(rhs);
+}
+
 commodity::commodity(const std::string &identifier)
 	: named_data_entry(identifier), food_type(food_type::none)
 {

@@ -2085,15 +2085,18 @@ void game::do_trade()
 	commodity_map<decimillesimal_int> remaining_demands;
 
 	std::map<food_type, std::vector<const commodity *>> food_type_commodities = commodity::get_food_type_commodities();
-	for (auto &[food_type, food_commodities] : food_type_commodities) {
-		std::stable_sort(food_commodities.begin(), food_commodities.end(), [this](const commodity *lhs, const commodity *rhs) {
-			//prefer consuming cheaper food commodities
-			return this->get_price(lhs) < this->get_price(rhs);
-		});
+	std::vector<const commodity *> food_commodities;
+	for (auto &[food_type, typed_food_commodities] : food_type_commodities) {
+		//prefer consuming cheaper food commodities
+		std::stable_sort(typed_food_commodities.begin(), typed_food_commodities.end(), commodity::commodity_price_compare);
+
+		food_commodities.insert(food_commodities.end(), typed_food_commodities.begin(), typed_food_commodities.end());
 	}
 
+	std::stable_sort(food_commodities.begin(), food_commodities.end(), commodity::commodity_price_compare);
+
 	for (const domain *domain : trade_domains) {
-		domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities);
+		domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities, food_commodities);
 	}
 
 	for (const domain *domain : trade_domains) {

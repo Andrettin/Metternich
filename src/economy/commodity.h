@@ -61,6 +61,8 @@ public:
 		return commodity::food_type_commodities;
 	}
 
+	static bool commodity_price_compare(const commodity *lhs, const commodity *rhs);
+
 private:
 	static inline std::map<food_type, std::vector<const commodity *>> food_type_commodities;
 
