@@ -1152,8 +1152,9 @@ QCoro::Task<void> character_game_data::apply_history(const QDate &start_date)
 
 	const metternich::domain *domain = character_history->get_domain();
 
-	if (domain != nullptr) {
+	if (domain != nullptr && domain->get_game_data()->is_alive()) {
 		assert_throw(!domain->get_game_data()->is_under_anarchy());
+
 		this->set_domain(domain);
 
 		if (this->character->get_military_unit_category() != military_unit_category::none) {

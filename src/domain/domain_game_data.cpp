@@ -1904,6 +1904,10 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
+	if (!this->is_alive()) {
+		return false;
+	}
+
 	assert_throw(!this->is_under_anarchy());
 
 	return this->domain->get_type() != domain_type::tribe;
@@ -1921,6 +1925,10 @@ QString domain_game_data::get_unplayable_reason() const
 
 	if (this->domain->get_type() == domain_type::tribe) {
 		return "You cannot play as an inherently tribal domain";
+	}
+
+	if (!this->is_alive()) {
+		return "You cannot play as a domain without any holdings or provinces.";
 	}
 
 	return QString();
