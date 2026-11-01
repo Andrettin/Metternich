@@ -534,7 +534,7 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
+void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
 {
 	this->set_starving_percent(decimillesimal_int(0));
 
@@ -558,6 +558,21 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		}
 
 		total_food_consumption += consumption;
+
+		auto free_consumption_find_iterator = remaining_free_food_consumption_per_holding.find(this->get_site());
+		if (free_consumption_find_iterator != remaining_free_food_consumption_per_holding.end()) {
+			decimillesimal_int &remaining_holding_free_consumption = free_consumption_find_iterator->second;
+
+			if (remaining_holding_free_consumption > 0) {
+				const decimillesimal_int free_consumption = decimillesimal_int::min(consumption, remaining_holding_free_consumption);
+				consumption -= free_consumption;
+				remaining_holding_free_consumption -= free_consumption;
+
+				if (consumption == 0) {
+					continue;
+				}
+			}
+		}
 
 		const auto commodities_find_iterator = food_type_commodities.find(food_type);
 		assert_throw(commodities_find_iterator != food_type_commodities.end());

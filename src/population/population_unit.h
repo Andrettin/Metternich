@@ -212,7 +212,7 @@ public:
 
 	bool is_food_producer() const;
 
-	void consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities);
+	void consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding);
 	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 

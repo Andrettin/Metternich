@@ -131,6 +131,8 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 		this->population_capacity_modifier = centesimal_int(value);
 	} else if (key == "population_capacity") {
 		this->population_capacity = std::stoll(value);
+	} else if (key == "free_food_consumption") {
+		this->free_food_consumption = centesimal_int(value);
 	} else if (key == "quarterly_population_growth_rate") {
 		this->quarterly_population_growth_rate = decimillesimal_int(value);
 	} else if (key == "output_modifier") {
@@ -319,8 +321,8 @@ gsml_data site_game_data::to_gsml_data() const
 
 	data.add_child(this->population->to_gsml_data());
 
-	if (this->get_population_capacity_level() != 0) {
-		data.add_property("population_capacity_level", this->get_population_capacity_level().to_string());
+	if (this->population_capacity_level != 0) {
+		data.add_property("population_capacity_level", this->population_capacity_level.to_string());
 	}
 
 	if (this->get_base_population_capacity() != 0) {
@@ -333,6 +335,10 @@ gsml_data site_game_data::to_gsml_data() const
 
 	if (this->get_population_capacity() != 0) {
 		data.add_property("population_capacity", std::to_string(this->get_population_capacity()));
+	}
+
+	if (this->free_food_consumption != 0) {
+		data.add_property("free_food_consumption", this->free_food_consumption.to_string());
 	}
 
 	if (this->get_quarterly_population_growth_rate() != 0) {
@@ -835,6 +841,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		}
 
 		this->change_population_capacity_level(-this->get_province()->get_game_data()->get_population_capacity_level_for_holding_level(this->get_holding_level()));
+		this->change_free_food_consumption(-this->get_province()->get_game_data()->get_free_food_consumption_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_type = holding_type;
@@ -843,6 +850,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		assert_throw(this->get_holding_type() == this->site->get_holding_type());
 
 		this->change_population_capacity_level(this->get_province()->get_game_data()->get_population_capacity_level_for_holding_level(this->get_holding_level()));
+		this->change_free_food_consumption(this->get_province()->get_game_data()->get_free_food_consumption_for_holding_level(this->get_holding_level()));
 	}
 
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
@@ -966,6 +974,7 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 
 	if (this->get_holding_type() != nullptr) {
 		this->change_population_capacity_level(-province_game_data->get_population_capacity_level_for_holding_level(this->get_holding_level()));
+		this->change_free_food_consumption(-province_game_data->get_free_food_consumption_for_holding_level(this->get_holding_level()));
 	}
 
 	this->holding_level = level;
@@ -973,6 +982,7 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	if (this->get_holding_type() != nullptr) {
 		//need to do this before changing the province's level or its total holding level, since those update the province's holdings' population capacity based on their holding level
 		this->change_population_capacity_level(province_game_data->get_population_capacity_level_for_holding_level(this->get_holding_level()));
+		this->change_free_food_consumption(province_game_data->get_free_food_consumption_for_holding_level(this->get_holding_level()));
 	}
 
 	//use the site's holding type, rather than the constructed holding type, in case the holding type is being lost
@@ -2382,6 +2392,15 @@ int64_t site_game_data::get_available_population_capacity() const
 {
 	const int64_t available_capacity = this->get_population_capacity() - this->get_population()->get_size();
 	return std::max(0ll, available_capacity);
+}
+
+void site_game_data::set_free_food_consumption(const centesimal_int &free_consumption)
+{
+	if (free_consumption == this->get_free_food_consumption()) {
+		return;
+	}
+
+	this->free_food_consumption = free_consumption;
 }
 
 decimillesimal_int site_game_data::get_population_growth_rate() const

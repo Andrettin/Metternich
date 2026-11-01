@@ -457,6 +457,18 @@ public:
 
 	int64_t get_available_population_capacity() const;
 
+	const centesimal_int &get_free_food_consumption() const
+	{
+		return this->free_food_consumption;
+	}
+
+	void set_free_food_consumption(const centesimal_int &free_consumption);
+
+	void change_free_food_consumption(const centesimal_int &change)
+	{
+		this->set_free_food_consumption(this->get_free_food_consumption() + change);
+	}
+
 	decimillesimal_int get_population_growth_rate() const;
 	decimillesimal_int get_effective_population_growth_rate() const;
 
@@ -771,6 +783,7 @@ private:
 	int64_t base_population_capacity = 0;
 	centesimal_int population_capacity_modifier;
 	int64_t population_capacity = 0;
+	centesimal_int free_food_consumption;
 	decimillesimal_int quarterly_population_growth_rate;
 	data_entry_map<employment_type, int64_t> employment_sizes;
 	data_entry_map<employment_type, int64_t> base_employment_capacities;

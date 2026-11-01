@@ -360,8 +360,17 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 		return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
 	});
 
+	std::unordered_map<const site *, decimillesimal_int> remaining_free_food_consumption_per_holding;
+	for (const site *site : this->get_game_data()->get_sites()) {
+		if (!site->is_holding() || !site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		remaining_free_food_consumption_per_holding[site] = decimillesimal_int(site->get_game_data()->get_free_food_consumption());
+	}
+
 	for (population_unit *population_unit : sorted_population_units) {
-		population_unit->consume_food(trade_domains, food_type_commodities);
+		population_unit->consume_food(trade_domains, food_type_commodities, remaining_free_food_consumption_per_holding);
 	}
 
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();

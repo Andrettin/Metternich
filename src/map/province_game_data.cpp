@@ -1748,6 +1748,7 @@ void province_game_data::change_holding_count(const int change)
 		}
 
 		holding_site->get_game_data()->change_population_capacity_level(-this->get_population_capacity_level_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		holding_site->get_game_data()->change_free_food_consumption(-this->get_free_food_consumption_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 	}
 
 	this->holding_count += change;
@@ -1758,6 +1759,7 @@ void province_game_data::change_holding_count(const int change)
 		}
 
 		holding_site->get_game_data()->change_population_capacity_level(this->get_population_capacity_level_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		holding_site->get_game_data()->change_free_food_consumption(this->get_free_food_consumption_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 	}
 }
 
@@ -1824,6 +1826,7 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 		}
 
 		holding_site->get_game_data()->change_population_capacity_level(-this->get_population_capacity_level_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		holding_site->get_game_data()->change_free_food_consumption(-this->get_free_food_consumption_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 	}
 
 	this->total_holding_level += change;
@@ -1834,6 +1837,7 @@ void province_game_data::change_total_holding_level(const centesimal_int &change
 		}
 
 		holding_site->get_game_data()->change_population_capacity_level(this->get_population_capacity_level_for_holding_level(holding_site->get_game_data()->get_holding_level()));
+		holding_site->get_game_data()->change_free_food_consumption(this->get_free_food_consumption_for_holding_level(holding_site->get_game_data()->get_holding_level()));
 	}
 }
 
@@ -1863,12 +1867,23 @@ void province_game_data::change_domain_skill_total_holding_level(const domain_sk
 	}
 }
 
-centesimal_int province_game_data::get_population_capacity_level_for_holding_level(const centesimal_int &holding_level) const
+centesimal_int province_game_data::get_population_capacity_level_for_holding_level(const int population_capacity_level, const centesimal_int &holding_level) const
 {
 	const centesimal_int divisor = centesimal_int::max(centesimal_int::max(this->get_total_holding_level(), this->get_holding_count()), 1);
 	assert_throw(divisor > 0);
 
-	return province_defines::get()->get_province_population_capacity_level_per_level() * this->get_level() * centesimal_int::max(holding_level, 1) / divisor;
+	return population_capacity_level * centesimal_int::max(holding_level, 1) / divisor;
+}
+
+centesimal_int province_game_data::get_population_capacity_level_for_holding_level(const centesimal_int &holding_level) const
+{
+	return this->get_population_capacity_level_for_holding_level(province_defines::get()->get_province_population_capacity_level_per_level() * this->get_level(), holding_level);
+}
+
+centesimal_int province_game_data::get_free_food_consumption_for_holding_level(const centesimal_int &holding_level) const
+{
+	//use a similar formular for calculating free food consumption as for calculating population capacity
+	return this->get_population_capacity_level_for_holding_level(province_defines::get()->get_free_food_consumption_per_province(), holding_level);
 }
 
 const resource_map<int> &province_game_data::get_resource_counts() const

@@ -2,6 +2,7 @@ default_province_terrain = plains
 default_water_zone_terrain = ocean
 province_map_tile_scale = 2
 province_population_capacity_level_per_level = 2
+free_food_consumption_per_province = 1
 
 province_level_commodity_costs_per_level = {
 	wealth = 1

@@ -20,6 +20,7 @@ class province_defines final : public defines_base, public singleton<province_de
 	Q_PROPERTY(const metternich::terrain_type *default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(int province_map_tile_scale MEMBER province_map_tile_scale READ get_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(int province_population_capacity_level_per_level MEMBER province_population_capacity_level_per_level READ get_province_population_capacity_level_per_level NOTIFY changed)
+	Q_PROPERTY(int free_food_consumption_per_province MEMBER free_food_consumption_per_province READ get_free_food_consumption_per_province NOTIFY changed)
 
 public:
 	province_defines();
@@ -51,6 +52,11 @@ public:
 	int get_province_population_capacity_level_per_level() const;
 	int get_province_level_for_population(const int64_t population) const;
 
+	int get_free_food_consumption_per_province() const
+	{
+		return this->free_food_consumption_per_province;
+	}
+
 	const commodity_map<int> &get_province_level_commodity_costs_per_level() const
 	{
 		return this->province_level_commodity_costs_per_level;
@@ -66,6 +72,7 @@ private:
 	const terrain_type *default_water_zone_terrain = nullptr;
 	int province_map_tile_scale = 2;
 	int province_population_capacity_level_per_level = 0;
+	int free_food_consumption_per_province = 0;
 	commodity_map<int> province_level_commodity_costs_per_level;
 	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 };
