@@ -2679,12 +2679,16 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth, change_input_storage);
 
 		decrease -= decrease_effective ? population_unit->get_effective_employment_size(employment_type, unemployment_size) : unemployment_size;
-		if (decrease == 0) {
+		if (decrease <= 0) {
 			break;
 		}
 	}
 
-	assert_throw(decrease == 0);
+	if (decrease_effective) {
+		assert_throw(decrease <= 0);
+	} else {
+		assert_throw(decrease == 0);
+	}
 }
 
 QCoro::Task<void> site_game_data::check_employment()
@@ -2727,6 +2731,7 @@ QCoro::Task<void> site_game_data::check_employment()
 			assert_throw(employed_population_type != nullptr);
 
 			if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size()) == 0) {
+				++i;
 				continue;
 			}
 

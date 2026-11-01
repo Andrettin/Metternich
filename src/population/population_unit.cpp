@@ -384,7 +384,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const metternic
 	int64_t employment_size = effective_employment_size;
 
 	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
-		const decimillesimal_int sick_and_starving_percent = this->get_sick_percent() - this->get_starving_percent();
+		const decimillesimal_int sick_and_starving_percent = this->get_sick_percent() + this->get_starving_percent();
 		assert_throw(sick_and_starving_percent < 100);
 		const decimillesimal_int healthy_employment_size = (effective_employment_size * 100 / (100 - sick_and_starving_percent));
 		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
