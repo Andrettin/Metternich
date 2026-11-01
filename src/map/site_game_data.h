@@ -407,14 +407,14 @@ public:
 	const population_class *get_default_population_class() const;
 	const population_type *get_default_population_type() const;
 
-	const centesimal_int &get_population_capacity_level() const
+	const decimillesimal_int &get_population_capacity_level() const
 	{
 		return this->population_capacity_level;
 	}
 
-	void set_population_capacity_level(const centesimal_int &capacity_level);
+	void set_population_capacity_level(const decimillesimal_int &capacity_level);
 
-	void change_population_capacity_level(const centesimal_int &change)
+	void change_population_capacity_level(const decimillesimal_int &change)
 	{
 		this->set_population_capacity_level(this->get_population_capacity_level() + change);
 	}
@@ -457,14 +457,14 @@ public:
 
 	int64_t get_available_population_capacity() const;
 
-	const centesimal_int &get_free_food_consumption() const
+	const decimillesimal_int &get_free_food_consumption() const
 	{
 		return this->free_food_consumption;
 	}
 
-	void set_free_food_consumption(const centesimal_int &free_consumption);
+	void set_free_food_consumption(const decimillesimal_int &free_consumption);
 
-	void change_free_food_consumption(const centesimal_int &change)
+	void change_free_food_consumption(const decimillesimal_int &change)
 	{
 		this->set_free_food_consumption(this->get_free_food_consumption() + change);
 	}
@@ -779,11 +779,11 @@ private:
 	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
-	centesimal_int population_capacity_level;
+	decimillesimal_int population_capacity_level;
 	int64_t base_population_capacity = 0;
 	centesimal_int population_capacity_modifier;
 	int64_t population_capacity = 0;
-	centesimal_int free_food_consumption;
+	decimillesimal_int free_food_consumption;
 	decimillesimal_int quarterly_population_growth_rate;
 	data_entry_map<employment_type, int64_t> employment_sizes;
 	data_entry_map<employment_type, int64_t> base_employment_capacities;

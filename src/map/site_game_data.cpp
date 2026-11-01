@@ -124,7 +124,7 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "resource_discovered") {
 		this->resource_discovered = string::to_bool(value);
 	} else if (key == "population_capacity_level") {
-		this->population_capacity_level = centesimal_int(value);
+		this->population_capacity_level = decimillesimal_int(value);
 	} else if (key == "base_population_capacity") {
 		this->base_population_capacity = std::stoll(value);
 	} else if (key == "population_capacity_modifier") {
@@ -132,7 +132,7 @@ void site_game_data::process_gsml_property(const gsml_property &property)
 	} else if (key == "population_capacity") {
 		this->population_capacity = std::stoll(value);
 	} else if (key == "free_food_consumption") {
-		this->free_food_consumption = centesimal_int(value);
+		this->free_food_consumption = decimillesimal_int(value);
 	} else if (key == "quarterly_population_growth_rate") {
 		this->quarterly_population_growth_rate = decimillesimal_int(value);
 	} else if (key == "output_modifier") {
@@ -2336,7 +2336,7 @@ const population_type *site_game_data::get_default_population_type() const
 	return this->get_culture()->get_population_class_type(this->get_default_population_class());
 }
 
-void site_game_data::set_population_capacity_level(const centesimal_int &capacity_level)
+void site_game_data::set_population_capacity_level(const decimillesimal_int &capacity_level)
 {
 	if (capacity_level == this->get_population_capacity_level()) {
 		return;
@@ -2394,7 +2394,7 @@ int64_t site_game_data::get_available_population_capacity() const
 	return std::max(0ll, available_capacity);
 }
 
-void site_game_data::set_free_food_consumption(const centesimal_int &free_consumption)
+void site_game_data::set_free_food_consumption(const decimillesimal_int &free_consumption)
 {
 	if (free_consumption == this->get_free_food_consumption()) {
 		return;

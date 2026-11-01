@@ -366,7 +366,7 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 			continue;
 		}
 
-		remaining_free_food_consumption_per_holding[site] = decimillesimal_int(site->get_game_data()->get_free_food_consumption());
+		remaining_free_food_consumption_per_holding[site] = site->get_game_data()->get_free_food_consumption();
 	}
 
 	for (population_unit *population_unit : sorted_population_units) {

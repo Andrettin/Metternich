@@ -299,9 +299,9 @@ public:
 
 	void change_domain_skill_total_holding_level(const domain_skill *domain_skill, const centesimal_int &change);
 
-	centesimal_int get_population_capacity_level_for_holding_level(const int population_capacity_level, const centesimal_int &holding_level) const;
-	centesimal_int get_population_capacity_level_for_holding_level(const centesimal_int &holding_level) const;
-	centesimal_int get_free_food_consumption_for_holding_level(const centesimal_int &holding_level) const;
+	decimillesimal_int get_population_capacity_level_for_holding_level(const int population_capacity_level, const centesimal_int &holding_level) const;
+	decimillesimal_int get_population_capacity_level_for_holding_level(const centesimal_int &holding_level) const;
+	decimillesimal_int get_free_food_consumption_for_holding_level(const centesimal_int &holding_level) const;
 
 	const resource_map<int> &get_resource_counts() const;
 
