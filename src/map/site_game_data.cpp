@@ -2410,37 +2410,14 @@ std::map<food_type, decimillesimal_int> site_game_data::get_food_consumption() c
 	decimillesimal_int remaining_free_food_consumption = this->get_free_food_consumption();
 
 	for (const auto &population_unit : this->get_population_units()) {
-		std::map<metternich::food_type, decimillesimal_int> unit_food_consumption = population_unit->get_food_consumption();
+		decimillesimal_int unit_total_food_consumption;
+		std::map<metternich::food_type, decimillesimal_int> unit_food_consumption = population_unit->get_food_consumption_after_free_consumption(unit_total_food_consumption, &remaining_free_food_consumption);
 
 		if (unit_food_consumption.empty()) {
 			continue;
 		}
 
-		decimillesimal_int unit_total_food_consumption;
-
 		for (const auto &[food_type, unit_consumption] : unit_food_consumption) {
-			unit_total_food_consumption += unit_consumption;
-		}
-
-		const decimillesimal_int unit_total_free_consumption = decimillesimal_int::min(unit_total_food_consumption, remaining_free_food_consumption);
-		remaining_free_food_consumption -= unit_total_free_consumption;
-
-		if (unit_total_free_consumption == unit_total_food_consumption) {
-			continue;
-		}
-
-		for (auto &[food_type, unit_consumption] : unit_food_consumption) {
-			if (unit_total_free_consumption > 0) {
-				const decimillesimal_int free_consumption = unit_total_free_consumption * unit_consumption / unit_total_food_consumption;
-				if (free_consumption > 0) {
-					unit_consumption -= free_consumption;
-
-					if (unit_consumption == 0) {
-						continue;
-					}
-				}
-			}
-
 			food_consumption[food_type] += unit_consumption;
 		}
 	}
