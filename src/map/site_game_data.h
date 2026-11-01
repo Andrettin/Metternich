@@ -462,7 +462,7 @@ public:
 
 	QString get_effective_population_growth_rate_qstring() const
 	{
-		return QString::fromStdString(this->get_effective_population_growth_rate().to_string());
+		return QString::fromStdString(centesimal_int(this->get_effective_population_growth_rate()).to_string());
 	}
 
 	const decimillesimal_int &get_quarterly_population_growth_rate() const
