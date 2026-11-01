@@ -36,6 +36,7 @@ Flickable {
 						icon_identifier: population_unit.icon.identifier
 						name: population_unit.type.name + " (" + population_unit.culture.name + ") (" + population_unit.religion.name + ")"
 						description: "Wealth: " + population_unit.get_wealth_qstring()
+							+ (population_unit.starving_percent > 0 ? (", Starving: " + population_unit.starving_percent + "%") : "")
 							+ ", Everyday Needs: " + population_unit.fulfilled_everyday_needs_percent + "%"
 							+ ", Luxury Needs: " + population_unit.fulfilled_luxury_needs_percent + "%"
 					}

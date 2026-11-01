@@ -499,6 +499,8 @@ bool population_unit::is_food_producer() const
 
 void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
 {
+	this->set_starving_percent(decimillesimal_int(0));
+
 	if (this->is_food_producer()) {
 		//food producers don't need to consume food
 		return;
@@ -506,7 +508,11 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 
 	std::map<food_type, decimillesimal_int> food_consumption = population_defines::get()->get_population_food_consumption();
 
+	decimillesimal_int total_food_consumption;
+	decimillesimal_int total_remaining_food_consumption;
+
 	for (auto &[food_type, consumption] : food_consumption) {
+		//adjust food consumption according to this population unit's size
 		consumption *= this->get_size();
 		consumption /= population_defines::get()->get_base_population_size();
 
@@ -514,11 +520,14 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 			continue;
 		}
 
+		total_food_consumption += consumption;
+
 		const auto commodities_find_iterator = food_type_commodities.find(food_type);
 		assert_throw(commodities_find_iterator != food_type_commodities.end());
 
 		const std::vector<const commodity *> &food_commodities = commodities_find_iterator->second;
 
+		//do food consumption
 		for (const commodity *food_commodity : food_commodities) {
 			const decimillesimal_int &stored_commodity = this->get_domain()->get_economy()->get_stored_commodity(food_commodity);
 			if (stored_commodity == 0) {
@@ -581,9 +590,14 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 				break;
 			}
 		}
+
+		total_remaining_food_consumption += consumption;
 	}
 
-	//FIXME: add starvation if not all food consumption could be fulfilled
+	//set how many people in this population unit are starving if not all food consumption could be fulfilled
+	if (total_remaining_food_consumption > 0) {
+		this->set_starving_percent(100 * total_remaining_food_consumption / total_food_consumption);
+	}
 }
 
 void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)

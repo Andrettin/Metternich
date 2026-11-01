@@ -25,6 +25,7 @@ class population_defines final : public defines_base, public singleton<populatio
 	Q_PROPERTY(qint64 base_population_size MEMBER base_population_size READ get_base_population_size NOTIFY changed)
 	Q_PROPERTY(qint64 base_population_needs_size MEMBER base_population_needs_size READ get_base_population_needs_size NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_population_growth_rate MEMBER base_monthly_population_growth_rate READ get_base_monthly_population_growth_rate NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int quarterly_starvation_mortality_rate MEMBER quarterly_starvation_mortality_rate READ get_quarterly_starvation_mortality_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_literacy_change_rate MEMBER base_monthly_literacy_change_rate READ get_base_monthly_literacy_change_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_literacy_educator_percent MEMBER base_literacy_educator_percent READ get_base_literacy_educator_percent NOTIFY changed)
@@ -65,6 +66,11 @@ public:
 	const decimillesimal_int &get_base_monthly_population_growth_rate() const
 	{
 		return this->base_monthly_population_growth_rate;
+	}
+
+	const decimillesimal_int &get_quarterly_starvation_mortality_rate() const
+	{
+		return this->quarterly_starvation_mortality_rate;
 	}
 
 	const decimillesimal_int &get_base_monthly_promotion_rate() const
@@ -111,6 +117,7 @@ private:
 	int64_t base_population_size = 0;
 	int64_t base_population_needs_size = 0;
 	decimillesimal_int base_monthly_population_growth_rate;
+	decimillesimal_int quarterly_starvation_mortality_rate;
 	decimillesimal_int base_monthly_promotion_rate;
 	decimillesimal_int base_monthly_literacy_change_rate;
 	decimillesimal_int base_literacy_educator_percent;

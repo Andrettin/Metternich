@@ -47,6 +47,7 @@ class population_unit final : public QObject
 	Q_PROPERTY(const metternich::site* site READ get_site NOTIFY site_changed)
 	Q_PROPERTY(qint64 size READ get_size NOTIFY size_changed)
 	Q_PROPERTY(archimedes::decimillesimal_int wealth READ get_wealth NOTIFY wealth_changed)
+	Q_PROPERTY(int starving_percent READ get_starving_percent_int NOTIFY starving_percent_changed)
 	Q_PROPERTY(int fulfilled_everyday_needs_percent READ get_fulfilled_everyday_needs_percent NOTIFY fulfilled_everyday_needs_percent_changed)
 	Q_PROPERTY(int fulfilled_luxury_needs_percent READ get_fulfilled_luxury_needs_percent NOTIFY fulfilled_luxury_needs_percent_changed)
 
@@ -163,6 +164,27 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
+	const decimillesimal_int &get_starving_percent() const
+	{
+		return this->starving_percent;
+	}
+
+	int get_starving_percent_int() const
+	{
+		return this->get_starving_percent().to_int();
+	}
+
+	void set_starving_percent(const decimillesimal_int &percent)
+	{
+		if (percent == this->get_starving_percent()) {
+			return;
+		}
+
+		this->starving_percent = percent;
+
+		emit starving_percent_changed();
+	}
+
 	int get_fulfilled_everyday_needs_percent() const
 	{
 		return this->fulfilled_everyday_needs_percent;
@@ -214,6 +236,7 @@ signals:
 	void size_changed();
 	void literacy_rate_changed();
 	void wealth_changed();
+	void starving_percent_changed();
 	void fulfilled_everyday_needs_percent_changed();
 	void fulfilled_luxury_needs_percent_changed();
 
@@ -228,6 +251,7 @@ private:
 	int64_t size = 0; //number of individuals in this population unit
 	decimillesimal_int literacy_rate; //in percent
 	decimillesimal_int wealth;
+	decimillesimal_int starving_percent;
 	int fulfilled_everyday_needs_percent = 100;
 	int fulfilled_luxury_needs_percent = 100;
 };

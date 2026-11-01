@@ -2417,8 +2417,12 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 
 	for (population_unit *population_unit : population_units) {
-		const decimillesimal_int unit_population_growth_rate = population_growth_rate;
-		//FIXME: starvation should affect the unit's population growth rate
+		decimillesimal_int unit_population_growth_rate = population_growth_rate;
+
+		if (population_unit->get_starving_percent() > 0) {
+			//starvation affects the unit's population growth rate
+			unit_population_growth_rate = population_defines::get()->get_quarterly_starvation_mortality_rate() * population_unit->get_starving_percent() / 100 * -1;
+		}
 
 		int64_t population_growth_size = (population_unit->get_size() * unit_population_growth_rate / 100).to_int64();
 
