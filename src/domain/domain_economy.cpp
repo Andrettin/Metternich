@@ -627,7 +627,7 @@ void domain_economy::set_storage_capacity(const int64_t capacity)
 	const commodity_map<int64_t> max_commodity_storages_copy = this->get_max_commodity_storages();
 	for (auto &[commodity, max_storage] : max_commodity_storages_copy) {
 		if (max_storage == old_capacity) {
-			this->set_max_commodity_storage(commodity, capacity);
+			this->set_max_commodity_storage(commodity, std::max(capacity, 0ll));
 		}
 	}
 
