@@ -16,6 +16,7 @@
 #include "infrastructure/holding_defines.h"
 #include "infrastructure/holding_type.h"
 #include "item/item_creation_type.h"
+#include "map/province_defines.h"
 #include "population/population_defines.h"
 #include "script/condition/and_condition.h"
 #include "script/condition/capital_condition.h"
@@ -311,7 +312,7 @@ int64_t building_type::get_population_capacity_for_province_level(const int prov
 {
 	assert_throw(this->get_holding_level() > 0);
 
-	return (defines::get()->get_province_population_capacity_level_per_level() * province_level * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1) * population_defines::get()->get_base_population_size()).to_int64();
+	return (province_defines::get()->get_province_population_capacity_level_per_level() * province_level * this->get_holding_level() / centesimal_int::max(province_total_holding_level, 1) * population_defines::get()->get_base_population_size()).to_int64();
 }
 
 commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(const site *site) const
@@ -351,7 +352,7 @@ commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(co
 			if (new_domain_skill_total_holding_level.to_int() > province->get_game_data()->get_level()) {
 				const int province_level_change = std::min(new_domain_skill_total_holding_level.to_int(), province->get_game_data()->get_max_level()) - province->get_game_data()->get_level();
 				for (int i = 0; i < province_level_change; ++i) {
-					for (const auto &[commodity, base_level_cost_per_level] : defines::get()->get_province_level_commodity_costs_per_level()) {
+					for (const auto &[commodity, base_level_cost_per_level] : province_defines::get()->get_province_level_commodity_costs_per_level()) {
 						decimillesimal_int level_cost_per_level = decimillesimal_int(base_level_cost_per_level);
 						if (commodity == defines::get()->get_wealth_commodity()) {
 							level_cost_per_level *= defines::get()->get_domain_income_unit_value();

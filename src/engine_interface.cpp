@@ -23,6 +23,7 @@
 #include "map/map.h"
 #include "map/map_template.h"
 #include "map/province.h"
+#include "map/province_defines.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -69,6 +70,11 @@ double engine_interface::get_scale_factor() const
 const defines *engine_interface::get_defines() const
 {
 	return defines::get();
+}
+
+const province_defines *engine_interface::get_province_defines() const
+{
+	return province_defines::get();
 }
 
 const ui_defines *engine_interface::get_ui_defines() const

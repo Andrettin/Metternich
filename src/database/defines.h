@@ -5,7 +5,6 @@
 #include "map/terrain_adjacency.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
-#include "util/dice.h"
 #include "util/singleton.h"
 
 Q_MOC_INCLUDE("character/domain_skill.h")
@@ -41,7 +40,6 @@ enum class attack_result;
 enum class battle_resolution_type;
 enum class diplomacy_state;
 enum class event_trigger;
-enum class province_taxation_type;
 
 class defines final : public defines_base, public singleton<defines>
 {
@@ -58,8 +56,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(int battle_map_scale MEMBER battle_map_scale READ get_battle_map_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
-	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
-	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
@@ -85,12 +81,9 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QColor route_color MEMBER route_color READ get_route_color NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path river_image_filepath MEMBER river_image_filepath WRITE set_river_image_filepath)
 	Q_PROPERTY(std::filesystem::path rivermouth_image_filepath MEMBER rivermouth_image_filepath WRITE set_rivermouth_image_filepath)
-	Q_PROPERTY(std::filesystem::path province_border_image_filepath MEMBER province_border_image_filepath WRITE set_province_border_image_filepath)
 	Q_PROPERTY(QString default_menu_background_filepath READ get_default_menu_background_filepath_qstring NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int default_diplomatic_map_tile_scale MEMBER default_diplomatic_map_tile_scale READ get_default_diplomatic_map_tile_scale NOTIFY changed)
-	Q_PROPERTY(int province_map_tile_scale MEMBER province_map_tile_scale READ get_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity_unit* domain_income_unit MEMBER domain_income_unit READ get_domain_income_unit NOTIFY changed)
-	Q_PROPERTY(int province_population_capacity_level_per_level MEMBER province_population_capacity_level_per_level READ get_province_population_capacity_level_per_level NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* click_sound MEMBER click_sound READ get_click_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::sound* error_sound MEMBER error_sound READ get_error_sound NOTIFY changed)
 	Q_PROPERTY(const metternich::music* main_menu_music MEMBER main_menu_music READ get_main_menu_music NOTIFY changed)
@@ -219,16 +212,6 @@ public:
 	const terrain_type *get_unexplored_terrain() const
 	{
 		return this->unexplored_terrain;
-	}
-
-	const terrain_type *get_default_province_terrain() const
-	{
-		return this->default_province_terrain;
-	}
-
-	const terrain_type *get_default_water_zone_terrain() const
-	{
-		return this->default_water_zone_terrain;
 	}
 
 	const terrain_type *get_default_space_terrain() const
@@ -380,13 +363,6 @@ public:
 
 	void set_rivermouth_image_filepath(const std::filesystem::path &filepath);
 
-	const std::filesystem::path &get_province_border_image_filepath() const
-	{
-		return this->province_border_image_filepath;
-	}
-
-	void set_province_border_image_filepath(const std::filesystem::path &filepath);
-
 	const std::map<event_trigger, int> get_event_trigger_none_random_weights() const
 	{
 		return this->event_trigger_none_random_weights;
@@ -405,26 +381,12 @@ public:
 		return this->default_diplomatic_map_tile_scale;
 	}
 
-	int get_province_map_tile_scale() const
-	{
-		return this->province_map_tile_scale;
-	}
-
 	const commodity_unit *get_domain_income_unit() const
 	{
 		return this->domain_income_unit;
 	}
 
 	decimillesimal_int get_domain_income_unit_value() const;
-
-	const commodity_map<int> &get_province_level_commodity_costs_per_level() const
-	{
-		return this->province_level_commodity_costs_per_level;
-	}
-
-	int get_province_population_capacity_level_per_level() const;
-	int get_province_level_for_population(const int64_t population) const;
-	const dice &get_province_taxation_for_level(const province_taxation_type taxation_type, const int level) const;
 	decimillesimal_int get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
 	const centesimal_int &get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const;
@@ -472,8 +434,6 @@ private:
 	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
-	const terrain_type *default_province_terrain = nullptr;
-	const terrain_type *default_water_zone_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
 	commodity_map<int> settlement_commodity_bonuses;
 	commodity_map<int> river_settlement_commodity_bonuses;
@@ -503,15 +463,10 @@ private:
 	std::filesystem::path river_image_filepath;
 	std::filesystem::path rivermouth_image_filepath;
 	std::filesystem::path route_image_filepath;
-	std::filesystem::path province_border_image_filepath;
 	std::map<event_trigger, int> event_trigger_none_random_weights; //the weight for no event happening for a given event trigger's random event selection
 	std::filesystem::path default_menu_background_filepath;
 	decimillesimal_int default_diplomatic_map_tile_scale = decimillesimal_int(1);
-	int province_map_tile_scale = 2;
 	const commodity_unit *domain_income_unit = nullptr;
-	int province_population_capacity_level_per_level = 0;
-	commodity_map<int> province_level_commodity_costs_per_level;
-	std::map<province_taxation_type, std::map<int, dice>> province_taxation_per_level;
 	std::map<int, decimillesimal_int> domain_maintenance_cost_per_domain_size;
 	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
 	std::map<battle_resolution_type, std::map<battle_resolution_type, std::map<int, std::vector<attack_result>>>> battle_resolution_results;

@@ -2,14 +2,13 @@
 
 #include "map/province_map_data.h"
 
-#include "database/defines.h"
-#include "database/preferences.h"
 #include "game/game.h"
 #include "game/scenario.h"
 #include "map/map.h"
 #include "map/map_projection.h"
 #include "map/map_template.h"
 #include "map/province.h"
+#include "map/province_defines.h"
 #include "map/route.h"
 #include "map/site.h"
 #include "map/site_map_data.h"
@@ -34,9 +33,9 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 		this->terrain = province->get_terrain();
 	} else {
 		if (province->is_water_zone()) {
-			this->terrain = defines::get()->get_default_water_zone_terrain();
+			this->terrain = province_defines::get()->get_default_water_zone_terrain();
 		} else {
-			this->terrain = defines::get()->get_default_province_terrain();
+			this->terrain = province_defines::get()->get_default_province_terrain();
 		}
 	}
 }
@@ -309,10 +308,10 @@ QString province_map_data::get_polygon_path() const
 
 		for (const QPoint &point : polygon) {
 			if (first) {
-				polygon_path += std::format("M {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+				polygon_path += std::format("M {} {}", point.x() * province_defines::get()->get_province_map_tile_scale(), point.y() * province_defines::get()->get_province_map_tile_scale());
 				first = false;
 			} else {
-				polygon_path += std::format(" L {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+				polygon_path += std::format(" L {} {}", point.x() * province_defines::get()->get_province_map_tile_scale(), point.y() * province_defines::get()->get_province_map_tile_scale());
 			}
 		}
 
@@ -333,10 +332,10 @@ QVariantList province_map_data::get_polygon_paths_qvariant_list() const
 
 		for (const QPoint &point : polygon) {
 			if (first) {
-				polygon_path += std::format("M {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+				polygon_path += std::format("M {} {}", point.x() * province_defines::get()->get_province_map_tile_scale(), point.y() * province_defines::get()->get_province_map_tile_scale());
 				first = false;
 			} else {
-				polygon_path += std::format(" L {} {}", point.x() * defines::get()->get_province_map_tile_scale(), point.y() * defines::get()->get_province_map_tile_scale());
+				polygon_path += std::format(" L {} {}", point.x() * province_defines::get()->get_province_map_tile_scale(), point.y() * province_defines::get()->get_province_map_tile_scale());
 			}
 		}
 

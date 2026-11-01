@@ -69,6 +69,7 @@
 #include "map/map_template.h"
 #include "map/moisture_type.h"
 #include "map/province.h"
+#include "map/province_defines.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_attribute.h"
@@ -178,6 +179,7 @@ int main(int argc, char **argv)
 		database::get()->add_defines(defines::get());
 		database::get()->add_defines(character_defines::get());
 		database::get()->add_defines(holding_defines::get());
+		database::get()->add_defines(province_defines::get());
 		database::get()->add_defines(population_defines::get());
 		database::get()->add_defines(ui_defines::get());
 

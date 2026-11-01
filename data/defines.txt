@@ -5,8 +5,6 @@ tile_size = { 64 64 }
 default_minimap_tile_scale = 0.25
 default_base_terrain = plains
 unexplored_terrain = unexplored
-default_province_terrain = plains
-default_water_zone_terrain = ocean
 default_space_terrain = space
 
 default_start_date = 1815.11.20
@@ -43,54 +41,6 @@ tariff_icon = wealth
 treasure_fleet_icon = chest
 
 domain_income_unit = gb
-province_population_capacity_level_per_level = 2
-
-province_level_commodity_costs_per_level = {
-	wealth = 1
-	regency = 1
-}
-
-province_taxation_per_level = {
-	light_taxation = {
-		0 = 0d0
-		1 = 1d3-2
-		2 = 1d3-1
-		3 = 1d3
-		4 = 1d4
-		5 = 1d4+1
-		6 = 1d6+1
-		7 = 1d8+1
-		8 = 1d10+1
-		9 = 1d12+1
-		10 = 2d8
-	}
-	moderate_taxation = {
-		0 = 0d0
-		1 = 1d3-1
-		2 = 1d3
-		3 = 1d4
-		4 = 1d4+1
-		5 = 1d6+1
-		6 = 1d8+1
-		7 = 1d10+1
-		8 = 1d12+1
-		9 = 2d8
-		10 = 2d8+2
-	}
-	heavy_taxation = {
-		0 = 1d3-2
-		1 = 1d3
-		2 = 1d4
-		3 = 1d4+1
-		4 = 1d6+1
-		5 = 1d8+1
-		6 = 1d10+1
-		7 = 1d12+1
-		8 = 2d8
-		9 = 2d8+2
-		10 = 2d10+2
-	}
-}
 
 domain_maintenance_cost_per_domain_size = {
 	1 = 0 #gb
@@ -129,9 +79,7 @@ diplomacy_state_colors = {
 
 river_image_filepath = "tiles/river.png"
 rivermouth_image_filepath = "tiles/rivermouth.png"
-province_border_image_filepath = "tiles/borders/province_border.png"
 default_diplomatic_map_tile_scale = 1
-province_map_tile_scale = 2
 
 event_trigger_none_random_weights = {
 	per_turn_pulse = 36

@@ -2,11 +2,11 @@
 
 #include "map/route_game_data.h"
 
-#include "database/defines.h"
 #include "database/preferences.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "map/province.h"
+#include "map/province_defines.h"
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
@@ -286,10 +286,10 @@ QString route_game_data::get_line_path() const
 
 	for (const QPoint &point : line_points) {
 		if (first) {
-			line_path += std::format("M {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+			line_path += std::format("M {} {}", (point.x() * province_defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * province_defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
 			first = false;
 		} else {
-			line_path += std::format(" L {} {}", (point.x() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
+			line_path += std::format(" L {} {}", (point.x() * province_defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int(), (point.y() * province_defines::get()->get_province_map_tile_scale() * preferences::get()->get_scale_factor()).to_int());
 		}
 	}
 

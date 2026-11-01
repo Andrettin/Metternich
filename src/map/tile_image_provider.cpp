@@ -63,14 +63,6 @@ QCoro::Task<void> tile_image_provider::load_image(const std::string id)
 		filepath = pathway->get_image_filepath();
 		
 		is_frame_image = true;
-	} else if (tile_image_type == "borders") {
-		if (identifier == "province_border") {
-			filepath = defines::get()->get_province_border_image_filepath();
-		} else {
-			assert_throw(false);
-		}
-
-		is_frame_image = true;
 	} else if (tile_image_type == "river") {
 		filepath = defines::get()->get_river_image_filepath();
 		is_frame_image = true;

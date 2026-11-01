@@ -4,18 +4,18 @@ import QtQuick.Shapes
 
 Item {
 	id: map_block
-	implicitWidth: metternich.defines.map_block_size.width * metternich.defines.province_map_tile_scale * scale_factor
-	implicitHeight: metternich.defines.map_block_size.height * metternich.defines.province_map_tile_scale * scale_factor
+	implicitWidth: metternich.defines.map_block_size.width * metternich.province_defines.province_map_tile_scale * scale_factor
+	implicitHeight: metternich.defines.map_block_size.height * metternich.province_defines.province_map_tile_scale * scale_factor
 	clip: true
 	
-	readonly property int scaled_map_block_start_x: map_block_start_x * metternich.defines.province_map_tile_scale * scale_factor
-	readonly property int scaled_map_block_start_y: map_block_start_y * metternich.defines.province_map_tile_scale * scale_factor
+	readonly property int scaled_map_block_start_x: map_block_start_x * metternich.province_defines.province_map_tile_scale * scale_factor
+	readonly property int scaled_map_block_start_y: map_block_start_y * metternich.province_defines.province_map_tile_scale * scale_factor
 	readonly property int map_block_index: index
 	
 	Item {
 		id: unscaled_province_map
-		width: metternich.defines.map_block_size.width * metternich.defines.province_map_tile_scale
-		height: metternich.defines.map_block_size.height * metternich.defines.province_map_tile_scale
+		width: metternich.defines.map_block_size.width * metternich.province_defines.province_map_tile_scale
+		height: metternich.defines.map_block_size.height * metternich.province_defines.province_map_tile_scale
 		clip: true
 		layer.enabled: true
 		
@@ -24,8 +24,8 @@ Item {
 			
 			Shape {
 				id: province_shape
-				x: -map_block_start_x * metternich.defines.province_map_tile_scale
-				y: -map_block_start_y * metternich.defines.province_map_tile_scale
+				x: -map_block_start_x * metternich.province_defines.province_map_tile_scale
+				y: -map_block_start_y * metternich.province_defines.province_map_tile_scale
 				visible: province_polygon_path.length > 0
 				
 				readonly property var province: model.modelData
@@ -130,7 +130,7 @@ Item {
 		onReleased: function (mouse) {
 			metternich.defines.click_sound.play()
 			
-			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.defines.province_map_tile_scale / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.province_defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.province_defines.province_map_tile_scale / scale_factor)))
 			
 			if (province === null || (selected_province === province && selected_garrison === false) || (province.water_zone && metternich.selected_military_units.length === 0)) {
 				select_province(null)
@@ -151,7 +151,7 @@ Item {
 		}
 		
 		onPositionChanged: function (mouse) {
-			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.defines.province_map_tile_scale / scale_factor)))
+			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.province_defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.province_defines.province_map_tile_scale / scale_factor)))
 			
 			if (province !== null) {
 				var text = get_province_status_text(province)
@@ -195,8 +195,8 @@ Item {
 		
 		Item {
 			id: site_icon_area
-			x: -scaled_map_block_start_x + (site ? Math.min(Math.max(site.game_data.tile_pos.x * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(width / 2), 0), province_map.contentWidth - width) : 0)
-			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
+			x: -scaled_map_block_start_x + (site ? Math.min(Math.max(site.game_data.tile_pos.x * metternich.province_defines.province_map_tile_scale * scale_factor - Math.floor(width / 2), 0), province_map.contentWidth - width) : 0)
+			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.province_defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
 			width: site_icon.width + 2 * scale_factor
 			height: site_icon.height + 2 * scale_factor
 			visible: province_map.show_sites && site && site.settlement
@@ -338,15 +338,15 @@ Item {
 		
 		Item {
 			id: province_label_area
-			x: -scaled_map_block_start_x + Math.max(Math.floor(text_rect.x * metternich.defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_width - width) / 2), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
-			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
+			x: -scaled_map_block_start_x + Math.max(Math.floor(text_rect.x * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_width - width) / 2), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
+			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
 			width: province_label_column.width
 			height: province_label_column.height
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
-			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.defines.province_map_tile_scale * scale_factor)
-			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.defines.province_map_tile_scale * scale_factor)
+			readonly property int text_rect_width: Math.floor(text_rect.width * metternich.province_defines.province_map_tile_scale * scale_factor)
+			readonly property int text_rect_height: Math.floor(text_rect.height * metternich.province_defines.province_map_tile_scale * scale_factor)
 			
 			Column {
 				id: province_label_column

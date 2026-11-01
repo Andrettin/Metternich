@@ -16,6 +16,7 @@ Q_MOC_INCLUDE("item/item_slot.h")
 Q_MOC_INCLUDE("map/map.h")
 Q_MOC_INCLUDE("map/map_template.h")
 Q_MOC_INCLUDE("map/province.h")
+Q_MOC_INCLUDE("map/province_defines.h")
 Q_MOC_INCLUDE("map/world.h")
 Q_MOC_INCLUDE("sound/media_player.h")
 Q_MOC_INCLUDE("ui/cursor.h")
@@ -39,6 +40,7 @@ class media_player;
 class military_unit;
 class preferences;
 class province;
+class province_defines;
 class trait_type;
 class ui_defines;
 class world;
@@ -53,6 +55,7 @@ class engine_interface final : public QObject, public singleton<engine_interface
 	Q_PROPERTY(bool running READ is_running NOTIFY running_changed)
 	Q_PROPERTY(double scale_factor READ get_scale_factor NOTIFY scale_factor_changed)
 	Q_PROPERTY(const metternich::defines* defines READ get_defines CONSTANT)
+	Q_PROPERTY(const metternich::province_defines* province_defines READ get_province_defines CONSTANT)
 	Q_PROPERTY(const metternich::ui_defines* ui_defines READ get_ui_defines CONSTANT)
 	Q_PROPERTY(metternich::game* game READ get_game CONSTANT)
 	Q_PROPERTY(metternich::map* map READ get_map CONSTANT)
@@ -86,6 +89,7 @@ public:
 	double get_scale_factor() const;
 
 	const defines *get_defines() const;
+	const province_defines *get_province_defines() const;
 	const ui_defines *get_ui_defines() const;
 	game *get_game() const;
 	map *get_map() const;

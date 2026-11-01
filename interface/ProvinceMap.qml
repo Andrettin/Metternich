@@ -86,8 +86,8 @@ TableView {
 	}
 	
 	function center_on_tile(tile_x, tile_y) {
-		var pixel_x = Math.round(tile_x * metternich.defines.province_map_tile_scale * scale_factor - province_map.width / 2)
-		var pixel_y = Math.round(tile_y * metternich.defines.province_map_tile_scale * scale_factor - province_map.height / 2)
+		var pixel_x = Math.round(tile_x * metternich.province_defines.province_map_tile_scale * scale_factor - province_map.width / 2)
+		var pixel_y = Math.round(tile_y * metternich.province_defines.province_map_tile_scale * scale_factor - province_map.height / 2)
 		
 		province_map.contentX = Math.min(Math.max(pixel_x, 0), province_map.contentWidth - province_map.width)
 		province_map.contentY = Math.min(Math.max(pixel_y, 0), province_map.contentHeight - province_map.height)

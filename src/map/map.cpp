@@ -12,7 +12,7 @@
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"
-#include "map/province_container.h"
+#include "map/province_defines.h"
 #include "map/province_map_data.h"
 #include "map/route.h"
 #include "map/site.h"
@@ -565,7 +565,7 @@ void map::initialize_diplomatic_map()
 
 void map::initialize_province_map()
 {
-	const int tile_scale = defines::get()->get_province_map_tile_scale();
+	const int tile_scale = province_defines::get()->get_province_map_tile_scale();
 	const QSize image_size = this->get_size() * tile_scale;
 	if (image_size != this->province_map_image_size) {
 		this->province_map_image_size = image_size;
