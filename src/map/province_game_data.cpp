@@ -523,6 +523,10 @@ QCoro::Task<void> province_game_data::set_owner(const domain *domain)
 
 	for (const site *site : this->get_sites()) {
 		if (site->get_game_data()->get_owner() == old_owner) {
+			if (domain != nullptr && site->get_game_data()->get_holding_type() != nullptr && !domain->get_game_data()->get_government_type()->is_holding_type_allowed(site->get_game_data()->get_holding_type())) {
+				continue;
+			}
+
 			co_await site->get_game_data()->set_owner(domain);
 		}
 	}
