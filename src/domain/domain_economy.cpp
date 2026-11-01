@@ -38,6 +38,7 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -350,6 +351,10 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 	const std::vector<population_unit *> &domain_population_units = this->get_game_data()->get_population_units();
 
 	std::vector<population_unit *> sorted_population_units = domain_population_units;
+
+	//shuffle the population units, so that for the same strata, population unit starvation effects will be randomized
+	vector::shuffle(sorted_population_units);
+
 	std::stable_sort(sorted_population_units.begin(), sorted_population_units.end(), [](const population_unit *lhs, const population_unit *rhs) {
 		//higher stratas consume food first
 		return lhs->get_type()->get_strata() > rhs->get_type()->get_strata();
