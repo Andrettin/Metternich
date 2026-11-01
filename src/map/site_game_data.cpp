@@ -2884,6 +2884,9 @@ void site_game_data::calculate_commodity_outputs()
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
 		decimillesimal_int output = employment_type->get_quarterly_output_value() * game::get()->get_current_quarters_per_turn();
+
+		//FIXME: the effective throughput should change depending on how many employees are sick (sick employees cannot work)
+
 		output *= employment_size;
 		output /= employment_type->get_base_employment_size();
 		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];
