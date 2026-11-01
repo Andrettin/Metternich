@@ -495,8 +495,8 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 
 	if (this->get_starving_percent() > 0) {
 		if (population_growth_rate > 0) {
-			//starvation adds to a negative population growth rate, but replaces a positive growth rate
-			population_growth_rate = decimillesimal_int(0);
+			//starvation adds to a negative population growth rate, but replaces a positive growth rate (in proportion to the starving percent)
+			population_growth_rate = population_growth_rate * (100 - this->get_starving_percent()) / 100;
 		}
 
 		//starvation affects the unit's population growth rate
