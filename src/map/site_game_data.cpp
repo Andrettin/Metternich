@@ -2390,6 +2390,24 @@ decimillesimal_int site_game_data::get_population_growth_rate() const
 	return this->get_quarterly_population_growth_rate() * game::get()->get_current_quarters_per_turn();
 }
 
+decimillesimal_int site_game_data::get_effective_population_growth_rate() const
+{
+	//get the effective population growth rate, i.e. the actual population growth rate for each population unit, then averaged according to population size
+	//this is necessary since specific population units might have a different population growth rate, e.g. because of starvation
+
+	decimillesimal_int population_growth_rate;
+
+	for (const auto &population_unit : this->get_population_units()) {
+		population_growth_rate += population_unit->get_population_growth_rate() * population_unit->get_size();
+	}
+
+	if (this->get_population()->get_size() > 0) {
+		population_growth_rate /= this->get_population()->get_size();
+	}
+
+	return population_growth_rate;
+}
+
 void site_game_data::set_quarterly_population_growth_rate(const decimillesimal_int &population_growth_rate)
 {
 	if (population_growth_rate == this->get_quarterly_population_growth_rate()) {
@@ -2405,11 +2423,6 @@ void site_game_data::set_quarterly_population_growth_rate(const decimillesimal_i
 
 QCoro::Task<void> site_game_data::do_population_growth()
 {
-	const decimillesimal_int &population_growth_rate = this->get_population_growth_rate();
-	if (population_growth_rate == 0) {
-		co_return;
-	}
-
 	//copy the population units vector since it might be modified by population growth
 	std::vector<population_unit *> population_units;
 	for (const qunique_ptr<population_unit> &population_unit : this->get_population_units()) {
@@ -2417,19 +2430,18 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 
 	for (population_unit *population_unit : population_units) {
-		decimillesimal_int unit_population_growth_rate = population_growth_rate;
+		const decimillesimal_int population_growth_rate = population_unit->get_population_growth_rate();
 
-		if (population_unit->get_starving_percent() > 0) {
-			//starvation affects the unit's population growth rate
-			unit_population_growth_rate = population_defines::get()->get_quarterly_starvation_mortality_rate() * population_unit->get_starving_percent() / 100 * -1;
+		if (population_growth_rate == 0) {
+			continue;
 		}
 
-		int64_t population_growth_size = (population_unit->get_size() * unit_population_growth_rate / 100).to_int64();
+		int64_t population_growth_size = (population_unit->get_size() * population_growth_rate / 100).to_int64();
 
-		if (unit_population_growth_rate > 0) {
+		if (population_growth_rate > 0) {
 			population_growth_size = std::max(population_growth_size, 1ll);
 			population_growth_size = std::min(population_growth_size, this->get_available_population_capacity());
-		} else if (unit_population_growth_rate < 0) {
+		} else if (population_growth_rate < 0) {
 			population_growth_size = std::min(population_growth_size, -1ll);
 
 			//don't remove more population than there is available

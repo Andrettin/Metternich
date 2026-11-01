@@ -164,6 +164,8 @@ public:
 		this->set_wealth(this->get_wealth() + change);
 	}
 
+	decimillesimal_int get_population_growth_rate() const;
+
 	const decimillesimal_int &get_starving_percent() const
 	{
 		return this->starving_percent;
@@ -174,16 +176,7 @@ public:
 		return this->get_starving_percent().to_int();
 	}
 
-	void set_starving_percent(const decimillesimal_int &percent)
-	{
-		if (percent == this->get_starving_percent()) {
-			return;
-		}
-
-		this->starving_percent = percent;
-
-		emit starving_percent_changed();
-	}
+	void set_starving_percent(const decimillesimal_int &percent);
 
 	int get_fulfilled_everyday_needs_percent() const
 	{

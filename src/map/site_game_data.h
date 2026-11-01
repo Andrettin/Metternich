@@ -89,7 +89,7 @@ class site_game_data final : public QObject
 	Q_PROPERTY(QVariantList population_units READ get_population_units_qvariant_list NOTIFY population_units_changed)
 	Q_PROPERTY(int population_unit_count READ get_population_unit_count NOTIFY population_units_changed)
 	Q_PROPERTY(qint64 population_capacity READ get_population_capacity NOTIFY population_capacity_changed)
-	Q_PROPERTY(QString population_growth_rate READ get_population_growth_rate_qstring NOTIFY population_growth_rate_changed)
+	Q_PROPERTY(QString population_growth_rate READ get_effective_population_growth_rate_qstring NOTIFY population_growth_rate_changed)
 	Q_PROPERTY(QVariantList commodity_outputs READ get_commodity_outputs_qvariant_list NOTIFY commodity_outputs_changed)
 	Q_PROPERTY(QVariantList visiting_armies READ get_visiting_armies_qvariant_list NOTIFY visiting_armies_changed)
 
@@ -458,10 +458,11 @@ public:
 	int64_t get_available_population_capacity() const;
 
 	decimillesimal_int get_population_growth_rate() const;
+	decimillesimal_int get_effective_population_growth_rate() const;
 
-	QString get_population_growth_rate_qstring() const
+	QString get_effective_population_growth_rate_qstring() const
 	{
-		return QString::fromStdString(this->get_population_growth_rate().to_string());
+		return QString::fromStdString(this->get_effective_population_growth_rate().to_string());
 	}
 
 	const decimillesimal_int &get_quarterly_population_growth_rate() const

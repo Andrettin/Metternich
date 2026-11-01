@@ -484,6 +484,40 @@ void population_unit::set_wealth(const decimillesimal_int &wealth)
 	emit wealth_changed();
 }
 
+decimillesimal_int population_unit::get_population_growth_rate() const
+{
+	assert_throw(this->get_site() != nullptr);
+
+	decimillesimal_int population_growth_rate = this->get_site()->get_game_data()->get_population_growth_rate();
+
+	if (this->get_starving_percent() > 0) {
+		if (population_growth_rate > 0) {
+			//starvation adds to a negative population growth rate, but replaces a positive growth rate
+			population_growth_rate = decimillesimal_int(0);
+		}
+
+		//starvation affects the unit's population growth rate
+		population_growth_rate += population_defines::get()->get_quarterly_starvation_mortality_rate() * this->get_starving_percent() / 100 * -1;
+	}
+
+	return population_growth_rate;
+}
+
+void population_unit::set_starving_percent(const decimillesimal_int &percent)
+{
+	if (percent == this->get_starving_percent()) {
+		return;
+	}
+
+	this->starving_percent = percent;
+
+	emit starving_percent_changed();
+
+	if (this->get_site() != nullptr) {
+		emit this->get_site()->get_game_data()->population_growth_rate_changed();
+	}
+}
+
 bool population_unit::is_food_producer() const
 {
 	if (this->get_type()->get_output_commodity() != nullptr && this->get_type()->get_output_commodity()->is_food()) {
