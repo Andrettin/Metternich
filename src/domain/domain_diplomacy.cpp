@@ -397,9 +397,8 @@ bool domain_diplomacy::can_attack(const metternich::domain *other_domain) const
 		return true;
 	}
 
-	if (other_domain->get_game_data()->is_under_anarchy() || this->get_game_data()->is_under_anarchy()) {
-		return true;
-	}
+	assert_throw(!this->get_game_data()->is_under_anarchy());
+	assert_throw(!other_domain->get_game_data()->is_under_anarchy());
 
 	return false;
 }

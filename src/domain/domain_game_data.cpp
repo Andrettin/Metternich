@@ -737,9 +737,7 @@ void domain_game_data::check_item_slots()
 void domain_game_data::do_civilian_unit_recruitment()
 {
 	try {
-		if (this->is_under_anarchy()) {
-			return;
-		}
+		assert_throw(!this->is_under_anarchy());
 
 		const data_entry_map<civilian_unit_type, int> recruitment_counts = this->civilian_unit_recruitment_counts;
 		for (const auto &[civilian_unit_type, recruitment_count] : recruitment_counts) {
@@ -836,6 +834,8 @@ QCoro::Task<void> domain_game_data::do_decisions()
 
 QCoro::Task<void> domain_game_data::do_events()
 {
+	assert_throw(!this->is_under_anarchy());
+
 	const std::vector<const province *> provinces = this->get_provinces();
 	for (const province *province : provinces) {
 		co_await province->get_game_data()->do_events();
@@ -846,19 +846,17 @@ QCoro::Task<void> domain_game_data::do_events()
 		co_await site->get_game_data()->do_events();
 	}
 
-	if (!this->is_under_anarchy()) {
-		const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
-		if (is_last_turn_of_year) {
-			co_await domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
-		}
-
-		const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
-		if (is_last_turn_of_quarter) {
-			co_await domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
-		}
-
-		co_await domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
+	const bool is_last_turn_of_year = game::get()->is_last_turn_of_year();
+	if (is_last_turn_of_year) {
+		co_await domain_event::check_events_for_scope(this->domain, event_trigger::yearly_pulse);
 	}
+
+	const bool is_last_turn_of_quarter = game::get()->is_last_turn_of_quarter();
+	if (is_last_turn_of_quarter) {
+		co_await domain_event::check_events_for_scope(this->domain, event_trigger::quarterly_pulse);
+	}
+
+	co_await domain_event::check_events_for_scope(this->domain, event_trigger::per_turn_pulse);
 
 	const std::vector<const character *> characters = this->get_characters();
 	for (const character *character : characters) {
@@ -948,9 +946,7 @@ QCoro::Task<void> domain_game_data::set_tier(const domain_tier tier)
 
 QCoro::Task<void> domain_game_data::check_tier()
 {
-	if (this->is_under_anarchy()) {
-		co_return;
-	}
+	assert_throw(!this->is_under_anarchy());
 
 	const domain_tier current_tier = this->get_tier();
 	const domain_tier_data *current_tier_data = domain_tier_data::get(current_tier);
@@ -1908,9 +1904,7 @@ bool domain_game_data::is_playable() const
 		return false;
 	}
 
-	if (this->is_under_anarchy()) {
-		return false;
-	}
+	assert_throw(!this->is_under_anarchy());
 
 	return this->domain->get_type() != domain_type::tribe;
 }
@@ -1923,10 +1917,6 @@ QString domain_game_data::get_unplayable_reason() const
 
 	if (!this->get_government()->get_ruler()->get_game_data()->is_playable()) {
 		return this->get_government()->get_ruler()->get_game_data()->get_unplayable_reason();
-	}
-
-	if (this->is_under_anarchy()) {
-		return "You cannot play as a domain under anarchy";
 	}
 
 	if (this->domain->get_type() == domain_type::tribe) {
@@ -3188,9 +3178,7 @@ QDate domain_game_data::get_historical_ruler_end_date(const character *character
 
 bool domain_game_data::create_civilian_unit(const civilian_unit_type *civilian_unit_type, const province *deployment_province, const phenotype *phenotype)
 {
-	if (this->is_under_anarchy()) {
-		return false;
-	}
+	assert_throw(!this->is_under_anarchy());
 
 	if (deployment_province == nullptr) {
 		deployment_province = this->get_capital_province();

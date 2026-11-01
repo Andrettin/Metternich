@@ -808,10 +808,7 @@ QCoro::Task<void> game::apply_history(const QDate &start_date)
 				domain_game_data *owner_game_data = owner->get_game_data();
 
 				assert_throw(owner_game_data->is_alive());
-
-				if (owner_game_data->is_under_anarchy()) {
-					continue;
-				}
+				assert_throw(!owner_game_data->is_under_anarchy());
 
 				const civilian_unit_type *type = historical_civilian_unit->get_type();
 				assert_throw(type != nullptr);
@@ -1153,7 +1150,7 @@ QCoro::Task<void> game::apply_sites()
 		co_await domain->get_game_data()->choose_capital();
 
 		if (domain->get_game_data()->get_capital() == nullptr) {
-			log::log_error(std::format("Domain \"{}\" has no capital.", domain->get_identifier()));
+			throw std::runtime_error(std::format("Domain \"{}\" has no capital.", domain->get_identifier()));
 		}
 	}
 
@@ -2081,14 +2078,6 @@ void game::do_trade()
 {
 	std::vector<metternich::domain *> trade_domains = this->get_domains();
 
-	std::erase_if(trade_domains, [this](const domain *domain) {
-		if (domain->get_game_data()->is_under_anarchy()) {
-			return true;
-		}
-
-		return false;
-	});
-
 	std::sort(trade_domains.begin(), trade_domains.end(), [](const metternich::domain *lhs, const metternich::domain *rhs) {
 		return lhs->get_identifier() < rhs->get_identifier();
 	});
@@ -2289,10 +2278,6 @@ void game::calculate_domain_ranks()
 	}
 
 	std::sort(domains.begin(), domains.end(), [](const metternich::domain *lhs, const metternich::domain *rhs) {
-		if (lhs->get_game_data()->is_under_anarchy() != rhs->get_game_data()->is_under_anarchy()) {
-			return rhs->get_game_data()->is_under_anarchy();
-		}
-
 		return lhs->get_game_data()->get_score() > rhs->get_game_data()->get_score();
 	});
 

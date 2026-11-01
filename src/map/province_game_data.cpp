@@ -430,9 +430,7 @@ QCoro::Task<void> province_game_data::do_military_unit_recruitment()
 	}
 
 	try {
-		if (this->get_owner()->get_game_data()->is_under_anarchy()) {
-			co_return;
-		}
+		assert_throw(!this->get_owner()->get_game_data()->is_under_anarchy());
 
 		const military_unit_type_map<int> recruitment_counts = this->military_unit_recruitment_counts;
 		if (recruitment_counts.empty()) {

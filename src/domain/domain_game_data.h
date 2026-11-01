@@ -108,7 +108,6 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(const metternich::site* capital READ get_capital NOTIFY capital_changed)
 	Q_PROPERTY(int holding_count READ get_holding_count NOTIFY holding_count_changed)
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
-	Q_PROPERTY(bool anarchy READ is_under_anarchy NOTIFY provinces_changed)
 	Q_PROPERTY(bool playable READ is_playable NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)

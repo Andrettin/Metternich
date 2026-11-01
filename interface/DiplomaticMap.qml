@@ -217,7 +217,7 @@ Flickable {
 			x: other_domain_capital ? Math.floor(other_domain_capital.game_data.tile_pos.x * metternich.map.diplomatic_map_tile_scale_double * scale_factor - width / 2) : 0
 			y: other_domain_capital ? Math.floor(other_domain_capital.game_data.tile_pos.y * metternich.map.diplomatic_map_tile_scale_double * scale_factor - height / 2) : 0
 			source: "image://icon/" + consulate.icon.identifier
-			visible: !reference_domain.game_data.anarchy && !other_domain.game_data.anarchy && diplomatic_map.mode === DiplomaticMap.Mode.Treaty
+			visible: diplomatic_map.mode === DiplomaticMap.Mode.Treaty
 			
 			readonly property var other_domain: model.modelData.key
 			readonly property var other_domain_capital: other_domain.game_data.capital

@@ -58,9 +58,7 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		if (scope->get_game_data()->is_under_anarchy()) {
-			co_return;
-		}
+		assert_throw(!scope->get_game_data()->is_under_anarchy());
 
 		const military_unit_type *type = this->get_type(scope);
 

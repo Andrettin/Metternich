@@ -624,10 +624,7 @@ void domain_government::set_appointed_office_holder(const office *office, const 
 
 QCoro::Task<void> domain_government::check_office_holder(const office *office)
 {
-	if (this->get_game_data()->is_under_anarchy()) {
-		co_await this->set_office_holder(office, nullptr);
-		co_return;
-	}
+	assert_throw(!this->get_game_data()->is_under_anarchy());
 
 	//process appointment, if any
 	const character *appointed_holder = this->get_appointed_office_holder(office);

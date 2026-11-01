@@ -176,9 +176,7 @@ void domain_ai::assign_trade_orders()
 	domain_economy->clear_bids();
 	domain_economy->clear_offers();
 
-	if (this->get_game_data()->is_under_anarchy()) {
-		return;
-	}
+	assert_throw(!this->get_game_data()->is_under_anarchy());
 
 	for (const auto &[commodity, value] : domain_economy->get_stored_commodities()) {
 		if (!domain_economy->can_trade_commodity(commodity)) {

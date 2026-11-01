@@ -311,9 +311,7 @@ QCoro::Task<void> domain_economy::do_production()
 void domain_economy::do_trade()
 {
 	try {
-		if (this->get_game_data()->is_under_anarchy()) {
-			return;
-		}
+		assert_throw(!this->get_game_data()->is_under_anarchy());
 
 		const std::vector<const metternich::domain *> trade_domains = this->get_known_domains_by_trade_priority();
 
@@ -348,6 +346,8 @@ void domain_economy::do_trade()
 
 void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities)
 {
+	assert_throw(!this->get_game_data()->is_under_anarchy());
+
 	std::vector<const metternich::domain *> trade_domains = { this->domain };
 	vector::merge(trade_domains, this->get_known_domains_by_trade_priority());
 

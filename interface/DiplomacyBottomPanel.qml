@@ -287,11 +287,10 @@ Rectangle {
 						"\n" + selected_domain_game_data.diplomacy.subject_type.name + " of " + selected_domain_game_data.diplomacy.overlord.name
 					) : "")
 					+ "\n" + selected_domain_game_data.title_name
-					+ (selected_domain_game_data.anarchy ? "\nAnarchy" : "")
 					+ (selected_domain_game_data.diplomacy.vassals.length > 0 ? ("\n" + number_string(selected_domain_game_data.diplomacy.vassals.length) + " " + (selected_domain_game_data.diplomacy.vassals.length > 1 ? "Vassals" : "Vassal")) : "")
 					+ (selected_domain_game_data.provinces.length > 0 ? ("\n" + number_string(selected_domain_game_data.provinces.length) + " " + (selected_domain_game_data.provinces.length > 1 ? "Provinces" : "Province")) : "")
 					+ "\n" + number_string(selected_domain_game_data.holding_count) + " " + (selected_domain_game_data.holding_count !== 1 ? "Holdings" : "Holding")
-					+ (!selected_domain_game_data.anarchy ? ("\nScore: " + number_string(selected_domain_game_data.score) + " (#" + (selected_domain_game_data.score_rank + 1) + ")") : "")
+					+ ("\nScore: " + number_string(selected_domain_game_data.score) + " (#" + (selected_domain_game_data.score_rank + 1) + ")")
 					+ ("\nDomain Power: " + number_string(selected_domain_game_data.domain_power))
 					+ (population_visible ? ("\nPopulation: " + number_string(selected_domain_population.size)) : "")
 					+ "\nLiteracy: " + selected_domain_population.literacy_rate + "%"

@@ -168,9 +168,7 @@ domain_game_data *domain_military::get_game_data() const
 QCoro::Task<void> domain_military::do_military_unit_recruitment()
 {
 	try {
-		if (this->get_game_data()->is_under_anarchy()) {
-			co_return;
-		}
+		assert_throw(!this->get_game_data()->is_under_anarchy());
 
 		for (const province *province : this->get_game_data()->get_provinces()) {
 			co_await province->get_game_data()->do_military_unit_recruitment();
