@@ -645,7 +645,6 @@ set(script_condition_HDRS
 	src/script/condition/advisor_condition.h
 	src/script/condition/age_category_condition.h
 	src/script/condition/age_condition.h
-	src/script/condition/anarchy_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_character_condition.h
 	src/script/condition/any_known_domain_condition.h

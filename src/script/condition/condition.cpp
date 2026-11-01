@@ -11,7 +11,6 @@
 #include "script/condition/advisor_condition.h"
 #include "script/condition/age_category_condition.h"
 #include "script/condition/age_condition.h"
-#include "script/condition/anarchy_condition.h"
 #include "script/condition/any_character_condition.h"
 #include "script/condition/any_known_domain_condition.h"
 #include "script/condition/any_nearby_province_condition.h"
@@ -190,8 +189,6 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 
 		if (key == "advisor") {
 			return std::make_unique<advisor_condition>(value, condition_operator);
-		} else if (key == "anarchy") {
-			return std::make_unique<anarchy_condition>(value, condition_operator);
 		} else if (key == "discovered_province") {
 			return std::make_unique<discovered_province_condition>(value, condition_operator);
 		} else if (key == "discovered_region") {
