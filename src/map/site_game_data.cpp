@@ -2658,7 +2658,7 @@ int64_t site_game_data::get_available_employment_input_capacity(const employment
 	return input_capacity;
 }
 
-QCoro::Task<void> site_game_data::decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage)
+QCoro::Task<void> site_game_data::decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage, const bool decrease_effective)
 {
 	std::vector<population_unit *> population_units;
 	for (const auto &population_unit : this->get_population_units()) {
@@ -2667,14 +2667,14 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		}
 	}
 	for (population_unit *population_unit : population_units) {
-		const int64_t unemployment_size = std::min(population_unit->get_employment_size_from_effective_size(decrease), population_unit->get_size());
+		const int64_t unemployment_size = std::min(decrease_effective ? population_unit->get_employment_size_from_effective_size(decrease) : decrease, population_unit->get_size());
 		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth, change_input_storage);
 
-		decrease -= unemployment_size;
+		decrease -= decrease_effective ? population_unit->get_effective_employment_size(employment_type, unemployment_size) : unemployment_size;
 		if (decrease == 0) {
 			break;
 		}
@@ -2723,7 +2723,7 @@ QCoro::Task<void> site_game_data::check_employment()
 			assert_throw(employed_population_type != nullptr);
 
 			const int64_t employee_size = std::min(std::min(available_employment_capacity, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity)), population_unit->get_size());
-			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type);
+			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size);
 			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
@@ -2756,7 +2756,7 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 	for (const auto &[employment_type, employment_size] : employment_sizes) {
 		if (!employment_type->is_available_for_site(this->site)) {
 			//if the employment is no longer allowed for the site, cease it entirely
-			co_await this->decrease_employment(employment_type, employment_size, true);
+			co_await this->decrease_employment(employment_type, employment_size, true, false);
 			assert_throw(this->get_employment_size(employment_type) == 0);
 			continue;
 		}
@@ -2766,7 +2766,7 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 		//if the employment capacity is below the employment size, reduce the latter
 		int64_t capacity_overflow = employment_size - capacity;
 		if (capacity_overflow > 0) {
-			co_await this->decrease_employment(employment_type, capacity_overflow, true);
+			co_await this->decrease_employment(employment_type, capacity_overflow, true, false);
 
 			capacity_overflow = this->get_employment_size(employment_type) - capacity;
 			if (capacity_overflow != 0) {

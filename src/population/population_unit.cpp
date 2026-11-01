@@ -356,15 +356,15 @@ QCoro::Task<void> population_unit::set_employment_type(const metternich::employm
 	emit employment_type_changed();
 }
 
-int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type) const
+int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type, const int64_t employee_size) const
 {
 	Q_UNUSED(employment_type);
 
-	int64_t effective_employment_size = this->get_size();
+	int64_t effective_employment_size = employee_size;
 
 	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
 		//sick and starving employees cannot work
-		effective_employment_size = (effective_employment_size * (this->get_sick_percent() + this->get_starving_percent()) / 100).to_int64();
+		effective_employment_size = (effective_employment_size * (100 - this->get_sick_percent() - this->get_starving_percent()) / 100).to_int64();
 	}
 
 	//FIXME: add support for population types to have throughput modifiers for specific employment types
@@ -374,7 +374,7 @@ int64_t population_unit::get_effective_employment_size(const metternich::employm
 
 int64_t population_unit::get_effective_employment_size() const
 {
-	return this->get_effective_employment_size(this->get_employment_type());
+	return this->get_effective_employment_size(this->get_employment_type(), this->get_size());
 }
 
 int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size) const
@@ -384,7 +384,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const metternic
 	int64_t employment_size = effective_employment_size;
 
 	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
-		employment_size = (effective_employment_size * 100 / (this->get_sick_percent() + this->get_starving_percent())).to_int64();
+		employment_size = (effective_employment_size * 100 / (100 - this->get_sick_percent() - this->get_starving_percent())).to_int64();
 	}
 
 	//FIXME: add support for population types to have throughput modifiers for specific employment types

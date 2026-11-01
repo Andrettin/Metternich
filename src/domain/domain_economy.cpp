@@ -786,7 +786,7 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 				assert_throw(employment_input_decrease >= 0);
 			}
 
-			co_await site->get_game_data()->decrease_employment(employment_type, unemployment_size, false);
+			co_await site->get_game_data()->decrease_employment(employment_type, unemployment_size, false, true);
 			decrease -= employment_input_decrease;
 
 			if (decrease <= 0) {

@@ -591,7 +591,7 @@ public:
 	}
 
 	int64_t get_available_employment_input_capacity(const employment_type *employment_type) const;
-	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage);
+	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage, const bool decrease_effective);
 	[[nodiscard]] QCoro::Task<void> check_employment();
 	[[nodiscard]] QCoro::Task<void> check_employment_capacities_overflow();
 
