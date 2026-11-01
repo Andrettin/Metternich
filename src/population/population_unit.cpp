@@ -553,20 +553,30 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		consumption *= this->get_size();
 		consumption /= population_defines::get()->get_base_population_size();
 
+		total_food_consumption += consumption;
+	}
+
+	decimillesimal_int total_free_consumption;
+
+	auto free_consumption_find_iterator = remaining_free_food_consumption_per_holding.find(this->get_site());
+	if (free_consumption_find_iterator != remaining_free_food_consumption_per_holding.end()) {
+		decimillesimal_int &remaining_holding_free_consumption = free_consumption_find_iterator->second;
+
+		if (remaining_holding_free_consumption > 0) {
+			total_free_consumption = decimillesimal_int::min(total_food_consumption, remaining_holding_free_consumption);
+			remaining_holding_free_consumption -= total_free_consumption;
+		}
+	}
+
+	for (auto &[food_type, consumption] : food_consumption) {
 		if (consumption == 0) {
 			continue;
 		}
 
-		total_food_consumption += consumption;
-
-		auto free_consumption_find_iterator = remaining_free_food_consumption_per_holding.find(this->get_site());
-		if (free_consumption_find_iterator != remaining_free_food_consumption_per_holding.end()) {
-			decimillesimal_int &remaining_holding_free_consumption = free_consumption_find_iterator->second;
-
-			if (remaining_holding_free_consumption > 0) {
-				const decimillesimal_int free_consumption = decimillesimal_int::min(consumption, remaining_holding_free_consumption);
+		if (total_free_consumption > 0) {
+			const decimillesimal_int free_consumption = total_free_consumption * consumption / total_food_consumption;
+			if (free_consumption > 0) {
 				consumption -= free_consumption;
-				remaining_holding_free_consumption -= free_consumption;
 
 				if (consumption == 0) {
 					continue;
