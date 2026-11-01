@@ -107,7 +107,7 @@ public:
 
 	int64_t get_effective_employment_size(const employment_type *employment_type, const int64_t employee_size) const;
 	int64_t get_effective_employment_size() const;
-	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size) const;
+	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size, const bool ceil) const;
 	int64_t get_employment_size_from_effective_size(const int64_t effective_employment_size) const;
 
 	const icon *get_icon() const;

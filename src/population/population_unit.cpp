@@ -377,14 +377,17 @@ int64_t population_unit::get_effective_employment_size() const
 	return this->get_effective_employment_size(this->get_employment_type(), this->get_size());
 }
 
-int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size) const
+int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const bool ceil) const
 {
 	Q_UNUSED(employment_type);
 
 	int64_t employment_size = effective_employment_size;
 
 	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
-		employment_size = (effective_employment_size * 100 / (100 - this->get_sick_percent() - this->get_starving_percent())).to_int64();
+		const decimillesimal_int sick_and_starving_percent = this->get_sick_percent() - this->get_starving_percent();
+		assert_throw(sick_and_starving_percent < 100);
+		const decimillesimal_int healthy_employment_size = (effective_employment_size * 100 / (100 - sick_and_starving_percent));
+		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
 	}
 
 	//FIXME: add support for population types to have throughput modifiers for specific employment types
@@ -396,7 +399,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const int64_t e
 {
 	assert_throw(this->get_employment_type() != nullptr);
 
-	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size);
+	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size, false);
 }
 
 const icon *population_unit::get_small_icon() const
