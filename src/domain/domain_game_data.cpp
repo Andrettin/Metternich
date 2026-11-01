@@ -543,6 +543,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 			co_return;
 		}
 
+		assert_throw(this->get_capital() != nullptr);
+
 		for (const province *province : this->get_provinces()) {
 			co_await province->get_game_data()->do_turn();
 		}
@@ -1453,7 +1455,8 @@ QCoro::Task<void> domain_game_data::remove_province(const province *province)
 {
 	std::erase(this->provinces, province);
 
-	if (this->get_capital_province() == province) {
+	//also choose the capital here if the capital province is null, to handle the case of the domain losing its last province, but still having holdings outside of it
+	if (this->get_capital_province() == province || this->get_capital_province() == nullptr) {
 		co_await this->choose_capital();
 	}
 
