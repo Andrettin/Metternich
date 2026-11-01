@@ -536,6 +536,8 @@ bool population_unit::is_food_producer() const
 
 std::map<food_type, decimillesimal_int> population_unit::get_food_consumption(decimillesimal_int &total_food_consumption) const
 {
+	total_food_consumption = decimillesimal_int(0);
+
 	if (this->is_food_producer()) {
 		//food producers don't need to consume food
 		return {};
