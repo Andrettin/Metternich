@@ -98,6 +98,8 @@ void population_unit::process_gsml_property(const gsml_property &property)
 		this->literacy_rate = decimillesimal_int(value);
 	} else if (key == "wealth") {
 		this->wealth = decimillesimal_int(value);
+	} else if (key == "sick_percent") {
+		this->sick_percent = decimillesimal_int(value);
 	} else if (key == "starving_percent") {
 		this->starving_percent = decimillesimal_int(value);
 	} else if (key == "fulfilled_everyday_needs_percent") {
@@ -129,6 +131,7 @@ gsml_data population_unit::to_gsml_data() const
 	data.add_property("size", std::to_string(this->size));
 	data.add_property("literacy_rate", this->literacy_rate.to_string());
 	data.add_property("wealth", this->wealth.to_string());
+	data.add_property("sick_percent", this->sick_percent.to_string());
 	data.add_property("starving_percent", this->starving_percent.to_string());
 	data.add_property("fulfilled_everyday_needs_percent", std::to_string(this->fulfilled_everyday_needs_percent));
 	data.add_property("fulfilled_luxury_needs_percent", std::to_string(this->fulfilled_luxury_needs_percent));
@@ -506,6 +509,17 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 	return population_growth_rate;
 }
 
+void population_unit::set_sick_percent(const decimillesimal_int &percent)
+{
+	if (percent == this->get_sick_percent()) {
+		return;
+	}
+
+	this->sick_percent = percent;
+
+	emit sick_percent_changed();
+}
+
 void population_unit::set_starving_percent(const decimillesimal_int &percent)
 {
 	if (percent == this->get_starving_percent()) {
@@ -593,6 +607,7 @@ std::map<food_type, decimillesimal_int> population_unit::get_food_consumption_af
 
 void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
 {
+	this->set_sick_percent(decimillesimal_int(0));
 	this->set_starving_percent(decimillesimal_int(0));
 
 	decimillesimal_int *remaining_holding_free_consumption = nullptr;
