@@ -711,14 +711,16 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 				break;
 			}
 		}
+	}
 
+	//try to consume food of the wrong type if possible (better than suffering starvation)
+	for (auto &[food_type, consumption] : food_consumption) {
 		if (consumption == 0) {
 			continue;
 		}
 
 		total_wrong_food_consumption += consumption;
 
-		//try to consume food of the wrong type if possible (better than suffering starvation)
 		for (const commodity *food_commodity : food_commodities) {
 			if (food_commodity->get_food_type() == food_type) {
 				//already checked
