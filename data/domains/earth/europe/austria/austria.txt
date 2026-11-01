@@ -291,9 +291,9 @@ austria = {
 			}
 		}
 		
-		#1836 = {
+		1836 = {
 			literacy_rate = 40
-		#}
+		}
 		
 		1848.11.21 = {
 			offices = {
