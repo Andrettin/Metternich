@@ -98,6 +98,8 @@ void population_unit::process_gsml_property(const gsml_property &property)
 		this->literacy_rate = decimillesimal_int(value);
 	} else if (key == "wealth") {
 		this->wealth = decimillesimal_int(value);
+	} else if (key == "starving_percent") {
+		this->starving_percent = decimillesimal_int(value);
 	} else if (key == "fulfilled_everyday_needs_percent") {
 		this->fulfilled_everyday_needs_percent = std::stoi(value);
 	} else if (key == "fulfilled_luxury_needs_percent") {
@@ -127,6 +129,7 @@ gsml_data population_unit::to_gsml_data() const
 	data.add_property("size", std::to_string(this->size));
 	data.add_property("literacy_rate", this->literacy_rate.to_string());
 	data.add_property("wealth", this->wealth.to_string());
+	data.add_property("starving_percent", this->starving_percent.to_string());
 	data.add_property("fulfilled_everyday_needs_percent", std::to_string(this->fulfilled_everyday_needs_percent));
 	data.add_property("fulfilled_luxury_needs_percent", std::to_string(this->fulfilled_luxury_needs_percent));
 
