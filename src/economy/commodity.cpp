@@ -239,20 +239,7 @@ std::string commodity::value_to_string(const decimillesimal_int &value, const bo
 		display_value = value / this->get_unit_value(unit);
 	}
 
-	std::string value_str;
-
-	//ensure that at least two significant digits will be displayed, but otherwise try to truncate to as close to integers as possible
-	if (display_value.abs() >= 10) {
-		value_str = number::to_formatted_string(display_value.to_int64());
-	} else if (display_value.abs() >= 1) {
-		value_str = decimal_int(display_value).to_formatted_string();
-	} else if (display_value.abs().get_value() >= 1000) {
-		value_str = centesimal_int(display_value).to_formatted_string();
-	} else if (display_value.abs().get_value() >= 100) {
-		value_str = millesimal_int(display_value).to_formatted_string();
-	} else {
-		value_str = display_value.to_formatted_string();
-	}
+	const std::string value_str = display_value.to_formatted_string(true);
 
 	if (unit != nullptr) {
 		if (joined) {
