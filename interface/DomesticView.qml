@@ -26,7 +26,7 @@ Item {
 	TiledBackground {
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		interface_style: "dark_wood_boards"
 		frame_count: 8
@@ -36,7 +36,7 @@ Item {
 		id: court_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.Court
 	}
@@ -45,7 +45,7 @@ Item {
 		id: government_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.Government
 	}
@@ -54,7 +54,7 @@ Item {
 		id: religion_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.Religion
 	}
@@ -63,7 +63,7 @@ Item {
 		id: production_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: production_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.Production
 	}
@@ -72,7 +72,7 @@ Item {
 		id: balance_book_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.BalanceBook
 	}
@@ -81,7 +81,7 @@ Item {
 		id: domain_history_view
 		anchors.top: top_bar.bottom
 		anchors.bottom: status_bar.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 		visible: domestic_view_mode === DomesticView.Mode.DomainHistory
 	}
@@ -95,23 +95,32 @@ Item {
 	}
 	
 	CourtInfoPanel {
-		id: infopanel
+		id: court_infopanel
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
+		visible: !production_view.visible
+	}
+	
+	ProductionInfoPanel {
+		id: production_infopanel
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		visible: production_view.visible
 	}
 	
 	StatusBar {
 		id: status_bar
 		anchors.bottom: parent.bottom
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 	}
 	
 	TopBar {
 		id: top_bar
 		anchors.top: parent.top
-		anchors.left: infopanel.right
+		anchors.left: court_infopanel.right
 		anchors.right: button_panel.left
 	}
 	

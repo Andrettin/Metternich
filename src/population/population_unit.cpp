@@ -534,26 +534,39 @@ bool population_unit::is_food_producer() const
 	return false;
 }
 
-void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
+std::map<food_type, decimillesimal_int> population_unit::get_food_consumption() const
 {
-	this->set_starving_percent(decimillesimal_int(0));
-
 	if (this->is_food_producer()) {
 		//food producers don't need to consume food
-		return;
+		return {};
 	}
 
 	std::map<food_type, decimillesimal_int> food_consumption = population_defines::get()->get_population_food_consumption();
-
-	decimillesimal_int total_food_consumption;
-	decimillesimal_int total_remaining_food_consumption;
 
 	for (auto &[food_type, consumption] : food_consumption) {
 		//adjust food consumption according to this population unit's size
 		consumption *= this->get_size();
 		consumption /= population_defines::get()->get_base_population_size();
+	}
 
+	return food_consumption;
+}
+
+void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
+{
+	this->set_starving_percent(decimillesimal_int(0));
+
+	std::map<food_type, decimillesimal_int> food_consumption = this->get_food_consumption();
+
+	decimillesimal_int total_food_consumption;
+	decimillesimal_int total_remaining_food_consumption;
+
+	for (const auto &[food_type, consumption] : food_consumption) {
 		total_food_consumption += consumption;
+	}
+
+	if (total_food_consumption == 0) {
+		return;
 	}
 
 	decimillesimal_int total_free_consumption;

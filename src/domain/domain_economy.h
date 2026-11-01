@@ -261,6 +261,8 @@ public:
 
 	bool produces_commodity(const commodity *commodity) const;
 
+	Q_INVOKABLE QString get_food_type_consumption_qstring(const QString &food_type_identifier) const;
+
 	province_taxation_type get_province_taxation_type() const
 	{
 		return this->province_taxation_type;

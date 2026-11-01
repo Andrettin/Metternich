@@ -18,6 +18,7 @@
 #include "economy/commodity.h"
 #include "economy/employment_type.h"
 #include "economy/expense_transaction_type.h"
+#include "economy/food_type.h"
 #include "economy/income_transaction_type.h"
 #include "economy/province_taxation_type.h"
 #include "economy/resource.h"
@@ -36,8 +37,10 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/exception_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -885,6 +888,27 @@ bool domain_economy::produces_commodity(const commodity *commodity) const
 	return false;
 }
 
+QString domain_economy::get_food_type_consumption_qstring(const QString &food_type_identifier) const
+{
+	try {
+		const food_type food_type = string::to_enum<metternich::food_type>(food_type_identifier.toStdString());
+
+		decimillesimal_int total_food_type_consumption;
+
+		for (const population_unit *population_unit : this->get_game_data()->get_population_units()) {
+			const std::map<metternich::food_type, decimillesimal_int> unit_food_consumption = population_unit->get_food_consumption();
+			const auto find_iterator = unit_food_consumption.find(food_type);
+			if (find_iterator != unit_food_consumption.end()) {
+				total_food_type_consumption += find_iterator->second;
+			}
+		}
+
+		return QString::fromStdString(total_food_type_consumption.to_formatted_string(true));
+	} catch (...) {
+		exception::report(std::current_exception());
+		return QString();
+	}
+}
 
 void domain_economy::set_province_taxation_type(const metternich::province_taxation_type province_taxation_type)
 {
