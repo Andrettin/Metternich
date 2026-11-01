@@ -1755,6 +1755,11 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 			capital->get_map_data()->get_province()->get_game_data()->choose_provincial_capital();
 		}
 
+		if (game::get()->is_running()) {
+			//check whether the new capital can gain any free-in-capital buildings
+			co_await capital->get_game_data()->check_free_buildings();
+		}
+
 		if (game::get()->is_loaded()) {
 			this->calculate_text_rect();
 			this->calculate_realm_text_rect();
