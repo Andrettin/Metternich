@@ -624,9 +624,10 @@ void domain_economy::set_storage_capacity(const int64_t capacity)
 
 	this->storage_capacity = capacity;
 
-	for (auto &[commodity, max_storage] : this->get_max_commodity_storages()) {
+	const commodity_map<int64_t> max_commodity_storages_copy = this->get_max_commodity_storages();
+	for (auto &[commodity, max_storage] : max_commodity_storages_copy) {
 		if (max_storage == old_capacity) {
-			this->change_max_commodity_storage(commodity, capacity - old_capacity);
+			this->set_max_commodity_storage(commodity, capacity);
 		}
 	}
 
@@ -996,6 +997,7 @@ void domain_economy::set_max_commodity_storage(const commodity *commodity, const
 	}
 
 	assert_throw(this->can_trade_commodity(commodity));
+	assert_throw(value >= 0);
 
 	if (value == 0) {
 		this->max_commodity_storages.erase(commodity);
