@@ -342,16 +342,61 @@ QCoro::Task<void> population_unit::set_employment_type(const metternich::employm
 	}
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size(), true);
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
 
 	this->employment_type = employment_type;
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size(), true);
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
 	}
 
 	emit employment_type_changed();
+}
+
+int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type) const
+{
+	Q_UNUSED(employment_type);
+
+	int64_t effective_employment_size = this->get_size();
+
+	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
+		//sick and starving employees cannot work
+		effective_employment_size = (effective_employment_size * (this->get_sick_percent() + this->get_starving_percent()) / 100).to_int64();
+	}
+
+	//FIXME: add support for population types to have throughput modifiers for specific employment types
+
+	return effective_employment_size;
+}
+
+int64_t population_unit::get_effective_employment_size() const
+{
+	return this->get_effective_employment_size(this->get_employment_type());
+}
+
+int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size) const
+{
+	Q_UNUSED(employment_type);
+
+	int64_t employment_size = effective_employment_size;
+
+	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
+		employment_size = (effective_employment_size * 100 / (this->get_sick_percent() + this->get_starving_percent())).to_int64();
+	}
+
+	//FIXME: add support for population types to have throughput modifiers for specific employment types
+
+	return employment_size;
+}
+
+int64_t population_unit::get_employment_size_from_effective_size(const int64_t effective_employment_size) const
+{
+	assert_throw(this->get_employment_type() != nullptr);
+
+	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size);
 }
 
 const icon *population_unit::get_small_icon() const
@@ -419,7 +464,8 @@ void population_unit::set_site(const metternich::site *site)
 	assert_throw(this->get_site() != nullptr);
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size(), change_input_storage);
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), change_input_storage);
 	}
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
@@ -429,7 +475,8 @@ void population_unit::set_site(const metternich::site *site)
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
 	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size(), change_input_storage);
+		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), this->get_size());
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), change_input_storage);
 	}
 
 	emit size_changed();
@@ -509,24 +556,42 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 	return population_growth_rate;
 }
 
-void population_unit::set_sick_percent(const decimillesimal_int &percent)
+QCoro::Task<void> population_unit::set_sick_percent(const decimillesimal_int &percent)
 {
 	if (percent == this->get_sick_percent()) {
-		return;
+		co_return;
+	}
+
+	if (this->get_employment_type() != nullptr) {
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
 
 	this->sick_percent = percent;
 
+	if (this->get_employment_type() != nullptr) {
+		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
+	}
+
 	emit sick_percent_changed();
 }
 
-void population_unit::set_starving_percent(const decimillesimal_int &percent)
+QCoro::Task<void> population_unit::set_starving_percent(const decimillesimal_int &percent)
 {
 	if (percent == this->get_starving_percent()) {
-		return;
+		co_return;
+	}
+
+	if (this->get_employment_type() != nullptr) {
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
 
 	this->starving_percent = percent;
+
+	if (this->get_employment_type() != nullptr) {
+		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
+	}
 
 	emit starving_percent_changed();
 
@@ -658,10 +723,10 @@ void population_unit::consume_imported_food_commodity(const commodity *food_comm
 	}
 }
 
-void population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
+QCoro::Task<void> population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
 {
-	this->set_sick_percent(decimillesimal_int(0));
-	this->set_starving_percent(decimillesimal_int(0));
+	co_await this->set_sick_percent(decimillesimal_int(0));
+	co_await this->set_starving_percent(decimillesimal_int(0));
 
 	decimillesimal_int *remaining_holding_free_consumption = nullptr;
 
@@ -677,7 +742,7 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 	decimillesimal_int total_remaining_food_consumption;
 
 	if (total_food_consumption == 0) {
-		return;
+		co_return;
 	}
 
 	for (auto &[food_type, consumption] : food_consumption) {
@@ -758,12 +823,12 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 
 	//set how many people in this population unit are sick because of not having a balanced enough diet
 	if (total_wrong_food_consumption > 0) {
-		this->set_sick_percent(100 * total_wrong_food_consumption / total_food_consumption);
+		co_await this->set_sick_percent(100 * total_wrong_food_consumption / total_food_consumption);
 	}
 
 	//set how many people in this population unit are starving if not all food consumption could be fulfilled
 	if (total_remaining_food_consumption > 0) {
-		this->set_starving_percent(100 * total_remaining_food_consumption / total_food_consumption);
+		co_await this->set_starving_percent(100 * total_remaining_food_consumption / total_food_consumption);
 	}
 }
 

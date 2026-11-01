@@ -201,6 +201,8 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 		scope.process(this->population.get());
 	} else if (tag == "employment_sizes") {
 		scope.to_map(this->employment_sizes);
+	} else if (tag == "effective_employment_sizes") {
+		scope.to_map(this->effective_employment_sizes);
 	} else if (tag == "base_employment_capacities") {
 		scope.to_map(this->base_employment_capacities);
 	} else if (tag == "employment_capacity_modifiers") {
@@ -345,8 +347,12 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_property("quarterly_population_growth_rate", this->get_quarterly_population_growth_rate().to_string());
 	}
 
-	if (!this->get_employment_sizes().empty()) {
+	if (!this->employment_sizes.empty()) {
 		data.add_child(gsml_data::from_map(this->employment_sizes, "employment_sizes"));
+	}
+
+	if (!this->effective_employment_sizes.empty()) {
+		data.add_child(gsml_data::from_map(this->effective_employment_sizes, "effective_employment_sizes"));
 	}
 
 	if (!this->base_employment_capacities.empty()) {
@@ -2211,7 +2217,8 @@ QCoro::Task<void> site_game_data::add_population_unit(qunique_ptr<population_uni
 	this->get_population()->on_population_unit_gained(population_unit.get());
 
 	if (population_unit->get_employment_type() != nullptr) {
-		co_await this->change_employment_size(population_unit->get_employment_type(), population_unit->get_size(), change_input_storage);
+		this->change_employment_size(population_unit->get_employment_type(), population_unit->get_size());
+		co_await this->change_effective_employment_size(population_unit->get_employment_type(), population_unit->get_effective_employment_size(), change_input_storage);
 	}
 
 	this->population_units.push_back(std::move(population_unit));
@@ -2234,7 +2241,8 @@ QCoro::Task<qunique_ptr<population_unit>> site_game_data::pop_population_unit(po
 			this->population_units.erase(this->population_units.begin() + i);
 
 			if (population_unit->get_employment_type() != nullptr) {
-				co_await this->change_employment_size(population_unit->get_employment_type(), -population_unit->get_size(), change_input_storage);
+				this->change_employment_size(population_unit->get_employment_type(), -population_unit->get_size());
+				co_await this->change_effective_employment_size(population_unit->get_employment_type(), -population_unit->get_effective_employment_size(), change_input_storage);
 			}
 
 			population_unit->get_province()->get_game_data()->remove_population_unit(population_unit);
@@ -2497,11 +2505,9 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 }
 
-QCoro::Task<void> site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage)
+void site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change)
 {
 	assert_throw(employment_type != nullptr);
-
-	const int64_t old_size = this->get_employment_size(employment_type);
 
 	const int64_t size = (this->employment_sizes[employment_type] += change);
 
@@ -2510,6 +2516,22 @@ QCoro::Task<void> site_game_data::change_employment_size(const employment_type *
 
 	if (size == 0) {
 		this->employment_sizes.erase(employment_type);
+	}
+}
+
+QCoro::Task<void> site_game_data::change_effective_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage)
+{
+	assert_throw(employment_type != nullptr);
+
+	const int64_t old_size = this->get_effective_employment_size(employment_type);
+
+	const int64_t size = (this->effective_employment_sizes[employment_type] += change);
+
+	assert_throw(size >= 0);
+	assert_throw(size <= this->get_employment_capacity(employment_type));
+
+	if (size == 0) {
+		this->effective_employment_sizes.erase(employment_type);
 	}
 
 	if (old_size > 0) {
@@ -2645,7 +2667,7 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		}
 	}
 	for (population_unit *population_unit : population_units) {
-		const int64_t unemployment_size = std::min(decrease, population_unit->get_size());
+		const int64_t unemployment_size = std::min(population_unit->get_employment_size_from_effective_size(decrease), population_unit->get_size());
 		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
@@ -2700,7 +2722,8 @@ QCoro::Task<void> site_game_data::check_employment()
 
 			assert_throw(employed_population_type != nullptr);
 
-			const int64_t employee_size = std::min(std::min(available_employment_capacity, available_employment_input_capacity), population_unit->get_size());
+			const int64_t employee_size = std::min(std::min(available_employment_capacity, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity)), population_unit->get_size());
+			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type);
 			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
@@ -2715,7 +2738,11 @@ QCoro::Task<void> site_game_data::check_employment()
 			}
 
 			available_employment_capacity -= employee_size;
-			available_employment_input_capacity -= employee_size;
+			available_employment_input_capacity -= effective_employee_size;
+
+			assert_throw(available_employment_capacity >= 0);
+			assert_throw(available_employment_input_capacity >= 0);
+
 			if (available_employment_capacity == 0 || available_employment_input_capacity == 0) {
 				break;
 			}
@@ -2876,7 +2903,7 @@ void site_game_data::calculate_commodity_outputs()
 		}
 	}
 
-	for (const auto &[employment_type, employment_size] : this->get_employment_sizes()) {
+	for (const auto &[employment_type, employment_size] : this->get_effective_employment_sizes()) {
 		if (employment_type->get_output_commodity() == nullptr) {
 			continue;
 		}
@@ -2884,9 +2911,6 @@ void site_game_data::calculate_commodity_outputs()
 		assert_throw(employment_type->get_base_employment_size() > 0);
 
 		decimillesimal_int output = employment_type->get_quarterly_output_value() * game::get()->get_current_quarters_per_turn();
-
-		//FIXME: the effective throughput should change depending on how many employees are sick (sick employees cannot work)
-
 		output *= employment_size;
 		output /= employment_type->get_base_employment_size();
 		output *= 100 + commodity_throughput_modifiers[employment_type->get_output_commodity()];

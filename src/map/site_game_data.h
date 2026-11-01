@@ -510,7 +510,25 @@ public:
 		return 0;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
+	void change_employment_size(const employment_type *employment_type, const int64_t change);
+
+	const data_entry_map<employment_type, int64_t> &get_effective_employment_sizes() const
+	{
+		return this->effective_employment_sizes;
+	}
+
+	int64_t get_effective_employment_size(const employment_type *employment_type) const
+	{
+		const auto find_iterator = this->effective_employment_sizes.find(employment_type);
+
+		if (find_iterator != this->effective_employment_sizes.end()) {
+			return find_iterator->second;
+		}
+
+		return 0;
+	}
+
+	[[nodiscard]] QCoro::Task<void> change_effective_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
 
 	int64_t get_base_employment_capacity(const employment_type *employment_type) const
 	{
@@ -789,6 +807,7 @@ private:
 	decimillesimal_int free_food_consumption;
 	decimillesimal_int quarterly_population_growth_rate;
 	data_entry_map<employment_type, int64_t> employment_sizes;
+	data_entry_map<employment_type, int64_t> effective_employment_sizes;
 	data_entry_map<employment_type, int64_t> base_employment_capacities;
 	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
 	data_entry_map<employment_type, int64_t> employment_capacities;

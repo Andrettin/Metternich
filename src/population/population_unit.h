@@ -105,6 +105,11 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_employment_type(const metternich::employment_type *employment_type);
 
+	int64_t get_effective_employment_size(const employment_type *employment_type) const;
+	int64_t get_effective_employment_size() const;
+	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size) const;
+	int64_t get_employment_size_from_effective_size(const int64_t effective_employment_size) const;
+
 	const icon *get_icon() const;
 	const icon *get_small_icon() const;
 
@@ -177,7 +182,7 @@ public:
 		return this->get_sick_percent().to_int();
 	}
 
-	void set_sick_percent(const decimillesimal_int &percent);
+	[[nodiscard]] QCoro::Task<void> set_sick_percent(const decimillesimal_int &percent);
 
 	const decimillesimal_int &get_starving_percent() const
 	{
@@ -189,7 +194,7 @@ public:
 		return this->get_starving_percent().to_int();
 	}
 
-	void set_starving_percent(const decimillesimal_int &percent);
+	[[nodiscard]] QCoro::Task<void> set_starving_percent(const decimillesimal_int &percent);
 
 	int get_fulfilled_everyday_needs_percent() const
 	{
@@ -230,7 +235,7 @@ public:
 
 	void consume_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption);
 	void consume_imported_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption, const std::vector<const metternich::domain *> &trade_domains);
-	void consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding);
+	[[nodiscard]] QCoro::Task<void> consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding);
 	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 

@@ -150,15 +150,15 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> apply_military_units();
 
-	QCoro::Task<void> on_setup_finished();
+	[[nodiscard]] QCoro::Task<void> on_setup_finished();
 
 	Q_INVOKABLE QCoro::QmlTask do_turn()
 	{
 		return this->do_turn_coro();
 	}
 
-	QCoro::Task<void> do_turn_coro();
-	void do_trade();
+	[[nodiscard]] QCoro::Task<void> do_turn_coro();
+	[[nodiscard]] QCoro::Task<void> do_trade();
 
 	const QDate &get_date() const
 	{

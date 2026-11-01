@@ -344,7 +344,7 @@ void domain_economy::do_trade()
 	}
 }
 
-void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities)
+QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities)
 {
 	assert_throw(!this->get_game_data()->is_under_anarchy());
 
@@ -373,19 +373,19 @@ void domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal
 	}
 
 	for (population_unit *population_unit : sorted_population_units) {
-		population_unit->consume_food(trade_domains, food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding);
+		co_await population_unit->consume_food(trade_domains, food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding);
 	}
 
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
 
 	if (weighted_population_size == 0) {
-		return;
+		co_return;
 	}
 
 	const decimillesimal_int consumption_wealth = std::max(this->get_game_data()->get_consumption_int(), 0) * defines::get()->get_domain_income_unit_value();
 
 	if (consumption_wealth == 0) {
-		return;
+		co_return;
 	}
 
 	for (population_unit *population_unit : domain_population_units) {
@@ -764,7 +764,7 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 			continue;
 		}
 
-		const data_entry_map<employment_type, int64_t> employment_sizes = site->get_game_data()->get_employment_sizes();
+		const data_entry_map<employment_type, int64_t> employment_sizes = site->get_game_data()->get_effective_employment_sizes();
 		for (const auto &[employment_type, employment_size] : employment_sizes) {
 			if (!employment_type->get_input_commodities().contains(commodity)) {
 				continue;

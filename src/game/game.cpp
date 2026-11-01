@@ -1986,7 +1986,7 @@ QCoro::Task<void> game::do_turn_coro()
 			domain->get_economy()->prepare_offers();
 		}
 
-		this->do_trade();
+		co_await this->do_trade();
 
 		for (const domain *domain : this->get_domains()) {
 			//do domain events after processing the turn for each domain, so that e.g. events won't refer to a scope which no longer exists by the time the player gets to choose an option
@@ -2074,7 +2074,7 @@ QCoro::Task<void> game::do_turn_coro()
 	}
 }
 
-void game::do_trade()
+QCoro::Task<void> game::do_trade()
 {
 	std::vector<metternich::domain *> trade_domains = this->get_domains();
 
@@ -2096,7 +2096,7 @@ void game::do_trade()
 	std::stable_sort(food_commodities.begin(), food_commodities.end(), commodity::commodity_price_compare);
 
 	for (const domain *domain : trade_domains) {
-		domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities, food_commodities);
+		co_await domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities, food_commodities);
 	}
 
 	for (const domain *domain : trade_domains) {
