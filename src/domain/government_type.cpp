@@ -286,9 +286,6 @@ void government_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->forbidden_laws.push_back(law::get(value));
 		}
-		auto conditions = std::make_unique<and_condition<domain>>();
-		conditions->process_gsml_data(scope);
-		this->conditions = std::move(conditions);
 	} else if (tag == "default_laws") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const law_group *law_group = law_group::get(property.get_key());
