@@ -568,6 +568,12 @@ void population_unit::consume_food(const std::vector<const metternich::domain *>
 		}
 	}
 
+	if (total_free_consumption == total_food_consumption) {
+		//if the total free food consumption for this population unit equals the total food consumption for it, then we don't need to go through the food types, we can just consider the population unit fed
+		//this also prevents rounding errors when calculating the free consumption for each food type leaving a tiny amount of starvation even if the population unit should be completely fed
+		return;
+	}
+
 	for (auto &[food_type, consumption] : food_consumption) {
 		if (consumption == 0) {
 			continue;
