@@ -2672,13 +2672,14 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		}
 
 		const int64_t unemployment_size = std::min(decrease_effective ? population_unit->get_employment_size_from_effective_size(employment_type, decrease, true) : decrease, population_unit->get_size());
+		const int64_t effective_unemployment_size = population_unit->get_effective_employment_size(employment_type, unemployment_size);
 		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, -unemployment_size, population_unit->get_literacy_rate(), -lost_wealth, change_input_storage);
 
-		decrease -= decrease_effective ? population_unit->get_effective_employment_size(employment_type, unemployment_size) : unemployment_size;
+		decrease -= decrease_effective ? effective_unemployment_size : unemployment_size;
 		if (decrease <= 0) {
 			break;
 		}
