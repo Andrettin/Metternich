@@ -82,28 +82,20 @@ public:
 		return this->type;
 	}
 
-	void set_type(const population_type *type);
-
 	const culture *get_culture() const
 	{
 		return this->culture;
 	}
-
-	void set_culture(const metternich::culture *culture);
 
 	const religion *get_religion() const
 	{
 		return this->religion;
 	}
 
-	void set_religion(const metternich::religion *religion);
-
 	const phenotype *get_phenotype() const
 	{
 		return this->phenotype;
 	}
-
-	void set_phenotype(const metternich::phenotype *phenotype);
 
 	const species *get_species() const;
 
@@ -111,8 +103,6 @@ public:
 	{
 		return this->employment_type;
 	}
-
-	[[nodiscard]] QCoro::Task<void> set_employment_type(const metternich::employment_type *employment_type);
 
 	int64_t get_effective_employment_size(const employment_type *employment_type, const int64_t employee_size, const decimillesimal_int &sick_and_starving_percent) const;
 	int64_t get_effective_employment_size() const;
