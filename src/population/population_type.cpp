@@ -72,24 +72,20 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
-	} else if (tag == "everyday_need_weights") {
+	} else if (tag == "everyday_needs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const commodity *commodity = commodity::get(key);
-			this->everyday_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
+			this->everyday_needs[commodity] = decimillesimal_int(value);
 		});
-
-		this->total_everyday_need_weight = archimedes::map::get_total_value(this->get_everyday_need_weights());
-	} else if (tag == "luxury_need_weights") {
+	} else if (tag == "luxury_needs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const commodity *commodity = commodity::get(key);
-			this->luxury_need_weights[commodity] = static_cast<int>(centesimal_int(value).get_value());
+			this->luxury_needs[commodity] = decimillesimal_int(value);
 		});
-
-		this->total_luxury_need_weight = archimedes::map::get_total_value(this->get_luxury_need_weights());
 	} else if (tag == "promotion_factors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
@@ -166,13 +162,13 @@ void population_type::check() const
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_everyday_need_weights()) {
+	for (const auto &[commodity, need] : this->get_everyday_needs()) {
 		if (!commodity->is_tradeable()) {
 			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_luxury_need_weights()) {
+	for (const auto &[commodity, need] : this->get_luxury_needs()) {
 		if (!commodity->is_tradeable()) {
 			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 		}

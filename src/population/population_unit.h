@@ -225,8 +225,8 @@ public:
 	void consume_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption);
 	void consume_imported_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	[[nodiscard]] QCoro::Task<void> consume_food(const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
-	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
-	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
+	void purchase_needs(const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
+	int purchase_needs(const commodity_map<decimillesimal_int> &base_needs, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 
 	population_unit_percentages get_percentages() const;
 

@@ -17,10 +17,10 @@ officers = {
 		south_asian = rifle_infantry_medium_small
 		african = rifle_infantry_dark_small
 	}
-	everyday_need_weights = {
-		coal = 2.3
-		lumber = 19.6 #furniture
-		glass = 2.9
-		tobacco = 3.3
+	everyday_needs = {
+		coal = 1
+		furniture = 4
+		glass = 1
+		tobacco = 3
 	}
 }

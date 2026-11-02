@@ -17,12 +17,12 @@ craftsmen = {
 		south_asian = craftsmen_medium_small
 		african = craftsmen_dark_small
 	}
-	everyday_need_weights = {
-		coal = 2.3
-		lumber = 14.7 #furniture
+	everyday_needs = {
+		coal = 1
+		furniture = 3
 	}
-	luxury_need_weights = {
-		lumber = 14.7 #furniture
-		tobacco = 1.045
+	luxury_needs = {
+		furniture = 3
+		tobacco = 0.95
 	}
 }

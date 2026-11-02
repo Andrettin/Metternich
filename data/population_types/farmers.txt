@@ -5,8 +5,6 @@ farmers = {
 	icon = slaves_light
 	small_icon = slaves_light_small
 	strata = lower
-	#output_commodity = wealth
-	#output_value = 7sp
 	equivalent_population_types = {
 		laborers
 		untrained_workers
@@ -23,14 +21,14 @@ farmers = {
 		south_asian = slaves_medium_small
 		african = slaves_dark_small
 	}
-	everyday_need_weights = {
-		coal = 2.3
-		lumber = 5.39 #furniture
-		fertilizer = 5
+	everyday_needs = {
+		coal = 1
+		fertilizer = 0.5
+		furniture = 1.1
 	}
-	luxury_need_weights = {
-		lumber = 14.7 #furniture
-		tobacco = 1.045
+	luxury_needs = {
+		furniture = 3
+		tobacco = 0.95
 	}
 	promotion_factors = {
 		aristocrats = {

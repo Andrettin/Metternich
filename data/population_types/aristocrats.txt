@@ -11,8 +11,8 @@ aristocrats = {
 	province_modifier = {
 		resource_output_modifier = 10
 	}
-	everyday_need_weights = {
-		coal = 2.3
-		tobacco = 11
+	everyday_needs = {
+		coal = 1
+		tobacco = 10
 	}
 }

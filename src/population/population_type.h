@@ -180,24 +180,14 @@ public:
 		return this->equivalent_population_types;
 	}
 
-	const commodity_map<int> &get_everyday_need_weights() const
+	const commodity_map<decimillesimal_int> &get_everyday_needs() const
 	{
-		return this->everyday_need_weights;
+		return this->everyday_needs;
 	}
 
-	int get_total_everyday_need_weight() const
+	const commodity_map<decimillesimal_int> &get_luxury_needs() const
 	{
-		return this->total_everyday_need_weight;
-	}
-
-	const commodity_map<int> &get_luxury_need_weights() const
-	{
-		return this->luxury_need_weights;
-	}
-
-	int get_total_luxury_need_weight() const
-	{
-		return this->total_luxury_need_weight;
+		return this->luxury_needs;
 	}
 
 	const population_type_map<std::unique_ptr<factor<population_unit>>> &get_promotion_factors() const
@@ -230,10 +220,8 @@ private:
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const domain>> domain_modifier;
 	std::vector<const population_type *> equivalent_population_types;
-	commodity_map<int> everyday_need_weights;
-	int total_everyday_need_weight = 0;
-	commodity_map<int> luxury_need_weights;
-	int total_luxury_need_weight = 0;
+	commodity_map<decimillesimal_int> everyday_needs;
+	commodity_map<decimillesimal_int> luxury_needs;
 	population_type_map<std::unique_ptr<factor<population_unit>>> promotion_factors; //selects the population type to be promoted or demoted to
 	const game_rule *required_game_rule = nullptr;
 };

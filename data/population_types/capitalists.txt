@@ -11,8 +11,8 @@ capitalists = {
 	province_modifier = {
 		industrial_output_modifier = 10
 	}
-	everyday_need_weights = {
-		coal = 46
-		tobacco = 22
+	everyday_needs = {
+		coal = 20
+		tobacco = 20
 	}
 }

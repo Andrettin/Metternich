@@ -376,23 +376,8 @@ QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<d
 		co_await population_unit->consume_food(food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding, trade_domains, remaining_demands);
 	}
 
-	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
-
-	if (weighted_population_size == 0) {
-		co_return;
-	}
-
-	const decimillesimal_int consumption_wealth = std::max(this->get_game_data()->get_consumption_int(), 0) * defines::get()->get_domain_income_unit_value();
-
-	if (consumption_wealth == 0) {
-		co_return;
-	}
-
 	for (population_unit *population_unit : domain_population_units) {
-		const int64_t population_unit_weighted_size = population_unit->get_weighted_size();
-		const decimillesimal_int population_unit_consumption_wealth = consumption_wealth * population_unit_weighted_size / weighted_population_size;
-
-		population_unit->purchase_needs(population_unit_consumption_wealth, trade_domains, remaining_demands);
+		population_unit->purchase_needs(trade_domains, remaining_demands);
 	}
 }
 
