@@ -2,7 +2,6 @@
 
 #include "database/defines_base.h"
 #include "economy/commodity_container.h"
-#include "util/centesimal_int.h"
 #include "util/singleton.h"
 
 namespace metternich {
