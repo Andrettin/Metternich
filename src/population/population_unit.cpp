@@ -640,9 +640,19 @@ void population_unit::consume_food_commodity(const commodity *food_commodity, de
 	consumption -= consumed_quantity;
 }
 
-void population_unit::consume_imported_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption, const std::vector<const metternich::domain *> &trade_domains)
+void population_unit::consume_imported_food_commodity(const commodity *food_commodity, decimillesimal_int &consumption, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	if (!this->domain->get_economy()->can_trade_commodity(food_commodity)) {
+		return;
+	}
+
+	//ensure that we have enough storage for the purchase
+	decimillesimal_int purchasable_quantity = decimillesimal_int::min(consumption, this->get_domain()->get_economy()->get_storage_capacity_for_commodity(food_commodity));
+
+	//ensure that we can afford to purchase the food commodity
+	purchasable_quantity = decimillesimal_int::min(purchasable_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
+
+	if (purchasable_quantity == 0) {
 		return;
 	}
 
@@ -656,13 +666,7 @@ void population_unit::consume_imported_food_commodity(const commodity *food_comm
 			continue;
 		}
 
-		decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, consumption);
-
-		//ensure that we have enough storage for the purchase
-		bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_storage_capacity_for_commodity(food_commodity));
-
-		//ensure that we can afford to purchase the food commodity
-		bought_quantity = decimillesimal_int::min(bought_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
+		decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, purchasable_quantity);
 
 		if (bought_quantity <= 0) {
 			//cannot afford to buy the commodity, or does not have storage capacity for it, so there's no point in doing the same process for other domains
@@ -673,14 +677,19 @@ void population_unit::consume_imported_food_commodity(const commodity *food_comm
 
 		this->get_domain()->get_economy()->change_stored_commodity(food_commodity, -bought_quantity);
 		consumption -= bought_quantity;
+		purchasable_quantity -= bought_quantity;
 
-		if (consumption == 0) {
+		if (purchasable_quantity == 0) {
 			break;
 		}
 	}
+
+	if (purchasable_quantity > 0) {
+		remaining_demands[food_commodity] += purchasable_quantity;
+	}
 }
 
-QCoro::Task<void> population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
+QCoro::Task<void> population_unit::consume_food(const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	decimillesimal_int *remaining_holding_free_consumption = nullptr;
 
@@ -725,7 +734,7 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 
 		//import remaining consumption for this food type
 		for (const commodity *food_commodity : food_type_commodity_vector) {
-			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains);
+			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains, remaining_demands);
 
 			if (consumption == 0) {
 				break;
@@ -765,7 +774,7 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 				continue;
 			}
 
-			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains);
+			this->consume_imported_food_commodity(food_commodity, consumption, trade_domains, remaining_demands);
 
 			if (consumption == 0) {
 				break;

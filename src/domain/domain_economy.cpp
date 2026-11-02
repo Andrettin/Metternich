@@ -373,7 +373,7 @@ QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<d
 	}
 
 	for (population_unit *population_unit : sorted_population_units) {
-		co_await population_unit->consume_food(trade_domains, food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding);
+		co_await population_unit->consume_food(food_type_commodities, food_commodities, remaining_free_food_consumption_per_holding, trade_domains, remaining_demands);
 	}
 
 	const int64_t weighted_population_size = this->get_game_data()->get_population()->get_weighted_size();
