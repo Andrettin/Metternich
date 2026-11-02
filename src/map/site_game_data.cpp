@@ -976,7 +976,6 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score((-this->get_holding_level() * 100).to_int());
 		this->get_owner()->get_game_data()->change_domain_power(-this->get_holding_level().to_int());
-		this->get_owner()->get_game_data()->change_consumption(-holding_defines::get()->get_consumption_for_holding_level(this->get_holding_level().to_int()));
 	}
 
 	if (this->get_holding_type() != nullptr) {
@@ -1012,7 +1011,6 @@ void site_game_data::set_holding_level(const centesimal_int &level)
 	if (this->get_owner() != nullptr) {
 		this->get_owner()->get_game_data()->change_score((this->get_holding_level() * 100).to_int());
 		this->get_owner()->get_game_data()->change_domain_power(this->get_holding_level().to_int());
-		this->get_owner()->get_game_data()->change_consumption(holding_defines::get()->get_consumption_for_holding_level(this->get_holding_level().to_int()));
 	}
 
 	this->update_weighted_holding_level();
@@ -2018,7 +2016,6 @@ QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 
 	if (this->get_owner() != nullptr) {
 		co_await this->get_owner()->get_game_data()->change_holding_count(multiplier);
-		this->get_owner()->get_game_data()->change_consumption(holding_defines::get()->get_consumption_for_holding_level(this->get_holding_level().to_int()) * multiplier);
 
 		for (const site_feature *feature : this->get_features()) {
 			if (feature->get_domain_modifier() != nullptr) {

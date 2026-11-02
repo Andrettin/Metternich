@@ -31,8 +31,6 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const centesimal_int &get_consumption_for_holding_level(const int holding_level) const;
-
 	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs(const construction_type construction_type) const
 	{
 		const auto find_iterator = this->construction_level_commodity_costs.find(construction_type);
@@ -85,7 +83,6 @@ signals:
 	void changed();
 
 private:
-	std::map<int, centesimal_int> consumption_per_holding_level;
 	std::map<construction_type, commodity_map<decimillesimal_int>> construction_level_commodity_costs;
 	std::map<construction_type, commodity_map<decimillesimal_int>> construction_level_commodity_costs_per_level;
 	std::map<construction_type, std::map<int, std::unique_ptr<const modifier<const site>>>> construction_level_modifiers;
