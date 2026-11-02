@@ -2291,17 +2291,27 @@ QCoro::Task<void> site_game_data::create_population_unit(const population_type *
 	co_await this->add_population_unit(std::move(population_unit), change_input_storage);
 }
 
-QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const population_unit_percentages &percentages, const decimillesimal_int &wealth, const bool change_input_storage)
+population_unit *site_game_data::get_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type) const
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
-			population_unit->change_wealth(wealth);
-			co_await population_unit->change_size(size_change, percentages, change_input_storage);
-			if (population_unit->get_size() == 0) {
-				co_await this->pop_population_unit(population_unit.get(), change_input_storage);
-			}
-			co_return;
+			return population_unit.get();
 		}
+	}
+
+	return nullptr;
+}
+
+QCoro::Task<void> site_game_data::change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const population_unit_percentages &percentages, const decimillesimal_int &wealth, const bool change_input_storage)
+{
+	population_unit *existing_population_unit = this->get_population_unit(type, culture, religion, phenotype, employment_type);
+	if (existing_population_unit != nullptr) {
+		existing_population_unit->change_wealth(wealth);
+		co_await existing_population_unit->change_size(size_change, percentages, change_input_storage);
+		if (existing_population_unit->get_size() == 0) {
+			co_await this->pop_population_unit(existing_population_unit, change_input_storage);
+		}
+		co_return;
 	}
 
 	assert_throw(size_change >= 0);
