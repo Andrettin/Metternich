@@ -570,7 +570,7 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 	}
 
 	this->sick_percent = sick_percent;
-	this->sick_percent = starving_percent;
+	this->starving_percent = starving_percent;
 
 	if (this->get_employment_type() != nullptr) {
 		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
