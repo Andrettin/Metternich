@@ -367,7 +367,7 @@ void population_unit::set_site(const metternich::site *site)
 	this->set_domain(domain);
 }
 
-[[nodiscard]] QCoro::Task<void> population_unit::change_size(const int64_t change, const population_unit_percentages &percentages, const bool change_input_storage)
+QCoro::Task<void> population_unit::change_size(const int64_t change, const population_unit_percentages &percentages, const bool change_input_storage)
 {
 	if (change == 0) {
 		co_return;
@@ -413,12 +413,12 @@ void population_unit::set_site(const metternich::site *site)
 
 	if (this->get_employment_type() != nullptr) {
 		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
-		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), change_input_storage);
+		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -old_effective_employment_size, change_input_storage);
 	}
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
 
-	this->size += change;
+	this->size = new_size;
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
