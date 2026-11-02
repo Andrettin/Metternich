@@ -105,9 +105,9 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_employment_type(const metternich::employment_type *employment_type);
 
-	int64_t get_effective_employment_size(const employment_type *employment_type, const int64_t employee_size) const;
+	int64_t get_effective_employment_size(const employment_type *employment_type, const int64_t employee_size, const decimillesimal_int &sick_and_starving_percent) const;
 	int64_t get_effective_employment_size() const;
-	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size, const bool ceil) const;
+	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const;
 	int64_t get_employment_size_from_effective_size(const int64_t effective_employment_size) const;
 
 	const icon *get_icon() const;
@@ -190,6 +190,11 @@ public:
 	int get_starving_percent_int() const
 	{
 		return this->get_starving_percent().to_int();
+	}
+
+	decimillesimal_int get_sick_and_starving_percent() const
+	{
+		return this->get_sick_percent() + this->get_starving_percent();
 	}
 
 	[[nodiscard]] QCoro::Task<void> set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent);

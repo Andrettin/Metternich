@@ -356,15 +356,15 @@ QCoro::Task<void> population_unit::set_employment_type(const metternich::employm
 	emit employment_type_changed();
 }
 
-int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type, const int64_t employee_size) const
+int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type, const int64_t employee_size, const decimillesimal_int &sick_and_starving_percent) const
 {
 	Q_UNUSED(employment_type);
 
 	int64_t effective_employment_size = employee_size;
 
-	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
+	if (sick_and_starving_percent > 0) {
 		//sick and starving employees cannot work
-		effective_employment_size = (effective_employment_size * (100 - this->get_sick_percent() - this->get_starving_percent()) / 100).to_int64();
+		effective_employment_size = (effective_employment_size * (100 - sick_and_starving_percent) / 100).to_int64();
 	}
 
 	//FIXME: add support for population types to have throughput modifiers for specific employment types
@@ -374,18 +374,17 @@ int64_t population_unit::get_effective_employment_size(const metternich::employm
 
 int64_t population_unit::get_effective_employment_size() const
 {
-	return this->get_effective_employment_size(this->get_employment_type(), this->get_size());
+	return this->get_effective_employment_size(this->get_employment_type(), this->get_size(), this->get_sick_and_starving_percent());
 }
 
-int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const bool ceil) const
+int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const
 {
 	Q_UNUSED(employment_type);
 
 	int64_t employment_size = effective_employment_size;
 
-	if (this->get_sick_percent() > 0 || this->get_starving_percent() > 0) {
-		const decimillesimal_int sick_and_starving_percent = this->get_sick_percent() + this->get_starving_percent();
-		assert_throw(sick_and_starving_percent < 100);
+	if (sick_and_starving_percent > 0) {
+		assert_throw(sick_and_starving_percent <= 100);
 		const decimillesimal_int healthy_employment_size = (effective_employment_size * 100 / (100 - sick_and_starving_percent));
 		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
 	}
@@ -399,7 +398,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const int64_t e
 {
 	assert_throw(this->get_employment_type() != nullptr);
 
-	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size, false);
+	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size, this->get_sick_and_starving_percent(), false);
 }
 
 const icon *population_unit::get_small_icon() const
@@ -565,6 +564,34 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 		co_return;
 	}
 
+	if (this->get_employment_type() != nullptr && !this->get_employment_type()->get_input_commodities().empty()) {
+		const decimillesimal_int new_sick_and_starving_percent = sick_percent + starving_percent;
+
+		const int64_t old_effective_employment_size = this->get_effective_employment_size();
+		const int64_t new_effective_employment_size = this->get_effective_employment_size(this->get_employment_type(), this->get_size(), new_sick_and_starving_percent);
+
+		if (new_effective_employment_size > old_effective_employment_size) {
+			//if there was a recovery of sickness or starvation for this population unit, then we need to check if there are enough inputs for the increase in effective employment
+
+			const int64_t available_input_capacity = this->get_site()->get_game_data()->get_available_employment_input_capacity(this->get_employment_type());
+			const int64_t effective_employment_size_increase = new_effective_employment_size - old_effective_employment_size;
+
+			if (effective_employment_size_increase > available_input_capacity) {
+				const int64_t unemployment_size = this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase, new_sick_and_starving_percent, true);
+				const bool full_unemployment = (unemployment_size == this->get_size());
+				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / this->get_size();
+
+				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, unemployment_size, this->get_literacy_rate(), lost_wealth, true);
+				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -unemployment_size, this->get_literacy_rate(), -lost_wealth, true);
+
+				if (full_unemployment) {
+					//this population unit will have been destroyed in this case, so we can't proceed with the function
+					co_return;
+				}
+			}
+		}
+	}
+
 	if (this->get_employment_type() != nullptr) {
 		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
@@ -573,7 +600,6 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 	this->starving_percent = starving_percent;
 
 	if (this->get_employment_type() != nullptr) {
-		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
 		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
 	}
 

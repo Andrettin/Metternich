@@ -2671,8 +2671,8 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 			continue;
 		}
 
-		const int64_t unemployment_size = std::min(decrease_effective ? population_unit->get_employment_size_from_effective_size(employment_type, decrease, true) : decrease, population_unit->get_size());
-		const int64_t effective_unemployment_size = population_unit->get_effective_employment_size(employment_type, unemployment_size);
+		const int64_t unemployment_size = std::min(decrease_effective ? population_unit->get_employment_size_from_effective_size(employment_type, decrease, population_unit->get_sick_and_starving_percent(), true) : decrease, population_unit->get_size());
+		const int64_t effective_unemployment_size = population_unit->get_effective_employment_size(employment_type, unemployment_size, population_unit->get_sick_and_starving_percent());
 		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_literacy_rate(), lost_wealth, change_input_storage);
@@ -2731,13 +2731,13 @@ QCoro::Task<void> site_game_data::check_employment()
 
 			assert_throw(employed_population_type != nullptr);
 
-			if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size()) == 0) {
+			if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size(), population_unit->get_sick_and_starving_percent()) == 0) {
 				++i;
 				continue;
 			}
 
-			const int64_t employee_size = std::min(std::min(available_employment_capacity, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, false)), population_unit->get_size());
-			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size);
+			const int64_t employee_size = std::min(std::min(available_employment_capacity, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, population_unit->get_sick_and_starving_percent(), false)), population_unit->get_size());
+			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, population_unit->get_sick_and_starving_percent());
 			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
 
