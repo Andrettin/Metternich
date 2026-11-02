@@ -652,7 +652,7 @@ void population_unit::consume_imported_food_commodity(const commodity *food_comm
 	//ensure that we can afford to purchase the food commodity
 	purchasable_quantity = decimillesimal_int::min(purchasable_quantity, this->get_domain()->get_economy()->get_wealth() / game::get()->get_price(food_commodity));
 
-	if (purchasable_quantity == 0) {
+	if (purchasable_quantity <= 0) {
 		return;
 	}
 
