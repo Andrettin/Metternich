@@ -828,10 +828,6 @@ int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &bas
 	decimillesimal_int fulfilled_percent;
 
 	for (const auto &[commodity, need] : needs) {
-		if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
-			continue;
-		}
-
 		assert_throw(need > 0);
 
 		decimillesimal_int affordable_need = decimillesimal_int::min(need, this->get_wealth() / game::get()->get_price(commodity));
@@ -868,11 +864,12 @@ int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &bas
 
 		fulfilled_percent += fulfilled_need * commodity->get_base_price();
 
-		if (fulfilled_need < affordable_need) {
-			remaining_demands[commodity] += affordable_need - fulfilled_need;
+		if (affordable_need > 0) {
+			remaining_demands[commodity] += affordable_need;
 		}
 	}
 
+	fulfilled_percent *= 100;
 	fulfilled_percent /= total_need_wealth;
 	return fulfilled_percent.to_int();
 }
