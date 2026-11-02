@@ -605,6 +605,7 @@ set(population_HDRS
 	src/population/population_type.h
 	src/population/population_type_container.h
 	src/population/population_unit.h
+	src/population/population_unit_percentages.h
 )
 source_group(population FILES ${population_HDRS})
 

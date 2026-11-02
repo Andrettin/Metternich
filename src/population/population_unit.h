@@ -31,15 +31,7 @@ class religion;
 class site;
 class species;
 enum class food_type;
-
-struct population_unit_percentages final
-{
-	decimillesimal_int literacy_rate;
-	decimillesimal_int sick_percent;
-	decimillesimal_int starving_percent;
-	int fulfilled_everyday_needs_percent = 100;
-	int fulfilled_luxury_needs_percent = 100;
-};
+struct population_unit_percentages;
 
 class population_unit final : public QObject
 {
@@ -237,18 +229,7 @@ public:
 	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 
-	population_unit_percentages get_percentages() const
-	{
-		population_unit_percentages percentages;
-
-		percentages.literacy_rate = this->get_literacy_rate();
-		percentages.sick_percent = this->get_sick_percent();
-		percentages.starving_percent = this->get_starving_percent();
-		percentages.fulfilled_everyday_needs_percent = this->get_fulfilled_everyday_needs_percent();
-		percentages.fulfilled_luxury_needs_percent = this->get_fulfilled_luxury_needs_percent();
-
-		return percentages;
-	}
+	population_unit_percentages get_percentages() const;
 
 signals:
 	void type_changed();

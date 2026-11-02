@@ -65,7 +65,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
-#include "population/population_unit.h"
+#include "population/population_unit_percentages.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"

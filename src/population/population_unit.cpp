@@ -18,6 +18,7 @@
 #include "population/population_defines.h"
 #include "population/population_strata.h"
 #include "population/population_type.h"
+#include "population/population_unit_percentages.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/factor.h"
@@ -873,6 +874,19 @@ int population_unit::purchase_needs(const decimillesimal_int &consumption_wealth
 
 	fulfilled_percent /= total_need_weight;
 	return fulfilled_percent;
+}
+
+population_unit_percentages population_unit::get_percentages() const
+{
+	population_unit_percentages percentages;
+
+	percentages.literacy_rate = this->get_literacy_rate();
+	percentages.sick_percent = this->get_sick_percent();
+	percentages.starving_percent = this->get_starving_percent();
+	percentages.fulfilled_everyday_needs_percent = this->get_fulfilled_everyday_needs_percent();
+	percentages.fulfilled_luxury_needs_percent = this->get_fulfilled_luxury_needs_percent();
+
+	return percentages;
 }
 
 }
