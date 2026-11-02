@@ -182,8 +182,6 @@ public:
 		return this->get_sick_percent().to_int();
 	}
 
-	[[nodiscard]] QCoro::Task<void> set_sick_percent(const decimillesimal_int &percent);
-
 	const decimillesimal_int &get_starving_percent() const
 	{
 		return this->starving_percent;
@@ -194,7 +192,7 @@ public:
 		return this->get_starving_percent().to_int();
 	}
 
-	[[nodiscard]] QCoro::Task<void> set_starving_percent(const decimillesimal_int &percent);
+	[[nodiscard]] QCoro::Task<void> set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent);
 
 	int get_fulfilled_everyday_needs_percent() const
 	{

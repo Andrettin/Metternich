@@ -559,9 +559,9 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 	return population_growth_rate;
 }
 
-QCoro::Task<void> population_unit::set_sick_percent(const decimillesimal_int &percent)
+QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent)
 {
-	if (percent == this->get_sick_percent()) {
+	if (sick_percent == this->get_sick_percent() && starving_percent == this->get_starving_percent()) {
 		co_return;
 	}
 
@@ -569,7 +569,8 @@ QCoro::Task<void> population_unit::set_sick_percent(const decimillesimal_int &pe
 		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
 
-	this->sick_percent = percent;
+	this->sick_percent = sick_percent;
+	this->sick_percent = starving_percent;
 
 	if (this->get_employment_type() != nullptr) {
 		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
@@ -577,25 +578,6 @@ QCoro::Task<void> population_unit::set_sick_percent(const decimillesimal_int &pe
 	}
 
 	emit sick_percent_changed();
-}
-
-QCoro::Task<void> population_unit::set_starving_percent(const decimillesimal_int &percent)
-{
-	if (percent == this->get_starving_percent()) {
-		co_return;
-	}
-
-	if (this->get_employment_type() != nullptr) {
-		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
-	}
-
-	this->starving_percent = percent;
-
-	if (this->get_employment_type() != nullptr) {
-		//FIXME: this could an increase commodity inputs, and if they are absent from storage, that would cause an exception
-		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
-	}
-
 	emit starving_percent_changed();
 
 	if (this->get_site() != nullptr) {
@@ -728,9 +710,6 @@ void population_unit::consume_imported_food_commodity(const commodity *food_comm
 
 QCoro::Task<void> population_unit::consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const metternich::site *, decimillesimal_int> &remaining_free_food_consumption_per_holding)
 {
-	co_await this->set_sick_percent(decimillesimal_int(0));
-	co_await this->set_starving_percent(decimillesimal_int(0));
-
 	decimillesimal_int *remaining_holding_free_consumption = nullptr;
 
 	auto free_consumption_find_iterator = remaining_free_food_consumption_per_holding.find(this->get_site());
@@ -745,6 +724,7 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 	decimillesimal_int total_remaining_food_consumption;
 
 	if (total_food_consumption == 0) {
+		co_await this->set_sick_and_starving_percent(decimillesimal_int(0), decimillesimal_int(0));
 		co_return;
 	}
 
@@ -825,14 +805,12 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 	}
 
 	//set how many people in this population unit are sick because of not having a balanced enough diet
-	if (total_wrong_food_consumption > 0) {
-		co_await this->set_sick_percent(100 * total_wrong_food_consumption / total_food_consumption);
-	}
+	const decimillesimal_int sick_percent = 100 * total_wrong_food_consumption / total_food_consumption;
 
 	//set how many people in this population unit are starving if not all food consumption could be fulfilled
-	if (total_remaining_food_consumption > 0) {
-		co_await this->set_starving_percent(100 * total_remaining_food_consumption / total_food_consumption);
-	}
+	const decimillesimal_int starving_percent = 100 * total_remaining_food_consumption / total_food_consumption;
+
+	co_await this->set_sick_and_starving_percent(sick_percent, starving_percent);
 }
 
 void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
