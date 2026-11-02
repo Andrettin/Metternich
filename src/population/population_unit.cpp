@@ -384,7 +384,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const metternic
 	int64_t employment_size = effective_employment_size;
 
 	if (sick_and_starving_percent > 0) {
-		assert_throw(sick_and_starving_percent <= 100);
+		assert_throw(sick_and_starving_percent < 100);
 		const decimillesimal_int healthy_employment_size = (effective_employment_size * 100 / (100 - sick_and_starving_percent));
 		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
 	}
@@ -577,7 +577,7 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 			const int64_t effective_employment_size_increase = new_effective_employment_size - old_effective_employment_size;
 
 			if (effective_employment_size_increase > available_input_capacity) {
-				const int64_t unemployment_size = this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase, new_sick_and_starving_percent, true);
+				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, new_sick_and_starving_percent, true), this->get_size());
 				const bool full_unemployment = (unemployment_size == this->get_size());
 				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / this->get_size();
 
