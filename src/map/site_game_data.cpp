@@ -2744,7 +2744,12 @@ QCoro::Task<void> site_game_data::check_employment()
 				continue;
 			}
 
-			const int64_t employee_size = std::min(std::min(available_employment_capacity, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, population_unit->get_sick_and_starving_percent(), false)), population_unit->get_size());
+			int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
+			if (!employment_type->get_input_commodities().empty()) {
+				employee_size = std::min(employee_size, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, population_unit->get_sick_and_starving_percent(), false));
+			}
+			assert_throw(employee_size > 0);
+
 			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, population_unit->get_sick_and_starving_percent());
 			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 			const bool full_employment = employee_size == population_unit->get_size();
