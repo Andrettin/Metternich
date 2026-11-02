@@ -2294,20 +2294,8 @@ QCoro::Task<void> site_game_data::change_population(const population_type *type,
 {
 	for (const auto &population_unit : this->get_population_units()) {
 		if (population_unit->get_type() == type && population_unit->get_culture() == culture && population_unit->get_religion() == religion && population_unit->get_phenotype() == phenotype && population_unit->get_employment_type() == employment_type) {
-			const int64_t new_size = population_unit->get_size() + size_change;
-			if (new_size > 0) {
-				population_unit->set_literacy_rate(((percentages.literacy_rate * size_change) + (population_unit->get_literacy_rate() * population_unit->get_size())) / new_size);
-
-				const decimillesimal_int new_sick_percent = ((percentages.sick_percent * size_change) + (population_unit->get_sick_percent() * population_unit->get_size())) / new_size;
-				const decimillesimal_int new_starving_percent = ((percentages.starving_percent * size_change) + (population_unit->get_starving_percent() * population_unit->get_size())) / new_size;
-				co_await population_unit->set_sick_and_starving_percent(new_sick_percent, new_starving_percent);
-
-				population_unit->set_fulfilled_everyday_needs_percent(static_cast<int>(((percentages.fulfilled_everyday_needs_percent * size_change) + (population_unit->get_fulfilled_everyday_needs_percent() * population_unit->get_size())) / new_size));
-
-				population_unit->set_fulfilled_luxury_needs_percent(static_cast<int>(((percentages.fulfilled_luxury_needs_percent * size_change) + (population_unit->get_fulfilled_luxury_needs_percent() * population_unit->get_size())) / new_size));
-			}
 			population_unit->change_wealth(wealth);
-			co_await population_unit->change_size(size_change, change_input_storage);
+			co_await population_unit->change_size(size_change, percentages, change_input_storage);
 			if (population_unit->get_size() == 0) {
 				co_await this->pop_population_unit(population_unit.get(), change_input_storage);
 			}

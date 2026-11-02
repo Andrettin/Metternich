@@ -460,14 +460,30 @@ void population_unit::set_site(const metternich::site *site)
 	this->set_domain(domain);
 }
 
-[[nodiscard]] QCoro::Task<void> population_unit::set_size(const int64_t size, const bool change_input_storage)
+[[nodiscard]] QCoro::Task<void> population_unit::change_size(const int64_t change, const population_unit_percentages &percentages, const bool change_input_storage)
 {
-	if (size == this->get_size()) {
+	if (change == 0) {
 		co_return;
 	}
 
-	assert_throw(size >= 0);
+	const int64_t new_size = this->get_size() + change;
+	assert_throw(new_size >= 0);
 	assert_throw(this->get_site() != nullptr);
+
+	if (new_size > 0 && change > 0) {
+		this->set_literacy_rate(((percentages.literacy_rate * change) + (this->get_literacy_rate() * this->get_size())) / new_size);
+
+		const decimillesimal_int new_sick_percent = ((percentages.sick_percent * change) + (this->get_sick_percent() * this->get_size())) / new_size;
+		const decimillesimal_int new_starving_percent = ((percentages.starving_percent * change) + (this->get_starving_percent() * this->get_size())) / new_size;
+		const bool removed = co_await this->set_sick_and_starving_percent(new_sick_percent, new_starving_percent);
+		if (removed) {
+			co_return;
+		}
+
+		this->set_fulfilled_everyday_needs_percent(static_cast<int>(((percentages.fulfilled_everyday_needs_percent * change) + (this->get_fulfilled_everyday_needs_percent() * this->get_size())) / new_size));
+
+		this->set_fulfilled_luxury_needs_percent(static_cast<int>(((percentages.fulfilled_luxury_needs_percent * change) + (this->get_fulfilled_luxury_needs_percent() * this->get_size())) / new_size));
+	}
 
 	if (this->get_employment_type() != nullptr) {
 		this->get_site()->get_game_data()->change_employment_size(this->get_employment_type(), -this->get_size());
@@ -476,7 +492,7 @@ void population_unit::set_site(const metternich::site *site)
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_lost(this);
 
-	this->size = size;
+	this->size += change;
 
 	this->get_site()->get_game_data()->get_population()->on_population_unit_gained(this);
 
@@ -562,10 +578,10 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 	return population_growth_rate;
 }
 
-QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent)
+QCoro::Task<bool> population_unit::set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent)
 {
 	if (sick_percent == this->get_sick_percent() && starving_percent == this->get_starving_percent()) {
-		co_return;
+		co_return false;
 	}
 
 	if (this->get_employment_type() != nullptr && !this->get_employment_type()->get_input_commodities().empty()) {
@@ -590,7 +606,7 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 
 				if (full_unemployment) {
 					//this population unit will have been destroyed in this case, so we can't proceed with the function
-					co_return;
+					co_return true;
 				}
 			}
 		}
@@ -613,6 +629,8 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 	if (this->get_site() != nullptr) {
 		emit this->get_site()->get_game_data()->population_growth_rate_changed();
 	}
+
+	co_return false;
 }
 
 bool population_unit::is_food_producer() const
