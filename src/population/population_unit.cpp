@@ -35,7 +35,7 @@ population_unit::population_unit()
 	connect(this, &population_unit::type_changed, this, &population_unit::icon_changed);
 }
 
-population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const metternich::site *site) : population_unit()
+population_unit::population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const population_unit_percentages &percentages, const metternich::site *site) : population_unit()
 {
 	this->type = type;
 	this->culture = culture;
@@ -43,7 +43,11 @@ population_unit::population_unit(const population_type *type, const metternich::
 	this->phenotype = phenotype;
 	this->employment_type = employment_type;
 	this->size = size;
-	this->literacy_rate = literacy_rate;
+	this->literacy_rate = percentages.literacy_rate;
+	this->sick_percent = percentages.sick_percent;
+	this->starving_percent = percentages.starving_percent;
+	this->fulfilled_everyday_needs_percent = percentages.fulfilled_everyday_needs_percent;
+	this->fulfilled_luxury_needs_percent = percentages.fulfilled_luxury_needs_percent;
 	this->site = site;
 
 	assert_throw(this->get_type() != nullptr);
@@ -174,9 +178,9 @@ QCoro::Task<void> population_unit::do_cultural_change()
 			continue;
 		}
 
-		co_await this->get_site()->get_game_data()->change_population(culture_population_type, cultural_derivation->culture, this->get_religion(), this->get_phenotype(), nullptr, derived_size, this->get_literacy_rate(), lost_wealth, true);
+		co_await this->get_site()->get_game_data()->change_population(culture_population_type, cultural_derivation->culture, this->get_religion(), this->get_phenotype(), nullptr, derived_size, this->get_percentages(), lost_wealth, true);
 
-		co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -derived_size, this->get_literacy_rate(), -lost_wealth, true);
+		co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -derived_size, this->get_percentages(), -lost_wealth, true);
 	}
 }
 
@@ -242,9 +246,9 @@ QCoro::Task<void> population_unit::do_promotion(const bool is_demotion)
 	const int64_t promoted_size = (this->get_size() * promotion_rate / 100).to_int64();
 	const decimillesimal_int lost_wealth = this->get_wealth() * promoted_size / this->get_size();
 
-	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_literacy_rate(), lost_wealth, true);
+	co_await this->get_site()->get_game_data()->change_population(best_promotion_type, this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, promoted_size, this->get_percentages(), lost_wealth, true);
 
-	co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_literacy_rate(), -lost_wealth, true);
+	co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -promoted_size, this->get_percentages(), -lost_wealth, true);
 }
 
 std::string population_unit::get_scope_name() const
@@ -581,8 +585,8 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 				const bool full_unemployment = (unemployment_size == this->get_size());
 				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / this->get_size();
 
-				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, unemployment_size, this->get_literacy_rate(), lost_wealth, true);
-				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -unemployment_size, this->get_literacy_rate(), -lost_wealth, true);
+				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, unemployment_size, this->get_percentages(), lost_wealth, true);
+				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), this->get_employment_type(), -unemployment_size, this->get_percentages(), -lost_wealth, true);
 
 				if (full_unemployment) {
 					//this population unit will have been destroyed in this case, so we can't proceed with the function

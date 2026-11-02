@@ -65,6 +65,7 @@
 #include "map/tile.h"
 #include "population/population.h"
 #include "population/population_type.h"
+#include "population/population_unit.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
@@ -1774,7 +1775,10 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 
 	const int64_t applied_population = std::min(remaining_population, site_game_data->get_available_population_capacity());
 
-	co_await site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, literacy_rate, decimillesimal_int(0), true);
+	population_unit_percentages percentages;
+	percentages.literacy_rate = literacy_rate;
+
+	co_await site_game_data->change_population(population_type, culture, religion, phenotype, nullptr, applied_population, percentages, decimillesimal_int(0), true);
 
 	co_return remaining_population - applied_population;
 }

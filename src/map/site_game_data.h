@@ -58,6 +58,7 @@ class technology;
 class tile;
 enum class construction_type;
 enum class food_type;
+struct population_unit_percentages;
 
 class site_game_data final : public QObject
 {
@@ -395,8 +396,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> add_population_unit(qunique_ptr<population_unit> &&population_unit, const bool change_input_storage);
 	[[nodiscard]] QCoro::Task<qunique_ptr<population_unit>> pop_population_unit(population_unit *population_unit, const bool change_input_storage);
 	void clear_population_units();
-	[[nodiscard]] QCoro::Task<void> create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const decimillesimal_int &wealth, const bool change_input_storage);
-	[[nodiscard]] QCoro::Task<void> change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const decimillesimal_int &literacy_rate, const decimillesimal_int &wealth, const bool change_input_storage);
+	[[nodiscard]] QCoro::Task<void> create_population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size, const population_unit_percentages &percentages, const decimillesimal_int &wealth, const bool change_input_storage);
+	[[nodiscard]] QCoro::Task<void> change_population(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const phenotype *phenotype, const employment_type *employment_type, const int64_t size_change, const population_unit_percentages &percentages, const decimillesimal_int &wealth, const bool change_input_storage);
 
 	metternich::population *get_population() const
 	{

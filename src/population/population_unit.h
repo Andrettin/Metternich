@@ -32,6 +32,15 @@ class site;
 class species;
 enum class food_type;
 
+struct population_unit_percentages final
+{
+	decimillesimal_int literacy_rate;
+	decimillesimal_int sick_percent;
+	decimillesimal_int starving_percent;
+	int fulfilled_everyday_needs_percent = 0;
+	int fulfilled_luxury_needs_percent = 0;
+};
+
 class population_unit final : public QObject
 {
 	Q_OBJECT
@@ -54,7 +63,7 @@ class population_unit final : public QObject
 
 public:
 	population_unit();
-	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const decimillesimal_int &literacy_rate, const site *site);
+	explicit population_unit(const population_type *type, const metternich::culture *culture, const metternich::religion *religion, const metternich::phenotype *phenotype, const metternich::employment_type *employment_type, const int64_t size, const population_unit_percentages &percentages, const site *site);
 	explicit population_unit(const gsml_data &scope);
 
 	void process_gsml_property(const gsml_property &property);
@@ -241,6 +250,19 @@ public:
 	[[nodiscard]] QCoro::Task<void> consume_food(const std::vector<const metternich::domain *> &trade_domains, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding);
 	void purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const decimillesimal_int &consumption_wealth, const commodity_map<int> &need_weights, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
+
+	population_unit_percentages get_percentages() const
+	{
+		population_unit_percentages percentages;
+
+		percentages.literacy_rate = this->get_literacy_rate();
+		percentages.sick_percent = this->get_sick_percent();
+		percentages.starving_percent = this->get_starving_percent();
+		percentages.fulfilled_everyday_needs_percent = this->get_fulfilled_everyday_needs_percent();
+		percentages.fulfilled_luxury_needs_percent = this->get_fulfilled_luxury_needs_percent();
+
+		return percentages;
+	}
 
 signals:
 	void type_changed();
