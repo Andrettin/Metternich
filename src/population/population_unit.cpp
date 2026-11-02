@@ -466,23 +466,42 @@ void population_unit::set_site(const metternich::site *site)
 		co_return;
 	}
 
-	const int64_t new_size = this->get_size() + change;
+	int64_t new_size = this->get_size() + change;
 	assert_throw(new_size >= 0);
 	assert_throw(this->get_site() != nullptr);
+
+	const int64_t old_effective_employment_size = this->get_effective_employment_size();
 
 	if (new_size > 0 && change > 0) {
 		this->set_literacy_rate(((percentages.literacy_rate * change) + (this->get_literacy_rate() * this->get_size())) / new_size);
 
 		const decimillesimal_int new_sick_percent = ((percentages.sick_percent * change) + (this->get_sick_percent() * this->get_size())) / new_size;
 		const decimillesimal_int new_starving_percent = ((percentages.starving_percent * change) + (this->get_starving_percent() * this->get_size())) / new_size;
-		const bool removed = co_await this->set_sick_and_starving_percent(new_sick_percent, new_starving_percent);
-		if (removed) {
-			co_return;
-		}
+		co_await this->set_sick_and_starving_percent(new_sick_percent, new_starving_percent, false);
 
 		this->set_fulfilled_everyday_needs_percent(static_cast<int>(((percentages.fulfilled_everyday_needs_percent * change) + (this->get_fulfilled_everyday_needs_percent() * this->get_size())) / new_size));
 
 		this->set_fulfilled_luxury_needs_percent(static_cast<int>(((percentages.fulfilled_luxury_needs_percent * change) + (this->get_fulfilled_luxury_needs_percent() * this->get_size())) / new_size));
+	}
+
+	if (change > 0 && change_input_storage && this->get_employment_type() != nullptr && !this->get_employment_type()->get_input_commodities().empty()) {
+		const int64_t new_effective_employment_size = this->get_effective_employment_size(this->get_employment_type(), new_size, this->get_sick_and_starving_percent());
+
+		if (new_effective_employment_size > old_effective_employment_size) {
+			const int64_t available_input_capacity = this->get_site()->get_game_data()->get_available_employment_input_capacity(this->get_employment_type());
+			const int64_t effective_employment_size_increase = new_effective_employment_size - old_effective_employment_size;
+
+			if (effective_employment_size_increase > available_input_capacity) {
+				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, this->get_sick_and_starving_percent(), true), new_size);
+				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / new_size;
+
+				new_size -= unemployment_size;
+				this->change_wealth(-lost_wealth);
+
+				//site_game_data::change_population() can call population_unit::change_size(), but in this case since the employment type is different, it is not a problem, since it can't affect this population unit
+				co_await this->get_site()->get_game_data()->change_population(this->get_type(), this->get_culture(), this->get_religion(), this->get_phenotype(), nullptr, unemployment_size, this->get_percentages(), lost_wealth, true);
+			}
+		}
 	}
 
 	if (this->get_employment_type() != nullptr) {
@@ -578,13 +597,13 @@ decimillesimal_int population_unit::get_population_growth_rate() const
 	return population_growth_rate;
 }
 
-QCoro::Task<bool> population_unit::set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent)
+QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent, const bool update_effective_employment)
 {
 	if (sick_percent == this->get_sick_percent() && starving_percent == this->get_starving_percent()) {
-		co_return false;
+		co_return;
 	}
 
-	if (this->get_employment_type() != nullptr && !this->get_employment_type()->get_input_commodities().empty()) {
+	if (update_effective_employment && this->get_employment_type() != nullptr && !this->get_employment_type()->get_input_commodities().empty()) {
 		const decimillesimal_int new_sick_and_starving_percent = sick_percent + starving_percent;
 
 		const int64_t old_effective_employment_size = this->get_effective_employment_size();
@@ -606,20 +625,20 @@ QCoro::Task<bool> population_unit::set_sick_and_starving_percent(const decimille
 
 				if (full_unemployment) {
 					//this population unit will have been destroyed in this case, so we can't proceed with the function
-					co_return true;
+					co_return;
 				}
 			}
 		}
 	}
 
-	if (this->get_employment_type() != nullptr) {
+	if (update_effective_employment && this->get_employment_type() != nullptr) {
 		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), -this->get_effective_employment_size(), true);
 	}
 
 	this->sick_percent = sick_percent;
 	this->starving_percent = starving_percent;
 
-	if (this->get_employment_type() != nullptr) {
+	if (update_effective_employment && this->get_employment_type() != nullptr) {
 		co_await this->get_site()->get_game_data()->change_effective_employment_size(this->get_employment_type(), this->get_effective_employment_size(), true);
 	}
 
@@ -629,8 +648,6 @@ QCoro::Task<bool> population_unit::set_sick_and_starving_percent(const decimille
 	if (this->get_site() != nullptr) {
 		emit this->get_site()->get_game_data()->population_growth_rate_changed();
 	}
-
-	co_return false;
 }
 
 bool population_unit::is_food_producer() const
@@ -772,7 +789,7 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 	decimillesimal_int total_remaining_food_consumption;
 
 	if (total_food_consumption == 0) {
-		co_await this->set_sick_and_starving_percent(decimillesimal_int(0), decimillesimal_int(0));
+		co_await this->set_sick_and_starving_percent(decimillesimal_int(0), decimillesimal_int(0), true);
 		co_return;
 	}
 
@@ -858,7 +875,7 @@ QCoro::Task<void> population_unit::consume_food(const std::vector<const metterni
 	//set how many people in this population unit are starving if not all food consumption could be fulfilled
 	const decimillesimal_int starving_percent = 100 * total_remaining_food_consumption / total_food_consumption;
 
-	co_await this->set_sick_and_starving_percent(sick_percent, starving_percent);
+	co_await this->set_sick_and_starving_percent(sick_percent, starving_percent, true);
 }
 
 void population_unit::purchase_needs(const decimillesimal_int &consumption_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)

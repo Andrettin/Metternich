@@ -202,7 +202,7 @@ public:
 	}
 
 	//this function returns true if the population unit was removed as a consequence of it
-	[[nodiscard]] QCoro::Task<bool> set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent);
+	[[nodiscard]] QCoro::Task<void> set_sick_and_starving_percent(const decimillesimal_int &sick_percent, const decimillesimal_int &starving_percent, const bool update_effective_employment);
 
 	int get_fulfilled_everyday_needs_percent() const
 	{
