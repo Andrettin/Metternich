@@ -3777,9 +3777,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 			str += ", ";
 		}
 
-		str += string::highlight(trait->get_name(this->character->get_species(), this->character->get_gender()));
-
-		str += ": " + trait_modifier_str;
+		str += trait_modifier_str;
 	}
 
 	return str;
