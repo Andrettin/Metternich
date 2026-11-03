@@ -4,5 +4,4 @@ sugar_cane = {
 	icon = sugar_cane
 	agricultural = true
 	base_price = 1
-	required_game_rule = additional_commodities
 }
