@@ -18,3 +18,66 @@ master_cotton_planter = {
 		}
 	}
 }
+
+master_fur_trader = {
+	name = "Master Fur Trader"
+	icon = furs
+	scaling_stat = trade
+	types = {
+		advisor_trait
+		general_proficiency
+	}
+	conditions = {
+		trade > 0
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			furs_output_modifier = 20
+		}
+		treasurer = {
+			furs_output_modifier = 20
+		}
+	}
+}
+
+master_sugar_planter = {
+	name = "Master Sugar Planter"
+	icon = sugar_cane
+	scaling_stat = agriculture
+	types = {
+		advisor_trait
+		general_proficiency
+	}
+	conditions = {
+		skill_training = agriculture
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			sugar_cane_output_modifier = 2.5
+		}
+		treasurer = {
+			sugar_cane_output_modifier = 2.5
+		}
+	}
+}
+
+master_tobacco_planter = {
+	name = "Master Tobacco Planter"
+	icon = tobacco
+	scaling_stat = agriculture
+	types = {
+		advisor_trait
+		general_proficiency
+	}
+	conditions = {
+		skill_training = agriculture
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			tobacco_output_modifier = 2.5
+		}
+		treasurer = {
+			tobacco_output_modifier = 2.5
+		}
+	}
+}

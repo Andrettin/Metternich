@@ -109,6 +109,9 @@ john_jacob_astor = {
 	gender = male
 	birth_date = 1763
 	death_date = 1848
+	traits = {
+		master_fur_trader
+	}
 }
 
 eli_whitney = {
