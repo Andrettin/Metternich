@@ -7,6 +7,7 @@
 #include "database/gsml_property.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_branch_type.h"
+#include "util/assert_util.h"
 
 namespace metternich {
 
