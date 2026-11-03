@@ -1,0 +1,54 @@
+cotton_weaving = {
+	name = "Cotton Weaving"
+	capacity_type = weaving
+	input_commodities = {
+		cotton = 2
+	}
+	output_commodity = fabric
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
+silk_weaving = {
+	name = "Silk Weaving"
+	capacity_type = weaving
+	input_commodities = {
+		silk = 2
+	}
+	output_commodity = fabric
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
+wool_weaving = {
+	name = "Wool Weaving"
+	capacity_type = weaving
+	input_commodities = {
+		wool = 2
+	}
+	output_commodity = fabric
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
+tailoring = {
+	name = "Tailoring"
+	input_commodities = {
+		fabric = 2
+	}
+	output_commodity = clothing
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
