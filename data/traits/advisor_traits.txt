@@ -1,0 +1,20 @@
+master_cotton_planter = {
+	name = "Master Cotton Planter"
+	icon = cotton
+	scaling_stat = agriculture
+	types = {
+		advisor_trait
+		general_proficiency
+	}
+	conditions = {
+		skill_training = agriculture
+	}
+	scaled_office_modifiers = {
+		ruler = {
+			cotton_output_modifier = 2.5
+		}
+		treasurer = {
+			cotton_output_modifier = 2.5
+		}
+	}
+}
