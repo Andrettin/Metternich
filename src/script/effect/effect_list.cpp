@@ -3,8 +3,10 @@
 #include "script/effect/effect_list.h"
 
 #include "database/gsml_data.h"
+#include "database/gsml_operator.h"
 #include "database/gsml_property.h"
 #include "script/effect/effect.h"
+#include "script/effect/effect_branch_type.h"
 
 namespace metternich {
 
@@ -51,14 +53,16 @@ QCoro::Task<void> effect_list<scope_type>::do_effects(scope_type *scope, context
 	bool branch_taken = false;
 
 	for (const std::unique_ptr<effect<scope_type>> &effect : this->effects) {
-		try {
-			if (effect->get_branch_type() == effect_branch_type::none) {
-				co_await effect->do_effect(scope, ctx);
-			} else {
+		if (effect->get_branch_type() == effect_branch_type::none) {
+			co_await effect->do_effect(scope, ctx);
+		} else {
+			//effect::do_effect() already has a try/catch construct, so here we need one only for effect::do_branch_effect()
+			try {
+				assert_throw(effect->get_operator() == gsml_operator::assignment);
 				branch_taken = co_await effect->do_branch_effect(scope, ctx, branch_taken);
+			} catch (...) {
+				std::throw_with_nested(std::runtime_error(std::format("Failed to do \"{}\" effect.", effect->get_class_identifier())));
 			}
-		} catch (...) {
-			std::throw_with_nested(std::runtime_error(std::format("Failed to do \"{}\" effect.", effect->get_class_identifier())));
 		}
 	}
 }
