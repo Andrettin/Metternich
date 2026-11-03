@@ -1725,9 +1725,8 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 	}
 
 	if (capital != nullptr) {
-		assert_throw(capital->is_holding());
-		assert_throw(this->get_provinces().empty() || capital->get_game_data()->get_province()->get_game_data()->get_owner() == this->domain);
-		assert_throw(capital->get_game_data()->is_built());
+		assert_throw(capital->get_game_data()->can_be_capital());
+		assert_throw(capital->get_game_data()->get_owner() == this->domain);
 	}
 
 	const site *old_capital = this->get_capital();
