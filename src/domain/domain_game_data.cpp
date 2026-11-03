@@ -1785,13 +1785,13 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 QCoro::Task<void> domain_game_data::choose_capital()
 {
 	const site *default_capital = this->domain->get_default_capital();
-	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital()) {
+	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital()) {
 		co_await this->set_capital(default_capital);
 		co_return;
 	}
 
 	const province *default_capital_province = default_capital->get_game_data()->get_province();
-	if (default_capital_province != nullptr && default_capital_province->get_game_data()->get_owner() == this->domain && default_capital_province->get_game_data()->get_provincial_capital() != nullptr && default_capital_province->get_game_data()->get_provincial_capital()->get_game_data()->can_be_capital()) {
+	if (default_capital_province != nullptr && default_capital_province->get_game_data()->get_owner() == this->domain && default_capital_province->get_game_data()->get_provincial_capital() != nullptr && default_capital_province->get_game_data()->get_owner() == this->domain && default_capital_province->get_game_data()->get_provincial_capital()->get_game_data()->can_be_capital()) {
 		co_await this->set_capital(default_capital_province->get_game_data()->get_provincial_capital());
 		co_return;
 	}
