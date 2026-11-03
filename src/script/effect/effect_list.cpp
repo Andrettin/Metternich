@@ -48,8 +48,18 @@ void effect_list<scope_type>::check() const
 template <typename scope_type>
 QCoro::Task<void> effect_list<scope_type>::do_effects(scope_type *scope, context &ctx) const
 {
+	bool branch_taken = false;
+
 	for (const std::unique_ptr<effect<scope_type>> &effect : this->effects) {
-		co_await effect->do_effect(scope, ctx);
+		try {
+			if (effect->get_branch_type() == effect_branch_type::none) {
+				co_await effect->do_effect(scope, ctx);
+			} else {
+				branch_taken = co_await effect->do_branch_effect(scope, ctx, branch_taken);
+			}
+		} catch (...) {
+			std::throw_with_nested(std::runtime_error(std::format("Failed to do \"{}\" effect.", effect->get_class_identifier())));
+		}
 	}
 }
 

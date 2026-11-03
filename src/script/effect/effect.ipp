@@ -28,6 +28,7 @@
 #include "script/effect/damage_effect.h"
 #include "script/effect/delayed_effect.h"
 #include "script/effect/domain_scope_effect.h"
+#include "script/effect/effect_branch_type.h"
 #include "script/effect/else_effect.h"
 #include "script/effect/else_if_effect.h"
 #include "script/effect/event_effect.h"
@@ -296,6 +297,22 @@ const province *effect<scope_type>::get_scope_province(const scope_type *scope)
 		assert_throw(false);
 		return nullptr;
 	}
+}
+
+template <typename scope_type>
+effect_branch_type effect<scope_type>::get_branch_type() const
+{
+	return effect_branch_type::none;
+}
+
+template <typename scope_type>
+QCoro::Task<bool> effect<scope_type>::do_branch_effect(scope_type *scope, context &ctx, const bool previous_branch_taken) const
+{
+	Q_UNUSED(scope);
+	Q_UNUSED(ctx);
+	Q_UNUSED(previous_branch_taken);
+
+	throw std::runtime_error(std::format("Branch processing is not supported for \"{}\" effects.", this->get_class_identifier()));
 }
 
 }

@@ -798,6 +798,7 @@ set(script_effect_HDRS
 	src/script/effect/domain_scope_effect.h
 	src/script/effect/effect.h
 	src/script/effect/effect.ipp
+	src/script/effect/effect_branch_type.h
 	src/script/effect/effect_list.h
 	src/script/effect/else_effect.h
 	src/script/effect/else_if_effect.h

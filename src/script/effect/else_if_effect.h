@@ -44,17 +44,24 @@ public:
 		}
 	}
 
-	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
+	virtual effect_branch_type get_branch_type() const override
 	{
-		if (this->is_previous_branch_taken(scope, ctx)) {
-			co_return;
+		return effect_branch_type::else_if_branch;
+	}
+
+	[[nodiscard]] virtual QCoro::Task<bool> do_branch_effect(scope_type *scope, context &ctx, const bool previous_branch_taken) const override
+	{
+		if (previous_branch_taken) {
+			co_return true;
 		}
 
 		if (!this->conditions.check(scope, ctx)) {
-			co_return;
+			co_return false;
 		}
 
 		co_await this->effects.do_effects(scope, ctx);
+
+		co_return true;
 	}
 
 	virtual std::string get_assignment_string(const scope_type *scope, const read_only_context &ctx, const size_t indent, const std::string &prefix) const override

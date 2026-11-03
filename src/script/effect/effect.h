@@ -15,6 +15,7 @@ class event;
 class military_unit;
 class population_unit;
 class province;
+enum class effect_branch_type;
 struct context;
 struct read_only_context;
 
@@ -36,6 +37,10 @@ public:
 	virtual ~effect()
 	{
 	}
+
+	virtual effect_branch_type get_branch_type() const;
+
+	[[nodiscard]] virtual QCoro::Task<bool> do_branch_effect(scope_type *scope, context &ctx, const bool previous_branch_taken) const;
 };
 
 extern template class effect<const character>;
