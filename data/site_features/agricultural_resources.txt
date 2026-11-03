@@ -27,19 +27,19 @@ prime_cotton_land = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	#weight_factor = {
-	#	base_value = 20
-	#	
-	#	modifier = {
-	#		factor = 0
-	#		or = {
-	#			terrain = mountains
-	#			terrain = high_mountains
-	#			terrain = forest
-	#			terrain = desert
-	#		}
-	#	}
-	#}
+	weight_factor = {
+		base_value = 20
+		
+		modifier = {
+			factor = 0
+			or = {
+				terrain = mountains
+				terrain = high_mountains
+				terrain = forest
+				terrain = desert
+			}
+		}
+	}
 }
 
 prime_fruit_land = {
