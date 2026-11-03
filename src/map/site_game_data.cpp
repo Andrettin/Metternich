@@ -2521,7 +2521,7 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 
 	assert_throw(size >= 0);
 	if (change > 0) {
-		assert_throw(change <= this->get_available_employment_capacity(employment_type->get_capacity_type()));
+		assert_throw(this->get_available_employment_capacity(employment_type->get_capacity_type()) >= 0);
 	}
 
 	if (size == 0) {
@@ -2809,7 +2809,8 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 		}
 	}
 
-	for (const auto &[capacity_type, capacity] : this->get_employment_capacities()) {
+	const data_entry_map<employment_capacity_type, int64_t> employment_capacities = this->get_employment_capacities();
+	for (const auto &[capacity_type, capacity] : employment_capacities) {
 		//if the employment capacity is below the employment size, reduce the latter
 		int64_t capacity_overflow = -this->get_available_employment_capacity(capacity_type);
 
