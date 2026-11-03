@@ -4,7 +4,6 @@ cotton = {
 	icon = cotton
 	agricultural = true
 	base_price = 1
-	required_game_rule = additional_commodities
 	units = {
 		0.004 = lb #8gp per lb or sq yd
 		0.4 = cwt
