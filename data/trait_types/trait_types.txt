@@ -43,6 +43,11 @@ personality_trait = {
 	name = "Personality Trait"
 }
 
+advisor_trait = {
+	name = "Advisor Trait"
+	max_traits = 1
+}
+
 mythic_trait = {
 	name = "Mythic Trait"
 }
