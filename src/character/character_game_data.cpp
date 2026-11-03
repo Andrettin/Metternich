@@ -3125,12 +3125,21 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 		co_return;
 	}
 
+	const bool is_office_skill = this->get_office() != nullptr && vector::contains(this->get_office()->get_skills(), skill);
+	if (is_office_skill) {
+		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
+	}
+
 	const bool was_trained = this->is_skill_trained(skill);
 
 	const int new_value = (this->skill_trainings[skill] += change);
 	assert_throw(new_value >= 0);
 	if (new_value == 0) {
 		this->skill_trainings.erase(skill);
+	}
+
+	if (is_office_skill) {
+		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
 	const bool is_trained = this->is_skill_trained(skill);
