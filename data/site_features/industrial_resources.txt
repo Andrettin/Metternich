@@ -1,3 +1,19 @@
+clothing = {
+	name = "Clothing"
+	icon = clothing
+	holding_types = {
+		guild
+	}
+}
+
+fabric = {
+	name = "Fabric"
+	icon = fabric
+	holding_types = {
+		guild
+	}
+}
+
 fertilizer = {
 	name = "Fertilizer"
 	icon = spices_yellow
