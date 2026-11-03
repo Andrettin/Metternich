@@ -2401,6 +2401,8 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
+	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
+		co_await this->change_skill_value(skill, change);
 	} else {
 		co_await this->change_stat_value(stat, change, true);
 	}
@@ -3155,6 +3157,15 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 int character_game_data::get_skill_value(const skill *skill) const
 {
 	return this->get_stat_value(skill);
+}
+
+QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	co_await this->change_stat_value(skill, change, this->is_skill_available(skill));
 }
 
 int character_game_data::get_effective_skill_value(const skill *skill) const
