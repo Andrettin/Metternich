@@ -3122,8 +3122,8 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 		co_return;
 	}
 
-	const bool is_office_skill = this->get_office() != nullptr && vector::contains(this->get_office()->get_skills(), skill);
-	if (is_office_skill) {
+	const bool affects_office_modifier = skill->affects_office_modifier_for_character(this->character);
+	if (affects_office_modifier) {
 		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
 	}
 
@@ -3135,7 +3135,7 @@ QCoro::Task<void> character_game_data::change_skill_training(const skill *skill,
 		this->skill_trainings.erase(skill);
 	}
 
-	if (is_office_skill) {
+	if (affects_office_modifier) {
 		co_await this->apply_office_modifier(this->domain, this->get_office(), 1);
 	}
 
