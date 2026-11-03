@@ -54,11 +54,11 @@ swordsmithy = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 85
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 65
 		}
 		base_population_capacity = 10 #as Smithy

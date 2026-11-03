@@ -8,6 +8,7 @@
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
 #include "economy/commodity.h"
+#include "economy/employment_capacity_type.h"
 #include "game/game.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
@@ -19,6 +20,23 @@
 #include "util/assert_util.h"
 
 namespace metternich {
+
+void employment_type::process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process, const data_type_metadata *metadata)
+{
+	data_type::process_database(definition, gsml_data_to_process, metadata);
+
+	if (!definition) {
+		for (employment_type *employment_type : employment_type::get_all()) {
+			if (employment_type->get_capacity_type() == nullptr) {
+				//if no capacity type was explicitly defined, create one specifically for this employment type
+				employment_capacity_type *capacity_type = employment_capacity_type::add(employment_type->get_identifier(), employment_type->get_module());
+				capacity_type->set_name(employment_type->get_name());
+				capacity_type->add_employment_type(employment_type);
+				employment_type->capacity_type = capacity_type;
+			}
+		}
+	}
+}
 	
 employment_type::employment_type(const std::string &identifier) : named_data_entry(identifier)
 {
@@ -33,7 +51,12 @@ void employment_type::process_gsml_property(const gsml_property &property)
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
-	if (key == "input_wealth_value") {
+	if (key == "capacity_type") {
+		assert_throw(property.get_operator() == gsml_operator::assignment);
+		employment_capacity_type *capacity_type = employment_capacity_type::get(value);
+		this->capacity_type = capacity_type;
+		capacity_type->add_employment_type(this);
+	} else if (key == "input_wealth_value") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
 		this->input_wealth_value = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else if (key == "monthly_output_value") {
@@ -128,6 +151,10 @@ void employment_type::initialize()
 
 void employment_type::check() const
 {
+	if (this->get_capacity_type() == nullptr) {
+		throw std::runtime_error(std::format("Employment type \"{}\" has no capacity type.", this->get_identifier()));
+	}
+
 	if (this->get_employee_types().empty()) {
 		throw std::runtime_error(std::format("Employment type \"{}\" has no employee types.", this->get_identifier()));
 	}

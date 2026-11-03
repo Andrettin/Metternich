@@ -4,10 +4,10 @@
 
 #include "database/gsml_data.h"
 #include "economy/commodity.h"
+#include "economy/employment_capacity_type.h"
 #include "economy/employment_type.h"
 #include "infrastructure/construction_type.h"
 #include "script/modifier.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 
@@ -23,7 +23,8 @@ const std::set<std::string> &holding_defines::get_database_dependencies() const
 {
 	static const std::set<std::string> database_dependencies = {
 		commodity::class_identifier, //needed for the suffixes for holding commodity costs
-		employment_type::class_identifier //needed so that employment capacity multipliers can work as expected
+		employment_capacity_type::class_identifier, //needed so that employment capacity multipliers can work as expected
+		employment_type::class_identifier //needed so that the automatically-created employment capacity types are present
 	};
 	return database_dependencies;
 }

@@ -34,6 +34,7 @@ class culture;
 class culture_base;
 class domain;
 class domain_skill;
+class employment_capacity_type;
 class icon;
 class military_unit;
 class pathway;
@@ -410,10 +411,9 @@ public:
 		co_await this->set_population_type_modifier_multiplier(population_type, this->get_population_type_modifier_multiplier(population_type) + change);
 	}
 
-
-	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
+	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
 	{
-		const auto find_iterator = this->employment_capacity_modifiers.find(employment_type);
+		const auto find_iterator = this->employment_capacity_modifiers.find(capacity_type);
 
 		if (find_iterator != this->employment_capacity_modifiers.end()) {
 			return find_iterator->second;
@@ -422,11 +422,11 @@ public:
 		return 0;
 	}
 
-	void set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier);
+	void set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier);
 
-	void change_employment_capacity_modifier(const employment_type *employment_type, const int64_t change)
+	void change_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t change)
 	{
-		this->set_employment_capacity_modifier(employment_type, this->get_employment_capacity_modifier(employment_type) + change);
+		this->set_employment_capacity_modifier(capacity_type, this->get_employment_capacity_modifier(capacity_type) + change);
 	}
 
 	const std::vector<military_unit *> &get_military_units() const
@@ -757,7 +757,7 @@ private:
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
-	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
+	data_entry_map<employment_capacity_type, int64_t> employment_capacity_modifiers;
 	std::vector<military_unit *> military_units;
 	std::map<military_unit_category, int> military_unit_category_counts;
 	std::vector<army *> entering_armies; //armies entering this province

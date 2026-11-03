@@ -24,11 +24,11 @@ militia_training_ground = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_infantry
+			capacity_type = light_infantry
 			capacity = 80
 		}
 		employment_capacity = {
-			employment_type = archery
+			capacity_type = archery
 			capacity = 10
 		}
 	}
@@ -65,11 +65,11 @@ archery_range = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_infantry
+			capacity_type = light_infantry
 			capacity = 130
 		}
 		employment_capacity = {
-			employment_type = archery
+			capacity_type = archery
 			capacity = 60
 		}
 	}
@@ -103,11 +103,11 @@ large_archery_range = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_infantry
+			capacity_type = light_infantry
 			capacity = 150
 		}
 		employment_capacity = {
-			employment_type = archery
+			capacity_type = archery
 			capacity = 150
 		}
 	}

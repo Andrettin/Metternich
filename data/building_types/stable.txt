@@ -28,7 +28,7 @@ small_stable = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_cavalry
+			capacity_type = light_cavalry
 			capacity = 35
 		}
 	}
@@ -68,7 +68,7 @@ medium_stable = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_cavalry
+			capacity_type = light_cavalry
 			capacity = 80
 		}
 		base_population_capacity = 10
@@ -114,7 +114,7 @@ large_stable = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_cavalry
+			capacity_type = light_cavalry
 			capacity = 135
 		}
 		base_population_capacity = 10
@@ -157,11 +157,11 @@ great_stable = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_cavalry
+			capacity_type = light_cavalry
 			capacity = 190
 		}
 		employment_capacity = {
-			employment_type = heavy_cavalry
+			capacity_type = heavy_cavalry
 			capacity = 5
 		}
 		base_population_capacity = 10
@@ -204,11 +204,11 @@ royal_stable = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_cavalry
+			capacity_type = light_cavalry
 			capacity = 245
 		}
 		employment_capacity = {
-			employment_type = heavy_cavalry
+			capacity_type = heavy_cavalry
 			capacity = 15
 		}
 		base_population_capacity = 10

@@ -34,7 +34,7 @@ cattle_ranch = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = cattle_ranching
+			capacity_type = cattle_ranching
 			multiplier = 1
 		}
 	}
@@ -74,7 +74,7 @@ sheep_ranch = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = sheep_ranching
+			capacity_type = sheep_ranching
 			multiplier = 1
 		}
 	}
@@ -113,7 +113,7 @@ tobacco_plantation = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = tobacco_planting
+			capacity_type = tobacco_planting
 			multiplier = 1
 		}
 	}

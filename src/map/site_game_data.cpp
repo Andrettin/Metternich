@@ -15,9 +15,9 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_technology.h"
-#include "domain/domain_turn_data.h"
 #include "domain/government_type.h"
 #include "economy/commodity.h"
+#include "economy/employment_capacity_type.h"
 #include "economy/employment_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
@@ -40,7 +40,6 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/province_map_data.h"
 #include "map/route.h"
 #include "map/route_game_data.h"
 #include "map/site.h"
@@ -63,7 +62,6 @@
 #include "script/scripted_site_modifier.h"
 #include "ui/icon.h"
 #include "ui/portrait.h"
-#include "ui/ui_defines.h"
 #include "unit/army.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
@@ -2522,7 +2520,7 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 	const int64_t size = (this->employment_sizes[employment_type] += change);
 
 	assert_throw(size >= 0);
-	assert_throw(size <= this->get_employment_capacity(employment_type));
+	assert_throw(size <= this->get_employment_capacity(employment_type->get_capacity_type()));
 
 	if (size == 0) {
 		this->employment_sizes.erase(employment_type);
@@ -2538,7 +2536,6 @@ QCoro::Task<void> site_game_data::change_effective_employment_size(const employm
 	const int64_t size = (this->effective_employment_sizes[employment_type] += change);
 
 	assert_throw(size >= 0);
-	assert_throw(size <= this->get_employment_capacity(employment_type));
 
 	if (size == 0) {
 		this->effective_employment_sizes.erase(employment_type);
@@ -2585,71 +2582,84 @@ QCoro::Task<void> site_game_data::change_effective_employment_size(const employm
 	}
 }
 
-void site_game_data::set_base_employment_capacity(const employment_type *employment_type, const int64_t capacity)
+void site_game_data::set_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity)
 {
-	assert_throw(employment_type != nullptr);
+	assert_throw(capacity_type != nullptr);
 
-	if (capacity == this->get_base_employment_capacity(employment_type)) {
+	if (capacity == this->get_base_employment_capacity(capacity_type)) {
 		return;
 	}
 
 	assert_throw(capacity >= 0);
 
 	if (capacity == 0) {
-		this->base_employment_capacities.erase(employment_type);
+		this->base_employment_capacities.erase(capacity_type);
 	} else {
-		this->base_employment_capacities[employment_type] = capacity;
+		this->base_employment_capacities[capacity_type] = capacity;
 	}
 
-	this->calculate_employment_capacity(employment_type);
+	this->calculate_employment_capacity(capacity_type);
 }
 
-void site_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)
+void site_game_data::set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier)
 {
-	assert_throw(employment_type != nullptr);
+	assert_throw(capacity_type != nullptr);
 
-	if (modifier == this->get_employment_capacity_modifier(employment_type)) {
+	if (modifier == this->get_employment_capacity_modifier(capacity_type)) {
 		return;
 	}
 
 	if (modifier == 0) {
-		this->employment_capacity_modifiers.erase(employment_type);
+		this->employment_capacity_modifiers.erase(capacity_type);
 	} else {
-		this->employment_capacity_modifiers[employment_type] = modifier;
+		this->employment_capacity_modifiers[capacity_type] = modifier;
 	}
 
-	this->calculate_employment_capacity(employment_type);
+	this->calculate_employment_capacity(capacity_type);
 }
 
-void site_game_data::set_employment_capacity(const employment_type *employment_type, const int64_t capacity)
+void site_game_data::set_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity)
 {
-	assert_throw(employment_type != nullptr);
+	assert_throw(capacity_type != nullptr);
 
-	if (capacity == this->get_employment_capacity(employment_type)) {
+	if (capacity == this->get_employment_capacity(capacity_type)) {
 		return;
 	}
 
 	assert_throw(capacity >= 0);
 
 	if (capacity == 0) {
-		this->employment_capacities.erase(employment_type);
+		this->employment_capacities.erase(capacity_type);
 	} else {
-		this->employment_capacities[employment_type] = capacity;
+		this->employment_capacities[capacity_type] = capacity;
 	}
 }
 
-void site_game_data::calculate_employment_capacity(const employment_type *employment_type)
+void site_game_data::calculate_employment_capacity(const employment_capacity_type *capacity_type)
 {
-	int64_t capacity = this->get_base_employment_capacity(employment_type);
+	int64_t capacity = this->get_base_employment_capacity(capacity_type);
 	
-	int64_t employment_capacity_modifier = this->get_employment_capacity_modifier(employment_type);
-	employment_capacity_modifier += this->get_province()->get_game_data()->get_employment_capacity_modifier(employment_type);
+	int64_t employment_capacity_modifier = this->get_employment_capacity_modifier(capacity_type);
+	employment_capacity_modifier += this->get_province()->get_game_data()->get_employment_capacity_modifier(capacity_type);
 	if (employment_capacity_modifier != 0) {
 		capacity *= 100 + employment_capacity_modifier;
 		capacity /= 100;
 	}
 	
-	this->set_employment_capacity(employment_type, capacity);
+	this->set_employment_capacity(capacity_type, capacity);
+}
+
+int64_t site_game_data::get_available_employment_capacity(const employment_capacity_type *capacity_type) const
+{
+	assert_throw(capacity_type != nullptr);
+
+	int64_t available_capacity = this->get_employment_capacity(capacity_type);
+
+	for (const employment_type *capacity_employment_type : capacity_type->get_employment_types()) {
+		available_capacity -= this->get_employment_size(capacity_employment_type);
+	}
+
+	return available_capacity;
 }
 
 int64_t site_game_data::get_available_employment_input_capacity(const employment_type *employment_type) const
@@ -2713,67 +2723,69 @@ QCoro::Task<void> site_game_data::check_employment()
 		}
 	}
 
-	for (const auto &[employment_type, employment_capacity] : this->get_employment_capacities()) {
-		if (!employment_type->is_available_for_site(this->site)) {
-			continue;
-		}
-
-		int64_t available_employment_capacity = this->get_available_employment_capacity(employment_type);
+	for (const auto &[capacity_type, employment_capacity] : this->get_employment_capacities()) {
+		int64_t available_employment_capacity = this->get_available_employment_capacity(capacity_type);
 		assert_throw(available_employment_capacity >= 0);
 		if (available_employment_capacity == 0) {
 			continue;
 		}
 
-		int64_t available_employment_input_capacity = this->get_available_employment_input_capacity(employment_type);
-		assert_throw(available_employment_input_capacity >= 0);
-		if (available_employment_input_capacity == 0) {
-			continue;
-		}
-
-		for (size_t i = 0; i < unemployed_population_units.size();) {
-			population_unit *population_unit = unemployed_population_units.at(i);
-
-			const population_type *employed_population_type = nullptr;
-			if (!employment_type->can_employ(population_unit->get_type(), employed_population_type)) {
-				++i;
+		for (const employment_type *employment_type : capacity_type->get_employment_types()) {
+			if (!employment_type->is_available_for_site(this->site)) {
 				continue;
 			}
 
-			assert_throw(employed_population_type != nullptr);
-
-			if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size(), population_unit->get_sick_and_starving_percent()) == 0) {
-				++i;
-				continue;
-			}
-
-			int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
-			if (!employment_type->get_input_commodities().empty()) {
-				employee_size = std::min(employee_size, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, population_unit->get_sick_and_starving_percent(), false));
-			}
-			assert_throw(employee_size > 0);
-
-			const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, population_unit->get_sick_and_starving_percent());
-			const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
-			const bool full_employment = employee_size == population_unit->get_size();
-
-			co_await this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_percentages(), lost_wealth, true);
-
-			co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_percentages(), -lost_wealth, true);
-
-			if (full_employment) {
-				unemployed_population_units.erase(unemployed_population_units.begin() + i);
-			} else {
-				++i;
-			}
-
-			available_employment_capacity -= employee_size;
-			available_employment_input_capacity -= effective_employee_size;
-
-			assert_throw(available_employment_capacity >= 0);
+			int64_t available_employment_input_capacity = this->get_available_employment_input_capacity(employment_type);
 			assert_throw(available_employment_input_capacity >= 0);
+			if (available_employment_input_capacity == 0) {
+				continue;
+			}
 
-			if (available_employment_capacity == 0 || available_employment_input_capacity == 0) {
-				break;
+			for (size_t i = 0; i < unemployed_population_units.size();) {
+				population_unit *population_unit = unemployed_population_units.at(i);
+
+				const population_type *employed_population_type = nullptr;
+				if (!employment_type->can_employ(population_unit->get_type(), employed_population_type)) {
+					++i;
+					continue;
+				}
+
+				assert_throw(employed_population_type != nullptr);
+
+				if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size(), population_unit->get_sick_and_starving_percent()) == 0) {
+					++i;
+					continue;
+				}
+
+				int64_t employee_size = std::min(available_employment_capacity, population_unit->get_size());
+				if (!employment_type->get_input_commodities().empty()) {
+					employee_size = std::min(employee_size, population_unit->get_employment_size_from_effective_size(employment_type, available_employment_input_capacity, population_unit->get_sick_and_starving_percent(), false));
+				}
+				assert_throw(employee_size > 0);
+
+				const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, population_unit->get_sick_and_starving_percent());
+				const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
+				const bool full_employment = employee_size == population_unit->get_size();
+
+				co_await this->change_population(employed_population_type, population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), employment_type, employee_size, population_unit->get_percentages(), lost_wealth, true);
+
+				co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, -employee_size, population_unit->get_percentages(), -lost_wealth, true);
+
+				if (full_employment) {
+					unemployed_population_units.erase(unemployed_population_units.begin() + i);
+				} else {
+					++i;
+				}
+
+				available_employment_capacity -= employee_size;
+				available_employment_input_capacity -= effective_employee_size;
+
+				assert_throw(available_employment_capacity >= 0);
+				assert_throw(available_employment_input_capacity >= 0);
+
+				if (available_employment_capacity == 0 || available_employment_input_capacity == 0) {
+					break;
+				}
 			}
 		}
 	}
@@ -2790,7 +2802,7 @@ QCoro::Task<void> site_game_data::check_employment_capacities_overflow()
 			continue;
 		}
 
-		const int64_t capacity = this->get_employment_capacity(employment_type);
+		const int64_t capacity = this->get_employment_capacity(employment_type->get_capacity_type());
 
 		//if the employment capacity is below the employment size, reduce the latter
 		int64_t capacity_overflow = employment_size - capacity;

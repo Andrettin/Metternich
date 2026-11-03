@@ -29,11 +29,11 @@ guard_quarters = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 30
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 15
 		}
 	}
@@ -74,11 +74,11 @@ small_barracks = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 70
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 30
 		}
 	}
@@ -120,11 +120,11 @@ medium_barracks = {
 	modifier = {
 		scripted_modifier_effect = barracks
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 115
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 50
 		}
 	}
@@ -166,11 +166,11 @@ large_barracks = {
 	modifier = {
 		scripted_modifier_effect = barracks
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 165
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 75
 		}
 	}
@@ -212,11 +212,11 @@ great_barracks = {
 	modifier = {
 		scripted_modifier_effect = barracks
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 225
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 100
 		}
 	}
@@ -258,11 +258,11 @@ royal_barracks = {
 	modifier = {
 		scripted_modifier_effect = barracks
 		employment_capacity = {
-			employment_type = heavy_infantry
+			capacity_type = heavy_infantry
 			capacity = 290
 		}
 		employment_capacity = {
-			employment_type = pikemen
+			capacity_type = pikemen
 			capacity = 130
 		}
 	}

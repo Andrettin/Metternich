@@ -1,5 +1,6 @@
 #pragma once
 
+#include "economy/employment_capacity_type.h"
 #include "economy/employment_type.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
@@ -27,25 +28,27 @@ public:
 	{
 		Q_UNUSED(ctx);
 
-		for (const auto &[employment_type, employment_capacity] : scope->get_game_data()->get_employment_capacities()) {
-			const metternich::population_type *employed_population_type = nullptr;
-			if (!employment_type->can_employ(this->population_type, employed_population_type)) {
+		for (const auto &[capacity_type, employment_capacity] : scope->get_game_data()->get_employment_capacities()) {
+			if (scope->get_game_data()->get_available_employment_capacity(capacity_type) <= 0) {
 				continue;
 			}
 
-			if (!employment_type->is_available_for_site(scope)) {
-				continue;
-			}
+			for (const employment_type *employment_type : capacity_type->get_employment_types()) {
+				const metternich::population_type *employed_population_type = nullptr;
+				if (!employment_type->can_employ(this->population_type, employed_population_type)) {
+					continue;
+				}
 
-			if (scope->get_game_data()->get_available_employment_capacity(employment_type) <= 0) {
-				continue;
-			}
+				if (!employment_type->is_available_for_site(scope)) {
+					continue;
+				}
 
-			if (scope->get_game_data()->get_available_employment_input_capacity(employment_type) <= 0) {
-				continue;
-			}
+				if (scope->get_game_data()->get_available_employment_input_capacity(employment_type) <= 0) {
+					continue;
+				}
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;

@@ -17,11 +17,11 @@ bowyer = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_infantry
+			capacity_type = light_infantry
 			capacity = 95
 		}
 		employment_capacity = {
-			employment_type = archery
+			capacity_type = archery
 			capacity = 95
 		}
 	}
@@ -50,11 +50,11 @@ crossbow_workshop = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = light_infantry
+			capacity_type = light_infantry
 			capacity = 215
 		}
 		employment_capacity = {
-			employment_type = archery
+			capacity_type = archery
 			capacity = 215
 		}
 	}

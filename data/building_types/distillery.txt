@@ -22,7 +22,7 @@ liquor_distillery = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = liquor_distilling
+			capacity_type = liquor_distilling
 			capacity = 10000
 		}
 	}

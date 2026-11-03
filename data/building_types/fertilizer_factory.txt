@@ -21,7 +21,7 @@ fertilizer_factory = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = fertilizer_making
+			capacity_type = fertilizer_making
 			capacity = 10000
 		}
 	}

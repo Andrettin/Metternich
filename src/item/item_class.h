@@ -8,6 +8,7 @@ Q_MOC_INCLUDE("item/item_slot.h")
 namespace metternich {
 
 class item_slot;
+class item_type;
 
 class item_class final : public named_data_entry, public data_type<item_class>
 {

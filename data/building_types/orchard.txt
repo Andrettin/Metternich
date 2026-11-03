@@ -29,7 +29,7 @@ orchard = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = fruit_farming
+			capacity_type = fruit_farming
 			multiplier = 1
 		}
 	}
@@ -70,7 +70,7 @@ improved_orchard = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = fruit_farming
+			capacity_type = fruit_farming
 			multiplier = 2
 		}
 	}
@@ -109,7 +109,7 @@ mechanized_orchard = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = fruit_farming
+			capacity_type = fruit_farming
 			multiplier = 3
 		}
 	}
@@ -148,7 +148,7 @@ industrial_orchard = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = fruit_farming
+			capacity_type = fruit_farming
 			multiplier = 4
 		}
 	}

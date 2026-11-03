@@ -29,7 +29,7 @@ grain_farm = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = grain_farming
+			capacity_type = grain_farming
 			multiplier = 1
 		}
 	}
@@ -70,7 +70,7 @@ grain_estate = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = grain_farming
+			capacity_type = grain_farming
 			multiplier = 2
 		}
 	}
@@ -109,7 +109,7 @@ mechanized_grain_estate = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = grain_farming
+			capacity_type = grain_farming
 			multiplier = 3
 		}
 	}
@@ -148,7 +148,7 @@ industrial_grain_estate = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = grain_farming
+			capacity_type = grain_farming
 			multiplier = 4
 		}
 	}

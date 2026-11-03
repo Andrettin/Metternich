@@ -532,9 +532,9 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> change_effective_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
 
-	int64_t get_base_employment_capacity(const employment_type *employment_type) const
+	int64_t get_base_employment_capacity(const employment_capacity_type *capacity_type) const
 	{
-		const auto find_iterator = this->base_employment_capacities.find(employment_type);
+		const auto find_iterator = this->base_employment_capacities.find(capacity_type);
 
 		if (find_iterator != this->base_employment_capacities.end()) {
 			return find_iterator->second;
@@ -543,16 +543,16 @@ public:
 		return 0;
 	}
 
-	void set_base_employment_capacity(const employment_type *employment_type, const int64_t capacity);
+	void set_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity);
 
-	void change_base_employment_capacity(const employment_type *employment_type, const int64_t change)
+	void change_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t change)
 	{
-		this->set_base_employment_capacity(employment_type, this->get_base_employment_capacity(employment_type) + change);
+		this->set_base_employment_capacity(capacity_type, this->get_base_employment_capacity(capacity_type) + change);
 	}
 
-	int64_t get_employment_capacity_modifier(const employment_type *employment_type) const
+	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
 	{
-		const auto find_iterator = this->employment_capacity_modifiers.find(employment_type);
+		const auto find_iterator = this->employment_capacity_modifiers.find(capacity_type);
 
 		if (find_iterator != this->employment_capacity_modifiers.end()) {
 			return find_iterator->second;
@@ -561,21 +561,21 @@ public:
 		return 0;
 	}
 
-	void set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier);
+	void set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier);
 
-	void change_employment_capacity_modifier(const employment_type *employment_type, const int64_t change)
+	void change_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t change)
 	{
-		this->set_employment_capacity_modifier(employment_type, this->get_employment_capacity_modifier(employment_type) + change);
+		this->set_employment_capacity_modifier(capacity_type, this->get_employment_capacity_modifier(capacity_type) + change);
 	}
 
-	const data_entry_map<employment_type, int64_t> &get_employment_capacities() const
+	const data_entry_map<employment_capacity_type, int64_t> &get_employment_capacities() const
 	{
 		return this->employment_capacities;
 	}
 
-	int64_t get_employment_capacity(const employment_type *employment_type) const
+	int64_t get_employment_capacity(const employment_capacity_type *capacity_type) const
 	{
-		const auto find_iterator = this->employment_capacities.find(employment_type);
+		const auto find_iterator = this->employment_capacities.find(capacity_type);
 
 		if (find_iterator != this->employment_capacities.end()) {
 			return find_iterator->second;
@@ -584,14 +584,10 @@ public:
 		return 0;
 	}
 
-	void set_employment_capacity(const employment_type *employment_type, const int64_t capacity);
-	void calculate_employment_capacity(const employment_type *employment_type);
+	void set_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity);
+	void calculate_employment_capacity(const employment_capacity_type *capacity_type);
 
-	int64_t get_available_employment_capacity(const employment_type *employment_type) const
-	{
-		return this->get_employment_capacity(employment_type) - this->get_employment_size(employment_type);
-	}
-
+	int64_t get_available_employment_capacity(const employment_capacity_type *capacity_type) const;
 	int64_t get_available_employment_input_capacity(const employment_type *employment_type) const;
 	[[nodiscard]] QCoro::Task<void> decrease_employment(const employment_type *employment_type, int64_t decrease, const bool change_input_storage, const bool decrease_effective);
 	[[nodiscard]] QCoro::Task<void> check_employment();
@@ -810,9 +806,9 @@ private:
 	decimillesimal_int quarterly_population_growth_rate;
 	data_entry_map<employment_type, int64_t> employment_sizes;
 	data_entry_map<employment_type, int64_t> effective_employment_sizes;
-	data_entry_map<employment_type, int64_t> base_employment_capacities;
-	data_entry_map<employment_type, int64_t> employment_capacity_modifiers;
-	data_entry_map<employment_type, int64_t> employment_capacities;
+	data_entry_map<employment_capacity_type, int64_t> base_employment_capacities;
+	data_entry_map<employment_capacity_type, int64_t> employment_capacity_modifiers;
+	data_entry_map<employment_capacity_type, int64_t> employment_capacities;
 	commodity_map<decimillesimal_int> base_commodity_outputs;
 	commodity_map<decimillesimal_int> commodity_outputs;
 	centesimal_int output_modifier;

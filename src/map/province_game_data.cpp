@@ -19,7 +19,7 @@
 #include "domain/government_type.h"
 #include "economy/commodity.h"
 #include "economy/commodity_container.h"
-#include "economy/employment_type.h"
+#include "economy/employment_capacity_type.h"
 #include "economy/resource.h"
 #include "engine_interface.h"
 #include "game/event_trigger.h"
@@ -2219,23 +2219,23 @@ QCoro::Task<void> province_game_data::set_population_type_modifier_multiplier(co
 	co_await population_type->get_province_modifier()->apply(this->province, new_multiplier);
 }
 
-void province_game_data::set_employment_capacity_modifier(const employment_type *employment_type, const int64_t modifier)
+void province_game_data::set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier)
 {
-	assert_throw(employment_type != nullptr);
+	assert_throw(capacity_type != nullptr);
 
-	if (modifier == this->get_employment_capacity_modifier(employment_type)) {
+	if (modifier == this->get_employment_capacity_modifier(capacity_type)) {
 		return;
 	}
 
 	if (modifier == 0) {
-		this->employment_capacity_modifiers.erase(employment_type);
+		this->employment_capacity_modifiers.erase(capacity_type);
 	} else {
-		this->employment_capacity_modifiers[employment_type] = modifier;
+		this->employment_capacity_modifiers[capacity_type] = modifier;
 	}
 
 	//recalculate the affected employment capacity for holdings in this province
 	for (const site *site : this->get_holding_sites()) {
-		site->get_game_data()->calculate_employment_capacity(employment_type);
+		site->get_game_data()->calculate_employment_capacity(capacity_type);
 	}
 }
 

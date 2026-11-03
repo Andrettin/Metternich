@@ -25,7 +25,7 @@ lumber_mill = {
 	}
 	modifier = {
 		employment_capacity = {
-			employment_type = lumber_making
+			capacity_type = lumber_making
 			capacity = 10000
 		}
 		productivity = 1

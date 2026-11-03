@@ -12,6 +12,7 @@ Q_MOC_INCLUDE("technology/technology.h")
 namespace metternich {
 
 class commodity;
+class employment_capacity_type;
 class technology;
 
 template <typename scope_type>
@@ -31,6 +32,8 @@ public:
 	static constexpr const char property_class_identifier[] = "metternich::employment_type*";
 	static constexpr const char database_folder[] = "employment_types";
 
+	static void process_database(const bool definition, const data_module_map<std::vector<gsml_data>> &gsml_data_to_process, const data_type_metadata *metadata);
+
 	explicit employment_type(const std::string &identifier);
 	~employment_type();
 
@@ -38,6 +41,11 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
+
+	const employment_capacity_type *get_capacity_type() const
+	{
+		return this->capacity_type;
+	}
 
 	const population_type_set &get_employee_types() const
 	{
@@ -93,6 +101,7 @@ signals:
 	void changed();
 
 private:
+	const employment_capacity_type *capacity_type = nullptr;
 	population_type_set employee_types;
 	commodity_map<decimillesimal_int> input_commodities;
 	decimillesimal_int input_wealth_value;
