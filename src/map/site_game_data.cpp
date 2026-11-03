@@ -592,12 +592,17 @@ bool site_game_data::can_be_capital() const
 		return false;
 	}
 
-	if (!this->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(this->get_holding_type())) {
+	const domain_game_data *owner_game_data = this->get_owner()->get_game_data();
+
+	if (!owner_game_data->get_government_type()->is_holding_type_allowed(this->get_holding_type())) {
 		return false;
 	}
 
-	if (this->get_owner()->get_game_data()->get_province_count() > 0 && this->get_province()->get_game_data()->get_owner() != this->get_owner()) {
-		return false;
+	if (owner_game_data->get_province_count() > 0 && this->get_province()->get_game_data()->get_owner() != this->get_owner()) {
+		//if there is only one province, only consider the owner to have provinces if that province as the owner set as its owner; this prevents issues if the owner is in the process of losing their last province
+		if (owner_game_data->get_province_count() > 1 || owner_game_data->get_provinces().at(0)->get_game_data()->get_owner() == this->get_owner()) {
+			return false;
+		}
 	}
 
 	return true;
