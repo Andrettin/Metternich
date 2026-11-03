@@ -1,6 +1,6 @@
 commercial_researching = {
 	name = "Commercial Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		academics
 	}
@@ -14,7 +14,7 @@ commercial_researching = {
 
 cultural_researching = {
 	name = "Cultural Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		academics
 	}
@@ -28,7 +28,7 @@ cultural_researching = {
 
 industrial_researching = {
 	name = "Industrial Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		academics
 	}
@@ -42,7 +42,7 @@ industrial_researching = {
 
 military_researching = {
 	name = "Military Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		officers
 	}
@@ -56,7 +56,7 @@ military_researching = {
 
 naval_researching = {
 	name = "Naval Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		officers
 	}
@@ -70,7 +70,7 @@ naval_researching = {
 
 religious_researching = {
 	name = "Religious Researching"
-	base_employment_size = 1000
+	base_employment_size = 10000
 	employee_types = {
 		clergymen
 	}
