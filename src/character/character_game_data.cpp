@@ -554,7 +554,7 @@ gsml_data character_game_data::to_gsml_data() const
 QCoro::Task<void> character_game_data::initialize()
 {
 	for (const skill *skill : skill::get_all()) {
-		co_await this->change_skill_value(skill, skill->get_base_value());
+		co_await this->change_typed_stat_value(skill, skill->get_base_value());
 	}
 }
 
@@ -2361,13 +2361,14 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
-QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier)
+QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change, const bool stat_enabled)
 {
 	if (change == 0) {
 		co_return;
 	}
 
 	const int old_value = this->get_stat_value(stat);
+	const bool affects_office_modifier = stat->affects_office_modifier_for_character(this->character);
 
 	if (affects_office_modifier) {
 		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
@@ -2400,10 +2401,8 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
-	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
-		co_await this->change_skill_value(skill, change);
 	} else {
-		co_await this->change_stat_value(stat, change, true, false);
+		co_await this->change_stat_value(stat, change, true);
 	}
 }
 
@@ -2491,8 +2490,6 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		co_return;
 	}
 
-	const bool is_office_attribute = this->get_office() != nullptr && vector::contains(this->get_office()->get_character_attributes(), attribute);
-
 	if (this->get_exceptional_attribute_value(attribute) != 0) {
 		//remove the exceptional value modifier before changing the attribute value, since the latter also affects it
 		const modifier<const metternich::character> *value_modifier = attribute->get_exceptional_value_modifier(this->get_attribute_value(attribute), this->get_exceptional_attribute_value(attribute));
@@ -2501,7 +2498,7 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		}
 	}
 
-	co_await this->change_stat_value(attribute, change, true, is_office_attribute);
+	co_await this->change_stat_value(attribute, change, true);
 
 	if (this->get_exceptional_attribute_value(attribute) != 0) {
 		//reapply the exceptional value modifier after changing the attribute value, since the latter also affects it
@@ -3160,17 +3157,6 @@ int character_game_data::get_skill_value(const skill *skill) const
 	return this->get_stat_value(skill);
 }
 
-QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
-{
-	if (change == 0) {
-		co_return;
-	}
-
-	const bool is_office_skill = this->get_office() != nullptr && vector::contains(this->get_office()->get_skills(), skill);
-
-	co_await this->change_stat_value(skill, change, this->is_skill_available(skill), is_office_skill);
-}
-
 int character_game_data::get_effective_skill_value(const skill *skill) const
 {
 	if (!this->is_skill_available(skill)) {
@@ -3393,7 +3379,7 @@ QCoro::Task<void> character_game_data::on_trait_gained(const trait *trait, const
 	if (this->get_office() != nullptr) {
 		assert_throw(this->get_domain() != nullptr);
 
-		if (trait->get_office_modifier(this->get_office()) != nullptr) {
+		if (trait->get_office_modifier(this->get_office()) != nullptr || trait->get_scaled_office_modifier(this->get_office()) != nullptr) {
 			co_await this->apply_trait_office_modifier(trait, this->get_domain(), this->get_office(), multiplier);
 		}
 	}
@@ -3754,7 +3740,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 	str += ": " + string::colored(number::to_signed_string(domain_attribute_modifier), number_color);
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
-		if (trait->get_office_modifier(office) == nullptr) {
+		if (trait->get_office_modifier(office) == nullptr && trait->get_scaled_office_modifier(office) == nullptr) {
 			continue;
 		}
 
@@ -3762,6 +3748,14 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 
 		if (trait->get_office_modifier(office) != nullptr) {
 			trait_modifier_str = trait->get_office_modifier(office)->get_single_line_string(domain, trait->is_unlimited() ? count : 1);
+		}
+
+		if (trait->get_scaled_office_modifier(office) != nullptr) {
+			if (!trait_modifier_str.empty()) {
+				trait_modifier_str += ", ";
+			}
+
+			trait_modifier_str += trait->get_scaled_office_modifier(office)->get_single_line_string(domain, (trait->is_unlimited() ? count : 1) * this->get_stat_value(trait->get_scaling_stat()));
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -3801,6 +3795,10 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 {
 	if (trait->get_office_modifier(office) != nullptr) {
 		co_await trait->get_office_modifier(office)->apply(domain, multiplier);
+	}
+
+	if (trait->get_scaled_office_modifier(office) != nullptr) {
+		co_await trait->get_scaled_office_modifier(office)->apply(domain, multiplier * this->get_stat_value(trait->get_scaling_stat()));
 	}
 }
 

@@ -2,13 +2,17 @@
 
 #include "character/skill.h"
 
+#include "character/character.h"
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/character_game_data.h"
 #include "character/skill_group.h"
 #include "database/gsml_data.h"
+#include "domain/office.h"
 #include "species/taxon.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -108,6 +112,16 @@ std::string_view skill::get_value_suffix() const
 	}
 
 	return "";
+}
+
+bool skill::affects_office_modifier_for_character(const character *character) const
+{
+	const office *office = character->get_game_data()->get_office();
+	if (office != nullptr && vector::contains(office->get_skills(), this)) {
+		return true;
+	}
+
+	return character_stat::affects_office_modifier_for_character(character);
 }
 
 }

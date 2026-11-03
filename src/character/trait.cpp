@@ -4,6 +4,7 @@
 
 #include "character/character_attribute.h"
 #include "character/character_class.h"
+#include "character/character_stat.h"
 #include "character/trait_type.h"
 #include "domain/office.h"
 #include "script/condition/and_condition.h"
@@ -31,6 +32,8 @@ void trait::process_gsml_property(const gsml_property &property)
 	if (key == "weight") {
 		const int factor = std::stoi(value);
 		this->weight_factor = std::make_unique<metternich::factor<character>>(factor);
+	} else if (key == "scaling_stat") {
+		this->scaling_stat = character_stat::get_stat(value);
 	} else {
 		named_data_entry::process_gsml_property(property);
 	}
@@ -89,6 +92,13 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			modifier->process_gsml_data(child_scope);
 			this->office_modifiers[office] = std::move(modifier);
 		});
+	} else if (tag == "scaled_office_modifiers") {
+		scope.for_each_child([this](const gsml_data &child_scope) {
+			const office *office = office::get(child_scope.get_tag());
+			auto modifier = std::make_unique<metternich::modifier<const domain>>();
+			modifier->process_gsml_data(child_scope);
+			this->scaled_office_modifiers[office] = std::move(modifier);
+		});
 	} else if (tag == "military_unit_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<military_unit>>();
 		modifier->process_gsml_data(scope);
@@ -109,6 +119,10 @@ void trait::check() const
 
 	if (this->get_types().empty()) {
 		throw std::runtime_error(std::format("Character trait \"{}\" has no type.", this->get_identifier()));
+	}
+
+	if (this->get_scaling_stat() == nullptr && !this->scaled_office_modifiers.empty()) {
+		throw std::runtime_error(std::format("Character trait \"{}\" has scaled modifiers, but no scaling stat.", this->get_identifier()));
 	}
 
 	named_data_entry::check();

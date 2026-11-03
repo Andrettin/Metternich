@@ -15,6 +15,7 @@ namespace metternich {
 
 class character;
 class character_attribute;
+class character_stat;
 class divine_domain;
 class domain;
 class icon;
@@ -87,6 +88,11 @@ public:
 		return this->divine_domain;
 	}
 
+	const character_stat *get_scaling_stat() const
+	{
+		return this->scaling_stat;
+	}
+
 	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
 	{
 		return this->attribute_bonuses;
@@ -140,6 +146,16 @@ public:
 		return nullptr;
 	}
 
+	const metternich::modifier<const domain> *get_scaled_office_modifier(const office *office) const
+	{
+		const auto find_iterator = this->scaled_office_modifiers.find(office);
+		if (find_iterator != this->scaled_office_modifiers.end()) {
+			return find_iterator->second.get();
+		}
+
+		return nullptr;
+	}
+
 	const metternich::modifier<military_unit> *get_military_unit_modifier() const
 	{
 		return this->military_unit_modifier.get();
@@ -162,6 +178,7 @@ private:
 	int level = 1;
 	bool unlimited = false;
 	const metternich::divine_domain *divine_domain = nullptr;
+	const character_stat *scaling_stat = nullptr;
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> gain_conditions;
@@ -169,6 +186,7 @@ private:
 	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> per_mythic_tier_modifiers;
 	std::map<int, std::unique_ptr<const metternich::modifier<const character>>> per_divine_rank_modifiers;
 	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> office_modifiers;
+	data_entry_map<office, std::unique_ptr<const metternich::modifier<const domain>>> scaled_office_modifiers;
 	std::unique_ptr<const metternich::modifier<military_unit>> military_unit_modifier;
 	std::unique_ptr<factor<character>> weight_factor;
 };

@@ -65,6 +65,8 @@ public:
 
 	const modifier<const character> *get_exceptional_value_modifier(const int value, const int exceptional_value) const;
 
+	virtual bool affects_office_modifier_for_character(const character *character) const override;
+
 signals:
 	void changed();
 

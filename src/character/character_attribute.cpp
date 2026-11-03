@@ -2,10 +2,14 @@
 
 #include "character/character_attribute.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
 #include "database/gsml_data.h"
+#include "domain/office.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 	
@@ -103,6 +107,16 @@ const modifier<const character> *character_attribute::get_exceptional_value_modi
 	}
 
 	return nullptr;
+}
+
+bool character_attribute::affects_office_modifier_for_character(const character *character) const
+{
+	const office *office = character->get_game_data()->get_office();
+	if (office != nullptr && vector::contains(office->get_character_attributes(), this)) {
+		return true;
+	}
+
+	return character_stat::affects_office_modifier_for_character(character);
 }
 
 }

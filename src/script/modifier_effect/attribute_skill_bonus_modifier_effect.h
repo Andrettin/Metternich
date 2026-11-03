@@ -45,7 +45,7 @@ public:
 				continue;
 			}
 
-			co_await scope->get_game_data()->change_skill_value(skill, (this->value * multiplier).to_int());
+			co_await scope->get_game_data()->change_typed_stat_value(skill, (this->value * multiplier).to_int());
 		}
 	}
 

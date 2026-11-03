@@ -90,6 +90,8 @@ public:
 		return this->groups;
 	}
 
+	virtual bool affects_office_modifier_for_character(const character *character) const override;
+
 signals:
 	void changed();
 

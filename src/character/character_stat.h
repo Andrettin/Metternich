@@ -50,6 +50,7 @@ public:
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
 	bool affects_military_unit_stats() const;
+	virtual bool affects_office_modifier_for_character(const character *character) const;
 
 	const std::vector<const character_stat *> &get_derived_stats() const
 	{

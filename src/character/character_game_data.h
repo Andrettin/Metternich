@@ -378,7 +378,7 @@ public:
 		return this->stat_values;
 	}
 
-	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled, const bool affects_office_modifier);
+	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled);
 	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
 
 	int get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const;
@@ -605,7 +605,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 
 	int get_skill_value(const skill *skill) const;
-	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const int change);
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;

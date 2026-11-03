@@ -2,6 +2,9 @@
 
 #include "character/character_stat.h"
 
+#include "character/character.h"
+#include "character/character_game_data.h"
+#include "character/trait.h"
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
@@ -89,6 +92,22 @@ void character_stat::process_gsml_scope(const gsml_data &scope)
 bool character_stat::affects_military_unit_stats() const
 {
 	return this->affect_military_unit_stats;
+}
+
+bool character_stat::affects_office_modifier_for_character(const character *character) const
+{
+	const office *office = character->get_game_data()->get_office();
+	if (office == nullptr) {
+		return false;
+	}
+
+	for (const auto &[trait, count] : character->get_game_data()->get_trait_counts()) {
+		if (trait->get_scaling_stat() == this && trait->get_scaled_office_modifier(office) != nullptr) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void character_stat::add_derived_stat(const character_stat *stat)
