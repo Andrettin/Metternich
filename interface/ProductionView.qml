@@ -22,7 +22,7 @@ Item {
 		anchors.top: storage_capacity_label.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		columns: 4
+		columns: 5
 		spacing: 16 * scale_factor
 		
 		Repeater {
@@ -158,7 +158,7 @@ Item {
 		anchors.top: storable_commodity_grid.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
-		columns: 4
+		columns: 5
 		spacing: 16 * scale_factor
 		
 		Repeater {
