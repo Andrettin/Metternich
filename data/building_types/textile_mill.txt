@@ -8,6 +8,11 @@ weavers_house = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = fabric
 		not = {
@@ -75,6 +80,11 @@ textile_mill = {
 	required_technology = industrialization
 	holding_types = {
 		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = fabric
