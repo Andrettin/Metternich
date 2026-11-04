@@ -10,6 +10,7 @@ florence = {
 	}
 	features = {
 		crossroads #important market or fair
+		prime_fruit_land
 	}
 	
 	history = {

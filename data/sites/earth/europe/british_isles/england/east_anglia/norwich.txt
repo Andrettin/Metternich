@@ -5,6 +5,9 @@ norwich = {
 	type = holding
 	holding_type = guild
 	province = east_anglia
+	features = {
+		iron_deposit
+	}
 	
 	history = {
 		high_middle_ages = {
