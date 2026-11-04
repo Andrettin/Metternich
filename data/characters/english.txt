@@ -182,7 +182,7 @@ john_rolfe = {
 	birth_date = 1585
 	death_date = 1622
 	stats = {
-		agriculture = 5 #+25% Tobacco with the Master Tobacco Planter trait
+		agriculture = 10 #+25% Tobacco with the Master Tobacco Planter trait
 	}
 	traits = {
 		master_tobacco_planter

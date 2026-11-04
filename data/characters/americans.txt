@@ -128,7 +128,7 @@ eli_whitney = {
 	birth_date = 1765
 	death_date = 1825
 	stats = {
-		agriculture = 10 #+50% Cotton with the Master Cotton Planter trait
+		agriculture = 20 #+50% Cotton with the Master Cotton Planter trait
 	}
 	traits = {
 		master_cotton_planter
