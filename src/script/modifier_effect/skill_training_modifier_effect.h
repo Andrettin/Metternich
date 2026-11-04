@@ -5,6 +5,7 @@
 #include "character/skill.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "species/species.h"
+#include "util/assert_util.h"
 #include "util/gender.h"
 
 namespace metternich {
@@ -46,6 +47,11 @@ public:
 		Q_UNUSED(separator);
 
 		return this->get_base_string(scope);
+	}
+
+	const metternich::skill *get_skill() const
+	{
+		return this->skill;
 	}
 
 private:

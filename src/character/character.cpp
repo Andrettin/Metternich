@@ -277,13 +277,13 @@ void character::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "attributes") {
+	if (tag == "stats") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 			const int value_int = std::stoi(value);
 
-			this->attribute_ranges[character_attribute::get(key)] = std::make_pair(value_int, value_int);
+			this->stat_ranges[character_stat::get_stat(key)] = std::make_pair(value_int, value_int);
 		});
 	} else if (tag == "attribute_ratings") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -339,7 +339,7 @@ void character::initialize()
 	}
 
 	for (const auto &[attribute, rating] : this->attribute_ratings) {
-		this->attribute_ranges[attribute] = attribute->get_rating_range(rating);
+		this->stat_ranges[attribute] = attribute->get_rating_range(rating);
 	}
 
 	if (this->get_deity() != nullptr) {
@@ -935,15 +935,15 @@ character *character::get_dynastic_parent() const
 	return this->get_father();
 }
 
-std::optional<std::pair<int, int>> character::get_attribute_range(const character_attribute *attribute) const
+std::optional<std::pair<int, int>> character::get_stat_range(const character_stat *stat) const
 {
-	const auto find_iterator = this->attribute_ranges.find(attribute);
-	if (find_iterator != this->attribute_ranges.end()) {
+	const auto find_iterator = this->stat_ranges.find(stat);
+	if (find_iterator != this->stat_ranges.end()) {
 		return find_iterator->second;
 	}
 
 	if (this->get_monster_type() != nullptr) {
-		return this->get_monster_type()->get_attribute_range(attribute);
+		return this->get_monster_type()->get_stat_range(stat);
 	}
 
 	return std::nullopt;

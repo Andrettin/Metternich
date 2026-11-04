@@ -29,7 +29,7 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "attributes") {
+	if (tag == "stats") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
@@ -45,7 +45,7 @@ void monster_type::process_gsml_scope(const gsml_data &scope)
 				range.second = range.first;
 			}
 
-			this->attribute_ranges[character_attribute::get(key)] = std::move(range);
+			this->stat_ranges[character_stat::get_stat(key)] = std::move(range);
 		});
 	} else if (tag == "attribute_ratings") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -91,7 +91,7 @@ void monster_type::initialize()
 	this->damage_dice.set_min_value(0);
 
 	for (const auto &[attribute, rating] : this->attribute_ratings) {
-		this->attribute_ranges[attribute] = attribute->get_rating_range(rating);
+		this->stat_ranges[attribute] = attribute->get_rating_range(rating);
 	}
 
 	named_data_entry::initialize();

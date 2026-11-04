@@ -21,6 +21,7 @@ class domain;
 class icon;
 class military_unit;
 class office;
+class skill;
 class taxon_base;
 class trait_type;
 
@@ -167,6 +168,9 @@ public:
 	{
 		return this->weight_factor.get();
 	}
+
+	bool enables_stat(const character_stat *stat) const;
+	int get_stat_change(const character_stat *stat) const;
 
 signals:
 	void changed();

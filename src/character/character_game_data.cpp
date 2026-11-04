@@ -771,6 +771,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	}
 
 	if (character_class != nullptr) {
+		//FIXME: should also continue leveling until all stat ranges are fulfilled (this cannot be implemented now however because it is currently impossible to guarantee that a given desired level of a skill is obtained)
 		while (!this->target_traits.empty()) {
 			if (this->get_level() == this->get_max_level()) {
 				break;
@@ -781,6 +782,7 @@ QCoro::Task<void> character_game_data::apply_species_and_class(const int level, 
 	}
 
 	if (!this->target_traits.empty()) {
+		//FIXME: as above, as soon as possible it should also be considered an error to not reach the target stat ranges
 		throw std::runtime_error(std::format("Could not acquire all target traits for character \"{}\".", this->character->get_identifier()));
 	}
 
@@ -819,7 +821,7 @@ QCoro::Task<void> character_game_data::generate_attributes()
 			co_await this->change_exceptional_attribute_value(attribute, exceptional_attribute_value);
 		}
 
-		const std::optional<std::pair<int, int>> attribute_range = this->character->get_attribute_range(attribute);
+		const std::optional<std::pair<int, int>> attribute_range = this->character->get_stat_range(attribute);
 
 		int min_result = 0;
 		min_result = std::max(species->get_min_attribute_value(attribute), min_result);
@@ -3557,8 +3559,24 @@ QCoro::Task<void> character_game_data::on_trait_chosen_coro(const trait *trait, 
 
 std::vector<const trait *> character_game_data::get_potential_traits_from_list(const std::vector<const trait *> &traits) const
 {
+	data_entry_map<character_stat, std::pair<int, int>> unfulfilled_stat_ranges;
+	for (const auto &[stat, range] : this->character->get_stat_ranges()) {
+		const int stat_value = this->get_stat_value(stat);
+		if (stat_value >= range.first) {
+			continue;
+		}
+
+		if (dynamic_cast<const character_attribute *>(stat) != nullptr) {
+			//attribute ranges are already handled during character generation
+			continue;
+		}
+
+		unfulfilled_stat_ranges[stat] = range;
+	}
+
 	std::vector<const trait *> potential_traits;
 	bool found_unacquired_trait = false;
+	bool found_target_stat_trait = false;
 
 	for (const trait *trait : traits) {
 		if (trait == nullptr) {
@@ -3573,6 +3591,21 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 		if (this->character == game::get()->get_player_character()) {
 			potential_traits.push_back(trait);
 		} else {
+			bool trait_increases_target_stat = false;
+			for (const auto &[stat, range] : unfulfilled_stat_ranges) {
+				if (trait->get_stat_change(stat) > 0 || trait->enables_stat(stat)) {
+					trait_increases_target_stat = true;
+					break;
+				}
+			}
+
+			if (!found_target_stat_trait && trait_increases_target_stat) {
+				potential_traits.clear();
+				found_target_stat_trait = true;
+			} else if (found_target_stat_trait && !trait_increases_target_stat) {
+				continue;
+			}
+
 			if (!found_unacquired_trait && !this->has_trait(trait)) {
 				potential_traits.clear();
 				found_unacquired_trait = true;

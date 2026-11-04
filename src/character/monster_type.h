@@ -13,6 +13,7 @@ namespace metternich {
 
 class character_attribute;
 class character_class;
+class character_stat;
 class icon;
 class item_type;
 class species;
@@ -75,10 +76,10 @@ public:
 		return this->experience_award;
 	}
 
-	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const
+	std::optional<std::pair<int, int>> get_stat_range(const character_stat *stat) const
 	{
-		const auto find_iterator = this->attribute_ranges.find(attribute);
-		if (find_iterator != this->attribute_ranges.end()) {
+		const auto find_iterator = this->stat_ranges.find(stat);
+		if (find_iterator != this->stat_ranges.end()) {
 			return find_iterator->second;
 		}
 
@@ -116,7 +117,7 @@ private:
 	dice damage_dice;
 	int64_t experience_award = 0; //the experience award for defeating the monster
 	data_entry_map<character_attribute, std::string> attribute_ratings;
-	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
+	data_entry_map<character_stat, std::pair<int, int>> stat_ranges;
 	std::vector<const trait *> traits;
 	std::unique_ptr<const modifier<const character>> modifier;
 	std::vector<const item_type *> items;

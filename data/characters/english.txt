@@ -134,6 +134,9 @@ henry_hudson = {
 	gender = male
 	birth_date = 1565
 	death_date = 1611
+	stats = {
+		trade = 5 #+100% Furs with the Master Fur Trader trait
+	}
 	traits = {
 		master_fur_trader
 	}
@@ -178,9 +181,10 @@ john_rolfe = {
 	gender = male
 	birth_date = 1585
 	death_date = 1622
-	#skill = 5 #+25% Tobacco
+	stats = {
+		agriculture = 5 #+25% Tobacco with the Master Tobacco Planter trait
+	}
 	traits = {
-		agriculture #precondition for the Master Tobacco Planter trait
 		master_tobacco_planter
 	}
 }

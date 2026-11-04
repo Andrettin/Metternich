@@ -35,6 +35,7 @@ class character_class;
 class character_game_data;
 class character_history;
 class character_reference;
+class character_stat;
 class civilian_unit_class;
 class civilian_unit_type;
 class culture;
@@ -345,7 +346,12 @@ public:
 		return static_cast<character *>(character_base::get_contemporary_character());
 	}
 
-	std::optional<std::pair<int, int>> get_attribute_range(const character_attribute *attribute) const;
+	const data_entry_map<character_stat, std::pair<int, int>> &get_stat_ranges() const
+	{
+		return this->stat_ranges;
+	}
+
+	std::optional<std::pair<int, int>> get_stat_range(const character_stat *stat) const;
 
 	int get_health() const
 	{
@@ -435,7 +441,7 @@ private:
 	metternich::portrait *portrait = nullptr;
 	const site *home_site = nullptr;
 	data_entry_map<character_attribute, std::string> attribute_ratings;
-	data_entry_map<character_attribute, std::pair<int, int>> attribute_ranges;
+	data_entry_map<character_stat, std::pair<int, int>> stat_ranges;
 	int health = 0;
 	std::vector<const trait *> traits;
 	std::vector<const item_type *> starting_items;

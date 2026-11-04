@@ -8,6 +8,8 @@
 #include "character/trait_type.h"
 #include "domain/office.h"
 #include "script/condition/and_condition.h"
+#include "script/modifier_effect/character_stat_modifier_effect.h"
+#include "script/modifier_effect/skill_training_modifier_effect.h"
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "species/taxon.h"
@@ -208,6 +210,47 @@ QString trait::get_military_unit_modifier_string() const
 	}
 
 	return QString::fromStdString(this->get_military_unit_modifier()->get_string(nullptr));
+}
+
+bool trait::enables_stat(const character_stat *stat) const
+{
+	if (this->get_modifier() == nullptr) {
+		return false;
+	}
+
+	const skill *skill = dynamic_cast<const metternich::skill *>(stat);
+	if (skill == nullptr) {
+		return false;
+	}
+
+	for (const auto &modifier_effect : this->get_modifier()->get_modifier_effects()) {
+		if (const skill_training_modifier_effect *skill_training_modifier_effect = dynamic_cast<const metternich::skill_training_modifier_effect *>(modifier_effect.get())) {
+			if (skill_training_modifier_effect->get_skill() == skill) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+int trait::get_stat_change(const character_stat *stat) const
+{
+	if (this->get_modifier() == nullptr) {
+		return 0;
+	}
+
+	decimillesimal_int stat_change;
+
+	for (const auto &modifier_effect : this->get_modifier()->get_modifier_effects()) {
+		if (const character_stat_modifier_effect *character_stat_modifier_effect = dynamic_cast<const metternich::character_stat_modifier_effect *>(modifier_effect.get())) {
+			if (character_stat_modifier_effect->get_stat() == stat) {
+				stat_change += character_stat_modifier_effect->get_value();
+			}
+		}
+	}
+
+	return stat_change.to_int();
 }
 
 }

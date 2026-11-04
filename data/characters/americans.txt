@@ -109,6 +109,9 @@ john_jacob_astor = {
 	gender = male
 	birth_date = 1763
 	death_date = 1848
+	stats = {
+		trade = 3 #+50% Furs with the Master Fur Trader trait (actually +60% because of the lack of granularity with the Trade domain skill)
+	}
 	traits = {
 		master_fur_trader
 	}
@@ -124,9 +127,10 @@ eli_whitney = {
 	gender = male
 	birth_date = 1765
 	death_date = 1825
-	#skill = 10 #+50% Cotton
+	stats = {
+		agriculture = 10 #+50% Cotton with the Master Cotton Planter trait
+	}
 	traits = {
-		agriculture #precondition for the Master Cotton Planter trait
 		master_cotton_planter
 	}
 }
