@@ -10,9 +10,15 @@ bristol = {
 	}
 	features = {
 		academic #historical university
+		#clothing
+		#iron_deposit
 	}
 	
 	history = {
+		1861 = {
+			#buildings += clothing_factory
+		}
+		
 		1909 = {
 			buildings += university #University founded in Bristol in 1909; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
 		}

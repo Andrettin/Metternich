@@ -6,7 +6,8 @@ zurich = {
 	holding_type = guild
 	features = {
 		academic #historical university
-		fabric
+		clothing
+		#fabric
 		#prime_cattle_land
 	}
 	
@@ -20,7 +21,11 @@ zurich = {
 		}
 		
 		1836 = {
-			buildings += textile_mill
+			#buildings += textile_mill
+		}
+		
+		1861 = {
+			buildings += clothing_factory
 		}
 	}
 }

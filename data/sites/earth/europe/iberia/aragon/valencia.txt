@@ -8,6 +8,8 @@ valencia = {
 	}
 	features = {
 		academic #historical university
+		#clothing
+		#prime_fruit_land
 	}
 	
 	history = {
@@ -17,6 +19,10 @@ valencia = {
 		
 		1500 = {
 			#buildings += university #University founded in Valencia in 1500; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1861 = {
+			#buildings += clothing_factory
 		}
 	}
 }

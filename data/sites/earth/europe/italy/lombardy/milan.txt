@@ -10,8 +10,10 @@ milan = {
 	}
 	features = {
 		academic #historical university
+		clothing
 		crossroads #important market or fair
 		#holy_site #historical cathedral
+		#iron_deposit
 	}
 	
 	history = {
@@ -47,6 +49,10 @@ milan = {
 		
 		1600 = {
 			population = 100000 #Milan had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1861 = {
+			buildings += clothing_factory
 		}
 	}
 }

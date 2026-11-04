@@ -5,6 +5,13 @@ baltimore = {
 	type = holding
 	province = maryland
 	features = {
+		#clothing
 		prime_tobacco_land
+	}
+	
+	history = {
+		1861 = {
+			#buildings += clothing_factory
+		}
 	}
 }

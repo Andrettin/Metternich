@@ -12,6 +12,8 @@ london = {
 	}
 	features = {
 		academic #historical university
+		clothing
+		#prime_grain_land
 	}
 	
 	history = {
@@ -59,6 +61,10 @@ london = {
 		
 		1836 = {
 			#buildings += university #University founded in London in 1836; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
+		}
+		
+		1861 = {
+			buildings += clothing_factory
 		}
 	}
 }

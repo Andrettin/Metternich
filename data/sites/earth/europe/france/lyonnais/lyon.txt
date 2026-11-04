@@ -12,9 +12,10 @@ lyon = {
 	}
 	features = {
 		academic #historical university
+		clothing
 		crossroads #important market or fair
 		#furniture
-		prime_grain_land
+		#prime_grain_land
 	}
 	
 	history = {
@@ -45,7 +46,8 @@ lyon = {
 		}
 		
 		1861 = {
-			buildings += furniture_factory
+			buildings += clothing_factory
+			#buildings += furniture_factory
 		}
 	}
 }
