@@ -3,4 +3,14 @@ concord = {
 	world = earth
 	geocoordinate = { -71.53804712080 43.20807191880 } #from Natural Earth
 	type = holding
+	features = {
+		#fabric
+		prime_timber
+	}
+	
+	history = {
+		1836 = {
+			buildings += textile_mill
+		}
+	}
 }

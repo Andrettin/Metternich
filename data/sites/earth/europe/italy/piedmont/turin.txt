@@ -7,6 +7,9 @@ turin = {
 	province = piedmont
 	features = {
 		academic #historical university
+		clothing
+		#fabric
+		#prime_fruit_land
 	}
 	
 	history = {
@@ -16,6 +19,11 @@ turin = {
 		
 		1405 = {
 			#buildings += university #University founded in Turin in 1405; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1861 = {
+			buildings += clothing_factory
+			#buildings += textile_mill
 		}
 	}
 }

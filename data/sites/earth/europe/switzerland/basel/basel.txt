@@ -9,6 +9,8 @@ basel = {
 	features = {
 		academic #historical university
 		crossroads #important market or fair
+		fabric
+		#prime_fruit_land
 	}
 	
 	history = {
@@ -27,6 +29,10 @@ basel = {
 		
 		1459 = {
 			#buildings += university #University founded in Basel in 1459; Source: William R. Shepherd, "Historical Atlas", 1923, p. 100.
+		}
+		
+		1861 = {
+			buildings += textile_mill
 		}
 	}
 }

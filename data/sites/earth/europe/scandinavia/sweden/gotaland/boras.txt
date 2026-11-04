@@ -4,4 +4,13 @@ boras = {
 	geocoordinate = { 12.91997595080 57.73044130360 } #from Natural Earth
 	type = resource
 	resource = fish
+	features = {
+		#fabric
+	}
+	
+	history = {
+		1861 = {
+			#buildings += textile_mill
+		}
+	}
 }

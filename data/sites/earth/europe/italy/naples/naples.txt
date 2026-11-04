@@ -12,6 +12,7 @@ naples = {
 	}
 	features = {
 		academic #historical university
+		#fabric
 		glass
 	}
 	
@@ -39,6 +40,7 @@ naples = {
 		
 		1861 = {
 			buildings += glassworks
+			#buildings += textile_mill
 		}
 	}
 }

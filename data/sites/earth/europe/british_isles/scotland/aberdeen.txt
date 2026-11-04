@@ -7,7 +7,8 @@ aberdeen = {
 	province = highlands
 	features = {
 		academic #historical university
-		prime_sheep_land
+		fabric
+		#prime_sheep_land
 	}
 	
 	history = {
@@ -21,6 +22,10 @@ aberdeen = {
 		
 		1593 = {
 			#Protestant College founded in Aberdeen in 1593; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+		}
+		
+		1861 = {
+			buildings += textile_mill
 		}
 	}
 }

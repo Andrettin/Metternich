@@ -4,6 +4,10 @@ moscow = {
 	geocoordinate = { 37.61552282590 55.75216412260 } #from Natural Earth
 	type = holding
 	province = moscow
+	features = {
+		#fabric
+		prime_timber
+	}
 	
 	history = {
 		1360 = {
@@ -12,6 +16,10 @@ moscow = {
 		
 		1700 = {
 			population = 100000 #Moscow had a population of 100,000+ in 1700; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1861 = {
+			#buildings += textile_mill
 		}
 	}
 }

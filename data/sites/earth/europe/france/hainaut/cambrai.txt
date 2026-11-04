@@ -7,7 +7,8 @@ cambrai = {
 	#holding_type = temple
 	province = picardy
 	features = {
-		coal_deposit
+		clothing
+		#coal_deposit
 		crossroads #important market or fair
 	}
 	
@@ -25,6 +26,10 @@ cambrai = {
 			population_groups = {
 				clergymen.french.catholic = 2800
 			}
+		}
+		
+		1861 = {
+			buildings += clothing_factory
 		}
 	}
 }

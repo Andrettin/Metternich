@@ -5,6 +5,9 @@ la_rochelle = {
 	type = resource
 	resource = fish
 	province = poitou
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {
@@ -17,6 +20,10 @@ la_rochelle = {
 				clergymen.french.catholic = 4500
 				officers.french.catholic = 1200
 			}
+		}
+		
+		1861 = {
+			#buildings += textile_mill
 		}
 	}
 }

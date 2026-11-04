@@ -8,6 +8,8 @@ dublin = {
 	features = {
 		academic #historical university
 		crossroads #important market or fair
+		fabric
+		#prime_grain_land
 	}
 	
 	history = {
@@ -30,6 +32,10 @@ dublin = {
 		
 		1591 = {
 			#Trinity College Dublin founded in 1591; Source: Henry Kamen, "Early Modern European Society", 2021, p. 291.
+		}
+		
+		1861 = {
+			buildings += textile_mill
 		}
 	}
 }

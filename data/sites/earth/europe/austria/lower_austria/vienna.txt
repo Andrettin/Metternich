@@ -11,6 +11,7 @@ vienna = {
 	}
 	features = {
 		crossroads #important market or fair
+		#fabric
 		glass
 		#holy_site #historical cathedral
 		#prime_grain_land
@@ -78,6 +79,7 @@ vienna = {
 		
 		1861 = {
 			buildings += glassworks
+			#buildings += textile_mill
 		}
 		
 		1900 = {

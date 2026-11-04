@@ -5,9 +5,16 @@ liverpool = {
 	type = holding
 	features = {
 		academic #historical university
+		#clothing
+		#fabric
 	}
 	
 	history = {
+		1836 = {
+			#buildings += clothing_factory
+			#buildings += textile_mill
+		}
+		
 		1903 = {
 			#buildings += university #University founded in Liverpool in 1903; Source: David Thomson, "Europe Since Napoleon", 1966, p. 449.
 			developed = true

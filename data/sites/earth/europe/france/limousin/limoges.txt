@@ -5,6 +5,7 @@ limoges = {
 	type = holding
 	province = limousin
 	features = {
+		#fabric
 		prime_cattle_land
 	}
 	
@@ -23,6 +24,10 @@ limoges = {
 				clergymen.french.catholic = 2800
 				officers.french.catholic = 1800
 			}
+		}
+		
+		1861 = {
+			#buildings += textile_mill
 		}
 	}
 }

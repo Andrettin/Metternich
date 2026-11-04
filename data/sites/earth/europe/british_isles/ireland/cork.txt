@@ -4,10 +4,17 @@ cork = {
 	geocoordinate = { -8.49577111961 51.89860089020 } #from Natural Earth
 	type = holding
 	province = munster
+	features = {
+		#clothing
+	}
 	
 	history = {
 		1360 = {
 			developed = true #existed in 1360; Source: William R. Shepherd, "Historical Atlas", 1911, p. 77.
+		}
+		
+		1861 = {
+			#buildings += clothing_factory
 		}
 	}
 }

@@ -7,9 +7,10 @@ barcelona = {
 	province = catalonia
 	features = {
 		academic #historical university
+		clothing
 		crossroads #important market or fair
 		#holy_site #historical cathedral
-		prime_cattle_land
+		#prime_cattle_land
 	}
 	
 	history = {
@@ -33,6 +34,10 @@ barcelona = {
 		
 		1717 = {
 			#buildings -= university #University abolished in Barcelona in 1717; Source: Enrique Martínez Ruiz, Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 225.
+		}
+		
+		1861 = {
+			buildings += clothing_factory
 		}
 	}
 }

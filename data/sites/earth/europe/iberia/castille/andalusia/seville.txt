@@ -10,6 +10,8 @@ seville = {
 	features = {
 		academic #historical university
 		crossroads #important market or fair
+		fabric
+		#prime_grain_land
 	}
 	
 	history = {
@@ -36,6 +38,10 @@ seville = {
 		
 		1600 = {
 			population = 100000 #Seville had a population of 100,000+ in 1600; Source: Henry Kamen, "Early Modern European Society", 2021, p. 34.
+		}
+		
+		1861 = {
+			buildings += textile_mill
 		}
 	}
 }
