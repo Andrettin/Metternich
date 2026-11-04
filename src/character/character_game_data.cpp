@@ -3562,6 +3562,13 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 	data_entry_map<character_stat, std::pair<int, int>> unfulfilled_stat_ranges;
 	for (const auto &[stat, range] : this->character->get_stat_ranges()) {
 		const int stat_value = this->get_stat_value(stat);
+
+		const skill *skill = dynamic_cast<const metternich::skill *>(stat);
+		if (skill != nullptr && !this->is_skill_available(skill)) {
+			unfulfilled_stat_ranges[stat] = range;
+			continue;
+		}
+
 		if (stat_value >= range.first) {
 			continue;
 		}
