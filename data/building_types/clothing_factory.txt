@@ -3,23 +3,32 @@ tailors_house = {
 	building_class = tailors_house
 	portrait = coal_pit
 	icon = clothing
+	wealth_cost = 10gb #as Trade Shop
+	required_technology = weaving
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
-		game_rule = additional_buildings
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
+		feature = clothing
+		not = {
+			scripted_condition = is_lair
 		}
 	}
-	commodity_costs = {
-		lumber = 2
-		iron = 2
+	commodity_cost_weights = { #as Weaver's House
+		lumber = 64
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tailoring
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
 	}
 }
 
@@ -29,22 +38,35 @@ tailors_shop = {
 	portrait = coal_pit
 	icon = clothing
 	base_building = tailors_house
+	wealth_cost = 10gb #as Trade Shop
+	required_technology = weaving
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
+		feature = clothing
+		not = {
+			scripted_condition = is_lair
 		}
 	}
-	commodity_costs = {
-		lumber = 4
-		iron = 4
+	commodity_cost_weights = { #as Weaver's Shop
+		lumber = 64
+		iron = 20 #Tools
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tailoring
+			multiplier = 2
+		}
+		scripted_modifier_effect = trade_shop
+	}
+	domain_modifier = {
+		scripted_modifier_effect = trade_shop
 	}
 }
 
@@ -54,21 +76,34 @@ clothing_factory = {
 	portrait = coal_pit
 	icon = clothing
 	base_building = tailors_shop
+	wealth_cost = 30gb #3x the cost of the Tailor's Shop
+	required_technology = industrialization
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
+		feature = clothing
+		not = {
+			scripted_condition = is_lair
 		}
 	}
-	commodity_costs = {
-		lumber = 8
-		steel = 8
+	commodity_cost_weights = { #as Textile Mill
+		lumber = 160
+		iron = 100 #Tools
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tailoring
+			multiplier = 4
+		}
+		scripted_modifier_effect = trade_shop
+	}
+	domain_modifier = {
+		scripted_modifier_effect = trade_shop
 	}
 }
