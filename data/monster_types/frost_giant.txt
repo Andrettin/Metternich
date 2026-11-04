@@ -4,7 +4,7 @@ frost_giant = {
 	icon = longswordsmen
 	damage_dice = 2d8+9
 	experience_award = 7000
-	attributes = {
+	stats = {
 		intelligence = 5-10
 	}
 	modifier = {

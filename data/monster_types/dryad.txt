@@ -3,7 +3,7 @@ dryad = {
 	species = dryad
 	icon = elven_archer
 	experience_award = 975
-	attributes = {
+	stats = {
 		intelligence = 13-14
 	}
 	modifier = {

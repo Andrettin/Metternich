@@ -4,7 +4,7 @@ large_water_elemental = {
 	icon = elven_archer
 	damage_dice = 5d6
 	experience_award = 2000
-	attributes = {
+	stats = {
 		intelligence = 5-7
 	}
 	modifier = {
@@ -21,7 +21,7 @@ huge_water_elemental = {
 	icon = elven_archer
 	damage_dice = 5d6
 	experience_award = 10000
-	attributes = {
+	stats = {
 		intelligence = 5-7
 	}
 	modifier = {

@@ -3,7 +3,7 @@ triton = {
 	species = triton
 	icon = spearmen
 	experience_award = 270
-	attributes = {
+	stats = {
 		intelligence = 13
 	}
 	modifier = {
