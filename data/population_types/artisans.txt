@@ -6,6 +6,7 @@ artisans = {
 	small_icon = expert_workers_small
 	strata = middle
 	everyday_needs = {
+		clothing = 5
 		coal = 1
 		furniture = 4
 		glass = 1

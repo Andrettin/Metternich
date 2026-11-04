@@ -18,6 +18,7 @@ bureaucrats = {
 		african = rifle_infantry_dark_small
 	}
 	everyday_needs = {
+		clothing = 5
 		coal = 1
 		furniture = 4
 		glass = 1

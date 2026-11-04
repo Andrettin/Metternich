@@ -10,10 +10,12 @@ laborers = {
 		untrained_workers
 	}
 	everyday_needs = {
+		clothing = 1.2
 		coal = 1
 		furniture = 1.1
 	}
 	luxury_needs = {
+		clothing = 3
 		furniture = 3
 		tobacco = 0.95
 	}

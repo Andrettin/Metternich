@@ -7,6 +7,7 @@ clergymen = {
 	strata = middle
 	educator = true
 	everyday_needs = {
+		clothing = 5
 		coal = 1
 		furniture = 4
 		glass = 1
