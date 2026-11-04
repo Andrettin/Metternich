@@ -69,6 +69,13 @@ public:
 		return nullptr;
 	}
 
+	virtual bool is_enabled_for_character(const character *character) const
+	{
+		Q_UNUSED(character);
+
+		return true;
+	}
+
 signals:
 	void changed();
 

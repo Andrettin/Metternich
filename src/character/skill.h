@@ -92,6 +92,8 @@ public:
 
 	virtual bool affects_office_modifier_for_character(const character *character) const override;
 
+	virtual bool is_enabled_for_character(const character *character) const override;
+
 signals:
 	void changed();
 

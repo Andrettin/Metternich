@@ -124,6 +124,11 @@ bool skill::affects_office_modifier_for_character(const character *character) co
 	return character_stat::affects_office_modifier_for_character(character);
 }
 
+bool skill::is_enabled_for_character(const character *character) const
+{
+	return character->get_game_data()->is_skill_available(this);
+}
+
 }
 
 #include "moc_skill.cpp"

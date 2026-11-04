@@ -2363,7 +2363,7 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
-QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change, const bool stat_enabled)
+QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change)
 {
 	if (change == 0) {
 		co_return;
@@ -2371,6 +2371,7 @@ QCoro::Task<void> character_game_data::change_stat_value(const character_stat *s
 
 	const int old_value = this->get_stat_value(stat);
 	const bool affects_office_modifier = stat->affects_office_modifier_for_character(this->character);
+	const bool stat_enabled = this->is_stat_enabled(stat);
 
 	if (affects_office_modifier) {
 		co_await this->apply_office_modifier(this->domain, this->get_office(), -1);
@@ -2403,11 +2404,23 @@ QCoro::Task<void> character_game_data::change_typed_stat_value(const character_s
 {
 	if (const character_attribute *attribute = dynamic_cast<const character_attribute *>(stat)) {
 		co_await this->change_attribute_value(attribute, change);
-	} else if (const skill *skill = dynamic_cast<const metternich::skill *>(stat)) {
-		co_await this->change_skill_value(skill, change);
 	} else {
-		co_await this->change_stat_value(stat, change, true);
+		co_await this->change_stat_value(stat, change);
 	}
+}
+
+int character_game_data::get_effective_stat_value(const character_stat *stat) const
+{
+	if (!this->is_stat_enabled(stat)) {
+		return 0;
+	}
+
+	return this->get_stat_value(stat);
+}
+
+bool character_game_data::is_stat_enabled(const character_stat *stat) const
+{
+	return stat->is_enabled_for_character(this->character);
 }
 
 int character_game_data::get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const
@@ -2502,7 +2515,7 @@ QCoro::Task<void> character_game_data::change_attribute_value(const character_at
 		}
 	}
 
-	co_await this->change_stat_value(attribute, change, true);
+	co_await this->change_stat_value(attribute, change);
 
 	if (this->get_exceptional_attribute_value(attribute) != 0) {
 		//reapply the exceptional value modifier after changing the attribute value, since the latter also affects it
@@ -3161,22 +3174,9 @@ int character_game_data::get_skill_value(const skill *skill) const
 	return this->get_stat_value(skill);
 }
 
-QCoro::Task<void> character_game_data::change_skill_value(const skill *skill, const int change)
-{
-	if (change == 0) {
-		co_return;
-	}
-
-	co_await this->change_stat_value(skill, change, this->is_skill_available(skill));
-}
-
 int character_game_data::get_effective_skill_value(const skill *skill) const
 {
-	if (!this->is_skill_available(skill)) {
-		return 0;
-	}
-
-	return this->get_skill_value(skill);
+	return this->get_effective_stat_value(skill);
 }
 
 bool character_game_data::do_skill_check(const skill *skill, const int roll_modifier, const site *location) const
@@ -3561,13 +3561,7 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 {
 	data_entry_map<character_stat, std::pair<int, int>> unfulfilled_stat_ranges;
 	for (const auto &[stat, range] : this->character->get_stat_ranges()) {
-		const int stat_value = this->get_stat_value(stat);
-
-		const skill *skill = dynamic_cast<const metternich::skill *>(stat);
-		if (skill != nullptr && !this->is_skill_available(skill)) {
-			unfulfilled_stat_ranges[stat] = range;
-			continue;
-		}
+		const int stat_value = this->get_effective_stat_value(stat);
 
 		if (stat_value >= range.first) {
 			continue;

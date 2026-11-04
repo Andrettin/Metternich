@@ -363,6 +363,11 @@ public:
 	[[nodiscard]] QCoro::Task<void> set_weight(const int weight);
 	[[nodiscard]] QCoro::Task<void> change_weight(const int change);
 
+	const data_entry_map<character_stat, int> &get_stat_values() const
+	{
+		return this->stat_values;
+	}
+
 	int get_stat_value(const character_stat *stat) const
 	{
 		const auto find_iterator = this->stat_values.find(stat);
@@ -373,13 +378,10 @@ public:
 		return 0;
 	}
 
-	const data_entry_map<character_stat, int> &get_stat_values() const
-	{
-		return this->stat_values;
-	}
-
-	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change, const bool stat_enabled);
+	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change);
 	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
+	int get_effective_stat_value(const character_stat *stat) const;
+	bool is_stat_enabled(const character_stat *stat) const;
 
 	int get_stat_modifier(const character_stat *stat, const character_modifier_type modifier_type) const;
 
@@ -605,7 +607,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> change_skill_training(const skill *skill, const int change);
 
 	int get_skill_value(const skill *skill) const;
-	[[nodiscard]] QCoro::Task<void> change_skill_value(const skill *skill, const int change);
 	int get_effective_skill_value(const skill *skill) const;
 	bool do_skill_check(const skill *skill, const int roll_modifier, const site *location) const;
 	int get_skill_check_chance(const skill *skill, const int roll_modifier, const site *location) const;
