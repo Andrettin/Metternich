@@ -470,9 +470,7 @@ const character *domain_government::calculate_elective_heir() const
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		int succession_score = character_game_data->get_office_domain_attribute_modifier(ruler_office, nullptr, nullptr);
-
-		succession_score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
+		const int succession_score = character_game_data->get_office_score(ruler_office);
 
 		if (succession_score > best_succession_score) {
 			potential_heirs.clear();
@@ -711,11 +709,7 @@ const character *domain_government::get_best_office_holder(const office *office)
 
 		const character_game_data *character_game_data = character->get_game_data();
 
-		int score = character_game_data->get_office_domain_attribute_modifier(office, nullptr, nullptr);
-
-		if (office->is_ruler()) {
-			score += (character_game_data->get_reputation() - character_game_data->get_bloodline_strength()) + character_game_data->get_bloodline_strength();
-		}
+		const int score = character_game_data->get_office_score(office);
 
 		if (score < best_score) {
 			continue;

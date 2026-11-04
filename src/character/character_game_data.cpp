@@ -3811,6 +3811,33 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	}
 }
 
+int character_game_data::get_office_score(const metternich::office *office) const
+{
+	//domain attributes have a 1-20 standard scale, so adding them directly to the score is consistent with the later impact of office trait modifier scaling attributes/skills on score
+	int score = this->get_office_domain_attribute_modifier(office, nullptr, nullptr);
+
+	if (office->is_ruler()) {
+		score += (this->get_reputation() - this->get_bloodline_strength()) + this->get_bloodline_strength();
+	}
+
+	for (const auto &[trait, count] : this->get_trait_counts()) {
+		if (trait->get_scaled_office_modifier(office) != nullptr && trait->get_scaled_office_modifier(office)->has_positive_modifier_effect()) {
+			int trait_score = this->get_stat_value(trait->get_scaling_stat());
+			if (dynamic_cast<const domain_skill *>(trait->get_scaling_stat()) != nullptr) {
+				//domain skills have a different standard scale (1-5) than attributes and skills (1-20), so here we increase the score for them proportionally
+				trait_score *= 4;
+			}
+			score += trait_score;
+		} else if (trait->get_office_modifier(office) != nullptr && trait->get_office_modifier(office)->has_positive_modifier_effect()) {
+			//half of the 1-20 standard scale which attributes/skills have
+			static constexpr int flat_office_modifier_trait_score = 10;
+			score += flat_office_modifier_trait_score;
+		}
+	}
+
+	return score;
+}
+
 void character_game_data::set_military_unit(metternich::military_unit *military_unit)
 {
 	if (military_unit == this->get_military_unit()) {

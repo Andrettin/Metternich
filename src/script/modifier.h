@@ -46,6 +46,7 @@ public:
 	}
 
 	void add_modifier_effect(std::unique_ptr<modifier_effect<scope_type>> &&modifier_effect);
+	bool has_positive_modifier_effect() const;
 
 private:
 	std::vector<std::unique_ptr<modifier_effect<scope_type>>> modifier_effects;

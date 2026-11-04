@@ -97,6 +97,14 @@ void modifier<scope_type>::add_modifier_effect(std::unique_ptr<modifier_effect<s
 	this->modifier_effects.push_back(std::move(modifier_effect));
 }
 
+template <typename scope_type>
+bool modifier<scope_type>::has_positive_modifier_effect() const
+{
+	return std::ranges::any_of(this->get_modifier_effects(), [](const auto &modifier_effect) {
+		return !modifier_effect->is_negative(decimillesimal_int(1));
+	});
+}
+
 template class modifier<const character>;
 template class modifier<const domain>;
 template class modifier<military_unit>;

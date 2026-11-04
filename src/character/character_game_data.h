@@ -693,6 +693,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> apply_office_modifier(const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
 	[[nodiscard]] QCoro::Task<void> apply_trait_office_modifier(const trait *trait, const metternich::domain *domain, const metternich::office *office, const int multiplier) const;
+	int get_office_score(const office *office) const;
 
 	metternich::military_unit *get_military_unit() const
 	{
