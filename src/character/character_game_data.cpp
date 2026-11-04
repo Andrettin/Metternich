@@ -3821,17 +3821,26 @@ int character_game_data::get_office_score(const metternich::office *office) cons
 	}
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
-		if (trait->get_scaled_office_modifier(office) != nullptr && trait->get_scaled_office_modifier(office)->has_positive_modifier_effect()) {
+		if (trait->get_scaled_office_modifier(office) != nullptr) {
 			int trait_score = this->get_stat_value(trait->get_scaling_stat());
 			if (dynamic_cast<const domain_skill *>(trait->get_scaling_stat()) != nullptr) {
 				//domain skills have a different standard scale (1-5) than attributes and skills (1-20), so here we increase the score for them proportionally
 				trait_score *= 4;
 			}
+			if (!trait->get_scaled_office_modifier(office)->has_positive_modifier_effect()) {
+				trait_score *= -1;
+			}
 			score += trait_score;
-		} else if (trait->get_office_modifier(office) != nullptr && trait->get_office_modifier(office)->has_positive_modifier_effect()) {
+		}
+		
+		if (trait->get_office_modifier(office) != nullptr) {
 			//half of the 1-20 standard scale which attributes/skills have
 			static constexpr int flat_office_modifier_trait_score = 10;
-			score += flat_office_modifier_trait_score;
+			int trait_score = flat_office_modifier_trait_score;
+			if (!trait->get_office_modifier(office)->has_positive_modifier_effect()) {
+				trait_score *= -1;
+			}
+			score += trait_score;
 		}
 	}
 
