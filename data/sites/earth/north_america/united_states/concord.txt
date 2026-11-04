@@ -10,7 +10,7 @@ concord = {
 	
 	history = {
 		1836 = {
-			buildings += textile_mill
+			#buildings += textile_mill
 		}
 	}
 }
