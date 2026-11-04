@@ -3800,7 +3800,7 @@ std::string character_game_data::get_office_modifier_string(const metternich::do
 				trait_modifier_str += ", ";
 			}
 
-			trait_modifier_str += trait->get_scaled_office_modifier(office)->get_single_line_string(domain, (trait->is_unlimited() ? count : 1) * this->get_stat_value(trait->get_scaling_stat()));
+			trait_modifier_str += trait->get_scaled_office_modifier(office)->get_single_line_string(domain, (trait->is_unlimited() ? count : 1) * this->get_effective_stat_value(trait->get_scaling_stat()));
 		}
 
 		if (trait_modifier_str.empty()) {
@@ -3841,7 +3841,7 @@ QCoro::Task<void> character_game_data::apply_trait_office_modifier(const trait *
 	}
 
 	if (trait->get_scaled_office_modifier(office) != nullptr) {
-		co_await trait->get_scaled_office_modifier(office)->apply(domain, multiplier * this->get_stat_value(trait->get_scaling_stat()));
+		co_await trait->get_scaled_office_modifier(office)->apply(domain, multiplier * this->get_effective_stat_value(trait->get_scaling_stat()));
 	}
 }
 
@@ -3856,7 +3856,7 @@ int character_game_data::get_office_score(const metternich::office *office) cons
 
 	for (const auto &[trait, count] : this->get_trait_counts()) {
 		if (trait->get_scaled_office_modifier(office) != nullptr) {
-			int trait_score = this->get_stat_value(trait->get_scaling_stat());
+			int trait_score = this->get_effective_stat_value(trait->get_scaling_stat());
 			if (dynamic_cast<const domain_skill *>(trait->get_scaling_stat()) != nullptr) {
 				//domain skills have a different standard scale (1-5) than attributes and skills (1-20), so here we increase the score for them proportionally
 				trait_score *= 4;
