@@ -6,7 +6,7 @@ linz = {
 	holding_type = guild
 	province = traungau
 	features = {
-		sulfur_deposit
+		fabric #Linzer Wollzeugfabrik
 	}
 	
 	history = {
