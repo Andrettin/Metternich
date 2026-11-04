@@ -7,6 +7,7 @@ annecy = {
 	province = savoy
 	features = {
 		coal_deposit
+		#fabric
 	}
 	
 	history = {

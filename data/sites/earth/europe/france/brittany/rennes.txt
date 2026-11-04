@@ -6,6 +6,7 @@ rennes = {
 	resource = grain
 	province = brittany
 	features = {
+		#fabric
 		prime_grain_land
 	}
 	

@@ -5,6 +5,9 @@ mosul = {
 	type = holding
 	holding_type = castle
 	province = mosul
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {

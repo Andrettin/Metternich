@@ -5,6 +5,9 @@ bruges = {
 	type = holding
 	holding_type = guild #important market or fair, and had a foreign office of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 	province = flanders
+	features = {
+		fabric
+	}
 	
 	history = {
 		919 = {

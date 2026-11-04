@@ -5,6 +5,9 @@ gottingen = {
 	type = holding
 	holding_type = castle
 	province = brunswick #Göttingen
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1815 = {

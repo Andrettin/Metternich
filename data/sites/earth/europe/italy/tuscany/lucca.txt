@@ -7,6 +7,7 @@ lucca = {
 	province = tuscany
 	features = {
 		academic #historical university
+		#fabric
 		prime_grain_land
 	}
 	

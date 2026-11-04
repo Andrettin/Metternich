@@ -5,4 +5,7 @@ bielefeld = {
 	type = holding
 	holding_type = guild
 	province = minden
+	features = {
+		fabric
+	}
 }

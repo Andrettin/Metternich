@@ -4,6 +4,7 @@ tlemcen = {
 	geocoordinate = { -1.32000756978 34.89041424460 } #from Natural Earth
 	province = oran
 	features = {
+		#fabric
 		iron_deposit
 	}
 	

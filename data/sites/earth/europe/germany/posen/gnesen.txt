@@ -9,6 +9,7 @@ gnesen = {
 		polish = "Gniezno"
 	}
 	features = {
+		#fabric
 		#fertilizer
 		prime_grain_land
 	}

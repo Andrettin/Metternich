@@ -6,6 +6,7 @@ lille = {
 	resource = iron_ore
 	province = picardy
 	features = {
+		#fabric
 		iron_deposit
 	}
 	

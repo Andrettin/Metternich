@@ -2,13 +2,12 @@ adrianople = {
 	name = "Adrianople"
 	world = earth
 	geocoordinate = { 26.56999548210 41.67043967600 } #from Natural Earth
-	type = resource
-	resource = grain #Wheat; Source: Map No. 501871 of the Perry-Castañeda Library Map Collection, 1974.
 	province = thrace
 	cultural_names = {
 		turkish = "Edirne"
 	}
 	features = {
+		#fabric
 		#holy_site #historical cathedral
 	}
 	

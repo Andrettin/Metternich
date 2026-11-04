@@ -12,6 +12,7 @@ regensburg = {
 	features = {
 		coal_deposit
 		#crossroads #important market or fair
+		#fabric
 		holy_site #historical cathedral
 	}
 	

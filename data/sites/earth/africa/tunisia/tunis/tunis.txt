@@ -5,6 +5,9 @@ tunis = {
 	type = holding
 	holding_type = castle
 	province = tunis
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {

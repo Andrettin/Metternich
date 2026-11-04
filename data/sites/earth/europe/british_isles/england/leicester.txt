@@ -11,6 +11,7 @@ leicester = {
 		roman = "Ratae" #Source: William R. Shepherd, "Historical Atlas", 1911, p. 51.
 	}
 	features = {
+		#fabric
 		#holy_site #historical cathedral
 	}
 	

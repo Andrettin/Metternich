@@ -5,6 +5,9 @@ breda = {
 	type = holding
 	holding_type = castle
 	province = breda
+	features = {
+		#fabric
+	}
 	
 	history = {
 		919 = {

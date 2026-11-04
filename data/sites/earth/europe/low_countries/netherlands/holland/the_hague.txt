@@ -5,6 +5,9 @@ the_hague = {
 	type = holding
 	holding_type = castle
 	province = holland
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1815 = {

@@ -10,6 +10,7 @@ belgrade = {
 	}
 	features = {
 		crossroads #important market or fair
+		fabric
 	}
 	
 	history = {

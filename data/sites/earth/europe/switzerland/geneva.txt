@@ -6,6 +6,7 @@ geneva = {
 	holding_type = castle
 	features = {
 		academic #historical university
+		#fabric
 		#holy_site #historical cathedral
 	}
 	

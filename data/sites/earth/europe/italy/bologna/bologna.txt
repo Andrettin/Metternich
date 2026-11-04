@@ -11,6 +11,7 @@ bologna = {
 	}
 	features = {
 		academic #historical university
+		#fabric
 		#prime_timber
 	}
 	

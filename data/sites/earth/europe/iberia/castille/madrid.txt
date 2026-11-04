@@ -9,7 +9,8 @@ madrid = {
 		roman = "Complutum"
 	}
 	features = {
-		prime_cattle_land
+		fabric
+		#prime_cattle_land
 	}
 	
 	history = {

@@ -6,6 +6,7 @@ antioch = {
 	holding_type = temple
 	province = antioch
 	features = {
+		#fabric
 		#holy_site
 		prime_fruit_land
 	}

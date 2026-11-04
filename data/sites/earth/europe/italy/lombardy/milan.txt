@@ -12,6 +12,7 @@ milan = {
 		academic #historical university
 		clothing
 		crossroads #important market or fair
+		#fabric
 		#holy_site #historical cathedral
 		#iron_deposit
 	}

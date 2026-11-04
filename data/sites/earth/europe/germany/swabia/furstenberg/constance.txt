@@ -9,6 +9,7 @@ constance = {
 		#german = "Konstanz"
 	}
 	features = {
+		#fabric
 		prime_timber
 	}
 	

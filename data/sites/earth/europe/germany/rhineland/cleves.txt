@@ -7,5 +7,6 @@ cleves = {
 	province = rhineland
 	features = {
 		coal_deposit
+		#fabric
 	}
 }

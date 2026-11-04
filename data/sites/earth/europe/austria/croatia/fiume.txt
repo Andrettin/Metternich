@@ -10,6 +10,7 @@ fiume = {
 	}
 	features = {
 		cove #free port
+		#fabric
 		prime_fruit_land
 	}
 	

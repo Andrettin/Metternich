@@ -6,6 +6,7 @@ bergamo = {
 	holding_type = castle
 	province = lombardy
 	features = {
+		#fabric
 		#holy_site #historical cathedral
 		prime_cattle_land
 	}

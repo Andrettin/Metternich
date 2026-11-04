@@ -4,6 +4,9 @@ fez = {
 	geocoordinate = { -5.00037723939 34.05459962870 } #from Natural Earth
 	type = holding
 	province = fez
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {

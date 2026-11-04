@@ -6,6 +6,7 @@ medina = {
 	holding_type = temple
 	province = medina
 	features = {
+		#fabric
 		#holy_site
 	}
 }

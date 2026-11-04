@@ -4,6 +4,9 @@ ghent = {
 	geocoordinate = { 3.70002193057 51.02999757800 } #from Natural Earth
 	type = holding
 	holding_type = guild #important market or fair in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	features = {
+		fabric
+	}
 	
 	history = {
 		919 = {

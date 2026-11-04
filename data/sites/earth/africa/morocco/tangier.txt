@@ -4,6 +4,9 @@ tangier = {
 	geocoordinate = { -5.83270369610 35.74728700670 } #from Natural Earth
 	type = holding
 	province = tangier
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {

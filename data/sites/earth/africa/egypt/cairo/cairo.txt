@@ -7,6 +7,7 @@ cairo = {
 	province = cairo
 	features = {
 		#crossroads #important market or fair
+		#fabric
 		prime_grain_land
 	}
 	

@@ -8,6 +8,7 @@ baghdad = {
 	province = diyala
 	features = {
 		crossroads #important market or fair
+		fabric
 		#holy_site
 	}
 	

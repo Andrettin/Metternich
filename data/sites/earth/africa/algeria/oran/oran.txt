@@ -5,6 +5,9 @@ oran = {
 	type = holding
 	holding_type = castle
 	province = oran
+	features = {
+		#fabric
+	}
 	
 	history = {
 		1360 = {

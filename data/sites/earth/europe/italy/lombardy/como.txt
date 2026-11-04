@@ -3,6 +3,9 @@ como = {
 	world = earth
 	geocoordinate = { 9.08000362004 45.81000612290 } #from Natural Earth
 	province = lombardy
+	features = {
+		#fabric
+	}
 	
 	history = {
 		919 = {

@@ -6,6 +6,7 @@ magdeburg = {
 	holding_type = castle
 	province = magdeburg
 	features = {
+		#fabric
 		#liquor
 		lumber
 	}
