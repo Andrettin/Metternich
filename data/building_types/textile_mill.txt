@@ -3,23 +3,27 @@ weavers_house = {
 	building_class = weavers_house
 	portrait = coal_pit
 	icon = fabric
+	wealth_cost = 10gb #as Trade Shop
+	required_technology = weaving
 	holding_types = {
 		guild
 	}
 	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
+		feature = fabric
+		not = {
+			scripted_condition = is_lair
 		}
-		game_rule = additional_buildings
 	}
-	commodity_costs = {
-		lumber = 2
-		iron = 2
+	commodity_cost_weights = {
+		lumber = 64
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = weaving
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
 	}
 }
 
@@ -29,23 +33,35 @@ weavers_shop = {
 	portrait = coal_pit
 	icon = fabric
 	base_building = weavers_house
+	wealth_cost = 10gb #as Trade Shop
+	required_technology = weaving
 	holding_types = {
 		guild
 	}
-	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
-		}
-		game_rule = additional_buildings
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
-	commodity_costs = {
-		lumber = 4
-		iron = 4
+	conditions = {
+		feature = fabric
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_cost_weights = {
+		lumber = 64
+		iron = 20 #Tools
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = weaving
+			multiplier = 2
+		}
+		scripted_modifier_effect = trade_shop
+	}
+	domain_modifier = {
+		scripted_modifier_effect = trade_shop
 	}
 }
 
@@ -55,22 +71,29 @@ textile_mill = {
 	portrait = coal_pit
 	icon = fabric
 	base_building = weavers_shop
+	wealth_cost = 30gb #3x the cost of the Weaver's Shop
+	required_technology = industrialization
 	holding_types = {
 		guild
 	}
 	conditions = {
-		province = {
-			or = {
-				capital = true
-				has_resource = cotton
-				has_resource = sheep
-				has_resource = silk
-			}
+		feature = fabric
+		not = {
+			scripted_condition = is_lair
 		}
-		game_rule = additional_buildings
 	}
-	commodity_costs = {
-		lumber = 8
-		steel = 8
+	commodity_cost_weights = {
+		lumber = 160
+		iron = 100 #Tools
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = weaving
+			multiplier = 4
+		}
+		scripted_modifier_effect = trade_shop
+	}
+	domain_modifier = {
+		scripted_modifier_effect = trade_shop
 	}
 }

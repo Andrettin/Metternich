@@ -6,3 +6,7 @@ barracks = {
 temple = {
 	base_population_capacity = 50
 }
+
+trade_shop = {
+	productivity = 1
+}

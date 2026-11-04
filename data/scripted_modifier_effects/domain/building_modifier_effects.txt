@@ -21,3 +21,8 @@ temple = {
 	stability = 2
 	unrest = -2
 }
+
+trade_shop = {
+	economy = 1
+	stability = 1
+}
