@@ -3603,6 +3603,7 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 			if (!found_target_stat_trait && trait_increases_target_stat) {
 				potential_traits.clear();
 				found_target_stat_trait = true;
+				found_unacquired_trait = false; //reset this variable
 			} else if (found_target_stat_trait && !trait_increases_target_stat) {
 				continue;
 			}
