@@ -267,6 +267,9 @@ upper_austria = {
 		austria_proper
 		imperial_austria_1806
 	}
+	resource_counts = {
+		sulfur_deposit = 1
+	}
 	
 	history = {
 		1798 = {

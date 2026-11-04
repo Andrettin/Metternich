@@ -6,7 +6,7 @@ magdeburg = {
 	holding_type = castle
 	province = magdeburg
 	features = {
-		liquor
+		#liquor
 		lumber
 	}
 	
@@ -19,7 +19,7 @@ magdeburg = {
 		#important market or fair, and center of the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
 		
 		1861 = {
-			buildings += liquor_distillery
+			#buildings += liquor_distillery
 			buildings += lumber_mill
 		}
 	}

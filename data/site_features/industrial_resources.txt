@@ -1,6 +1,7 @@
 clothing = {
 	name = "Clothing"
 	icon = clothing
+	resource = true
 	holding_types = {
 		guild
 	}
@@ -9,6 +10,7 @@ clothing = {
 fabric = {
 	name = "Fabric"
 	icon = fabric
+	resource = true
 	holding_types = {
 		guild
 	}
@@ -17,24 +19,29 @@ fabric = {
 fertilizer = {
 	name = "Fertilizer"
 	icon = spices_yellow
+	resource = true
 }
 
 furniture = {
 	name = "Furniture"
 	icon = furniture
+	resource = true
 }
 
 glass = {
 	name = "Glass"
 	icon = glass
+	resource = true
 }
 
 liquor = {
 	name = "Liquor"
 	icon = wine
+	resource = true
 }
 
 lumber = {
 	name = "Lumber"
 	icon = lumber
+	resource = true
 }

@@ -6,7 +6,7 @@ brussels = {
 	holding_type = guild
 	province = brabant
 	features = {
-		liquor
+		#liquor
 		sulfur_deposit
 	}
 	
@@ -30,7 +30,7 @@ brussels = {
 		}
 		
 		1861 = {
-			buildings += liquor_distillery
+			#buildings += liquor_distillery
 		}
 	}
 }

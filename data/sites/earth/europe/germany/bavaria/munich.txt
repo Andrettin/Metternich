@@ -5,7 +5,7 @@ munich = {
 	type = holding
 	holding_type = guild
 	features = {
-		glass
+		#glass
 		liquor
 	}
 	
@@ -19,7 +19,7 @@ munich = {
 		}
 		
 		1861 = {
-			buildings += glassworks
+			#buildings += glassworks
 			buildings += liquor_distillery
 		}
 	}

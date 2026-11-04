@@ -10,7 +10,7 @@ clermont = {
 	}
 	features = {
 		coal_deposit
-		lumber
+		#lumber
 	}
 	
 	history = {
@@ -31,7 +31,7 @@ clermont = {
 		}
 		
 		1861 = {
-			buildings += lumber_mill
+			#buildings += lumber_mill
 		}
 	}
 }

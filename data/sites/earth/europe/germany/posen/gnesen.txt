@@ -9,7 +9,7 @@ gnesen = {
 		polish = "Gniezno"
 	}
 	features = {
-		fertilizer
+		#fertilizer
 		prime_grain_land
 	}
 	
@@ -23,7 +23,7 @@ gnesen = {
 		}
 		
 		1861 = {
-			buildings += fertilizer_factory
+			#buildings += fertilizer_factory
 		}
 	}
 }

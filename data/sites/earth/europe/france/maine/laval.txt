@@ -6,7 +6,7 @@ laval = {
 	resource = timber
 	province = anjou
 	features = {
-		glass
+		#glass
 		prime_timber
 	}
 	
@@ -22,7 +22,7 @@ laval = {
 		}
 		
 		1861 = {
-			buildings += glassworks
+			#buildings += glassworks
 		}
 	}
 }
