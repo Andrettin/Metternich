@@ -1,3 +1,27 @@
+beavers = {
+	name = "Beavers"
+	icon = beaver
+	resource = true
+	terrain_types = {
+		forest
+	}
+	domain_modifier = {
+		scripted_modifier_effect = resource
+	}
+}
+
+deer = {
+	name = "Deer"
+	icon = deer
+	resource = true
+	terrain_types = {
+		forest
+	}
+	domain_modifier = {
+		scripted_modifier_effect = resource
+	}
+}
+
 prime_timber = {
 	name = "Prime Timber"
 	icon = timber
@@ -5,9 +29,6 @@ prime_timber = {
 	terrain_types = {
 		forest
 	}
-	#modifier = {
-	#	lumber_throughput_modifier = 100 #bonus to sawmill production
-	#}
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}

@@ -1,0 +1,147 @@
+fur_camp = {
+	name = "Fur Camp"
+	building_class = fur_camp
+	portrait = stable
+	icon = furs
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		or = {
+			feature = beavers
+			feature = deer
+		}
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 3gb #as Sawmill
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = fur_trapping
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+improved_fur_camp = {
+	name = "Improved Fur Camp"
+	building_class = improved_fur_camp
+	portrait = stable
+	icon = furs
+	base_building = fur_camp
+	required_technology = improved_trapping_techniques
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		or = {
+			feature = beavers
+			feature = deer
+		}
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 12gb #4x the Fur Camp cost
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = fur_trapping
+			multiplier = 2
+		}
+	}
+}
+
+advanced_fur_camp = {
+	name = "Advanced Fur Camp"
+	building_class = advanced_fur_camp
+	portrait = stable
+	icon = furs
+	base_building = improved_fur_camp
+	required_technology = riverboats
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		or = {
+			feature = beavers
+			feature = deer
+		}
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 24gb #8x the Fur Camp cost
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = fur_trapping
+			multiplier = 3
+		}
+	}
+}
+
+industrial_fur_camp = {
+	name = "Industrial Fur Camp"
+	building_class = industrial_fur_camp
+	portrait = stable
+	icon = furs
+	base_building = advanced_fur_camp
+	required_technology = excessive_fur_harvesting
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		or = {
+			feature = beavers
+			feature = deer
+		}
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 48gb #16x the Fur Camp cost
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = fur_trapping
+			multiplier = 4
+		}
+	}
+}

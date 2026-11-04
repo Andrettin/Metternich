@@ -1,0 +1,19 @@
+fur_camp = {
+	name = "Fur Camp"
+	slot_type = resource
+}
+
+improved_fur_camp = {
+	name = "Improved Fur Camp"
+	slot_type = resource
+}
+
+advanced_fur_camp = {
+	name = "Advanced Fur Camp"
+	slot_type = resource
+}
+
+industrial_fur_camp = {
+	name = "Industrial Fur Camp"
+	slot_type = resource
+}

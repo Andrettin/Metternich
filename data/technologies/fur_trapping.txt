@@ -1,0 +1,36 @@
+improved_trapping_techniques = {
+	name = "Improved Trapping Techniques"
+	subcategory = farming
+	portrait = stable
+	icon = furs
+	period = absolutism_age
+	prerequisites = {
+		colonialism #to place it in the appropriate period
+	}
+	
+	#FIXME: should require a Furs discovery technology
+}
+
+riverboats = {
+	name = "Riverboats"
+	subcategory = farming
+	portrait = stable
+	icon = furs
+	period = revolutionary_age
+	prerequisites = {
+		improved_trapping_techniques
+		steam_power #high_pressure_steam_engine
+	}
+}
+
+excessive_fur_harvesting = {
+	name = "Excessive Fur Harvesting"
+	subcategory = farming
+	portrait = stable
+	icon = furs
+	period = napoleonic_age
+	prerequisites = {
+		riverboats
+		#compound_steam_engine
+	}
+}

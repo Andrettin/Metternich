@@ -1,3 +1,15 @@
+fur_trapping = {
+	name = "Fur Trapping"
+	output_commodity = furs
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		laborers
+		tribesmen
+		slaves
+	}
+}
+
 lumberjacking = {
 	name = "Lumberjacking"
 	output_commodity = timber
