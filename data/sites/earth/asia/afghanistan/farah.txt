@@ -3,7 +3,6 @@ farah = {
 	world = earth
 	geocoordinate = { 62.09681921270 32.39172955220 } #from Natural Earth
 	type = resource
-	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
 	resource = cotton
 	province = afghanistan
 }

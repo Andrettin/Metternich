@@ -1,0 +1,156 @@
+cotton_plantation = {
+	name = "Cotton Plantation"
+	building_class = cotton_plantation
+	portrait = stable
+	icon = cotton
+	required_technology = cotton_planting
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_cotton_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = cotton_planting
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+large_cotton_plantation = {
+	name = "Large Cotton Plantation"
+	building_class = large_cotton_plantation
+	portrait = stable
+	icon = cotton
+	base_building = cotton_plantation
+	required_technology = large_cotton_plantations
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_cotton_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 8gb #4x the Cotton Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = cotton_planting
+			multiplier = 2
+		}
+	}
+}
+
+mechanized_cotton_plantation = {
+	name = "Mechanized Cotton Plantation"
+	building_class = mechanized_cotton_plantation
+	portrait = stable
+	icon = cotton
+	base_building = large_cotton_plantation
+	required_technology = cotton_gin
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_cotton_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 16gb #8x the Cotton Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = cotton_planting
+			multiplier = 3
+		}
+	}
+}
+
+industrial_cotton_plantation = {
+	name = "Industrial Cotton Plantation"
+	building_class = industrial_cotton_plantation
+	portrait = stable
+	icon = cotton
+	base_building = mechanized_cotton_plantation
+	required_technology = cotton_gin
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	conditions = {
+		feature = prime_cotton_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 32gb #16x the Cotton Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = cotton_planting
+			multiplier = 4
+		}
+	}
+}

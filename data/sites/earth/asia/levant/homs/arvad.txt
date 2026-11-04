@@ -2,11 +2,12 @@ arvad = {
 	name = "Arvad"
 	world = earth
 	geocoordinate = { 35.858333333333 34.856111111111 }
-	type = resource
-	resource = cotton #cloth
 	province = homs #Tartus
 	cultural_names = {
 		arabic = "Arwad"
+	}
+	features = {
+		#fabric
 	}
 	
 	history = {

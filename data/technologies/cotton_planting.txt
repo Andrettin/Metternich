@@ -1,0 +1,39 @@
+cotton_planting = {
+	name = "Cotton Planting"
+	subcategory = farming
+	portrait = stable
+	icon = cotton
+	period = bronze_age
+	prerequisites = {
+		wood_plow #earlier agricultural technology
+	}
+	
+	#FIXME: should require a Cotton discovery technology
+}
+
+large_cotton_plantations = {
+	name = "Large Cotton Plantations"
+	subcategory = farming
+	portrait = stable
+	icon = cotton
+	period = absolutism_age
+	prerequisites = {
+		cotton_planting
+		
+		colonialism #to place it in the appropriate period
+	}
+}
+
+cotton_gin = {
+	name = "Cotton Gin"
+	subcategory = farming
+	portrait = stable
+	icon = cotton
+	period = revolutionary_age
+	prerequisites = {
+		large_cotton_plantations
+		#trained_journeymen
+		
+		seed_drill #to place it in the appropriate period
+	}
+}

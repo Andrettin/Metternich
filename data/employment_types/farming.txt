@@ -1,3 +1,15 @@
+cotton_planting = {
+	name = "Cotton Planting"
+	output_commodity = cotton
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		farmers
+		tribesmen
+		slaves
+	}
+}
+
 cattle_ranching = {
 	name = "Cattle Ranching"
 	output_commodity = cattle
