@@ -53,6 +53,11 @@ sheep_ranch = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_sheep_land
 		not = {
@@ -91,6 +96,11 @@ tobacco_plantation = {
 		castle
 		guild
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = prime_tobacco_land

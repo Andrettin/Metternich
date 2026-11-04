@@ -8,6 +8,11 @@ grain_farm = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_grain_land
 		not = {
@@ -49,6 +54,11 @@ grain_estate = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_grain_land
 		not = {
@@ -88,6 +98,11 @@ mechanized_grain_estate = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_grain_land
 		not = {
@@ -126,6 +141,11 @@ industrial_grain_estate = {
 		castle
 		guild
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = prime_grain_land

@@ -9,6 +9,11 @@ cotton_plantation = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_cotton_land
 		not = {
@@ -50,6 +55,11 @@ large_cotton_plantation = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_cotton_land
 		not = {
@@ -89,6 +99,11 @@ mechanized_cotton_plantation = {
 		guild
 		temple
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		feature = prime_cotton_land
 		not = {
@@ -127,6 +142,11 @@ industrial_cotton_plantation = {
 		castle
 		guild
 		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		feature = prime_cotton_land
