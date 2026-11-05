@@ -4,4 +4,7 @@ umea = {
 	geocoordinate = { 20.23999426140 63.82999147460 } #from Natural Earth
 	type = holding
 	province = vasterbotten
+	features = {
+		#beavers #furs
+	}
 }

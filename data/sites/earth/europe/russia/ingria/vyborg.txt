@@ -9,6 +9,7 @@ vyborg = {
 		finnish = "Viipuri"
 	}
 	features = {
+		#beavers #furs
 		prime_timber
 	}
 }

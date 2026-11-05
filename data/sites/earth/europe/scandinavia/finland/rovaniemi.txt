@@ -3,4 +3,7 @@ rovaniemi = {
 	world = earth
 	geocoordinate = { 25.71593908560 66.50003521640 } #from Natural Earth
 	type = holding
+	features = {
+		#beavers #furs
+	}
 }
