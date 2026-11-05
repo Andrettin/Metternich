@@ -2,10 +2,6 @@ farmers = {
 	name = "Farmers"
 }
 
-ranchers = {
-	name = "Ranchers"
-}
-
 expert_farmers = {
 	name = "Expert Farmers"
 }
