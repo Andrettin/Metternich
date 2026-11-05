@@ -1,6 +1,7 @@
 master_cotton_planters = {
 	name = "Master Cotton Planters"
 	population_class = master_cotton_planters
+	color = { 227 227 227 }
 	icon = master_cotton_planters
 	small_icon = master_cotton_planters_small
 }

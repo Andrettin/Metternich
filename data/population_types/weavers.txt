@@ -17,6 +17,7 @@ journeyman_weavers = {
 master_weavers = {
 	name = "Master Weavers"
 	population_class = master_weavers
+	color = { 190 190 190 }
 	icon = expert_workers
 	small_icon = expert_workers_small
 	strata = middle
