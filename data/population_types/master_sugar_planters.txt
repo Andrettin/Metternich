@@ -1,6 +1,7 @@
 master_sugar_planters = {
 	name = "Master Sugar Planters"
 	population_class = master_sugar_planters
+	color = { 93 121 186 }
 	icon = master_sugar_planters
 	small_icon = master_sugar_planters_small
 }
