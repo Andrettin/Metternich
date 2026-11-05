@@ -269,16 +269,24 @@ const species *population_unit::get_species() const
 
 int64_t population_unit::get_effective_employment_size(const metternich::employment_type *employment_type, const int64_t employee_size, const decimillesimal_int &sick_and_starving_percent) const
 {
-	Q_UNUSED(employment_type);
+	assert_throw(employment_type != nullptr);
 
 	int64_t effective_employment_size = employee_size;
+
+	if (employment_type->get_output_commodity() != nullptr) {
+		decimillesimal_int throughput_modifier = this->get_type()->get_commodity_throughput_modifier(employment_type->get_output_commodity());
+
+		//FIXME: move all throughput modifiers to be applied here
+
+		if (throughput_modifier != 0) {
+			effective_employment_size = (effective_employment_size * (100 + throughput_modifier) / 100).to_int64();
+		}
+	}
 
 	if (sick_and_starving_percent > 0) {
 		//sick and starving employees cannot work
 		effective_employment_size = (effective_employment_size * (100 - sick_and_starving_percent) / 100).to_int64();
 	}
-
-	//FIXME: add support for population types to have throughput modifiers for specific employment types
 
 	return effective_employment_size;
 }
@@ -290,17 +298,26 @@ int64_t population_unit::get_effective_employment_size() const
 
 int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const
 {
-	Q_UNUSED(employment_type);
+	assert_throw(employment_type != nullptr);
 
 	int64_t employment_size = effective_employment_size;
 
 	if (sick_and_starving_percent > 0) {
 		assert_throw(sick_and_starving_percent < 100);
-		const decimillesimal_int healthy_employment_size = (effective_employment_size * 100 / (100 - sick_and_starving_percent));
+		const decimillesimal_int healthy_employment_size = (employment_size * 100 / (100 - sick_and_starving_percent));
 		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
 	}
 
-	//FIXME: add support for population types to have throughput modifiers for specific employment types
+	if (employment_type->get_output_commodity() != nullptr) {
+		decimillesimal_int throughput_modifier = this->get_type()->get_commodity_throughput_modifier(employment_type->get_output_commodity());
+
+		//FIXME: move all throughput modifiers to be applied here
+
+		if (throughput_modifier != 0) {
+			const decimillesimal_int modified_employment_size = (employment_size * 100 / (100 + throughput_modifier));
+			employment_size = ceil ? modified_employment_size.to_ceil_int64() : modified_employment_size.to_int64();
+		}
+	}
 
 	return employment_size;
 }

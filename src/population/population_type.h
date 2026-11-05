@@ -180,6 +180,17 @@ public:
 		return this->equivalent_population_types;
 	}
 
+	const decimillesimal_int &get_commodity_throughput_modifier(const commodity *commodity) const
+	{
+		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
+		if (find_iterator != this->commodity_throughput_modifiers.end()) {
+			return find_iterator->second;
+		}
+
+		static constexpr decimillesimal_int zero;
+		return zero;
+	}
+
 	const commodity_map<decimillesimal_int> &get_everyday_needs() const
 	{
 		return this->everyday_needs;
@@ -220,6 +231,7 @@ private:
 	std::unique_ptr<modifier<const province>> province_modifier;
 	std::unique_ptr<modifier<const domain>> domain_modifier;
 	std::vector<const population_type *> equivalent_population_types;
+	commodity_map<decimillesimal_int> commodity_throughput_modifiers;
 	commodity_map<decimillesimal_int> everyday_needs;
 	commodity_map<decimillesimal_int> luxury_needs;
 	population_type_map<std::unique_ptr<factor<population_unit>>> promotion_factors; //selects the population type to be promoted or demoted to

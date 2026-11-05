@@ -72,6 +72,13 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
+	} else if (tag == "commodity_throughput_modifiers") {
+		scope.for_each_property([this](const gsml_property &property) {
+			const std::string &key = property.get_key();
+			const std::string &value = property.get_value();
+			const commodity *commodity = commodity::get(key);
+			this->commodity_throughput_modifiers[commodity] = decimillesimal_int(value);
+		});
 	} else if (tag == "everyday_needs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
