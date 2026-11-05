@@ -11,6 +11,20 @@ fertilizer_making = {
 	}
 }
 
+fur_hat_making = {
+	name = "Fur Hat Making"
+	capacity_type = weaving #for now; fur hat making should get its own line of buildings and capacity when there are sites with the Fur Hats resource
+	input_commodities = {
+		furs = 2
+	}
+	output_commodity = fur_hats
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+	}
+}
+
 furniture_making = {
 	name = "Furniture Making"
 	input_commodities = {

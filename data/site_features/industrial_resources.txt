@@ -22,6 +22,12 @@ fertilizer = {
 	resource = true
 }
 
+fur_hats = {
+	name = "Fur Hats"
+	icon = fur_hats
+	resource = true
+}
+
 furniture = {
 	name = "Furniture"
 	icon = furniture
