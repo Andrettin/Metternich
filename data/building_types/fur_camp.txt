@@ -14,10 +14,7 @@ fur_camp = {
 		engineer
 	}
 	conditions = {
-		or = {
-			feature = beavers
-			feature = deer
-		}
+		feature = beavers
 		not = {
 			scripted_condition = is_lair
 		}
@@ -53,10 +50,7 @@ improved_fur_camp = {
 		engineer
 	}
 	conditions = {
-		or = {
-			feature = beavers
-			feature = deer
-		}
+		feature = beavers
 		not = {
 			scripted_condition = is_lair
 		}
@@ -90,10 +84,7 @@ advanced_fur_camp = {
 		engineer
 	}
 	conditions = {
-		or = {
-			feature = beavers
-			feature = deer
-		}
+		feature = beavers
 		not = {
 			scripted_condition = is_lair
 		}
@@ -127,10 +118,7 @@ industrial_fur_camp = {
 		engineer
 	}
 	conditions = {
-		or = {
-			feature = beavers
-			feature = deer
-		}
+		feature = beavers
 		not = {
 			scripted_condition = is_lair
 		}
