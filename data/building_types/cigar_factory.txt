@@ -6,6 +6,11 @@ tobacconists_house = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		game_rule = additional_buildings
 		province = {
@@ -26,6 +31,11 @@ tobacconists_shop = {
 	holding_types = {
 		guild
 	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
 	conditions = {
 		game_rule = additional_buildings
 		province = {
@@ -45,6 +55,11 @@ cigar_factory = {
 	base_building = tobacconists_shop
 	holding_types = {
 		guild
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
 	}
 	conditions = {
 		game_rule = additional_buildings
