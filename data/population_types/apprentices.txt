@@ -5,6 +5,7 @@ apprentices = {
 	icon = expert_workers
 	small_icon = expert_workers_small
 	strata = middle
+	industrial_throughput_modifier = 300
 	everyday_needs = {
 		clothing = 5
 		coal = 1

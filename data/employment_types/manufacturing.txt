@@ -8,6 +8,8 @@ fertilizer_making = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
 
@@ -22,6 +24,8 @@ fur_hat_making = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
 
@@ -35,6 +39,8 @@ furniture_making = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
 
@@ -48,6 +54,8 @@ glass_making = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
 
@@ -62,6 +70,8 @@ liquor_distilling = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
 
@@ -75,5 +85,7 @@ lumber_making = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 	}
 }
