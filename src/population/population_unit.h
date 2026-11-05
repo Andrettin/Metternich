@@ -99,7 +99,7 @@ public:
 	decimillesimal_int get_throughput_modifier(const employment_type *employment_type, const population_type *population_type) const;
 	int64_t get_effective_employment_size(const employment_type *employment_type, const int64_t employee_size, const population_type *population_type, const decimillesimal_int &sick_and_starving_percent) const;
 	int64_t get_effective_employment_size() const;
-	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const;
+	int64_t get_employment_size_from_effective_size(const employment_type *employment_type, const int64_t effective_employment_size, const population_type *population_type, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const;
 	int64_t get_employment_size_from_effective_size(const int64_t effective_employment_size) const;
 
 	const icon *get_icon() const;

@@ -311,7 +311,7 @@ int64_t population_unit::get_effective_employment_size() const
 	return this->get_effective_employment_size(this->get_employment_type(), this->get_size(), this->get_type(), this->get_sick_and_starving_percent());
 }
 
-int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const
+int64_t population_unit::get_employment_size_from_effective_size(const metternich::employment_type *employment_type, const int64_t effective_employment_size, const population_type *population_type, const decimillesimal_int &sick_and_starving_percent, const bool ceil) const
 {
 	assert_throw(employment_type != nullptr);
 
@@ -323,7 +323,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const metternic
 		employment_size = ceil ? healthy_employment_size.to_ceil_int64() : healthy_employment_size.to_int64();
 	}
 
-	const decimillesimal_int throughput_modifier = this->get_throughput_modifier(employment_type, this->get_type());
+	const decimillesimal_int throughput_modifier = this->get_throughput_modifier(employment_type, population_type);
 	if (throughput_modifier != 0) {
 		const decimillesimal_int modified_employment_size = (employment_size * 100 / (100 + throughput_modifier));
 		employment_size = ceil ? modified_employment_size.to_ceil_int64() : modified_employment_size.to_int64();
@@ -336,7 +336,7 @@ int64_t population_unit::get_employment_size_from_effective_size(const int64_t e
 {
 	assert_throw(this->get_employment_type() != nullptr);
 
-	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size, this->get_sick_and_starving_percent(), false);
+	return this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size, this->get_type(), this->get_sick_and_starving_percent(), false);
 }
 
 const icon *population_unit::get_small_icon() const
@@ -426,7 +426,7 @@ QCoro::Task<void> population_unit::change_size(const int64_t change, const popul
 			const int64_t effective_employment_size_increase = new_effective_employment_size - old_effective_employment_size;
 
 			if (effective_employment_size_increase > available_input_capacity) {
-				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, this->get_sick_and_starving_percent(), true), new_size);
+				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, this->get_type(), this->get_sick_and_starving_percent(), true), new_size);
 				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / new_size;
 
 				new_size -= unemployment_size;
@@ -550,7 +550,7 @@ QCoro::Task<void> population_unit::set_sick_and_starving_percent(const decimille
 			const int64_t effective_employment_size_increase = new_effective_employment_size - old_effective_employment_size;
 
 			if (effective_employment_size_increase > available_input_capacity) {
-				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, new_sick_and_starving_percent, true), this->get_size());
+				const int64_t unemployment_size = std::min(this->get_employment_size_from_effective_size(this->get_employment_type(), effective_employment_size_increase - available_input_capacity, this->get_type(), new_sick_and_starving_percent, true), this->get_size());
 				const bool full_unemployment = (unemployment_size == this->get_size());
 				const decimillesimal_int lost_wealth = this->get_wealth() * unemployment_size / this->get_size();
 
