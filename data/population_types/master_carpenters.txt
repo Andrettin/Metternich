@@ -1,6 +1,7 @@
 master_carpenters = {
 	name = "Master Carpenters"
 	population_class = master_carpenters
+	color = { 65 89 166 }
 	icon = expert_workers
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
