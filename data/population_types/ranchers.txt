@@ -1,9 +1,0 @@
-ranchers = {
-	name = "Ranchers"
-	population_class = ranchers
-	icon = rancher
-	small_icon = rancher_small
-	#output_commodity = wealth
-	#output_value = 7sp
-	#output_modifier = 10
-}

@@ -1,7 +1,6 @@
-artisans = {
-	name = "Artisans"
-	population_class = artisans
-	color = { 127 3 3 }
+journeymen = {
+	name = "Journeymen"
+	population_class = journeymen
 	icon = expert_workers
 	small_icon = expert_workers_small
 	strata = middle

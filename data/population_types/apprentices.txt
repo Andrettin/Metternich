@@ -1,0 +1,15 @@
+apprentices = {
+	name = "Apprentices"
+	population_class = apprentices
+	color = { 127 3 3 }
+	icon = expert_workers
+	small_icon = expert_workers_small
+	strata = middle
+	everyday_needs = {
+		clothing = 5
+		coal = 1
+		furniture = 4
+		glass = 1
+		tobacco = 3
+	}
+}

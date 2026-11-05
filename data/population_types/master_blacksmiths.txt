@@ -1,0 +1,10 @@
+master_blacksmiths = {
+	name = "Master Blacksmiths"
+	population_class = master_blacksmiths
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	everyday_needs = {
+		fur_hats = 20
+	}
+}

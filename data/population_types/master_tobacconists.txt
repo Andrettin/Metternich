@@ -1,0 +1,11 @@
+master_tobacconists = {
+	name = "Master Tobacconists"
+	population_class = master_tobacconists
+	color = { 28 109 16 }
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	everyday_needs = {
+		fur_hats = 20
+	}
+}

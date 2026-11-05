@@ -9,6 +9,8 @@ cotton_weaving = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 		master_weavers
 	}
 }
@@ -24,6 +26,8 @@ silk_weaving = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 		master_weavers
 	}
 }
@@ -39,6 +43,8 @@ wool_weaving = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 		master_weavers
 	}
 }
@@ -53,6 +59,8 @@ tailoring = {
 	base_employment_size = 10000
 	employee_types = {
 		craftsmen
+		apprentices
+		journeymen
 		master_weavers
 	}
 }

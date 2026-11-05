@@ -1,0 +1,22 @@
+master_weavers = {
+	name = "Master Weavers"
+	population_class = master_weavers
+	color = { 190 190 190 }
+	icon = expert_workers
+	small_icon = expert_workers_small
+	strata = middle
+	commodity_throughput_modifiers = {
+		fabric = 700
+		clothing = 700
+	}
+	everyday_needs = {
+		fur_hats = 20
+		
+		#as Apprentices/Journeymen
+		clothing = 5
+		coal = 1
+		furniture = 4
+		glass = 1
+		tobacco = 3
+	}
+}

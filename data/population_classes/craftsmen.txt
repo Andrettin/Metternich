@@ -1,3 +1,35 @@
 craftsmen = {
 	name = "Craftsmen"
 }
+
+apprentices = {
+	name = "Apprentices"
+}
+
+journeymen = {
+	name = "Journeymen"
+}
+
+master_blacksmiths = {
+	name = "Master Blacksmiths"
+}
+
+master_carpenters = {
+	name = "Master Carpenters"
+}
+
+master_furriers = {
+	name = "Master Furriers"
+}
+
+master_gunsmiths = {
+	name = "Master Gunsmiths"
+}
+
+master_tobacconists = {
+	name = "Master Tobacconists"
+}
+
+master_weavers = {
+	name = "Master Weavers"
+}

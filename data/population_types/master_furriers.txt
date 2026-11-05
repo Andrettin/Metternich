@@ -1,0 +1,10 @@
+master_furriers = {
+	name = "Master Furriers"
+	population_class = master_furriers
+	icon = expert_workers
+	small_icon = expert_workers_small
+	required_game_rule = additional_population_types
+	everyday_needs = {
+		fur_hats = 20
+	}
+}

@@ -35,23 +35,13 @@ guild = {
 		craftsmen
 		farmers
 		laborers
-		apprentice_blacksmiths
-		journeyman_blacksmiths
+		apprentices
+		journeymen
 		master_blacksmiths
-		apprentice_carpenters
-		journeyman_carpenters
 		master_carpenters
-		apprentice_furriers
-		journeyman_furriers
 		master_furriers
-		apprentice_gunsmiths
-		journeyman_gunsmiths
 		master_gunsmiths
-		apprentice_tobacconists
-		journeyman_tobacconists
 		master_tobacconists
-		apprentice_weavers
-		journeyman_weavers
 		master_weavers
 		bureaucrats
 		elder_statesmen

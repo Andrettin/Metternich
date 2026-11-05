@@ -36,7 +36,7 @@ laborers = {
 				literacy_rate < 50
 			}
 		}
-		artisans = {
+		apprentices = {
 			base_value = 0.01
 			
 			modifier = {
