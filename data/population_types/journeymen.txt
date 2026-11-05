@@ -1,6 +1,7 @@
 journeymen = {
 	name = "Journeymen"
 	population_class = journeymen
+	color = { 107 24 16 }
 	icon = expert_workers
 	small_icon = expert_workers_small
 	strata = middle
