@@ -2691,7 +2691,7 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 
 	//prefer unemploying population units with lower throughput
 	std::stable_sort(population_units.begin(), population_units.end(), [employment_type](const population_unit *lhs, const population_unit *rhs) {
-		return lhs->get_throughput_modifier(employment_type) < rhs->get_throughput_modifier(employment_type);
+		return lhs->get_throughput_modifier(employment_type, lhs->get_type()) < rhs->get_throughput_modifier(employment_type, rhs->get_type());
 	});
 
 	for (population_unit *population_unit : population_units) {
@@ -2700,7 +2700,7 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 		}
 
 		const int64_t unemployment_size = std::min(decrease_effective ? population_unit->get_employment_size_from_effective_size(employment_type, decrease, population_unit->get_sick_and_starving_percent(), true) : decrease, population_unit->get_size());
-		const int64_t effective_unemployment_size = population_unit->get_effective_employment_size(employment_type, unemployment_size, population_unit->get_sick_and_starving_percent());
+		const int64_t effective_unemployment_size = population_unit->get_effective_employment_size(employment_type, unemployment_size, population_unit->get_type(), population_unit->get_sick_and_starving_percent());
 		const decimillesimal_int lost_wealth = population_unit->get_wealth() * unemployment_size / population_unit->get_size();
 
 		co_await this->change_population(population_unit->get_type(), population_unit->get_culture(), population_unit->get_religion(), population_unit->get_phenotype(), nullptr, unemployment_size, population_unit->get_percentages(), lost_wealth, change_input_storage);
@@ -2751,7 +2751,7 @@ QCoro::Task<void> site_game_data::check_employment()
 
 			//prefer employing population units with higher throughput
 			std::stable_sort(unemployed_population_units.begin(), unemployed_population_units.end(), [employment_type](const population_unit *lhs, const population_unit *rhs) {
-				return lhs->get_throughput_modifier(employment_type) > rhs->get_throughput_modifier(employment_type);
+				return lhs->get_throughput_modifier(employment_type, lhs->get_type()) > rhs->get_throughput_modifier(employment_type, rhs->get_type());
 			});
 
 			for (size_t i = 0; i < unemployed_population_units.size();) {
@@ -2765,7 +2765,7 @@ QCoro::Task<void> site_game_data::check_employment()
 
 				assert_throw(employed_population_type != nullptr);
 
-				if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size(), population_unit->get_sick_and_starving_percent()) == 0) {
+				if (population_unit->get_effective_employment_size(employment_type, population_unit->get_size(), employed_population_type, population_unit->get_sick_and_starving_percent()) == 0) {
 					++i;
 					continue;
 				}
@@ -2776,7 +2776,7 @@ QCoro::Task<void> site_game_data::check_employment()
 				}
 				assert_throw(employee_size > 0);
 
-				const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, population_unit->get_sick_and_starving_percent());
+				const int64_t effective_employee_size = population_unit->get_effective_employment_size(employment_type, employee_size, employed_population_type, population_unit->get_sick_and_starving_percent());
 				const decimillesimal_int lost_wealth = population_unit->get_wealth() * employee_size / population_unit->get_size();
 				const bool full_employment = employee_size == population_unit->get_size();
 
