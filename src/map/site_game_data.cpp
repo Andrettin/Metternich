@@ -2688,6 +2688,12 @@ QCoro::Task<void> site_game_data::decrease_employment(const employment_type *emp
 			population_units.push_back(population_unit.get());
 		}
 	}
+
+	//prefer unemploying population units with lower throughput
+	std::stable_sort(population_units.begin(), population_units.end(), [employment_type](const population_unit *lhs, const population_unit *rhs) {
+		return lhs->get_throughput_modifier(employment_type) < rhs->get_throughput_modifier(employment_type);
+	});
+
 	for (population_unit *population_unit : population_units) {
 		if (decrease_effective && population_unit->get_effective_employment_size() == 0) {
 			continue;
@@ -2742,6 +2748,11 @@ QCoro::Task<void> site_game_data::check_employment()
 			if (available_employment_input_capacity == 0) {
 				continue;
 			}
+
+			//prefer employing population units with higher throughput
+			std::stable_sort(unemployed_population_units.begin(), unemployed_population_units.end(), [employment_type](const population_unit *lhs, const population_unit *rhs) {
+				return lhs->get_throughput_modifier(employment_type) > rhs->get_throughput_modifier(employment_type);
+			});
 
 			for (size_t i = 0; i < unemployed_population_units.size();) {
 				population_unit *population_unit = unemployed_population_units.at(i);
