@@ -394,7 +394,7 @@ QCoro::Task<void> population_unit::change_size(const int64_t change, const popul
 	assert_throw(new_size >= 0);
 	assert_throw(this->get_site() != nullptr);
 
-	const int64_t old_effective_employment_size = this->get_effective_employment_size();
+	const int64_t old_effective_employment_size = this->get_employment_type() != nullptr ? this->get_effective_employment_size() : 0;
 
 	if (new_size > 0 && change > 0) {
 		this->set_literacy_rate(((percentages.literacy_rate * change) + (this->get_literacy_rate() * this->get_size())) / new_size);
