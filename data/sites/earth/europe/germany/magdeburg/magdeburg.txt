@@ -8,7 +8,7 @@ magdeburg = {
 	features = {
 		#fabric
 		#liquor
-		lumber
+		#lumber
 	}
 	
 	history = {
@@ -21,7 +21,7 @@ magdeburg = {
 		
 		1861 = {
 			#buildings += liquor_distillery
-			buildings += lumber_mill
+			#buildings += lumber_mill
 		}
 	}
 }

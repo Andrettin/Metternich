@@ -5,9 +5,7 @@ lumber_mill = {
 	icon = lumber
 	wealth_cost = 12gb
 	holding_types = {
-		castle
 		guild
-		temple
 	}
 	builder_civilian_unit_types = {
 		ruler
@@ -15,10 +13,7 @@ lumber_mill = {
 		engineer
 	}
 	conditions = {
-		or = {
-			feature = lumber
-			feature = prime_timber
-		}
+		feature = lumber
 	}
 	commodity_cost_weights = {
 		lumber = 52

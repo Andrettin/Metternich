@@ -20,34 +20,52 @@ fertilizer = {
 	name = "Fertilizer"
 	icon = spices_yellow
 	resource = true
+	holding_types = {
+		guild
+	}
 }
 
 fur_hats = {
 	name = "Fur Hats"
 	icon = fur_hats
 	resource = true
+	holding_types = {
+		guild
+	}
 }
 
 furniture = {
 	name = "Furniture"
 	icon = furniture
 	resource = true
+	holding_types = {
+		guild
+	}
 }
 
 glass = {
 	name = "Glass"
 	icon = glass
 	resource = true
+	holding_types = {
+		guild
+	}
 }
 
 liquor = {
 	name = "Liquor"
 	icon = wine
 	resource = true
+	holding_types = {
+		guild
+	}
 }
 
 lumber = {
 	name = "Lumber"
 	icon = lumber
 	resource = true
+	holding_types = {
+		guild
+	}
 }

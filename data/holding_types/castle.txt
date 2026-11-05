@@ -56,7 +56,6 @@ castle = {
 		untrained_workers
 		trained_workers
 		expert_workers
-		craftsmen
 		farmers
 		laborers
 		soldiers

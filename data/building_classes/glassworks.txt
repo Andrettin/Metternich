@@ -1,4 +1,4 @@
 glassworks = {
 	name = "Glassworks"
-	slot_type = glassworks
+	slot_type = resource
 }

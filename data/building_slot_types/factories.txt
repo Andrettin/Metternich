@@ -10,28 +10,12 @@ bronze_foundry = {
 	name = "Bronze Foundry"
 }
 
-fertilizer_factory = {
-	name = "Fertilizer Factory"
-}
-
-glassworks = {
-	name = "Glassworks"
-}
-
 iron_smelter = {
 	name = "Iron Smelter"
 }
 
 lead_smelter = {
 	name = "Lead Smelter"
-}
-
-liquor_distillery = {
-	name = "Liquor Distillery"
-}
-
-lumber_mill = {
-	name = "Lumber Mill"
 }
 
 mercury_refinery = {

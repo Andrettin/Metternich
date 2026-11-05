@@ -4,9 +4,7 @@ fertilizer_factory = {
 	portrait = coal_pit
 	icon = spices_yellow
 	holding_types = {
-		castle
 		guild
-		temple
 	}
 	builder_civilian_unit_types = {
 		ruler

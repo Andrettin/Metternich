@@ -5,7 +5,7 @@ smolensk = {
 	type = holding
 	province = smolensk
 	features = {
-		liquor
+		#liquor
 	}
 	
 	history = {
@@ -14,7 +14,7 @@ smolensk = {
 		}
 		
 		1861 = {
-			buildings += liquor_distillery
+			#buildings += liquor_distillery
 		}
 	}
 }

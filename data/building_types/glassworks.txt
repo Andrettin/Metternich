@@ -5,7 +5,6 @@ glassworks = {
 	icon = glass
 	required_technology = glassblowing
 	holding_types = {
-		castle
 		guild
 	}
 	builder_civilian_unit_types = {
