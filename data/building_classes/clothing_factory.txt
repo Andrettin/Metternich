@@ -1,14 +1,14 @@
 tailors_house = {
 	name = "Tailor's House"
-	slot_type = clothing_factory
+	slot_type = resource
 }
 
 tailors_shop = {
 	name = "Tailor's Shop"
-	slot_type = clothing_factory
+	slot_type = resource
 }
 
 clothing_factory = {
 	name = "Clothing Factory"
-	slot_type = clothing_factory
+	slot_type = resource
 }

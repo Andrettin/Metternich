@@ -46,14 +46,6 @@ steel_mill = {
 	name = "Steel Mill"
 }
 
-textile_mill = {
-	name = "Textile Mill"
-}
-
-clothing_factory = {
-	name = "Clothing Factory"
-}
-
 furniture_factory = {
 	name = "Furniture Factory"
 }
