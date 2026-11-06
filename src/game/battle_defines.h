@@ -56,8 +56,8 @@ signals:
 	void changed();
 
 private:
-	std::chrono::seconds combat_round_duration;
-	std::chrono::seconds battle_round_duration;
+	std::chrono::seconds combat_round_duration{};
+	std::chrono::seconds battle_round_duration{};
 	int battle_tile_length = 0; //the length of each side of a battle tile, in inches
 	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
 	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
