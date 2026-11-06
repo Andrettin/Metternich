@@ -870,8 +870,6 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 	decimillesimal_int total_fulfilled_need_wealth;
 
 	for (auto &[need_type, need] : needs) {
-		assert_throw(need > 0);
-
 		if (std::holds_alternative<luxury_type>(need_type)) {
 			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
 
@@ -886,6 +884,10 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 				}
 
 				this->purchase_need_commodity(commodity, need, total_fulfilled_need_wealth, trade_domains, remaining_demands);
+
+				if (need == 0) {
+					break;
+				}
 			}
 		} else {
 			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
@@ -899,6 +901,8 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 
 void population_unit::purchase_need_commodity(const commodity *commodity, decimillesimal_int &need, decimillesimal_int &total_fulfilled_need_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
+	assert_throw(need > 0);
+
 	decimillesimal_int affordable_need = decimillesimal_int::min(need, this->get_wealth() / game::get()->get_price(commodity));
 
 	if (affordable_need == 0) {
