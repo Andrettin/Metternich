@@ -104,10 +104,10 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 
 			const std::optional<luxury_type> luxury_type = magic_enum::enum_cast<metternich::luxury_type>(key);
 			if (luxury_type.has_value()) {
-				this->everyday_needs[luxury_type.value()] = need;
+				this->luxury_needs[luxury_type.value()] = need;
 			} else {
 				const commodity *commodity = commodity::get(key);
-				this->everyday_needs[commodity] = need;
+				this->luxury_needs[commodity] = need;
 			}
 		});
 	} else if (tag == "promotion_factors") {
