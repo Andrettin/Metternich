@@ -14,6 +14,7 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "engine_interface.h"
+#include "game/battle_defines.h"
 #include "game/domain_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -328,7 +329,7 @@ QCoro::Task<void> combat::do_round()
 	}
 
 	for (const character *character : all_characters) {
-		co_await character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
+		co_await character->get_game_data()->decrement_status_effect_durations(battle_defines::get()->get_combat_round_duration(), this->ctx);
 	}
 }
 
@@ -728,7 +729,7 @@ QCoro::Task<void> combat::on_ended_coro()
 	vector::merge(all_characters, this->defending_party->get_characters());
 	for (const character *character : all_characters) {
 		while (character->get_game_data()->has_any_status_effect_with_less_than_duration(std::chrono::months(1))) {
-			co_await character->get_game_data()->decrement_status_effect_durations(defines::get()->get_combat_round_duration(), this->ctx);
+			co_await character->get_game_data()->decrement_status_effect_durations(battle_defines::get()->get_combat_round_duration(), this->ctx);
 		}
 	}
 

@@ -40,6 +40,7 @@
 #include "economy/province_taxation_type.h"
 #include "engine_interface.h"
 #include "game/attack_result.h"
+#include "game/battle_defines.h"
 #include "game/battle_resolution_type.h"
 #include "game/decision_type.h"
 #include "game/event.h"
@@ -177,6 +178,7 @@ int main(int argc, char **argv)
 		QImageReader::setAllocationLimit(1024);
 
 		database::get()->add_defines(defines::get());
+		database::get()->add_defines(battle_defines::get());
 		database::get()->add_defines(character_defines::get());
 		database::get()->add_defines(holding_defines::get());
 		database::get()->add_defines(province_defines::get());

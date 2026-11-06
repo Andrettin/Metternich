@@ -12,6 +12,7 @@
 #include "domain/domain_government.h"
 #include "engine_interface.h"
 #include "game/attack_result.h"
+#include "game/battle_defines.h"
 #include "game/game.h"
 #include "map/site.h"
 #include "map/terrain_type.h"
@@ -36,7 +37,7 @@ namespace metternich {
 
 centesimal_int battle::length_to_battle_tile_length(const int length)
 {
-	return centesimal_int(length) * defines::get()->get_battle_map_scale() / defines::get()->get_battle_tile_length();
+	return centesimal_int(length) * battle_defines::get()->get_battle_map_scale() / battle_defines::get()->get_battle_tile_length();
 }
 
 centesimal_int battle::length_to_battle_range(const int length)

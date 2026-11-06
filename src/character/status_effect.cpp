@@ -2,8 +2,8 @@
 
 #include "character/status_effect.h"
 
-#include "database/defines.h"
 #include "database/gsml_data.h"
+#include "game/battle_defines.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "util/random.h"
@@ -61,7 +61,7 @@ std::chrono::seconds status_effect::get_duration(const std::optional<int> &caste
 	std::chrono::seconds duration(0);
 
 	if (!this->get_duration_rounds().is_null()) {
-		duration += random::get()->roll_dice(this->get_duration_rounds()) * defines::get()->get_combat_round_duration();
+		duration += random::get()->roll_dice(this->get_duration_rounds()) * battle_defines::get()->get_combat_round_duration();
 	}
 
 	if (caster_level.has_value()) {

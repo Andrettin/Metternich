@@ -39,6 +39,7 @@
 #include "economy/commodity.h"
 #include "engine_interface.h"
 #include "game/battle.h"
+#include "game/battle_defines.h"
 #include "game/character_event.h"
 #include "game/event_trigger.h"
 #include "game/game.h"
@@ -3921,7 +3922,7 @@ void character_game_data::update_military_unit_stats()
 		military_unit->set_stat(military_unit_stat::missile, centesimal_int(0));
 	}
 	military_unit->set_stat(military_unit_stat::defense, centesimal_int(character_defines::get()->get_battle_defense_for_armor_class(this->get_armor_class_bonus())));
-	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1));
+	military_unit->set_stat(military_unit_stat::movement, centesimal_int::max(centesimal_int(this->get_movement()) * character_defines::get()->get_battle_movement_rate() / battle_defines::get()->get_battle_tile_length(), 1));
 	military_unit->set_stat(military_unit_stat::range, battle_range);
 	military_unit->set_stat(military_unit_stat::initiative, centesimal_int(this->get_initiative_bonus()));
 }

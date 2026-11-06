@@ -6,11 +6,11 @@
 #include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_military.h"
 #include "economy/commodity.h"
 #include "game/battle.h"
+#include "game/battle_defines.h"
 #include "game/battle_resolution_type.h"
 #include "item/item_type.h"
 #include "script/modifier.h"
@@ -326,7 +326,7 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 	const bool ranged = range.to_int() > 1;
 	this->stats[military_unit_stat::range] = centesimal_int(range);
 
-	centesimal_int hit_points = defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
+	centesimal_int hit_points = battle_defines::get()->get_military_unit_hit_points_for_hit_dice(hit_dice_count);
 	hit_points *= 10;
 	int manpower_needed = 100;
 
@@ -348,7 +348,7 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 		this->stats[military_unit_stat::initiative] = centesimal_int(initiative);
 	}
 	if (movement != 0) {
-		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / defines::get()->get_battle_tile_length(), 1);
+		this->stats[military_unit_stat::movement] = centesimal_int::max(centesimal_int(movement) * character_defines::get()->get_battle_movement_rate() / battle_defines::get()->get_battle_tile_length(), 1);
 	}
 	if (max_melee_damage != 0 || to_hit_bonus != 0) {
 		this->stats[military_unit_stat::melee] = centesimal_int(character_defines::get()->get_battle_melee_for_to_hit_bonus_and_max_damage(to_hit_bonus.to_int(), max_melee_damage.to_int(), false));

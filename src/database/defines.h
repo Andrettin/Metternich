@@ -3,7 +3,6 @@
 #include "database/defines_base.h"
 #include "economy/commodity_container.h"
 #include "map/terrain_adjacency.h"
-#include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 #include "util/singleton.h"
 
@@ -36,8 +35,6 @@ class office;
 class portrait;
 class sound;
 class terrain_type;
-enum class attack_result;
-enum class battle_resolution_type;
 enum class diplomacy_state;
 enum class event_trigger;
 
@@ -53,7 +50,6 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(QDate default_start_date MEMBER default_start_date READ get_default_start_date)
 	Q_PROPERTY(int default_months_per_turn MEMBER default_months_per_turn READ get_default_months_per_turn NOTIFY changed)
 	Q_PROPERTY(int evolutionary_months_per_turn MEMBER evolutionary_months_per_turn READ get_evolutionary_months_per_turn NOTIFY changed)
-	Q_PROPERTY(int battle_map_scale MEMBER battle_map_scale READ get_battle_map_scale NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
@@ -97,7 +93,6 @@ public:
 		return "defines.txt";
 	}
 
-	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 	virtual void initialize() override;
 	virtual void check() const override;
@@ -182,26 +177,6 @@ public:
 	decimillesimal_int years_to_turns(const int years, const int current_year) const
 	{
 		return this->months_to_turns(years * 12, current_year);
-	}
-
-	const std::chrono::seconds &get_combat_round_duration() const
-	{
-		return this->combat_round_duration;
-	}
-
-	const std::chrono::seconds &get_battle_round_duration() const
-	{
-		return this->battle_round_duration;
-	}
-
-	int get_battle_tile_length() const
-	{
-		return this->battle_tile_length;
-	}
-
-	int get_battle_map_scale() const
-	{
-		return this->battle_map_scale;
 	}
 
 	const terrain_type *get_default_base_terrain() const
@@ -389,10 +364,6 @@ public:
 	decimillesimal_int get_domain_income_unit_value() const;
 	decimillesimal_int get_domain_maintenance_cost_for_domain_size(const int domain_size) const;
 
-	const centesimal_int &get_military_unit_hit_points_for_hit_dice(const int hit_dice_count) const;
-
-	const std::vector<attack_result> &get_battle_resolution_results(const battle_resolution_type attacker_resolution_type, const battle_resolution_type defender_resolution_type, const int attack_defense_difference) const;
-
 	const std::vector<int> &get_river_adjacency_subtiles(const terrain_adjacency &adjacency) const;
 	void set_river_adjacency_subtiles(const terrain_adjacency &adjacency, const std::vector<int> &subtiles);
 	int get_rivermouth_adjacency_tile(const terrain_adjacency &adjacency) const;
@@ -428,10 +399,6 @@ private:
 	int default_months_per_turn = 3;
 	int evolutionary_months_per_turn = 3;
 	std::map<int, int> months_per_turn_from_year;
-	std::chrono::seconds combat_round_duration;
-	std::chrono::seconds battle_round_duration;
-	int battle_tile_length = 0; //the length of each side of a battle tile, in inches
-	int battle_map_scale = 1; //the scale multiplier applied to the battle map (not graphical scaling!)
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
@@ -468,8 +435,6 @@ private:
 	decimillesimal_int default_diplomatic_map_tile_scale = decimillesimal_int(1);
 	const commodity_unit *domain_income_unit = nullptr;
 	std::map<int, decimillesimal_int> domain_maintenance_cost_per_domain_size;
-	std::map<int, centesimal_int> military_unit_hit_points_per_hit_dice;
-	std::map<battle_resolution_type, std::map<battle_resolution_type, std::map<int, std::vector<attack_result>>>> battle_resolution_results;
 	std::map<terrain_adjacency, std::vector<int>> river_adjacency_subtiles;
 	std::map<terrain_adjacency, int> rivermouth_adjacency_tiles;
 	std::map<terrain_adjacency, int> route_adjacency_tiles;

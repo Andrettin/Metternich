@@ -9,7 +9,6 @@
 #include "character/monster_type.h"
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
@@ -18,6 +17,7 @@
 #include "economy/commodity.h"
 #include "game/attack_result.h"
 #include "game/battle.h"
+#include "game/battle_defines.h"
 #include "game/battle_resolution_type.h"
 #include "game/game.h"
 #include "item/item.h"
@@ -623,7 +623,7 @@ centesimal_int military_unit::get_effective_stat(const military_unit_stat stat) 
 
 int military_unit::get_battle_movement() const
 {
-	return (this->get_effective_stat(military_unit_stat::movement) * defines::get()->get_battle_map_scale()).to_int();
+	return (this->get_effective_stat(military_unit_stat::movement) * battle_defines::get()->get_battle_map_scale()).to_int();
 }
 
 QVariantList military_unit::get_promotions_qvariant_list() const
@@ -807,7 +807,7 @@ QCoro::Task<bool> military_unit::attack(military_unit *target, const int battle_
 		defense += target->get_effective_stat(military_unit_stat::defense_vs_mounted).to_int();
 	}
 
-	const attack_result result = vector::get_random(defines::get()->get_battle_resolution_results(this->get_battle_resolution_type(), target->get_battle_resolution_type(), attack - defense));
+	const attack_result result = vector::get_random(battle_defines::get()->get_battle_resolution_results(this->get_battle_resolution_type(), target->get_battle_resolution_type(), attack - defense));
 
 	switch (result) {
 		case attack_result::miss:
