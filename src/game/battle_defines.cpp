@@ -76,12 +76,20 @@ void battle_defines::process_gsml_scope(const gsml_data &scope)
 
 void battle_defines::check() const
 {
+	if (this->get_combat_round_duration().count() == 0) {
+		throw std::runtime_error("No combat round duration has been defined.");
+	}
+
 	if (this->get_battle_round_duration().count() == 0) {
 		throw std::runtime_error("No battle round duration has been defined.");
 	}
 
 	if (this->get_battle_tile_length() == 0) {
 		throw std::runtime_error("No battle tile length has been defined.");
+	}
+
+	if (this->military_unit_hit_points_per_hit_dice.empty()) {
+		throw std::runtime_error("No military unit hit points per hit dice have been defined.");
 	}
 
 	if (this->battle_resolution_results.empty()) {
