@@ -37,6 +37,7 @@
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
+#include "economy/luxury_type.h"
 #include "economy/province_taxation_type.h"
 #include "engine_interface.h"
 #include "game/attack_result.h"
@@ -210,6 +211,7 @@ int main(int argc, char **argv)
 			database_util::register_enum<geological_era>();
 			database_util::register_enum<grammatical_gender>();
 			database_util::register_enum<log_level>();
+			database_util::register_enum<luxury_type>();
 			database_util::register_enum<military_unit_category>();
 			database_util::register_enum<military_unit_domain>();
 			database_util::register_enum<moisture_type>();

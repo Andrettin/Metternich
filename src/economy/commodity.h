@@ -3,7 +3,6 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
-#include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 #include "util/millionesimal_int.h"
 
@@ -24,6 +23,7 @@ class icon;
 class technology;
 enum class commodity_type;
 enum class food_type;
+enum class luxury_type;
 
 class commodity final : public named_data_entry, public data_type<commodity>
 {
@@ -33,6 +33,7 @@ class commodity final : public named_data_entry, public data_type<commodity>
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* tiny_icon MEMBER tiny_icon READ get_tiny_icon NOTIFY changed)
 	Q_PROPERTY(metternich::food_type food_type MEMBER food_type READ get_food_type NOTIFY changed)
+	Q_PROPERTY(metternich::luxury_type luxury_type MEMBER luxury_type READ get_luxury_type NOTIFY changed)
 	Q_PROPERTY(bool abstract MEMBER abstract READ is_abstract NOTIFY changed)
 	Q_PROPERTY(bool manpower MEMBER manpower READ is_manpower NOTIFY changed)
 	Q_PROPERTY(bool agricultural MEMBER agricultural READ is_agricultural NOTIFY changed)
@@ -61,10 +62,40 @@ public:
 		return commodity::food_type_commodities;
 	}
 
+	static const std::vector<const commodity *> &get_food_type_commodities(const food_type food_type)
+	{
+		const auto find_iterator = commodity::food_type_commodities.find(food_type);
+
+		if (find_iterator != commodity::food_type_commodities.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::vector<const commodity *> empty_vector;
+		return empty_vector;
+	}
+
+	static const std::map<luxury_type, std::vector<const commodity *>> &get_luxury_type_commodities()
+	{
+		return commodity::luxury_type_commodities;
+	}
+
+	static const std::vector<const commodity *> &get_luxury_type_commodities(const luxury_type luxury_type)
+	{
+		const auto find_iterator = commodity::luxury_type_commodities.find(luxury_type);
+
+		if (find_iterator != commodity::luxury_type_commodities.end()) {
+			return find_iterator->second;
+		}
+
+		static const std::vector<const commodity *> empty_vector;
+		return empty_vector;
+	}
+
 	static bool commodity_price_compare(const commodity *lhs, const commodity *rhs);
 
 private:
 	static inline std::map<food_type, std::vector<const commodity *>> food_type_commodities;
+	static inline std::map<luxury_type, std::vector<const commodity *>> luxury_type_commodities;
 
 public:
 	explicit commodity(const std::string &identifier);
@@ -93,6 +124,13 @@ public:
 	metternich::food_type get_food_type() const
 	{
 		return this->food_type;
+	}
+
+	bool is_luxury() const;
+
+	metternich::luxury_type get_luxury_type() const
+	{
+		return this->luxury_type;
 	}
 
 	bool is_abstract() const
@@ -211,6 +249,7 @@ private:
 	const metternich::icon *icon = nullptr;
 	const metternich::icon *tiny_icon = nullptr;
 	metternich::food_type food_type{};
+	metternich::luxury_type luxury_type{};
 	bool abstract = false;
 	bool manpower = false; //whether this is some form of manpower, used for recruiting units
 	bool agricultural = false; //benefits from farming efficiency gains

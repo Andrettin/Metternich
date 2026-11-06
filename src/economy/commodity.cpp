@@ -7,6 +7,7 @@
 #include "economy/commodity_type.h"
 #include "economy/commodity_unit.h"
 #include "economy/food_type.h"
+#include "economy/luxury_type.h"
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "technology/technology.h"
@@ -69,6 +70,10 @@ void commodity::initialize()
 		commodity::food_type_commodities[this->get_food_type()].push_back(this);
 	}
 
+	if (this->get_luxury_type() != luxury_type::none) {
+		commodity::luxury_type_commodities[this->get_luxury_type()].push_back(this);
+	}
+
 	named_data_entry::initialize();
 }
 
@@ -103,11 +108,36 @@ void commodity::check() const
 	if (this->has_special_storage_capacity() && !this->is_storable()) {
 		throw std::runtime_error(std::format("Non-storable commodity \"{}\" has a special storage capacity.", this->get_identifier()));
 	}
+
+	if (this->is_food()) {
+		if (!this->is_tradeable()) {
+			throw std::runtime_error(std::format("Food commodity \"{}\" is not tradeable.", this->get_identifier(), magic_enum::enum_name(this->get_luxury_type())));
+		}
+
+		if (this->get_base_price() != commodity::get_food_type_commodities(this->get_food_type()).at(0)->get_base_price()) {
+			throw std::runtime_error(std::format("Food commodity \"{}\" has a different base price than other commodities of its food type (\"{}\").", this->get_identifier(), magic_enum::enum_name(this->get_food_type())));
+		}
+	}
+
+	if (this->is_luxury()) {
+		if (!this->is_tradeable()) {
+			throw std::runtime_error(std::format("Luxury commodity \"{}\" is not tradeable.", this->get_identifier(), magic_enum::enum_name(this->get_luxury_type())));
+		}
+
+		if (this->get_base_price() != commodity::get_luxury_type_commodities(this->get_luxury_type()).at(0)->get_base_price()) {
+			throw std::runtime_error(std::format("Luxury commodity \"{}\" has a different base price than other commodities of its luxury type (\"{}\").", this->get_identifier(), magic_enum::enum_name(this->get_luxury_type())));
+		}
+	}
 }
 
 bool commodity::is_food() const
 {
 	return this->get_food_type() != food_type::none;
+}
+
+bool commodity::is_luxury() const
+{
+	return this->get_luxury_type() != luxury_type::none;
 }
 
 bool commodity::is_wealth() const

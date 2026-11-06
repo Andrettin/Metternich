@@ -2,6 +2,7 @@ liquor = {
 	name = "Liquor"
 	type = good
 	icon = wine
+	luxury_type = alcohol
 	industrial = true
 	base_price = 6
 	
