@@ -4,7 +4,7 @@ liquor = {
 	icon = wine
 	luxury_type = alcohol
 	industrial = true
-	base_price = 6
+	base_price = 3
 	
 	#2sp per lb, price of whiskey
 }

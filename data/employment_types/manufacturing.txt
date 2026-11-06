@@ -62,8 +62,7 @@ glass_making = {
 liquor_distilling = {
 	name = "Liquor Distilling"
 	input_commodities = {
-		grain = 1
-		glass = 1
+		grain = 2
 	}
 	output_commodity = liquor
 	quarterly_output_value = 1
