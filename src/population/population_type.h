@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "economy/luxury_demand_map.h"
 #include "population/population_type_container.h"
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
@@ -197,12 +198,12 @@ public:
 		return zero;
 	}
 
-	const commodity_map<decimillesimal_int> &get_everyday_needs() const
+	const luxury_demand_map<decimillesimal_int> &get_everyday_needs() const
 	{
 		return this->everyday_needs;
 	}
 
-	const commodity_map<decimillesimal_int> &get_luxury_needs() const
+	const luxury_demand_map<decimillesimal_int> &get_luxury_needs() const
 	{
 		return this->luxury_needs;
 	}
@@ -239,8 +240,8 @@ private:
 	std::unique_ptr<modifier<const domain>> domain_modifier;
 	std::vector<const population_type *> equivalent_population_types;
 	commodity_map<decimillesimal_int> commodity_throughput_modifiers;
-	commodity_map<decimillesimal_int> everyday_needs;
-	commodity_map<decimillesimal_int> luxury_needs;
+	luxury_demand_map<decimillesimal_int> everyday_needs;
+	luxury_demand_map<decimillesimal_int> luxury_needs;
 	population_type_map<std::unique_ptr<factor<population_unit>>> promotion_factors; //selects the population type to be promoted or demoted to
 	const game_rule *required_game_rule = nullptr;
 };

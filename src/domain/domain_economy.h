@@ -21,6 +21,7 @@ class domain;
 class domain_game_data;
 enum class food_type;
 enum class income_transaction_type;
+enum class luxury_type;
 enum class population_strata;
 enum class province_taxation_type;
 
@@ -131,6 +132,8 @@ public:
 	{
 		return this->get_tradeable_commodities().contains(commodity);
 	}
+
+	bool can_trade_luxury_type(const luxury_type luxury_type) const;
 
 	const commodity_map<decimillesimal_int> &get_stored_commodities() const
 	{

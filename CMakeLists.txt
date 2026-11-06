@@ -111,6 +111,7 @@ set(economy_SRCS
 	src/economy/employment_type.cpp
 	src/economy/expense_transaction.cpp
 	src/economy/income_transaction.cpp
+	src/economy/luxury_demand_map.cpp
 	src/economy/resource.cpp
 	src/economy/resource_container.cpp
 	src/economy/transaction.cpp
@@ -478,6 +479,7 @@ set(economy_HDRS
 	src/economy/food_type.h
 	src/economy/income_transaction.h
 	src/economy/income_transaction_type.h
+	src/economy/luxury_demand_map.h
 	src/economy/luxury_type.h
 	src/economy/province_taxation_type.h
 	src/economy/resource.h

@@ -10,6 +10,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
+#include "economy/luxury_type.h"
 #include "game/game.h"
 #include "game/game_rules.h"
 #include "population/population.h"
@@ -83,15 +84,31 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
-			const commodity *commodity = commodity::get(key);
-			this->everyday_needs[commodity] = decimillesimal_int(value);
+
+			const decimillesimal_int need(value);
+
+			const std::optional<luxury_type> luxury_type = magic_enum::enum_cast<metternich::luxury_type>(key);
+			if (luxury_type.has_value()) {
+				this->everyday_needs[luxury_type.value()] = need;
+			} else {
+				const commodity *commodity = commodity::get(key);
+				this->everyday_needs[commodity] = need;
+			}
 		});
 	} else if (tag == "luxury_needs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
-			const commodity *commodity = commodity::get(key);
-			this->luxury_needs[commodity] = decimillesimal_int(value);
+
+			const decimillesimal_int need(value);
+
+			const std::optional<luxury_type> luxury_type = magic_enum::enum_cast<metternich::luxury_type>(key);
+			if (luxury_type.has_value()) {
+				this->everyday_needs[luxury_type.value()] = need;
+			} else {
+				const commodity *commodity = commodity::get(key);
+				this->everyday_needs[commodity] = need;
+			}
 		});
 	} else if (tag == "promotion_factors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -169,15 +186,21 @@ void population_type::check() const
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_everyday_needs()) {
-		if (!commodity->is_tradeable()) {
-			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+	for (const auto &[need_type, need] : this->get_everyday_needs()) {
+		if (std::holds_alternative<const commodity *>(need_type)) {
+			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
+			if (!commodity->is_tradeable()) {
+				throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+			}
 		}
 	}
 
-	for (const auto &[commodity, need] : this->get_luxury_needs()) {
-		if (!commodity->is_tradeable()) {
-			throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+	for (const auto &[need_type, need] : this->get_luxury_needs()) {
+		if (std::holds_alternative<const commodity *>(need_type)) {
+			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
+			if (!commodity->is_tradeable()) {
+				throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+			}
 		}
 	}
 }

@@ -3,6 +3,7 @@
 #include "game/scenario.h"
 
 #include "database/defines.h"
+#include "database/gsml_data.h"
 #include "domain/domain.h"
 #include "map/map_template.h"
 #include "util/assert_util.h"

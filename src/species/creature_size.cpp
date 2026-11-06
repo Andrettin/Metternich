@@ -2,6 +2,7 @@
 
 #include "species/creature_size.h"
 
+#include "database/gsml_data.h"
 #include "species/creature_size_container.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"

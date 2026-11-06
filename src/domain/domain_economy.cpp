@@ -443,6 +443,17 @@ void domain_economy::remove_tradeable_commodity(const commodity *commodity)
 	emit tradeable_commodities_changed();
 }
 
+bool domain_economy::can_trade_luxury_type(const luxury_type luxury_type) const
+{
+	for (const commodity *commodity : commodity::get_luxury_type_commodities(luxury_type)) {
+		if (this->can_trade_commodity(commodity)) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 QVariantList domain_economy::get_stored_commodities_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_stored_commodities());

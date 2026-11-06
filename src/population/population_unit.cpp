@@ -827,15 +827,30 @@ void population_unit::purchase_needs(const std::vector<const metternich::domain 
 	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &base_needs, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	decimillesimal_int total_need_wealth;
 
-	commodity_map<decimillesimal_int> needs;
+	luxury_demand_map<decimillesimal_int> needs;
 
-	for (const auto &[commodity, base_need] : base_needs) {
-		if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
-			continue;
+	for (const auto &[need_type, base_need] : base_needs) {
+		decimillesimal_int base_price;
+
+		if (std::holds_alternative<luxury_type>(need_type)) {
+			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
+			if (!this->domain->get_economy()->can_trade_luxury_type(luxury_type)) {
+				continue;
+			}
+
+			//the base prices of all commodities belonging to a luxury type are guaranteed to be the same
+			base_price = commodity::get_luxury_type_commodities(luxury_type).at(0)->get_base_price();
+		} else {
+			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
+			if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
+				continue;
+			}
+
+			base_price = commodity->get_base_price();
 		}
 
 		decimillesimal_int need = base_need;
@@ -843,8 +858,8 @@ int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &bas
 		need /= population_defines::get()->get_base_population_needs_size();
 
 		if (need > 0) {
-			needs[commodity] = need;
-			total_need_wealth += need * commodity->get_base_price();
+			needs[need_type] = need;
+			total_need_wealth += need * base_price;
 		}
 	}
 
@@ -852,53 +867,70 @@ int population_unit::purchase_needs(const commodity_map<decimillesimal_int> &bas
 		return 100;
 	}
 
-	decimillesimal_int fulfilled_percent;
+	decimillesimal_int total_fulfilled_need_wealth;
 
-	for (const auto &[commodity, need] : needs) {
-		assert_throw(need > 0);
+	for (const auto &[need_type, need] : needs) {
+		if (std::holds_alternative<luxury_type>(need_type)) {
+			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
 
-		decimillesimal_int affordable_need = decimillesimal_int::min(need, this->get_wealth() / game::get()->get_price(commodity));
+			for (const commodity *commodity : commodity::get_luxury_type_commodities(luxury_type)) {
+				if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
+					continue;
+				}
 
-		if (affordable_need == 0) {
-			continue;
-		}
-
-		decimillesimal_int fulfilled_need;
-
-		for (const metternich::domain *trade_domain : trade_domains) {
-			const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(commodity);
-			if (domain_offer == 0) {
-				continue;
+				this->purchase_need_commodity(commodity, need, total_fulfilled_need_wealth, trade_domains, remaining_demands);
 			}
-
-			assert_throw(domain_offer > 0);
-			assert_throw(affordable_need > 0);
-
-			const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, affordable_need);
-			assert_throw(bought_quantity > 0);
-
-			trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false, false);
-
-			const decimillesimal_int purchase_price = bought_quantity * game::get()->get_price(commodity);
-			this->change_wealth(-purchase_price);
-
-			affordable_need -= bought_quantity;
-			fulfilled_need += bought_quantity;
-			if (affordable_need == 0) {
-				break;
-			}
-		}
-
-		fulfilled_percent += fulfilled_need * commodity->get_base_price();
-
-		if (affordable_need > 0) {
-			remaining_demands[commodity] += affordable_need;
+		} else {
+			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
+			this->purchase_need_commodity(commodity, need, total_fulfilled_need_wealth, trade_domains, remaining_demands);
 		}
 	}
 
-	fulfilled_percent *= 100;
-	fulfilled_percent /= total_need_wealth;
+	const decimillesimal_int fulfilled_percent = total_fulfilled_need_wealth * 100 / total_need_wealth;
 	return fulfilled_percent.to_int();
+}
+
+void population_unit::purchase_need_commodity(const commodity *commodity, const decimillesimal_int &need, decimillesimal_int &fulfilled_percent, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+{
+	assert_throw(need > 0);
+
+	decimillesimal_int affordable_need = decimillesimal_int::min(need, this->get_wealth() / game::get()->get_price(commodity));
+
+	if (affordable_need == 0) {
+		return;;
+	}
+
+	decimillesimal_int fulfilled_need;
+
+	for (const metternich::domain *trade_domain : trade_domains) {
+		const decimillesimal_int domain_offer = trade_domain->get_economy()->get_offer(commodity);
+		if (domain_offer == 0) {
+			continue;
+		}
+
+		assert_throw(domain_offer > 0);
+		assert_throw(affordable_need > 0);
+
+		const decimillesimal_int bought_quantity = decimillesimal_int::min(domain_offer, affordable_need);
+		assert_throw(bought_quantity > 0);
+
+		trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false, false);
+
+		const decimillesimal_int purchase_price = bought_quantity * game::get()->get_price(commodity);
+		this->change_wealth(-purchase_price);
+
+		affordable_need -= bought_quantity;
+		fulfilled_need += bought_quantity;
+		if (affordable_need == 0) {
+			break;
+		}
+	}
+
+	fulfilled_percent += fulfilled_need * commodity->get_base_price();
+
+	if (affordable_need > 0) {
+		remaining_demands[commodity] += affordable_need;
+	}
 }
 
 population_unit_percentages population_unit::get_percentages() const

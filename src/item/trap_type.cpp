@@ -2,6 +2,7 @@
 
 #include "item/trap_type.h"
 
+#include "database/gsml_data.h"
 #include "script/effect/effect_list.h"
 
 namespace metternich {
