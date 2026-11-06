@@ -111,7 +111,7 @@ void commodity::check() const
 
 	if (this->is_food()) {
 		if (!this->is_tradeable()) {
-			throw std::runtime_error(std::format("Food commodity \"{}\" is not tradeable.", this->get_identifier(), magic_enum::enum_name(this->get_luxury_type())));
+			throw std::runtime_error(std::format("Food commodity \"{}\" is not tradeable.", this->get_identifier()));
 		}
 
 		if (this->get_base_price() != commodity::get_food_type_commodities(this->get_food_type()).at(0)->get_base_price()) {
@@ -121,7 +121,7 @@ void commodity::check() const
 
 	if (this->is_luxury()) {
 		if (!this->is_tradeable()) {
-			throw std::runtime_error(std::format("Luxury commodity \"{}\" is not tradeable.", this->get_identifier(), magic_enum::enum_name(this->get_luxury_type())));
+			throw std::runtime_error(std::format("Luxury commodity \"{}\" is not tradeable.", this->get_identifier()));
 		}
 
 		if (this->get_base_price() != commodity::get_luxury_type_commodities(this->get_luxury_type()).at(0)->get_base_price()) {
