@@ -210,7 +210,7 @@ private:
 	commodity_type type {};
 	const metternich::icon *icon = nullptr;
 	const metternich::icon *tiny_icon = nullptr;
-	metternich::food_type food_type;
+	metternich::food_type food_type{};
 	bool abstract = false;
 	bool manpower = false; //whether this is some form of manpower, used for recruiting units
 	bool agricultural = false; //benefits from farming efficiency gains
