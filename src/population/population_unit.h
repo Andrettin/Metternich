@@ -229,7 +229,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> consume_food(const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, std::unordered_map<const site *, decimillesimal_int> &remaining_free_food_consumption_per_holding, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	void purchase_needs(const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 	int purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
-	void purchase_need_commodity(const commodity *commodity, const decimillesimal_int &need, decimillesimal_int &total_fulfilled_need_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
+	void purchase_need_commodity(const commodity *commodity, decimillesimal_int &need, decimillesimal_int &total_fulfilled_need_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands);
 
 	population_unit_percentages get_percentages() const;
 
