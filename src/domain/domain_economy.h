@@ -58,7 +58,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> do_production();
 	void do_trade();
-	[[nodiscard]] QCoro::Task<void> do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities);
+	[[nodiscard]] QCoro::Task<void> do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities);
 
 	const resource_map<int> &get_resource_counts() const
 	{

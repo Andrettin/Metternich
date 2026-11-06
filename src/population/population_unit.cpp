@@ -821,13 +821,13 @@ QCoro::Task<void> population_unit::consume_food(const std::map<food_type, std::v
 	co_await this->set_sick_and_starving_percent(sick_percent, starving_percent, true);
 }
 
-void population_unit::purchase_needs(const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+void population_unit::purchase_needs(const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
-	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(this->get_type()->get_everyday_needs(), trade_domains, remaining_demands));
-	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), trade_domains, remaining_demands));
+	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(this->get_type()->get_everyday_needs(), luxury_type_commodities, trade_domains, remaining_demands));
+	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), luxury_type_commodities, trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	decimillesimal_int total_need_wealth;
 
@@ -873,7 +873,12 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 		if (std::holds_alternative<luxury_type>(need_type)) {
 			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
 
-			for (const commodity *commodity : commodity::get_luxury_type_commodities(luxury_type)) {
+			const auto commodities_find_iterator = luxury_type_commodities.find(luxury_type);
+			assert_throw(commodities_find_iterator != luxury_type_commodities.end());
+
+			const std::vector<const commodity *> &luxury_type_commodity_vector = commodities_find_iterator->second;
+
+			for (const commodity *commodity : luxury_type_commodity_vector) {
 				if (!this->domain->get_economy()->can_trade_commodity(commodity)) {
 					continue;
 				}

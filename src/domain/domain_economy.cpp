@@ -344,7 +344,7 @@ void domain_economy::do_trade()
 	}
 }
 
-QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities)
+QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<decimillesimal_int> &remaining_demands, const std::map<food_type, std::vector<const commodity *>> &food_type_commodities, const std::vector<const commodity *> &food_commodities, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities)
 {
 	assert_throw(!this->get_game_data()->is_under_anarchy());
 
@@ -377,7 +377,7 @@ QCoro::Task<void> domain_economy::do_population_needs_purchasing(commodity_map<d
 	}
 
 	for (population_unit *population_unit : domain_population_units) {
-		population_unit->purchase_needs(trade_domains, remaining_demands);
+		population_unit->purchase_needs(luxury_type_commodities, trade_domains, remaining_demands);
 	}
 }
 

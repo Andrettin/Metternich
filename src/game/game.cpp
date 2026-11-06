@@ -2099,8 +2099,14 @@ QCoro::Task<void> game::do_trade()
 
 	std::stable_sort(food_commodities.begin(), food_commodities.end(), commodity::commodity_price_compare);
 
+	std::map<luxury_type, std::vector<const commodity *>> luxury_type_commodities = commodity::get_luxury_type_commodities();
+	for (auto &[luxury_type, typed_luxury_commodities] : luxury_type_commodities) {
+		//prefer consuming cheaper luxury commodities
+		std::stable_sort(typed_luxury_commodities.begin(), typed_luxury_commodities.end(), commodity::commodity_price_compare);
+	}
+
 	for (const domain *domain : trade_domains) {
-		co_await domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities, food_commodities);
+		co_await domain->get_economy()->do_population_needs_purchasing(remaining_demands, food_type_commodities, food_commodities, luxury_type_commodities);
 	}
 
 	for (const domain *domain : trade_domains) {
