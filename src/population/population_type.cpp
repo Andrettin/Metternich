@@ -192,6 +192,11 @@ void population_type::check() const
 			if (!commodity->is_tradeable()) {
 				throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
 			}
+		} else {
+			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
+			if (commodity::get_luxury_type_commodities(luxury_type).empty()) {
+				throw std::runtime_error(std::format("Population type \"{}\" needs a luxury type (\"{}\") with no commodities.", this->get_identifier(), magic_enum::enum_name(luxury_type)));
+			}
 		}
 	}
 
@@ -200,6 +205,11 @@ void population_type::check() const
 			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
 			if (!commodity->is_tradeable()) {
 				throw std::runtime_error(std::format("Population type \"{}\" needs a non-tradeable commodity (\"{}\").", this->get_identifier(), commodity->get_identifier()));
+			}
+		} else {
+			const luxury_type luxury_type = std::get<metternich::luxury_type>(need_type);
+			if (commodity::get_luxury_type_commodities(luxury_type).empty()) {
+				throw std::runtime_error(std::format("Population type \"{}\" needs a luxury type (\"{}\") with no commodities.", this->get_identifier(), magic_enum::enum_name(luxury_type)));
 			}
 		}
 	}
