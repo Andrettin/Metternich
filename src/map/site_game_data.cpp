@@ -866,11 +866,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	if (old_holding_type == nullptr && this->get_holding_type() != nullptr) {
 		co_await this->on_holding_built(1);
 
-		for (const site_feature *feature : this->site->get_features()) {
-			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), holding_type)) {
-				co_await this->add_feature(feature);
-			}
-		}
+		co_await this->check_features();
 
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
@@ -880,11 +876,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 	} else if (old_holding_type != nullptr && this->get_holding_type() == nullptr) {
 		co_await this->on_holding_built(-1);
 
-		for (const site_feature *feature : this->site->get_features()) {
-			if (!feature->get_holding_types().empty() && vector::contains(feature->get_holding_types(), old_holding_type)) {
-				co_await this->remove_feature(feature);
-			}
-		}
+		co_await this->check_features();
 
 		if (this->get_owner() != nullptr) {
 			if (this->get_owner()->get_game_data()->get_capital() == this->site) {
@@ -1387,6 +1379,12 @@ bool site_game_data::can_have_feature(const site_feature *feature) const
 		return false;
 	}
 
+	if (!feature->get_holding_types().empty()) {
+		if (this->get_holding_type() == nullptr || !vector::contains(feature->get_holding_types(), this->get_holding_type())) {
+			return false;
+		}
+	}
+
 	/*
 	if (!feature->get_terrain_types().empty()) {
 		if (this->get_terrain() == nullptr) {
@@ -1451,6 +1449,24 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 
 	if (game::get()->is_running()) {
 		emit features_changed();
+	}
+}
+
+QCoro::Task<void> site_game_data::check_features()
+{
+	//remove features that this site can no longer have
+	const data_entry_set<site_feature> features = this->get_features();
+	for (const site_feature *feature : features) {
+		if (!this->can_have_feature(feature)) {
+			co_await this->remove_feature(feature);
+		}
+	}
+
+	//add features that this site can now have
+	for (const site_feature *feature : this->site->get_features()) {
+		if (this->can_have_feature(feature)) {
+			co_await this->add_feature(feature);
+		}
 	}
 }
 

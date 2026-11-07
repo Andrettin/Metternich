@@ -289,6 +289,7 @@ public:
 	bool can_have_feature(const site_feature *feature) const;
 	[[nodiscard]] QCoro::Task<void> add_feature(const site_feature *feature);
 	[[nodiscard]] QCoro::Task<void> remove_feature(const site_feature *feature);
+	[[nodiscard]] QCoro::Task<void> check_features();
 	[[nodiscard]] QCoro::Task<void> generate_features();
 
 	const data_entry_map<site_attribute, int> &get_attribute_values() const
