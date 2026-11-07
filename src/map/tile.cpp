@@ -30,25 +30,6 @@ void tile::set_site(const metternich::site *site)
 	this->site = site;
 }
 
-const metternich::site *tile::get_holding() const
-{
-	if (this->get_site() != nullptr && this->get_site()->is_holding()) {
-		return this->get_site();
-	}
-
-	return nullptr;
-}
-
-const holding_type *tile::get_holding_type() const
-{
-	const metternich::site *holding = this->get_holding();
-	if (holding != nullptr) {
-		return holding->get_game_data()->get_holding_type();
-	}
-
-	return nullptr;
-}
-
 const metternich::resource *tile::get_resource() const
 {
 	if (this->get_site() != nullptr) {
@@ -62,33 +43,6 @@ bool tile::is_resource_discovered() const
 {
 	if (this->get_site() != nullptr) {
 		return this->get_site()->get_game_data()->is_resource_discovered();
-	}
-
-	return false;
-}
-
-const commodity_map<decimillesimal_int> &tile::get_commodity_outputs() const
-{
-	static commodity_map<decimillesimal_int> empty_map;
-
-	if (this->get_site() != nullptr) {
-		return this->get_site()->get_game_data()->get_commodity_outputs();
-	}
-
-	return empty_map;
-}
-
-void tile::calculate_commodity_outputs()
-{
-	if (this->get_site() != nullptr) {
-		this->get_site()->get_game_data()->calculate_commodity_outputs();
-	}
-}
-
-bool tile::produces_commodity(const commodity *commodity) const
-{
-	if (this->get_site() != nullptr) {
-		return this->get_site()->get_game_data()->produces_commodity(commodity);
 	}
 
 	return false;

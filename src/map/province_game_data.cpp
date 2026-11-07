@@ -1955,14 +1955,6 @@ const terrain_type *province_game_data::get_terrain() const
 
 bool province_game_data::produces_commodity(const commodity *commodity) const
 {
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-
-		if (tile->produces_commodity(commodity)) {
-			return true;
-		}
-	}
-
 	for (const site *site : this->province->get_map_data()->get_holding_sites()) {
 		if (!site->get_game_data()->is_built()) {
 			continue;
@@ -2766,14 +2758,7 @@ void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity 
 		this->commodity_bonuses_for_tile_thresholds[commodity][threshold] = value;
 	}
 
-	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		tile *tile = map::get()->get_tile(tile_pos);
-		if (!tile->produces_commodity(commodity)) {
-			continue;
-		}
-
-		tile->calculate_commodity_outputs();
-	}
+	this->calculate_site_commodity_output(commodity);
 }
 
 void province_game_data::update_province_level_taxation()

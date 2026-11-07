@@ -5,11 +5,9 @@
 namespace metternich {
 
 class domain;
-class holding_type;
 class province;
 class resource;
 class site;
-class terrain_type;
 
 class tile final
 {
@@ -33,16 +31,8 @@ public:
 
 	void set_site(const metternich::site *site);
 
-	const metternich::site *get_holding() const;
-	const holding_type *get_holding_type() const;
-
 	const metternich::resource *get_resource() const;
 	bool is_resource_discovered() const;
-
-	const commodity_map<decimillesimal_int> &get_commodity_outputs() const;
-	void calculate_commodity_outputs();
-
-	bool produces_commodity(const commodity *commodity) const;
 
 private:
 	metternich::province *province = nullptr;
