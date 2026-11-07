@@ -2002,6 +2002,27 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 		game::get()->add_fired_event(technology->get_discovery_event());
 	}
 
+	//check if any discoveries can now be triggered, if they required this technology
+	bool leads_to_discovery = false;
+	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
+		if (requiring_technology->is_discovery()) {
+			leads_to_discovery = true;
+			break;
+		}
+	}
+
+	if (leads_to_discovery) {
+		for (const auto &[site_feature, count] : this->get_site_feature_counts()) {
+			if (site_feature->get_discovery_technology() == nullptr) {
+				continue;
+			}
+
+			if (this->can_gain_technology(site_feature->get_discovery_technology())) {
+				co_await this->add_technology(site_feature->get_discovery_technology());
+			}
+		}
+	}
+
 	if (game::get()->is_running()) {
 		emit technologies_changed();
 
