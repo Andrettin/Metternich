@@ -916,13 +916,7 @@ QCoro::Task<void> game::generate_site_resource_features(const data_entry_map<sit
 		std::vector<const site *> potential_resource_sites;
 
 		for (const site *site : available_sites) {
-			bool has_resource_feature = false;
-			for (const site_feature *feature : site->get_game_data()->get_features()) {
-				if (feature->is_resource()) {
-					has_resource_feature = true;
-					break;
-				}
-			}
+			const bool has_resource_feature = site->get_game_data()->get_resource_feature() != nullptr;
 			if (has_resource_feature) {
 				continue;
 			}
