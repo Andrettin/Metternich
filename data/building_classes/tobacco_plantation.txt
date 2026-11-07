@@ -1,0 +1,19 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+	slot_type = resource
+}
+
+large_tobacco_plantation = {
+	name = "Large Tobacco Plantation"
+	slot_type = resource
+}
+
+mechanized_tobacco_plantation = {
+	name = "Mechanized Tobacco Plantation"
+	slot_type = resource
+}
+
+industrial_tobacco_plantation = {
+	name = "Industrial Tobacco Plantation"
+	slot_type = resource
+}

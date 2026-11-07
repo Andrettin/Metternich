@@ -1,0 +1,44 @@
+tobacco = {
+	name = "Tobacco"
+	subcategory = farming
+	portrait = stable
+	icon = tobacco
+	discovery = true
+	period = stone_age
+}
+
+tobacco_planting = {
+	name = "Tobacco Planting"
+	subcategory = farming
+	portrait = stable
+	icon = tobacco
+	period = bronze_age
+	prerequisites = {
+		tobacco
+		wood_plow #earlier agricultural technology
+	}
+}
+
+large_tobacco_plantations = {
+	name = "Large Tobacco Plantations"
+	subcategory = farming
+	portrait = stable
+	icon = tobacco
+	period = revolutionary_age
+	prerequisites = {
+		tobacco_planting
+		seed_drill
+	}
+}
+
+tobacco_industry = {
+	name = "Tobacco Industry"
+	subcategory = farming
+	portrait = stable
+	icon = tobacco
+	period = napoleonic_age
+	prerequisites = {
+		large_tobacco_plantations
+		steam_power #early_steam_railroads
+	}
+}

@@ -1,0 +1,176 @@
+tobacco_plantation = {
+	name = "Tobacco Plantation"
+	building_class = tobacco_plantation
+	portrait = stable
+	icon = tobacco
+	required_technology = tobacco_planting
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_tobacco_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tobacco_planting
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+large_tobacco_plantation = {
+	name = "Large Tobacco Plantation"
+	building_class = large_tobacco_plantation
+	portrait = stable
+	icon = tobacco
+	base_building = tobacco_plantation
+	required_technology = large_tobacco_plantations
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_tobacco_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 8gb #4x the Tobacco Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tobacco_planting
+			multiplier = 2
+		}
+	}
+}
+
+mechanized_tobacco_plantation = {
+	name = "Mechanized Tobacco Plantation"
+	building_class = mechanized_tobacco_plantation
+	portrait = stable
+	icon = tobacco
+	base_building = large_tobacco_plantation
+	required_technology = tobacco_industry
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_tobacco_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 16gb #8x the Tobacco Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tobacco_planting
+			multiplier = 3
+		}
+	}
+}
+
+industrial_tobacco_plantation = {
+	name = "Industrial Tobacco Plantation"
+	building_class = industrial_tobacco_plantation
+	portrait = stable
+	icon = tobacco
+	base_building = mechanized_tobacco_plantation
+	required_technology = tobacco_industry
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_tobacco_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 32gb #16x the Tobacco Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = tobacco_planting
+			multiplier = 4
+		}
+	}
+}

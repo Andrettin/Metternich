@@ -7,8 +7,3 @@ sheep_ranch = {
 	name = "Sheep Ranch"
 	slot_type = resource
 }
-
-tobacco_plantation = {
-	name = "Tobacco Plantation"
-	slot_type = resource
-}
