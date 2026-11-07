@@ -1434,7 +1434,7 @@ QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 		co_await feature->get_domain_modifier()->apply(this->get_owner());
 	}
 
-	this->get_province()->get_game_data()->change_site_feature_count(feature, 1);
+	co_await this->get_province()->get_game_data()->change_site_feature_count(feature, 1);
 
 	if (game::get()->is_running()) {
 		emit features_changed();
@@ -1455,7 +1455,7 @@ QCoro::Task<void> site_game_data::remove_feature(const site_feature *feature)
 		co_await feature->get_domain_modifier()->remove(this->get_owner());
 	}
 
-	this->get_province()->get_game_data()->change_site_feature_count(feature, -1);
+	co_await this->get_province()->get_game_data()->change_site_feature_count(feature, -1);
 
 	if (game::get()->is_running()) {
 		emit features_changed();

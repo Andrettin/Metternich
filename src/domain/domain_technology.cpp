@@ -20,6 +20,7 @@
 #include "map/province_game_data.h"
 #include "map/province_map_data.h"
 #include "map/site.h"
+#include "map/site_feature.h"
 #include "map/site_game_data.h"
 #include "map/tile.h"
 #include "religion/religion.h"
@@ -437,23 +438,16 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 		for (const province *province : this->get_game_data()->get_explored_provinces()) {
 			const province_game_data *province_game_data = province->get_game_data();
 
-			for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
-				const tile *tile = map::get()->get_tile(tile_pos);
-				const resource *tile_resource = tile->get_resource();
-
-				if (!tile->is_resource_discovered()) {
+			for (const auto &[site_feature, count] : province_game_data->get_site_feature_counts()) {
+				if (site_feature->get_discovery_technology() == nullptr) {
 					continue;
 				}
 
-				if (tile_resource->get_discovery_technology() == nullptr) {
-					continue;
-				}
-
-				if (this->can_gain_technology(tile_resource->get_discovery_technology())) {
-					co_await this->add_technology(tile_resource->get_discovery_technology());
+				if (this->can_gain_technology(site_feature->get_discovery_technology())) {
+					co_await this->add_technology(site_feature->get_discovery_technology());
 
 					if (game::get()->is_running()) {
-						emit technology_researched(tile_resource->get_discovery_technology());
+						emit technology_researched(site_feature->get_discovery_technology());
 					}
 				}
 			}

@@ -311,18 +311,7 @@ public:
 		return this->site_feature_counts;
 	}
 
-	void change_site_feature_count(const site_feature *feature, const int change)
-	{
-		if (change == 0) {
-			return;
-		}
-
-		const int new_value = (this->site_feature_counts[feature] += change);
-
-		if (new_value == 0) {
-			this->site_feature_counts.erase(feature);
-		}
-	}
+	[[nodiscard]] QCoro::Task<void> change_site_feature_count(const site_feature *feature, const int change);
 
 	data_entry_map<site_feature, int> get_available_resource_counts() const;
 

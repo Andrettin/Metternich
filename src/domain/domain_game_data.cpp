@@ -3452,16 +3452,13 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		game::get()->set_exploration_changed();
 	}
 
-	for (const QPoint &tile_pos : province_map_data->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const resource *tile_resource = tile->get_resource();
-
-		if (tile_resource != nullptr && tile->is_resource_discovered() && tile_resource->get_discovery_technology() != nullptr) {
-			if (this->get_technology()->can_gain_technology(tile_resource->get_discovery_technology())) {
-				co_await this->get_technology()->add_technology(tile_resource->get_discovery_technology());
+	for (const auto &[site_feature, count] : province_game_data->get_site_feature_counts()) {
+		if (site_feature->get_discovery_technology() != nullptr) {
+			if (this->get_technology()->can_gain_technology(site_feature->get_discovery_technology())) {
+				co_await this->get_technology()->add_technology(site_feature->get_discovery_technology());
 
 				if (game::get()->is_running()) {
-					emit get_technology()->technology_researched(tile_resource->get_discovery_technology());
+					emit get_technology()->technology_researched(site_feature->get_discovery_technology());
 				}
 			}
 		}

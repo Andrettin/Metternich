@@ -1891,6 +1891,47 @@ const resource_map<int> &province_game_data::get_resource_counts() const
 	return this->province->get_map_data()->get_resource_counts();
 }
 
+QCoro::Task<void> province_game_data::change_site_feature_count(const site_feature *feature, const int change)
+{
+	if (change == 0) {
+		co_return;
+	}
+
+	const int new_value = (this->site_feature_counts[feature] += change);
+
+	if (new_value == 0) {
+		this->site_feature_counts.erase(feature);
+	}
+
+	const int old_value = new_value - change;
+	const bool had_feature = old_value > 0;
+	const bool has_feature = new_value > 0;
+
+	if (!had_feature && has_feature && feature->get_discovery_technology() != nullptr) {
+		for (const domain *domain : game::get()->get_domains()) {
+			domain_game_data *domain_game_data = domain->get_game_data();
+			domain_technology *domain_technology = domain->get_technology();
+
+			if (!domain_game_data->is_province_explored(this->province)) {
+				continue;
+			}
+
+			if (domain_technology->can_gain_technology(feature->get_discovery_technology())) {
+				co_await domain_technology->add_technology(feature->get_discovery_technology());
+
+				if (game::get()->is_running()) {
+					emit domain_technology->technology_researched(feature->get_discovery_technology());
+				}
+			}
+		}
+
+		//do this after, so that the technology_researched signal above will still be emitted if this happens to be the capital province of a domain that is getting the technology this way
+		if (this->can_gain_technology(feature->get_discovery_technology())) {
+			co_await this->add_technology(feature->get_discovery_technology());
+		}
+	}
+}
+
 //the province resource counts, with the resources already applied removed from them
 data_entry_map<site_feature, int> province_game_data::get_available_resource_counts() const
 {

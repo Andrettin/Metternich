@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 
+Q_MOC_INCLUDE("technology/technology.h")
 Q_MOC_INCLUDE("ui/icon.h")
 
 namespace metternich {
@@ -25,6 +26,7 @@ class site_feature final : public named_data_entry, public data_type<site_featur
 
 	Q_PROPERTY(const metternich::icon *icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(bool resource MEMBER resource READ is_resource NOTIFY changed)
+	Q_PROPERTY(const metternich::technology* discovery_technology MEMBER discovery_technology READ get_discovery_technology NOTIFY changed)
 
 public:
 	static constexpr const char class_identifier[] = "site_feature";
@@ -45,6 +47,11 @@ public:
 	bool is_resource() const
 	{
 		return this->resource;
+	}
+
+	const technology *get_discovery_technology() const
+	{
+		return this->discovery_technology;
 	}
 
 	const std::vector<const holding_type *> &get_holding_types() const
@@ -80,6 +87,7 @@ signals:
 private:
 	const metternich::icon *icon = nullptr;
 	bool resource = false;
+	const technology *discovery_technology = nullptr; //technology which is obtained when holdings with this feature are explored
 	std::vector<const holding_type *> holding_types;
 	std::vector<const terrain_type *> terrain_types;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
