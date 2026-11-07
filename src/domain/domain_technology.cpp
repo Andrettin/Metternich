@@ -438,7 +438,8 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 		for (const province *province : this->get_game_data()->get_explored_provinces()) {
 			const province_game_data *province_game_data = province->get_game_data();
 
-			for (const auto &[site_feature, count] : province_game_data->get_site_feature_counts()) {
+			const data_entry_map<site_feature, int> site_feature_counts = province_game_data->get_site_feature_counts();
+			for (const auto &[site_feature, count] : site_feature_counts) {
 				if (site_feature->get_discovery_technology() == nullptr) {
 					continue;
 				}

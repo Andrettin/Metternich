@@ -2012,7 +2012,8 @@ QCoro::Task<void> province_game_data::add_technology(const technology *technolog
 	}
 
 	if (leads_to_discovery) {
-		for (const auto &[site_feature, count] : this->get_site_feature_counts()) {
+		const data_entry_map<site_feature, int> site_feature_counts = this->get_site_feature_counts();
+		for (const auto &[site_feature, count] : site_feature_counts) {
 			if (site_feature->get_discovery_technology() == nullptr) {
 				continue;
 			}
