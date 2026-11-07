@@ -1520,13 +1520,7 @@ QCoro::Task<void> site_game_data::generate_features()
 {
 	if (this->site->is_holding()) {
 		if (this->site->get_holding_type() != nullptr && this->site->get_holding_type()->has_resource()) {
-			bool has_resource_feature = false;
-			for (const site_feature *feature : this->get_features()) {
-				if (feature->is_resource()) {
-					has_resource_feature = true;
-					break;
-				}
-			}
+			const bool has_resource_feature = this->get_resource_feature() != nullptr;
 
 			if (!has_resource_feature) {
 				//generate a resource feature if this holding has none
