@@ -1,5 +1,8 @@
 preaching = {
 	name = "Preaching"
+	output_commodity = piety
+	quarterly_output_value = 1
+	base_employment_size = 10000
 	employee_types = {
 		clergymen
 	}
