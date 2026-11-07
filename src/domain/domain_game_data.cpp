@@ -73,6 +73,7 @@
 #include "script/modifier.h"
 #include "script/scripted_domain_modifier.h"
 #include "species/phenotype.h"
+#include "technology/technology.h"
 #include "ui/icon.h"
 #include "ui/icon_container.h"
 #include "ui/portrait.h"
@@ -1560,10 +1561,10 @@ QCoro::Task<void> domain_game_data::on_province_gained(const province *province,
 	}
 }
 
-std::vector<const province *> domain_game_data::get_accessible_provinces() const
+province_set domain_game_data::get_holding_provinces() const
 {
-	//get provinces either owned by this domain, or in which this domain has holdings
-	std::vector<const province *> accessible_provinces = this->get_provinces();
+	//get provinces in which this domain has holdings
+	province_set holding_provinces;
 
 	for (const site *site : this->get_sites()) {
 		if (!site->is_holding()) {
@@ -1571,12 +1572,16 @@ std::vector<const province *> domain_game_data::get_accessible_provinces() const
 		}
 
 		const province *site_province = site->get_game_data()->get_province();
-		if (!vector::contains(accessible_provinces, site_province)) {
-			accessible_provinces.push_back(site_province);
-		}
+		holding_provinces.insert(site_province);
 	}
 
-	return accessible_provinces;
+	return holding_provinces;
+}
+
+province_set domain_game_data::get_accessible_provinces() const
+{
+	//get provinces in which this domain has holdings
+	return this->get_holding_provinces();
 }
 
 QVariantList domain_game_data::get_sites_qvariant_list() const
@@ -1600,6 +1605,19 @@ QCoro::Task<void> domain_game_data::add_site(const site *site)
 
 	if (this->get_capital() == nullptr) {
 		co_await this->choose_capital();
+	}
+
+	//discoveries are applied to all provinces in which a domain has holdings
+	const technology_set technologies = this->get_technology()->get_technologies();
+	for (const metternich::technology *technology : technologies) {
+		if (!technology->is_discovery()) {
+			continue;
+		}
+
+		province_game_data *province_game_data = site->get_game_data()->get_province()->get_game_data();
+		if (province_game_data->can_gain_technology(technology)) {
+			co_await province_game_data->add_technology(technology);
+		}
 	}
 
 	if (game::get()->is_running()) {

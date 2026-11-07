@@ -295,7 +295,8 @@ public:
 		return static_cast<int>(this->get_provinces().size());
 	}
 
-	std::vector<const province *> get_accessible_provinces() const;
+	province_set get_holding_provinces() const;
+	province_set get_accessible_provinces() const;
 
 	const std::vector<const site *> &get_sites() const
 	{

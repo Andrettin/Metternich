@@ -425,6 +425,16 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 		}
 	}
 
+	if (technology->is_discovery()) {
+		//discoveries apply to all provinces in which the domain owns a holding
+		const province_set holding_provinces = this->get_game_data()->get_holding_provinces();
+		for (const province *province : holding_provinces) {
+			if (province->get_game_data()->can_gain_technology(technology)) {
+				co_await province->get_game_data()->add_technology(technology);
+			}
+		}
+	}
+
 	//check if any discoveries can now be triggered, if they required this technology
 	bool leads_to_discovery = false;
 	for (const metternich::technology *requiring_technology : technology->get_leads_to()) {
