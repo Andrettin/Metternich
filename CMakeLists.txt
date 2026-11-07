@@ -655,11 +655,11 @@ set(script_condition_HDRS
 	src/script/condition/age_condition.h
 	src/script/condition/and_condition.h
 	src/script/condition/any_character_condition.h
+	src/script/condition/any_holding_condition.h
 	src/script/condition/any_known_domain_condition.h
 	src/script/condition/any_nearby_province_condition.h
 	src/script/condition/any_neighbor_country_condition.h
 	src/script/condition/any_neighbor_province_condition.h
-	src/script/condition/any_holding_condition.h
 	src/script/condition/any_site_condition.h
 	src/script/condition/any_subject_domain_condition.h
 	src/script/condition/artillery_condition.h
