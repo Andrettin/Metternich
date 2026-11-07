@@ -425,14 +425,6 @@ QCoro::Task<void> site_game_data::initialize()
 	if (resource != nullptr && resource->get_modifier() != nullptr) {
 		co_await resource->get_modifier()->apply(this->site);
 	}
-
-	for (const site_feature *feature : this->site->get_features()) {
-		if (!feature->get_holding_types().empty()) {
-			continue;
-		}
-
-		co_await this->add_feature(feature);
-	}
 }
 
 QCoro::Task<void> site_game_data::do_turn()
