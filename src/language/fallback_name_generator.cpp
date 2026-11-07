@@ -6,7 +6,6 @@
 #include "language/name_generator.h"
 #include "unit/military_unit_class.h"
 #include "util/gender.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

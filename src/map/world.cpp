@@ -8,10 +8,7 @@
 #include "map/site.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
-#include "util/exception_util.h"
 #include "util/geojson_util.h"
-#include "util/georectangle.h"
-#include "util/path_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {

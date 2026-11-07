@@ -12,7 +12,6 @@
 #include "map/tile_image_provider.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
-#include "util/path_util.h"
 
 namespace metternich {
 

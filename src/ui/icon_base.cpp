@@ -3,7 +3,6 @@
 #include "ui/icon_base.h"
 
 #include "database/database.h"
-#include "ui/icon_image_provider.h"
 #include "util/assert_util.h"
 
 namespace metternich {

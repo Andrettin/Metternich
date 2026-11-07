@@ -13,7 +13,6 @@
 #include "unit/army.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_type.h"
-#include "unit/military_unit_type_container.h"
 #include "util/qunique_ptr.h"
 #include "util/random.h"
 #include "util/string_conversion_util.h"

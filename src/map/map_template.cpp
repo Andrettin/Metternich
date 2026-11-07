@@ -15,7 +15,6 @@
 #include "map/site.h"
 #include "map/site_map_data.h"
 #include "map/site_type.h"
-#include "map/terrain_feature.h"
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "map/world.h"

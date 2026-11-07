@@ -1,7 +1,6 @@
 #pragma once
 
 #include "character/character.h"
-#include "character/character_game_data.h"
 #include "database/defines.h"
 #include "script/effect/effect.h"
 #include "script/opinion_modifier.h"

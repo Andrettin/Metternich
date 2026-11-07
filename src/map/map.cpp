@@ -22,6 +22,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "util/assert_util.h"
+#include "util/centesimal_int.h"
 #include "util/container_util.h"
 #include "util/exception_util.h"
 #include "util/image_util.h"

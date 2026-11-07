@@ -12,7 +12,6 @@
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
 #include "domain/domain_military.h"
-#include "domain/domain_technology.h"
 #include "domain/domain_turn_data.h"
 #include "domain/subject_type.h"
 #include "economy/commodity.h"

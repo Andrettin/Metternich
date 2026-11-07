@@ -24,7 +24,6 @@
 #include "language/word.h"
 #include "map/province.h"
 #include "map/site.h"
-#include "map/site_type.h"
 #include "religion/deity.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"

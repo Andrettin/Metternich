@@ -43,7 +43,6 @@
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
 #include "unit/civilian_unit_type.h"
-#include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"

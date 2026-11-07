@@ -3,7 +3,6 @@
 #include "character/character_container.h"
 #include "game/combat_base.h"
 #include "script/context.h"
-#include "util/dice.h"
 #include "util/qunique_ptr.h"
 
 Q_MOC_INCLUDE("character/character.h")

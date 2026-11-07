@@ -4,6 +4,7 @@
 
 #include "database/gsml_data.h"
 #include "domain/domain.h"
+#include "domain/domain_game_data.h"
 #include "domain/domain_turn_data.h"
 #include "game/event.h"
 #include "game/event_instance.h"
@@ -25,7 +26,6 @@
 #include "script/mean_time_to_happen.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
-#include "util/centesimal_int.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
 

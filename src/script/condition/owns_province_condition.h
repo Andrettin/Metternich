@@ -1,7 +1,6 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "script/condition/condition.h"

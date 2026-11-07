@@ -25,6 +25,7 @@
 #include "religion/religion.h"
 #include "script/opinion_modifier.h"
 #include "util/assert_util.h"
+#include "util/centesimal_int.h"
 #include "util/image_util.h"
 #include "util/map_util.h"
 

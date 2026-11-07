@@ -2,7 +2,6 @@
 
 #include "map/combat_map_grid_model.h"
 
-#include "character/character.h"
 #include "game/combat.h"
 #include "game/game.h"
 #include "map/terrain_type.h"

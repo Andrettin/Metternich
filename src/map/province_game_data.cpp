@@ -48,7 +48,6 @@
 #include "population/population_type.h"
 #include "population/population_unit.h"
 #include "religion/religion.h"
-#include "script/context.h"
 #include "script/modifier.h"
 #include "script/scripted_province_modifier.h"
 #include "technology/technology.h"

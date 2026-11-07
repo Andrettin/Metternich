@@ -1,7 +1,6 @@
 #pragma once
 
 #include "map/province.h"
-#include "map/province_game_data.h"
 #include "map/route.h"
 #include "map/route_game_data.h"
 #include "script/condition/condition.h"

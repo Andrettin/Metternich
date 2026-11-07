@@ -7,7 +7,6 @@
 #include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/income_transaction_type.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

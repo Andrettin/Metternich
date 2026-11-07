@@ -17,7 +17,6 @@
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
-#include "unit/civilian_unit_type.h"
 #include "util/assert_util.h"
 #include "util/random.h"
 #include "util/string_util.h"

@@ -5,7 +5,6 @@
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"
-#include "domain/domain_game_data.h"
 #include "domain/domain_technology.h"
 #include "game/game.h"
 #include "infrastructure/building_item_slot.h"

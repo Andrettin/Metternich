@@ -1,7 +1,6 @@
 #pragma once
 
 #include "economy/transaction.h"
-#include "util/centesimal_int.h"
 
 namespace metternich {
 

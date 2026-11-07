@@ -3,7 +3,6 @@
 #include "game/combat.h"
 
 #include "character/character.h"
-#include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
 #include "character/party.h"
@@ -23,7 +22,6 @@
 #include "item/object_type.h"
 #include "item/trap_type.h"
 #include "map/site.h"
-#include "map/site_game_data.h"
 #include "map/terrain_type.h"
 #include "script/effect/effect_list.h"
 #include "sound/sound.h"

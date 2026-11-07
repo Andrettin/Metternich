@@ -5,7 +5,6 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "database/gsml_data.h"
-#include "domain/domain.h"
 #include "infrastructure/building_slot.h"
 #include "item/item.h"
 #include "item/item_creation_type.h"

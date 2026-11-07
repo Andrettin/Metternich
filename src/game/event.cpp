@@ -2,8 +2,8 @@
 
 #include "game/event.h"
 
-#include "database/gsml_data.h"
 #include "database/gsml_operator.h"
+#include "database/gsml_property.h"
 #include "engine_interface.h"
 #include "game/event_instance.h"
 #include "game/event_random_group.h"

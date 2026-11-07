@@ -12,7 +12,6 @@
 #include "domain/domain.h"
 #include "game/combat.h"
 #include "game/game.h"
-#include "item/item_type.h"
 #include "item/object_type.h"
 #include "item/trap_type.h"
 #include "script/context.h"

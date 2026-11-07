@@ -5,7 +5,6 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
-#include "map/site_game_data.h"
 #include "script/condition/scope_condition_base.h"
 
 namespace metternich {

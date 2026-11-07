@@ -5,8 +5,6 @@
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
 #include "database/gsml_data.h"
-#include "domain/domain.h"
-#include "domain/domain_game_data.h"
 #include "map/province_feature.h"
 #include "map/province_game_data.h"
 #include "map/province_history.h"
