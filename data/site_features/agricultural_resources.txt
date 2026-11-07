@@ -69,6 +69,7 @@ prime_tobacco_land = {
 	name = "Prime Tobacco Land"
 	icon = tobacco
 	resource = true
+	discovery_technology = tobacco
 	terrain_types = {
 		plains
 	}
