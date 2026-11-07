@@ -403,6 +403,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/portraits/bronze_chisel.png (by Exidelo) (licensed under the CC0)
 /graphics/portraits/bronze_shield.png (by Exidelo) (licensed under the CC0)
 /graphics/portraits/bronze_shortsword.png (by Exidelo) (licensed under the CC0)
+/graphics/portraits/cheese.png (by Vladislav "iDreamRunner") (licensed under the CC0)
 /graphics/portraits/chest.png (by Vladislav "iDreamRunner") (licensed under the CC0)
 /graphics/portraits/comital_crown.png (by Jinn and Exidelo) (licensed under the CC0)
 /graphics/portraits/crossed_bronze_broadswords.png (by Exidelo) (licensed under the CC0)

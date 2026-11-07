@@ -2,6 +2,10 @@ bronze_chisel = {
 	filepath = "portraits/bronze_chisel.png"
 }
 
+cheese = {
+	filepath = "portraits/cheese.png"
+}
+
 helmet = {
 	filepath = "portraits/helmet.png"
 }
