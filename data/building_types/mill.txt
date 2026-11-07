@@ -1,7 +1,7 @@
 mill = {
 	name = "Mill"
 	building_class = mill
-	portrait = coal_pit
+	portrait = smithy
 	icon = cog
 	wealth_cost = 6gb
 	holding_types = {

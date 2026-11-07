@@ -1,7 +1,7 @@
 paper_mill = {
 	name = "Paper Mill"
 	building_class = paper_mill
-	portrait = coal_pit
+	portrait = smithy
 	icon = paper
 	holding_types = {
 		guild

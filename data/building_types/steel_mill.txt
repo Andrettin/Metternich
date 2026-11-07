@@ -1,7 +1,7 @@
 steel_mill = {
 	name = "Steel Mill"
 	building_class = steel_mill
-	portrait = coal_pit
+	portrait = smithy
 	icon = steel
 	#required_technology = crucible_process
 	holding_types = {

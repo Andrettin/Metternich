@@ -1,7 +1,7 @@
 furriers_house = {
 	name = "Furrier's House"
 	building_class = furriers_house
-	portrait = coal_pit
+	portrait = smithy
 	icon = fur_hats
 	holding_types = {
 		guild
@@ -26,7 +26,7 @@ furriers_house = {
 furriers_shop = {
 	name = "Furrier's Shop"
 	building_class = furriers_shop
-	portrait = coal_pit
+	portrait = smithy
 	icon = fur_hats
 	base_building = furriers_house
 	holding_types = {
@@ -52,7 +52,7 @@ furriers_shop = {
 fur_factory = {
 	name = "Fur Factory"
 	building_class = fur_factory
-	portrait = coal_pit
+	portrait = smithy
 	icon = fur_hats
 	base_building = furriers_shop
 	holding_types = {

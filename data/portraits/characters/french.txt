@@ -1,3 +1,36 @@
+eleanor_of_aquitaine = {
+	filepath = "portraits/characters/eleanor_of_aquitaine.png"
+	character_conditions = {
+		gender = female
+		or = {
+			species = human
+			species = centaur
+			species = elf
+			species = half_elf
+			species = halfling
+		}
+		not = {
+			cultural_group = african
+		}
+		or = {
+			character_class = {
+				character_class = aristocrat
+				type = base_class
+			}
+			character_class = {
+				character_class = warrior
+				type = base_class
+			}
+			character_class = {
+				character_class = paladin
+				type = base_class
+			}
+		}
+		age_category < old
+		birth_year < 1500
+	}
+}
+
 louis_xiv = {
 	filepath = "portraits/characters/louis_xiv.png"
 	character_conditions = {

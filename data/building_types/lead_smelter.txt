@@ -1,7 +1,7 @@
 lead_smelter = {
 	name = "Lead Smelter"
 	building_class = lead_smelter
-	portrait = coal_pit
+	portrait = smithy
 	icon = iron
 	holding_types = {
 		guild

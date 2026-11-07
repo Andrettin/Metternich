@@ -1,7 +1,7 @@
 furniture_factory = {
 	name = "Furniture Factory"
 	building_class = furniture_factory
-	portrait = coal_pit
+	portrait = smithy
 	icon = furniture
 	holding_types = {
 		guild

@@ -34,6 +34,10 @@ ruined_castle = {
 	filepath = "portraits/buildings/ruined_castle.png"
 }
 
+smithy = {
+	filepath = "portraits/buildings/smithy.png"
+}
+
 stable = {
 	filepath = "portraits/buildings/stable.png"
 }
