@@ -48,6 +48,15 @@ philip_ii_of_spain = {
 		or = {
 			age_category < old
 			immortal = true
+			#no older portrait for these classes
+			character_class = {
+				character_class = blacksmith
+				type = base_class
+			}
+			character_class = {
+				character_class = ranger
+				type = base_class
+			}
 		}
 	}
 }
