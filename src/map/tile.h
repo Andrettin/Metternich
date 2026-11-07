@@ -31,9 +31,6 @@ public:
 
 	void set_site(const metternich::site *site);
 
-	const metternich::resource *get_resource() const;
-	bool is_resource_discovered() const;
-
 private:
 	metternich::province *province = nullptr;
 	const metternich::site *site = nullptr;

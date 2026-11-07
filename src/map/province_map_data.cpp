@@ -260,13 +260,13 @@ void province_map_data::process_site_tile(const QPoint &tile_pos)
 {
 	const tile *tile = map::get()->get_tile(tile_pos);
 
-	if (tile->get_resource() != nullptr) {
-		this->resource_tiles.push_back(tile_pos);
-		++this->resource_counts[tile->get_resource()];
-	}
-
 	if (tile->get_site() != nullptr) {
 		assert_throw(tile->get_site()->get_map_data()->is_on_map());
+
+		if (tile->get_site()->get_map_data()->get_resource() != nullptr) {
+			this->resource_tiles.push_back(tile_pos);
+			++this->resource_counts[tile->get_site()->get_map_data()->get_resource()];
+		}
 
 		this->sites.push_back(tile->get_site());
 

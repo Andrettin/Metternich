@@ -30,22 +30,4 @@ void tile::set_site(const metternich::site *site)
 	this->site = site;
 }
 
-const metternich::resource *tile::get_resource() const
-{
-	if (this->get_site() != nullptr) {
-		return this->get_site()->get_map_data()->get_resource();
-	}
-
-	return nullptr;
-}
-
-bool tile::is_resource_discovered() const
-{
-	if (this->get_site() != nullptr) {
-		return this->get_site()->get_game_data()->is_resource_discovered();
-	}
-
-	return false;
-}
-
 }

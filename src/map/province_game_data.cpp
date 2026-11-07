@@ -2868,10 +2868,10 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
-		const metternich::resource *tile_resource = tile->get_resource();
-		const metternich::commodity *tile_resource_commodity = tile_resource->get_commodity();
+		const metternich::resource *site_resource = tile->get_site()->get_game_data()->get_resource();
+		const metternich::commodity *site_resource_commodity = site_resource->get_commodity();
 
-		if (tile_resource_commodity == commodity) {
+		if (site_resource_commodity == commodity) {
 			return true;
 		}
 	}

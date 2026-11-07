@@ -390,12 +390,14 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 			const point_set prospected_tiles = this->get_game_data()->get_prospected_tiles();
 			for (const QPoint &tile_pos : prospected_tiles) {
 				const tile *tile = map::get()->get_tile(tile_pos);
+				const site *site = tile->get_site();
+				assert_throw(site != nullptr);
 
-				if (tile->is_resource_discovered()) {
+				if (site->get_game_data()->is_resource_discovered()) {
 					continue;
 				}
 
-				if (!vector::contains(discovered_resource->get_terrain_types(), tile->get_province()->get_game_data()->get_terrain())) {
+				if (!vector::contains(discovered_resource->get_terrain_types(), site->get_game_data()->get_province()->get_game_data()->get_terrain())) {
 					continue;
 				}
 
@@ -411,13 +413,17 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 
 				for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
 					const tile *tile = map::get()->get_tile(tile_pos);
-					const resource *tile_resource = tile->get_resource();
 
-					if (tile_resource != discovered_resource) {
+					const site *site = tile->get_site();
+					assert_throw(site != nullptr);
+
+					const resource *site_resource = site->get_game_data()->get_resource();
+
+					if (site_resource != discovered_resource) {
 						continue;
 					}
 
-					if (!tile->is_resource_discovered()) {
+					if (!site->get_game_data()->is_resource_discovered()) {
 						co_await map::get()->set_tile_resource_discovered(tile_pos, true);
 					}
 				}

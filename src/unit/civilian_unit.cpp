@@ -606,18 +606,19 @@ resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles()
 	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
 			const tile *tile = map::get()->get_tile(tile_pos);
+			const resource *site_resource = tile->get_site()->get_game_data()->get_resource();
 
-			if (tile->get_resource() == nullptr) {
+			if (site_resource == nullptr) {
 				continue;
 			}
 
-			if (!this->get_type()->can_improve_resource(tile->get_resource())) {
+			if (!this->get_type()->can_improve_resource(site_resource)) {
 				continue;
 			}
 
 			//const improvement *improvement = this->get_buildable_resource_improvement_for_tile(tile_pos);
 			//if (improvement != nullptr) {
-			//	resource_tiles[tile->get_resource()].push_back(tile_pos);
+			//	resource_tiles[site_resource].push_back(tile_pos);
 			//}
 		}
 	}
@@ -669,7 +670,7 @@ bool civilian_unit::can_prospect_province(const metternich::province *province) 
 
 		const tile *tile = map::get()->get_tile(tile_pos);
 
-		if (tile->is_resource_discovered()) {
+		if (tile->get_site()->get_game_data()->is_resource_discovered()) {
 			continue;
 		}
 

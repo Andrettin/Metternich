@@ -416,37 +416,37 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 			break;
 	}
 
-	if (tile->get_resource() != nullptr) {
-		if (tile->get_resource()->is_near_water() && tile->get_province() != nullptr && !tile->get_province()->get_map_data()->is_near_water()) {
-			log::log_error(std::format("Site \"{}\" {} has near water resource \"{}\", but is not near water.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
+	if (site->get_map_data()->get_resource() != nullptr) {
+		if (site->get_map_data()->get_resource()->is_near_water() && site->get_map_data()->get_province() != nullptr && !site->get_map_data()->get_province()->get_map_data()->is_near_water()) {
+			log::log_error(std::format("Site \"{}\" {} has near water resource \"{}\", but is not near water.", site->get_identifier(), point::to_string(tile_pos), site->get_map_data()->get_resource()->get_identifier()));
 		}
 
-		if (tile->get_resource()->is_coastal() && tile->get_province() != nullptr && !tile->get_province()->get_map_data()->is_coastal()) {
-			log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier()));
+		if (site->get_map_data()->get_resource()->is_coastal() && site->get_map_data()->get_province() != nullptr && !site->get_map_data()->get_province()->get_map_data()->is_coastal()) {
+			log::log_error(std::format("Site \"{}\" {} has coastal resource \"{}\", but is not coastal.", site->get_identifier(), point::to_string(tile_pos), site->get_map_data()->get_resource()->get_identifier()));
 		}
 
-		if (!vector::contains(tile->get_resource()->get_terrain_types(), tile->get_province()->get_map_data()->get_terrain())) {
-			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), tile->get_resource()->get_identifier(), tile->get_province()->get_map_data()->get_terrain()->get_identifier()));
+		if (!vector::contains(site->get_map_data()->get_resource()->get_terrain_types(), site->get_map_data()->get_province()->get_map_data()->get_terrain())) {
+			log::log_error(std::format("Site \"{}\" {} has resource \"{}\", which doesn't match its \"{}\" terrain type.", site->get_identifier(), point::to_string(tile_pos), site->get_map_data()->get_resource()->get_identifier(), site->get_map_data()->get_province()->get_map_data()->get_terrain()->get_identifier()));
 		}
 	}
 
 	site->get_map_data()->set_tile_pos(tile_pos);
 
-	assert_throw(tile->get_province() != nullptr);
-	tile->get_province()->get_map_data()->process_site_tile(tile_pos);
+	assert_throw(site->get_map_data()->get_province() != nullptr);
+	site->get_map_data()->get_province()->get_map_data()->process_site_tile(tile_pos);
 }
 
 QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
 {
 	tile *tile = this->get_tile(tile_pos);
+	assert_throw(tile->get_site() != nullptr);
 
-	if (discovered == tile->is_resource_discovered()) {
+	if (discovered == tile->get_site()->get_game_data()->is_resource_discovered()) {
 		co_return;
 	}
 
-	const resource *resource = tile->get_resource();
+	const resource *resource = tile->get_site()->get_game_data()->get_resource();
 	assert_throw(resource != nullptr);
-	assert_throw(tile->get_site() != nullptr);
 	tile->get_site()->get_game_data()->set_resource_discovered(discovered);
 
 	emit tile_resource_changed(tile_pos);

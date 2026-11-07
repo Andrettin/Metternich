@@ -1379,10 +1379,13 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 
 	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
 		const tile *tile = map::get()->get_tile(tile_pos);
-		const resource *resource = tile->get_resource();
+		const site *site = tile->get_site();
+		assert_throw(site != nullptr);
+
+		const resource *resource = site->get_game_data()->get_resource();
 
 		if (resource != nullptr) {
-			if (!tile->is_resource_discovered() && !resource->is_prospectable()) {
+			if (!site->get_game_data()->is_resource_discovered() && !resource->is_prospectable()) {
 				assert_throw(resource->get_required_technology() != nullptr);
 
 				if (this->get_technology()->has_technology(resource->get_required_technology())) {
@@ -3491,10 +3494,14 @@ QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)
 	this->prospected_tiles.insert(tile_pos);
 
 	const tile *tile = map::get()->get_tile(tile_pos);
-	const resource *tile_resource = tile->get_resource();
 
-	if (tile_resource != nullptr) {
-		if (!tile->is_resource_discovered() && (tile_resource->get_required_technology() == nullptr || this->get_technology()->has_technology(tile_resource->get_required_technology()))) {
+	const site *site = tile->get_site();
+	assert_throw(site != nullptr);
+
+	const resource *site_resource = site->get_game_data()->get_resource();
+
+	if (site_resource != nullptr) {
+		if (!site->get_game_data()->is_resource_discovered() && (site_resource->get_required_technology() == nullptr || this->get_technology()->has_technology(site_resource->get_required_technology()))) {
 			co_await map::get()->set_tile_resource_discovered(tile_pos, true);
 		}
 	}
