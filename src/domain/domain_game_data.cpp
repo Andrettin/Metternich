@@ -3452,7 +3452,8 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		game::get()->set_exploration_changed();
 	}
 
-	for (const auto &[site_feature, count] : province_game_data->get_site_feature_counts()) {
+	const data_entry_map<site_feature, int> site_feature_counts = province_game_data->get_site_feature_counts();
+	for (const auto &[site_feature, count] : site_feature_counts) {
 		if (site_feature->get_discovery_technology() != nullptr) {
 			if (this->get_technology()->can_gain_technology(site_feature->get_discovery_technology())) {
 				co_await this->get_technology()->add_technology(site_feature->get_discovery_technology());
