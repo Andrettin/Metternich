@@ -16,6 +16,10 @@ shrine = {
 		wealth = 8gb
 	}
 	modifier = {
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 1
+		}
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -47,6 +51,10 @@ temple = {
 		lumber = 64
 	}
 	modifier = {
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 2
+		}
 	}
 	domain_modifier = {
 		scripted_modifier_effect = temple
@@ -77,6 +85,10 @@ large_temple = {
 		lumber = 64 #as Temple
 	}
 	modifier = {
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 3
+		}
 	}
 	domain_modifier = {
 		scripted_modifier_effect = temple
@@ -113,6 +125,10 @@ cathedral = {
 	}
 	modifier = {
 		scripted_modifier_effect = cathedral
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 4
+		}
 	}
 	domain_modifier = {
 		scripted_modifier_effect = cathedral
@@ -151,6 +167,10 @@ large_cathedral = {
 	}
 	modifier = {
 		scripted_modifier_effect = cathedral
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 4
+		}
 	}
 	domain_modifier = {
 		scripted_modifier_effect = cathedral
@@ -189,6 +209,10 @@ grand_cathedral = {
 	}
 	modifier = {
 		scripted_modifier_effect = cathedral
+		employment_capacity = {
+			capacity_type = preaching
+			multiplier = 4
+		}
 	}
 	domain_modifier = {
 		scripted_modifier_effect = cathedral
