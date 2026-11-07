@@ -1591,6 +1591,8 @@ QVariantList domain_game_data::get_sites_qvariant_list() const
 
 QCoro::Task<void> domain_game_data::add_site(const site *site)
 {
+	assert_throw(site->is_holding());
+
 	const bool was_alive = this->is_alive();
 
 	co_await this->explore_province(site->get_map_data()->get_province());

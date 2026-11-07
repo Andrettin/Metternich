@@ -4,7 +4,7 @@ namespace metternich {
 
 class province;
 
-struct province_compare
+struct province_compare final
 {
 	bool operator()(const province *province, const metternich::province *other_province) const;
 };
