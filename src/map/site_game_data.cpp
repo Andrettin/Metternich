@@ -1474,7 +1474,7 @@ QCoro::Task<void> site_game_data::check_features()
 
 	//add features that this site can now have
 	for (const site_feature *feature : this->site->get_features()) {
-		if (this->can_have_feature(feature)) {
+		if (!this->has_feature(feature) && this->can_have_feature(feature)) {
 			co_await this->add_feature(feature);
 		}
 	}
