@@ -24,6 +24,7 @@ battle_resolution_results = {
 				fall_back
 				miss
 				miss
+				hit
 			}
 			-2 = {
 				miss
@@ -31,6 +32,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				miss
 			}
 			-1 = {
 				fall_back
@@ -38,6 +40,7 @@ battle_resolution_results = {
 				miss
 				hit
 				hit
+				miss
 			}
 			0 = {
 				miss
@@ -45,6 +48,7 @@ battle_resolution_results = {
 				rout
 				fall_back
 				hit
+				miss
 			}
 			1 = {
 				hit
@@ -52,6 +56,7 @@ battle_resolution_results = {
 				destroy
 				miss
 				rout
+				hit
 			}
 			2 = {
 				miss
@@ -59,12 +64,14 @@ battle_resolution_results = {
 				miss
 				hit
 				hit
+				rout
 			}
 			3 = {
 				miss
 				rout
 				hit
 				destroy
+				hit
 				hit
 			}
 		}
@@ -75,6 +82,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				miss
 			}
 			-2 = {
 				fall_back
@@ -82,6 +90,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				miss
@@ -89,6 +98,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				hit
 			}
 			0 = {
 				miss
@@ -96,6 +106,7 @@ battle_resolution_results = {
 				hit
 				miss
 				hit
+				miss
 			}
 			1 = {
 				hit
@@ -103,6 +114,7 @@ battle_resolution_results = {
 				hit
 				hit
 				fall_back
+				hit
 			}
 			2 = {
 				hit
@@ -110,6 +122,7 @@ battle_resolution_results = {
 				hit
 				hit
 				rout
+				miss
 			}
 			3 = {
 				destroy
@@ -117,6 +130,7 @@ battle_resolution_results = {
 				rout
 				hit
 				destroy
+				miss
 			}
 		}
 		crossed_swords = {
@@ -126,6 +140,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			-2 = {
 				hit
@@ -133,6 +148,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			-1 = {
 				hit
@@ -140,6 +156,7 @@ battle_resolution_results = {
 				miss
 				hit
 				miss
+				fall_back
 			}
 			0 = {
 				miss
@@ -147,6 +164,7 @@ battle_resolution_results = {
 				hit
 				miss
 				hit
+				rout
 			}
 			1 = {
 				hit
@@ -154,6 +172,7 @@ battle_resolution_results = {
 				rout
 				hit
 				miss
+				destroy
 			}
 			2 = {
 				miss
@@ -161,6 +180,7 @@ battle_resolution_results = {
 				rout
 				hit
 				hit
+				rout
 			}
 			3 = {
 				hit
@@ -168,6 +188,7 @@ battle_resolution_results = {
 				hit
 				rout
 				hit
+				destroy
 			}
 		}
 	}
@@ -179,6 +200,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				miss
+				fall_back
 			}
 			-2 = {
 				miss
@@ -186,6 +208,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				miss
 			}
 			-1 = {
 				miss
@@ -193,6 +216,7 @@ battle_resolution_results = {
 				hit
 				miss
 				hit
+				miss
 			}
 			0 = {
 				rout
@@ -200,6 +224,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				hit
 			}
 			1 = {
 				destroy
@@ -207,6 +232,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			2 = {
 				hit
@@ -214,6 +240,7 @@ battle_resolution_results = {
 				hit
 				destroy
 				rout
+				hit
 			}
 			3 = {
 				rout
@@ -221,6 +248,7 @@ battle_resolution_results = {
 				miss
 				hit
 				rout
+				hit
 			}
 		}
 		pennant = {
@@ -230,6 +258,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				fall_back
 			}
 			-2 = {
 				fall_back
@@ -237,6 +266,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				hit
@@ -244,6 +274,7 @@ battle_resolution_results = {
 				miss
 				hit
 				miss
+				hit
 			}
 			0 = {
 				hit
@@ -251,6 +282,7 @@ battle_resolution_results = {
 				hit
 				rout
 				miss
+				hit
 			}
 			1 = {
 				hit
@@ -258,6 +290,7 @@ battle_resolution_results = {
 				miss
 				destroy
 				hit
+				rout
 			}
 			2 = {
 				hit
@@ -265,6 +298,7 @@ battle_resolution_results = {
 				rout
 				hit
 				destroy
+				hit
 			}
 			3 = {
 				hit
@@ -272,6 +306,7 @@ battle_resolution_results = {
 				destroy
 				destroy
 				hit
+				rout
 			}
 		}
 		crossed_swords = {
@@ -281,6 +316,7 @@ battle_resolution_results = {
 				fall_back
 				miss
 				fall_back
+				hit
 			}
 			-2 = {
 				hit
@@ -288,6 +324,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			-1 = {
 				miss
@@ -295,6 +332,7 @@ battle_resolution_results = {
 				hit
 				miss
 				hit
+				miss
 			}
 			0 = {
 				hit
@@ -302,6 +340,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			1 = {
 				rout
@@ -309,6 +348,7 @@ battle_resolution_results = {
 				miss
 				hit
 				hit
+				fall_back
 			}
 			2 = {
 				rout
@@ -316,6 +356,7 @@ battle_resolution_results = {
 				hit
 				miss
 				hit
+				destroy
 			}
 			3 = {
 				destroy
@@ -323,6 +364,7 @@ battle_resolution_results = {
 				hit
 				hit
 				miss
+				hit
 			}
 		}
 	}
@@ -334,6 +376,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				miss
 			}
 			-2 = {
 				fall_back
@@ -341,6 +384,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			-1 = {
 				hit
@@ -348,6 +392,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			0 = {
 				hit
@@ -355,6 +400,7 @@ battle_resolution_results = {
 				miss
 				hit
 				miss
+				hit
 			}
 			1 = {
 				fall_back
@@ -362,6 +408,7 @@ battle_resolution_results = {
 				hit
 				rout
 				hit
+				miss
 			}
 			2 = {
 				destroy
@@ -369,12 +416,14 @@ battle_resolution_results = {
 				hit
 				rout
 				miss
+				hit
 			}
 			3 = {
 				hit
 				miss
 				rout
 				rout
+				destroy
 				destroy
 			}
 		}
@@ -385,6 +434,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			-2 = {
 				hit
@@ -392,6 +442,7 @@ battle_resolution_results = {
 				fall_back
 				hit
 				miss
+				hit
 			}
 			-1 = {
 				miss
@@ -399,6 +450,7 @@ battle_resolution_results = {
 				miss
 				fall_back
 				hit
+				miss
 			}
 			0 = {
 				hit
@@ -406,6 +458,7 @@ battle_resolution_results = {
 				miss
 				hit
 				rout
+				fall_back
 			}
 			1 = {
 				miss
@@ -413,6 +466,7 @@ battle_resolution_results = {
 				hit
 				fall_back
 				destroy
+				miss
 			}
 			2 = {
 				hit
@@ -420,10 +474,12 @@ battle_resolution_results = {
 				miss
 				miss
 				rout
+				hit
 			}
 			3 = {
 				rout
 				destroy
+				hit
 				hit
 				hit
 				hit
@@ -436,6 +492,7 @@ battle_resolution_results = {
 				miss
 				hit
 				miss
+				fall_back
 			}
 			-2 = {
 				miss
@@ -443,6 +500,7 @@ battle_resolution_results = {
 				hit
 				miss
 				fall_back
+				miss
 			}
 			-1 = {
 				hit
@@ -450,6 +508,7 @@ battle_resolution_results = {
 				hit
 				miss
 				miss
+				hit
 			}
 			0 = {
 				fall_back
@@ -457,12 +516,14 @@ battle_resolution_results = {
 				miss
 				hit
 				hit
+				miss
 			}
 			1 = {
 				miss
 				rout
 				hit
 				miss
+				hit
 				hit
 			}
 			2 = {
@@ -471,12 +532,14 @@ battle_resolution_results = {
 				rout
 				hit
 				miss
+				miss
 			}
 			3 = {
 				hit
 				hit
 				destroy
 				miss
+				rout
 				rout
 			}
 		}
