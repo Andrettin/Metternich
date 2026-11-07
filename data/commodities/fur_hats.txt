@@ -4,4 +4,5 @@ fur_hats = {
 	icon = fur_hats
 	industrial = true
 	base_price = 3
+	required_technology = furs
 }

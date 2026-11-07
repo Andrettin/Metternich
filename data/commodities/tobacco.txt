@@ -4,6 +4,7 @@ tobacco = {
 	icon = tobacco
 	agricultural = true
 	base_price = 1
+	required_technology = tobacco
 	units = {
 		0.00025 = lb #5sp per lb
 		0.5 = tn
