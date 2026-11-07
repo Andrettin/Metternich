@@ -24,6 +24,7 @@ prime_cotton_land = {
 	name = "Prime Cotton Land"
 	icon = cotton
 	resource = true
+	discovery_technology = cotton
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}

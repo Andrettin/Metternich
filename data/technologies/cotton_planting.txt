@@ -1,3 +1,12 @@
+cotton = {
+	name = "Cotton"
+	subcategory = farming
+	portrait = stable
+	icon = cotton
+	discovery = true
+	period = stone_age
+}
+
 cotton_planting = {
 	name = "Cotton Planting"
 	subcategory = farming
@@ -5,10 +14,9 @@ cotton_planting = {
 	icon = cotton
 	period = bronze_age
 	prerequisites = {
+		cotton
 		wood_plow #earlier agricultural technology
 	}
-	
-	#FIXME: should require a Cotton discovery technology
 }
 
 large_cotton_plantations = {

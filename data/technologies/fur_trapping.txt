@@ -1,3 +1,12 @@
+furs = {
+	name = "Furs"
+	subcategory = farming
+	portrait = stable
+	icon = furs
+	discovery = true
+	period = stone_age
+}
+
 improved_trapping_techniques = {
 	name = "Improved Trapping Techniques"
 	subcategory = farming
@@ -5,10 +14,9 @@ improved_trapping_techniques = {
 	icon = furs
 	period = absolutism_age
 	prerequisites = {
+		furs
 		colonialism #to place it in the appropriate period
 	}
-	
-	#FIXME: should require a Furs discovery technology
 }
 
 riverboats = {

@@ -2,6 +2,7 @@ beavers = {
 	name = "Beavers"
 	icon = beaver
 	resource = true
+	discovery_technology = furs
 	terrain_types = {
 		forest
 	}

@@ -3,6 +3,7 @@ fur_camp = {
 	building_class = fur_camp
 	portrait = stable
 	icon = furs
+	required_technology = furs
 	holding_types = {
 		castle
 		guild
