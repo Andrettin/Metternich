@@ -1,7 +1,7 @@
 black_powder = {
 	name = "Black Powder"
 	subcategory = chemistry
-	portrait = engineering
+	portrait = gunpowder
 	icon = coal
 	period = renaissance_age
 	prerequisites = {
@@ -13,7 +13,7 @@ black_powder = {
 chemistry = {
 	name = "Chemistry"
 	subcategory = chemistry
-	portrait = engineering
+	portrait = gunpowder
 	icon = research
 	period = gunpowder_age
 	prerequisites = {

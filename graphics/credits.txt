@@ -412,6 +412,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/portraits/engineering.png (by Exidelo) (licensed under the CC0)
 /graphics/portraits/enter_extra_1.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/grand_ducal_crown.png (by Jinn and Exidelo) (licensed under the CC0)
+/graphics/portraits/gunpowder.png (by Exidelo) (licensed under the CC0)
 /graphics/portraits/helmet.png (by Exidelo) (licensed under the CC0)
 /graphics/portraits/marquisal_crown.png (by Jinn and Exidelo) (licensed under the CC0)
 /graphics/portraits/potion_red.png (by Jinn) (licensed under the CC0)
