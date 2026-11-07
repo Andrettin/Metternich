@@ -8,7 +8,6 @@
 #include "domain/domain.h"
 #include "domain/domain_diplomacy.h"
 #include "domain/domain_game_data.h"
-#include "domain/domain_technology.h"
 #include "economy/resource.h"
 #include "game/game.h"
 #include "map/province.h"

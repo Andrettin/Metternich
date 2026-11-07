@@ -58,7 +58,6 @@
 #include "script/condition/and_condition.h"
 #include "script/context.h"
 #include "script/effect/effect_list.h"
-#include "script/factor.h"
 #include "script/modifier.h"
 #include "script/scripted_site_modifier.h"
 #include "ui/icon.h"

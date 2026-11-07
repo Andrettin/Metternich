@@ -15,9 +15,6 @@ class site;
 class terrain_type;
 
 template <typename scope_type>
-class factor;
-
-template <typename scope_type>
 class modifier;
 
 class site_feature final : public named_data_entry, public data_type<site_feature>

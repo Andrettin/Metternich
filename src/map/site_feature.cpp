@@ -7,8 +7,8 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
-#include "script/factor.h"
 #include "script/modifier.h"
+#include "technology/technology.h"
 
 namespace metternich {
 
@@ -48,6 +48,10 @@ void site_feature::check() const
 {
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Site feature \"{}\" has no icon.", this->get_identifier()));
+	}
+
+	if (this->get_discovery_technology() != nullptr && !this->get_discovery_technology()->is_discovery()) {
+		throw std::runtime_error(std::format("Site feature \"{}\" has technology \"{}\" set as its discovery technology, but that technology has \"discovery\" set to false.", this->get_identifier(), this->get_discovery_technology()->get_identifier()));
 	}
 
 	named_data_entry::check();
