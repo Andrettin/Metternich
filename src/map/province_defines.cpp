@@ -7,6 +7,7 @@
 #include "economy/province_taxation_type.h"
 #include "population/population_defines.h"
 #include "util/assert_util.h"
+#include "util/centesimal_int.h"
 
 namespace metternich {
 

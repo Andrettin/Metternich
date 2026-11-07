@@ -10,7 +10,6 @@
 #include "language/name_generator.h"
 #include "species/taxon.h"
 #include "util/gender.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

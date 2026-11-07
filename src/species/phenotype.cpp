@@ -4,9 +4,7 @@
 
 #include "species/species.h"
 #include "util/assert_util.h"
-#include "util/log_util.h"
 #include "util/random.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

@@ -2,7 +2,7 @@
 
 #include "domain/domain_tier_data.h"
 
-#include "domain/domain_tier.h"
+#include "database/gsml_data.h"
 #include "script/modifier.h"
 
 namespace metternich {

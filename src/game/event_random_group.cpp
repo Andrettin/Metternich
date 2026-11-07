@@ -3,9 +3,7 @@
 #include "game/event_random_group.h"
 
 #include "database/defines.h"
-#include "game/event.h"
 #include "game/event_trigger.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

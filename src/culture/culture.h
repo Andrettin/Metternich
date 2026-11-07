@@ -1,7 +1,6 @@
 #pragma once
 
 #include "culture/culture_base.h"
-#include "culture/culture_container.h"
 #include "database/data_type.h"
 #include "species/phenotype_container.h"
 #include "util/color_container.h"

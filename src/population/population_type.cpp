@@ -4,16 +4,13 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
-#include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_operator.h"
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "economy/luxury_type.h"
 #include "game/game.h"
 #include "game/game_rules.h"
-#include "population/population.h"
 #include "population/population_class.h"
 #include "script/factor.h"
 #include "script/modifier.h"
@@ -23,9 +20,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/map_util.h"
-#include "util/number_util.h"
 #include "util/random.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

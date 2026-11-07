@@ -1,5 +1,6 @@
 #pragma once
 
+#include "database/data_type.h"
 #include "game/event.h"
 #include "game/scoped_event_base.h"
 

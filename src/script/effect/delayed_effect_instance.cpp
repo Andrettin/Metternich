@@ -3,7 +3,6 @@
 #include "script/effect/delayed_effect_instance.h"
 
 #include "character/character.h"
-#include "character/character_game_data.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "domain/domain.h"

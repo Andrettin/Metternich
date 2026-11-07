@@ -3,7 +3,6 @@
 #include "technology/technological_period.h"
 
 #include "util/assert_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 	

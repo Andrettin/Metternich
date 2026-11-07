@@ -2,7 +2,6 @@
 
 #include "script/context.h"
 #include "script/effect/effect.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

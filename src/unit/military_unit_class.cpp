@@ -7,7 +7,6 @@
 #include "unit/military_unit_domain.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

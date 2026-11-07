@@ -3,7 +3,6 @@
 #include "database/preferences.h"
 
 #include "database/database.h"
-#include "database/defines.h"
 #include "database/gsml_data.h"
 #include "database/gsml_parser.h"
 #include "game/game_rules.h"
@@ -11,7 +10,6 @@
 #include "util/exception_util.h"
 #include "util/log_util.h"
 #include "util/string_conversion_util.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

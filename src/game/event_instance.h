@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "script/context.h"
 

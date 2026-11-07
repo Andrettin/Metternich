@@ -12,9 +12,7 @@
 #include "game/game_rules.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
-#include "util/decimal_int.h"
 #include "util/dice.h"
-#include "util/millesimal_int.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 

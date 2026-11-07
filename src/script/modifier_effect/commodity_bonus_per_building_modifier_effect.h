@@ -5,7 +5,6 @@
 #include "economy/commodity.h"
 #include "infrastructure/building_type.h"
 #include "script/modifier_effect/modifier_effect.h"
-#include "util/number_util.h"
 
 namespace metternich {
 

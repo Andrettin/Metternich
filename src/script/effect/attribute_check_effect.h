@@ -12,9 +12,7 @@
 #include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
-#include "util/assert_util.h"
 #include "util/number_util.h"
-#include "util/random.h"
 
 namespace metternich {
 

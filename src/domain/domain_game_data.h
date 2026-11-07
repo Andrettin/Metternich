@@ -1,7 +1,6 @@
 #pragma once
 
 #include "database/data_entry_container.h"
-#include "economy/commodity_container.h"
 #include "infrastructure/building_class_container.h"
 #include "infrastructure/building_type_container.h"
 #include "map/province_container.h"

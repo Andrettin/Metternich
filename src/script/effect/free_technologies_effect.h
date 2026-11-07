@@ -3,7 +3,6 @@
 #include "domain/domain.h"
 #include "domain/domain_technology.h"
 #include "script/effect/effect.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

@@ -16,7 +16,6 @@
 #include "script/effect/effect_list.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

@@ -16,7 +16,6 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/gender.h"
-#include "util/log_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 

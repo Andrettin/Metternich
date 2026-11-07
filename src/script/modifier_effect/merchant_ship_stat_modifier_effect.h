@@ -1,11 +1,10 @@
 #pragma once
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
+#include "domain/domain_military.h"
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

@@ -4,21 +4,15 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
-#include "domain/domain_government.h"
-#include "domain/domain_military.h"
 #include "domain/domain_technology.h"
-#include "domain/office.h"
 #include "game/game.h"
-#include "game/game_rules.h"
 #include "infrastructure/building_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
-#include "map/site_type.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/effect_list.h"
 #include "script/modifier.h"
@@ -27,7 +21,6 @@
 #include "util/assert_util.h"
 #include "util/random.h"
 #include "util/string_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

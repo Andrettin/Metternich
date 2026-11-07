@@ -3,7 +3,6 @@
 #include "map/terrain_type.h"
 
 #include "database/database.h"
-#include "database/defines.h"
 #include "map/direction.h"
 #include "map/elevation_type.h"
 #include "map/forestation_type.h"
@@ -13,7 +12,6 @@
 #include "map/tile_image_provider.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
-#include "util/image_util.h"
 #include "util/path_util.h"
 
 namespace metternich {

@@ -1,6 +1,5 @@
 #include "script/opinion_modifier.h"
 
-#include "database/defines.h"
 #include "database/gsml_property.h"
 
 namespace metternich {

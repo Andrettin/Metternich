@@ -2,7 +2,6 @@
 
 #include "database/data_entry_container.h"
 #include "database/named_data_entry.h"
-#include "domain/domain_container.h"
 #include "infrastructure/building_class_container.h"
 #include "language/name_variant.h"
 #include "population/population_class_container.h"

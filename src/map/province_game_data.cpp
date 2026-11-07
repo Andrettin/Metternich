@@ -3,7 +3,6 @@
 #include "map/province_game_data.h"
 
 #include "character/domain_skill.h"
-#include "character/party.h"
 #include "culture/culture.h"
 #include "database/defines.h"
 #include "database/gsml_data.h"

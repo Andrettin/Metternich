@@ -34,8 +34,6 @@
 #include "util/assert_util.h"
 #include "util/dice.h"
 #include "util/map_util.h"
-#include "util/number_util.h"
-#include "util/point_container.h"
 #include "util/point_util.h"
 #include "util/random.h"
 #include "util/size_util.h"

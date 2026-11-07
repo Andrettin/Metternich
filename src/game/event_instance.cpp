@@ -4,8 +4,6 @@
 
 #include "engine_interface.h"
 #include "game/event.h"
-#include "game/event_option.h"
-#include "game/game.h"
 #include "script/context.h"
 #include "util/assert_util.h"
 #include "util/exception_util.h"

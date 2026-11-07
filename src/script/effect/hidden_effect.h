@@ -1,6 +1,5 @@
 #pragma once
 
-#include "database/database.h"
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "script/effect/effect.h"

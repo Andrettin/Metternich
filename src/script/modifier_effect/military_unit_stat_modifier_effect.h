@@ -11,7 +11,6 @@
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

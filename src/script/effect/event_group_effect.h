@@ -3,7 +3,6 @@
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
 #include "script/effect/effect.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

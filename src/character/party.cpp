@@ -4,7 +4,6 @@
 
 #include "character/character.h"
 #include "character/character_game_data.h"
-#include "database/defines.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/vector_util.h"

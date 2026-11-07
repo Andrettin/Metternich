@@ -1,9 +1,7 @@
 #pragma once
 
-#include "script/condition/and_condition.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
-#include "util/string_util.h"
 
 namespace metternich {
 

@@ -12,12 +12,10 @@
 #include "domain/domain_technology.h"
 #include "domain/journal_entry.h"
 #include "domain/office.h"
-#include "infrastructure/building_slot.h"
 #include "infrastructure/building_type.h"
 #include "infrastructure/building_type_container.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/site.h"
 #include "map/site_game_data.h"
 #include "technology/technology.h"
 #include "unit/civilian_unit.h"
@@ -25,8 +23,6 @@
 #include "util/assert_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
-
-#include <magic_enum/magic_enum_utility.hpp>
 
 namespace metternich {
 

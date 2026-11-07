@@ -2,7 +2,6 @@
 
 #include "infrastructure/building_slot.h"
 
-#include "database/defines.h"
 #include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_economy.h"

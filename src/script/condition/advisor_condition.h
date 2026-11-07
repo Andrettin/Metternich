@@ -1,10 +1,8 @@
 #pragma once
 
 #include "character/character.h"
-#include "domain/domain.h"
-#include "domain/domain_government.h"
+#include "character/character_game_data.h"
 #include "script/condition/condition.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

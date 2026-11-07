@@ -12,7 +12,6 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/string_util.h"
-#include "util/vector_random_util.h"
 
 namespace metternich {
 

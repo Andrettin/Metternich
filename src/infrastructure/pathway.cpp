@@ -8,12 +8,10 @@
 #include "map/province.h"
 #include "map/province_game_data.h"
 #include "map/terrain_type.h"
-#include "map/tile.h"
 #include "map/tile_image_provider.h"
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 

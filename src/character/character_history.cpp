@@ -9,7 +9,6 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "util/assert_util.h"
-#include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {

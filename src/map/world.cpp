@@ -3,18 +3,14 @@
 #include "map/world.h"
 
 #include "database/database.h"
-#include "map/equirectangular_map_projection.h"
 #include "map/province.h"
 #include "map/route.h"
 #include "map/site.h"
 #include "map/terrain_feature.h"
 #include "map/terrain_type.h"
-#include "util/assert_util.h"
 #include "util/exception_util.h"
 #include "util/geojson_util.h"
 #include "util/georectangle.h"
-#include "util/geoshape_util.h"
-#include "util/number_util.h"
 #include "util/path_util.h"
 #include "util/vector_util.h"
 

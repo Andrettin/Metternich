@@ -3,7 +3,6 @@
 #include "game/battle.h"
 
 #include "character/character.h"
-#include "character/character_defines.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
 #include "database/defines.h"

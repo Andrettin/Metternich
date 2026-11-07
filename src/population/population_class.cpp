@@ -3,7 +3,6 @@
 #include "population/population_class.h"
 
 #include "population/population_type.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

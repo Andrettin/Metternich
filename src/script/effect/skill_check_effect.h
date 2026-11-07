@@ -9,7 +9,6 @@
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
 #include "util/assert_util.h"
-#include "util/random.h"
 
 namespace metternich {
 

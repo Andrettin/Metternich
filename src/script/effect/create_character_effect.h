@@ -4,7 +4,6 @@
 #include "character/character_class.h"
 #include "character/character_game_data.h"
 #include "character/monster_type.h"
-#include "culture/culture.h"
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "game/game.h"

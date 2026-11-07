@@ -3,7 +3,6 @@
 #include "population/population.h"
 
 #include "culture/culture.h"
-#include "database/defines.h"
 #include "database/gsml_data.h"
 #include "game/game.h"
 #include "population/population_strata.h"

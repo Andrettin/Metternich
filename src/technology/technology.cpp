@@ -50,7 +50,6 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/string_util.h"
-#include "util/vector_util.h"
 
 namespace metternich {
 	

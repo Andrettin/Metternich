@@ -4,7 +4,6 @@
 
 #include "game/game.h"
 #include "technology/technology.h"
-#include "util/date_util.h"
 #include "util/exception_util.h"
 
 namespace metternich {

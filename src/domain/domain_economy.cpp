@@ -28,7 +28,6 @@
 #include "map/province_game_data.h"
 #include "map/site.h"
 #include "map/site_game_data.h"
-#include "map/tile.h"
 #include "population/population.h"
 #include "population/population_strata.h"
 #include "population/population_type.h"

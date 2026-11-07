@@ -4,7 +4,6 @@
 #include "game/game_rule.h"
 #include "game/game_rules.h"
 #include "script/condition/condition.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

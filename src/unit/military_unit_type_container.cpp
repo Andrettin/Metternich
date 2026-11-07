@@ -2,7 +2,6 @@
 
 #include "unit/military_unit_type_container.h"
 
-#include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
 
 namespace metternich {

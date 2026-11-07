@@ -3,7 +3,6 @@
 #include "unit/civilian_unit_class.h"
 
 #include "unit/civilian_unit_type.h"
-#include "util/assert_util.h"
 
 namespace metternich {
 

@@ -3,7 +3,6 @@
 #include "infrastructure/wonder.h"
 
 #include "domain/domain.h"
-#include "domain/domain_game_data.h"
 #include "economy/commodity.h"
 #include "game/game.h"
 #include "game/game_rule.h"

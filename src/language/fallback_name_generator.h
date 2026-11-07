@@ -1,6 +1,5 @@
 #pragma once
 
-#include "language/name_variant.h"
 #include "unit/military_unit_class_container.h"
 #include "util/singleton.h"
 

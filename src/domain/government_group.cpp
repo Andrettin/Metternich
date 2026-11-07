@@ -7,8 +7,6 @@
 #include "domain/domain_tier_data.h"
 #include "domain/government_type.h"
 #include "domain/office.h"
-#include "database/defines.h"
-#include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/string_util.h"
 
