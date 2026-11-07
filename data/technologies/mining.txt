@@ -44,7 +44,7 @@ black_coal = {
 		water_wheel
 	}
 	discovery_conditions = {
-		any_settlement = {
+		any_holding = {
 			feature = coal_deposit
 		}
 	}

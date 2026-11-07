@@ -80,16 +80,16 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 		for (const std::string &value : values) {
 			this->built_buildings.push_back(building_type::get(value));
 		}
-	} else if (tag == "built_settlement_buildings") {
+	} else if (tag == "built_holding_buildings") {
 		scope.for_each_element([this](const gsml_property &property) {
-			const site *settlement = site::get(property.get_key());
+			const site *holding_site = site::get(property.get_key());
 			const building_type *building = building_type::get(property.get_value());
-			this->built_settlement_buildings[settlement].push_back(building);
+			this->built_holding_buildings[holding_site].push_back(building);
 		}, [this](const gsml_data &child_scope) {
-			const site *settlement = site::get(child_scope.get_tag());
+			const site *holding_site = site::get(child_scope.get_tag());
 
 			for (const std::string &value : child_scope.get_values()) {
-				this->built_settlement_buildings[settlement].push_back(building_type::get(value));
+				this->built_holding_buildings[holding_site].push_back(building_type::get(value));
 			}
 		});
 	} else if (tag == "built_holding_site_levels") {
@@ -141,14 +141,14 @@ void journal_entry::check() const
 		this->get_failure_effects()->check();
 	}
 
-	for (const auto &[settlement, buildings] : this->get_built_settlement_buildings()) {
-		if (!settlement->is_settlement()) {
-			throw std::runtime_error(std::format("Journal entry \"{}\" requires constructing a building in \"{}\", but that site is not a settlement.", this->get_identifier(), settlement->get_identifier()));
+	for (const auto &[holding, buildings] : this->get_built_holding_buildings()) {
+		if (!holding->is_holding()) {
+			throw std::runtime_error(std::format("Journal entry \"{}\" requires constructing a building in \"{}\", but that site is not a holding.", this->get_identifier(), holding->get_identifier()));
 		}
 	}
 
 	for (const auto &[site, level] : this->get_built_holding_site_levels()) {
-		if (!site->is_settlement()) {
+		if (!site->is_holding()) {
 			throw std::runtime_error(std::format("Journal entry \"{}\" requires developing site \"{}\" to a certain holding level, but that site is not a holding site.", this->get_identifier(), site->get_identifier()));
 		}
 	}
@@ -207,7 +207,7 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 		&& this->owned_provinces.empty()
 		&& this->owned_sites.empty()
 		&& this->get_built_buildings().empty()
-		&& this->get_built_settlement_buildings().empty()
+		&& this->get_built_holding_buildings().empty()
 		&& this->get_built_holding_site_levels().empty()
 		&& this->get_researched_technologies().empty()
 		&& this->get_recruited_characters().empty()
@@ -252,11 +252,11 @@ bool journal_entry::check_completion_conditions(const domain *domain, const bool
 		}
 	}
 
-	for (const auto &[settlement, buildings] : this->get_built_settlement_buildings()) {
-		assert_throw(settlement->is_settlement());
+	for (const auto &[holding, buildings] : this->get_built_holding_buildings()) {
+		assert_throw(holding->is_holding());
 
 		for (const building_type *building : buildings) {
-			if (!settlement->get_game_data()->has_building_or_better(building)) {
+			if (!holding->get_game_data()->has_building_or_better(building)) {
 				return false;
 			}
 		}
@@ -324,15 +324,15 @@ QString journal_entry::get_completion_conditions_string() const
 		str += std::format("Build {} {}", string::get_indefinite_article(building->get_name()), building->get_name());
 	}
 
-	for (const auto &[settlement, buildings] : this->get_built_settlement_buildings()) {
-		assert_throw(settlement->is_settlement());
+	for (const auto &[holding, buildings] : this->get_built_holding_buildings()) {
+		assert_throw(holding->is_holding());
 
 		for (const building_type *building : buildings) {
 			if (!str.empty()) {
 				str += "\n";
 			}
 
-			str += std::format("Build {} {} in {}", string::get_indefinite_article(building->get_name()), building->get_name(), settlement->get_game_data()->get_current_cultural_name());
+			str += std::format("Build {} {} in {}", string::get_indefinite_article(building->get_name()), building->get_name(), holding->get_game_data()->get_current_cultural_name());
 		}
 	}
 
@@ -431,11 +431,11 @@ std::vector<const building_type *> journal_entry::get_built_buildings_with_requi
 	return buildings;
 }
 
-site_map<std::vector<const building_type *>> journal_entry::get_built_settlement_buildings_with_requirements() const
+site_map<std::vector<const building_type *>> journal_entry::get_built_holding_buildings_with_requirements() const
 {
-	site_map<std::vector<const building_type *>> settlement_buildings = this->get_built_settlement_buildings();
+	site_map<std::vector<const building_type *>> holding_buildings = this->get_built_holding_buildings();
 
-	for (auto &[settlement, buildings] : settlement_buildings) {
+	for (auto &[holding, buildings] : holding_buildings) {
 		for (size_t i = 0; i < buildings.size(); ++i) {
 			const building_type *building = buildings[i];
 
@@ -449,7 +449,7 @@ site_map<std::vector<const building_type *>> journal_entry::get_built_settlement
 		}
 	}
 
-	return settlement_buildings;
+	return holding_buildings;
 }
 
 }

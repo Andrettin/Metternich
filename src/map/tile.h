@@ -33,7 +33,7 @@ public:
 
 	void set_site(const metternich::site *site);
 
-	const metternich::site *get_settlement() const;
+	const metternich::site *get_holding() const;
 	const holding_type *get_holding_type() const;
 
 	const metternich::resource *get_resource() const;

@@ -30,9 +30,9 @@ void tile::set_site(const metternich::site *site)
 	this->site = site;
 }
 
-const metternich::site *tile::get_settlement() const
+const metternich::site *tile::get_holding() const
 {
-	if (this->get_site() != nullptr && this->get_site()->is_settlement()) {
+	if (this->get_site() != nullptr && this->get_site()->is_holding()) {
 		return this->get_site();
 	}
 
@@ -41,9 +41,9 @@ const metternich::site *tile::get_settlement() const
 
 const holding_type *tile::get_holding_type() const
 {
-	const metternich::site *settlement = this->get_settlement();
-	if (settlement != nullptr) {
-		return settlement->get_game_data()->get_holding_type();
+	const metternich::site *holding = this->get_holding();
+	if (holding != nullptr) {
+		return holding->get_game_data()->get_holding_type();
 	}
 
 	return nullptr;

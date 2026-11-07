@@ -117,12 +117,12 @@ public:
 
 	std::vector<const building_type *> get_built_buildings_with_requirements() const;
 
-	const site_map<std::vector<const building_type *>> &get_built_settlement_buildings() const
+	const site_map<std::vector<const building_type *>> &get_built_holding_buildings() const
 	{
-		return this->built_settlement_buildings;
+		return this->built_holding_buildings;
 	}
 
-	site_map<std::vector<const building_type *>> get_built_settlement_buildings_with_requirements() const;
+	site_map<std::vector<const building_type *>> get_built_holding_buildings_with_requirements() const;
 
 	const site_map<int> &get_built_holding_site_levels() const
 	{
@@ -157,7 +157,7 @@ private:
 	std::vector<const province *> owned_provinces;
 	std::vector<const site *> owned_sites;
 	std::vector<const building_type *> built_buildings;
-	site_map<std::vector<const building_type *>> built_settlement_buildings;
+	site_map<std::vector<const building_type *>> built_holding_buildings;
 	site_map<int> built_holding_site_levels;
 	std::vector<const technology *> researched_technologies;
 	std::vector<const character *> recruited_characters;

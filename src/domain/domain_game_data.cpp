@@ -3534,9 +3534,9 @@ QCoro::Task<void> domain_game_data::add_active_journal_entry(const journal_entry
 		this->get_ai()->change_building_desire_modifier(building, journal_entry::ai_building_desire_modifier);
 	}
 
-	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
+	for (const auto &[holding, buildings] : journal_entry->get_built_holding_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->get_ai()->change_holding_building_desire_modifier(settlement, building, journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_holding_building_desire_modifier(holding, building, journal_entry::ai_building_desire_modifier);
 		}
 	}
 }
@@ -3553,9 +3553,9 @@ QCoro::Task<void> domain_game_data::remove_active_journal_entry(const journal_en
 		this->get_ai()->change_building_desire_modifier(building, -journal_entry::ai_building_desire_modifier);
 	}
 
-	for (const auto &[settlement, buildings] : journal_entry->get_built_settlement_buildings_with_requirements()) {
+	for (const auto &[holding, buildings] : journal_entry->get_built_holding_buildings_with_requirements()) {
 		for (const building_type *building : buildings) {
-			this->get_ai()->change_holding_building_desire_modifier(settlement, building, -journal_entry::ai_building_desire_modifier);
+			this->get_ai()->change_holding_building_desire_modifier(holding, building, -journal_entry::ai_building_desire_modifier);
 		}
 	}
 }

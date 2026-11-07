@@ -5,7 +5,7 @@ gresham_college = { #Source: Henry Kamen, "Early Modern European Society", 2021,
 	preconditions = {
 		owns_site = london
 	}
-	built_settlement_buildings = {
+	built_holding_buildings = {
 		london = academy
 	}
 	completion_effects = {

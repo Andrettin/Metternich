@@ -1222,14 +1222,14 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		site_province = tile->get_province();
 	}
 
-	const metternich::site *settlement = site->is_settlement() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
+	const metternich::site *holding_site = site->is_holding() && tile != nullptr ? site : site_province->get_game_data()->get_provincial_capital();
 
-	if (settlement == nullptr || !settlement->get_map_data()->is_on_map()) {
+	if (holding_site == nullptr || !holding_site->get_map_data()->is_on_map()) {
 		co_return;
 	}
 
-	metternich::site_game_data *settlement_game_data = settlement->get_game_data();
-	const metternich::holding_type *holding_type = settlement_game_data->get_holding_type();
+	metternich::site_game_data *holding_game_data = holding_site->get_game_data();
+	const metternich::holding_type *holding_type = holding_game_data->get_holding_type();
 
 	const site_history *site_history = site->get_history();
 
@@ -1237,7 +1237,7 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		//apply ruin buildings
 		for (auto [building_slot_type, building] : site_history->get_buildings()) {
 			if (building->is_ruin()) {
-				co_await settlement_game_data->add_building_with_prerequisites(building);
+				co_await holding_game_data->add_building_with_prerequisites(building);
 			}
 		}
 		
@@ -1247,22 +1247,22 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 	//holding level before applying buildings, e.g. from site features
 	const int holding_level_before_building_application = site_game_data->get_holding_level().to_int();
 
-	if (site == settlement && settlement_game_data->is_built()) {
+	if (site == holding_site && holding_game_data->is_built()) {
 		//set an initial culture/religion so that buildings can be applied without issues
 		if (site_history->get_culture() != nullptr) {
-			settlement_game_data->set_culture(site_history->get_culture());
+			holding_game_data->set_culture(site_history->get_culture());
 		} else {
-			settlement_game_data->set_culture(settlement_game_data->get_province()->get_game_data()->get_culture());
+			holding_game_data->set_culture(holding_game_data->get_province()->get_game_data()->get_culture());
 		}
 
 		if (site_history->get_religion() != nullptr) {
-			settlement_game_data->set_religion(site_history->get_religion());
+			holding_game_data->set_religion(site_history->get_religion());
 		} else {
-			settlement_game_data->set_religion(settlement_game_data->get_province()->get_game_data()->get_religion());
+			holding_game_data->set_religion(holding_game_data->get_province()->get_game_data()->get_religion());
 		}
 	}
 
-	const domain *owner = settlement_game_data->get_owner();
+	const domain *owner = holding_game_data->get_owner();
 	domain_game_data *owner_game_data = owner ? owner->get_game_data() : nullptr;
 
 	for (auto [building_slot_type, building] : site_history->get_buildings()) {
@@ -1271,27 +1271,27 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		}
 
 		//add the building's required technology first, so that even if the building cannot be applied, its technology is still added
-		if (building->get_required_technology() != nullptr && settlement_game_data->get_province() != nullptr) {
-			co_await settlement_game_data->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
+		if (building->get_required_technology() != nullptr && holding_game_data->get_province() != nullptr) {
+			co_await holding_game_data->get_province()->get_game_data()->add_technology_with_prerequisites(building->get_required_technology());
 		}
 
-		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+		building_slot *building_slot = holding_game_data->get_building_slot(building_slot_type);
 		if (building_slot == nullptr) {
-			if (settlement == site) {
-				throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but does not have its building slot.", settlement->get_identifier(), building->get_identifier()));
+			if (holding_site == site) {
+				throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but does not have its building slot.", holding_site->get_identifier(), building->get_identifier()));
 			} else {
 				continue;
 			}
 		}
 
 		while (building != nullptr) {
-			if (settlement == site) {
+			if (holding_site == site) {
 				if (holding_type == nullptr) {
-					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but has no holding type.", settlement->get_identifier(), building->get_identifier()));
+					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but has no holding type.", holding_site->get_identifier(), building->get_identifier()));
 				}
 
 				if (!vector::contains(building->get_holding_types(), holding_type)) {
-					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but its holding type of \"{}\" is not appropriate for it.", settlement->get_identifier(), building->get_identifier(), holding_type->get_identifier()));
+					throw std::runtime_error(std::format("Holding \"{}\" is set in history to have building \"{}\", but its holding type of \"{}\" is not appropriate for it.", holding_site->get_identifier(), building->get_identifier(), holding_type->get_identifier()));
 				}
 			}
 
@@ -1306,10 +1306,10 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 			continue;
 		}
 
-		const building_type *slot_building = settlement_game_data->get_slot_building(building_slot_type);
+		const building_type *slot_building = holding_game_data->get_slot_building(building_slot_type);
 
 		if (slot_building == nullptr || slot_building->get_level() < building->get_level()) {
-			co_await settlement_game_data->add_building_with_prerequisites(building);
+			co_await holding_game_data->add_building_with_prerequisites(building);
 		}
 	}
 
@@ -1319,21 +1319,21 @@ QCoro::Task<void> game::apply_site_buildings(const site *site)
 		}
 
 		if (holding_type == nullptr) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but has no holding type.", settlement->get_identifier(), wonder->get_identifier()));
+			throw std::runtime_error(std::format("Holding \"{}\" is set in history to have wonder \"{}\", but has no holding type.", holding_site->get_identifier(), wonder->get_identifier()));
 		}
 
 		if (!vector::contains(wonder->get_building()->get_holding_types(), holding_type)) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but its holding type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", settlement->get_identifier(), wonder->get_identifier(), holding_type->get_identifier(), wonder->get_building()->get_identifier()));
+			throw std::runtime_error(std::format("Holding \"{}\" is set in history to have wonder \"{}\", but its holding type of \"{}\" is not appropriate for the wonder's building type of \"{}\".", holding_site->get_identifier(), wonder->get_identifier(), holding_type->get_identifier(), wonder->get_building()->get_identifier()));
 		}
 
-		building_slot *building_slot = settlement_game_data->get_building_slot(building_slot_type);
+		building_slot *building_slot = holding_game_data->get_building_slot(building_slot_type);
 
 		if (building_slot == nullptr) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", settlement->get_identifier(), wonder->get_identifier()));
+			throw std::runtime_error(std::format("Holding \"{}\" is set in history to have wonder \"{}\", but does not have its building slot available.", holding_site->get_identifier(), wonder->get_identifier()));
 		}
 
 		if (!building_slot->can_have_wonder(wonder)) {
-			throw std::runtime_error(std::format("Settlement \"{}\" is set in history to have wonder \"{}\", but cannot have it.", settlement->get_identifier(), wonder->get_identifier()));
+			throw std::runtime_error(std::format("Holding \"{}\" is set in history to have wonder \"{}\", but cannot have it.", holding_site->get_identifier(), wonder->get_identifier()));
 		}
 
 		co_await building_slot->set_wonder(wonder);

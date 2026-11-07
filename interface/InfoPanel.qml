@@ -13,7 +13,7 @@ Rectangle {
 	readonly property var selected_site_game_data: selected_site ? selected_site.game_data : null
 	property bool viewing_population: false
 	property bool viewing_population_units: false
-	property bool viewing_settlement_info: false
+	property bool viewing_holding_info: false
 	
 	PanelTiledBackground {
 	}
@@ -118,7 +118,7 @@ Rectangle {
 		
 		readonly property string icon_identifier: selected_civilian_unit ? selected_civilian_unit.icon.identifier : (
 			selected_site ? (
-				(selected_site.settlement && selected_site.game_data.holding_type !== null) ? "" : (
+				(selected_site.holding && selected_site.game_data.holding_type !== null) ? "" : (
 					selected_site.map_data.resource && selected_site.map_data.resource.icon ? selected_site.map_data.resource.icon.identifier : (selected_site.map_data.resource && selected_site.map_data.resource.commodity ? selected_site.map_data.resource.commodity.icon.identifier : "")
 				)
 			) : ""
@@ -157,7 +157,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		horizontalAlignment: Text.AlignHCenter
 		text: selected_province && selected_garrison ? (selected_province.water_zone ? "Fleet" : "Garrison") : format_text((selected_site && !selected_garrison) ? (
-			selected_site.settlement ? "" : (
+			selected_site.holding ? "" : (
 				selected_site.map_data.resource ? (selected_site.map_data.resource.natural_wonder ? "Natural Wonder" : selected_site.map_data.resource.name) : ""
 			)
 		) : (selected_civilian_unit ? selected_civilian_unit.name
@@ -178,7 +178,7 @@ Rectangle {
 			id: feature_row
 			anchors.verticalCenter: parent.verticalCenter
 			location: selected_site !== null ? selected_site : selected_province
-			visible: location && location.game_data.features.length > 0 && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_settlement_info
+			visible: location && location.game_data.features.length > 0 && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_holding_info
 		}
 		
 		CustomIconImage {
@@ -220,8 +220,8 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		visible_rows: 2
-		visible: selected_site !== null && selected_site.settlement && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_settlement_info
-		building_slots: selected_site !== null && selected_site.settlement ? selected_site_game_data.visible_building_slots : []
+		visible: selected_site !== null && selected_site.holding && !selected_garrison && !viewing_population && !viewing_population_units && !viewing_holding_info
+		building_slots: selected_site !== null && selected_site.holding ? selected_site_game_data.visible_building_slots : []
 	}
 	
 	SitePortraitGrid {
@@ -500,14 +500,14 @@ Rectangle {
 	
 	PortraitButton {
 		id: holder_portrait
-		anchors.top: selected_site !== null && !selected_site.settlement ? site_info_text.bottom : title.bottom
+		anchors.top: selected_site !== null && !selected_site.holding ? site_info_text.bottom : title.bottom
 		anchors.topMargin: 16 * scale_factor
 		anchors.horizontalCenter: parent.horizontalCenter
 		portrait_identifier: holder ? holder.game_data.portrait.identifier : ""
-		visible: holder !== null && (viewing_settlement_info || (selected_site !== null && !selected_site.settlement)) && !viewing_population && !viewing_population_units
+		visible: holder !== null && (viewing_holding_info || (selected_site !== null && !selected_site.holding)) && !viewing_population && !viewing_population_units
 		circle: true
 		
-		readonly property var holder: selected_site !== null && selected_site.settlement && province_game_data ? province_game_data.governor : null
+		readonly property var holder: selected_site !== null && selected_site.holding && province_game_data ? province_game_data.governor : null
 		
 		onClicked: {
 			character_dialog.character = holder
@@ -530,7 +530,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.leftMargin: 16 * scale_factor
 		text: selected_site_game_data ? format_text(commodity_outputs_to_string(selected_site_game_data.commodity_outputs)) : ""
-		visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
+		visible: selected_site !== null && selected_site.holding && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_holding_info
 		
 		function commodity_outputs_to_string(commodity_outputs) {
 			var str = ""
@@ -585,7 +585,7 @@ Rectangle {
 			onClicked: {
 				viewing_population = true
 				viewing_population_units = false
-				viewing_settlement_info = false
+				viewing_holding_info = false
 			}
 			
 			onHoveredChanged: {
@@ -605,7 +605,7 @@ Rectangle {
 			onClicked: {
 				viewing_population_units = true
 				viewing_population = false
-				viewing_settlement_info = false
+				viewing_holding_info = false
 			}
 			
 			onHoveredChanged: {
@@ -713,18 +713,18 @@ Rectangle {
 		IconButton {
 			id: output_button
 			icon_identifier: "cog"
-			//visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_settlement_info
+			//visible: selected_site !== null && selected_site.holding && selected_site.game_data.holding_type !== null && !selected_garrison && !viewing_holding_info
 			visible: false
 			
 			onClicked: {
-				viewing_settlement_info = true
+				viewing_holding_info = true
 				viewing_population = false
 				viewing_population_units = false
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "View Settlement Info"
+					status_text = "View Holding Info"
 				} else {
 					status_text = ""
 				}
@@ -743,7 +743,7 @@ Rectangle {
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = selected_site.settlement ? "Back to Holding" : "Back to Site"
+					status_text = selected_site.holding ? "Back to Holding" : "Back to Site"
 				} else {
 					status_text = ""
 				}
@@ -777,15 +777,15 @@ Rectangle {
 		IconButton {
 			id: output_back_button
 			icon_identifier: "settlement"
-			visible: selected_site !== null && selected_site.settlement && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_settlement_info
+			visible: selected_site !== null && selected_site.holding && selected_site.game_data.holding_type !== null && !selected_garrison && viewing_holding_info
 			
 			onClicked: {
-				viewing_settlement_info = false
+				viewing_holding_info = false
 			}
 			
 			onHoveredChanged: {
 				if (hovered) {
-					status_text = "Back to Settlement"
+					status_text = "Back to Holding"
 				} else {
 					status_text = ""
 				}

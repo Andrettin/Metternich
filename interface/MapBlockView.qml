@@ -199,7 +199,7 @@ Item {
 			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.province_defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
 			width: site_icon.width + 2 * scale_factor
 			height: site_icon.height + 2 * scale_factor
-			visible: province_map.show_sites && site && site.settlement
+			visible: province_map.show_sites && site && site.holding
 			
 			readonly property var site: model.modelData
 			readonly property var tile_pos: site ? site.map_data.tile_pos : null

@@ -5,7 +5,7 @@ relation = { #Source: Henry Kamen, "Early Modern European Society", 2021, p. 308
 	preconditions = {
 		owns_site = strasbourg
 	}
-	built_settlement_buildings = {
+	built_holding_buildings = {
 		strasbourg = newspaper
 	}
 	completion_effects = {
@@ -21,7 +21,7 @@ gazette_de_france = { #Source: Henry Kamen, "Early Modern European Society", 202
 		domain = france
 		owns_site = paris
 	}
-	built_settlement_buildings = {
+	built_holding_buildings = {
 		paris = newspaper
 	}
 	completion_effects = {

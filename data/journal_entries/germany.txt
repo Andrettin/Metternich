@@ -5,7 +5,7 @@
 #	preconditions = {
 #		owns_site = helmstedt
 #	}
-#	built_settlement_buildings = {
+#	built_holding_buildings = {
 #		helmstedt = newspaper
 #	}
 #	completion_effects = {
@@ -20,7 +20,7 @@ frankfurter_zeitung = { #Source: Henry Kamen, "Early Modern European Society", 2
 	preconditions = {
 		owns_site = frankfurt
 	}
-	built_settlement_buildings = {
+	built_holding_buildings = {
 		frankfurt = newspaper
 	}
 	completion_effects = {

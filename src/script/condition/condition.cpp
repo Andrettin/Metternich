@@ -16,7 +16,7 @@
 #include "script/condition/any_nearby_province_condition.h"
 #include "script/condition/any_neighbor_country_condition.h"
 #include "script/condition/any_neighbor_province_condition.h"
-#include "script/condition/any_settlement_condition.h"
+#include "script/condition/any_holding_condition.h"
 #include "script/condition/any_site_condition.h"
 #include "script/condition/any_subject_domain_condition.h"
 #include "script/condition/artillery_condition.h"
@@ -467,8 +467,8 @@ std::unique_ptr<const condition_base<scope_type, read_only_context>> condition<s
 	}
 
 	if constexpr (std::is_same_v<scope_type, domain> || std::is_same_v<scope_type, province>) {
-		if (tag == "any_settlement") {
-			condition = std::make_unique<any_settlement_condition<scope_type>>(condition_operator);
+		if (tag == "any_holding") {
+			condition = std::make_unique<any_holding_condition<scope_type>>(condition_operator);
 		} else if (tag == "any_site") {
 			condition = std::make_unique<any_site_condition<scope_type>>(condition_operator);
 		} else if (tag == "ruler") {

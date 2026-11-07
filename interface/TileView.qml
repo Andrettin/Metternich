@@ -195,7 +195,7 @@ Item {
 				selected_civilian_unit = civilian_unit
 				selected_site = null
 				selected_province = null
-			} else if (site !== null && (site !== selected_site || selected_garrison) && (site.settlement || resource)) {
+			} else if (site !== null && (site !== selected_site || selected_garrison) && (site.holding || resource)) {
 				selected_site = site
 				selected_province = null
 				selected_civilian_unit = null
@@ -228,7 +228,7 @@ Item {
 			
 			if (!explored) {
 				text += "Unexplored"
-			} else if (site !== null && site.settlement && site.game_data.holding_type) {
+			} else if (site !== null && site.holding && site.game_data.holding_type) {
 				text += site.game_data.holding_type.name
 				
 				if (resource !== null) {
@@ -252,12 +252,12 @@ Item {
 			text += ") "
 			
 			if (explored) {
-				if (site !== null && (resource !== null || site.settlement)) {
+				if (site !== null && (resource !== null || site.holding)) {
 					text += site.game_data.current_cultural_name
 				}
 				
 				if (province !== null) {
-					if (site !== null && (resource !== null || site.settlement)) {
+					if (site !== null && (resource !== null || site.holding)) {
 						text += ", "
 					}
 					

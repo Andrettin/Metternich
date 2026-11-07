@@ -5,7 +5,7 @@ corrant_out_of_italy_germany_etc = { #Source: Henry Kamen, "Early Modern Europea
 	preconditions = {
 		owns_site = amsterdam
 	}
-	built_settlement_buildings = {
+	built_holding_buildings = {
 		amsterdam = newspaper
 	}
 	completion_effects = {

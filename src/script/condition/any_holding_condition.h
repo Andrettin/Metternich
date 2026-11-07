@@ -11,17 +11,17 @@
 namespace metternich {
 
 template <typename upper_scope_type>
-class any_settlement_condition final : public scope_condition_base<upper_scope_type, site, read_only_context, condition<site>>
+class any_holding_condition final : public scope_condition_base<upper_scope_type, site, read_only_context, condition<site>>
 {
 public:
-	explicit any_settlement_condition(const gsml_operator condition_operator)
+	explicit any_holding_condition(const gsml_operator condition_operator)
 		: scope_condition_base<upper_scope_type, site, read_only_context, condition<site>>(condition_operator)
 	{
 	}
 
 	virtual const std::string &get_class_identifier() const override
 	{
-		static const std::string class_identifier = "any_settlement";
+		static const std::string class_identifier = "any_holding";
 		return class_identifier;
 	}
 
@@ -29,23 +29,23 @@ public:
 	{
 		if constexpr (std::is_same_v<upper_scope_type, domain>) {
 			for (const province *province : upper_scope->get_game_data()->get_provinces()) {
-				for (const site *settlement_site : province->get_game_data()->get_holding_sites()) {
-					if (!settlement_site->get_game_data()->is_built()) {
+				for (const site *holding_site : province->get_game_data()->get_holding_sites()) {
+					if (!holding_site->get_game_data()->is_built()) {
 						continue;
 					}
 
-					if (this->check_scope(settlement_site, ctx)) {
+					if (this->check_scope(holding_site, ctx)) {
 						return true;
 					}
 				}
 			}
 		} else if constexpr (std::is_same_v<upper_scope_type, province>) {
-			for (const site *settlement_site : upper_scope->get_game_data()->get_holding_sites()) {
-				if (!settlement_site->get_game_data()->is_built()) {
+			for (const site *holding_site : upper_scope->get_game_data()->get_holding_sites()) {
+				if (!holding_site->get_game_data()->is_built()) {
 					continue;
 				}
 
-				if (this->check_scope(settlement_site, ctx)) {
+				if (this->check_scope(holding_site, ctx)) {
 					return true;
 				}
 			}
@@ -56,7 +56,7 @@ public:
 
 	virtual std::string get_scope_name() const override
 	{
-		return "Any settlement";
+		return "Any holding";
 	}
 };
 
