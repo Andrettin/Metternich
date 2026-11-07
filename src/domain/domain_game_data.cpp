@@ -1591,8 +1591,6 @@ QVariantList domain_game_data::get_sites_qvariant_list() const
 
 QCoro::Task<void> domain_game_data::add_site(const site *site)
 {
-	assert_throw(site->is_holding());
-
 	const bool was_alive = this->is_alive();
 
 	co_await this->explore_province(site->get_map_data()->get_province());
@@ -1610,15 +1608,17 @@ QCoro::Task<void> domain_game_data::add_site(const site *site)
 	}
 
 	//discoveries are applied to all provinces in which a domain has holdings
-	const technology_set technologies = this->get_technology()->get_technologies();
-	for (const metternich::technology *technology : technologies) {
-		if (!technology->is_discovery()) {
-			continue;
-		}
+	if (site->is_holding()) {
+		const technology_set technologies = this->get_technology()->get_technologies();
+		for (const metternich::technology *technology : technologies) {
+			if (!technology->is_discovery()) {
+				continue;
+			}
 
-		province_game_data *province_game_data = site->get_game_data()->get_province()->get_game_data();
-		if (province_game_data->can_gain_technology(technology)) {
-			co_await province_game_data->add_technology(technology);
+			province_game_data *province_game_data = site->get_game_data()->get_province()->get_game_data();
+			if (province_game_data->can_gain_technology(technology)) {
+				co_await province_game_data->add_technology(technology);
+			}
 		}
 	}
 
