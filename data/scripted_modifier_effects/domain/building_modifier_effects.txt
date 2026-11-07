@@ -2,6 +2,13 @@ barracks = {
 	unrest = -1
 }
 
+cathedral = {
+	loyalty = 4
+	stability = 4
+	unrest = -4
+	#fame = 1
+}
+
 granary = {
 	loyalty = 1
 	stability = 1

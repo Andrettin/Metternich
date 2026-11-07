@@ -14,9 +14,6 @@ alchemists_shop = {
 	commodity_costs = {
 		wealth = 18gb
 	}
-	modifier = {
-		base_population_capacity = 10
-	}
 	domain_modifier = {
 		economy = 1
 	}

@@ -20,7 +20,6 @@ mansion = {
 	modifier = {
 		law = 1
 		society = 1
-		base_population_capacity = 30
 	}
 	domain_modifier = {
 		stability = 1
@@ -50,7 +49,6 @@ great_mansion = {
 	modifier = {
 		law = 1
 		society = 1
-		base_population_capacity = 50
 	}
 	domain_modifier = {
 		economy = 1
@@ -86,7 +84,6 @@ palace = {
 	modifier = {
 		law = 2
 		society = 1
-		base_population_capacity = 200
 	}
 	domain_modifier = {
 		economy = 2
@@ -116,7 +113,6 @@ grand_palace = {
 	modifier = {
 		law = 2
 		society = 1
-		base_population_capacity = 200
 	}
 	domain_modifier = {
 		economy = 2

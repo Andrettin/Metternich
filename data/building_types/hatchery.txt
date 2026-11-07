@@ -14,9 +14,6 @@ hatchery = {
 	conditions = {
 		scripted_condition = is_lair
 	}
-	modifier = {
-		scripted_modifier_effect = temple
-	}
 	domain_modifier = {
 		scripted_modifier_effect = temple
 	}

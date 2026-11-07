@@ -71,7 +71,6 @@ medium_stable = {
 			capacity_type = light_cavalry
 			capacity = 80
 		}
-		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1
@@ -117,7 +116,6 @@ large_stable = {
 			capacity_type = light_cavalry
 			capacity = 135
 		}
-		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1
@@ -164,7 +162,6 @@ great_stable = {
 			capacity_type = heavy_cavalry
 			capacity = 5
 		}
-		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1
@@ -211,7 +208,6 @@ royal_stable = {
 			capacity_type = heavy_cavalry
 			capacity = 15
 		}
-		base_population_capacity = 10
 	}
 	domain_modifier = {
 		economy = 1

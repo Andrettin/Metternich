@@ -16,7 +16,6 @@ shrine = {
 		wealth = 8gb
 	}
 	modifier = {
-		base_population_capacity = 10
 	}
 	domain_modifier = {
 		loyalty = 1
@@ -48,7 +47,6 @@ temple = {
 		lumber = 64
 	}
 	modifier = {
-		scripted_modifier_effect = temple
 	}
 	domain_modifier = {
 		scripted_modifier_effect = temple
@@ -79,7 +77,6 @@ large_temple = {
 		lumber = 64 #as Temple
 	}
 	modifier = {
-		scripted_modifier_effect = temple
 	}
 	domain_modifier = {
 		scripted_modifier_effect = temple
@@ -115,14 +112,10 @@ cathedral = {
 		iron = 100
 	}
 	modifier = {
-		law = 2
-		base_population_capacity = 100
+		scripted_modifier_effect = cathedral
 	}
 	domain_modifier = {
-		loyalty = 4
-		stability = 4
-		unrest = -4
-		#fame = 1
+		scripted_modifier_effect = cathedral
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -157,14 +150,10 @@ large_cathedral = {
 		iron = 100 #as Cathedral
 	}
 	modifier = {
-		law = 2
-		base_population_capacity = 100
+		scripted_modifier_effect = cathedral
 	}
 	domain_modifier = {
-		loyalty = 4
-		stability = 4
-		unrest = -4
-		#fame = 1
+		scripted_modifier_effect = cathedral
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -199,14 +188,10 @@ grand_cathedral = {
 		iron = 100 #as Cathedral
 	}
 	modifier = {
-		law = 2
-		base_population_capacity = 100
+		scripted_modifier_effect = cathedral
 	}
 	domain_modifier = {
-		loyalty = 4
-		stability = 4
-		unrest = -4
-		#fame = 1
+		scripted_modifier_effect = cathedral
 	}
 	item_creation_types = {
 		minor_potion_scroll_or_wondrous_item
@@ -241,7 +226,6 @@ monastery = {
 	modifier = {
 		law = 1
 		lore = 1
-		base_population_capacity = 50
 	}
 	domain_modifier = {
 		stability = 1

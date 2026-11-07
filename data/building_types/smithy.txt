@@ -21,9 +21,6 @@ smithy = {
 		lumber = 64
 		iron = 20
 	}
-	modifier = {
-		base_population_capacity = 10
-	}
 	domain_modifier = {
 		economy = 1
 		stability = 1
@@ -61,7 +58,6 @@ swordsmithy = {
 			capacity_type = pikemen
 			capacity = 65
 		}
-		base_population_capacity = 10 #as Smithy
 	}
 	domain_modifier = {
 		economy = 1

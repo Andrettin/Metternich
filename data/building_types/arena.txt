@@ -16,6 +16,5 @@ arena = {
 	}
 	modifier = {
 		amenities_bonus = 3
-		base_population_capacity = 100
 	}
 }
