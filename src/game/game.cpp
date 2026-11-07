@@ -968,9 +968,6 @@ QCoro::Task<void> game::apply_sites()
 		//check to see if any features should be added on start
 		co_await site_game_data->check_features();
 
-		//generate features for the start, if any are missing (e.g. resource features)
-		//co_await site->get_game_data()->generate_features();
-
 		const province *site_province = site->get_map_data()->get_province();
 		assert_throw(site_province != nullptr);
 		assert_throw(site_province->get_game_data()->is_on_map());

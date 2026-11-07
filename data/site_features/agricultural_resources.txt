@@ -10,14 +10,6 @@ prime_cattle_land = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	weight_factor = {
-		base_value = 30
-		
-		modifier = {
-			factor = 1.5
-			terrain = steppe
-		}
-	}
 }
 
 prime_cotton_land = {
@@ -27,19 +19,6 @@ prime_cotton_land = {
 	discovery_technology = cotton
 	domain_modifier = {
 		scripted_modifier_effect = resource
-	}
-	weight_factor = {
-		base_value = 20
-		
-		modifier = {
-			factor = 0
-			or = {
-				terrain = mountains
-				terrain = high_mountains
-				terrain = forest
-				terrain = desert
-			}
-		}
 	}
 }
 
@@ -63,30 +42,6 @@ prime_grain_land = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	weight_factor = {
-		base_value = 35
-		
-		modifier = {
-			factor = 0.15
-			or = {
-				terrain = mountains
-				terrain = high_mountains
-				terrain = forest
-				terrain = hills
-			}
-		}
-		modifier = {
-			factor = 0.25
-			terrain = swamp
-		}
-		modifier = {
-			factor = 0.6
-			or = {
-				terrain = savannah
-				terrain = steppe
-			}
-		}
-	}
 }
 
 prime_sheep_land = {
@@ -98,25 +53,6 @@ prime_sheep_land = {
 	}
 	domain_modifier = {
 		scripted_modifier_effect = resource
-	}
-	weight_factor = {
-		base_value = 30
-		
-		modifier = {
-			factor = 0.15
-			or = {
-				terrain = plains
-				#terrain = hills
-				terrain = forest
-			}
-		}
-		modifier = {
-			factor = 1.25
-			or = {
-				terrain = desert
-				terrain = savannah
-			}
-		}
 	}
 }
 
@@ -138,8 +74,5 @@ prime_tobacco_land = {
 	}
 	domain_modifier = {
 		scripted_modifier_effect = resource
-	}
-	weight_factor = {
-		base_value = 15
 	}
 }

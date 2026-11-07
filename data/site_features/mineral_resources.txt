@@ -10,9 +10,6 @@ coal_deposit = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	weight_factor = {
-		base_value = 1
-	}
 }
 
 gold_deposit = {
@@ -25,9 +22,6 @@ gold_deposit = {
 	}
 	domain_modifier = {
 		scripted_modifier_effect = resource
-	}
-	weight_factor = {
-		base_value = 5
 	}
 }
 
@@ -43,9 +37,6 @@ iron_deposit = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	weight_factor = {
-		base_value = 10
-	}
 }
 
 silver_deposit = {
@@ -59,9 +50,6 @@ silver_deposit = {
 	}
 	domain_modifier = {
 		scripted_modifier_effect = resource
-	}
-	weight_factor = {
-		base_value = 5 #same as gold
 	}
 }
 

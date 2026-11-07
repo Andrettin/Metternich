@@ -76,11 +76,6 @@ public:
 
 	Q_INVOKABLE QString get_modifier_string(const metternich::site *site) const;
 
-	const factor<site> *get_weight_factor() const
-	{
-		return this->weight_factor.get();
-	}
-
 signals:
 	void changed();
 
@@ -92,7 +87,6 @@ private:
 	std::vector<const terrain_type *> terrain_types;
 	std::unique_ptr<metternich::modifier<const site>> modifier;
 	std::unique_ptr<metternich::modifier<const domain>> domain_modifier;
-	std::unique_ptr<factor<site>> weight_factor;
 };
 
 }

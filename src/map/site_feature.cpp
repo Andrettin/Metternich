@@ -39,9 +39,6 @@ void site_feature::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "domain_modifier") {
 		this->domain_modifier = std::make_unique<metternich::modifier<const domain>>();
 		this->domain_modifier->process_gsml_data(scope);
-	} else if (tag == "weight_factor") {
-		this->weight_factor = std::make_unique<factor<site>>();
-		this->weight_factor->process_gsml_data(scope);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

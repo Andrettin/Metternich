@@ -33,7 +33,4 @@ prime_timber = {
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}
-	weight_factor = {
-		base_value = 25
-	}
 }

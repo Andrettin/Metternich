@@ -1508,36 +1508,6 @@ QCoro::Task<void> site_game_data::check_features()
 	}
 }
 
-QCoro::Task<void> site_game_data::generate_features()
-{
-	if (this->site->is_holding()) {
-		if (this->site->get_holding_type() != nullptr && this->site->get_holding_type()->has_resource()) {
-			const bool has_resource_feature = this->get_resource_feature() != nullptr;
-
-			if (!has_resource_feature) {
-				//generate a resource feature if this holding has none
-				std::vector<const site_feature *> potential_resources;
-				for (const site_feature *feature : site_feature::get_all()) {
-					if (feature->is_resource() && feature->get_weight_factor() != nullptr) {
-						if (!this->can_have_feature(feature)) {
-							continue;
-						}
-
-						const int weight = feature->get_weight_factor()->calculate(this->site).to_int();
-						for (int i = 0; i < weight; ++i) {
-							potential_resources.push_back(feature);
-						}
-					}
-				}
-
-				if (!potential_resources.empty()) {
-					co_await this->add_feature(vector::get_random(potential_resources));
-				}
-			}
-		}
-	}
-}
-
 QVariantList site_game_data::get_attribute_values_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_attribute_values());
