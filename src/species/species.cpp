@@ -161,7 +161,7 @@ void species::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->gendered_names[magic_enum::enum_cast<gender>(key).value()] = value;
+			this->gendered_names[string::to_enum<gender>(key)] = value;
 		});
 	} else if (tag == "pre_evolutions") {
 		for (const std::string &value : values) {
@@ -205,14 +205,14 @@ void species::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->gendered_min_starting_weights[magic_enum::enum_cast<gender>(key).value()] = string::to_weight(value);
+			this->gendered_min_starting_weights[string::to_enum<gender>(key)] = string::to_weight(value);
 		});
 	} else if (tag == "max_starting_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->gendered_max_starting_weights[magic_enum::enum_cast<gender>(key).value()] = string::to_weight(value);
+			this->gendered_max_starting_weights[string::to_enum<gender>(key)] = string::to_weight(value);
 		});
 	} else if (tag == "character_class_level_limits") {
 		scope.for_each_property([this](const gsml_property &property) {

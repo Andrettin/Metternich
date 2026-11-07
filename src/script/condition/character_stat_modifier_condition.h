@@ -6,6 +6,7 @@
 #include "character/character_stat.h"
 #include "script/condition/numerical_condition.h"
 #include "script/context.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -31,7 +32,7 @@ public:
 		if (key == "stat") {
 			this->stat = character_stat::get_stat(value);
 		} else if (key == "modifier_type") {
-			this->modifier_type = magic_enum::enum_cast<character_modifier_type>(value).value();
+			this->modifier_type = string::to_enum<character_modifier_type>(value);
 		} else if (key == "modifier") {
 			this->set_base_value(std::stoi(value));
 			this->set_condition_operator(property.get_operator());

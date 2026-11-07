@@ -11,6 +11,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -34,7 +35,7 @@ void resource::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "site_types") {
 		for (const std::string &value : values) {
-			this->site_types.insert(magic_enum::enum_cast<site_type>(value).value());
+			this->site_types.insert(string::to_enum<site_type>(value));
 		}
 	} else if (tag == "modifier") {
 		this->modifier = std::make_unique<metternich::modifier<const site>>();

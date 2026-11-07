@@ -47,7 +47,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "bloodline_strength_category_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
+			const bloodline_strength_category category = string::to_enum<bloodline_strength_category>(property.get_key());
 			const int weight = std::stoi(property.get_value());
 
 			this->bloodline_strength_category_weights[category] = weight;
@@ -59,7 +59,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "bloodline_strength_per_category") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const bloodline_strength_category category = magic_enum::enum_cast<bloodline_strength_category>(property.get_key()).value();
+			const bloodline_strength_category category = string::to_enum<bloodline_strength_category>(property.get_key());
 			dice dice(property.get_value());
 
 			this->bloodline_strength_per_category[category] = std::move(dice);
@@ -69,7 +69,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->divine_rank_levels[magic_enum::enum_cast<divine_rank>(key).value()] = std::stoi(value);
+			this->divine_rank_levels[string::to_enum<divine_rank>(key)] = std::stoi(value);
 		});
 	} else if (tag == "divine_rank_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
@@ -122,7 +122,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "opinion_type_thresholds") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const opinion_type opinion_type = magic_enum::enum_cast<metternich::opinion_type>(property.get_key()).value();
+			const opinion_type opinion_type = string::to_enum<metternich::opinion_type>(property.get_key());
 			const int opinion = std::stoi(property.get_value());
 
 			this->opinion_type_thresholds[opinion] = opinion_type;

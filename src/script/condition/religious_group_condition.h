@@ -5,6 +5,7 @@
 #include "script/condition/condition.h"
 #include "script/target_variant.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -16,7 +17,7 @@ public:
 		: condition<scope_type>(condition_operator)
 	{
 		if (magic_enum::enum_contains<special_target_type>(value)) {
-			this->religious_group_target = magic_enum::enum_cast<special_target_type>(value).value();
+			this->religious_group_target = string::to_enum<special_target_type>(value);
 		} else {
 			this->religious_group_target = religious_group::get(value);
 		}

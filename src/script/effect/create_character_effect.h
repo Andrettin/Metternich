@@ -12,6 +12,7 @@
 #include "species/species.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -44,7 +45,7 @@ public:
 		} else if (key == "level") {
 			this->level = std::stoi(value);
 		} else if (key == "gender") {
-			this->gender = magic_enum::enum_cast<archimedes::gender>(value).value();
+			this->gender = string::to_enum<archimedes::gender>(value);
 		} else if (key == "health") {
 			this->health = std::stoi(value);
 		} else if (key == "saved_scope") {

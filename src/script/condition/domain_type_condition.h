@@ -3,6 +3,7 @@
 #include "domain/domain.h"
 #include "domain/domain_type.h"
 #include "script/condition/condition.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -13,7 +14,7 @@ public:
 	explicit domain_type_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<domain>(condition_operator)
 	{
-		this->domain_type = magic_enum::enum_cast<metternich::domain_type>(value).value();
+		this->domain_type = string::to_enum<metternich::domain_type>(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override

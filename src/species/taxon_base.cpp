@@ -10,6 +10,7 @@
 #include "language/name_generator.h"
 #include "species/taxon.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -31,7 +32,7 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->starting_age_modifiers[magic_enum::enum_cast<starting_age_category>(key).value()] = dice(value);
+			this->starting_age_modifiers[string::to_enum<starting_age_category>(key)] = dice(value);
 		});
 	} else if (tag == "item_slots") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -52,7 +53,7 @@ void taxon_base::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
-			const gender gender = magic_enum::enum_cast<archimedes::gender>(tag).value();
+			const gender gender = string::to_enum<archimedes::gender>(tag);
 
 			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});

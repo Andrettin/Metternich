@@ -79,7 +79,7 @@ void domain_economy::process_gsml_property(const gsml_property &property)
 	if (key == "storage_capacity") {
 		this->storage_capacity = std::stoll(value);
 	} else if (key == "province_taxation_type") {
-		this->province_taxation_type = magic_enum::enum_cast<metternich::province_taxation_type>(value).value();
+		this->province_taxation_type = string::to_enum<metternich::province_taxation_type>(value);
 	} else if (key == "attribute_taxation") {
 		this->attribute_taxation = decimillesimal_int(value);
 	} else if (key == "output_modifier") {

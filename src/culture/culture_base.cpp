@@ -24,6 +24,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 #include <magic_enum/magic_enum_utility.hpp>
@@ -75,7 +76,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->patronyms[magic_enum::enum_cast<gender>(key).value()] = value;
+			this->patronyms[string::to_enum<gender>(key)] = value;
 		});
 	} else if (tag == "title_names") {
 		government_type::process_title_name_scope(this->title_names, scope);
@@ -127,7 +128,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
-			const gender gender = magic_enum::enum_cast<archimedes::gender>(tag).value();
+			const gender gender = string::to_enum<archimedes::gender>(tag);
 
 			this->given_name_generator->add_names(gender, child_scope.get_values());
 		});
@@ -139,7 +140,7 @@ void culture_base::process_gsml_scope(const gsml_data &scope)
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &tag = child_scope.get_tag();
 
-			const gender gender = magic_enum::enum_cast<archimedes::gender>(tag).value();
+			const gender gender = string::to_enum<archimedes::gender>(tag);
 
 			this->surname_generator->add_names(gender, child_scope.get_values());
 		});

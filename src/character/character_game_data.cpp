@@ -211,7 +211,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 				const std::string &grandchild_tag = grandchild_scope.get_tag();
 				const std::vector<std::string> &grandchild_values = grandchild_scope.get_values();
 
-				const character_modifier_type modifier_type = magic_enum::enum_cast<character_modifier_type>(grandchild_tag).value();
+				const character_modifier_type modifier_type = string::to_enum<character_modifier_type>(grandchild_tag);
 				for (const std::string &grandchild_value : grandchild_values) {
 					this->stat_modifiers[stat][modifier_type].push_back(std::stoi(grandchild_value));
 				}
@@ -224,7 +224,7 @@ void character_game_data::process_gsml_scope(const gsml_data &scope)
 			const character_stat *stat = character_stat::get_stat(child_tag);
 
 			child_scope.for_each_property([this, stat](const gsml_property &stat_property) {
-				const character_modifier_type modifier_type = magic_enum::enum_cast<character_modifier_type>(stat_property.get_key()).value();
+				const character_modifier_type modifier_type = string::to_enum<character_modifier_type>(stat_property.get_key());
 				this->stat_modifier_totals[stat][modifier_type] = std::stoi(stat_property.get_value());
 			});
 		});

@@ -5,6 +5,7 @@
 #include "domain/domain_tier.h"
 #include "domain/domain_tier_data.h"
 #include "script/condition/numerical_condition.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -12,7 +13,7 @@ class tier_condition final : public numerical_condition<domain, read_only_contex
 {
 public:
 	explicit tier_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<domain, read_only_context>(static_cast<int>(magic_enum::enum_cast<domain_tier>(value).value()), condition_operator)
+		: numerical_condition<domain, read_only_context>(static_cast<int>(string::to_enum<domain_tier>(value)), condition_operator)
 	{
 	}
 

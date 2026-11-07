@@ -28,6 +28,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/map_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
@@ -53,9 +54,9 @@ void domain_government::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "succession_type") {
-		this->succession_type = magic_enum::enum_cast<metternich::succession_type>(value).value();
+		this->succession_type = string::to_enum<metternich::succession_type>(value);
 	} else if (key == "succession_gender_type") {
-		this->succession_gender_type = magic_enum::enum_cast<metternich::succession_gender_type>(value).value();
+		this->succession_gender_type = string::to_enum<metternich::succession_gender_type>(value);
 	} else if (key == "law_cost_modifier") {
 		this->law_cost_modifier = std::stoi(value);
 	} else {

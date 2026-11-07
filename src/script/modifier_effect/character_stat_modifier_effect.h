@@ -5,6 +5,7 @@
 #include "character/character_modifier_type.h"
 #include "character/character_stat.h"
 #include "script/modifier_effect/modifier_effect.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -33,7 +34,7 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "modifier_type") {
-			this->modifier_type = magic_enum::enum_cast<character_modifier_type>(value).value();
+			this->modifier_type = string::to_enum<character_modifier_type>(value);
 		} else if (key == "modifier") {
 			this->value = decimillesimal_int(std::stoi(value));
 		} else {

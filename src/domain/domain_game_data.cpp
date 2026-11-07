@@ -136,7 +136,7 @@ void domain_game_data::process_gsml_property(const gsml_property &property)
 	const std::string &value = property.get_value();
 
 	if (key == "tier") {
-		this->tier = magic_enum::enum_cast<domain_tier>(value).value();
+		this->tier = string::to_enum<domain_tier>(value);
 	} else if (key == "culture") {
 		this->culture = culture::get(value);
 	} else if (key == "religion") {

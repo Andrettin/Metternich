@@ -48,18 +48,18 @@ void battle_defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "battle_resolution_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const battle_resolution_type attacker_resolution_type = magic_enum::enum_cast<battle_resolution_type>(child_tag).value();
+			const battle_resolution_type attacker_resolution_type = string::to_enum<battle_resolution_type>(child_tag);
 
 			child_scope.for_each_child([this, attacker_resolution_type](const gsml_data &grandchild_scope) {
 				const std::string &grandchild_tag = grandchild_scope.get_tag();
-				const battle_resolution_type defender_resolution_type = magic_enum::enum_cast<battle_resolution_type>(grandchild_tag).value();
+				const battle_resolution_type defender_resolution_type = string::to_enum<battle_resolution_type>(grandchild_tag);
 
 				grandchild_scope.for_each_child([this, attacker_resolution_type, defender_resolution_type](const gsml_data &great_grandchild_scope) {
 					const int attack_defense_difference = std::stoi(great_grandchild_scope.get_tag());
 
 					std::vector<attack_result> results;
 					for (const std::string &value : great_grandchild_scope.get_values()) {
-						const attack_result result = magic_enum::enum_cast<attack_result>(value).value();
+						const attack_result result = string::to_enum<attack_result>(value);
 						results.push_back(result);
 					}
 

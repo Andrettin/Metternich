@@ -28,6 +28,7 @@
 #include "util/gender.h"
 #include "util/log_util.h"
 #include "util/random.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -83,7 +84,7 @@ void domain::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "tier_core_provinces") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_tag).value();
+			const domain_tier tier = string::to_enum<domain_tier>(child_tag);
 
 			const std::vector<std::string> &child_values = child_scope.get_values();
 			std::vector<const province *> &tier_core_provinces = this->tier_core_provinces[tier];
@@ -94,7 +95,7 @@ void domain::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "tier_core_holdings") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_tag).value();
+			const domain_tier tier = string::to_enum<domain_tier>(child_tag);
 
 			const std::vector<std::string> &child_values = child_scope.get_values();
 			std::vector<const site *> &tier_core_holdings = this->tier_core_holdings[tier];

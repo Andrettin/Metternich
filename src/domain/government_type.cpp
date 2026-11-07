@@ -16,6 +16,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -104,7 +105,7 @@ void government_type::process_title_name_scope(title_name_map &title_names, cons
 	scope.for_each_property([&title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();
+		const domain_tier tier = string::to_enum<domain_tier>(key);
 		title_names[tier] = value;
 	});
 }
@@ -188,16 +189,16 @@ void government_type::process_office_title_name_scope(office_title_inner_name_ma
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 		if (magic_enum::enum_contains<domain_tier>(key)) {
-			const domain_tier tier = magic_enum::enum_cast<domain_tier>(key).value();
+			const domain_tier tier = string::to_enum<domain_tier>(key);
 			office_title_names[tier][gender::none] = value;
 		} else {
-			const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+			const gender gender = string::to_enum<archimedes::gender>(key);
 			office_title_names[domain_tier::none][gender] = value;
 		}
 	});
 
 	scope.for_each_child([&office_title_names](const gsml_data &child_scope) {
-		const domain_tier tier = magic_enum::enum_cast<domain_tier>(child_scope.get_tag()).value();
+		const domain_tier tier = string::to_enum<domain_tier>(child_scope.get_tag());
 		government_type::process_office_title_name_scope(office_title_names[tier], child_scope);
 	});
 }
@@ -207,7 +208,7 @@ void government_type::process_office_title_name_scope(std::map<gender, std::stri
 	scope.for_each_property([&office_title_names](const gsml_property &property) {
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
-		const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+		const gender gender = string::to_enum<archimedes::gender>(key);
 		office_title_names[gender] = value;
 	});
 }

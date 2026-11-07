@@ -3,6 +3,7 @@
 #include "game/game.h"
 #include "script/condition/numerical_condition.h"
 #include "time/month.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -12,7 +13,7 @@ class month_condition final : public numerical_condition<scope_type, read_only_c
 {
 public:
 	explicit month_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<scope_type, read_only_context>(static_cast<int>(magic_enum::enum_cast<month>(value).value()), condition_operator)
+		: numerical_condition<scope_type, read_only_context>(static_cast<int>(string::to_enum<month>(value)), condition_operator)
 	{
 	}
 

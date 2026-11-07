@@ -8,6 +8,7 @@
 #include "unit/military_unit_class.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -42,7 +43,7 @@ public:
 		} else if (key == "unit_class") {
 			this->unit_class = military_unit_class::get(value);
 		} else if (key == "category") {
-			this->category = magic_enum::enum_cast<military_unit_category>(value).value();
+			this->category = string::to_enum<military_unit_category>(value);
 		} else if (key == "count") {
 			this->count = std::stoi(value);
 		} else {

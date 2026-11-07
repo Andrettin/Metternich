@@ -8,6 +8,7 @@
 #include "population/population_defines.h"
 #include "util/assert_util.h"
 #include "util/centesimal_int.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -32,7 +33,7 @@ void province_defines::process_gsml_scope(const gsml_data &scope)
 		});
 	} else if (tag == "province_taxation_per_level") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
-			const province_taxation_type taxation_type = magic_enum::enum_cast<province_taxation_type>(child_scope.get_tag()).value();
+			const province_taxation_type taxation_type = string::to_enum<province_taxation_type>(child_scope.get_tag());
 
 			child_scope.for_each_property([this, taxation_type](const gsml_property &property) {
 				const int level = std::stoi(property.get_key());

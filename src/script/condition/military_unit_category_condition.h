@@ -3,6 +3,7 @@
 #include "script/condition/condition.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_category.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -14,7 +15,7 @@ public:
 	explicit military_unit_category_condition(const std::string &value, const gsml_operator condition_operator)
 		: condition<scope_type>(condition_operator)
 	{
-		this->military_unit_category = magic_enum::enum_cast<metternich::military_unit_category>(value).value();
+		this->military_unit_category = string::to_enum<metternich::military_unit_category>(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override

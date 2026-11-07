@@ -11,6 +11,7 @@
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -38,10 +39,10 @@ public:
 
 		if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const metternich::domain>) {
 			if (key == "domain") {
-				this->domain = magic_enum::enum_cast<military_unit_domain>(value).value();
+				this->domain = string::to_enum<military_unit_domain>(value);
 				return;
 			} else if (key == "category") {
-				this->category = magic_enum::enum_cast<military_unit_category>(value).value();
+				this->category = string::to_enum<military_unit_category>(value);
 				return;
 			} else if (key == "type") {
 				this->type = military_unit_type::get(value);
@@ -50,7 +51,7 @@ public:
 		}
 
 		if (key == "stat") {
-			this->stat = magic_enum::enum_cast<military_unit_stat>(value).value();
+			this->stat = string::to_enum<military_unit_stat>(value);
 		} else if (key == "value") {
 			this->value = decimillesimal_int(value);
 		} else {

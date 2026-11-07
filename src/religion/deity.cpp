@@ -20,6 +20,7 @@
 #include "spell/spell.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -58,7 +59,7 @@ void deity::process_gsml_property(const gsml_property &property)
 
 	if (key == "divine_rank") {
 		assert_throw(property.get_operator() == gsml_operator::assignment);
-		const divine_rank rank = magic_enum::enum_cast<divine_rank>(value).value();
+		const divine_rank rank = string::to_enum<divine_rank>(value);
 		this->divine_level = character_defines::get()->get_divine_rank_level(rank);
 	} else {
 		named_data_entry::process_gsml_property(property);

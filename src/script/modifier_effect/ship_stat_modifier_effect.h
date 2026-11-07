@@ -5,6 +5,7 @@
 #include "script/modifier_effect/modifier_effect.h"
 #include "unit/military_unit_stat.h"
 #include "unit/military_unit_type.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -12,7 +13,7 @@ class ship_stat_modifier_effect final : public modifier_effect<const domain>
 {
 public:
 	explicit ship_stat_modifier_effect(const std::string &stat_name, const std::string &value)
-		: modifier_effect(value), military_unit_stat(magic_enum::enum_cast<metternich::military_unit_stat>(stat_name).value())
+		: modifier_effect(value), military_unit_stat(string::to_enum<metternich::military_unit_stat>(stat_name))
 	{
 	}
 

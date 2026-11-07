@@ -29,6 +29,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
@@ -45,7 +46,7 @@ void character_class::process_variant_name_scope(std::map<const taxon_base *, st
 		} else if (const taxon *taxon = taxon::try_get(key)) {
 			variant_names[taxon][gender::none] = value;
 		} else {
-			const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+			const gender gender = string::to_enum<archimedes::gender>(key);
 			variant_names[nullptr][gender] = value;
 		}
 	});
@@ -68,7 +69,7 @@ void character_class::process_variant_name_scope(std::map<gender, std::string> &
 		const std::string &key = property.get_key();
 		const std::string &value = property.get_value();
 
-		const gender gender = magic_enum::enum_cast<archimedes::gender>(key).value();
+		const gender gender = string::to_enum<archimedes::gender>(key);
 		variant_names[gender] = value;
 	});
 }

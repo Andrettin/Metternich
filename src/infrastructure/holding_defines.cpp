@@ -8,6 +8,7 @@
 #include "economy/employment_type.h"
 #include "infrastructure/construction_type.h"
 #include "script/modifier.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -36,7 +37,7 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 	if (tag == "construction_level_commodity_costs") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(child_tag).value();
+			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
 			child_scope.for_each_property([this, construction_type](const gsml_property &property) {
 				const commodity *commodity = commodity::get(property.get_key());
@@ -46,7 +47,7 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "construction_level_commodity_costs_per_level") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(child_tag).value();
+			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
 			child_scope.for_each_property([this, construction_type](const gsml_property &property) {
 				const commodity *commodity = commodity::get(property.get_key());
@@ -56,7 +57,7 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "construction_level_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(child_tag).value();
+			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
 			child_scope.for_each_child([this, construction_type](const gsml_data &grandchild_scope) {
 				const int construction_level = std::stoi(grandchild_scope.get_tag());
@@ -68,7 +69,7 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "construction_level_domain_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(child_tag).value();
+			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
 			child_scope.for_each_child([this, construction_type](const gsml_data &grandchild_scope) {
 				const int construction_level = std::stoi(grandchild_scope.get_tag());

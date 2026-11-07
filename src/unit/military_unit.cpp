@@ -40,6 +40,7 @@
 #include "util/log_util.h"
 #include "util/map_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_random_util.h"
 #include "util/vector_util.h"
 
@@ -154,7 +155,7 @@ void military_unit::process_gsml_property(const gsml_property &property)
 	} else if (key == "max_hit_points") {
 		this->max_hit_points = std::stoi(value);
 	} else if (key == "battle_resolution_type") {
-		this->battle_resolution_type = magic_enum::enum_cast<metternich::battle_resolution_type>(value).value();
+		this->battle_resolution_type = string::to_enum<metternich::battle_resolution_type>(value);
 	} else if (key == "army_index") {
 		assert_throw(this->owner != nullptr);
 		const size_t index = std::stoull(value);

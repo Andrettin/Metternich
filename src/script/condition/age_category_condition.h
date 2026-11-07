@@ -4,6 +4,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "script/condition/numerical_condition.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -11,7 +12,7 @@ class age_category_condition final : public numerical_condition<character, read_
 {
 public:
 	explicit age_category_condition(const std::string &value, const gsml_operator condition_operator)
-		: numerical_condition<character, read_only_context>(static_cast<int>(magic_enum::enum_cast<age_category>(value).value()), condition_operator)
+		: numerical_condition<character, read_only_context>(static_cast<int>(string::to_enum<age_category>(value)), condition_operator)
 	{
 	}
 

@@ -4,6 +4,7 @@
 #include "domain/domain_economy.h"
 #include "population/population_strata.h"
 #include "script/modifier_effect/modifier_effect.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -23,7 +24,7 @@ public:
 		const std::string &value = property.get_value();
 
 		if (key == "strata") {
-			this->strata = magic_enum::enum_cast<population_strata>(value).value();
+			this->strata = string::to_enum<population_strata>(value);
 		} else if (key == "rate") {
 			this->value = decimillesimal_int(value);
 		} else {

@@ -9,6 +9,7 @@
 #include "map/diplomatic_map_mode.h"
 #include "map/map.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -51,7 +52,7 @@ QImage diplomatic_map_image_provider::requestImage(const QString &id, QSize *siz
 			std::optional<diplomacy_state> diplomacy_state;
 			const std::string &diplomacy_state_identifier = id_list.at(2);
 			if (diplomacy_state_identifier != "empire") {
-				diplomacy_state = magic_enum::enum_cast<metternich::diplomacy_state>(diplomacy_state_identifier).value();
+				diplomacy_state = string::to_enum<metternich::diplomacy_state>(diplomacy_state_identifier);
 			}
 			
 			if (diplomacy_state.has_value()) {

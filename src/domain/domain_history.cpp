@@ -101,7 +101,7 @@ void domain_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 			if (key == "domain") {
 				other_domain = domain::get(value);
 			} else if (key == "state") {
-				state = magic_enum::enum_cast<diplomacy_state>(value).value();
+				state = string::to_enum<diplomacy_state>(value);
 			} else if (key == "subject_type") {
 				subject_type = subject_type::get(value);
 				state = diplomacy_state::vassal;

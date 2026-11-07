@@ -42,7 +42,7 @@ public:
 				} else if (property.get_key() == "trap") {
 					this->trap = trap_type::get(property.get_value());
 				} else if (property.get_key() == "placement") {
-					this->placement = magic_enum::enum_cast<combat_placement>(property.get_value()).value();
+					this->placement = string::to_enum<combat_placement>(property.get_value());
 				} else {
 					assert_throw(false);
 				}

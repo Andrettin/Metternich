@@ -16,6 +16,7 @@
 #include "util/assert_util.h"
 #include "util/log_util.h"
 #include "util/path_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -57,12 +58,12 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
-			const diplomacy_state diplomacy_state = magic_enum::enum_cast<metternich::diplomacy_state>(child_tag).value();
+			const diplomacy_state diplomacy_state = string::to_enum<metternich::diplomacy_state>(child_tag);
 			this->diplomacy_state_colors[diplomacy_state] = child_scope.to_color();
 		});
 	} else if (tag == "event_trigger_none_random_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
-			const event_trigger trigger = magic_enum::enum_cast<event_trigger>(property.get_key()).value();
+			const event_trigger trigger = string::to_enum<event_trigger>(property.get_key());
 			const int weight = std::stoi(property.get_value());
 
 			this->event_trigger_none_random_weights[trigger] = weight;

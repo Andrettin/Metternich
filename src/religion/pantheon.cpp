@@ -4,6 +4,7 @@
 
 #include "database/gsml_data.h"
 #include "religion/divine_rank.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -16,7 +17,7 @@ void pantheon::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->divine_rank_names[magic_enum::enum_cast<divine_rank>(key).value()] = value;
+			this->divine_rank_names[string::to_enum<divine_rank>(key)] = value;
 		});
 	} else {
 		data_entry::process_gsml_scope(scope);

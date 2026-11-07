@@ -5,6 +5,7 @@
 #include "character/character_class_type.h"
 #include "script/condition/condition.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -36,7 +37,7 @@ public:
 		if (key == "character_class") {
 			this->character_class = character_class::get(value);
 		} else if (key == "type") {
-			this->type = magic_enum::enum_cast<character_class_type>(value).value();
+			this->type = string::to_enum<character_class_type>(value);
 		} else {
 			condition<character>::process_gsml_property(property);
 		}

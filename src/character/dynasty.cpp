@@ -4,9 +4,11 @@
 
 #include "culture/cultural_group.h"
 #include "culture/culture.h"
+#include "database/gsml_data.h"
 #include "language/word.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -38,7 +40,7 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 				const std::string &key = property.get_key();
 				const std::string &value = property.get_value();
 
-				this->cultural_names[culture][magic_enum::enum_cast<gender>(key).value()] = value;
+				this->cultural_names[culture][string::to_enum<gender>(key)] = value;
 			});
 		});
 	} else if (tag == "gendered_names") {
@@ -46,7 +48,7 @@ void dynasty::process_gsml_scope(const gsml_data &scope)
 			const std::string &key = property.get_key();
 			const std::string &value = property.get_value();
 
-			this->cultural_names[nullptr][magic_enum::enum_cast<gender>(key).value()] = value;
+			this->cultural_names[nullptr][string::to_enum<gender>(key)] = value;
 		});
 	} else if (tag == "cultural_prefixes") {
 		scope.for_each_property([this](const gsml_property &property) {

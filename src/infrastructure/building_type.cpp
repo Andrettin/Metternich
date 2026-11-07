@@ -33,6 +33,7 @@
 #include "util/container_util.h"
 #include "util/log_util.h"
 #include "util/number_util.h"
+#include "util/string_conversion_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -79,7 +80,7 @@ void building_type::process_gsml_property(const gsml_property &property)
 	if (key == "wealth_cost") {
 		this->wealth_cost = defines::get()->get_wealth_commodity()->string_to_value(value);
 	} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
-		const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
+		const construction_type construction_type = string::to_enum<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size()));
 		const centesimal_int construction_level(value);
 		this->construction_levels[construction_type] = construction_level;
 		this->total_construction_level += construction_level;
@@ -116,7 +117,7 @@ void building_type::process_gsml_scope(const gsml_data &scope)
 		}
 	} else if (tag == "recruited_military_unit_categories") {
 		for (const std::string &value : values) {
-			this->recruited_military_unit_categories.push_back(magic_enum::enum_cast<military_unit_category>(value).value());
+			this->recruited_military_unit_categories.push_back(string::to_enum<military_unit_category>(value));
 		}
 	} else if (tag == "commodity_costs") {
 		scope.for_each_property([this](const gsml_property &property) {

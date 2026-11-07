@@ -9,6 +9,7 @@
 #include "script/effect/effect_list.h"
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -40,7 +41,7 @@ void battle_enemy::process_gsml_property(const gsml_property &property)
 	} else if (key == "health") {
 		this->health = std::stoi(value);
 	} else if (key == "placement") {
-		this->placement = magic_enum::enum_cast<combat_placement>(value).value();
+		this->placement = string::to_enum<combat_placement>(value);
 	} else {
 		assert_throw(false);
 	}

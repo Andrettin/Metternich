@@ -95,6 +95,7 @@
 #include "script/modifier_effect/weapon_damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/weapon_to_hit_bonus_modifier_effect.h"
 #include "script/modifier_effect/weight_modifier_effect.h"
+#include "util/string_conversion_util.h"
 
 namespace metternich {
 
@@ -252,7 +253,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			} else if (key.starts_with(merchant_ship_stat_modifier_prefix)) {
 				const std::string stat_name = key.substr(merchant_ship_stat_modifier_prefix.size(), key.size() - merchant_ship_stat_modifier_prefix.size() - military_unit_type_stat_modifier_suffix.size());
 
-				return std::make_unique<merchant_ship_stat_modifier_effect>(magic_enum::enum_cast<military_unit_stat>(stat_name).value(), value);
+				return std::make_unique<merchant_ship_stat_modifier_effect>(string::to_enum<military_unit_stat>(stat_name), value);
 			}
 		}
 	} else if constexpr (std::is_same_v<scope_type, const province>) {
@@ -280,7 +281,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			const commodity *commodity = commodity::get(key.substr(monthly_prefix.size(), key.size() - monthly_prefix.size() - bonus_suffix.size()));
 			return std::make_unique<monthly_commodity_bonus_modifier_effect>(commodity, value);
 		} else if (key.ends_with(level_suffix) && magic_enum::enum_cast<construction_type>(key.substr(0, key.size() - level_suffix.size())).has_value()) {
-			const construction_type construction_type = magic_enum::enum_cast<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size())).value();
+			const construction_type construction_type = string::to_enum<metternich::construction_type>(key.substr(0, key.size() - level_suffix.size()));
 			return std::make_unique<construction_level_modifier_effect>(construction_type, value);
 		} else if (key.ends_with(bonus_suffix)) {
 			const size_t commodity_identifier_size = key.size() - bonus_suffix.size();
@@ -292,7 +293,7 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, military_unit>) {
 		if (magic_enum::enum_contains<military_unit_stat>(key)) {
-			return std::make_unique<military_unit_stat_modifier_effect<scope_type>>(magic_enum::enum_cast<military_unit_stat>(key).value(), value);
+			return std::make_unique<military_unit_stat_modifier_effect<scope_type>>(string::to_enum<military_unit_stat>(key), value);
 		}
 	}
 
