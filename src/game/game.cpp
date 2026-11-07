@@ -960,8 +960,6 @@ QCoro::Task<void> game::generate_site_resource_features(const data_entry_map<sit
 
 QCoro::Task<void> game::apply_sites()
 {
-	co_await this->generate_site_resource_features();
-
 	for (const site *site : map::get()->get_sites()) {
 		site_game_data *site_game_data = site->get_game_data();
 
@@ -1134,6 +1132,9 @@ QCoro::Task<void> game::apply_sites()
 			throw std::runtime_error(std::format("Domain \"{}\" has no capital.", domain->get_identifier()));
 		}
 	}
+
+	//place the resources after the holding types have been set, since resources can depend on specific holding types, but before the buildings are set, since the latter can require specific resources
+	co_await this->generate_site_resource_features();
 
 	std::vector<std::exception_ptr> exceptions;
 
