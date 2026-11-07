@@ -1891,6 +1891,22 @@ const resource_map<int> &province_game_data::get_resource_counts() const
 	return this->province->get_map_data()->get_resource_counts();
 }
 
+//the province resource counts, with the resources already applied removed from them
+data_entry_map<site_feature, int> province_game_data::get_available_resource_counts() const
+{
+	data_entry_map<site_feature, int> resource_counts = this->province->get_resource_counts();
+	if (resource_counts.empty()) {
+		return resource_counts;
+	}
+
+	//remove the already-existing resource sites from the counts
+	for (const auto &[resource, count] : this->get_site_feature_counts()) {
+		resource_counts[resource] -= count;
+	}
+
+	return resource_counts;
+}
+
 const terrain_type *province_game_data::get_terrain() const
 {
 	return this->province->get_map_data()->get_terrain();

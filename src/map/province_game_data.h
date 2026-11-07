@@ -324,6 +324,8 @@ public:
 		}
 	}
 
+	data_entry_map<site_feature, int> get_available_resource_counts() const;
+
 	const terrain_type *get_terrain() const;
 
 	std::vector<const site *> get_visible_sites() const;

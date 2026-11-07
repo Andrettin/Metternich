@@ -96,6 +96,8 @@ public:
 		return this->resource_counts;
 	}
 
+	data_entry_map<site_feature, int> get_available_resource_counts() const;
+
 private:
 	const metternich::world *world = nullptr;
 	bool continent = false;

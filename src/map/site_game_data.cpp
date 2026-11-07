@@ -40,6 +40,7 @@
 #include "map/map.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/region.h"
 #include "map/route.h"
 #include "map/route_game_data.h"
 #include "map/site.h"
@@ -1373,6 +1374,17 @@ QVariantList site_game_data::get_features_qvariant_list() const
 	return archimedes::container::to_qvariant_list(this->get_features());
 }
 
+const site_feature *site_game_data::get_resource_feature() const
+{
+	for (const site_feature *feature : this->get_features()) {
+		if (feature->is_resource()) {
+			return feature;
+		}
+	}
+
+	return nullptr;
+}
+
 bool site_game_data::can_have_feature(const site_feature *feature) const
 {
 	if (!this->site->can_have_feature(feature)) {
@@ -1406,11 +1418,9 @@ QCoro::Task<void> site_game_data::add_feature(const site_feature *feature)
 
 	if (feature->is_resource()) {
 		//if the feature is a resource one, remove any existing resource features (a site can have only one of those)
-		for (const site_feature *existing_feature : this->get_features()) {
-			if (existing_feature->is_resource()) {
-				co_await this->remove_feature(existing_feature);
-				break;
-			}
+		const site_feature *existing_feature = this->get_resource_feature();
+		if (existing_feature != nullptr) {
+			co_await this->remove_feature(existing_feature);
 		}
 	}
 
@@ -1466,6 +1476,42 @@ QCoro::Task<void> site_game_data::check_features()
 	for (const site_feature *feature : this->site->get_features()) {
 		if (this->can_have_feature(feature)) {
 			co_await this->add_feature(feature);
+		}
+	}
+
+	if (game::get()->is_running() && this->get_resource_feature() == nullptr && this->get_holding_type() != nullptr && this->get_holding_type()->has_resource()) {
+		//if the site became eligible for having a resource during the course of a game, allow it to receive a resource from the resource counts of its province or region
+		std::vector<const site_feature *> potential_resources;
+		data_entry_map<site_feature, int> resource_counts = this->get_province()->get_game_data()->get_available_resource_counts();
+
+		for (const region *region : this->get_province()->get_regions()) {
+			const data_entry_map<site_feature, int> region_resource_counts = region->get_available_resource_counts();
+			for (const auto &[resource, count] : region_resource_counts) {
+				if (count > 0) {
+					resource_counts[resource] = std::max(count, resource_counts[resource]);
+				}
+			}
+		}
+
+		for (const auto &[resource, count] : resource_counts) {
+			if (count <= 0) {
+				continue;
+			}
+
+			assert_throw(resource->is_resource());
+
+			if (!this->can_have_feature(resource)) {
+				continue;
+			}
+
+			for (int i = 0; i < count; ++i) {
+				potential_resources.push_back(resource);
+			}
+		}
+
+		if (!potential_resources.empty()) {
+			const site_feature *resource = vector::get_random(potential_resources);
+			co_await this->add_feature(resource);
 		}
 	}
 }

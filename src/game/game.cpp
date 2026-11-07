@@ -838,14 +838,9 @@ QCoro::Task<void> game::generate_site_resource_features()
 {
 	//generate province resource sites
 	for (const province *province : map::get()->get_provinces()) {
-		data_entry_map<site_feature, int> resource_counts = province->get_resource_counts();
+		const data_entry_map<site_feature, int> resource_counts = province->get_game_data()->get_available_resource_counts();
 		if (resource_counts.empty()) {
 			continue;
-		}
-
-		//remove the already-existing resource sites from the counts
-		for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
-			resource_counts[resource] -= count;
 		}
 
 		std::vector<const site *> available_sites;
@@ -876,7 +871,7 @@ QCoro::Task<void> game::generate_site_resource_features()
 	});
 
 	for (const region *region : regions) {
-		data_entry_map<site_feature, int> resource_counts = region->get_resource_counts();
+		const data_entry_map<site_feature, int> resource_counts = region->get_available_resource_counts();
 		if (resource_counts.empty()) {
 			continue;
 		}
@@ -886,11 +881,6 @@ QCoro::Task<void> game::generate_site_resource_features()
 		for (const province *province : region->get_provinces()) {
 			if (!province->get_map_data()->is_on_map()) {
 				continue;
-			}
-
-			//remove the already-existing resource sites from the counts
-			for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
-				resource_counts[resource] -= count;
 			}
 
 			for (const site *site : province->get_map_data()->get_sites()) {

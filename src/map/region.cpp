@@ -5,6 +5,8 @@
 #include "database/gsml_data.h"
 #include "database/gsml_property.h"
 #include "map/province.h"
+#include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "map/region_history.h"
 #include "map/site_feature.h"
 #include "util/assert_util.h"
@@ -105,6 +107,27 @@ bool region::is_part_of(const region *other_region) const
 	}
 
 	return false;
+}
+
+data_entry_map<site_feature, int> region::get_available_resource_counts() const
+{
+	data_entry_map<site_feature, int> resource_counts = this->get_resource_counts();
+	if (resource_counts.empty()) {
+		return resource_counts;
+	}
+
+	for (const province *province : this->get_provinces()) {
+		if (!province->get_map_data()->is_on_map()) {
+			continue;
+		}
+
+		//remove the already-existing resource sites from the counts
+		for (const auto &[resource, count] : province->get_game_data()->get_site_feature_counts()) {
+			resource_counts[resource] -= count;
+		}
+	}
+
+	return resource_counts;
 }
 
 }
