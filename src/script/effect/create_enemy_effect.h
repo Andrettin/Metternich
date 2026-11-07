@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script/battle_enemy.h"
+#include "script/context.h"
 
 namespace metternich {
 

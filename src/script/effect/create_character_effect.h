@@ -7,6 +7,7 @@
 #include "domain/domain.h"
 #include "domain/domain_game_data.h"
 #include "game/game.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "species/species.h"
 #include "util/assert_util.h"

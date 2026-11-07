@@ -2,6 +2,7 @@
 
 #include "game/event_random_group.h"
 #include "game/event_trigger.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 
 namespace metternich {

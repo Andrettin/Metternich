@@ -4,6 +4,7 @@
 #include "game/domain_event.h"
 #include "game/province_event.h"
 #include "game/site_event.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
 

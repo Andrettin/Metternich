@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "character/character_game_data.h"
 #include "character/save_type.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "util/dice.h"
 #include "util/random.h"

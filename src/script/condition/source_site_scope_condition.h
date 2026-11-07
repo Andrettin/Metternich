@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script/condition/scope_condition.h"
+#include "script/context.h"
 
 namespace metternich {
 

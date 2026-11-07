@@ -2,6 +2,7 @@
 
 #include "map/site.h"
 #include "map/site_game_data.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "util/assert_util.h"
 #include "util/string_conversion_util.h"

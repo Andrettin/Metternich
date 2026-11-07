@@ -1,5 +1,6 @@
 #pragma once
 
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "script/effect/effect_list.h"
 

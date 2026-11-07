@@ -5,6 +5,7 @@
 #include "character/save_type.h"
 #include "character/status_effect.h"
 #include "engine_interface.h"
+#include "script/context.h"
 #include "script/effect/effect.h"
 #include "ui/portrait.h"
 
