@@ -91,6 +91,20 @@ modest = {
 		proud = 1-5
 		modest = 15-20
 	}
+	value_modifiers = {
+		1 = {
+			trait = proud
+		}
+		6 = {
+			trait = {
+				trait = proud
+				count = -1
+			}
+		}
+		15 = {
+			trait = humble
+		}
+	}
 }
 
 peaceful = {
@@ -99,6 +113,20 @@ peaceful = {
 	rating_ranges = {
 		violent = 1-5
 		peaceful = 15-20
+	}
+	value_modifiers = {
+		1 = {
+			trait = wroth
+		}
+		6 = {
+			trait = {
+				trait = wroth
+				count = -1
+			}
+		}
+		15 = {
+			trait = patient
+		}
 	}
 }
 

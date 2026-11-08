@@ -26,3 +26,50 @@ honest = {
 		deceitful
 	}
 }
+
+humble = {
+	name = "Humble"
+	icon = heart
+	same_opinion = 5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		proud
+	}
+}
+
+patient = {
+	name = "Patient"
+	icon = heart
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		wroth
+	}
+}
+
+proud = {
+	name = "Proud"
+	icon = labor
+	opposite_opinion = -5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		humble
+	}
+}
+
+wroth = {
+	name = "Wroth"
+	icon = saber
+	opposite_opinion = -5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		patient
+	}
+}
