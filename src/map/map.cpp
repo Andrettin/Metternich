@@ -130,7 +130,12 @@ void map::create_tiles()
 
 	assert_throw(!this->get_size().isNull());
 
-	const int tile_quantity = this->get_width() * this->get_height();
+	const size_t tile_quantity = static_cast<size_t>(this->get_width()) * static_cast<size_t>(this->get_height());
+	assert_throw(tile_quantity > 0);
+	const size_t last_tile_index = tile_quantity - 1;
+	if (last_tile_index > std::numeric_limits<uint32_t>::max()) {
+		throw std::runtime_error(std::format("The map has tiles with position indices up to {}, but only up to {} is supported.", last_tile_index, std::numeric_limits<uint32_t>::max()));
+	}
 
 	this->tiles->resize(tile_quantity, tile());
 }
