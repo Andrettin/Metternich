@@ -9,7 +9,7 @@ class tile final
 {
 public:
 	using province_index_type = uint16_t;
-	static constexpr province_index_type no_province_index = std::numeric_limits<uint16_t>::max();
+	static constexpr province_index_type no_province_index = std::numeric_limits<province_index_type>::max();
 	static constexpr province_index_type last_valid_province_index = no_province_index - 1;
 
 	metternich::province *get_province() const;

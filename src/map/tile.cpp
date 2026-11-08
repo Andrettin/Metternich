@@ -18,7 +18,11 @@ metternich::province *tile::get_province() const
 
 void tile::set_province(metternich::province *province)
 {
-	this->province_index = static_cast<uint16_t>(province->get_index());
+	if (province == nullptr) {
+		this->province_index = tile::no_province_index;
+	} else {
+		this->province_index = static_cast<uint16_t>(province->get_index());
+	}
 }
 
 const domain *tile::get_owner() const
