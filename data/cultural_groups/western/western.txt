@@ -7,6 +7,7 @@ western = {
 		explored_regions += europe
 		explored_regions += middle_east
 		explored_regions += north_africa
+		explored_regions += sudan
 		explored_regions += baltic_sea
 		explored_regions += mediterranean_sea
 		explored_regions += north_sea
@@ -18,6 +19,17 @@ western = {
 		explored_provinces += english_channel
 		explored_provinces += inner_seas
 		explored_provinces += irish_sea
+		explored_provinces += coast_of_andalusia
+		explored_provinces += coast_of_cornwall
+		explored_provinces += coast_of_galicia
+		explored_provinces += coast_of_ireland
+		explored_provinces += coast_of_morocco
+		explored_provinces += coast_of_portugal
+		explored_provinces += coast_of_scotland
+		explored_provinces += coast_of_the_faroes
+		explored_provinces += norwegian_sea
+		explored_provinces += red_sea
+		explored_provinces += persian_gulf
 		
 		1180 = {
 			#the English scholar Alexander Neckam (1157-1217) wrote about the uses of magnetism for ascertaining the north/south direction in 1180; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 164-165.
