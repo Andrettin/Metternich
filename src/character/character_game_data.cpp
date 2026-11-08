@@ -5099,14 +5099,14 @@ int character_game_data::get_opinion_of(const metternich::character *other)
 		opinion += other->get_game_data()->get_same_culture_opinion_modifier();
 	}
 
-	for (const auto &[trait, count] : this->get_trait_counts()) {
-		if (trait->get_same_opinion() != 0 && other->get_game_data()->has_trait(trait)) {
+	for (const auto &[trait, count] : other->get_game_data()->get_trait_counts()) {
+		if (trait->get_same_opinion() != 0 && this->has_trait(trait)) {
 			opinion += trait->get_same_opinion();
 		}
 
 		if (trait->get_opposite_opinion() != 0) {
 			for (const metternich::trait *opposite_trait : trait->get_opposite_traits()) {
-				if (other->get_game_data()->has_trait(opposite_trait)) {
+				if (this->has_trait(opposite_trait)) {
 					opinion += trait->get_opposite_opinion();
 					break;
 				}

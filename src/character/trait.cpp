@@ -15,6 +15,7 @@
 #include "species/taxon.h"
 #include "ui/ui_defines.h"
 #include "util/gender.h"
+#include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
 
