@@ -565,7 +565,7 @@ void map_template::generate_site(const site *site) const
 		}
 
 		for (const QPoint &tile_pos : province_tiles) {
-			if (map->get_site(tile_pos) != nullptr) {
+			if (map->get_tile_site(tile_pos) != nullptr) {
 				continue;
 			}
 
@@ -702,7 +702,7 @@ bool map_template::is_pos_available_for_site_generation(const QPoint &tile_pos, 
 			return false;
 		}
 
-		if (map::get()->get_site(rect_pos) != nullptr) {
+		if (map::get()->get_tile_site(rect_pos) != nullptr) {
 			available = false;
 			return true;
 		}

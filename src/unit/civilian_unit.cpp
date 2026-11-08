@@ -604,7 +604,7 @@ resource_map<std::vector<QPoint>> civilian_unit::get_improvable_resource_tiles()
 
 	for (const metternich::province *province : this->get_owner()->get_game_data()->get_provinces()) {
 		for (const QPoint &tile_pos : province->get_game_data()->get_resource_tiles()) {
-			const site *site = map::get()->get_site(tile_pos);
+			const site *site = map::get()->get_tile_site(tile_pos);
 			const resource *site_resource = site->get_game_data()->get_resource();
 
 			if (site_resource == nullptr) {

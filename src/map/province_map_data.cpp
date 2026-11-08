@@ -258,7 +258,7 @@ void province_map_data::add_tile(const QPoint &tile_pos)
 
 void province_map_data::process_site_tile(const QPoint &tile_pos)
 {
-	const site *site = map::get()->get_site(tile_pos);
+	const site *site = map::get()->get_tile_site(tile_pos);
 
 	if (site != nullptr) {
 		assert_throw(site->get_map_data()->is_on_map());

@@ -334,7 +334,7 @@ void map::clear()
 
 	this->provinces.clear();
 	this->sites.clear();
-	this->sites_by_position.clear();
+	this->tile_sites.clear();
 	this->tiles.reset();
 	this->ocean_diplomatic_map_image = QImage();
 	this->empty_diplomatic_map_image = QImage();
@@ -391,6 +391,29 @@ void map::set_tile_province(const QPoint &tile_pos, province *province)
 	province->get_map_data()->add_tile(tile_pos);
 }
 
+
+const site *map::get_tile_site(const size_t index) const
+{
+	const auto find_iterator = this->tile_sites.find(index);
+	if (find_iterator != this->tile_sites.end()) {
+		return find_iterator->second;
+	}
+
+	return nullptr;
+}
+
+const site *map::get_tile_site(const QPoint &pos) const
+{
+	const size_t index = this->get_pos_index(pos);
+	return this->get_tile_site(index);
+}
+
+void map::set_site_position(const site *site, const QPoint &pos)
+{
+	const size_t index = this->get_pos_index(pos);
+	this->tile_sites[index] = site;
+}
+
 void map::set_tile_site(const QPoint &tile_pos, const site *site)
 {
 	tile *tile = this->get_tile(tile_pos);
@@ -438,7 +461,7 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 
 QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
 {
-	const site *site = this->get_site(tile_pos);
+	const site *site = this->get_tile_site(tile_pos);
 	assert_throw(site != nullptr);
 
 	if (discovered == site->get_game_data()->is_resource_discovered()) {
@@ -461,7 +484,7 @@ bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
 			return false;
 		}
 
-		const metternich::site *adjacent_site = this->get_site(adjacent_pos);
+		const metternich::site *adjacent_site = this->get_tile_site(adjacent_pos);
 
 		if (adjacent_site != nullptr && adjacent_site->is_celestial_body()) {
 			result = true;
@@ -531,16 +554,6 @@ QVariantList map::get_provinces_qvariant_list() const
 QVariantList map::get_sites_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_sites());
-}
-
-const site *map::get_site(const QPoint &pos) const
-{
-	const auto find_iterator = this->sites_by_position.find(pos);
-	if (find_iterator != this->sites_by_position.end()) {
-		return find_iterator->second;
-	}
-
-	return nullptr;
 }
 
 void map::initialize_diplomatic_map()

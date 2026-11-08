@@ -1,7 +1,6 @@
 #pragma once
 
 #include "util/decimillesimal_int.h"
-#include "util/point_container.h"
 #include "util/singleton.h"
 
 namespace archimedes {
@@ -93,6 +92,9 @@ public:
 	tile *get_tile(const QPoint &pos) const;
 	Q_INVOKABLE const metternich::province *get_tile_province(const QPoint &tile_pos) const;
 	void set_tile_province(const QPoint &tile_pos, province *province);
+	const site *get_tile_site(const size_t index) const;
+	const site *get_tile_site(const QPoint &pos) const;
+	void set_site_position(const site *site, const QPoint &pos);
 	void set_tile_site(const QPoint &tile_pos, const site *site);
 	[[nodiscard]] QCoro::Task<void> set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered);
 
@@ -123,13 +125,6 @@ public:
 	void add_site(const site *site)
 	{
 		this->sites.push_back(site);
-	}
-
-	const site *get_site(const QPoint &pos) const;
-
-	void set_site_position(const site *site, const QPoint &pos)
-	{
-		this->sites_by_position[pos] = site;
 	}
 
 	void initialize_diplomatic_map();
@@ -225,9 +220,9 @@ signals:
 private:
 	QSize size;
 	std::unique_ptr<std::vector<tile>> tiles;
+	std::unordered_map<size_t, const site *> tile_sites;
 	std::vector<province *> provinces; //the provinces which are on the map
 	std::vector<const site *> sites; //the sites which are on the map
-	point_unordered_map<const site *> sites_by_position;
 	QImage ocean_diplomatic_map_image;
 	QImage empty_diplomatic_map_image; //diplomatic map image for ownerless land provinces
 	QImage empty_terrain_diplomatic_map_image; //terrain diplomatic map image for ownerless land provinces

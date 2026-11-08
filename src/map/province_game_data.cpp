@@ -1574,7 +1574,7 @@ void province_game_data::calculate_text_rect()
 			}
 
 			const tile *tile = map->get_tile(adjacent_pos);
-			if (map->get_site(adjacent_pos) != nullptr || tile->get_province() != this->province) {
+			if (map->get_tile_site(adjacent_pos) != nullptr || tile->get_province() != this->province) {
 				return;
 			}
 
@@ -1637,7 +1637,7 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 					break;
 				}
 
-				if (map->get_site(adjacent_pos) != nullptr) {
+				if (map->get_tile_site(adjacent_pos) != nullptr) {
 					can_expand_left = false;
 					break;
 				}
@@ -1665,7 +1665,7 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 					break;
 				}
 
-				if (map->get_site(adjacent_pos) != nullptr) {
+				if (map->get_tile_site(adjacent_pos) != nullptr) {
 					can_expand_right = false;
 					break;
 				}
@@ -1693,7 +1693,7 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 					break;
 				}
 
-				if (map->get_site(adjacent_pos) != nullptr) {
+				if (map->get_tile_site(adjacent_pos) != nullptr) {
 					can_expand_up = false;
 					break;
 				}
@@ -1721,7 +1721,7 @@ QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) 
 					break;
 				}
 
-				if (map->get_site(adjacent_pos) != nullptr) {
+				if (map->get_tile_site(adjacent_pos) != nullptr) {
 					can_expand_down = false;
 					break;
 				}
@@ -2867,7 +2867,7 @@ bool province_game_data::can_produce_commodity(const commodity *commodity) const
 	assert_throw(commodity != nullptr);
 
 	for (const QPoint &tile_pos : this->get_resource_tiles()) {
-		const site *site = map::get()->get_site(tile_pos);
+		const site *site = map::get()->get_tile_site(tile_pos);
 		const metternich::resource *site_resource = site->get_game_data()->get_resource();
 		const metternich::commodity *site_resource_commodity = site_resource->get_commodity();
 
