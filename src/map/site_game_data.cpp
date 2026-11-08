@@ -2043,6 +2043,17 @@ QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 		for (const auto &[attribute, value] : this->get_owner()->get_game_data()->get_site_attribute_values()) {
 			co_await this->change_attribute_value(attribute, value * multiplier);
 		}
+
+		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
+			if (building_slot->get_building() != nullptr) {
+				this->get_owner()->get_game_data()->change_holding_building_count(building_slot->get_building(), multiplier);
+
+				const commodity_map<int> &building_commodity_bonuses = this->get_owner()->get_economy()->get_building_commodity_bonuses(building_slot->get_building());
+				for (const auto &[commodity, bonus] : building_commodity_bonuses) {
+					this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
+				}
+			}
+		}
 	}
 
 	if (this->get_province() != nullptr) {
@@ -2070,17 +2081,14 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 	assert_throw(multiplier != 0);
 	assert_throw(this->get_province() != nullptr);
 
-	if (this->get_owner() != nullptr) {
+	if (this->get_owner() != nullptr && this->is_built()) {
 		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 		co_await domain_game_data->change_holding_building_count(building, multiplier);
 
 		const commodity_map<int> &building_commodity_bonuses = domain_economy->get_building_commodity_bonuses(building);
-		if (!building_commodity_bonuses.empty()) {
-			assert_throw(this->is_built());
-			for (const auto &[commodity, bonus] : building_commodity_bonuses) {
-				this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
-			}
+		for (const auto &[commodity, bonus] : building_commodity_bonuses) {
+			this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
 		}
 	}
 
