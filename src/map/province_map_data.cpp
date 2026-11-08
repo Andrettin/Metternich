@@ -168,14 +168,15 @@ void province_map_data::initialize_terrain()
 
 void province_map_data::calculate_territory_rect_center()
 {
-	const int tile_count = static_cast<int>(this->get_tiles().size());
+	const int tile_count = static_cast<int>(this->get_tile_indices().size());
 
 	assert_throw(tile_count > 0);
 
 	int64_t sum_x = 0;
 	int64_t sum_y = 0;
 
-	for (const QPoint &tile_pos : this->get_tiles()) {
+	for (const uint32_t tile_index : this->get_tile_indices()) {
+		const QPoint tile_pos = map::get()->get_index_pos(tile_index);
 		sum_x += tile_pos.x();
 		sum_y += tile_pos.y();
 	}
@@ -253,7 +254,7 @@ void province_map_data::add_neighbor_province(const metternich::province *provin
 
 void province_map_data::add_tile(const QPoint &tile_pos)
 {
-	this->tiles.push_back(tile_pos);
+	this->tile_indices.push_back(static_cast<uint32_t>(map::get()->get_pos_index(tile_pos)));
 }
 
 void province_map_data::process_site_tile(const QPoint &tile_pos)

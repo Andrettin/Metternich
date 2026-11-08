@@ -29,7 +29,7 @@ public:
 
 	bool is_on_map() const
 	{
-		return !this->get_tiles().empty();
+		return !this->get_tile_indices().empty();
 	}
 
 	const terrain_type *get_terrain() const
@@ -84,9 +84,9 @@ public:
 		return this->nearby_provinces;
 	}
 
-	const std::vector<QPoint> &get_tiles() const
+	const std::vector<uint32_t> &get_tile_indices() const
 	{
-		return this->tiles;
+		return this->tile_indices;
 	}
 
 	void add_tile(const QPoint &tile_pos);
@@ -137,7 +137,7 @@ private:
 	QPoint territory_rect_center = QPoint(-1, -1);
 	std::vector<const metternich::province *> neighbor_provinces;
 	std::vector<const metternich::province *> nearby_provinces; //neighbor provinces plus land provinces connected by a water zone
-	std::vector<QPoint> tiles;
+	std::vector<uint32_t> tile_indices;
 	std::vector<QPoint> resource_tiles;
 	std::vector<const site *> sites;
 	std::vector<const site *> holding_sites; //includes all holdings, even if unbuilt

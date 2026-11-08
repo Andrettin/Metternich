@@ -282,7 +282,8 @@ QCoro::Task<void> map::process_border_tiles()
 		}
 
 		QFuture<void> future = QtConcurrent::run([this, province, province_map_data]() {
-			for (const QPoint &tile_pos : province_map_data->get_tiles()) {
+			for (const uint32_t tile_index : province_map_data->get_tile_indices()) {
+				const QPoint tile_pos = this->get_index_pos(tile_index);
 				bool is_border_tile = false;
 
 				point::for_each_adjacent(tile_pos, [this, &tile_pos, province, province_map_data, &is_border_tile](const QPoint &adjacent_pos) {
@@ -354,6 +355,11 @@ int map::get_map_block_grid_height() const
 size_t map::get_pos_index(const QPoint &pos) const
 {
 	return point::to_index(pos, static_cast<size_t>(this->get_width()));
+}
+
+QPoint map::get_index_pos(const size_t index) const
+{
+	return point::from_index(index, static_cast<size_t>(this->get_width()));
 }
 
 tile *map::get_tile(const size_t index) const

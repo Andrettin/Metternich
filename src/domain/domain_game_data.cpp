@@ -1554,7 +1554,7 @@ QCoro::Task<void> domain_game_data::on_province_gained(const province *province,
 		}
 	}
 
-	this->change_tile_terrain_count(province_game_data->get_terrain(), static_cast<int>(province->get_map_data()->get_tiles().size() - province->get_map_data()->get_sites().size()) * multiplier);
+	this->change_tile_terrain_count(province_game_data->get_terrain(), static_cast<int>(province->get_map_data()->get_tile_indices().size() - province->get_map_data()->get_sites().size()) * multiplier);
 
 	for (const auto &[commodity, threshold_map] : this->get_economy()->get_commodity_bonuses_for_tile_thresholds()) {
 		for (const auto &[threshold, value] : threshold_map) {
@@ -2036,7 +2036,7 @@ void domain_game_data::calculate_territory_rect_center()
 			continue;
 		}
 
-		const int province_tile_count = static_cast<int>(province_map_data->get_tiles().size());
+		const int province_tile_count = static_cast<int>(province_map_data->get_tile_indices().size());
 		sum_x += static_cast<int64_t>(province_map_data->get_territory_rect_center().x()) * province_tile_count;
 		sum_y += static_cast<int64_t>(province_map_data->get_territory_rect_center().y()) * province_tile_count;
 		tile_count += province_tile_count;

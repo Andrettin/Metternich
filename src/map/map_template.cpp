@@ -539,7 +539,7 @@ void map_template::generate_site(const site *site) const
 		const bool is_coastal = resource != nullptr && resource->is_coastal();
 		const std::vector<const terrain_type *> &site_terrains = site->get_terrain_types();
 
-		const std::vector<QPoint> province_tiles = vector::shuffled(province_map_data->get_tiles());
+		const std::vector<uint32_t> province_tile_indices = vector::shuffled(province_map_data->get_tile_indices());
 
 		if (!site_terrains.empty()) {
 			bool has_terrain = false;
@@ -564,10 +564,12 @@ void map_template::generate_site(const site *site) const
 			}
 		}
 
-		for (const QPoint &tile_pos : province_tiles) {
-			if (map->get_tile_site(tile_pos) != nullptr) {
+		for (const uint32_t tile_index : province_tile_indices) {
+			if (map->get_tile_site(tile_index) != nullptr) {
 				continue;
 			}
+
+			const QPoint tile_pos = map->get_index_pos(tile_index);
 
 			if (!this->is_pos_available_for_site_generation(tile_pos, province)) {
 				continue;
