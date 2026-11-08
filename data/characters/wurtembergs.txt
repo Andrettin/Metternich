@@ -40,7 +40,7 @@ ludwig_friedrich_von_wurtemberg = { #Duke Ludwig Friedrich Alexander of Württem
 }
 
 maria_dorothee_von_wurtemberg = { #Maria Dorothée Wilhelmina von Württemberg; Source: "Almanach de Gotha pour l'année 1847", 1847, pp. 12, 81.
-	name = "Maria Dorothée" #"Maria Dorothée Wilhelmina"
+	name = "Maria Dorothee" #"Maria Dorothée Wilhelmina"
 	dynasty = wurtemberg
 	character_class = aristocrat
 	culture = german #Swabian
