@@ -26,8 +26,7 @@ liquor_distillery = {
 			capacity = 10000
 		}
 	}
-	domain_modifier = { #same as brewery
-		loyalty = 1
-		stability = 1
+	domain_modifier = {
+		scripted_modifier_effect = brewery
 	}
 }

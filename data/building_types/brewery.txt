@@ -17,7 +17,6 @@ brewery = {
 		iron = 20
 	}
 	domain_modifier = {
-		loyalty = 1
-		stability = 1
+		scripted_modifier_effect = brewery
 	}
 }
