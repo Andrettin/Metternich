@@ -2070,7 +2070,7 @@ QCoro::Task<void> site_game_data::on_building_gained(const building_type *buildi
 	assert_throw(multiplier != 0);
 	assert_throw(this->get_province() != nullptr);
 
-	if (this->get_owner() != nullptr) {
+	if (this->get_owner() != nullptr && this->is_built()) {
 		domain_game_data *domain_game_data = this->get_owner()->get_game_data();
 		domain_economy *domain_economy = this->get_owner()->get_economy();
 		co_await domain_game_data->change_holding_building_count(building, multiplier);
