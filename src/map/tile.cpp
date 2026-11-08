@@ -2,13 +2,8 @@
 
 #include "map/tile.h"
 
-#include "domain/domain.h"
-#include "economy/resource.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
-#include "map/site.h"
-#include "map/site_game_data.h"
-#include "map/site_map_data.h"
 
 namespace metternich {
 

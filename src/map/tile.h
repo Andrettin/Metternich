@@ -1,13 +1,9 @@
 #pragma once
 
-#include "economy/commodity_container.h"
-
 namespace metternich {
 
 class domain;
 class province;
-class resource;
-class site;
 
 class tile final
 {
