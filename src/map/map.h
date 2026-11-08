@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/decimillesimal_int.h"
+#include "util/point_container.h"
 #include "util/singleton.h"
 
 namespace archimedes {
@@ -124,6 +125,13 @@ public:
 		this->sites.push_back(site);
 	}
 
+	const site *get_site(const QPoint &pos) const;
+
+	void set_site_position(const site *site, const QPoint &pos)
+	{
+		this->sites_by_position[pos] = site;
+	}
+
 	void initialize_diplomatic_map();
 	void initialize_province_map();
 
@@ -219,6 +227,7 @@ private:
 	std::unique_ptr<std::vector<tile>> tiles;
 	std::vector<province *> provinces; //the provinces which are on the map
 	std::vector<const site *> sites; //the sites which are on the map
+	point_unordered_map<const site *> sites_by_position;
 	QImage ocean_diplomatic_map_image;
 	QImage empty_diplomatic_map_image; //diplomatic map image for ownerless land provinces
 	QImage empty_terrain_diplomatic_map_image; //terrain diplomatic map image for ownerless land provinces

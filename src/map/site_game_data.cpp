@@ -151,9 +151,6 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 	if (tag == "tile_pos") {
 		const QPoint tile_pos = scope.to_point();
 		this->site->get_map_data()->set_tile_pos(tile_pos);
-
-		tile *tile = map::get()->get_tile(tile_pos);
-		tile->set_site(this->site);
 	} else if (tag == "construction_levels") {
 		scope.to_map(this->construction_levels);
 	} else if (tag == "features") {

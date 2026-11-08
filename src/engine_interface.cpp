@@ -332,7 +332,7 @@ void engine_interface::move_selected_military_units_to(const QPoint &tile_pos)
 
 	if (tile->get_province() != nullptr) {
 		if (tile->get_province() == this->get_selected_military_units().front()->get_province()) {
-			const site *site = tile->get_site();
+			const site *site = map::get()->get_site(tile_pos);
 			if (site != nullptr && site->get_game_data()->can_be_visited_by(game::get()->get_player_domain())) {
 				target = site;
 			}

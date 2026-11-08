@@ -21,13 +21,4 @@ const domain *tile::get_owner() const
 	return this->get_province()->get_game_data()->get_owner();
 }
 
-void tile::set_site(const metternich::site *site)
-{
-	if (site == this->get_site()) {
-		return;
-	}
-
-	this->site = site;
-}
-
 }

@@ -393,7 +393,6 @@ void map::set_tile_province(const QPoint &tile_pos, province *province)
 void map::set_tile_site(const QPoint &tile_pos, const site *site)
 {
 	tile *tile = this->get_tile(tile_pos);
-	tile->set_site(site);
 
 	if (site->get_province() != nullptr && site->get_province() != tile->get_province() && site->get_province()->get_map_data()->is_on_map()) {
 		throw std::runtime_error(std::format("Site \"{}\" was not placed within its province.", site->get_identifier()));
@@ -438,16 +437,16 @@ void map::set_tile_site(const QPoint &tile_pos, const site *site)
 
 QCoro::Task<void> map::set_tile_resource_discovered(const QPoint &tile_pos, const bool discovered)
 {
-	tile *tile = this->get_tile(tile_pos);
-	assert_throw(tile->get_site() != nullptr);
+	const site *site = this->get_site(tile_pos);
+	assert_throw(site != nullptr);
 
-	if (discovered == tile->get_site()->get_game_data()->is_resource_discovered()) {
+	if (discovered == site->get_game_data()->is_resource_discovered()) {
 		co_return;
 	}
 
-	const resource *resource = tile->get_site()->get_game_data()->get_resource();
+	const resource *resource = site->get_game_data()->get_resource();
 	assert_throw(resource != nullptr);
-	tile->get_site()->get_game_data()->set_resource_discovered(discovered);
+	site->get_game_data()->set_resource_discovered(discovered);
 
 	emit tile_resource_changed(tile_pos);
 }
@@ -461,9 +460,9 @@ bool map::is_tile_near_celestial_body(const QPoint &tile_pos) const
 			return false;
 		}
 
-		const metternich::tile *adjacent_tile = this->get_tile(adjacent_pos);
+		const metternich::site *adjacent_site = this->get_site(adjacent_pos);
 
-		if (adjacent_tile->get_site() != nullptr && adjacent_tile->get_site()->is_celestial_body()) {
+		if (adjacent_site != nullptr && adjacent_site->is_celestial_body()) {
 			result = true;
 			return true;
 		}
@@ -531,6 +530,16 @@ QVariantList map::get_provinces_qvariant_list() const
 QVariantList map::get_sites_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_sites());
+}
+
+const site *map::get_site(const QPoint &pos) const
+{
+	const auto find_iterator = this->sites_by_position.find(pos);
+	if (find_iterator != this->sites_by_position.end()) {
+		return find_iterator->second;
+	}
+
+	return nullptr;
 }
 
 void map::initialize_diplomatic_map()

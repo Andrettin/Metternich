@@ -389,8 +389,7 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 		if (discovered_resource->is_prospectable()) {
 			const point_set prospected_tiles = this->get_game_data()->get_prospected_tiles();
 			for (const QPoint &tile_pos : prospected_tiles) {
-				const tile *tile = map::get()->get_tile(tile_pos);
-				const site *site = tile->get_site();
+				const site *site = map::get()->get_site(tile_pos);
 				assert_throw(site != nullptr);
 
 				if (site->get_game_data()->is_resource_discovered()) {
@@ -412,9 +411,7 @@ QCoro::Task<void> domain_technology::on_technology_added(const technology *techn
 				}
 
 				for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
-					const tile *tile = map::get()->get_tile(tile_pos);
-
-					const site *site = tile->get_site();
+					const site *site = map::get()->get_site(tile_pos);
 					assert_throw(site != nullptr);
 
 					const resource *site_resource = site->get_game_data()->get_resource();

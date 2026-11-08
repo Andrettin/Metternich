@@ -1326,7 +1326,7 @@ void map_generator::generate_site(const site *site, const zone &zone)
 			}
 
 			for (const QPoint &tile_pos : find_iterator->second) {
-				if (map->get_tile(tile_pos)->get_site() != nullptr) {
+				if (map->get_site(tile_pos) != nullptr) {
 					continue;
 				}
 
@@ -1335,7 +1335,7 @@ void map_generator::generate_site(const site *site, const zone &zone)
 		}
 	} else {
 		for (const QPoint &tile_pos : zone.tiles) {
-			if (map->get_tile(tile_pos)->get_site() != nullptr) {
+			if (map->get_site(tile_pos) != nullptr) {
 				continue;
 			}
 

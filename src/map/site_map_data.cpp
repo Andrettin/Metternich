@@ -39,6 +39,9 @@ void site_map_data::set_tile_pos(const QPoint &tile_pos)
 	}
 
 	this->tile_pos = tile_pos;
+
+	map::get()->set_site_position(this->site, tile_pos);
+
 	emit tile_pos_changed();
 }
 

@@ -258,20 +258,20 @@ void province_map_data::add_tile(const QPoint &tile_pos)
 
 void province_map_data::process_site_tile(const QPoint &tile_pos)
 {
-	const tile *tile = map::get()->get_tile(tile_pos);
+	const site *site = map::get()->get_site(tile_pos);
 
-	if (tile->get_site() != nullptr) {
-		assert_throw(tile->get_site()->get_map_data()->is_on_map());
+	if (site != nullptr) {
+		assert_throw(site->get_map_data()->is_on_map());
 
-		if (tile->get_site()->get_map_data()->get_resource() != nullptr) {
+		if (site->get_map_data()->get_resource() != nullptr) {
 			this->resource_tiles.push_back(tile_pos);
-			++this->resource_counts[tile->get_site()->get_map_data()->get_resource()];
+			++this->resource_counts[site->get_map_data()->get_resource()];
 		}
 
-		this->sites.push_back(tile->get_site());
+		this->sites.push_back(site);
 
-		if (tile->get_site()->is_holding()) {
-			this->holding_sites.push_back(tile->get_site());
+		if (site->is_holding()) {
+			this->holding_sites.push_back(site);
 		}
 	}
 }

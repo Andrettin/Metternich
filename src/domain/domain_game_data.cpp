@@ -1378,8 +1378,7 @@ QCoro::Task<void> domain_game_data::add_province(const province *province)
 	const province_game_data *province_game_data = province->get_game_data();
 
 	for (const QPoint &tile_pos : province_game_data->get_resource_tiles()) {
-		const tile *tile = map::get()->get_tile(tile_pos);
-		const site *site = tile->get_site();
+		const site *site = map::get()->get_site(tile_pos);
 		assert_throw(site != nullptr);
 
 		const resource *resource = site->get_game_data()->get_resource();
@@ -3493,9 +3492,7 @@ QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)
 {
 	this->prospected_tiles.insert(tile_pos);
 
-	const tile *tile = map::get()->get_tile(tile_pos);
-
-	const site *site = tile->get_site();
+	const site *site = map::get()->get_site(tile_pos);
 	assert_throw(site != nullptr);
 
 	const resource *site_resource = site->get_game_data()->get_resource();

@@ -24,16 +24,8 @@ public:
 
 	const domain *get_owner() const;
 
-	const metternich::site *get_site() const
-	{
-		return this->site;
-	}
-
-	void set_site(const metternich::site *site);
-
 private:
 	metternich::province *province = nullptr;
-	const metternich::site *site = nullptr;
 };
 
 }
