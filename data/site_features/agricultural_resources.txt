@@ -60,6 +60,7 @@ prime_sugar_land = {
 	name = "Prime Sugar Land"
 	icon = sugar_cane
 	resource = true
+	discovery_technology = sugar_cane
 	domain_modifier = {
 		scripted_modifier_effect = resource
 	}

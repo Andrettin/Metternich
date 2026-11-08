@@ -4,4 +4,5 @@ sugar_cane = {
 	icon = sugar_cane
 	agricultural = true
 	base_price = 1
+	required_technology = sugar_cane
 }

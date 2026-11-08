@@ -58,6 +58,18 @@ sheep_ranching = {
 	}
 }
 
+sugar_planting = {
+	name = "Sugar Planting"
+	output_commodity = sugar_cane
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		farmers
+		tribesmen
+		slaves
+	}
+}
+
 tobacco_planting = {
 	name = "Tobacco Planting"
 	output_commodity = tobacco

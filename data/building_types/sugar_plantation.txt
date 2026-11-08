@@ -1,0 +1,176 @@
+sugar_plantation = {
+	name = "Sugar Plantation"
+	building_class = sugar_plantation
+	portrait = stable
+	icon = sugar_cane
+	required_technology = sugar_planting
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_sugar_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 2gb
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = sugar_planting
+			multiplier = 1
+		}
+	}
+	free_on_start_conditions = {
+	}
+}
+
+large_sugar_plantation = {
+	name = "Large Sugar Plantation"
+	building_class = large_sugar_plantation
+	portrait = stable
+	icon = sugar_cane
+	base_building = sugar_plantation
+	required_technology = large_sugar_plantations
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_sugar_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 8gb #4x the Sugar Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = sugar_planting
+			multiplier = 2
+		}
+	}
+}
+
+mechanized_sugar_plantation = {
+	name = "Mechanized Sugar Plantation"
+	building_class = mechanized_sugar_plantation
+	portrait = stable
+	icon = sugar_cane
+	base_building = large_sugar_plantation
+	required_technology = sugar_industry
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_sugar_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 16gb #8x the Sugar Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = sugar_planting
+			multiplier = 3
+		}
+	}
+}
+
+industrial_sugar_plantation = {
+	name = "Industrial Sugar Plantation"
+	building_class = industrial_sugar_plantation
+	portrait = stable
+	icon = sugar_cane
+	base_building = mechanized_sugar_plantation
+	required_technology = sugar_industry
+	holding_types = {
+		castle
+		guild
+		temple
+	}
+	builder_civilian_unit_types = {
+		ruler
+		treasurer
+		engineer
+	}
+	conditions = {
+		feature = prime_sugar_land
+		not = {
+			scripted_condition = is_lair
+		}
+	}
+	commodity_costs = {
+		wealth = 32gb #16x the Sugar Plantation cost
+	}
+	cost_factor = {
+		modifier = {
+			factor = 2
+			terrain = hills
+		}
+		modifier = {
+			factor = 4
+			terrain = desert
+		}
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = sugar_planting
+			multiplier = 4
+		}
+	}
+}

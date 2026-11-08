@@ -1,0 +1,19 @@
+sugar_plantation = {
+	name = "Sugar Plantation"
+	slot_type = resource
+}
+
+large_sugar_plantation = {
+	name = "Large Sugar Plantation"
+	slot_type = resource
+}
+
+mechanized_sugar_plantation = {
+	name = "Mechanized Sugar Plantation"
+	slot_type = resource
+}
+
+industrial_sugar_plantation = {
+	name = "Industrial Sugar Plantation"
+	slot_type = resource
+}
