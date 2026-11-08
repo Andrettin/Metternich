@@ -2046,7 +2046,7 @@ QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 
 		for (const qunique_ptr<building_slot> &building_slot : this->building_slots) {
 			if (building_slot->get_building() != nullptr) {
-				this->get_owner()->get_game_data()->change_holding_building_count(building_slot->get_building(), multiplier);
+				co_await this->get_owner()->get_game_data()->change_holding_building_count(building_slot->get_building(), multiplier);
 
 				const commodity_map<int> &building_commodity_bonuses = this->get_owner()->get_economy()->get_building_commodity_bonuses(building_slot->get_building());
 				for (const auto &[commodity, bonus] : building_commodity_bonuses) {
