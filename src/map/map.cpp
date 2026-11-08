@@ -334,6 +334,7 @@ void map::clear()
 
 	this->provinces.clear();
 	this->sites.clear();
+	this->sites_by_position.clear();
 	this->tiles.reset();
 	this->ocean_diplomatic_map_image = QImage();
 	this->empty_diplomatic_map_image = QImage();
