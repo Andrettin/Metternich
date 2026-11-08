@@ -3416,6 +3416,11 @@ bool domain_game_data::is_province_discovered(const province *province) const
 	return false;
 }
 
+QVariantList domain_game_data::get_explored_provinces_qvariant_list() const
+{
+	return container::to_qvariant_list(this->get_explored_provinces());
+}
+
 bool domain_game_data::is_province_explored(const metternich::province *province) const
 {
 	if constexpr (map::exploration_enabled) {
@@ -3466,7 +3471,6 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		}
 	}
 
-
 	this->explored_provinces.insert(province);
 
 	if (this->domain == game::get()->get_player_domain()) {
@@ -3486,6 +3490,8 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 			}
 		}
 	}
+
+	emit explored_provinces_changed();
 }
 
 QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)
@@ -3935,6 +3941,11 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 
 			co_await province->get_game_data()->set_owner(releasable_domain);
 		}
+	}
+
+	//the released domain should get the same explored provinces as its previous owner
+	for (const province *explored_province : this->get_explored_provinces()) {
+		co_await releasable_domain->get_game_data()->explore_province(explored_province);
 	}
 
 	//ensure the released domain has an appropriate government, culture, religion and ruler

@@ -26,7 +26,7 @@ Item {
 				id: province_shape
 				x: -map_block_start_x * metternich.province_defines.province_map_tile_scale
 				y: -map_block_start_y * metternich.province_defines.province_map_tile_scale
-				visible: province_polygon_path.length > 0
+				visible: province_polygon_path.length > 0 && metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 				
 				readonly property var province: model.modelData
 				readonly property var province_polygon_path: province ? province.map_data.polygon_path : ""
@@ -132,7 +132,7 @@ Item {
 			
 			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.province_defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.province_defines.province_map_tile_scale / scale_factor)))
 			
-			if (province === null || (selected_province === province && selected_garrison === false) || (province.water_zone && metternich.selected_military_units.length === 0)) {
+			if (province === null || !metternich.game.player_domain.game_data.is_province_explored(province) || (selected_province === province && selected_garrison === false) || (province.water_zone && metternich.selected_military_units.length === 0)) {
 				select_province(null)
 			} else {
 				if (metternich.selected_military_units.length > 0) {
@@ -153,7 +153,7 @@ Item {
 		onPositionChanged: function (mouse) {
 			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.province_defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.province_defines.province_map_tile_scale / scale_factor)))
 			
-			if (province !== null) {
+			if (province !== null && metternich.game.player_domain.game_data.is_province_explored(province)) {
 				var text = get_province_status_text(province)
 				status_text = text
 			} else {
@@ -170,6 +170,8 @@ Item {
 			x: -scaled_map_block_start_x
 			y: -scaled_map_block_start_y
 			visible: route && route.game_data.active && route.type !== null && (province_map.mode === ProvinceMap.Mode.TradeZone || route.type.output_commodity !== metternich.defines.wealth_commodity) && (province_map.mode === ProvinceMap.Mode.Temple || route.type.output_commodity !== metternich.defines.piety_commodity)
+			
+			//FIXME: only the parts of the route in explored territory should be visible
 			
 			readonly property var route: model.modelData
 			readonly property var route_line_path: route ? route.game_data.get_line_path() : ""
@@ -199,9 +201,10 @@ Item {
 			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.province_defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
 			width: site_icon.width + 2 * scale_factor
 			height: site_icon.height + 2 * scale_factor
-			visible: province_map.show_sites && site && site.holding
+			visible: province_map.show_sites && site && site.holding && metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 			
 			readonly property var site: model.modelData
+			readonly property var province: site.game_data.province
 			readonly property var tile_pos: site ? site.map_data.tile_pos : null
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			readonly property var icon: site ? site.game_data.icon : null
@@ -213,12 +216,12 @@ Item {
 				height: site_icon_area.height
 				radius: width / 2
 				color: selected ? metternich.defines.selected_domain_color : get_holding_map_mode_color(province_map.mode, site, change_count)
-				visible: site && (selected || color !== get_map_mode_color(province_map.mode, site.game_data.province, change_count))
+				visible: site && (selected || color !== get_map_mode_color(province_map.mode, province, change_count))
 				
 				property int change_count: 0
 				
 				Connections {
-					target: site && site.game_data.province ? site.game_data.province.game_data : null
+					target: site && province ? province.game_data : null
 					
 					function onMap_image_changed() {
 						change_count += 1
@@ -342,6 +345,7 @@ Item {
 			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
 			width: province_label_column.width
 			height: province_label_column.height
+			visible: metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)

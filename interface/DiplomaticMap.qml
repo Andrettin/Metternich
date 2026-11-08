@@ -110,7 +110,7 @@ Flickable {
 			
 			var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_scale_double / scale_factor)))
 			
-			if (province === null) {
+			if (province === null || !metternich.game.player_domain.game_data.is_province_explored(province)) {
 				diplomatic_map.selected_domain = null
 				return
 			}
@@ -136,7 +136,7 @@ Flickable {
 			if (typeof status_text !== 'undefined') {
 				var province = metternich.map.get_tile_province(Qt.point(Math.floor(mouse.x / metternich.map.diplomatic_map_tile_scale_double / scale_factor), Math.floor(mouse.y / metternich.map.diplomatic_map_tile_scale_double / scale_factor)))
 				
-				if (province !== null) {
+				if (province !== null && metternich.game.player_domain.game_data.is_province_explored(province)) {
 					status_text = get_status_text(province)
 				} else {
 					status_text = ""
