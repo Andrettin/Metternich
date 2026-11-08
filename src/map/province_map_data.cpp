@@ -151,6 +151,9 @@ void province_map_data::on_map_created()
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_holding_sites().size(), province::max_holdings));
 	}
 
+	//shrink the tile index vector to the actual usage, to prevent needlessly increased memory usage
+	this->tile_indices.shrink_to_fit();
+
 	emit territory_changed();
 }
 
