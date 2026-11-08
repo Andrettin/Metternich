@@ -131,7 +131,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(QVariantList scripted_modifiers READ get_scripted_modifiers_qvariant_list NOTIFY scripted_modifiers_changed)
 	Q_PROPERTY(QVariantList characters READ get_characters_qvariant_list NOTIFY characters_changed)
 	Q_PROPERTY(QVariantList historical_rulers READ get_historical_rulers_qvariant_list NOTIFY characters_changed)
-	Q_PROPERTY(QVariantList explored_provinces READ get_explored_provinces_qvariant_list NOTIFY explored_provinces_changed)
+	Q_PROPERTY(int explored_province_count READ get_explored_province_count NOTIFY explored_provinces_changed)
 	Q_PROPERTY(QVariantList active_journal_entries READ get_active_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList inactive_journal_entries READ get_inactive_journal_entries_qvariant_list NOTIFY journal_entries_changed)
 	Q_PROPERTY(QVariantList finished_journal_entries READ get_finished_journal_entries_qvariant_list NOTIFY journal_entries_changed)
@@ -795,7 +795,7 @@ public:
 		return this->explored_provinces;
 	}
 
-	QVariantList get_explored_provinces_qvariant_list() const;
+	int get_explored_province_count() const;
 	Q_INVOKABLE bool is_province_explored(const metternich::province *province) const;
 	bool is_region_discovered(const region *region) const;
 	[[nodiscard]] QCoro::Task<void> explore_province(const province *province);

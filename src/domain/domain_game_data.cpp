@@ -3411,9 +3411,9 @@ bool domain_game_data::is_province_discovered(const province *province) const
 	return false;
 }
 
-QVariantList domain_game_data::get_explored_provinces_qvariant_list() const
+int domain_game_data::get_explored_province_count() const
 {
-	return container::to_qvariant_list(this->get_explored_provinces());
+	return static_cast<int>(this->get_explored_provinces().size());
 }
 
 bool domain_game_data::is_province_explored(const metternich::province *province) const

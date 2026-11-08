@@ -26,7 +26,7 @@ Item {
 				id: province_shape
 				x: -map_block_start_x * metternich.province_defines.province_map_tile_scale
 				y: -map_block_start_y * metternich.province_defines.province_map_tile_scale
-				visible: province_polygon_path.length > 0 && metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
+				visible: province_polygon_path.length > 0 && metternich.game.player_domain.game_data.explored_province_count > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 				
 				readonly property var province: model.modelData
 				readonly property var province_polygon_path: province ? province.map_data.polygon_path : ""
@@ -201,7 +201,7 @@ Item {
 			y: -scaled_map_block_start_y + (site ? Math.min(Math.max(site.game_data.tile_pos.y * metternich.province_defines.province_map_tile_scale * scale_factor - Math.floor(height / 2), 0), province_map.contentHeight - height) : 0)
 			width: site_icon.width + 2 * scale_factor
 			height: site_icon.height + 2 * scale_factor
-			visible: province_map.show_sites && site && site.holding && metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
+			visible: province_map.show_sites && site && site.holding && metternich.game.player_domain.game_data.explored_province_count > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 			
 			readonly property var site: model.modelData
 			readonly property var province: site ? site.game_data.province : null
@@ -345,7 +345,7 @@ Item {
 			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
 			width: province_label_column.width
 			height: province_label_column.height
-			visible: metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
+			visible: metternich.game.player_domain.game_data.explored_province_count > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 			
 			readonly property var province: model.modelData
 			readonly property var text_rect: province ? province.game_data.text_rect : Qt.rect(0, 0, 0, 0)
