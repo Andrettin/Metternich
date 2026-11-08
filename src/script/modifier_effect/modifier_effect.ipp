@@ -21,8 +21,8 @@
 #include "script/modifier_effect/commodity_bonus_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_building_modifier_effect.h"
+#include "script/modifier_effect/commodity_bonus_per_holding_modifier_effect.h"
 #include "script/modifier_effect/commodity_bonus_per_population_modifier_effect.h"
-#include "script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h"
 #include "script/modifier_effect/commodity_output_modifier_effect.h"
 #include "script/modifier_effect/commodity_throughput_modifier_effect.h"
 #include "script/modifier_effect/construction_level_modifier_effect.h"
@@ -379,8 +379,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			modifier_effect = std::make_unique<ai_building_desire_modifier_effect>();
 		} else if (tag == "building_cost_efficiency") {
 			modifier_effect = std::make_unique<building_cost_efficiency_modifier_effect>();
-		} else if (tag == "commodity_bonus_per_settlement") {
-			modifier_effect = std::make_unique<commodity_bonus_per_settlement_modifier_effect<scope_type>>();
+		} else if (tag == "commodity_bonus_per_holding") {
+			modifier_effect = std::make_unique<commodity_bonus_per_holding_modifier_effect<scope_type>>();
 		} else if (tag == "monthly_technology_category_research") {
 			modifier_effect = std::make_unique<monthly_technology_category_research_modifier_effect>();
 		} else if (tag == "population_strata_tax_rate") {

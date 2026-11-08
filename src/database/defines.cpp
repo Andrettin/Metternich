@@ -41,19 +41,19 @@ void defines::process_gsml_scope(const gsml_data &scope)
 
 			this->months_per_turn_from_year[threshold_year] = months_per_turn;
 		});
-	} else if (tag == "settlement_commodity_bonuses") {
+	} else if (tag == "holding_commodity_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			const int bonus = std::stoi(property.get_value());
 
-			this->settlement_commodity_bonuses[commodity] = bonus;
+			this->holding_commodity_bonuses[commodity] = bonus;
 		});
-	} else if (tag == "river_settlement_commodity_bonuses") {
+	} else if (tag == "river_holding_commodity_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const commodity *commodity = commodity::get(property.get_key());
 			const int bonus = std::stoi(property.get_value());
 
-			this->river_settlement_commodity_bonuses[commodity] = bonus;
+			this->river_holding_commodity_bonuses[commodity] = bonus;
 		});
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {

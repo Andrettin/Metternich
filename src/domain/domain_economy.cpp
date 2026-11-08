@@ -132,8 +132,8 @@ void domain_economy::process_gsml_scope(const gsml_data &scope)
 		scope.to_map(this->commodity_bonuses_for_tile_thresholds);
 	} else if (tag == "commodity_bonuses_per_population") {
 		scope.to_map(this->commodity_bonuses_per_population);
-	} else if (tag == "settlement_commodity_bonuses") {
-		scope.to_map(this->settlement_commodity_bonuses);
+	} else if (tag == "holding_commodity_bonuses") {
+		scope.to_map(this->holding_commodity_bonuses);
 	} else if (tag == "capital_commodity_bonuses") {
 		scope.to_map(this->capital_commodity_bonuses);
 	} else if (tag == "capital_commodity_bonuses_per_population") {
@@ -221,8 +221,8 @@ gsml_data domain_economy::to_gsml_data() const
 		data.add_child(gsml_data::from_map(this->commodity_bonuses_per_population, "commodity_bonuses_per_population"));
 	}
 
-	if (!this->settlement_commodity_bonuses.empty()) {
-		data.add_child(gsml_data::from_map(this->settlement_commodity_bonuses, "settlement_commodity_bonuses"));
+	if (!this->holding_commodity_bonuses.empty()) {
+		data.add_child(gsml_data::from_map(this->holding_commodity_bonuses, "holding_commodity_bonuses"));
 	}
 
 	if (!this->capital_commodity_bonuses.empty()) {
@@ -1321,18 +1321,18 @@ void domain_economy::change_commodity_bonus_per_population(const commodity *comm
 	}
 }
 
-void domain_economy::change_settlement_commodity_bonus(const commodity *commodity, const centesimal_int &change)
+void domain_economy::change_holding_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
 		return;
 	}
 
-	const centesimal_int count = (this->settlement_commodity_bonuses[commodity] += change);
+	const centesimal_int count = (this->holding_commodity_bonuses[commodity] += change);
 
 	assert_throw(count >= 0);
 
 	if (count == 0) {
-		this->settlement_commodity_bonuses.erase(commodity);
+		this->holding_commodity_bonuses.erase(commodity);
 	}
 
 	for (const province *province : this->get_game_data()->get_provinces()) {

@@ -1274,23 +1274,6 @@ void map_generator::generate_sites()
 			this->generate_site(province->get_default_provincial_capital(), zone);
 
 			assert_throw(province->get_default_provincial_capital()->get_map_data()->is_on_map());
-
-			//const QPoint &tile_pos = province->get_default_provincial_capital()->get_map_data()->get_tile_pos();
-
-			if (!province->is_star_system()) {
-				/*
-				//change non-flatlands or forested terrain to unforested flatlands for settlements
-				const terrain_type *tile_terrain = map->get_tile(tile_pos)->get_terrain();
-				if (tile_terrain->get_elevation_type() != elevation_type::flatlands || tile_terrain->get_forestation_type() != forestation_type::none) {
-					const temperature_type temperature_type = this->get_tile_temperature_type(tile_pos);
-					const moisture_type moisture_type = this->get_tile_moisture_type(tile_pos);
-
-					const terrain_type *terrain = terrain_type::get_by_biome(elevation_type::flatlands, temperature_type, moisture_type, forestation_type::none);
-
-					//map->set_tile_terrain(tile_pos, terrain);
-				}
-				*/
-			}
 		}
 
 		for (const site *site : province->get_sites()) {

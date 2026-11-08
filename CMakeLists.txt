@@ -864,7 +864,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/commodity_bonus_for_tile_threshold_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_building_modifier_effect.h
-	src/script/modifier_effect/commodity_bonus_per_settlement_modifier_effect.h
+	src/script/modifier_effect/commodity_bonus_per_holding_modifier_effect.h
 	src/script/modifier_effect/commodity_bonus_per_population_modifier_effect.h
 	src/script/modifier_effect/commodity_output_modifier_effect.h
 	src/script/modifier_effect/commodity_throughput_modifier_effect.h

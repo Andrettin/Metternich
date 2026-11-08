@@ -588,7 +588,7 @@ std::string building_type::get_modifier_string(const site *site, const bool sing
 
 QString building_type::get_effects_string(const metternich::site *site, const bool single_line) const
 {
-	assert_throw(site->is_settlement());
+	assert_throw(site->is_holding());
 
 	std::string str = this->get_modifier_string(site, single_line);
 

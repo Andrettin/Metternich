@@ -194,14 +194,14 @@ public:
 		return this->default_space_terrain;
 	}
 
-	const commodity_map<int> &get_settlement_commodity_bonuses() const
+	const commodity_map<int> &get_holding_commodity_bonuses() const
 	{
-		return this->settlement_commodity_bonuses;
+		return this->holding_commodity_bonuses;
 	}
 
-	const commodity_map<int> &get_river_settlement_commodity_bonuses() const
+	const commodity_map<int> &get_river_holding_commodity_bonuses() const
 	{
-		return this->river_settlement_commodity_bonuses;
+		return this->river_holding_commodity_bonuses;
 	}
 
 	const commodity *get_wealth_commodity() const
@@ -402,8 +402,8 @@ private:
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
-	commodity_map<int> settlement_commodity_bonuses;
-	commodity_map<int> river_settlement_commodity_bonuses;
+	commodity_map<int> holding_commodity_bonuses;
+	commodity_map<int> river_holding_commodity_bonuses;
 	const commodity *wealth_commodity = nullptr;
 	const commodity *regency_commodity = nullptr;
 	const commodity *piety_commodity = nullptr;

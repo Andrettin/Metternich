@@ -21,9 +21,9 @@ evolutionary_months_per_turn = 120000 #10,000 years
 #	1800 = 3
 #}
 
-settlement_commodity_bonuses = {
+holding_commodity_bonuses = {
 }
-river_settlement_commodity_bonuses = {
+river_holding_commodity_bonuses = {
 }
 
 wealth_commodity = wealth

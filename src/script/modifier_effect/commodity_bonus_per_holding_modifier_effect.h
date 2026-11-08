@@ -8,12 +8,12 @@
 namespace metternich {
 
 template <typename scope_type>
-class commodity_bonus_per_settlement_modifier_effect final : public modifier_effect<scope_type>
+class commodity_bonus_per_holding_modifier_effect final : public modifier_effect<scope_type>
 {
 public:
 	virtual const std::string &get_identifier() const override
 	{
-		static const std::string identifier = "commodity_bonus_per_settlement";
+		static const std::string identifier = "commodity_bonus_per_holding";
 		return identifier;
 	}
 
@@ -37,14 +37,14 @@ public:
 			return;
 		}
 
-		scope->get_economy()->change_settlement_commodity_bonus(this->commodity, centesimal_int(this->value * multiplier));
+		scope->get_economy()->change_holding_commodity_bonus(this->commodity, centesimal_int(this->value * multiplier));
 	}
 
 	virtual std::string get_base_string(const scope_type *scope) const override
 	{
 		Q_UNUSED(scope);
 
-		return std::format("{} per Settlement", this->commodity->get_name());
+		return std::format("{} per Holding", this->commodity->get_name());
 	}
 
 	virtual bool are_decimals_relevant() const override
