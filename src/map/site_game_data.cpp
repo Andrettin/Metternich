@@ -669,7 +669,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 			this->population->remove_upper_population(old_owner->get_game_data()->get_population());
 		}
 
-		if (this->site->is_holding()) {
+		if (this->site->is_holding() && this->is_built()) {
 			for (const auto &[commodity, bonus] : old_owner->get_economy()->get_holding_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, decimillesimal_int(-bonus));
 			}
@@ -717,7 +717,7 @@ QCoro::Task<void> site_game_data::set_owner(const domain *owner)
 			this->population->add_upper_population(this->get_owner()->get_game_data()->get_population());
 		}
 
-		if (this->site->is_holding()) {
+		if (this->site->is_holding() && this->is_built()) {
 			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_holding_commodity_bonuses()) {
 				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
 			}
@@ -2047,18 +2047,18 @@ QCoro::Task<void> site_game_data::on_holding_built(const int multiplier)
 
 	if (this->get_province() != nullptr) {
 		for (const auto &[commodity, bonus] : defines::get()->get_holding_commodity_bonuses()) {
-			this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
+			this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
 		}
 
 		if (this->site->get_map_data()->has_river()) {
 			for (const auto &[commodity, bonus] : defines::get()->get_river_holding_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
+				this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
 			}
 		}
 
 		if (this->get_owner() != nullptr) {
 			for (const auto &[commodity, bonus] : this->get_owner()->get_economy()->get_holding_commodity_bonuses()) {
-				this->change_base_commodity_output(commodity, decimillesimal_int(bonus));
+				this->change_base_commodity_output(commodity, decimillesimal_int(bonus) * multiplier);
 			}
 		}
 	}
