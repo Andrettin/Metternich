@@ -5140,11 +5140,7 @@ void character_game_data::set_base_opinion_of(const metternich::character *other
 		return;
 	}
 
-	if (opinion == 0) {
-		this->base_opinions.erase(other);
-	} else {
-		this->base_opinions[other] = opinion;
-	}
+	this->base_opinions[other] = opinion;
 }
 
 void character_game_data::add_ruled_domain(const metternich::domain *domain)
