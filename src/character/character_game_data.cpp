@@ -5123,8 +5123,9 @@ int character_game_data::get_base_opinion_of(const metternich::character *other)
 	}
 
 	//generate an opinion towards the character
-	static constexpr dice opinion_dice(1, 100);
-	const int generated_opinion = random::get()->roll_dice(opinion_dice);
+	static constexpr int min_generated_opinion = -100;
+	static constexpr int max_generated_opinion = 100;
+	const int generated_opinion = random::get()->generate_in_range(min_generated_opinion, max_generated_opinion);
 
 	this->base_opinions[other] = generated_opinion;
 

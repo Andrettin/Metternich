@@ -216,10 +216,10 @@ battle_defense_per_armor_class = {
 }
 
 opinion_type_thresholds = {
-	hostile = 1
-	unfavorable = 6
-	cautious = 26
-	indifferent = 46
-	friendly = 76
-	loyal = 96
+	hostile = -100
+	unfavorable = -75
+	cautious = -50
+	indifferent = -25
+	friendly = 50
+	loyal = 75
 }

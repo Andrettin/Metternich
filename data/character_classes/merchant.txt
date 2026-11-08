@@ -15,7 +15,7 @@ merchant = {
 			skill_training = open_locks
 			
 			#merchant modifiers
-			burgher_opinion = 5 #urban opinion
+			burgher_opinion = 10 #urban opinion
 			appraising = 2
 		}
 	}

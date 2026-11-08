@@ -23,7 +23,7 @@ noble_carolingian_warrior = {
 	level_modifiers = {
 		1 = {
 			#trait = riding
-			same_culture_opinion = 15
+			same_culture_opinion = 30
 			#FIXME: add +10% per level for item/personal service base costs?
 		}
 	}

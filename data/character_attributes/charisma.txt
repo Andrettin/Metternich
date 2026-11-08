@@ -3,67 +3,67 @@ charisma = {
 	type = main
 	value_modifiers = {
 		1 = {
-			general_opinion = -35
+			general_opinion = -70
 		}
 		2 = {
-			general_opinion = 5
-		}
-		3 = {
-			general_opinion = 5
-		}
-		4 = {
-			general_opinion = 5
-		}
-		5 = {
-			general_opinion = 5
-		}
-		6 = {
-			general_opinion = 5
-		}
-		7 = {
-			general_opinion = 5
-		}
-		8 = {
-			general_opinion = 5
-		}
-		13 = {
-			general_opinion = 5
-		}
-		14 = {
-			general_opinion = 5
-		}
-		15 = {
-			general_opinion = 5
-		}
-		16 = {
 			general_opinion = 10
 		}
+		3 = {
+			general_opinion = 10
+		}
+		4 = {
+			general_opinion = 10
+		}
+		5 = {
+			general_opinion = 10
+		}
+		6 = {
+			general_opinion = 10
+		}
+		7 = {
+			general_opinion = 10
+		}
+		8 = {
+			general_opinion = 10
+		}
+		13 = {
+			general_opinion = 10
+		}
+		14 = {
+			general_opinion = 10
+		}
+		15 = {
+			general_opinion = 10
+		}
+		16 = {
+			general_opinion = 20
+		}
 		17 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		18 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		19 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		20 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		21 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		22 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		23 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		24 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 		25 = {
-			general_opinion = 5
+			general_opinion = 10
 		}
 	}
 }
