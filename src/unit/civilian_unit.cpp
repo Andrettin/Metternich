@@ -26,7 +26,6 @@
 #include "map/site.h"
 #include "map/site_game_data.h"
 #include "map/terrain_type.h"
-#include "map/tile.h"
 #include "species/phenotype.h"
 #include "unit/civilian_unit_type.h"
 #include "ui/icon.h"

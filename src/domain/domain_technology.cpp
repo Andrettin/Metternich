@@ -22,7 +22,6 @@
 #include "map/site.h"
 #include "map/site_feature.h"
 #include "map/site_game_data.h"
-#include "map/tile.h"
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/context.h"
