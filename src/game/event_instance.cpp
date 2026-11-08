@@ -19,12 +19,12 @@ event_instance::event_instance(const metternich::event *event, const QString &na
 				continue;
 			}
 
-			this->option_indexes.push_back(i);
+			this->option_indices.push_back(i);
 			this->option_names.push_back(QString::fromStdString(event->get_option_name(i)));
 			this->option_tooltips.push_back(QString::fromStdString(event->get_option_tooltip(i, ctx)));
 		}
 
-		assert_throw(!this->option_indexes.empty());
+		assert_throw(!this->option_indices.empty());
 	} else {
 		this->option_names.push_back(QString::fromStdString(event::option_default_name));
 	}
@@ -34,7 +34,7 @@ QCoro::Task<void> event_instance::choose_option_coro(const int displayed_option_
 {
 	try {
 		if (this->event->get_option_count() > 0) {
-			const int option_index = this->option_indexes.at(displayed_option_index);
+			const int option_index = this->option_indices.at(displayed_option_index);
 			co_await this->event->do_option_effects(option_index, this->ctx);
 		}
 

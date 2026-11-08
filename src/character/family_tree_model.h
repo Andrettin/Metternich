@@ -56,7 +56,7 @@ signals:
 private:
 	const metternich::character *character = nullptr;
 	const metternich::character *oldest_ancestor = nullptr;
-	character_map<QModelIndex> character_indexes;
+	character_map<QModelIndex> character_indices;
 };
 
 }

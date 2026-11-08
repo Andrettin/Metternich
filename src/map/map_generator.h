@@ -111,7 +111,7 @@ private:
 	bool generate_country(const domain *domain, const std::vector<province *> &country_provinces);
 	void generate_star_systems();
 	std::vector<province *> generate_province_group(const std::vector<province *> &potential_provinces, province *capital_province);
-	int generate_province(province *province, std::vector<int> &group_zone_indexes);
+	int generate_province(province *province, std::vector<int> &group_zone_indices);
 	bool can_assign_province_to_zone_index(const province *province, const int zone_index) const;
 	static int get_province_distance_multiplier_to(const province *province, const metternich::province *other_province);
 

@@ -1647,23 +1647,23 @@ void site_game_data::initialize_building_slots()
 std::vector<const building_slot *> site_game_data::get_visible_building_slots() const
 {
 	std::vector<const building_slot *> visible_building_slots;
-	std::map<const building_slot *, size_t> building_slots_indexes;
+	std::map<const building_slot *, size_t> building_slots_indices;
 	for (size_t i = 0; i < this->get_building_slots().size(); ++i) {
 		const qunique_ptr<building_slot> &building_slot = this->get_building_slots().at(i);
 		visible_building_slots.push_back(building_slot.get());
-		building_slots_indexes[building_slot.get()] = i;
+		building_slots_indices[building_slot.get()] = i;
 	}
 
 	std::erase_if(visible_building_slots, [](const building_slot *building_slot) {
 		return !building_slot->is_available();
 	});
 
-	std::sort(visible_building_slots.begin(), visible_building_slots.end(), [&building_slots_indexes](const building_slot *lhs, const building_slot *rhs) {
+	std::sort(visible_building_slots.begin(), visible_building_slots.end(), [&building_slots_indices](const building_slot *lhs, const building_slot *rhs) {
 		if ((lhs->get_building() != nullptr) != (rhs->get_building() != nullptr)) {
 			return lhs->get_building() != nullptr;
 		}
 
-		return building_slots_indexes[lhs] < building_slots_indexes[rhs];
+		return building_slots_indices[lhs] < building_slots_indices[rhs];
 	});
 
 	return visible_building_slots;

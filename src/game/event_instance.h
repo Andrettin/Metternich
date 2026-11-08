@@ -64,7 +64,7 @@ private:
 	const metternich::event *event = nullptr;
 	QString name;
 	QString description;
-	std::vector<int> option_indexes;
+	std::vector<int> option_indices;
 	QStringList option_names;
 	QStringList option_tooltips;
 	context ctx;

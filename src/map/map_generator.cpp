@@ -695,7 +695,7 @@ void map_generator::consolidate_water_zones()
 
 int map_generator::choose_sea_zone_for_removal(const std::set<int> &remaining_sea_zones, const std::vector<int> &sea_zones_to_remove, std::vector<std::vector<int>> &distance_cache) const
 {
-	std::vector<int> best_zone_indexes;
+	std::vector<int> best_zone_indices;
 	int best_distance = 0;
 
 	//get the zones which are as far away from other countries as possible
@@ -727,17 +727,17 @@ int map_generator::choose_sea_zone_for_removal(const std::set<int> &remaining_se
 		}
 
 		if (distance > best_distance) {
-			best_zone_indexes.clear();
+			best_zone_indices.clear();
 			best_distance = distance;
 		}
 
 		if (distance == best_distance) {
-			best_zone_indexes.push_back(zone_index);
+			best_zone_indices.push_back(zone_index);
 		}
 	}
 
-	if (!best_zone_indexes.empty()) {
-		return vector::get_random(best_zone_indexes);
+	if (!best_zone_indices.empty()) {
+		return vector::get_random(best_zone_indices);
 	}
 
 	return -1;
@@ -883,8 +883,8 @@ void map_generator::generate_countries_from_provinces(const std::vector<province
 			break;
 		}
 
-		std::vector<int> group_province_indexes;
-		this->generate_province(province, group_province_indexes);
+		std::vector<int> group_province_indices;
+		this->generate_province(province, group_province_indices);
 	}
 
 	for (province *province : potential_lakes) {
@@ -892,8 +892,8 @@ void map_generator::generate_countries_from_provinces(const std::vector<province
 			break;
 		}
 
-		std::vector<int> group_zone_indexes;
-		this->generate_province(province, group_zone_indexes);
+		std::vector<int> group_zone_indices;
+		this->generate_province(province, group_zone_indices);
 	}
 
 	for (const auto &[country, country_provinces] : provinces_by_country) {
@@ -963,8 +963,8 @@ void map_generator::generate_star_systems()
 			break;
 		}
 
-		std::vector<int> group_province_indexes;
-		const int province_index = this->generate_province(province, group_province_indexes);
+		std::vector<int> group_province_indices;
+		const int province_index = this->generate_province(province, group_province_indices);
 		if (province_index == -1) {
 			break;
 		}
@@ -974,10 +974,10 @@ void map_generator::generate_star_systems()
 std::vector<province *> map_generator::generate_province_group(const std::vector<province *> &potential_provinces, province *capital_province)
 {
 	std::vector<province *> provinces;
-	std::vector<int> group_zone_indexes;
+	std::vector<int> group_zone_indices;
 
 	if (capital_province != nullptr) {
-		const int zone_index = this->generate_province(capital_province, group_zone_indexes);
+		const int zone_index = this->generate_province(capital_province, group_zone_indices);
 		if (zone_index == -1) {
 			return {};
 		}
@@ -986,7 +986,7 @@ std::vector<province *> map_generator::generate_province_group(const std::vector
 	}
 
 	for (province *province : vector::shuffled(potential_provinces)) {
-		const int zone_index = this->generate_province(province, group_zone_indexes);
+		const int zone_index = this->generate_province(province, group_zone_indices);
 		if (zone_index == -1) {
 			continue;
 		}
@@ -1001,7 +1001,7 @@ std::vector<province *> map_generator::generate_province_group(const std::vector
 	return provinces;
 }
 
-int map_generator::generate_province(province *province, std::vector<int> &group_zone_indexes)
+int map_generator::generate_province(province *province, std::vector<int> &group_zone_indices)
 {
 	if (province->is_hidden()) {
 		return -1;
@@ -1012,11 +1012,11 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 	}
 
 	int zone_index = -1;
-	const size_t group_generated_province_count = group_zone_indexes.size();
+	const size_t group_generated_province_count = group_zone_indices.size();
 
 	if (group_generated_province_count == 0) {
 		//first province
-		std::vector<int> best_zone_indexes;
+		std::vector<int> best_zone_indices;
 		std::optional<int> best_distance;
 
 		const QPoint map_center_pos(this->get_width() / 2 - 1, this->get_height() / 2 - 1);
@@ -1047,7 +1047,7 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 				}
 
 				if (!best_distance.has_value() || distance < best_distance.value()) {
-					best_zone_indexes.clear();
+					best_zone_indices.clear();
 					best_distance = distance;
 				}
 			} else {
@@ -1077,35 +1077,35 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 				}
 
 				if (!best_distance.has_value() || distance > best_distance.value()) {
-					best_zone_indexes.clear();
+					best_zone_indices.clear();
 					best_distance = distance;
 				}
 			}
 
 			if (distance == best_distance.value()) {
-				best_zone_indexes.push_back(static_cast<int>(i));
+				best_zone_indices.push_back(static_cast<int>(i));
 			}
 		}
 
-		if (!best_zone_indexes.empty()) {
-			zone_index = vector::get_random(best_zone_indexes);
+		if (!best_zone_indices.empty()) {
+			zone_index = vector::get_random(best_zone_indices);
 		}
 	} else {
 		//pick a zone bordering one of the country's existing provinces
 		std::map<int, int> zone_index_border_counts;
-		std::set<int> checked_zone_indexes;
+		std::set<int> checked_zone_indices;
 
-		for (const int country_zone_index : group_zone_indexes) {
+		for (const int country_zone_index : group_zone_indices) {
 			const zone &country_zone = this->zones.at(country_zone_index);
 
 			for (const int border_zone_index : country_zone.border_zones) {
-				if (checked_zone_indexes.contains(border_zone_index)) {
+				if (checked_zone_indices.contains(border_zone_index)) {
 					if (!zone_index_border_counts.contains(border_zone_index)) {
 						//already checked for suitability and deemed unsuitable
 						continue;
 					}
 				} else {
-					checked_zone_indexes.insert(border_zone_index);
+					checked_zone_indices.insert(border_zone_index);
 					//make the suitability check if it hasn't been done yet
 					if (!this->can_assign_province_to_zone_index(province, border_zone_index)) {
 						continue;
@@ -1116,21 +1116,21 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 			}
 		}
 
-		std::vector<int> best_zone_indexes;
+		std::vector<int> best_zone_indices;
 		int best_border_count = 0;
 		for (const auto &[border_zone_index, border_count] : zone_index_border_counts) {
 			if (border_count > best_border_count) {
-				best_zone_indexes.clear();
+				best_zone_indices.clear();
 				best_border_count = border_count;
 			}
 
 			if (border_count == best_border_count) {
-				best_zone_indexes.push_back(border_zone_index);
+				best_zone_indices.push_back(border_zone_index);
 			}
 		}
 
-		if (!best_zone_indexes.empty()) {
-			zone_index = vector::get_random(best_zone_indexes);
+		if (!best_zone_indices.empty()) {
+			zone_index = vector::get_random(best_zone_indices);
 		}
 	}
 
@@ -1139,7 +1139,7 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 	}
 
 	this->provinces_by_zone_index[zone_index] = province;
-	group_zone_indexes.push_back(zone_index);
+	group_zone_indices.push_back(zone_index);
 
 	this->generated_provinces.insert(province);
 
