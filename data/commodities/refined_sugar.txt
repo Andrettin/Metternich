@@ -4,5 +4,5 @@ refined_sugar = {
 	icon = refined_sugar
 	industrial = true
 	base_price = 3
-	required_technology = sugar_cane
+	required_technology = sugar_refining
 }
