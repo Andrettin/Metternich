@@ -3,6 +3,7 @@ boston = {
 	world = earth
 	geocoordinate = { -71.07001367360 42.32996014310 } #from Natural Earth
 	type = holding
+	holding_type = guild #had a printing press
 	province = massachusetts
 	
 	history = {

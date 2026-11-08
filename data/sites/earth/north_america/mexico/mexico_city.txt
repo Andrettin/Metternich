@@ -3,6 +3,7 @@ mexico_city = {
 	world = earth
 	geocoordinate = { -99.13098820170 19.44244244280 } #from Natural Earth
 	type = holding
+	holding_type = guild #had a printing press
 	cultural_names = {
 		aztec = "Tenochtitlan"
 	}
