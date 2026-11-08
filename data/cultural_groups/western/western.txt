@@ -18,7 +18,6 @@ western = {
 		explored_provinces += english_channel
 		explored_provinces += inner_seas
 		explored_provinces += irish_sea
-		explored_provinces += north_atlantic_ocean
 		
 		1180 = {
 			#the English scholar Alexander Neckam (1157-1217) wrote about the uses of magnetism for ascertaining the north/south direction in 1180; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, pp. 164-165.
@@ -38,11 +37,13 @@ western = {
 		1492 = {
 			#Puerto Rico was discovered in 1492 by Columbus; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 201.
 			explored_provinces += puerto_rico
+			explored_provinces += coast_of_the_canaries
+			explored_provinces += canarian_shelf
+			explored_provinces += north_atlantic_ocean
 		}
 		
 		1497 = {
 			#Amerigo Vespucci went on an expedition to explore the coast of South America in 1497; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 199.
-			explored_provinces += south_atlantic_ocean
 			explored_provinces += alagoas
 			explored_provinces += bahia
 			explored_provinces += ceara
@@ -64,11 +65,15 @@ western = {
 			explored_provinces += rio_negro
 			explored_provinces += santa_cruz_argentina
 			explored_provinces += tierra_del_fuego
+			explored_provinces += coast_of_brazil
+			explored_provinces += coast_of_uruguay
+			explored_provinces += coast_of_argentina
 		}
 		
 		1498 = {
 			#Christopher Columbus went on an expedition to the mouth of the Orinoco River in 1498; Source: Isaac Asimov, "Cronologia das Ciências e das Descobertas", 1993, p. 200.
 			explored_provinces += venezuela
+			explored_provinces += caribbean_sea
 		}
 		
 		1500.3 = {
