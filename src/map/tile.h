@@ -8,20 +8,17 @@ class province;
 class tile final
 {
 public:
-	metternich::province *get_province() const
-	{
-		return this->province;
-	}
+	using province_index_type = uint16_t;
+	static constexpr province_index_type no_province_index = std::numeric_limits<uint16_t>::max();
+	static constexpr province_index_type last_valid_province_index = no_province_index - 1;
 
-	void set_province(metternich::province *province)
-	{
-		this->province = province;
-	}
+	metternich::province *get_province() const;
+	void set_province(metternich::province *province);
 
 	const domain *get_owner() const;
 
 private:
-	metternich::province *province = nullptr;
+	province_index_type province_index = tile::no_province_index;
 };
 
 }

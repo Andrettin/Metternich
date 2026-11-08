@@ -14,6 +14,7 @@
 #include "map/site.h"
 #include "map/site_feature.h"
 #include "map/terrain_type.h"
+#include "map/tile.h"
 #include "map/world.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
@@ -128,6 +129,10 @@ void province::initialize()
 
 void province::check() const
 {
+	if (this->get_index() > tile::last_valid_province_index) {
+		throw std::runtime_error(std::format("Province \"{}\" has index {}, but only province indices up to {} are supported.", this->get_identifier(), this->get_index(), tile::last_valid_province_index));
+	}
+
 	if (this->get_terrain() == nullptr && !this->is_water_zone() && this->get_primary_star() == nullptr) {
 		log::log_error(std::format("Land province \"{}\" has no terrain.", this->get_identifier()));
 	}
