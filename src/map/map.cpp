@@ -391,7 +391,6 @@ void map::set_tile_province(const QPoint &tile_pos, province *province)
 	province->get_map_data()->add_tile(tile_pos);
 }
 
-
 const site *map::get_tile_site(const size_t index) const
 {
 	const auto find_iterator = this->tile_sites.find(index);
@@ -402,9 +401,11 @@ const site *map::get_tile_site(const size_t index) const
 	return nullptr;
 }
 
-const site *map::get_tile_site(const QPoint &pos) const
+const site *map::get_tile_site(const QPoint &tile_pos) const
 {
-	const size_t index = this->get_pos_index(pos);
+	assert_throw(this->contains(tile_pos));
+
+	const size_t index = this->get_pos_index(tile_pos);
 	return this->get_tile_site(index);
 }
 
