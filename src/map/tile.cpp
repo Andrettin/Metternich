@@ -21,7 +21,7 @@ void tile::set_province(metternich::province *province)
 	if (province == nullptr) {
 		this->province_index = tile::no_province_index;
 	} else {
-		this->province_index = static_cast<uint16_t>(province->get_index());
+		this->province_index = static_cast<tile::province_index_type>(province->get_index());
 	}
 }
 
