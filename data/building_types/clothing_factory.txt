@@ -39,7 +39,7 @@ tailors_shop = {
 	icon = clothing
 	base_building = tailors_house
 	wealth_cost = 10gb #as Trade Shop
-	required_technology = weaving
+	required_technology = clothmaking
 	holding_types = {
 		guild
 	}
