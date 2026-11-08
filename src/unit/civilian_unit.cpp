@@ -662,13 +662,11 @@ bool civilian_unit::can_prospect_province(const metternich::province *province) 
 		return false;
 	}
 
-	for (const QPoint &tile_pos : province->get_map_data()->get_tiles()) {
-		if (this->get_owner()->get_game_data()->is_tile_prospected(tile_pos)) {
+	for (const site *site : province->get_map_data()->get_sites()) {
+		if (this->get_owner()->get_game_data()->is_tile_prospected(site->get_game_data()->get_tile_pos())) {
 			//already prospected
 			continue;
 		}
-
-		const site *site = map::get()->get_site(tile_pos);
 
 		if (site->get_game_data()->is_resource_discovered()) {
 			continue;
