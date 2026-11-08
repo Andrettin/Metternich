@@ -153,7 +153,9 @@ Item {
 		onPositionChanged: function (mouse) {
 			var province = metternich.map.get_tile_province(Qt.point(map_block_start_x + Math.floor(mouse.x / metternich.province_defines.province_map_tile_scale / scale_factor), Math.floor(map_block_start_y + mouse.y / metternich.province_defines.province_map_tile_scale / scale_factor)))
 			
-			if (province !== null && metternich.game.player_domain.game_data.is_province_explored(province)) {
+			if (metternich.game.player_domain !== null && province !== null && !metternich.game.player_domain.game_data.is_province_explored(province)) {
+				status_text = "Unexplored"
+			} else if (province !== null) {
 				var text = get_province_status_text(province)
 				status_text = text
 			} else {
