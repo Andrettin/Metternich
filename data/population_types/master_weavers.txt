@@ -12,7 +12,7 @@ master_weavers = {
 	everyday_needs = {
 		fur_hats = 20
 		
-		#as Apprentices/Journeymen
+		#general artisan needs
 		clothing = 5
 		coal = 1
 		furniture = 4

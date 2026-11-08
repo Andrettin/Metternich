@@ -69,3 +69,12 @@ lumber = {
 		guild
 	}
 }
+
+refined_sugar = {
+	name = "Refined Sugar"
+	icon = refined_sugar
+	resource = true
+	holding_types = {
+		guild
+	}
+}

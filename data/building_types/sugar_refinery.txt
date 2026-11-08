@@ -3,7 +3,8 @@ sugar_refinery = {
 	building_class = sugar_refinery
 	portrait = smithy
 	icon = refined_sugar
-	required_technology = renaissance
+	wealth_cost = 30gb #as Textile Mill
+	required_technology = sugar_refining
 	holding_types = {
 		guild
 	}
@@ -13,12 +14,23 @@ sugar_refinery = {
 		engineer
 	}
 	conditions = {
-		game_rule = additional_buildings
-		province = {
-			or = {
-				capital = true
-				has_resource = sugar_cane
-			}
+		feature = refined_sugar
+		not = {
+			scripted_condition = is_lair
 		}
+	}
+	commodity_cost_weights = { #as Textile Mill
+		lumber = 160
+		iron = 100 #Tools
+	}
+	modifier = {
+		employment_capacity = {
+			capacity_type = sugar_refining
+			multiplier = 4
+		}
+		scripted_modifier_effect = trade_shop
+	}
+	domain_modifier = {
+		scripted_modifier_effect = trade_shop
 	}
 }

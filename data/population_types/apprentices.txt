@@ -7,6 +7,9 @@ apprentices = {
 	strata = middle
 	industrial_throughput_modifier = 300
 	everyday_needs = {
+		refined_sugar = 20
+		
+		#general artisan needs
 		clothing = 5
 		coal = 1
 		furniture = 4

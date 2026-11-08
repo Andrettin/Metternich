@@ -88,3 +88,18 @@ lumber_making = {
 		journeymen
 	}
 }
+
+sugar_refining = {
+	name = "Sugar Refining"
+	input_commodities = {
+		sugar_cane = 2
+	}
+	output_commodity = refined_sugar
+	quarterly_output_value = 1
+	base_employment_size = 10000
+	employee_types = {
+		craftsmen
+		apprentices
+		journeymen
+	}
+}
