@@ -36,6 +36,15 @@ bristol_channel = {
 	}
 }
 
+canarian_shelf = {
+	name = "Canarian Shelf"
+	color = { 3 143 234 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 caribbean_sea = {
 	name = "Caribbean Sea"
 	color = { 41 137 162 }
@@ -67,6 +76,15 @@ coast_of_argentina = {
 coast_of_brazil = {
 	name = "Coast of Brazil"
 	color = { 25 202 202 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_cape_verde = {
+	name = "Coast of Cape Verde"
+	color = { 234 207 114 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -127,6 +145,15 @@ coast_of_madeira = {
 	}
 }
 
+coast_of_mauritania = {
+	name = "Coast of Mauritania"
+	color = { 217 159 224 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_morocco = {
 	name = "Coast of Morocco"
 	color = { 84 180 56 }
@@ -163,6 +190,15 @@ coast_of_scotland = {
 	}
 }
 
+coast_of_senegambia = {
+	name = "Coast of Senegambia"
+	color = { 146 102 240 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_south_georgia = {
 	name = "Coast of South Georgia"
 	color = { 114 203 253 }
@@ -181,6 +217,15 @@ coast_of_the_azores = {
 	}
 }
 
+coast_of_the_canaries = {
+	name = "Coast of the Canaries"
+	color = { 42 210 153 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_the_falklands = {
 	name = "Coast of the Falklands"
 	color = { 82 202 252 }
@@ -193,6 +238,15 @@ coast_of_the_falklands = {
 coast_of_the_faroes = {
 	name = "Coast of the Faroes"
 	color = { 168 171 182 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_the_western_sahara = {
+	name = "Coast of the Western Sahara"
+	color = { 157 55 220 }
 	sea = true
 	regions = {
 		atlantic_ocean
