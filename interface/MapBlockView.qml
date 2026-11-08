@@ -204,7 +204,7 @@ Item {
 			visible: province_map.show_sites && site && site.holding && metternich.game.player_domain.game_data.explored_provinces.length > 0 && metternich.game.player_domain.game_data.is_province_explored(province)
 			
 			readonly property var site: model.modelData
-			readonly property var province: site.game_data.province
+			readonly property var province: site ? site.game_data.province : null
 			readonly property var tile_pos: site ? site.map_data.tile_pos : null
 			readonly property var holding_type: site ? site.game_data.holding_type : null
 			readonly property var icon: site ? site.game_data.icon : null
