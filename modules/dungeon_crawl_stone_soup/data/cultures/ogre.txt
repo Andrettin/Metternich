@@ -1,0 +1,7 @@
+ogre += {
+	given_names = {
+		female = {
+			"Erolcha" #Erolcha the Cunning (unique female ogre mage)
+		}
+	}
+}
