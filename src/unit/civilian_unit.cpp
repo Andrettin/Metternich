@@ -646,10 +646,8 @@ bool civilian_unit::can_explore_province(const metternich::province *province) c
 	for (const metternich::province *neighbor_province : province->get_map_data()->get_neighbor_provinces()) {
 		if (!this->get_owner()->get_game_data()->is_province_explored(neighbor_province)) {
 			adjacent_unexplored = true;
-			return true;
+			break;
 		}
-
-		return false;
 	}
 
 	return adjacent_unexplored;
