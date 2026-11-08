@@ -3387,18 +3387,13 @@ void domain_game_data::set_building_class_cost_efficiency_modifier(const buildin
 
 bool domain_game_data::is_tile_explored(const QPoint &tile_pos) const
 {
-	if constexpr (map::exploration_enabled) {
-		const tile *tile = map::get()->get_tile(tile_pos);
+	const tile *tile = map::get()->get_tile(tile_pos);
 
-		if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
-			return true;
-		}
-
-		return false;
-	} else {
-		//exploration mechanics are disabled, the entire map is always explored
+	if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
 		return true;
 	}
+
+	return false;
 }
 
 bool domain_game_data::is_province_discovered(const province *province) const
@@ -3423,12 +3418,8 @@ QVariantList domain_game_data::get_explored_provinces_qvariant_list() const
 
 bool domain_game_data::is_province_explored(const metternich::province *province) const
 {
-	if constexpr (map::exploration_enabled) {
-		//get whether the province has been fully explored
-		return this->explored_provinces.contains(province);
-	} else {
-		return true;
-	}
+	//get whether the province has been fully explored
+	return this->explored_provinces.contains(province);
 }
 
 bool domain_game_data::is_region_discovered(const region *region) const
@@ -3491,7 +3482,9 @@ QCoro::Task<void> domain_game_data::explore_province(const province *province)
 		}
 	}
 
-	emit explored_provinces_changed();
+	if (game::get()->is_running()) {
+		emit explored_provinces_changed();
+	}
 }
 
 QCoro::Task<void> domain_game_data::prospect_tile(const QPoint &tile_pos)

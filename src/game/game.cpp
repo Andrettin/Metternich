@@ -2410,12 +2410,6 @@ QCoro::Task<void> game::create_diplomatic_map_image()
 
 QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 {
-	if (!map::exploration_enabled) {
-		this->exploration_diplomatic_map_image = QImage(QSize(1, 1), QImage::Format_ARGB32);
-		this->exploration_diplomatic_map_image.fill(Qt::transparent);
-		co_return;
-	}
-
 	const map *map = map::get();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();

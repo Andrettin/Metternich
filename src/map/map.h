@@ -34,8 +34,6 @@ class map final : public QObject, public singleton<map>
 	Q_PROPERTY(double minimap_tile_scale_double READ get_minimap_tile_scale_double NOTIFY minimap_tile_scale_changed)
 
 public:
-	static constexpr bool exploration_enabled = false;
-
 	map();
 	~map();
 
