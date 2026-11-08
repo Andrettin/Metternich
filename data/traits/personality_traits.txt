@@ -1,11 +1,28 @@
 deceitful = {
 	name = "Deceitful"
 	icon = dagger_bloody
+	opposite_opinion = -5
 	types = {
 		personality_trait
+	}
+	opposite_traits = {
+		honest
 	}
 	modifier = {
 		disguise = 2
 		forgery = 2
+	}
+}
+
+honest = {
+	name = "Honest"
+	icon = heart
+	same_opinion = 5
+	opposite_opinion = -5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		deceitful
 	}
 }

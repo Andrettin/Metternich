@@ -42,6 +42,8 @@ class trait final : public named_data_entry, public data_type<trait>
 	Q_PROPERTY(int level MEMBER level READ get_level NOTIFY changed)
 	Q_PROPERTY(bool unlimited MEMBER unlimited READ is_unlimited NOTIFY changed)
 	Q_PROPERTY(const metternich::divine_domain* divine_domain MEMBER divine_domain READ get_divine_domain NOTIFY changed)
+	Q_PROPERTY(int same_opinion MEMBER same_opinion READ get_same_opinion NOTIFY changed)
+	Q_PROPERTY(int opposite_opinion MEMBER opposite_opinion READ get_opposite_opinion NOTIFY changed)
 	Q_PROPERTY(QString modifier_string READ get_modifier_qstring CONSTANT)
 	Q_PROPERTY(QString military_unit_modifier_string READ get_military_unit_modifier_string CONSTANT)
 
@@ -92,6 +94,21 @@ public:
 	const character_stat *get_scaling_stat() const
 	{
 		return this->scaling_stat;
+	}
+
+	int get_same_opinion() const
+	{
+		return this->same_opinion;
+	}
+
+	int get_opposite_opinion() const
+	{
+		return this->opposite_opinion;
+	}
+
+	const std::vector<const trait *> &get_opposite_traits() const
+	{
+		return this->opposite_traits;
 	}
 
 	const data_entry_map<character_attribute, int> &get_attribute_bonuses() const
@@ -183,6 +200,9 @@ private:
 	bool unlimited = false;
 	const metternich::divine_domain *divine_domain = nullptr;
 	const character_stat *scaling_stat = nullptr;
+	int same_opinion = 0;
+	int opposite_opinion = 0;
+	std::vector<const trait *> opposite_traits;
 	data_entry_map<character_attribute, int> attribute_bonuses;
 	std::unique_ptr<const and_condition<character>> conditions;
 	std::unique_ptr<const and_condition<character>> gain_conditions;

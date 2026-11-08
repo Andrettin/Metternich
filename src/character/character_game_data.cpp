@@ -5094,8 +5094,24 @@ int character_game_data::get_opinion_of(const metternich::character *other)
 	if (this->get_character_class() != nullptr && this->get_character_class()->is_burgher()) {
 		opinion += other->get_game_data()->get_burgher_opinion_modifier();
 	}
+
 	if (this->character->get_culture() == other->get_culture()) {
 		opinion += other->get_game_data()->get_same_culture_opinion_modifier();
+	}
+
+	for (const auto &[trait, count] : this->get_trait_counts()) {
+		if (trait->get_same_opinion() != 0 && other->get_game_data()->has_trait(trait)) {
+			opinion += trait->get_same_opinion();
+		}
+
+		if (trait->get_opposite_opinion() != 0) {
+			for (const metternich::trait *opposite_trait : trait->get_opposite_traits()) {
+				if (other->get_game_data()->has_trait(opposite_trait)) {
+					opinion += trait->get_opposite_opinion();
+					break;
+				}
+			}
+		}
 	}
 
 	return opinion;

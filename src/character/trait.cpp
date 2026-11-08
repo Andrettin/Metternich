@@ -13,7 +13,10 @@
 #include "script/factor.h"
 #include "script/modifier.h"
 #include "species/taxon.h"
+#include "ui/ui_defines.h"
 #include "util/gender.h"
+#include "util/string_util.h"
+#include "util/vector_util.h"
 
 namespace metternich {
 
@@ -53,6 +56,11 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			trait_type *trait_type = trait_type::get(value);
 			trait_type->add_trait(this);
 			this->add_type(trait_type);
+		}
+	} else if (tag == "opposite_traits") {
+		for (const std::string &value : values) {
+			const trait *opposite_trait = trait::get(value);
+			this->opposite_traits.push_back(opposite_trait);
 		}
 	} else if (tag == "attribute_bonuses") {
 		scope.for_each_property([this](const gsml_property &property) {
@@ -116,7 +124,7 @@ void trait::process_gsml_scope(const gsml_data &scope)
 void trait::check() const
 {
 	if (this->get_icon() == nullptr) {
-		throw std::runtime_error(std::format("Trait \"{}\" has no icon.", this->get_identifier()));
+		throw std::runtime_error(std::format("Character trait \"{}\" has no icon.", this->get_identifier()));
 	}
 
 	if (this->get_types().empty()) {
@@ -125,6 +133,20 @@ void trait::check() const
 
 	if (this->get_scaling_stat() == nullptr && !this->scaled_office_modifiers.empty()) {
 		throw std::runtime_error(std::format("Character trait \"{}\" has scaled modifiers, but no scaling stat.", this->get_identifier()));
+	}
+
+	if (this->get_opposite_opinion() != 0 && this->get_opposite_traits().empty()) {
+		throw std::runtime_error(std::format("Character trait \"{}\" has an opposite opinion value, but no listed opposite traits.", this->get_identifier()));
+	}
+
+	for (const trait *opposite_trait : this->get_opposite_traits()) {
+		if (opposite_trait == this) {
+			throw std::runtime_error(std::format("Character trait \"{}\" has itself listed as an opposite trait.", this->get_identifier()));
+		}
+
+		if (!vector::contains(opposite_trait->get_opposite_traits(), this)) {
+			throw std::runtime_error(std::format("Character trait \"{}\" has trait \"{}\" listed as an opposite trait, but the opposition is not mutual.", this->get_identifier(), opposite_trait->get_identifier()));
+		}
 	}
 
 	named_data_entry::check();
@@ -167,13 +189,27 @@ std::string trait::get_modifier_string(const int multiplier, const bool single_l
 		}
 	}
 
+	const std::string separator = single_line ? ", " : "\n";
+
+	if (this->get_same_opinion() != 0) {
+		if (!str.empty()) {
+			str += separator;
+		}
+
+		str += std::format("Same Trait Opinion: {}", string::colored(number::to_signed_string(this->get_same_opinion()), this->get_same_opinion() >= 0 ? ui_defines::get()->get_green_text_color() : ui_defines::get()->get_red_text_color()));
+	}
+
+	if (this->get_opposite_opinion() != 0) {
+		if (!str.empty()) {
+			str += separator;
+		}
+
+		str += std::format("Opposite Trait Opinion: {}", string::colored(number::to_signed_string(this->get_opposite_opinion()), this->get_opposite_opinion() >= 0 ? ui_defines::get()->get_green_text_color() : ui_defines::get()->get_red_text_color()));
+	}
+
 	for (const auto &[tier_interval, modifier] : this->get_per_mythic_tier_modifiers()) {
 		if (!str.empty()) {
-			if (single_line) {
-				str += ", ";
-			} else {
-				str += "\n";
-			}
+			str += separator;
 		}
 
 		str += std::format("Every {} mythic tier{}:{}{}", tier_interval, tier_interval > 1 ? "s" : "", single_line ? " " : "\n", single_line ? modifier->get_single_line_string(nullptr, multiplier) : modifier->get_string(nullptr, multiplier, 1));
@@ -181,11 +217,7 @@ std::string trait::get_modifier_string(const int multiplier, const bool single_l
 
 	for (const auto &[rank_interval, modifier] : this->get_per_divine_rank_modifiers()) {
 		if (!str.empty()) {
-			if (single_line) {
-				str += ", ";
-			} else {
-				str += "\n";
-			}
+			str += separator;
 		}
 
 		str += std::format("Every {} divine rank{}:{}{}", rank_interval, rank_interval > 1 ? "s" : "", single_line ? " " : "\n", single_line ? modifier->get_single_line_string(nullptr, multiplier) : modifier->get_string(nullptr, multiplier, 1));
