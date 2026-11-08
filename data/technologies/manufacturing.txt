@@ -339,6 +339,7 @@ sugar_refining = {
 	period = castle_age
 	prerequisites = {
 		clothmaking
+		sugar_cane
 	}
 	discovery_mean_time_to_happen = {
 		months = 2000
