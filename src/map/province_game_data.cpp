@@ -1584,7 +1584,7 @@ void province_game_data::check_potential_text_rect(const QRect &rect, const QSiz
 	if (score > best_score || (score == best_score && centroid_distance < best_centroid_distance)) {
 		best_score = score;
 		best_centroid_distance = centroid_distance;
-		best_rect = rect;
+		best_rect = placed_rect;
 	}
 }
 
@@ -1604,7 +1604,7 @@ void province_game_data::calculate_text_rect()
 	column_index_stack.reserve(territory_tile_width + 1);
 
 	static constexpr int font_pixel_size = 8;
-	const QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name().size()) * font_pixel_size, font_pixel_size) * 60 / 100 / province_defines::get()->get_province_map_tile_scale();
+	const QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name_qstring().size()) * font_pixel_size * 60 / 100, font_pixel_size) / province_defines::get()->get_province_map_tile_scale();
 
 	for (int y = territory_rect.top(); y <= territory_rect.bottom(); ++y) {
 		for (int i = 0; i < territory_tile_width; ++i) {
