@@ -1568,11 +1568,18 @@ void province_game_data::check_potential_text_rect(const QRect &rect, const QSiz
 
 	const int64_t fit_score = std::min(static_cast<int64_t>(rect.width()) * label_height, static_cast<int64_t>(rect.height()) * label_width);
 
-	const int64_t comfortable_score = 2 * label_width * label_height;
+	const int64_t comfortable_score = label_width * label_height * 150 / 100;
 	const int64_t score = std::min(fit_score, comfortable_score);
 
 	const QPoint &territory_centroid = this->get_territory_centroid();
-	const int64_t centroid_distance = point::square_distance_to(rect.center(), territory_centroid);
+
+	const int placed_width = std::min(rect.width(), label_size.width());
+	const int placed_height = std::min(rect.height(), label_size.height());
+	const int placed_left = std::clamp(territory_centroid.x() - placed_width / 2, rect.left(), rect.right() - placed_width + 1);
+	const int placed_top = std::clamp(territory_centroid.y() - placed_height / 2, rect.top(), rect.bottom() - placed_height + 1);
+	const QRect placed_rect(placed_left, placed_top, placed_width, placed_height);
+
+	const int64_t centroid_distance = point::square_distance_to(placed_rect.center(), territory_centroid);
 
 	if (score > best_score || (score == best_score && centroid_distance < best_centroid_distance)) {
 		best_score = score;
@@ -1597,7 +1604,7 @@ void province_game_data::calculate_text_rect()
 	column_index_stack.reserve(territory_tile_width + 1);
 
 	static constexpr int font_pixel_size = 8;
-	const QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name().size()) * font_pixel_size, 8) / province_defines::get()->get_province_map_tile_scale();
+	const QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name().size()) * font_pixel_size, font_pixel_size) * 60 / 100 / province_defines::get()->get_province_map_tile_scale();
 
 	for (int y = territory_rect.top(); y <= territory_rect.bottom(); ++y) {
 		for (int i = 0; i < territory_tile_width; ++i) {
