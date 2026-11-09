@@ -1003,6 +1003,8 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_flat_footed(const bool value);
 
+	bool is_vassal_of(const metternich::character *other) const;
+
 	Q_INVOKABLE int get_opinion_of(const metternich::character *other);
 	opinion_type get_opinion_type_of(const metternich::character *other);
 	Q_INVOKABLE QString get_opinion_name_of(const metternich::character *other);
@@ -1022,10 +1024,24 @@ public:
 	void change_general_opinion_modifier(const int change)
 	{
 		if (change == 0) {
-
+			return;
 		}
 
 		this->general_opinion_modifier += change;
+	}
+
+	int get_vassal_opinion_modifier() const
+	{
+		return this->vassal_opinion_modifier;
+	}
+
+	void change_vassal_opinion_modifier(const int change)
+	{
+		if (change == 0) {
+			return;
+		}
+
+		this->vassal_opinion_modifier += change;
 	}
 
 	int get_burgher_opinion_modifier() const
@@ -1036,7 +1052,7 @@ public:
 	void change_burgher_opinion_modifier(const int change)
 	{
 		if (change == 0) {
-
+			return;
 		}
 
 		this->burgher_opinion_modifier += change;
@@ -1050,7 +1066,7 @@ public:
 	void change_same_culture_opinion_modifier(const int change)
 	{
 		if (change == 0) {
-
+			return;
 		}
 
 		this->same_culture_opinion_modifier += change;
@@ -1207,6 +1223,7 @@ private:
 	bool flat_footed = false;
 	character_map<int> base_opinions;
 	int general_opinion_modifier = 0;
+	int vassal_opinion_modifier = 0;
 	int burgher_opinion_modifier = 0;
 	int same_culture_opinion_modifier = 0;
 	domain_set ruled_domains; //domains that this character has ever ruled

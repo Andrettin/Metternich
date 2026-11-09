@@ -91,6 +91,7 @@
 #include "script/modifier_effect/trait_of_type_modifier_effect.h"
 #include "script/modifier_effect/unit_upgrade_cost_modifier_effect.h"
 #include "script/modifier_effect/unrest_modifier_effect.h"
+#include "script/modifier_effect/vassal_opinion_modifier_effect.h"
 #include "script/modifier_effect/warship_cost_modifier_effect.h"
 #include "script/modifier_effect/weapon_damage_bonus_modifier_effect.h"
 #include "script/modifier_effect/weapon_to_hit_bonus_modifier_effect.h"
@@ -153,6 +154,8 @@ std::unique_ptr<modifier_effect<scope_type>> modifier_effect<scope_type>::from_g
 			return std::make_unique<trait_modifier_effect>(value);
 		} else if (key == "trait_of_type") {
 			return std::make_unique<trait_of_type_modifier_effect>(value);
+		} else if (key == "vassal_opinion") {
+			return std::make_unique<vassal_opinion_modifier_effect>(value);
 		} else if (key == "weight") {
 			return std::make_unique<weight_modifier_effect>(value);
 		} else if (character_stat::try_get_stat(key) != nullptr) {

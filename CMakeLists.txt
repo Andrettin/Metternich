@@ -937,6 +937,7 @@ set(script_modifier_effect_HDRS
 	src/script/modifier_effect/trait_of_type_modifier_effect.h
 	src/script/modifier_effect/unit_upgrade_cost_modifier_effect.h
 	src/script/modifier_effect/unrest_modifier_effect.h
+	src/script/modifier_effect/vassal_opinion_modifier_effect.h
 	src/script/modifier_effect/warship_cost_modifier_effect.h
 	src/script/modifier_effect/weapon_damage_bonus_modifier_effect.h
 	src/script/modifier_effect/weapon_to_hit_bonus_modifier_effect.h

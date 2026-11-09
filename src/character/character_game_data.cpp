@@ -28,6 +28,7 @@
 #include "database/defines.h"
 #include "domain/domain.h"
 #include "domain/domain_attribute.h"
+#include "domain/domain_diplomacy.h"
 #include "domain/domain_economy.h"
 #include "domain/domain_game_data.h"
 #include "domain/domain_government.h"
@@ -183,6 +184,8 @@ void character_game_data::process_gsml_property(const gsml_property &property)
 		this->flat_footed = string::to_bool(value);
 	} else if (key == "general_opinion_modifier") {
 		this->general_opinion_modifier = std::stoi(value);
+	} else if (key == "vassal_opinion_modifier") {
+		this->vassal_opinion_modifier = std::stoi(value);
 	} else if (key == "burgher_opinion_modifier") {
 		this->burgher_opinion_modifier = std::stoi(value);
 	} else if (key == "same_culture_opinion_modifier") {
@@ -359,6 +362,9 @@ gsml_data character_game_data::to_gsml_data() const
 
 	if (this->get_general_opinion_modifier() != 0) {
 		data.add_property("general_opinion_modifier", std::to_string(this->get_general_opinion_modifier()));
+	}
+	if (this->get_vassal_opinion_modifier() != 0) {
+		data.add_property("vassal_opinion_modifier", std::to_string(this->get_vassal_opinion_modifier()));
 	}
 	if (this->get_burgher_opinion_modifier() != 0) {
 		data.add_property("burgher_opinion_modifier", std::to_string(this->get_burgher_opinion_modifier()));
@@ -5083,6 +5089,29 @@ QCoro::Task<void> character_game_data::set_flat_footed(const bool value)
 	}
 }
 
+bool character_game_data::is_vassal_of(const metternich::character *other) const
+{
+	assert_throw(this->character != other);
+
+	//a ruler character's vassals are those who belong to the same domain (without being the ruler), or the rulers of (direct) vassal domains
+
+	if (this->get_domain() == nullptr) {
+		return false;
+	}
+
+	if (this->is_ruler()) {
+		if (this->get_domain()->get_diplomacy()->get_overlord() != nullptr && this->get_domain()->get_diplomacy()->get_overlord()->get_government()->get_ruler() == other) {
+			return true;
+		}
+	} else {
+		if (this->get_domain()->get_government()->get_ruler() == other) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int character_game_data::get_opinion_of(const metternich::character *other)
 {
 	assert_throw(other != nullptr);
@@ -5090,6 +5119,10 @@ int character_game_data::get_opinion_of(const metternich::character *other)
 	int opinion = this->get_base_opinion_of(other);
 
 	opinion += other->get_game_data()->get_general_opinion_modifier();
+
+	if (this->is_vassal_of(other)) {
+		opinion += other->get_game_data()->get_vassal_opinion_modifier();
+	}
 
 	if (this->get_character_class() != nullptr && this->get_character_class()->is_burgher()) {
 		opinion += other->get_game_data()->get_burgher_opinion_modifier();
