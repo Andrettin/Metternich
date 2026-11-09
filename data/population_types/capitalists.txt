@@ -12,7 +12,7 @@ capitalists = {
 		industrial_output_modifier = 10
 	}
 	everyday_needs = {
-		coal = 20
-		tobacco = 20
+		coal = 0.8
+		tobacco = 0.8
 	}
 }

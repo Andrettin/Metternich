@@ -18,13 +18,15 @@ soldiers = {
 		african = rifle_infantry_dark_small
 	}
 	everyday_needs = {
-		clothing = 1
-		coal = 1
-		furniture = 1
+		alcohol = 0.08 #liquor
+		clothing = 0.04
+		coal = 0.04
+		furniture = 0.04
 	}
 	luxury_needs = {
-		clothing = 3
-		furniture = 3
-		tobacco = 0.95
+		alcohol = 0.06 #liquor
+		clothing = 0.12
+		furniture = 0.12
+		tobacco = 0.038
 	}
 }

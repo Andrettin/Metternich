@@ -18,10 +18,11 @@ officers = {
 		african = rifle_infantry_dark_small
 	}
 	everyday_needs = {
-		clothing = 5
-		coal = 1
-		furniture = 4
-		glass = 1
-		tobacco = 3
+		alcohol = 0.2 #liquor
+		clothing = 0.2
+		coal = 0.04
+		furniture = 0.16
+		glass = 0.04
+		tobacco = 0.12
 	}
 }

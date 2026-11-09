@@ -22,7 +22,6 @@ class population_defines final : public defines_base, public singleton<populatio
 	Q_PROPERTY(metternich::population_class* default_population_class MEMBER default_population_class)
 	Q_PROPERTY(metternich::population_class* default_tribal_population_class MEMBER default_tribal_population_class)
 	Q_PROPERTY(qint64 base_population_size MEMBER base_population_size READ get_base_population_size NOTIFY changed)
-	Q_PROPERTY(qint64 base_population_needs_size MEMBER base_population_needs_size READ get_base_population_needs_size NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_population_growth_rate MEMBER base_monthly_population_growth_rate READ get_base_monthly_population_growth_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int quarterly_starvation_mortality_rate MEMBER quarterly_starvation_mortality_rate READ get_quarterly_starvation_mortality_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_promotion_rate MEMBER base_monthly_promotion_rate READ get_base_monthly_promotion_rate NOTIFY changed)
@@ -55,11 +54,6 @@ public:
 	int64_t get_base_population_size() const
 	{
 		return this->base_population_size;
-	}
-
-	int64_t get_base_population_needs_size() const
-	{
-		return this->base_population_needs_size;
 	}
 
 	const decimillesimal_int &get_base_monthly_population_growth_rate() const
@@ -114,7 +108,6 @@ private:
 	population_class *default_population_class = nullptr;
 	population_class *default_tribal_population_class = nullptr;
 	int64_t base_population_size = 0;
-	int64_t base_population_needs_size = 0;
 	decimillesimal_int base_monthly_population_growth_rate;
 	decimillesimal_int quarterly_starvation_mortality_rate;
 	decimillesimal_int base_monthly_promotion_rate;

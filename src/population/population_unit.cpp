@@ -855,7 +855,7 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 
 		decimillesimal_int need = base_need;
 		need *= this->get_size();
-		need /= population_defines::get()->get_base_population_needs_size();
+		need /= population_defines::get()->get_base_population_size();
 
 		if (need > 0) {
 			needs[need_type] = need;

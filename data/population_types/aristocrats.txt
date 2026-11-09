@@ -12,7 +12,7 @@ aristocrats = {
 		resource_output_modifier = 10
 	}
 	everyday_needs = {
-		coal = 1
-		tobacco = 10
+		coal = 0.04
+		tobacco = 0.4
 	}
 }

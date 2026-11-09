@@ -6,6 +6,6 @@ master_tobacconists = {
 	small_icon = expert_workers_small
 	required_game_rule = additional_population_types
 	everyday_needs = {
-		fur_hats = 20
+		fur_hats = 1
 	}
 }

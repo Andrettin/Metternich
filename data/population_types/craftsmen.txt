@@ -18,13 +18,15 @@ craftsmen = {
 		african = craftsmen_dark_small
 	}
 	everyday_needs = {
-		clothing = 3
-		coal = 1
-		furniture = 3
+		alcohol = 0.12 #liquor
+		clothing = 0.12
+		coal = 0.04
+		furniture = 0.12
 	}
 	luxury_needs = {
-		clothing = 3
-		furniture = 3
-		tobacco = 0.95
+		alcohol = 0.06 #liquor
+		clothing = 0.12
+		furniture = 0.12
+		tobacco = 0.038
 	}
 }
