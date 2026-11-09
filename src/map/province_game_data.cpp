@@ -1575,9 +1575,14 @@ void province_game_data::check_potential_text_rect(const QRect &rect, const QSiz
 
 	const int placed_width = std::min(rect.width(), label_size.width());
 	const int placed_height = std::min(rect.height(), label_size.height());
-	const int placed_left = std::clamp(territory_centroid.x() - placed_width / 2, rect.left(), rect.right() - placed_width + 1);
-	const int placed_top = std::clamp(territory_centroid.y() - placed_height / 2, rect.top(), rect.bottom() - placed_height + 1);
-	const QRect placed_rect(placed_left, placed_top, placed_width, placed_height);
+
+	static constexpr int extra_clearance = 4;
+	const int clearance_x = std::min((rect.width() - placed_width) / 2, extra_clearance);
+	const int clearance_y = std::min((rect.height() - placed_height) / 2, extra_clearance);
+	const QRect placement_area = rect.adjusted(clearance_x, clearance_y, -clearance_x, -clearance_y);
+
+	const int placed_left = std::clamp(territory_centroid.x() - placed_width / 2, placement_area.left(), placement_area.right() - placed_width + 1);
+	const int placed_top = std::clamp(territory_centroid.y() - placed_height / 2, placement_area.top(), placement_area.bottom() - placed_height + 1);	const QRect placed_rect(placed_left, placed_top, placed_width, placed_height);
 
 	const int64_t centroid_distance = point::square_distance_to(placed_rect.center(), territory_centroid);
 
