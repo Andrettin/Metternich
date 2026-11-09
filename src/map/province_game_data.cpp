@@ -1556,184 +1556,81 @@ QColor province_game_data::get_technology_map_color() const
 	return province_color;
 }
 
+void province_game_data::check_potential_text_rect(const QRect &rect, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const
+{
+	static constexpr int64_t base_tile_label_width = 4;
+	static constexpr int64_t base_tile_label_height = 1;
+
+	const int64_t score = std::min(static_cast<int64_t>(rect.width()) * base_tile_label_height, static_cast<int64_t>(rect.height()) * base_tile_label_width);
+
+	const QPoint &territory_centroid = this->get_territory_centroid();
+	const int64_t centroid_distance = point::square_distance_to(rect.center(), territory_centroid);
+
+	if (score > best_score || (score == best_score && centroid_distance < best_centroid_distance)) {
+		best_score = score;
+		best_centroid_distance = centroid_distance;
+		best_rect = rect;
+	}
+}
+
 void province_game_data::calculate_text_rect()
 {
 	this->text_rect = QRect();
 
 	const map *map = map::get();
 
-	const province_map_data *province_map_data = this->province->get_map_data();
+	QRect best_rect;
+	int64_t best_score = -1;
+	int64_t best_centroid_distance = std::numeric_limits<int64_t>::max();
 
-	std::vector<QPoint> start_positions;
-	start_positions.reserve(province_map_data->get_sites().size() * 4 + 1);
-	start_positions.push_back(this->get_center_tile_pos());
-	for (const site *site : province_map_data->get_sites()) {
-		point::for_each_cardinally_adjacent(site->get_map_data()->get_tile_pos(), [this, &start_positions, map](const QPoint &adjacent_pos) {
-			if (!map->contains(adjacent_pos)) {
-				return;
-			}
+	const QRect &territory_rect = this->get_territory_rect();
+	const int territory_tile_width = territory_rect.width();
 
-			const tile *tile = map->get_tile(adjacent_pos);
-			if (map->get_tile_site(adjacent_pos) != nullptr || tile->get_province() != this->province) {
-				return;
-			}
+	std::vector<int> heights(territory_tile_width, 0);
+	std::vector<int> column_index_stack;
+	column_index_stack.reserve(territory_tile_width + 1);
 
-			start_positions.push_back(adjacent_pos);
-		});
-	}
+	for (int y = territory_rect.top(); y <= territory_rect.bottom(); ++y) {
+		for (int i = 0; i < territory_tile_width; ++i) {
+			const int x = territory_rect.left() + i;
+			const QPoint tile_pos(x, y);
 
-	std::vector<QRect> potential_text_rects;
-	potential_text_rects.reserve(start_positions.size());
-	for (const QPoint &tile_pos : start_positions) {
-		QRect text_rect = this->calculate_text_rect_for_pos(tile_pos);
+			const bool tile_usable = map->get_tile(tile_pos)->get_province() == this->province && map->get_tile_site(tile_pos) == nullptr;
 
-		if (!potential_text_rects.empty()) {
-			const QRect &previous_text_rect = potential_text_rects.back();
-			const int text_rect_area = text_rect.width() * text_rect.height();
-			const int previous_text_rect_area = previous_text_rect.width() * previous_text_rect.height();
-			if (text_rect_area > previous_text_rect_area) {
-				potential_text_rects.clear();
-			} else if (text_rect_area < previous_text_rect_area) {
-				continue;
-			}
+			heights[i] = tile_usable ? heights[i] + 1 : 0;
 		}
-		potential_text_rects.push_back(std::move(text_rect));
+
+		column_index_stack.clear();
+
+		for (int i = 0; i <= territory_tile_width; ++i) {
+			const int current_height = i < territory_tile_width ? heights[i] : 0;
+
+			while (!column_index_stack.empty() && heights[column_index_stack.back()] >= current_height) {
+				const int rect_height = heights[column_index_stack.back()];
+				column_index_stack.pop_back();
+
+				if (rect_height == 0) {
+					continue;
+				}
+
+				const int left = column_index_stack.empty() ? 0 : column_index_stack.back() + 1;
+				const int rect_width = i - left;
+
+				const QRect rect(territory_rect.left() + left, y - rect_height + 1, rect_width, rect_height);
+				this->check_potential_text_rect(rect, best_rect, best_score, best_centroid_distance);
+			}
+
+			column_index_stack.push_back(i);
+		}
 	}
 
-	this->text_rect = vector::get_random(potential_text_rects);
+	if (!best_rect.isNull()) {
+		this->text_rect = best_rect;
+	} else {
+		this->text_rect = QRect(this->get_center_tile_pos(), QSize(1, 1));
+	}
 
 	emit text_rect_changed();
-}
-
-QRect province_game_data::calculate_text_rect_for_pos(const QPoint &center_pos) const
-{
-	const map *map = map::get();
-
-	QRect text_rect = QRect(center_pos, QSize(1, 1));
-
-	bool can_expand_left = true;
-	bool can_expand_right = true;
-	bool can_expand_up = true;
-	bool can_expand_down = true;
-
-	bool changed = true;
-	while (changed) {
-		changed = false;
-
-		if (can_expand_left) {
-			const int left_x = text_rect.left() - 1;
-			for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
-				const QPoint adjacent_pos(left_x, y);
-
-				if (!this->get_territory_rect().contains(adjacent_pos)) {
-					can_expand_left = false;
-					break;
-				}
-
-				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-				if (adjacent_tile->get_province() != this->province) {
-					can_expand_left = false;
-					break;
-				}
-
-				if (map->get_tile_site(adjacent_pos) != nullptr) {
-					can_expand_left = false;
-					break;
-				}
-			}
-			if (can_expand_left) {
-				text_rect.setLeft(left_x);
-				changed = true;
-			}
-		}
-
-		if (can_expand_right) {
-			const int right_x = text_rect.right() + 1;
-			for (int y = text_rect.top(); y <= text_rect.bottom(); ++y) {
-				const QPoint adjacent_pos(right_x, y);
-
-				if (!this->get_territory_rect().contains(adjacent_pos)) {
-					can_expand_right = false;
-					break;
-				}
-
-				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-				if (adjacent_tile->get_province() != this->province) {
-					can_expand_right = false;
-					break;
-				}
-
-				if (map->get_tile_site(adjacent_pos) != nullptr) {
-					can_expand_right = false;
-					break;
-				}
-			}
-			if (can_expand_right) {
-				text_rect.setRight(right_x);
-				changed = true;
-			}
-		}
-
-		if (can_expand_up) {
-			const int up_y = text_rect.top() - 1;
-			for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
-				const QPoint adjacent_pos(x, up_y);
-
-				if (!this->get_territory_rect().contains(adjacent_pos)) {
-					can_expand_up = false;
-					break;
-				}
-
-				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-				if (adjacent_tile->get_province() != this->province) {
-					can_expand_up = false;
-					break;
-				}
-
-				if (map->get_tile_site(adjacent_pos) != nullptr) {
-					can_expand_up = false;
-					break;
-				}
-			}
-			if (can_expand_up) {
-				text_rect.setTop(up_y);
-				changed = true;
-			}
-		}
-
-		if (can_expand_down) {
-			const int down_y = text_rect.bottom() + 1;
-			for (int x = text_rect.left(); x <= text_rect.right(); ++x) {
-				const QPoint adjacent_pos(x, down_y);
-
-				if (!this->get_territory_rect().contains(adjacent_pos)) {
-					can_expand_down = false;
-					break;
-				}
-
-				const metternich::tile *adjacent_tile = map->get_tile(adjacent_pos);
-
-				if (adjacent_tile->get_province() != this->province) {
-					can_expand_down = false;
-					break;
-				}
-
-				if (map->get_tile_site(adjacent_pos) != nullptr) {
-					can_expand_down = false;
-					break;
-				}
-			}
-			if (can_expand_down) {
-				text_rect.setBottom(down_y);
-				changed = true;
-			}
-		}
-	}
-
-	return text_rect;
 }
 
 void province_game_data::change_holding_count(const int change)

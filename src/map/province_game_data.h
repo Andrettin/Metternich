@@ -269,8 +269,8 @@ public:
 		return this->text_rect;
 	}
 
+	void check_potential_text_rect(const QRect &rect, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const;
 	void calculate_text_rect();
-	QRect calculate_text_rect_for_pos(const QPoint &center_pos) const;
 
 	int get_holding_count() const
 	{
