@@ -344,7 +344,7 @@ Item {
 		Item {
 			id: province_label_area
 			x: -scaled_map_block_start_x + Math.max(Math.floor(text_rect.x * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_width - width) / 2), Math.floor((province_label.contentWidth - width) / 2 + 1 * scale_factor))
-			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.max(0, Math.floor((text_rect_height - height) / 2))
+			y: -scaled_map_block_start_y + Math.floor(text_rect.y * metternich.province_defines.province_map_tile_scale * scale_factor) + Math.floor((text_rect_height - height) / 2)
 			width: province_label_column.width
 			height: province_label_column.height
 			visible: metternich.game.player_domain.game_data.explored_province_count > 0 && metternich.game.player_domain.game_data.is_province_explored(province)

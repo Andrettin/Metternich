@@ -1610,7 +1610,9 @@ void province_game_data::calculate_text_rect()
 	column_index_stack.reserve(territory_tile_width + 1);
 
 	static constexpr int font_pixel_size = 8;
-	QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name_qstring().size()) * font_pixel_size * 60 / 100, font_pixel_size) / province_defines::get()->get_province_map_tile_scale();
+	static constexpr int text_line_pixel_height = 10;
+	static constexpr int label_icon_row_pixel_height = 8 + 2;
+	QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name_qstring().size()) * font_pixel_size * 60 / 100, text_line_pixel_height + label_icon_row_pixel_height) / province_defines::get()->get_province_map_tile_scale();
 
 	static constexpr int site_icon_area_pixel_size = 8 + 2;
 	const int tile_scale = province_defines::get()->get_province_map_tile_scale();
