@@ -6,9 +6,7 @@ brussels = {
 	holding_type = guild
 	province = brabant
 	features = {
-		#fabric
-		#liquor
-		sulfur_deposit
+		fabric
 	}
 	
 	history = {
@@ -17,7 +15,7 @@ brussels = {
 		}
 		
 		1836 = {
-			#buildings += textile_mill
+			buildings += textile_mill
 			
 			population_groups = {
 				aristocrats.flemish.catholic = 6000

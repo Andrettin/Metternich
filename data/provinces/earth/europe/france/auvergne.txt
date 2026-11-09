@@ -4,6 +4,7 @@ auvergne = {
 	default_provincial_capital = clermont
 	resource_counts = {
 		coal_deposit = 2
+		lumber = 1 #from Clermont, which as a castle cannot have it
 		prime_grain_land = 1
 		prime_sheep_land = 1
 	}

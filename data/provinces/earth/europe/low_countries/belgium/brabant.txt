@@ -3,8 +3,10 @@ brabant = {
 	color = { 1 128 97 }
 	default_provincial_capital = brussels
 	resource_counts = {
+		liquor = 1 #from Brussels, which already has a different resource
 		prime_cattle_land = 2
 		prime_grain_land = 5
+		sulfur_deposit = 1 #from Brussels, which already has a different resource
 		#tin_deposit = 1
 	}
 	regions = {

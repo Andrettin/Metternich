@@ -10,7 +10,6 @@ clermont = {
 	}
 	features = {
 		coal_deposit
-		#lumber
 	}
 	
 	history = {

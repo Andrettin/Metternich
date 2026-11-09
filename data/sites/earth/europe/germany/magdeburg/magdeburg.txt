@@ -5,11 +5,6 @@ magdeburg = {
 	type = holding
 	holding_type = castle
 	province = magdeburg
-	features = {
-		#fabric
-		#liquor
-		#lumber
-	}
 	
 	history = {
 		919 = {

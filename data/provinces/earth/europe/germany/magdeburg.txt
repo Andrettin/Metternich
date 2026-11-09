@@ -3,6 +3,11 @@ magdeburg = {
 	color = { 160 128 224 }
 	terrain = plains
 	default_provincial_capital = magdeburg
+	resource_counts = {
+		fabric = 1
+		liquor = 1
+		lumber = 1
+	}
 	regions = {
 		germany
 	}
