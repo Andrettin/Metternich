@@ -1,3 +1,33 @@
+brave = {
+	name = "Brave"
+	icon = lion
+	same_opinion = 5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		craven
+	}
+	modifier = {
+		vassal_opinion = 5
+	}
+}
+
+craven = {
+	name = "Craven"
+	icon = skull
+	opposite_opinion = -5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		brave
+	}
+	modifier = {
+		vassal_opinion = -5
+	}
+}
+
 deceitful = {
 	name = "Deceitful"
 	icon = dagger_bloody
@@ -11,6 +41,21 @@ deceitful = {
 	modifier = {
 		disguise = 2
 		forgery = 2
+	}
+}
+
+diligent = {
+	name = "Diligent"
+	icon = treaty
+	same_opinion = 5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		slothful
+	}
+	modifier = {
+		vassal_opinion = 5
 	}
 }
 
@@ -59,6 +104,21 @@ proud = {
 	}
 	opposite_traits = {
 		humble
+	}
+}
+
+slothful = {
+	name = "Slothful"
+	icon = skull
+	opposite_opinion = -5
+	types = {
+		personality_trait
+	}
+	opposite_traits = {
+		diligent
+	}
+	modifier = {
+		vassal_opinion = -5
 	}
 }
 

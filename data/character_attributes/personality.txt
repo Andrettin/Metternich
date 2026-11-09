@@ -14,6 +14,20 @@ courageous = {
 		fearful = 1-5
 		courageous = 15-20
 	}
+	value_modifiers = {
+		1 = {
+			trait = craven
+		}
+		6 = {
+			trait = {
+				trait = craven
+				count = -1
+			}
+		}
+		15 = {
+			trait = brave
+		}
+	}
 }
 
 dogmatic = {
@@ -31,6 +45,20 @@ energetic = {
 	rating_ranges = {
 		lazy = 1-5
 		energetic = 15-20
+	}
+	value_modifiers = {
+		1 = {
+			trait = slothful
+		}
+		6 = {
+			trait = {
+				trait = slothful
+				count = -1
+			}
+		}
+		15 = {
+			trait = diligent
+		}
 	}
 }
 
