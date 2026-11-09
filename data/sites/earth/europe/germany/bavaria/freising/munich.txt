@@ -4,6 +4,7 @@ munich = {
 	geocoordinate = { 11.57499344750 48.12994203600 } #from Natural Earth
 	type = holding
 	holding_type = guild
+	province = freising
 	features = {
 		#fabric
 		#glass
