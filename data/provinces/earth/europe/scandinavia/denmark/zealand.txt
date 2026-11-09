@@ -2,6 +2,10 @@ zealand = {
 	name = "Zealand"
 	color = { 128 192 224 }
 	default_provincial_capital = copenhagen
+	resource_counts = {
+		liquor = 1 #from Copenhagen, which already has a different resource
+		prime_grain_land = 1 #from Copenhagen, which already has a different resource
+	}
 	regions = {
 		denmark
 	}

@@ -7,8 +7,6 @@ copenhagen = {
 	features = {
 		academic #historical university
 		fertilizer
-		#liquor
-		#prime_grain_land
 	}
 	
 	history = {
