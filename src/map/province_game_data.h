@@ -269,7 +269,7 @@ public:
 		return this->text_rect;
 	}
 
-	void check_potential_text_rect(const QRect &rect, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const;
+	void check_potential_text_rect(const QRect &rect, const QSize &label_size, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const;
 	void calculate_text_rect();
 
 	int get_holding_count() const

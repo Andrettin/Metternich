@@ -609,6 +609,11 @@ void province_game_data::set_culture(const metternich::culture *culture)
 			site->get_game_data()->set_culture(this->get_culture());
 		}
 	}
+
+	if (game::get()->is_running()) {
+		//cultural change can change the current cultural name, so the text rect needs to be recalculated
+		this->calculate_text_rect();
+	}
 }
 
 void province_game_data::on_population_main_culture_changed(const metternich::culture *culture)
@@ -1556,12 +1561,15 @@ QColor province_game_data::get_technology_map_color() const
 	return province_color;
 }
 
-void province_game_data::check_potential_text_rect(const QRect &rect, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const
+void province_game_data::check_potential_text_rect(const QRect &rect, const QSize &label_size, QRect &best_rect, int64_t &best_score, int64_t &best_centroid_distance) const
 {
-	static constexpr int64_t base_tile_label_width = 4;
-	static constexpr int64_t base_tile_label_height = 1;
+	const int64_t label_width = label_size.width();
+	const int64_t label_height = label_size.height();
 
-	const int64_t score = std::min(static_cast<int64_t>(rect.width()) * base_tile_label_height, static_cast<int64_t>(rect.height()) * base_tile_label_width);
+	const int64_t fit_score = std::min(static_cast<int64_t>(rect.width()) * label_height, static_cast<int64_t>(rect.height()) * label_width);
+
+	const int64_t comfortable_score = 2 * label_width * label_height;
+	const int64_t score = std::min(fit_score, comfortable_score);
 
 	const QPoint &territory_centroid = this->get_territory_centroid();
 	const int64_t centroid_distance = point::square_distance_to(rect.center(), territory_centroid);
@@ -1575,8 +1583,6 @@ void province_game_data::check_potential_text_rect(const QRect &rect, QRect &bes
 
 void province_game_data::calculate_text_rect()
 {
-	this->text_rect = QRect();
-
 	const map *map = map::get();
 
 	QRect best_rect;
@@ -1589,6 +1595,9 @@ void province_game_data::calculate_text_rect()
 	std::vector<int> heights(territory_tile_width, 0);
 	std::vector<int> column_index_stack;
 	column_index_stack.reserve(territory_tile_width + 1);
+
+	static constexpr int font_pixel_size = 8;
+	const QSize label_tile_size = QSize(static_cast<int>(this->get_current_cultural_name().size()) * font_pixel_size, 8) / province_defines::get()->get_province_map_tile_scale();
 
 	for (int y = territory_rect.top(); y <= territory_rect.bottom(); ++y) {
 		for (int i = 0; i < territory_tile_width; ++i) {
@@ -1617,7 +1626,7 @@ void province_game_data::calculate_text_rect()
 				const int rect_width = i - left;
 
 				const QRect rect(territory_rect.left() + left, y - rect_height + 1, rect_width, rect_height);
-				this->check_potential_text_rect(rect, best_rect, best_score, best_centroid_distance);
+				this->check_potential_text_rect(rect, label_tile_size, best_rect, best_score, best_centroid_distance);
 			}
 
 			column_index_stack.push_back(i);
