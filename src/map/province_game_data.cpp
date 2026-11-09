@@ -1582,7 +1582,8 @@ void province_game_data::check_potential_text_rect(const QRect &rect, const QSiz
 	const QRect placement_area = rect.adjusted(clearance_x, clearance_y, -clearance_x, -clearance_y);
 
 	const int placed_left = std::clamp(territory_centroid.x() - placed_width / 2, placement_area.left(), placement_area.right() - placed_width + 1);
-	const int placed_top = std::clamp(territory_centroid.y() - placed_height / 2, placement_area.top(), placement_area.bottom() - placed_height + 1);	const QRect placed_rect(placed_left, placed_top, placed_width, placed_height);
+	const int placed_top = std::clamp(territory_centroid.y() - placed_height / 2, placement_area.top(), placement_area.bottom() - placed_height + 1);
+	const QRect placed_rect(placed_left, placed_top, placed_width, placed_height);
 
 	const int64_t centroid_distance = point::square_distance_to(placed_rect.center(), territory_centroid);
 
