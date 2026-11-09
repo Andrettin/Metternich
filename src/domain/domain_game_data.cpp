@@ -2006,7 +2006,7 @@ void domain_game_data::calculate_territory_rect()
 	}
 
 	if (!this->get_territory_rect().isNull()) {
-		this->calculate_territory_rect_center();
+		this->calculate_territory_centroid();
 		this->calculate_center_tile_pos();
 		this->calculate_text_rect();
 	}
@@ -2020,7 +2020,7 @@ void domain_game_data::calculate_territory_rect()
 	}
 }
 
-void domain_game_data::calculate_territory_rect_center()
+void domain_game_data::calculate_territory_centroid()
 {
 	if (this->get_provinces().empty()) {
 		return;
@@ -2037,12 +2037,12 @@ void domain_game_data::calculate_territory_rect_center()
 		}
 
 		const int province_tile_count = static_cast<int>(province_map_data->get_tile_indices().size());
-		sum_x += static_cast<int64_t>(province_map_data->get_territory_rect_center().x()) * province_tile_count;
-		sum_y += static_cast<int64_t>(province_map_data->get_territory_rect_center().y()) * province_tile_count;
+		sum_x += static_cast<int64_t>(province_map_data->get_territory_centroid().x()) * province_tile_count;
+		sum_y += static_cast<int64_t>(province_map_data->get_territory_centroid().y()) * province_tile_count;
 		tile_count += province_tile_count;
 	}
 
-	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
+	this->territory_centroid = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
 }
 
 
@@ -2052,7 +2052,7 @@ void domain_game_data::calculate_center_tile_pos()
 		return;
 	}
 
-	this->center_tile_pos = this->get_territory_rect_center();
+	this->center_tile_pos = this->get_territory_centroid();
 
 	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 

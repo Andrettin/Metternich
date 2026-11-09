@@ -1094,9 +1094,9 @@ const QRect &province_game_data::get_territory_rect() const
 	return this->province->get_map_data()->get_territory_rect();
 }
 
-const QPoint &province_game_data::get_territory_rect_center() const
+const QPoint &province_game_data::get_territory_centroid() const
 {
-	return this->province->get_map_data()->get_territory_rect_center();
+	return this->province->get_map_data()->get_territory_centroid();
 }
 
 const std::vector<const metternich::province *> &province_game_data::get_neighbor_provinces() const

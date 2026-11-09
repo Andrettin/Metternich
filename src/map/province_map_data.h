@@ -64,12 +64,12 @@ public:
 		return this->territory_rect;
 	}
 
-	const QPoint &get_territory_rect_center() const
+	const QPoint &get_territory_centroid() const
 	{
-		return this->territory_rect_center;
+		return this->territory_centroid;
 	}
 
-	void calculate_territory_rect_center();
+	void calculate_territory_centroid();
 	void calculate_center_tile_pos();
 
 	const std::vector<const metternich::province *> &get_neighbor_provinces() const
@@ -134,7 +134,7 @@ private:
 	bool coastal = false;
 	bool river = false;
 	QRect territory_rect;
-	QPoint territory_rect_center = QPoint(-1, -1);
+	QPoint territory_centroid = QPoint(-1, -1); //a centroid is the geometric center
 	std::vector<const metternich::province *> neighbor_provinces;
 	std::vector<const metternich::province *> nearby_provinces; //neighbor provinces plus land provinces connected by a water zone
 	std::vector<uint32_t> tile_indices;

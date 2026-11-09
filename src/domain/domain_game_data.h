@@ -109,7 +109,7 @@ class domain_game_data final : public QObject
 	Q_PROPERTY(bool coastal READ is_coastal NOTIFY provinces_changed)
 	Q_PROPERTY(bool playable READ is_playable NOTIFY provinces_changed)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY provinces_changed)
-	Q_PROPERTY(QPoint territory_rect_center READ get_territory_rect_center NOTIFY provinces_changed)
+	Q_PROPERTY(QPoint territory_centroid READ get_territory_centroid NOTIFY provinces_changed)
 	Q_PROPERTY(QVariantList contiguous_territory_rects READ get_contiguous_territory_rects_qvariant_list NOTIFY provinces_changed)
 	Q_PROPERTY(QRect main_contiguous_territory_rect READ get_main_contiguous_territory_rect NOTIFY provinces_changed)
 	Q_PROPERTY(QRect text_rect READ get_text_rect NOTIFY provinces_changed)
@@ -362,12 +362,12 @@ public:
 
 	void calculate_territory_rect();
 
-	const QPoint &get_territory_rect_center() const
+	const QPoint &get_territory_centroid() const
 	{
-		return this->territory_rect_center;
+		return this->territory_centroid;
 	}
 
-	void calculate_territory_rect_center();
+	void calculate_territory_centroid();
 
 	const QPoint &get_center_tile_pos() const
 	{
@@ -942,7 +942,7 @@ private:
 	std::vector<const province *> border_provinces;
 	int coastal_province_count = 0;
 	QRect territory_rect;
-	QPoint territory_rect_center = QPoint(-1, -1);
+	QPoint territory_centroid = QPoint(-1, -1); //a centroid is the geometric center
 	QPoint center_tile_pos = QPoint(-1, -1);
 	std::vector<QRect> contiguous_territory_rects;
 	QRect main_contiguous_territory_rect;

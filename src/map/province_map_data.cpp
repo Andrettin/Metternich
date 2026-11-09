@@ -144,7 +144,7 @@ void province_map_data::on_map_created()
 		}
 	}
 
-	this->calculate_territory_rect_center();
+	this->calculate_territory_centroid();
 	this->calculate_center_tile_pos();
 
 	if (this->get_holding_sites().size() > province::max_holdings) {
@@ -169,7 +169,7 @@ void province_map_data::initialize_terrain()
 	}
 }
 
-void province_map_data::calculate_territory_rect_center()
+void province_map_data::calculate_territory_centroid()
 {
 	const int tile_count = static_cast<int>(this->get_tile_indices().size());
 
@@ -184,12 +184,12 @@ void province_map_data::calculate_territory_rect_center()
 		sum_y += tile_pos.y();
 	}
 
-	this->territory_rect_center = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
+	this->territory_centroid = QPoint(static_cast<int>(sum_x / tile_count), static_cast<int>(sum_y / tile_count));
 }
 
 void province_map_data::calculate_center_tile_pos()
 {
-	this->center_tile_pos = this->get_territory_rect_center();
+	this->center_tile_pos = this->get_territory_centroid();
 
 	assert_throw(this->get_center_tile_pos() != QPoint(-1, -1));
 

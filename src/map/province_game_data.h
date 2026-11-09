@@ -193,7 +193,7 @@ public:
 	bool is_near_water() const;
 
 	const QRect &get_territory_rect() const;
-	const QPoint &get_territory_rect_center() const;
+	const QPoint &get_territory_centroid() const;
 	const std::vector<const metternich::province *> &get_neighbor_provinces() const;
 
 	bool is_country_border_province() const;
