@@ -71,30 +71,14 @@ public:
 		return this->buildings;
 	}
 
-	const building_type *get_building(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->buildings.find(slot_type);
-		if (find_iterator != this->buildings.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	const building_type *get_building(const building_slot_type *slot_type) const;
 
 	const building_slot_type_map<const wonder *> &get_wonders() const
 	{
 		return this->wonders;
 	}
 
-	const wonder *get_wonder(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->wonders.find(slot_type);
-		if (find_iterator != this->wonders.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	const wonder *get_wonder(const building_slot_type *slot_type) const;
 
 	const metternich::culture *get_culture() const
 	{
@@ -125,15 +109,7 @@ public:
 		return this->population_groups;
 	}
 
-	int64_t get_group_population(const population_group_key &group_key) const
-	{
-		const auto find_iterator = this->population_groups.find(group_key);
-		if (find_iterator != this->population_groups.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int64_t get_group_population(const population_group_key &group_key) const;
 
 	void set_group_population(const population_group_key &group_key, const int64_t population)
 	{

@@ -26,6 +26,7 @@
 #include "util/exception_util.h"
 #include "util/image_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/path_util.h"
 #include "util/point_util.h"
 #include "util/vector_util.h"
@@ -404,12 +405,7 @@ void map::set_tile_province(const QPoint &tile_pos, province *province)
 
 const site *map::get_tile_site(const size_t index) const
 {
-	const auto find_iterator = this->tile_sites.find(index);
-	if (find_iterator != this->tile_sites.end()) {
-		return find_iterator->second;
-	}
-
-	return nullptr;
+	return archimedes::map::get_or_default(this->tile_sites, index);
 }
 
 const site *map::get_tile_site(const QPoint &tile_pos) const

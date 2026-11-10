@@ -2329,13 +2329,7 @@ void game::set_player_domain(const domain *domain)
 
 const decimillesimal_int &game::get_price(const commodity *commodity) const
 {
-	const auto find_iterator = this->prices.find(commodity);
-
-	if (find_iterator != this->prices.end()) {
-		return find_iterator->second;
-	}
-
-	return commodity->get_base_price();
+	return archimedes::map::get_or_default(this->prices, commodity, commodity->get_base_price());
 }
 
 QString game::get_price_qstring(const metternich::commodity *commodity) const

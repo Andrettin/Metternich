@@ -105,25 +105,8 @@ public:
 		return this->small_icon;
 	}
 
-	const metternich::icon *get_phenotype_icon(const phenotype *phenotype) const
-	{
-		const auto find_iterator = this->phenotype_icons.find(phenotype);
-		if (find_iterator != this->phenotype_icons.end()) {
-			return find_iterator->second;
-		}
-
-		return this->get_icon();
-	}
-
-	const metternich::icon *get_phenotype_small_icon(const phenotype *phenotype) const
-	{
-		const auto find_iterator = this->phenotype_small_icons.find(phenotype);
-		if (find_iterator != this->phenotype_small_icons.end()) {
-			return find_iterator->second;
-		}
-
-		return this->get_small_icon();
-	}
+	const metternich::icon *get_phenotype_icon(const phenotype *phenotype) const;
+	const metternich::icon *get_phenotype_small_icon(const phenotype *phenotype) const;
 
 	population_strata get_strata() const
 	{
@@ -187,16 +170,7 @@ public:
 		return this->equivalent_population_types;
 	}
 
-	const decimillesimal_int &get_commodity_throughput_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
-		if (find_iterator != this->commodity_throughput_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
+	const decimillesimal_int &get_commodity_throughput_modifier(const commodity *commodity) const;
 
 	const luxury_demand_map<decimillesimal_int> &get_everyday_needs() const
 	{

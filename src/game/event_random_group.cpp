@@ -4,8 +4,15 @@
 
 #include "database/defines.h"
 #include "game/event_trigger.h"
+#include "util/map_util.h"
 
 namespace metternich {
+
+const std::vector<event_random_group *> &event_random_group::get_all_of_trigger(const event_trigger trigger)
+{
+	static const std::vector<event_random_group *> empty_vector;
+	return archimedes::map::get_or_default(event_random_group::groups_by_trigger, trigger, empty_vector);
+}
 
 event_random_group::event_random_group(const std::string &identifier)
 	: named_data_entry(identifier), trigger(event_trigger::none)

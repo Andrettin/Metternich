@@ -1160,6 +1160,12 @@ QVariantList site_game_data::get_construction_levels_qvariant_list() const
 	return archimedes::map::to_qvariant_list(construction_levels_by_name);
 }
 
+const centesimal_int &site_game_data::get_construction_level(const construction_type construction_type) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->construction_levels, construction_type, zero);
+}
+
 QCoro::Task<void> site_game_data::set_construction_level(const construction_type construction_type, const centesimal_int &level)
 {
 	assert_throw(this->site->is_holding());
@@ -1509,6 +1515,11 @@ QVariantList site_game_data::get_attribute_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_attribute_values());
 }
 
+int site_game_data::get_attribute_value(const site_attribute *attribute) const
+{
+	return archimedes::map::get_or_default(this->attribute_values, attribute);
+}
+
 QCoro::Task<void> site_game_data::change_attribute_value(const site_attribute *attribute, const int change)
 {
 	if (change == 0) {
@@ -1642,6 +1653,11 @@ void site_game_data::initialize_building_slots()
 
 		this->add_building_slot(make_qunique<building_slot>(building_slot_type, this->site));
 	}
+}
+
+building_slot *site_game_data::get_building_slot(const building_slot_type *slot_type) const
+{
+	return archimedes::map::get_or_default(this->building_slot_map, slot_type);
 }
 
 std::vector<const building_slot *> site_game_data::get_visible_building_slots() const
@@ -2539,6 +2555,11 @@ QCoro::Task<void> site_game_data::do_population_growth()
 	}
 }
 
+int64_t site_game_data::get_employment_size(const employment_type *employment_type) const
+{
+	return archimedes::map::get_or_default(this->employment_sizes, employment_type);
+}
+
 void site_game_data::change_employment_size(const employment_type *employment_type, const int64_t change)
 {
 	assert_throw(employment_type != nullptr);
@@ -2553,6 +2574,11 @@ void site_game_data::change_employment_size(const employment_type *employment_ty
 	if (size == 0) {
 		this->employment_sizes.erase(employment_type);
 	}
+}
+
+int64_t site_game_data::get_effective_employment_size(const employment_type *employment_type) const
+{
+	return archimedes::map::get_or_default(this->effective_employment_sizes, employment_type);
 }
 
 QCoro::Task<void> site_game_data::change_effective_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage)
@@ -2610,6 +2636,11 @@ QCoro::Task<void> site_game_data::change_effective_employment_size(const employm
 	}
 }
 
+int64_t site_game_data::get_base_employment_capacity(const employment_capacity_type *capacity_type) const
+{
+	return archimedes::map::get_or_default(this->base_employment_capacities, capacity_type);
+}
+
 void site_game_data::set_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity)
 {
 	assert_throw(capacity_type != nullptr);
@@ -2629,6 +2660,11 @@ void site_game_data::set_base_employment_capacity(const employment_capacity_type
 	this->calculate_employment_capacity(capacity_type);
 }
 
+int64_t site_game_data::get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
+{
+	return archimedes::map::get_or_default(this->employment_capacity_modifiers, capacity_type);
+}
+
 void site_game_data::set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier)
 {
 	assert_throw(capacity_type != nullptr);
@@ -2644,6 +2680,11 @@ void site_game_data::set_employment_capacity_modifier(const employment_capacity_
 	}
 
 	this->calculate_employment_capacity(capacity_type);
+}
+
+int64_t site_game_data::get_employment_capacity(const employment_capacity_type *capacity_type) const
+{
+	return archimedes::map::get_or_default(this->employment_capacities, capacity_type);
 }
 
 void site_game_data::set_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity)
@@ -2894,6 +2935,12 @@ QVariantList site_game_data::get_commodity_outputs_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
 }
 
+const decimillesimal_int &site_game_data::get_commodity_output(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_outputs, commodity, zero);
+}
+
 QString site_game_data::get_commodity_output_qstring(const metternich::commodity *commodity) const
 {
 	assert_throw(commodity != nullptr);
@@ -3022,6 +3069,17 @@ void site_game_data::calculate_commodity_outputs()
 
 		this->set_commodity_output(commodity, output);
 	}
+}
+
+const centesimal_int &site_game_data::get_commodity_output_modifier(const commodity *commodity) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_output_modifiers, commodity, zero);
+}
+
+int site_game_data::get_commodity_throughput_modifier(const commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->commodity_throughput_modifiers, commodity);
 }
 
 void site_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)

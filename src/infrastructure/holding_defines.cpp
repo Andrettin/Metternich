@@ -8,6 +8,7 @@
 #include "economy/employment_type.h"
 #include "infrastructure/construction_type.h"
 #include "script/modifier.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
@@ -81,6 +82,18 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 	} else {
 		defines_base::process_gsml_scope(scope);
 	}
+}
+
+const commodity_map<decimillesimal_int> &holding_defines::get_construction_level_commodity_costs(const construction_type construction_type) const
+{
+	static const commodity_map<decimillesimal_int> empty_map;
+	return archimedes::map::get_or_default(this->construction_level_commodity_costs, construction_type, empty_map);
+}
+
+const commodity_map<decimillesimal_int> &holding_defines::get_construction_level_commodity_costs_per_level(const construction_type construction_type) const
+{
+	static const commodity_map<decimillesimal_int> empty_map;
+	return archimedes::map::get_or_default(this->construction_level_commodity_costs_per_level, construction_type, empty_map);
 }
 
 }

@@ -201,17 +201,7 @@ public:
 		return this->battle_resolution_type;
 	}
 
-	const centesimal_int &get_stat(const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->stats.find(stat);
-		if (find_iterator != this->stats.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_stat(const military_unit_stat stat) const;
 	void set_stat(const military_unit_stat stat, const centesimal_int &value);
 
 	void change_stat(const military_unit_stat stat, const centesimal_int &change)

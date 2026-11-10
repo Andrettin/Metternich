@@ -107,17 +107,7 @@ public:
 		return this->stats;
 	}
 
-	const centesimal_int &get_stat(const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->get_stats().find(stat);
-		if (find_iterator != this->get_stats().end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_stat(const military_unit_stat stat) const;
 	centesimal_int get_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
 	centesimal_int get_display_stat_for_domain(const military_unit_stat stat, const domain *domain) const;
 	Q_INVOKABLE QVariantList get_stats_for_domain_qvariant_list(const domain *domain) const;

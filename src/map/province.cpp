@@ -19,6 +19,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -26,6 +27,11 @@ namespace metternich {
 const std::set<std::string> province::database_dependencies = {
 	region::class_identifier
 };
+
+province *province::try_get_by_color(const QColor &color)
+{
+	return archimedes::map::get_or_default(province::provinces_by_color, color);
+}
 
 void province::initialize_all(const data_type_metadata *metadata)
 {

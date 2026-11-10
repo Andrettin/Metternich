@@ -19,6 +19,7 @@
 #include "technology/technology_category.h"
 #include "technology/technology_subcategory.h"
 #include "util/decimal_int.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -94,6 +95,13 @@ void region_history::process_gsml_scope(const gsml_data &scope, const QDate &dat
 	} else {
 		data_entry_history::process_gsml_scope(scope, date);
 	}
+}
+
+int64_t region_history::get_population() const
+{
+	static const population_group_key key;
+
+	return archimedes::map::get_or_default(this->population_groups, key);
 }
 
 void region_history::distribute_population()

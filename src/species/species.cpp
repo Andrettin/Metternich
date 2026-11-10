@@ -19,6 +19,7 @@
 #include "util/assert_util.h"
 #include "util/gender.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
 
 #include <magic_enum/magic_enum_utility.hpp>
@@ -322,13 +323,7 @@ taxonomic_rank species::get_rank() const
 
 const std::string &species::get_name(const gender gender) const
 {
-	const auto find_iterator = this->gendered_names.find(gender);
-
-	if (find_iterator != this->gendered_names.end()) {
-		return find_iterator->second;
-	}
-
-	return named_data_entry::get_name();
+	return archimedes::map::get_or_default(this->gendered_names, gender, named_data_entry::get_name());
 }
 
 std::string species::get_scientific_name() const

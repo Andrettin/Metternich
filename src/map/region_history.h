@@ -57,17 +57,7 @@ public:
 		return this->phenotype_weights;
 	}
 
-	int64_t get_population() const
-	{
-		static const population_group_key key;
-
-		const auto find_iterator = this->population_groups.find(key);
-		if (find_iterator != this->population_groups.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int64_t get_population() const;
 
 	void set_population(const int64_t population)
 	{

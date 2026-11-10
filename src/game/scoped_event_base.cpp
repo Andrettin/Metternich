@@ -26,12 +26,27 @@
 #include "script/mean_time_to_happen.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 #include "util/random.h"
 #include "util/vector_random_util.h"
 
 #include <QCoroSignal>
 
 namespace metternich {
+
+template <typename scope_type>
+const std::vector<const scoped_event_base<scope_type> *> &scoped_event_base<scope_type>::get_trigger_events(const event_trigger trigger)
+{
+	static const std::vector<const scoped_event_base *> empty_list;
+	return archimedes::map::get_or_default(scoped_event_base::trigger_events, trigger, empty_list);
+}
+
+template <typename scope_type>
+const std::vector<const scoped_event_base<scope_type> *> &scoped_event_base<scope_type>::get_trigger_random_events(const event_trigger trigger)
+{
+	static const std::vector<const scoped_event_base *> empty_list;
+	return archimedes::map::get_or_default(scoped_event_base::trigger_random_events, trigger, empty_list);
+}
 
 template <typename scope_type>
 const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const read_only_context &ctx)

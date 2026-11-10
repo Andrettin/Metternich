@@ -75,11 +75,7 @@ QVariantList game_rules::get_values_qvariant_list() const
 
 bool game_rules::get_value(const archimedes::game_rule *rule) const
 {
-	const auto find_iterator = this->values.find(rule);
-	if (find_iterator != this->values.end()) {
-		return find_iterator->second;
-	}
-	return false;
+	return archimedes::map::get_or_default(this->values, rule, false);
 }
 
 bool game_rules::get_value(const std::string &rule_identifier) const

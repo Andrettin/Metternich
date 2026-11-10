@@ -11,7 +11,9 @@
 #include "population/population_unit.h"
 #include "script/special_target_type.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
+#include "util/string_util.h"
 
 namespace metternich {
 
@@ -120,26 +122,13 @@ const typename context_base<read_only>::scope_variant_type &context_base<read_on
 template <bool read_only>
 const std::string &context_base<read_only>::get_saved_string(const std::string &name) const
 {
-	const auto find_iterator = this->saved_strings.find(name);
-
-	if (find_iterator != this->saved_strings.end()) {
-		return find_iterator->second;
-	}
-
-	static const std::string empty_str;
-	return empty_str;
+	return archimedes::map::get_or_default(this->saved_strings, name, string::empty_str);
 }
 
 template <bool read_only>
 const building_type *context_base<read_only>::get_saved_building(const std::string &name) const
 {
-	const auto find_iterator = this->saved_buildings.find(name);
-
-	if (find_iterator != this->saved_buildings.end()) {
-		return find_iterator->second;
-	}
-
-	return nullptr;
+	return archimedes::map::get_or_default(this->saved_buildings, name);
 }
 
 template struct context_base<false>;

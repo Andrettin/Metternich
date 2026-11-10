@@ -137,15 +137,7 @@ public:
 		return this->population_groups;
 	}
 
-	int64_t get_group_population(const population_group_key &group_key) const
-	{
-		const auto find_iterator = this->population_groups.find(group_key);
-		if (find_iterator != this->population_groups.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int64_t get_group_population(const population_group_key &group_key) const;
 
 	void set_group_population(const population_group_key &group_key, const int64_t population)
 	{
@@ -161,15 +153,7 @@ public:
 		return this->lower_bound_population_groups;
 	}
 
-	int64_t get_lower_bound_group_population(const population_group_key &group_key) const
-	{
-		const auto find_iterator = this->lower_bound_population_groups.find(group_key);
-		if (find_iterator != this->lower_bound_population_groups.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int64_t get_lower_bound_group_population(const population_group_key &group_key) const;
 
 	void initialize_population();
 	void distribute_population();

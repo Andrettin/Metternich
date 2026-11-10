@@ -11,6 +11,7 @@
 #include "map/site.h"
 #include "population/population_type.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -135,6 +136,21 @@ bool site_history::is_developed() const
 	}
 
 	return false;
+}
+
+const building_type *site_history::get_building(const building_slot_type *slot_type) const
+{
+	return archimedes::map::get_or_default(this->buildings, slot_type);
+}
+
+const wonder *site_history::get_wonder(const building_slot_type *slot_type) const
+{
+	return archimedes::map::get_or_default(this->wonders, slot_type);
+}
+
+int64_t site_history::get_group_population(const population_group_key &group_key) const
+{
+	return archimedes::map::get_or_default(this->population_groups, group_key);
 }
 
 }

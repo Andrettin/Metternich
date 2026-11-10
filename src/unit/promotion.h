@@ -50,15 +50,7 @@ public:
 		return this->stat_bonuses;
 	}
 
-	int get_stat_bonus(const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->get_stat_bonuses().find(stat);
-		if (find_iterator != this->get_stat_bonuses().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_stat_bonus(const military_unit_stat stat) const;
 
 	const metternich::modifier<military_unit> *get_modifier() const
 	{

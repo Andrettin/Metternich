@@ -7,6 +7,7 @@
 #include "ui/ui_defines.h"
 #include "unit/military_unit.h"
 #include "unit/military_unit_stat.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
@@ -55,6 +56,11 @@ void promotion::check() const
 	if (this->get_modifier() == nullptr && this->get_stat_bonuses().empty()) {
 		throw std::runtime_error(std::format("Promotion \"{}\" has no modifier and no stat bonuses.", this->get_identifier()));
 	}
+}
+
+int promotion::get_stat_bonus(const military_unit_stat stat) const
+{
+	return archimedes::map::get_or_default(this->get_stat_bonuses(), stat);
 }
 
 QCoro::Task<void> promotion::apply_modifier(military_unit *military_unit, const int multiplier) const

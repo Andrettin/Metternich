@@ -586,6 +586,12 @@ QCoro::Task<void> military_unit::fully_recover()
 	}
 }
 
+const centesimal_int &military_unit::get_stat(const military_unit_stat stat) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->stats, stat, zero);
+}
+
 void military_unit::set_stat(const military_unit_stat stat, const centesimal_int &value)
 {
 	if (value == this->get_stat(stat)) {

@@ -23,17 +23,7 @@ class event_random_group final : public named_data_entry, public data_type<event
 	Q_PROPERTY(int delay_days MEMBER delay_days)
 
 public:
-	static const std::vector<event_random_group *> &get_all_of_trigger(const event_trigger trigger)
-	{
-		static std::vector<event_random_group *> empty_vector;
-
-		const auto find_iterator = event_random_group::groups_by_trigger.find(trigger);
-		if (find_iterator != event_random_group::groups_by_trigger.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_vector;
-	}
+	static const std::vector<event_random_group *> &get_all_of_trigger(const event_trigger trigger);
 
 private:
 	static inline std::map<event_trigger, std::vector<event_random_group *>> groups_by_trigger;

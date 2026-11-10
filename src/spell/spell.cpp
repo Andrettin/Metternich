@@ -19,6 +19,7 @@
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 #include "util/vector_util.h"
@@ -201,12 +202,7 @@ bool spell::is_available_for_character_class(const character_class *character_cl
 
 int spell::get_level_for_character_class(const character_class *character_class) const
 {
-	const auto find_iterator = this->character_class_levels.find(character_class);
-	if (find_iterator != this->character_class_levels.end()) {
-		return find_iterator->second;
-	}
-
-	return this->get_level();
+	return archimedes::map::get_or_default(this->character_class_levels, character_class, this->get_level());
 }
 
 bool spell::is_combat_spell() const

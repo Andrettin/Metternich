@@ -56,15 +56,7 @@ public:
 		return terrain_type;
 	}
 
-	static terrain_type *try_get_by_color(const QColor &color)
-	{
-		const auto find_iterator = terrain_type::terrain_types_by_color.find(color);
-		if (find_iterator != terrain_type::terrain_types_by_color.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	static terrain_type *try_get_by_color(const QColor &color);
 
 	static terrain_type *get_by_character(const char character)
 	{
@@ -77,15 +69,7 @@ public:
 		return terrain_type;
 	}
 
-	static terrain_type *try_get_by_character(const char character)
-	{
-		const auto find_iterator = terrain_type::terrain_types_by_character.find(character);
-		if (find_iterator != terrain_type::terrain_types_by_character.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	static terrain_type *try_get_by_character(const char character);
 
 	static terrain_type *get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);
 	static terrain_type *try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);

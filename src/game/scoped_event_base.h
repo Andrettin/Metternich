@@ -43,29 +43,8 @@ public:
 		scoped_event_base::trigger_random_events.clear();
 	}
 
-	static const std::vector<const scoped_event_base *> &get_trigger_events(const event_trigger trigger)
-	{
-		static std::vector<const scoped_event_base *> empty_list;
-
-		const auto find_iterator = scoped_event_base::trigger_events.find(trigger);
-		if (find_iterator != scoped_event_base::trigger_events.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_list;
-	}
-
-	static const std::vector<const scoped_event_base *> &get_trigger_random_events(const event_trigger trigger)
-	{
-		static std::vector<const scoped_event_base *> empty_list;
-
-		const auto find_iterator = scoped_event_base::trigger_random_events.find(trigger);
-		if (find_iterator != scoped_event_base::trigger_random_events.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_list;
-	}
+	static const std::vector<const scoped_event_base *> &get_trigger_events(const event_trigger trigger);
+	static const std::vector<const scoped_event_base *> &get_trigger_random_events(const event_trigger trigger);
 
 	static void add_trigger_none_random_weight(const event_trigger trigger, const int weight)
 	{

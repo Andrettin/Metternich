@@ -79,15 +79,7 @@ public:
 		return this->river_crossing_required_technology;
 	}
 
-	const technology *get_terrain_required_technology(const terrain_type *terrain) const
-	{
-		const auto find_iterator = this->terrain_required_technologies.find(terrain);
-		if (find_iterator != this->terrain_required_technologies.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	const technology *get_terrain_required_technology(const terrain_type *terrain) const;
 
 	const commodity_map<decimillesimal_int> &get_commodity_costs() const
 	{

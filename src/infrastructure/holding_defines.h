@@ -30,27 +30,8 @@ public:
 
 	virtual void process_gsml_scope(const gsml_data &scope) override;
 
-	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs(const construction_type construction_type) const
-	{
-		const auto find_iterator = this->construction_level_commodity_costs.find(construction_type);
-		if (find_iterator != this->construction_level_commodity_costs.end()) {
-			return find_iterator->second;
-		}
-
-		static const commodity_map<decimillesimal_int> empty_map;
-		return empty_map;
-	}
-
-	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs_per_level(const construction_type construction_type) const
-	{
-		const auto find_iterator = this->construction_level_commodity_costs_per_level.find(construction_type);
-		if (find_iterator != this->construction_level_commodity_costs_per_level.end()) {
-			return find_iterator->second;
-		}
-
-		static const commodity_map<decimillesimal_int> empty_map;
-		return empty_map;
-	}
+	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs(const construction_type construction_type) const;
+	const commodity_map<decimillesimal_int> &get_construction_level_commodity_costs_per_level(const construction_type construction_type) const;
 
 	const modifier<const site> *get_construction_level_modifier(const construction_type construction_type, const int construction_level) const
 	{

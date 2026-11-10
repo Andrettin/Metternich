@@ -32,6 +32,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 #include "util/vector_util.h"
@@ -307,6 +308,12 @@ QVariantList building_type::get_recruited_civilian_unit_types_qvariant_list() co
 QVariantList building_type::get_recruited_military_unit_categories_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_recruited_military_unit_categories());
+}
+
+const centesimal_int &building_type::get_construction_level(const construction_type construction_type) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->construction_levels, construction_type, zero);
 }
 
 int64_t building_type::get_population_capacity_for_province_level(const int province_level, const centesimal_int &province_total_holding_level) const

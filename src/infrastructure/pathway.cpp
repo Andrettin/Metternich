@@ -12,6 +12,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -125,6 +126,11 @@ void pathway::set_image_filepath(const std::filesystem::path &filepath)
 	}
 
 	this->image_filepath = database::get()->get_graphics_path(this->get_module()) / filepath;
+}
+
+const technology *pathway::get_terrain_required_technology(const terrain_type *terrain) const
+{
+	return archimedes::map::get_or_default(this->terrain_required_technologies, terrain);
 }
 
 commodity_map<decimillesimal_int> pathway::get_commodity_costs_for_province(const province *province) const

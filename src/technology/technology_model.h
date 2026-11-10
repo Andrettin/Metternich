@@ -36,16 +36,7 @@ public:
 		return role_names;
 	}
 
-	const std::vector<const metternich::technology *> &get_technology_children(const metternich::technology *technology) const
-	{
-		const auto find_iterator = this->technology_children.find(technology);
-		if (find_iterator != this->technology_children.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<const metternich::technology *> empty_vector;
-		return empty_vector;
-	}
+	const std::vector<const metternich::technology *> &get_technology_children(const metternich::technology *technology) const;
 
 private:
 	std::vector<const metternich::technology *> top_level_technologies;

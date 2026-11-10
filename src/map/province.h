@@ -75,15 +75,7 @@ public:
 		return province;
 	}
 
-	static province *try_get_by_color(const QColor &color)
-	{
-		const auto find_iterator = province::provinces_by_color.find(color);
-		if (find_iterator != province::provinces_by_color.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	static province *try_get_by_color(const QColor &color);
 
 	static void initialize_all(const data_type_metadata *metadata);
 

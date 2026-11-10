@@ -194,16 +194,7 @@ public:
 		return this->construction_levels;
 	}
 
-	const centesimal_int &get_construction_level(const construction_type construction_type) const
-	{
-		const auto find_iterator = this->construction_levels.find(construction_type);
-		if (find_iterator != this->construction_levels.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
+	const centesimal_int &get_construction_level(const construction_type construction_type) const;
 
 	const centesimal_int &get_total_construction_level() const
 	{

@@ -142,6 +142,11 @@ QVariantList population::get_type_sizes_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_type_sizes());
 }
 
+qint64 population::get_type_size(const metternich::population_type *type) const
+{
+	return archimedes::map::get_or_default(this->get_type_sizes(), type);
+}
+
 void population::change_type_size(const population_type *type, const int64_t change)
 {
 	if (change == 0) {
@@ -178,12 +183,7 @@ QVariantList population::get_culture_sizes_qvariant_list() const
 
 int64_t population::get_culture_size(const culture *culture) const
 {
-	const auto find_iterator = this->get_culture_sizes().find(culture);
-	if (find_iterator != this->get_culture_sizes().end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
+	return archimedes::map::get_or_default(this->get_culture_sizes(), culture);
 }
 
 void population::change_culture_size(const culture *culture, const int64_t change)

@@ -225,17 +225,7 @@ public:
 
 	QVariantList get_construction_levels_qvariant_list() const;
 
-	const centesimal_int &get_construction_level(const construction_type construction_type) const
-	{
-		const auto find_iterator = this->construction_levels.find(construction_type);
-		if (find_iterator != this->construction_levels.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_construction_level(const construction_type construction_type) const;
 	[[nodiscard]] QCoro::Task<void> set_construction_level(const construction_type construction_type, const centesimal_int &level);
 
 	[[nodiscard]] QCoro::Task<void> change_construction_level(const construction_type construction_type, const centesimal_int &change)
@@ -299,16 +289,7 @@ public:
 
 	QVariantList get_attribute_values_qvariant_list() const;
 
-	int get_attribute_value(const site_attribute *attribute) const
-	{
-		const auto find_iterator = this->attribute_values.find(attribute);
-		if (find_iterator != this->attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_attribute_value(const site_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const site_attribute *attribute, const int change);
 	[[nodiscard]] QCoro::Task<void> add_attribute_roll_result(const site_attribute *attribute, const dice &dice, const int roll_result);
 	[[nodiscard]] QCoro::Task<void> remove_attribute_roll_result(const site_attribute *attribute, const dice &dice);
@@ -323,23 +304,11 @@ public:
 	QVariantList get_building_slots_qvariant_list() const;
 	void add_building_slot(qunique_ptr<building_slot> &&building_slot);
 	void initialize_building_slots();
-
-	building_slot *get_building_slot(const building_slot_type *slot_type) const
-	{
-		const auto find_iterator = this->building_slot_map.find(slot_type);
-
-		if (find_iterator != this->building_slot_map.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
+	building_slot *get_building_slot(const building_slot_type *slot_type) const;
 	std::vector<const building_slot *> get_visible_building_slots() const;
 	QVariantList get_visible_building_slots_qvariant_list() const;
 
 	const building_type *get_slot_building(const building_slot_type *slot_type) const;
-
 	[[nodiscard]] QCoro::Task<void> set_slot_building(const building_slot_type *slot_type, const building_type *building);
 
 	const building_type *get_building_class_type(const building_class *building_class) const;
@@ -502,17 +471,7 @@ public:
 		return this->employment_sizes;
 	}
 
-	int64_t get_employment_size(const employment_type *employment_type) const
-	{
-		const auto find_iterator = this->employment_sizes.find(employment_type);
-
-		if (find_iterator != this->employment_sizes.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_employment_size(const employment_type *employment_type) const;
 	void change_employment_size(const employment_type *employment_type, const int64_t change);
 
 	const data_entry_map<employment_type, int64_t> &get_effective_employment_sizes() const
@@ -520,30 +479,10 @@ public:
 		return this->effective_employment_sizes;
 	}
 
-	int64_t get_effective_employment_size(const employment_type *employment_type) const
-	{
-		const auto find_iterator = this->effective_employment_sizes.find(employment_type);
-
-		if (find_iterator != this->effective_employment_sizes.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_effective_employment_size(const employment_type *employment_type) const;
 	[[nodiscard]] QCoro::Task<void> change_effective_employment_size(const employment_type *employment_type, const int64_t change, const bool change_input_storage);
 
-	int64_t get_base_employment_capacity(const employment_capacity_type *capacity_type) const
-	{
-		const auto find_iterator = this->base_employment_capacities.find(capacity_type);
-
-		if (find_iterator != this->base_employment_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_base_employment_capacity(const employment_capacity_type *capacity_type) const;
 	void set_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity);
 
 	void change_base_employment_capacity(const employment_capacity_type *capacity_type, const int64_t change)
@@ -551,17 +490,7 @@ public:
 		this->set_base_employment_capacity(capacity_type, this->get_base_employment_capacity(capacity_type) + change);
 	}
 
-	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
-	{
-		const auto find_iterator = this->employment_capacity_modifiers.find(capacity_type);
-
-		if (find_iterator != this->employment_capacity_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const;
 	void set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier);
 
 	void change_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t change)
@@ -574,17 +503,7 @@ public:
 		return this->employment_capacities;
 	}
 
-	int64_t get_employment_capacity(const employment_capacity_type *capacity_type) const
-	{
-		const auto find_iterator = this->employment_capacities.find(capacity_type);
-
-		if (find_iterator != this->employment_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_employment_capacity(const employment_capacity_type *capacity_type) const;
 	void set_employment_capacity(const employment_capacity_type *capacity_type, const int64_t capacity);
 	void calculate_employment_capacity(const employment_capacity_type *capacity_type);
 
@@ -607,20 +526,8 @@ public:
 	}
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
-
-	const decimillesimal_int &get_commodity_output(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_outputs.find(commodity);
-		if (find_iterator != this->commodity_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
+	const decimillesimal_int &get_commodity_output(const commodity *commodity) const;
 	Q_INVOKABLE QString get_commodity_output_qstring(const metternich::commodity *commodity) const;
-
 	void set_commodity_output(const commodity *commodity, const decimillesimal_int &output);
 	void calculate_commodity_outputs();
 
@@ -650,17 +557,7 @@ public:
 		return this->commodity_output_modifiers;
 	}
 
-	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_output_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
+	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const;
 
 	void set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 	{
@@ -687,17 +584,7 @@ public:
 		return this->commodity_throughput_modifiers;
 	}
 
-	int get_commodity_throughput_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_throughput_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_commodity_throughput_modifier(const commodity *commodity) const;
 	void set_commodity_throughput_modifier(const commodity *commodity, const int value);
 
 	void change_commodity_throughput_modifier(const commodity *commodity, const int value)

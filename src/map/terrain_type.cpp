@@ -12,8 +12,19 @@
 #include "map/tile_image_provider.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
+
+terrain_type *terrain_type::try_get_by_color(const QColor &color)
+{
+	return archimedes::map::get_or_default(terrain_type::terrain_types_by_color, color);
+}
+
+terrain_type *terrain_type::try_get_by_character(const char character)
+{
+	return archimedes::map::get_or_default(terrain_type::terrain_types_by_character, character);
+}
 
 terrain_type *terrain_type::get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)
 {

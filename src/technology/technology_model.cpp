@@ -5,6 +5,7 @@
 #include "game/game.h"
 #include "technology/technology.h"
 #include "util/exception_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -110,6 +111,12 @@ QModelIndex technology_model::parent(const QModelIndex &index) const
 	}
 
 	return QModelIndex();
+}
+
+const std::vector<const metternich::technology *> &technology_model::get_technology_children(const metternich::technology *technology) const
+{
+	static const std::vector<const metternich::technology *> empty_vector;
+	return archimedes::map::get_or_default(this->technology_children, technology, empty_vector);
 }
 
 }

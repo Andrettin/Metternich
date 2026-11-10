@@ -15,6 +15,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/decimal_int.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -134,6 +135,16 @@ phenotype_map<int64_t> province_history::get_phenotype_weights_for_culture(const
 	});
 
 	return phenotype_weights;
+}
+
+int64_t province_history::get_group_population(const population_group_key &group_key) const
+{
+	return archimedes::map::get_or_default(this->population_groups, group_key);
+}
+
+int64_t province_history::get_lower_bound_group_population(const population_group_key &group_key) const
+{
+	return archimedes::map::get_or_default(this->lower_bound_population_groups, group_key);
 }
 
 void province_history::initialize_population()

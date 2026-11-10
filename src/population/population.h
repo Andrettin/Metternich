@@ -53,16 +53,7 @@ public:
 
 	QVariantList get_type_sizes_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_type_size(const metternich::population_type *type) const
-	{
-		const auto find_iterator = this->get_type_sizes().find(type);
-		if (find_iterator != this->get_type_sizes().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE qint64 get_type_size(const metternich::population_type *type) const;
 	void change_type_size(const population_type *type, const int64_t change);
 
 	const culture_map<int64_t> &get_culture_sizes() const

@@ -25,18 +25,7 @@ public:
 
 	virtual void check() const override;
 
-	const std::vector<const building_type *> &get_building_types_for_holding_type(const holding_type *holding_type) const
-	{
-		const auto find_iterator = this->building_types_by_holding_type.find(holding_type);
-
-		if (find_iterator != this->building_types_by_holding_type.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<const building_type *> empty_vector;
-		return empty_vector;
-	}
-
+	const std::vector<const building_type *> &get_building_types_for_holding_type(const holding_type *holding_type) const;
 	void add_building_type(const building_type *building_type);
 
 	const std::vector<const wonder *> &get_wonders() const

@@ -19,6 +19,7 @@
 #include "ui/icon.h"
 #include "util/assert_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/random.h"
 
 namespace metternich {
@@ -209,6 +210,16 @@ void population_type::check() const
 	}
 }
 
+const icon *population_type::get_phenotype_icon(const phenotype *phenotype) const
+{
+	return archimedes::map::get_or_default(this->phenotype_icons, phenotype, this->get_icon());
+}
+
+const icon *population_type::get_phenotype_small_icon(const phenotype *phenotype) const
+{
+	return archimedes::map::get_or_default(this->phenotype_small_icons, phenotype, this->get_small_icon());
+}
+
 QString population_type::get_domain_modifier_string(const metternich::domain *domain) const
 {
 	if (this->get_output_commodity() == nullptr && this->get_domain_modifier() == nullptr) {
@@ -239,6 +250,12 @@ QString population_type::get_domain_modifier_string(const metternich::domain *do
 	*/
 
 	return QString::fromStdString(str);
+}
+
+const decimillesimal_int &population_type::get_commodity_throughput_modifier(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_throughput_modifiers, commodity, zero);
 }
 
 bool population_type::is_enabled() const

@@ -361,6 +361,12 @@ void military_unit_type::initialize_stats_from_monster_type(int &hit_dice_count)
 	}
 }
 
+const centesimal_int &military_unit_type::get_stat(const military_unit_stat stat) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->get_stats(), stat, zero);
+}
+
 centesimal_int military_unit_type::get_stat_for_domain(const military_unit_stat stat, const domain *domain) const
 {
 	centesimal_int value = this->get_stat(stat);
