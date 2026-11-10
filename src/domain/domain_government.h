@@ -62,17 +62,7 @@ public:
 
 	QVariantList get_laws_qvariant_list() const;
 
-	Q_INVOKABLE const metternich::law *get_law(const metternich::law_group *law_group) const
-	{
-		const auto find_iterator = this->get_laws().find(law_group);
-
-		if (find_iterator != this->get_laws().end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
+	Q_INVOKABLE const metternich::law *get_law(const metternich::law_group *law_group) const;
 	[[nodiscard]] QCoro::Task<void> set_law(const law_group *law_group, const law *law);
 	bool has_law(const law *law) const;
 	Q_INVOKABLE bool can_have_law(const metternich::law *law) const;
@@ -115,17 +105,7 @@ public:
 
 	QVariantList get_office_holders_qvariant_list() const;
 
-	Q_INVOKABLE const metternich::character *get_office_holder(const metternich::office *office) const
-	{
-		const auto find_iterator = this->office_holders.find(office);
-
-		if (find_iterator != this->office_holders.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
+	Q_INVOKABLE const metternich::character *get_office_holder(const metternich::office *office) const;
 	[[nodiscard]] QCoro::Task<void> set_office_holder(const office *office, const character *character);
 
 	const data_entry_map<office, const character *> &get_appointed_office_holders() const
@@ -135,17 +115,7 @@ public:
 
 	QVariantList get_appointed_office_holders_qvariant_list() const;
 
-	Q_INVOKABLE const metternich::character *get_appointed_office_holder(const metternich::office *office) const
-	{
-		const auto find_iterator = this->appointed_office_holders.find(office);
-
-		if (find_iterator != this->appointed_office_holders.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
+	Q_INVOKABLE const metternich::character *get_appointed_office_holder(const metternich::office *office) const;
 	Q_INVOKABLE void set_appointed_office_holder(const metternich::office *office, const metternich::character *character);
 
 	[[nodiscard]] QCoro::Task<void> check_office_holder(const office *office);

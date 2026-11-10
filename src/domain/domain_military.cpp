@@ -484,6 +484,18 @@ void domain_military::clear_armies()
 	this->armies.clear();
 }
 
+const std::map<military_unit_stat, centesimal_int> &domain_military::get_military_unit_type_stat_modifiers(const military_unit_type *type) const
+{
+	static const std::map<military_unit_stat, centesimal_int> empty_map;
+	return archimedes::map::get_or_default(this->military_unit_type_stat_modifiers, type, empty_map);
+}
+
+const centesimal_int &domain_military::get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->get_military_unit_type_stat_modifiers(type), stat, zero);
+}
+
 void domain_military::set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_military_unit_type_stat_modifier(type, stat);
@@ -512,6 +524,11 @@ void domain_military::set_military_unit_type_stat_modifier(const military_unit_t
 	}
 }
 
+int domain_military::get_free_infantry_promotion_count(const promotion *promotion) const
+{
+	return archimedes::map::get_or_default(this->free_infantry_promotion_counts, promotion);
+}
+
 QCoro::Task<void> domain_military::set_free_infantry_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_infantry_promotion_count(promotion);
@@ -534,6 +551,11 @@ QCoro::Task<void> domain_military::set_free_infantry_promotion_count(const promo
 			co_await military_unit->check_free_promotions();
 		}
 	}
+}
+
+int domain_military::get_free_cavalry_promotion_count(const promotion *promotion) const
+{
+	return archimedes::map::get_or_default(this->free_cavalry_promotion_counts, promotion);
 }
 
 QCoro::Task<void> domain_military::set_free_cavalry_promotion_count(const promotion *promotion, const int value)
@@ -560,6 +582,11 @@ QCoro::Task<void> domain_military::set_free_cavalry_promotion_count(const promot
 	}
 }
 
+int domain_military::get_free_artillery_promotion_count(const promotion *promotion) const
+{
+	return archimedes::map::get_or_default(this->free_artillery_promotion_counts, promotion);
+}
+
 QCoro::Task<void> domain_military::set_free_artillery_promotion_count(const promotion *promotion, const int value)
 {
 	const int old_value = this->get_free_artillery_promotion_count(promotion);
@@ -582,6 +609,11 @@ QCoro::Task<void> domain_military::set_free_artillery_promotion_count(const prom
 			co_await military_unit->check_free_promotions();
 		}
 	}
+}
+
+int domain_military::get_free_warship_promotion_count(const promotion *promotion) const
+{
+	return archimedes::map::get_or_default(this->free_warship_promotion_counts, promotion);
 }
 
 QCoro::Task<void> domain_military::set_free_warship_promotion_count(const promotion *promotion, const int value)

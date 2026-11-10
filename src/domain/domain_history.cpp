@@ -186,13 +186,7 @@ domain_map<QDate> domain_history::get_inserted_domain_ruler_histories(const QDat
 
 diplomacy_state domain_history::get_diplomacy_state(const metternich::domain *other_domain) const
 {
-	const auto find_iterator = this->diplomacy_states.find(other_domain);
-
-	if (find_iterator != this->diplomacy_states.end()) {
-		return find_iterator->second;
-	}
-
-	return diplomacy_state::peace;
+	return archimedes::map::get_or_default(this->diplomacy_states, other_domain, diplomacy_state::peace);
 }
 
 }

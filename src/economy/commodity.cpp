@@ -13,10 +13,23 @@
 #include "technology/technology.h"
 #include "util/assert_util.h"
 #include "util/dice.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
+
+const std::vector<const commodity *> &commodity::get_food_type_commodities(const metternich::food_type food_type)
+{
+	static const std::vector<const commodity *> empty_vector;
+	return archimedes::map::get_or_default(commodity::food_type_commodities, food_type, empty_vector);
+}
+
+const std::vector<const commodity *> &commodity::get_luxury_type_commodities(const metternich::luxury_type luxury_type)
+{
+	static const std::vector<const commodity *> empty_vector;
+	return archimedes::map::get_or_default(commodity::luxury_type_commodities, luxury_type, empty_vector);
+}
 
 bool commodity::commodity_price_compare(const commodity *lhs, const commodity *rhs)
 {

@@ -87,34 +87,9 @@ public:
 		this->deployment_limit += change;
 	}
 
-	const std::map<military_unit_stat, centesimal_int> &get_military_unit_type_stat_modifiers(const military_unit_type *type) const
-	{
-		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);
+	const std::map<military_unit_stat, centesimal_int> &get_military_unit_type_stat_modifiers(const military_unit_type *type) const;
 
-		if (find_iterator != this->military_unit_type_stat_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::map<military_unit_stat, centesimal_int> empty_map;
-		return empty_map;
-	}
-
-	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->military_unit_type_stat_modifiers.find(type);
-
-		if (find_iterator != this->military_unit_type_stat_modifiers.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(stat);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const;
 	void set_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value);
 
 	void change_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &change)
@@ -187,17 +162,7 @@ public:
 		return this->free_infantry_promotion_counts;
 	}
 
-	int get_free_infantry_promotion_count(const promotion *promotion) const
-	{
-		const auto find_iterator = this->free_infantry_promotion_counts.find(promotion);
-
-		if (find_iterator != this->free_infantry_promotion_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_infantry_promotion_count(const promotion *promotion) const;
 	[[nodiscard]] QCoro::Task<void> set_free_infantry_promotion_count(const promotion *promotion, const int value);
 
 	[[nodiscard]] QCoro::Task<void> change_free_infantry_promotion_count(const promotion *promotion, const int value)
@@ -210,17 +175,7 @@ public:
 		return this->free_cavalry_promotion_counts;
 	}
 
-	int get_free_cavalry_promotion_count(const promotion *promotion) const
-	{
-		const auto find_iterator = this->free_cavalry_promotion_counts.find(promotion);
-
-		if (find_iterator != this->free_cavalry_promotion_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_cavalry_promotion_count(const promotion *promotion) const;
 	[[nodiscard]] QCoro::Task<void> set_free_cavalry_promotion_count(const promotion *promotion, const int value);
 
 	[[nodiscard]] QCoro::Task<void> change_free_cavalry_promotion_count(const promotion *promotion, const int value)
@@ -233,17 +188,7 @@ public:
 		return this->free_artillery_promotion_counts;
 	}
 
-	int get_free_artillery_promotion_count(const promotion *promotion) const
-	{
-		const auto find_iterator = this->free_artillery_promotion_counts.find(promotion);
-
-		if (find_iterator != this->free_artillery_promotion_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_artillery_promotion_count(const promotion *promotion) const;
 	[[nodiscard]] QCoro::Task<void> set_free_artillery_promotion_count(const promotion *promotion, const int value);
 
 	[[nodiscard]] QCoro::Task<void> change_free_artillery_promotion_count(const promotion *promotion, const int value)
@@ -256,17 +201,7 @@ public:
 		return this->free_warship_promotion_counts;
 	}
 
-	int get_free_warship_promotion_count(const promotion *promotion) const
-	{
-		const auto find_iterator = this->free_warship_promotion_counts.find(promotion);
-
-		if (find_iterator != this->free_warship_promotion_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_warship_promotion_count(const promotion *promotion) const;
 	[[nodiscard]] QCoro::Task<void> set_free_warship_promotion_count(const promotion *promotion, const int value);
 
 	[[nodiscard]] QCoro::Task<void> change_free_warship_promotion_count(const promotion *promotion, const int value)

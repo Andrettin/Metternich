@@ -444,18 +444,7 @@ public:
 	}
 
 	QVariantList get_attribute_values_qvariant_list() const;
-
-	const decimillesimal_int &get_attribute_value(const domain_attribute *attribute) const
-	{
-		const auto find_iterator = this->attribute_values.find(attribute);
-		if (find_iterator != this->attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
+	const decimillesimal_int &get_attribute_value(const domain_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_attribute_value(const domain_attribute *attribute, const decimillesimal_int &change);
 	bool do_attribute_check(const domain_attribute *attribute, const int roll_modifier, int *roll_result_output = nullptr) const;
 	int get_attribute_check_chance(const domain_attribute *attribute, const int roll_modifier) const;
@@ -467,17 +456,7 @@ public:
 	}
 
 	QVariantList get_site_attribute_values_qvariant_list() const;
-
-	int get_site_attribute_value(const site_attribute *attribute) const
-	{
-		const auto find_iterator = this->site_attribute_values.find(attribute);
-		if (find_iterator != this->site_attribute_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_site_attribute_value(const site_attribute *attribute) const;
 	[[nodiscard]] QCoro::Task<void> change_site_attribute_value(const site_attribute *attribute, const int change);
 
 	const centesimal_int &get_consumption() const
@@ -616,16 +595,7 @@ public:
 	bool has_building(const building_type *building) const;
 	bool has_building_or_better(const building_type *building) const;
 
-	int get_holding_building_count(const building_type *building) const
-	{
-		const auto find_iterator = this->holding_building_counts.find(building);
-
-		if (find_iterator != this->holding_building_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_holding_building_count(const building_type *building) const;
 
 	Q_INVOKABLE int get_holding_building_count(metternich::building_type *building) const
 	{
@@ -705,17 +675,7 @@ public:
 
 	Q_INVOKABLE bool can_gain_civilian_unit(const metternich::civilian_unit_type *civilian_unit_type) const;
 
-	Q_INVOKABLE int get_civilian_unit_recruitment_count(const metternich::civilian_unit_type *civilian_unit_type) const
-	{
-		const auto find_iterator = this->civilian_unit_recruitment_counts.find(civilian_unit_type);
-
-		if (find_iterator != this->civilian_unit_recruitment_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE int get_civilian_unit_recruitment_count(const metternich::civilian_unit_type *civilian_unit_type) const;
 	void change_civilian_unit_recruitment_count(const civilian_unit_type *civilian_unit_type, const int change, const bool change_input_storage = true);
 	Q_INVOKABLE bool can_increase_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type) const;
 	Q_INVOKABLE void increase_civilian_unit_recruitment(const metternich::civilian_unit_type *civilian_unit_type);
@@ -740,18 +700,7 @@ public:
 		}
 	}
 
-	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const
-	{
-		const auto find_iterator = this->population_type_modifier_multipliers.find(type);
-
-		if (find_iterator != this->population_type_modifier_multipliers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int one(1);
-		return one;
-	}
-
+	Q_INVOKABLE const centesimal_int &get_population_type_modifier_multiplier(const population_type *type) const;
 	[[nodiscard]] QCoro::Task<void> set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value);
 
 	[[nodiscard]] QCoro::Task<void> change_population_type_modifier_multiplier(const population_type *type, const centesimal_int &change)
@@ -769,17 +718,7 @@ public:
 		this->building_cost_efficiency_modifier += change;
 	}
 
-	int get_building_class_cost_efficiency_modifier(const building_class *building_class) const
-	{
-		const auto find_iterator = this->building_class_cost_efficiency_modifiers.find(building_class);
-
-		if (find_iterator != this->building_class_cost_efficiency_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_building_class_cost_efficiency_modifier(const building_class *building_class) const;
 	void set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value);
 
 	void change_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)
@@ -847,17 +786,7 @@ public:
 		return this->free_building_class_counts;
 	}
 
-	int get_free_building_class_count(const building_class *building_class) const
-	{
-		const auto find_iterator = this->free_building_class_counts.find(building_class);
-
-		if (find_iterator != this->free_building_class_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_building_class_count(const building_class *building_class) const;
 	[[nodiscard]] QCoro::Task<void> set_free_building_class_count(const building_class *building_class, const int value);
 
 	[[nodiscard]] QCoro::Task<void> change_free_building_class_count(const building_class *building_class, const int value)

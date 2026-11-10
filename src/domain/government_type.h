@@ -115,16 +115,7 @@ public:
 		return this->default_laws;
 	}
 
-	const law *get_default_law(const law_group *group) const
-	{
-		const auto find_iterator = this->default_laws.find(group);
-
-		if (find_iterator != this->default_laws.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	const law *get_default_law(const law_group *group) const;
 
 	const technology *get_required_technology() const
 	{

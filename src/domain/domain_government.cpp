@@ -129,6 +129,11 @@ QVariantList domain_government::get_laws_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_laws());
 }
 
+const law *domain_government::get_law(const law_group *law_group) const
+{
+	return archimedes::map::get_or_default(this->get_laws(), law_group);
+}
+
 QCoro::Task<void> domain_government::set_law(const law_group *law_group, const law *law)
 {
 	assert_throw(law_group != nullptr);
@@ -488,6 +493,11 @@ QVariantList domain_government::get_office_holders_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_office_holders());
 }
 
+const character *domain_government::get_office_holder(const office *office) const
+{
+	return archimedes::map::get_or_default(this->office_holders, office);
+}
+
 QCoro::Task<void> domain_government::set_office_holder(const office *office, const character *character)
 {
 	assert_throw(office != nullptr);
@@ -579,6 +589,11 @@ QCoro::Task<void> domain_government::set_office_holder(const office *office, con
 QVariantList domain_government::get_appointed_office_holders_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_appointed_office_holders());
+}
+
+const character *domain_government::get_appointed_office_holder(const office *office) const
+{
+	return archimedes::map::get_or_default(this->appointed_office_holders, office);
 }
 
 void domain_government::set_appointed_office_holder(const office *office, const character *character)

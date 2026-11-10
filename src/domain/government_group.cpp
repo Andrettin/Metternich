@@ -8,6 +8,7 @@
 #include "domain/government_type.h"
 #include "domain/office.h"
 #include "util/gender.h"
+#include "util/map_util.h"
 #include "util/string_util.h"
 
 namespace metternich {
@@ -41,12 +42,7 @@ const std::string &government_group::get_title_name(const domain_tier tier) cons
 
 const std::string &government_group::get_site_title_name(const int tier) const
 {
-	const auto find_iterator = this->site_title_names.find(tier);
-	if (find_iterator != this->site_title_names.end()) {
-		return find_iterator->second;
-	}
-
-	return string::empty_str;
+	return archimedes::map::get_or_default(this->site_title_names, tier, string::empty_str);
 }
 
 const std::string &government_group::get_office_title_name(const metternich::office *office, const domain_tier tier, const gender gender) const

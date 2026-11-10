@@ -137,18 +137,7 @@ public:
 		this->technology_cost_modifier += change;
 	}
 
-	const centesimal_int &get_technology_category_cost_modifier(const technology_category *category) const
-	{
-		const auto find_iterator = this->technology_category_cost_modifiers.find(category);
-
-		if (find_iterator != this->technology_category_cost_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_technology_category_cost_modifier(const technology_category *category) const;
 	void set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value);
 
 	void change_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
@@ -156,18 +145,7 @@ public:
 		this->set_technology_category_cost_modifier(category, this->get_technology_category_cost_modifier(category) + value);
 	}
 
-	const centesimal_int &get_technology_subcategory_cost_modifier(const technology_subcategory *subcategory) const
-	{
-		const auto find_iterator = this->technology_subcategory_cost_modifiers.find(subcategory);
-
-		if (find_iterator != this->technology_subcategory_cost_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_technology_subcategory_cost_modifier(const technology_subcategory *subcategory) const;
 	void set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value);
 
 	void change_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
@@ -187,17 +165,7 @@ public:
 		co_await this->set_gain_technologies_known_by_others_count(this->get_gain_technologies_known_by_others_count() + value);
 	}
 
-	int64_t get_technology_category_quarterly_research(const technology_category *category) const
-	{
-		const auto find_iterator = this->technology_category_quarterly_researches.find(category);
-
-		if (find_iterator != this->technology_category_quarterly_researches.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_technology_category_quarterly_research(const technology_category *category) const;
 	void set_technology_category_quarterly_research(const technology_category *category, const int64_t value);
 
 	void change_technology_category_quarterly_research(const technology_category *category, const int64_t value)

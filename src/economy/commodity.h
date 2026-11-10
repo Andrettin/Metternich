@@ -62,34 +62,14 @@ public:
 		return commodity::food_type_commodities;
 	}
 
-	static const std::vector<const commodity *> &get_food_type_commodities(const food_type food_type)
-	{
-		const auto find_iterator = commodity::food_type_commodities.find(food_type);
-
-		if (find_iterator != commodity::food_type_commodities.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<const commodity *> empty_vector;
-		return empty_vector;
-	}
+	static const std::vector<const commodity *> &get_food_type_commodities(const food_type food_type);
 
 	static const std::map<luxury_type, std::vector<const commodity *>> &get_luxury_type_commodities()
 	{
 		return commodity::luxury_type_commodities;
 	}
 
-	static const std::vector<const commodity *> &get_luxury_type_commodities(const luxury_type luxury_type)
-	{
-		const auto find_iterator = commodity::luxury_type_commodities.find(luxury_type);
-
-		if (find_iterator != commodity::luxury_type_commodities.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<const commodity *> empty_vector;
-		return empty_vector;
-	}
+	static const std::vector<const commodity *> &get_luxury_type_commodities(const luxury_type luxury_type);
 
 	static bool commodity_price_compare(const commodity *lhs, const commodity *rhs);
 

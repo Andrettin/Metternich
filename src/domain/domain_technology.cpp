@@ -961,6 +961,12 @@ QCoro::Task<void> domain_technology::gain_technologies_known_by_others()
 	}
 }
 
+const centesimal_int &domain_technology::get_technology_category_cost_modifier(const technology_category *category) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->technology_category_cost_modifiers, category, zero);
+}
+
 void domain_technology::set_technology_category_cost_modifier(const technology_category *category, const centesimal_int &value)
 {
 	if (value == this->get_technology_category_cost_modifier(category)) {
@@ -972,6 +978,12 @@ void domain_technology::set_technology_category_cost_modifier(const technology_c
 	} else {
 		this->technology_category_cost_modifiers[category] = value;
 	}
+}
+
+const centesimal_int &domain_technology::get_technology_subcategory_cost_modifier(const technology_subcategory *subcategory) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->technology_subcategory_cost_modifiers, subcategory, zero);
 }
 
 void domain_technology::set_technology_subcategory_cost_modifier(const technology_subcategory *subcategory, const centesimal_int &value)
@@ -1001,6 +1013,11 @@ QCoro::Task<void> domain_technology::set_gain_technologies_known_by_others_count
 	if (old_value == 0) {
 		co_await this->gain_technologies_known_by_others();
 	}
+}
+
+int64_t domain_technology::get_technology_category_quarterly_research(const technology_category *category) const
+{
+	return archimedes::map::get_or_default(this->technology_category_quarterly_researches, category);
 }
 
 void domain_technology::set_technology_category_quarterly_research(const technology_category *category, const int64_t value)

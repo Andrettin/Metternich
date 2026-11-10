@@ -2379,6 +2379,12 @@ QVariantList domain_game_data::get_attribute_values_qvariant_list() const
 	return archimedes::map::to_qvariant_list(attribute_values_int_map);
 }
 
+const decimillesimal_int &domain_game_data::get_attribute_value(const domain_attribute *attribute) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->attribute_values, attribute, zero);
+}
+
 QCoro::Task<void> domain_game_data::change_attribute_value(const domain_attribute *attribute, const decimillesimal_int &change)
 {
 	if (change == 0) {
@@ -2472,6 +2478,11 @@ int domain_game_data::get_attribute_check_control_modifier() const
 QVariantList domain_game_data::get_site_attribute_values_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_site_attribute_values());
+}
+
+int domain_game_data::get_site_attribute_value(const site_attribute *attribute) const
+{
+	return archimedes::map::get_or_default(this->site_attribute_values, attribute);
 }
 
 QCoro::Task<void> domain_game_data::change_site_attribute_value(const site_attribute *attribute, const int change)
@@ -2787,6 +2798,11 @@ bool domain_game_data::has_building_or_better(const building_type *building) con
 	}
 
 	return false;
+}
+
+int domain_game_data::get_holding_building_count(const building_type *building) const
+{
+	return archimedes::map::get_or_default(this->holding_building_counts, building);
 }
 
 QCoro::Task<void> domain_game_data::change_holding_building_count(const building_type *building, const int change)
@@ -3276,6 +3292,11 @@ bool domain_game_data::can_gain_civilian_unit(const civilian_unit_type *civilian
 	return true;
 }
 
+int domain_game_data::get_civilian_unit_recruitment_count(const metternich::civilian_unit_type *civilian_unit_type) const
+{
+	return archimedes::map::get_or_default(this->civilian_unit_recruitment_counts, civilian_unit_type);
+}
+
 void domain_game_data::change_civilian_unit_recruitment_count(const civilian_unit_type *civilian_unit_type, const int change, const bool change_input_storage)
 {
 	if (change == 0) {
@@ -3349,6 +3370,12 @@ void domain_game_data::decrease_civilian_unit_recruitment(const civilian_unit_ty
 	}
 }
 
+const centesimal_int &domain_game_data::get_population_type_modifier_multiplier(const population_type *type) const
+{
+	static const centesimal_int one(1);
+	return archimedes::map::get_or_default(this->population_type_modifier_multipliers, type, one);
+}
+
 QCoro::Task<void> domain_game_data::set_population_type_modifier_multiplier(const population_type *type, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_population_type_modifier_multiplier(type);
@@ -3370,6 +3397,11 @@ QCoro::Task<void> domain_game_data::set_population_type_modifier_multiplier(cons
 
 	//type->get_domain_modifier()->apply(this->domain, -centesimal_int::min(population_type_count * old_value, max_modifier_multiplier));
 	//type->get_domain_modifier()->apply(this->domain, centesimal_int::min(population_type_count * value, max_modifier_multiplier));
+}
+
+int domain_game_data::get_building_class_cost_efficiency_modifier(const building_class *building_class) const
+{
+	return archimedes::map::get_or_default(this->building_class_cost_efficiency_modifiers, building_class);
 }
 
 void domain_game_data::set_building_class_cost_efficiency_modifier(const building_class *building_class, const int value)
@@ -3707,6 +3739,11 @@ QCoro::Task<bool> domain_game_data::check_active_journal_entries(const read_only
 	}
 
 	co_return changed;
+}
+
+int domain_game_data::get_free_building_class_count(const building_class *building_class) const
+{
+	return archimedes::map::get_or_default(this->free_building_class_counts, building_class);
 }
 
 QCoro::Task<void> domain_game_data::set_free_building_class_count(const building_class *building_class, const int value)

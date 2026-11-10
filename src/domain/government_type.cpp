@@ -16,6 +16,7 @@
 #include "script/modifier.h"
 #include "technology/technology.h"
 #include "util/gender.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
@@ -381,12 +382,7 @@ const std::string &government_type::get_title_name(const domain_tier tier) const
 
 const std::string &government_type::get_site_title_name(const int tier) const
 {
-	const auto find_iterator = this->site_title_names.find(tier);
-	if (find_iterator != this->site_title_names.end()) {
-		return find_iterator->second;
-	}
-
-	return this->get_group()->get_site_title_name(tier);
+	return archimedes::map::get_or_default(this->site_title_names, tier, this->get_group()->get_site_title_name(tier));
 }
 
 const std::string &government_type::get_office_title_name(const office *office, const domain_tier tier, const gender gender) const
@@ -417,6 +413,11 @@ bool government_type::is_holding_type_preferred(const holding_type *holding_type
 bool government_type::is_holding_type_allowed(const holding_type *holding_type) const
 {
 	return vector::contains(this->allowed_holding_types, holding_type);
+}
+
+const law *government_type::get_default_law(const law_group *group) const
+{
+	return archimedes::map::get_or_default(this->default_laws, group);
 }
 
 QString government_type::get_modifier_string(const metternich::domain *domain) const
