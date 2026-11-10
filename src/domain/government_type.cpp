@@ -382,7 +382,12 @@ const std::string &government_type::get_title_name(const domain_tier tier) const
 
 const std::string &government_type::get_site_title_name(const int tier) const
 {
-	return archimedes::map::get_or_default(this->site_title_names, tier, this->get_group()->get_site_title_name(tier));
+	const auto find_iterator = this->site_title_names.find(tier);
+	if (find_iterator != this->site_title_names.end()) {
+		return find_iterator->second;
+	}
+
+	return this->get_group()->get_site_title_name(tier);
 }
 
 const std::string &government_type::get_office_title_name(const office *office, const domain_tier tier, const gender gender) const
