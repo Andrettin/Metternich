@@ -19,6 +19,7 @@
 #include "unit/civilian_unit.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 #include "util/vector_random_util.h"
 
@@ -188,6 +189,22 @@ void domain_ai::assign_trade_orders()
 		domain_economy->set_default_min_commodity_storage(commodity);
 		domain_economy->set_default_max_commodity_storage(commodity);
 	}
+}
+
+int domain_ai::get_building_desire_modifier(const building_type *building) const
+{
+	return archimedes::map::get_or_default(this->building_desire_modifiers, building);
+}
+
+int domain_ai::get_holding_building_desire_modifier(const site *holding, const building_type *building) const
+{
+	const auto find_iterator = this->holding_building_desire_modifiers.find(holding);
+
+	if (find_iterator != this->holding_building_desire_modifiers.end()) {
+		return archimedes::map::get_or_default(find_iterator->second, building);
+	}
+
+	return 0;
 }
 
 }

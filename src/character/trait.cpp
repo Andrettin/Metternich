@@ -15,6 +15,7 @@
 #include "species/taxon.h"
 #include "ui/ui_defines.h"
 #include "util/gender.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/string_util.h"
 #include "util/vector_util.h"
@@ -176,6 +177,11 @@ const std::string &trait::get_name(const taxon_base *taxon, const gender gender)
 	}
 
 	return named_data_entry::get_name();
+}
+
+int trait::get_attribute_bonus(const character_attribute *attribute) const
+{
+	return archimedes::map::get_or_default(this->get_attribute_bonuses(), attribute);
 }
 
 std::string trait::get_modifier_string(const int multiplier, const bool single_line) const

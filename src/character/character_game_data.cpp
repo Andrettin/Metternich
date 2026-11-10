@@ -2366,6 +2366,11 @@ void character_game_data::set_reputation(const int reputation)
 	}
 }
 
+int character_game_data::get_stat_value(const character_stat *stat) const
+{
+	return archimedes::map::get_or_default(this->stat_values, stat);
+}
+
 QCoro::Task<void> character_game_data::change_stat_value(const character_stat *stat, const int change)
 {
 	if (change == 0) {
@@ -2576,12 +2581,7 @@ int character_game_data::get_attribute_check_chance(const character_attribute *a
 
 int character_game_data::get_exceptional_attribute_value(const character_attribute *attribute) const
 {
-	const auto find_iterator = this->exceptional_attribute_values.find(attribute);
-	if (find_iterator != this->exceptional_attribute_values.end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
+	return archimedes::map::get_or_default(this->exceptional_attribute_values, attribute);
 }
 
 QCoro::Task<void> character_game_data::change_exceptional_attribute_value(const character_attribute *attribute, const int change)
@@ -2932,6 +2932,11 @@ int character_game_data::get_armor_class_bonus() const
 	return this->get_stat_value(character_stat::armor_class.get());
 }
 
+int character_game_data::get_species_armor_class_bonus(const species *species) const
+{
+	return archimedes::map::get_or_default(this->species_armor_class_bonuses, species);
+}
+
 void character_game_data::change_species_armor_class_bonus(const species *species, const int change)
 {
 	if (change == 0) {
@@ -2952,6 +2957,11 @@ void character_game_data::change_species_armor_class_bonus(const species *specie
 int character_game_data::get_to_hit_bonus() const
 {
 	return this->get_stat_value(character_stat::to_hit.get());
+}
+
+int character_game_data::get_weapon_to_hit_bonus(const item_type *weapon_type) const
+{
+	return archimedes::map::get_or_default(this->weapon_to_hit_bonuses, weapon_type);
 }
 
 void character_game_data::change_weapon_to_hit_bonus(const item_type *weapon_type, const int change)
@@ -2991,6 +3001,11 @@ void character_game_data::set_damage_bonus(const int bonus)
 void character_game_data::change_damage_bonus(const int change)
 {
 	this->set_damage_bonus(this->get_damage_bonus() + change);
+}
+
+int character_game_data::get_weapon_damage_bonus(const item_type *weapon_type) const
+{
+	return archimedes::map::get_or_default(this->weapon_damage_bonuses, weapon_type);
 }
 
 void character_game_data::change_weapon_damage_bonus(const item_type *weapon_type, const int change)
@@ -3262,6 +3277,11 @@ void character_game_data::change_damage_reduction(const damage_reduction_type *t
 	if (game::get()->is_running()) {
 		emit damage_reductions_changed();
 	}
+}
+
+int character_game_data::get_trait_count(const trait *trait) const
+{
+	return archimedes::map::get_or_default(this->trait_counts, trait);
 }
 
 QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, const int change)
@@ -4096,12 +4116,7 @@ void character_game_data::change_learned_spell_count(const spell *spell, const i
 
 int character_game_data::get_spell_charges(const spell *spell) const
 {
-	const auto find_iterator = this->spell_charges.find(spell);
-	if (find_iterator != this->spell_charges.end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
+	return archimedes::map::get_or_default(this->spell_charges, spell);
 }
 
 void character_game_data::change_spell_charges(const spell *spell, const int change)
@@ -4123,12 +4138,7 @@ void character_game_data::change_spell_charges(const spell *spell, const int cha
 
 int character_game_data::get_max_spell_charges(const spell *spell) const
 {
-	const auto find_iterator = this->max_spell_charges.find(spell);
-	if (find_iterator != this->max_spell_charges.end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
+	return archimedes::map::get_or_default(this->max_spell_charges, spell);
 }
 
 void character_game_data::change_max_spell_charges(const spell *spell, const int change)
@@ -4576,6 +4586,12 @@ QCoro::Task<void> character_game_data::on_item_consumed_with_enchantment(const e
 	}
 }
 
+const std::vector<item *> &character_game_data::get_equipped_items(const item_slot *slot) const
+{
+	static const std::vector<item *> empty_vector;
+	return archimedes::map::get_or_default(this->equipped_items, slot, empty_vector);
+}
+
 const item *character_game_data::get_equipped_item(const item_slot *slot, const int slot_index) const
 {
 	const std::vector<item *> &equipped_items = this->get_equipped_items(slot);
@@ -4984,6 +5000,12 @@ bool character_game_data::can_craft_items() const
 	return !this->get_recipes().empty();
 }
 
+const centesimal_int &character_game_data::get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->commanded_military_unit_stat_modifiers, stat, zero);
+}
+
 void character_game_data::set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value)
 {
 	const centesimal_int old_value = this->get_commanded_military_unit_stat_modifier(stat);
@@ -4997,6 +5019,19 @@ void character_game_data::set_commanded_military_unit_stat_modifier(const milita
 	} else {
 		this->commanded_military_unit_stat_modifiers[stat] = value;
 	}
+}
+
+const centesimal_int &character_game_data::get_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
+{
+	const auto find_iterator = this->commanded_military_unit_type_stat_modifiers.find(type);
+
+	static constexpr centesimal_int zero;
+
+	if (find_iterator != this->commanded_military_unit_type_stat_modifiers.end()) {
+		return archimedes::map::get_or_default(find_iterator->second, stat, zero);
+	}
+
+	return zero;
 }
 
 void character_game_data::set_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value)
@@ -5021,6 +5056,12 @@ void character_game_data::set_commanded_military_unit_type_stat_modifier(const m
 QVariantList character_game_data::get_status_effects_qvariant_list() const
 {
 	return container::to_qvariant_list(archimedes::map::get_keys(this->status_effect_durations));
+}
+
+const std::chrono::seconds &character_game_data::get_status_effect_duration(const status_effect *status_effect) const
+{
+	static constexpr std::chrono::seconds zero = std::chrono::seconds(0);
+	return archimedes::map::get_or_default(this->status_effect_durations, status_effect, zero);
 }
 
 QCoro::Task<void> character_game_data::set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration)

@@ -182,17 +182,7 @@ public:
 
 	QVariantList get_commodity_storage_capacities_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_commodity_storage_capacity(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_storage_capacities.find(commodity);
-
-		if (find_iterator != this->commodity_storage_capacities.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE qint64 get_commodity_storage_capacity(const metternich::commodity *commodity) const;
 	[[nodiscard]] QCoro::Task<void> change_commodity_storage_capacity(const commodity *commodity, const int64_t change);
 
 	int64_t get_storage_capacity_for_commodity(const commodity *commodity) const;
@@ -205,18 +195,7 @@ public:
 
 	QVariantList get_commodity_inputs_qvariant_list() const;
 
-	const decimillesimal_int &get_commodity_input(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_inputs.find(commodity);
-
-		if (find_iterator != this->commodity_inputs.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
+	const decimillesimal_int &get_commodity_input(const commodity *commodity) const;
 	Q_INVOKABLE int get_commodity_input(const QString &commodity_identifier) const;
 	void change_commodity_input(const commodity *commodity, const decimillesimal_int &change, const bool change_input_storage);
 	bool can_change_commodity_input(const commodity *commodity, const decimillesimal_int &change) const;
@@ -229,18 +208,7 @@ public:
 
 	QVariantList get_commodity_outputs_qvariant_list() const;
 
-	const decimillesimal_int &get_commodity_output(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_outputs.find(commodity);
-
-		if (find_iterator != this->commodity_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
+	const decimillesimal_int &get_commodity_output(const commodity *commodity) const;
 	Q_INVOKABLE qint64 get_commodity_output_int(const metternich::commodity *commodity) const;
 	Q_INVOKABLE QString get_commodity_output_qstring(const metternich::commodity *commodity) const;
 	Q_INVOKABLE QString get_commodity_output_wealth_value_qstring(const metternich::commodity *commodity) const;
@@ -282,17 +250,7 @@ public:
 
 	QVariantList get_min_commodity_storages_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_min_commodity_storage(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->min_commodity_storages.find(commodity);
-
-		if (find_iterator != this->min_commodity_storages.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE qint64 get_min_commodity_storage(const metternich::commodity *commodity) const;
 	Q_INVOKABLE void set_min_commodity_storage(const metternich::commodity *commodity, const int64_t value);
 
 	Q_INVOKABLE void change_min_commodity_storage(const metternich::commodity *commodity, const int64_t change)
@@ -312,17 +270,7 @@ public:
 
 	QVariantList get_max_commodity_storages_qvariant_list() const;
 
-	Q_INVOKABLE qint64 get_max_commodity_storage(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->max_commodity_storages.find(commodity);
-
-		if (find_iterator != this->max_commodity_storages.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE qint64 get_max_commodity_storage(const metternich::commodity *commodity) const;
 	Q_INVOKABLE void set_max_commodity_storage(const metternich::commodity *commodity, const int64_t value);
 
 	Q_INVOKABLE void change_max_commodity_storage(const metternich::commodity *commodity, const int64_t change)
@@ -341,18 +289,7 @@ public:
 	}
 
 	QVariantList get_bids_qvariant_list() const;
-
-	const decimillesimal_int &get_bid(const commodity *commodity) const
-	{
-		const auto find_iterator = this->bids.find(commodity);
-
-		if (find_iterator != this->bids.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
+	const decimillesimal_int &get_bid(const commodity *commodity) const;
 
 	Q_INVOKABLE qint64 get_bid_int(const metternich::commodity *commodity) const
 	{
@@ -390,18 +327,7 @@ public:
 	}
 
 	QVariantList get_offers_qvariant_list() const;
-
-	const decimillesimal_int &get_offer(const commodity *commodity) const
-	{
-		const auto find_iterator = this->offers.find(commodity);
-
-		if (find_iterator != this->offers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
+	const decimillesimal_int &get_offer(const commodity *commodity) const;
 
 	Q_INVOKABLE qint64 get_offer_int(const metternich::commodity *commodity) const
 	{
@@ -441,16 +367,7 @@ public:
 		return this->commodity_needs;
 	}
 
-	int get_commodity_need(const metternich::commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_needs.find(commodity);
-
-		if (find_iterator != this->commodity_needs.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_commodity_need(const metternich::commodity *commodity) const;
 
 	void set_commodity_need(const metternich::commodity *commodity, const int value)
 	{
@@ -467,17 +384,7 @@ public:
 
 	void calculate_commodity_needs();
 	
-	int get_population_strata_tax_rate(const population_strata strata) const
-	{
-		const auto find_iterator = this->population_strata_tax_rates.find(strata);
-
-		if (find_iterator != this->population_strata_tax_rates.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_population_strata_tax_rate(const population_strata strata) const;
 	void set_population_strata_tax_rate(const population_strata strata, const int value);
 
 	void change_population_strata_tax_rate(const population_strata strata, const int change)
@@ -507,17 +414,7 @@ public:
 		return this->commodity_output_modifiers;
 	}
 
-	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_output_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
+	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const;
 
 	Q_INVOKABLE int get_commodity_output_modifier(metternich::commodity *commodity) const
 	{
@@ -537,18 +434,7 @@ public:
 		return this->capital_commodity_output_modifiers;
 	}
 
-	const centesimal_int &get_capital_commodity_output_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->capital_commodity_output_modifiers.find(commodity);
-
-		if (find_iterator != this->capital_commodity_output_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_capital_commodity_output_modifier(const commodity *commodity) const;
 	void set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value);
 
 	void change_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &change)
@@ -573,16 +459,7 @@ public:
 		return this->commodity_throughput_modifiers;
 	}
 
-	int get_commodity_throughput_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_throughput_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_commodity_throughput_modifier(const commodity *commodity) const;
 
 	Q_INVOKABLE int get_commodity_throughput_modifier(metternich::commodity *commodity) const
 	{
@@ -602,33 +479,8 @@ public:
 		return this->building_commodity_bonuses;
 	}
 
-	const commodity_map<int> &get_building_commodity_bonuses(const building_type *building) const
-	{
-		const auto find_iterator = this->building_commodity_bonuses.find(building);
-
-		if (find_iterator != this->building_commodity_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		static const commodity_map<int> empty_map;
-		return empty_map;
-	}
-
-	int get_building_commodity_bonus(const commodity *commodity, const building_type *building) const
-	{
-		const auto find_iterator = this->building_commodity_bonuses.find(building);
-
-		if (find_iterator != this->building_commodity_bonuses.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(commodity);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		return 0;
-	}
-
+	const commodity_map<int> &get_building_commodity_bonuses(const building_type *building) const;
+	int get_building_commodity_bonus(const commodity *commodity, const building_type *building) const;
 	void change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change);
 
 	const commodity_map<std::map<int, int>> &get_commodity_bonuses_for_tile_thresholds() const
@@ -636,21 +488,7 @@ public:
 		return this->commodity_bonuses_for_tile_thresholds;
 	}
 
-	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
-	{
-		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
-
-		if (find_iterator != this->commodity_bonuses_for_tile_thresholds.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(threshold);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		return 0;
-	}
-
+	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const;
 	void set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value);
 
 	void change_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
@@ -663,19 +501,7 @@ public:
 		return this->commodity_bonuses_per_population;
 	}
 
-	const centesimal_int &get_commodity_bonus_per_population(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_bonuses_per_population.find(commodity);
-
-		if (find_iterator != this->commodity_bonuses_per_population.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-
-		return zero;
-	}
-
+	const centesimal_int &get_commodity_bonus_per_population(const commodity *commodity) const;
 	void change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
 
 	const commodity_map<centesimal_int> &get_holding_commodity_bonuses() const
@@ -683,19 +509,7 @@ public:
 		return this->holding_commodity_bonuses;
 	}
 
-	const centesimal_int &get_holding_commodity_bonus(const commodity *commodity) const
-	{
-		const auto find_iterator = this->holding_commodity_bonuses.find(commodity);
-
-		if (find_iterator != this->holding_commodity_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-
-		return zero;
-	}
-
+	const centesimal_int &get_holding_commodity_bonus(const commodity *commodity) const;
 	void change_holding_commodity_bonus(const commodity *commodity, const centesimal_int &change);
 
 	const commodity_map<centesimal_int> &get_capital_commodity_bonuses() const
@@ -703,19 +517,7 @@ public:
 		return this->capital_commodity_bonuses;
 	}
 
-	const centesimal_int &get_capital_commodity_bonus(const commodity *commodity) const
-	{
-		const auto find_iterator = this->capital_commodity_bonuses.find(commodity);
-
-		if (find_iterator != this->capital_commodity_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-
-		return zero;
-	}
-
+	const centesimal_int &get_capital_commodity_bonus(const commodity *commodity) const;
 	void change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change);
 
 	const commodity_map<centesimal_int> &get_capital_commodity_bonuses_per_population() const
@@ -723,19 +525,7 @@ public:
 		return this->capital_commodity_bonuses_per_population;
 	}
 
-	const centesimal_int &get_capital_commodity_bonus_per_population(const commodity *commodity) const
-	{
-		const auto find_iterator = this->capital_commodity_bonuses_per_population.find(commodity);
-
-		if (find_iterator != this->capital_commodity_bonuses_per_population.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-
-		return zero;
-	}
-
+	const centesimal_int &get_capital_commodity_bonus_per_population(const commodity *commodity) const;
 	void change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change);
 
 signals:

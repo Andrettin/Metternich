@@ -22,16 +22,7 @@ public:
 	virtual void process_gsml_property(const gsml_property &property) override;
 	virtual void check() const override;
 
-	const std::variant<int, dice> &get_value_variant_for_level(const int level) const
-	{
-		const auto find_iterator = this->value_per_level.find(level);
-		if (find_iterator != this->value_per_level.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::variant<int, dice> zero = 0;
-		return zero;
-	}
+	const std::variant<int, dice> &get_value_variant_for_level(const int level) const;
 
 	int get_value_for_level(const int level) const
 	{

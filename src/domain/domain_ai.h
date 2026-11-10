@@ -39,16 +39,7 @@ public:
 
 	void assign_trade_orders();
 
-	int get_building_desire_modifier(const building_type *building) const
-	{
-		const auto find_iterator = this->building_desire_modifiers.find(building);
-
-		if (find_iterator != this->building_desire_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_building_desire_modifier(const building_type *building) const;
 
 	void set_building_desire_modifier(const building_type *building, const int value)
 	{
@@ -68,20 +59,7 @@ public:
 		this->set_building_desire_modifier(building, this->get_building_desire_modifier(building) + value);
 	}
 
-	int get_holding_building_desire_modifier(const site *holding, const building_type *building) const
-	{
-		const auto find_iterator = this->holding_building_desire_modifiers.find(holding);
-
-		if (find_iterator != this->holding_building_desire_modifiers.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(building);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		return 0;
-	}
+	int get_holding_building_desire_modifier(const site *holding, const building_type *building) const;
 
 	void set_holding_building_desire_modifier(const site *holding, const building_type *building, const int value)
 	{

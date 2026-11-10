@@ -135,31 +135,11 @@ public:
 
 	QVariantList get_consulates_qvariant_list() const;
 
-	const consulate *get_consulate(const metternich::domain *other_domain) const
-	{
-		const auto find_iterator = this->consulates.find(other_domain);
-
-		if (find_iterator != this->consulates.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
-
+	const consulate *get_consulate(const metternich::domain *other_domain) const;
 	void set_consulate(const metternich::domain *other_domain, const consulate *consulate);
 
 	int get_opinion_of(const metternich::domain *other) const;
-
-	int get_base_opinion(const metternich::domain *other) const
-	{
-		const auto find_iterator = this->base_opinions.find(other);
-		if (find_iterator != this->base_opinions.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_base_opinion(const metternich::domain *other) const;
 	void set_base_opinion(const metternich::domain *other, const int opinion);
 
 	void change_base_opinion(const metternich::domain *other, const int change)
@@ -167,18 +147,7 @@ public:
 		this->set_base_opinion(other, this->get_base_opinion(other) + change);
 	}
 
-	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::domain *other) const
-	{
-		static const opinion_modifier_map<int> empty_map;
-
-		const auto find_iterator = this->opinion_modifiers.find(other);
-		if (find_iterator != this->opinion_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_map;
-	}
-
+	const opinion_modifier_map<int> &get_opinion_modifiers_for(const metternich::domain *other) const;
 	void add_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier, const int duration);
 	void remove_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier);
 	void decrement_opinion_modifiers();
@@ -264,17 +233,7 @@ public:
 		this->diplomatic_penalty_for_expansion_modifier += change;
 	}
 
-	int get_free_consulate_count(const consulate *consulate) const
-	{
-		const auto find_iterator = this->free_consulate_counts.find(consulate);
-
-		if (find_iterator != this->free_consulate_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_free_consulate_count(const consulate *consulate) const;
 	void set_free_consulate_count(const consulate *consulate, const int value);
 
 	void change_free_consulate_count(const consulate *consulate, const int value)

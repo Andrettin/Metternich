@@ -8,6 +8,7 @@
 #include "database/gsml_data.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/challenge_rating_modifier_effect.h"
+#include "util/map_util.h"
 #include "util/vector_util.h"
 
 namespace metternich {
@@ -45,6 +46,11 @@ const std::unique_ptr<const character_stat> character_stat::to_hit = []() {
 	to_hit->affect_military_unit_stats = true;
 	return to_hit;
 }();
+
+const character_stat *character_stat::try_get_stat(const std::string &identifier)
+{
+	return archimedes::map::get_or_default(character_stat::stats_by_identifier, identifier);
+}
 
 character_stat::character_stat(const std::string &identifier) : named_data_entry(identifier)
 {

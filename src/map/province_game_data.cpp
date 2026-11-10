@@ -2227,7 +2227,7 @@ QCoro::Task<void> province_game_data::set_population_type_modifier_multiplier(co
 
 int64_t province_game_data::get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
 {
-	return archimedes::map::get_or_default(this->employment_capacity_modifiers, capacity_type, 0);
+	return archimedes::map::get_or_default(this->employment_capacity_modifiers, capacity_type);
 }
 
 void province_game_data::set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier)
@@ -2310,7 +2310,7 @@ QVariantList province_game_data::get_military_unit_category_counts_qvariant_list
 
 int province_game_data::get_military_unit_category_count(const metternich::military_unit_category category) const
 {
-	return archimedes::map::get_or_default(this->military_unit_category_counts, category, 0);
+	return archimedes::map::get_or_default(this->military_unit_category_counts, category);
 }
 
 void province_game_data::change_military_unit_category_count(const military_unit_category category, const int change)
@@ -2511,7 +2511,7 @@ QVariantList province_game_data::get_military_unit_recruitment_counts_qvariant_l
 
 int province_game_data::get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const
 {
-	return archimedes::map::get_or_default(this->military_unit_recruitment_counts, military_unit_type, 0);
+	return archimedes::map::get_or_default(this->military_unit_recruitment_counts, military_unit_type);
 }
 
 void province_game_data::change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage)
@@ -2691,7 +2691,7 @@ const centesimal_int &province_game_data::get_commodity_output_modifier(const co
 
 int province_game_data::get_commodity_throughput_modifier(const commodity *commodity) const
 {
-	return archimedes::map::get_or_default(this->commodity_throughput_modifiers, commodity, 0);
+	return archimedes::map::get_or_default(this->commodity_throughput_modifiers, commodity);
 }
 
 void province_game_data::set_commodity_throughput_modifier(const commodity *commodity, const int value)
@@ -2718,7 +2718,7 @@ const std::map<int, int> &province_game_data::get_commodity_bonus_for_tile_thres
 int province_game_data::get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
 {
 	const std::map<int, int> &threshold_map = this->get_commodity_bonus_for_tile_threshold_map(commodity);
-	return archimedes::map::get_or_default(threshold_map, threshold, 0);
+	return archimedes::map::get_or_default(threshold_map, threshold);
 }
 
 void province_game_data::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
@@ -2845,7 +2845,7 @@ void province_game_data::set_trade_efficiency_modifier(const int value)
 
 int province_game_data::get_technology_category_spread_modifier(const technology_category *category) const
 {
-	return archimedes::map::get_or_default(this->technology_category_spread_modifiers, category, 0);
+	return archimedes::map::get_or_default(this->technology_category_spread_modifiers, category);
 }
 
 bool province_game_data::can_produce_commodity(const commodity *commodity) const

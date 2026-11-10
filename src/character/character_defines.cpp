@@ -8,6 +8,7 @@
 #include "religion/divine_rank.h"
 #include "script/modifier.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
 
 namespace metternich {
@@ -141,12 +142,7 @@ void character_defines::check() const
 
 int character_defines::get_bloodline_strength_category_weight(const bloodline_strength_category category) const
 {
-	const auto find_iterator = this->bloodline_strength_category_weights.find(category);
-	if (find_iterator != this->bloodline_strength_category_weights.end()) {
-		return find_iterator->second;
-	}
-
-	return 0;
+	return archimedes::map::get_or_default(this->bloodline_strength_category_weights, category);
 }
 
 const std::vector<bloodline_strength_category> &character_defines::get_weighted_bloodline_strength_categories() const

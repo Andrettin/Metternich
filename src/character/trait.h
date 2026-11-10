@@ -116,15 +116,7 @@ public:
 		return this->attribute_bonuses;
 	}
 
-	int get_attribute_bonus(const character_attribute *attribute) const
-	{
-		const auto find_iterator = this->get_attribute_bonuses().find(attribute);
-		if (find_iterator != this->get_attribute_bonuses().end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_attribute_bonus(const character_attribute *attribute) const;
 
 	const and_condition<character> *get_conditions() const
 	{

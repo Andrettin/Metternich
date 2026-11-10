@@ -384,7 +384,6 @@ public:
 	int get_rank_level(const std::string &rank) const
 	{
 		const auto find_iterator = this->rank_levels.find(rank);
-
 		if (find_iterator != this->rank_levels.end()) {
 			return find_iterator->second;
 		}

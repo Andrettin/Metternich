@@ -368,16 +368,7 @@ public:
 		return this->stat_values;
 	}
 
-	int get_stat_value(const character_stat *stat) const
-	{
-		const auto find_iterator = this->stat_values.find(stat);
-		if (find_iterator != this->stat_values.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_stat_value(const character_stat *stat) const;
 	[[nodiscard]] QCoro::Task<void> change_stat_value(const character_stat *stat, const int change);
 	[[nodiscard]] QCoro::Task<void> change_typed_stat_value(const character_stat *stat, const int change);
 	int get_effective_stat_value(const character_stat *stat) const;
@@ -533,16 +524,7 @@ public:
 		return this->species_armor_class_bonuses;
 	}
 
-	int get_species_armor_class_bonus(const species *species) const
-	{
-		const auto find_iterator = this->species_armor_class_bonuses.find(species);
-		if (find_iterator != this->species_armor_class_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_species_armor_class_bonus(const species *species) const;
 	void change_species_armor_class_bonus(const species *species, const int change);
 
 	int get_to_hit_bonus() const;
@@ -552,16 +534,7 @@ public:
 		return this->weapon_to_hit_bonuses;
 	}
 
-	int get_weapon_to_hit_bonus(const item_type *weapon_type) const
-	{
-		const auto find_iterator = this->weapon_to_hit_bonuses.find(weapon_type);
-		if (find_iterator != this->weapon_to_hit_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_weapon_to_hit_bonus(const item_type *weapon_type) const;
 	void change_weapon_to_hit_bonus(const item_type *weapon_type, const int change);
 
 	int get_damage_bonus() const
@@ -577,16 +550,7 @@ public:
 		return this->weapon_damage_bonuses;
 	}
 
-	int get_weapon_damage_bonus(const item_type *weapon_type) const
-	{
-		const auto find_iterator = this->weapon_damage_bonuses.find(weapon_type);
-		if (find_iterator != this->weapon_damage_bonuses.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_weapon_damage_bonus(const item_type *weapon_type) const;
 	void change_weapon_damage_bonus(const item_type *weapon_type, const int change);
 
 	int get_min_damage(const creature_size *target_size) const;
@@ -626,17 +590,7 @@ public:
 		return this->trait_counts;
 	}
 
-	int get_trait_count(const trait *trait) const
-	{
-		const auto find_iterator = this->trait_counts.find(trait);
-
-		if (find_iterator != this->trait_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_trait_count(const trait *trait) const;
 	[[nodiscard]] QCoro::Task<void> change_trait_count(const trait *trait, const int change);
 
 	QVariantList get_traits_qvariant_list() const;
@@ -831,18 +785,7 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_item_consumed(const item *item);
 	[[nodiscard]] QCoro::Task<void> on_item_consumed_with_enchantment(const enchantment *enchantment);
 
-	const std::vector<item *> &get_equipped_items(const item_slot *slot) const
-	{
-		const auto find_iterator = this->equipped_items.find(slot);
-
-		if (find_iterator != this->equipped_items.end()) {
-			return find_iterator->second;
-		}
-
-		static const std::vector<item *> empty_vector;
-		return empty_vector;
-	}
-
+	const std::vector<item *> &get_equipped_items(const item_slot *slot) const;
 	Q_INVOKABLE const metternich::item *get_equipped_item(const metternich::item_slot *slot, const int slot_index) const;
 
 	int get_equipped_item_count(const item_slot *slot) const
@@ -900,18 +843,7 @@ public:
 
 	bool can_craft_items() const;
 
-	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->commanded_military_unit_stat_modifiers.find(stat);
-
-		if (find_iterator != this->commanded_military_unit_stat_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_commanded_military_unit_stat_modifier(const military_unit_stat stat) const;
 	void set_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &value);
 
 	void change_commanded_military_unit_stat_modifier(const military_unit_stat stat, const centesimal_int &change)
@@ -919,22 +851,7 @@ public:
 		this->set_commanded_military_unit_stat_modifier(stat, this->get_commanded_military_unit_stat_modifier(stat) + change);
 	}
 
-	const centesimal_int &get_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const
-	{
-		const auto find_iterator = this->commanded_military_unit_type_stat_modifiers.find(type);
-
-		if (find_iterator != this->commanded_military_unit_type_stat_modifiers.end()) {
-			const auto sub_find_iterator = find_iterator->second.find(stat);
-
-			if (sub_find_iterator != find_iterator->second.end()) {
-				return sub_find_iterator->second;
-			}
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat) const;
 	void set_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &value);
 
 	void change_commanded_military_unit_type_stat_modifier(const military_unit_type *type, const military_unit_stat stat, const centesimal_int &change)
@@ -975,18 +892,7 @@ public:
 		return this->status_effect_durations;
 	}
 
-	const std::chrono::seconds &get_status_effect_duration(const status_effect *status_effect) const
-	{
-		const auto find_iterator = this->status_effect_durations.find(status_effect);
-
-		if (find_iterator != this->status_effect_durations.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr std::chrono::seconds zero = std::chrono::seconds(0);
-		return zero;
-	}
-
+	const std::chrono::seconds &get_status_effect_duration(const status_effect *status_effect) const;
 	[[nodiscard]] QCoro::Task<void> set_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &duration);
 
 	[[nodiscard]] QCoro::Task<void> change_status_effect_duration(const status_effect *status_effect, const std::chrono::seconds &change)

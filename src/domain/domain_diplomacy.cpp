@@ -285,13 +285,7 @@ QCoro::Task<void> domain_diplomacy::add_known_domain(const metternich::domain *o
 
 diplomacy_state domain_diplomacy::get_diplomacy_state(const metternich::domain *other_domain) const
 {
-	const auto find_iterator = this->diplomacy_states.find(other_domain);
-
-	if (find_iterator != this->diplomacy_states.end()) {
-		return find_iterator->second;
-	}
-
-	return diplomacy_state::peace;
+	return archimedes::map::get_or_default(this->diplomacy_states, other_domain, diplomacy_state::peace);
 }
 
 QCoro::Task<void> domain_diplomacy::set_diplomacy_state(const metternich::domain *other_domain, const diplomacy_state state)
@@ -406,13 +400,7 @@ bool domain_diplomacy::can_attack(const metternich::domain *other_domain) const
 
 std::optional<diplomacy_state> domain_diplomacy::get_offered_diplomacy_state(const metternich::domain *other_domain) const
 {
-	const auto find_iterator = this->offered_diplomacy_states.find(other_domain);
-
-	if (find_iterator != this->offered_diplomacy_states.end()) {
-		return find_iterator->second;
-	}
-
-	return std::nullopt;
+	return archimedes::map::get_or_default(this->offered_diplomacy_states, other_domain);
 }
 
 void domain_diplomacy::set_offered_diplomacy_state(const metternich::domain *other_domain, const std::optional<diplomacy_state> &state)
@@ -437,6 +425,11 @@ void domain_diplomacy::set_offered_diplomacy_state(const metternich::domain *oth
 QVariantList domain_diplomacy::get_consulates_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->consulates);
+}
+
+const consulate *domain_diplomacy::get_consulate(const metternich::domain *other_domain) const
+{
+	return archimedes::map::get_or_default(this->consulates, other_domain);
 }
 
 void domain_diplomacy::set_consulate(const metternich::domain *other_domain, const consulate *consulate)
@@ -469,6 +462,11 @@ int domain_diplomacy::get_opinion_of(const metternich::domain *other) const
 	return opinion;
 }
 
+int domain_diplomacy::get_base_opinion(const metternich::domain *other) const
+{
+	return archimedes::map::get_or_default(this->base_opinions, other);
+}
+
 void domain_diplomacy::set_base_opinion(const metternich::domain *other, const int opinion)
 {
 	assert_throw(other != this->domain);
@@ -490,6 +488,12 @@ void domain_diplomacy::set_base_opinion(const metternich::domain *other, const i
 	} else {
 		this->base_opinions[other] = opinion;
 	}
+}
+
+const opinion_modifier_map<int> &domain_diplomacy::get_opinion_modifiers_for(const metternich::domain *other) const
+{
+	static const opinion_modifier_map<int> empty_map;
+	return archimedes::map::get_or_default(this->opinion_modifiers, other, empty_map);
 }
 
 void domain_diplomacy::add_opinion_modifier(const metternich::domain *other, const opinion_modifier *modifier, const int duration)
@@ -972,6 +976,11 @@ bool domain_diplomacy::can_declare_war_on(const metternich::domain *other_domain
 	}
 
 	return true;
+}
+
+int domain_diplomacy::get_free_consulate_count(const consulate *consulate) const
+{
+	return archimedes::map::get_or_default(this->free_consulate_counts, consulate);
 }
 
 void domain_diplomacy::set_free_consulate_count(const consulate *consulate, const int value)

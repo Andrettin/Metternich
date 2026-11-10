@@ -461,14 +461,8 @@ const decimillesimal_int &domain_economy::get_stored_commodity(const metternich:
 {
 	assert_throw(commodity != nullptr);
 
-	const auto find_iterator = this->stored_commodities.find(commodity);
-
-	if (find_iterator != this->stored_commodities.end()) {
-		return find_iterator->second;
-	}
-
 	static constexpr decimillesimal_int zero;
-	return zero;
+	return archimedes::map::get_or_default(this->stored_commodities, commodity, zero);
 }
 
 QString domain_economy::get_stored_commodity_qstring(const metternich::commodity *commodity) const
@@ -635,6 +629,11 @@ QVariantList domain_economy::get_commodity_storage_capacities_qvariant_list() co
 	return archimedes::map::to_qvariant_list(this->get_commodity_storage_capacities());
 }
 
+int64_t domain_economy::get_commodity_storage_capacity(const commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->commodity_storage_capacities, commodity);
+}
+
 QCoro::Task<void> domain_economy::change_commodity_storage_capacity(const commodity *commodity, const int64_t change)
 {
 	assert_throw(commodity->has_special_storage_capacity());
@@ -693,6 +692,12 @@ QCoro::Task<void> domain_economy::decrease_manpower_commodity_usage(const commod
 QVariantList domain_economy::get_commodity_inputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_inputs());
+}
+
+const decimillesimal_int &domain_economy::get_commodity_input(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_inputs, commodity, zero);
 }
 
 int domain_economy::get_commodity_input(const QString &commodity_identifier) const
@@ -799,6 +804,12 @@ QCoro::Task<void> domain_economy::decrease_commodity_input(const commodity *comm
 QVariantList domain_economy::get_commodity_outputs_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_commodity_outputs());
+}
+
+const decimillesimal_int &domain_economy::get_commodity_output(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_outputs, commodity, zero);
 }
 
 qint64 domain_economy::get_commodity_output_int(const commodity *commodity) const
@@ -962,6 +973,11 @@ QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_min_commodity_storages());
 }
 
+int64_t domain_economy::get_min_commodity_storage(const metternich::commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->min_commodity_storages, commodity);
+}
+
 void domain_economy::set_min_commodity_storage(const commodity *commodity, const int64_t value)
 {
 	if (value == this->get_min_commodity_storage(commodity)) {
@@ -982,6 +998,11 @@ void domain_economy::set_min_commodity_storage(const commodity *commodity, const
 QVariantList domain_economy::get_max_commodity_storages_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_max_commodity_storages());
+}
+
+int64_t domain_economy::get_max_commodity_storage(const metternich::commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->max_commodity_storages, commodity);
 }
 
 void domain_economy::set_max_commodity_storage(const commodity *commodity, const int64_t value)
@@ -1005,6 +1026,12 @@ void domain_economy::set_max_commodity_storage(const commodity *commodity, const
 QVariantList domain_economy::get_bids_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_bids());
+}
+
+const decimillesimal_int &domain_economy::get_bid(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->bids, commodity, zero);
 }
 
 void domain_economy::set_bid(const commodity *commodity, const decimillesimal_int &value)
@@ -1043,6 +1070,12 @@ void domain_economy::prepare_bids()
 QVariantList domain_economy::get_offers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_offers());
+}
+
+const decimillesimal_int &domain_economy::get_offer(const commodity *commodity) const
+{
+	static constexpr decimillesimal_int zero;
+	return archimedes::map::get_or_default(this->offers, commodity, zero);
 }
 
 void domain_economy::set_offer(const commodity *commodity, const decimillesimal_int &value)
@@ -1146,9 +1179,19 @@ void domain_economy::do_sale(const metternich::domain *other_domain, const commo
 	}
 }
 
+int domain_economy::get_commodity_need(const metternich::commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->commodity_needs, commodity);
+}
+
 void domain_economy::calculate_commodity_needs()
 {
 	this->commodity_needs.clear();
+}
+
+int domain_economy::get_population_strata_tax_rate(const population_strata strata) const
+{
+	return archimedes::map::get_or_default(this->population_strata_tax_rates, strata);
 }
 
 void domain_economy::set_population_strata_tax_rate(const population_strata strata, const int value)
@@ -1182,6 +1225,12 @@ void domain_economy::set_output_modifier(const centesimal_int &value)
 	}
 }
 
+const centesimal_int &domain_economy::get_commodity_output_modifier(const commodity *commodity) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_output_modifiers, commodity, zero);
+}
+
 void domain_economy::set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 {
 	if (value == this->get_commodity_output_modifier(commodity)) {
@@ -1195,6 +1244,12 @@ void domain_economy::set_commodity_output_modifier(const commodity *commodity, c
 	}
 
 	this->calculate_site_commodity_output(commodity);
+}
+
+const centesimal_int &domain_economy::get_capital_commodity_output_modifier(const commodity *commodity) const
+{
+	static constexpr centesimal_int zero;
+	return archimedes::map::get_or_default(this->capital_commodity_output_modifiers, commodity, zero);
 }
 
 void domain_economy::set_capital_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
@@ -1227,6 +1282,11 @@ void domain_economy::set_throughput_modifier(const int value)
 	}
 }
 
+int domain_economy::get_commodity_throughput_modifier(const commodity *commodity) const
+{
+	return archimedes::map::get_or_default(this->commodity_throughput_modifiers, commodity);
+}
+
 void domain_economy::set_commodity_throughput_modifier(const commodity *commodity, const int value)
 {
 	if (value == this->get_commodity_throughput_modifier(commodity)) {
@@ -1240,6 +1300,17 @@ void domain_economy::set_commodity_throughput_modifier(const commodity *commodit
 	}
 
 	this->calculate_site_commodity_output(commodity);
+}
+
+const commodity_map<int> &domain_economy::get_building_commodity_bonuses(const building_type *building) const
+{
+	static const commodity_map<int> empty_map;
+	return archimedes::map::get_or_default(this->building_commodity_bonuses, building, empty_map);
+}
+
+int domain_economy::get_building_commodity_bonus(const commodity *commodity, const building_type *building) const
+{
+	return archimedes::map::get_or_default(this->get_building_commodity_bonuses(building), commodity);
 }
 
 void domain_economy::change_building_commodity_bonus(const building_type *building, const commodity *commodity, const int change)
@@ -1273,6 +1344,17 @@ void domain_economy::change_building_commodity_bonus(const building_type *buildi
 	}
 }
 
+int domain_economy::get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
+{
+	const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
+
+	if (find_iterator != this->commodity_bonuses_for_tile_thresholds.end()) {
+		return archimedes::map::get_or_default(find_iterator->second, threshold);
+	}
+
+	return 0;
+}
+
 void domain_economy::set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
 {
 	const int old_value = this->get_commodity_bonus_for_tile_threshold(commodity, threshold);
@@ -1294,6 +1376,12 @@ void domain_economy::set_commodity_bonus_for_tile_threshold(const commodity *com
 	for (const province *province : this->get_game_data()->get_provinces()) {
 		province->get_game_data()->change_commodity_bonus_for_tile_threshold(commodity, threshold, value - old_value);
 	}
+}
+
+const centesimal_int &domain_economy::get_commodity_bonus_per_population(const commodity *commodity) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->commodity_bonuses_per_population, commodity, zero);
 }
 
 void domain_economy::change_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)
@@ -1321,6 +1409,12 @@ void domain_economy::change_commodity_bonus_per_population(const commodity *comm
 	}
 }
 
+const centesimal_int &domain_economy::get_holding_commodity_bonus(const commodity *commodity) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->holding_commodity_bonuses, commodity, zero);
+}
+
 void domain_economy::change_holding_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
@@ -1346,6 +1440,12 @@ void domain_economy::change_holding_commodity_bonus(const commodity *commodity, 
 	}
 }
 
+const centesimal_int &domain_economy::get_capital_commodity_bonus(const commodity *commodity) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->capital_commodity_bonuses, commodity, zero);
+}
+
 void domain_economy::change_capital_commodity_bonus(const commodity *commodity, const centesimal_int &change)
 {
 	if (change == 0) {
@@ -1363,6 +1463,12 @@ void domain_economy::change_capital_commodity_bonus(const commodity *commodity, 
 	if (this->get_game_data()->get_capital() != nullptr) {
 		this->get_game_data()->get_capital()->get_game_data()->calculate_commodity_outputs();
 	}
+}
+
+const centesimal_int &domain_economy::get_capital_commodity_bonus_per_population(const commodity *commodity) const
+{
+	static const centesimal_int zero;
+	return archimedes::map::get_or_default(this->capital_commodity_bonuses_per_population, commodity, zero);
 }
 
 void domain_economy::change_capital_commodity_bonus_per_population(const commodity *commodity, const centesimal_int &change)

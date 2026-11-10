@@ -5,6 +5,7 @@
 #include "database/gsml_operator.h"
 #include "database/gsml_property.h"
 #include "util/assert_util.h"
+#include "util/map_util.h"
 
 namespace metternich {
 
@@ -29,6 +30,12 @@ void level_value_table::check() const
 	if (this->value_per_level.empty()) {
 		throw std::runtime_error(std::format("Level value table \"{}\" has no data.", this->get_identifier()));
 	}
+}
+
+const std::variant<int, dice> &level_value_table::get_value_variant_for_level(const int level) const
+{
+	static const std::variant<int, dice> zero = 0;
+	return archimedes::map::get_or_default(this->value_per_level, level, zero);
 }
 
 }

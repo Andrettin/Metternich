@@ -24,6 +24,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/gender.h"
+#include "util/map_util.h"
 #include "util/string_conversion_util.h"
 #include "util/string_util.h"
 
@@ -283,12 +284,7 @@ void culture_base::reset_history()
 
 const std::string &culture_base::get_patronym(const gender gender) const
 {
-	const auto find_iterator = this->patronyms.find(gender);
-	if (find_iterator != this->patronyms.end()) {
-		return find_iterator->second;
-	}
-
-	return string::empty_str;
+	return archimedes::map::get_or_default(this->patronyms, gender, string::empty_str);
 }
 
 phenotype *culture_base::get_default_phenotype() const

@@ -25,15 +25,7 @@ public:
 		return stat;
 	}
 
-	static const character_stat *try_get_stat(const std::string &identifier)
-	{
-		const auto find_iterator = character_stat::stats_by_identifier.find(identifier);
-		if (find_iterator != character_stat::stats_by_identifier.end()) {
-			return find_iterator->second;
-		}
-
-		return nullptr;
-	}
+	static const character_stat *try_get_stat(const std::string &identifier);
 
 private:
 	static inline std::map<std::string, const character_stat *> stats_by_identifier;
