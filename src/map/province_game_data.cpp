@@ -2711,7 +2711,7 @@ void province_game_data::set_commodity_throughput_modifier(const commodity *comm
 
 const std::map<int, int> &province_game_data::get_commodity_bonus_for_tile_threshold_map(const commodity *commodity) const
 {
-	static std::map<int, int> empty_map;
+	static const std::map<int, int> empty_map;
 	return archimedes::map::get_or_default(this->commodity_bonuses_for_tile_thresholds, commodity, empty_map);
 }
 
