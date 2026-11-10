@@ -286,18 +286,7 @@ public:
 
 	void change_total_holding_level(const centesimal_int &change);
 
-	const centesimal_int &get_domain_skill_total_holding_level(const domain_skill *domain_skill) const
-	{
-		const auto find_iterator = this->domain_skill_total_holding_levels.find(domain_skill);
-
-		if (find_iterator != this->domain_skill_total_holding_levels.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int zero;
-		return zero;
-	}
-
+	const centesimal_int &get_domain_skill_total_holding_level(const domain_skill *domain_skill) const;
 	void change_domain_skill_total_holding_level(const domain_skill *domain_skill, const centesimal_int &change);
 
 	decimillesimal_int get_population_capacity_level_for_holding_level(const int population_capacity_level, const centesimal_int &holding_level) const;
@@ -383,18 +372,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> on_population_type_size_changed(const population_type *population_type, const int64_t change);
 
-	const centesimal_int &get_population_type_modifier_multiplier(const population_type *population_type) const
-	{
-		const auto find_iterator = this->population_type_modifier_multipliers.find(population_type);
-
-		if (find_iterator != this->population_type_modifier_multipliers.end()) {
-			return find_iterator->second;
-		}
-
-		static const centesimal_int one(1);
-		return one;
-	}
-
+	const centesimal_int &get_population_type_modifier_multiplier(const population_type *population_type) const;
 	[[nodiscard]] QCoro::Task<void> set_population_type_modifier_multiplier(const population_type *population_type, const centesimal_int &value);
 
 	[[nodiscard]] QCoro::Task<void> change_population_type_modifier_multiplier(const population_type *population_type, const centesimal_int &change)
@@ -402,17 +380,7 @@ public:
 		co_await this->set_population_type_modifier_multiplier(population_type, this->get_population_type_modifier_multiplier(population_type) + change);
 	}
 
-	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const
-	{
-		const auto find_iterator = this->employment_capacity_modifiers.find(capacity_type);
-
-		if (find_iterator != this->employment_capacity_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int64_t get_employment_capacity_modifier(const employment_capacity_type *capacity_type) const;
 	void set_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t modifier);
 
 	void change_employment_capacity_modifier(const employment_capacity_type *capacity_type, const int64_t change)
@@ -434,18 +402,7 @@ public:
 	void clear_military_units();
 
 	QVariantList get_military_unit_category_counts_qvariant_list() const;
-
-	Q_INVOKABLE int get_military_unit_category_count(const metternich::military_unit_category category) const
-	{
-		const auto find_iterator = this->military_unit_category_counts.find(category);
-
-		if (find_iterator != this->military_unit_category_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE int get_military_unit_category_count(const metternich::military_unit_category category) const;
 	void change_military_unit_category_count(const military_unit_category category, const int change);
 
 	bool has_domain_military_unit(const domain *domain) const;
@@ -482,17 +439,7 @@ public:
 	const military_unit_type_map<int> &get_military_unit_recruitment_counts() const;
 	QVariantList get_military_unit_recruitment_counts_qvariant_list() const;
 
-	Q_INVOKABLE int get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const
-	{
-		const auto find_iterator = this->military_unit_recruitment_counts.find(military_unit_type);
-
-		if (find_iterator != this->military_unit_recruitment_counts.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	Q_INVOKABLE int get_military_unit_recruitment_count(const metternich::military_unit_type *military_unit_type) const;
 	void change_military_unit_recruitment_count(const military_unit_type *military_unit_type, const int change, const bool change_input_storage = true);
 	Q_INVOKABLE bool can_increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type) const;
 	Q_INVOKABLE void increase_military_unit_recruitment(const metternich::military_unit_type *military_unit_type);
@@ -508,17 +455,7 @@ public:
 	void calculate_site_commodity_outputs();
 	void calculate_site_commodity_output(const commodity *commodity);
 
-	const decimillesimal_int &get_local_commodity_output(const commodity *commodity) const
-	{
-		const auto find_iterator = this->local_commodity_outputs.find(commodity);
-		if (find_iterator != this->local_commodity_outputs.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr decimillesimal_int zero;
-		return zero;
-	}
-
+	const decimillesimal_int &get_local_commodity_output(const commodity *commodity) const;
 	void change_local_commodity_output(const commodity *commodity, const decimillesimal_int &change);
 
 	const centesimal_int &get_output_modifier() const
@@ -547,17 +484,7 @@ public:
 		return this->commodity_output_modifiers;
 	}
 
-	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_output_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_output_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		static constexpr centesimal_int zero;
-		return zero;
-	}
+	const centesimal_int &get_commodity_output_modifier(const commodity *commodity) const;
 
 	void set_commodity_output_modifier(const commodity *commodity, const centesimal_int &value)
 	{
@@ -584,17 +511,7 @@ public:
 		return this->commodity_throughput_modifiers;
 	}
 
-	int get_commodity_throughput_modifier(const commodity *commodity) const
-	{
-		const auto find_iterator = this->commodity_throughput_modifiers.find(commodity);
-
-		if (find_iterator != this->commodity_throughput_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	int get_commodity_throughput_modifier(const commodity *commodity) const;
 	void set_commodity_throughput_modifier(const commodity *commodity, const int value);
 
 	void change_commodity_throughput_modifier(const commodity *commodity, const int value)
@@ -607,31 +524,8 @@ public:
 		return this->commodity_bonuses_for_tile_thresholds;
 	}
 
-	const std::map<int, int> &get_commodity_bonus_for_tile_threshold_map(const commodity *commodity) const
-	{
-		static std::map<int, int> empty_map;
-
-		const auto find_iterator = this->commodity_bonuses_for_tile_thresholds.find(commodity);
-
-		if (find_iterator != this->commodity_bonuses_for_tile_thresholds.end()) {
-			return find_iterator->second;
-		}
-
-		return empty_map;
-	}
-
-	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const
-	{
-		const std::map<int, int> &threshold_map = this->get_commodity_bonus_for_tile_threshold_map(commodity);
-
-		const auto find_iterator = threshold_map.find(threshold);
-		if (find_iterator != threshold_map.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
-
+	const std::map<int, int> &get_commodity_bonus_for_tile_threshold_map(const commodity *commodity) const;
+	int get_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold) const;
 	void set_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value);
 
 	void change_commodity_bonus_for_tile_threshold(const commodity *commodity, const int threshold, const int value)
@@ -659,16 +553,7 @@ public:
 		this->set_trade_efficiency_modifier(this->get_trade_efficiency_modifier() + change);
 	}
 
-	int get_technology_category_spread_modifier(const technology_category *category) const
-	{
-		const auto find_iterator = this->technology_category_spread_modifiers.find(category);
-
-		if (find_iterator != this->technology_category_spread_modifiers.end()) {
-			return find_iterator->second;
-		}
-
-		return 0;
-	}
+	int get_technology_category_spread_modifier(const technology_category *category) const;
 
 	void change_technology_category_spread_modifier(const technology_category *category, const int change)
 	{
