@@ -205,7 +205,7 @@ const millionesimal_int &commodity::get_unit_value(const commodity_unit *unit) c
 	throw std::runtime_error(std::format("Commodity \"{}\" has no value for unit \"{}\".", this->get_identifier(), unit->get_identifier()));
 }
 
-int64_t commodity::get_unit_value_int64(const commodity_unit *unit) const
+qint64 commodity::get_unit_value_int64(const commodity_unit *unit) const
 {
 	return this->get_unit_value(unit).to_int64();
 }

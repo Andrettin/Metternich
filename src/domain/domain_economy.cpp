@@ -472,7 +472,7 @@ QString domain_economy::get_stored_commodity_qstring(const metternich::commodity
 	return commodity->value_to_qstring(this->get_stored_commodity(commodity));
 }
 
-int64_t domain_economy::get_stored_commodity_int(const commodity *commodity) const
+qint64 domain_economy::get_stored_commodity_int(const commodity *commodity) const
 {
 	return this->get_stored_commodity(commodity).to_int64();
 }
@@ -629,7 +629,7 @@ QVariantList domain_economy::get_commodity_storage_capacities_qvariant_list() co
 	return archimedes::map::to_qvariant_list(this->get_commodity_storage_capacities());
 }
 
-int64_t domain_economy::get_commodity_storage_capacity(const commodity *commodity) const
+qint64 domain_economy::get_commodity_storage_capacity(const commodity *commodity) const
 {
 	return archimedes::map::get_or_default(this->commodity_storage_capacities, commodity);
 }
@@ -973,7 +973,7 @@ QVariantList domain_economy::get_min_commodity_storages_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_min_commodity_storages());
 }
 
-int64_t domain_economy::get_min_commodity_storage(const metternich::commodity *commodity) const
+qint64 domain_economy::get_min_commodity_storage(const metternich::commodity *commodity) const
 {
 	return archimedes::map::get_or_default(this->min_commodity_storages, commodity);
 }
@@ -1000,7 +1000,7 @@ QVariantList domain_economy::get_max_commodity_storages_qvariant_list() const
 	return archimedes::map::to_qvariant_list(this->get_max_commodity_storages());
 }
 
-int64_t domain_economy::get_max_commodity_storage(const metternich::commodity *commodity) const
+qint64 domain_economy::get_max_commodity_storage(const metternich::commodity *commodity) const
 {
 	return archimedes::map::get_or_default(this->max_commodity_storages, commodity);
 }
