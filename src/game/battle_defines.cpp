@@ -39,12 +39,7 @@ void battle_defines::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "military_unit_hit_points_per_hit_dice") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int hit_dice_count = std::stoi(property.get_key());
-			const centesimal_int hit_points(property.get_value());
-
-			this->military_unit_hit_points_per_hit_dice[hit_dice_count] = hit_points;
-		});
+		scope.to_map(this->military_unit_hit_points_per_hit_dice);
 	} else if (tag == "battle_resolution_results") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();

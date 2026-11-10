@@ -25,12 +25,7 @@ void province_defines::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "province_level_commodity_costs_per_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			const int cost = std::stoi(property.get_value());
-
-			this->province_level_commodity_costs_per_level[commodity] = cost;
-		});
+		scope.to_map(this->province_level_commodity_costs_per_level);
 	} else if (tag == "province_taxation_per_level") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const province_taxation_type taxation_type = string::to_enum<province_taxation_type>(child_scope.get_tag());

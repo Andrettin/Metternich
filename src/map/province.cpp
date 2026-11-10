@@ -84,10 +84,7 @@ void province::process_gsml_scope(const gsml_data &scope)
 			this->features.push_back(province_feature::get(value));
 		}
 	} else if (tag == "resource_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const site_feature *resource = site_feature::get(property.get_key());
-			this->resource_counts[resource] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->resource_counts);
 	} else if (tag == "generation_worlds") {
 		for (const std::string &value : values) {
 			this->generation_worlds.push_back(world::get(value));

@@ -35,26 +35,11 @@ void defines::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "months_per_turn_from_year") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int threshold_year = std::stoi(property.get_key());
-			const int months_per_turn = std::stoi(property.get_value());
-
-			this->months_per_turn_from_year[threshold_year] = months_per_turn;
-		});
+		scope.to_map(this->months_per_turn_from_year);
 	} else if (tag == "holding_commodity_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			const int bonus = std::stoi(property.get_value());
-
-			this->holding_commodity_bonuses[commodity] = bonus;
-		});
+		scope.to_map(this->holding_commodity_bonuses);
 	} else if (tag == "river_holding_commodity_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			const int bonus = std::stoi(property.get_value());
-
-			this->river_holding_commodity_bonuses[commodity] = bonus;
-		});
+		scope.to_map(this->river_holding_commodity_bonuses);
 	} else if (tag == "diplomacy_state_colors") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();

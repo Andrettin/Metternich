@@ -51,12 +51,7 @@ void holding_type::process_gsml_scope(const gsml_data &scope)
 			this->conditional_names[child_tag] = std::move(conditions);
 		});
 	} else if (tag == "tier_levels") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->tier_levels[key] = std::stoi(value);
-		});
+		scope.to_map(this->tier_levels);
 	} else if (tag == "population_classes") {
 		for (const std::string &value : values) {
 			const population_class *population_class = population_class::get(value);

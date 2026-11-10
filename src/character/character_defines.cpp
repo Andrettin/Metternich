@@ -40,12 +40,7 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "experience_award_per_challenge_rating") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int challenge_rating = std::stoi(property.get_key());
-			const int64_t experience_award = std::stoll(property.get_value());
-
-			this->experience_award_per_challenge_rating[challenge_rating] = experience_award;
-		});
+		scope.to_map(this->experience_award_per_challenge_rating);
 	} else if (tag == "bloodline_strength_category_weights") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const bloodline_strength_category category = string::to_enum<bloodline_strength_category>(property.get_key());
@@ -80,47 +75,17 @@ void character_defines::process_gsml_scope(const gsml_data &scope)
 			this->divine_rank_modifiers[divine_level] = std::move(modifier);
 		});
 	} else if (tag == "mana_cost_per_spell_level") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int level = std::stoi(property.get_key());
-			const int mana_cost = std::stoi(property.get_value());
-
-			this->mana_cost_per_spell_level[level] = mana_cost;
-		});
+		scope.to_map(this->mana_cost_per_spell_level);
 	} else if (tag == "battle_attack_conversion_points_per_to_hit_bonus") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int to_hit_bonus = std::stoi(property.get_key());
-			const int attack_conversion_points = std::stoi(property.get_value());
-
-			this->battle_attack_conversion_points_per_to_hit_bonus[to_hit_bonus] = attack_conversion_points;
-		});
+		scope.to_map(this->battle_attack_conversion_points_per_to_hit_bonus);
 	} else if (tag == "battle_attack_conversion_points_per_max_damage") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int max_damage = std::stoi(property.get_key());
-			const int attack_conversion_points = std::stoi(property.get_value());
-
-			this->battle_attack_conversion_points_per_max_damage[max_damage] = attack_conversion_points;
-		});
+		scope.to_map(this->battle_attack_conversion_points_per_max_damage);
 	} else if (tag == "battle_melee_per_attack_conversion_points") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int attack_conversion_points = std::stoi(property.get_key());
-			const int melee = std::stoi(property.get_value());
-
-			this->battle_melee_per_attack_conversion_points[attack_conversion_points] = melee;
-		});
+		scope.to_map(this->battle_melee_per_attack_conversion_points);
 	} else if (tag == "battle_missile_per_attack_conversion_points") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int attack_conversion_points = std::stoi(property.get_key());
-			const int missile = std::stoi(property.get_value());
-
-			this->battle_missile_per_attack_conversion_points[attack_conversion_points] = missile;
-		});
+		scope.to_map(this->battle_missile_per_attack_conversion_points);
 	} else if (tag == "battle_defense_per_armor_class") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const int armor_class = std::stoi(property.get_key());
-			const int defense = std::stoi(property.get_value());
-
-			this->battle_defense_per_armor_class[armor_class] = defense;
-		});
+		scope.to_map(this->battle_defense_per_armor_class);
 	} else if (tag == "opinion_type_thresholds") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const opinion_type opinion_type = string::to_enum<metternich::opinion_type>(property.get_key());

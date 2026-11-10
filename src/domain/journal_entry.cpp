@@ -93,11 +93,7 @@ void journal_entry::process_gsml_scope(const gsml_data &scope)
 			}
 		});
 	} else if (tag == "built_holding_site_levels") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const site *site = site::get(property.get_key());
-			const int level = std::stoi(property.get_value());
-			this->built_holding_site_levels[site] = level;
-		});
+		scope.to_map(this->built_holding_site_levels);
 	} else if (tag == "researched_technologies") {
 		for (const std::string &value : values) {
 			this->researched_technologies.push_back(technology::get(value));

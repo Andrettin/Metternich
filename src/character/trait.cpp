@@ -65,12 +65,7 @@ void trait::process_gsml_scope(const gsml_data &scope)
 			this->opposite_traits.push_back(opposite_trait);
 		}
 	} else if (tag == "attribute_bonuses") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const character_attribute *attribute = character_attribute::get(property.get_key());
-			const int value = std::stoi(property.get_value());
-
-			this->attribute_bonuses[attribute] = value;
-		});
+		scope.to_map(this->attribute_bonuses);
 	} else if (tag == "conditions") {
 		auto conditions = std::make_unique<and_condition<character>>();
 		conditions->process_gsml_data(scope);

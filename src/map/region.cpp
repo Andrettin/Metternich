@@ -27,10 +27,7 @@ void region::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "resource_counts") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const site_feature *resource_feature = site_feature::get(property.get_key());
-			this->resource_counts[resource_feature] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->resource_counts);
 	} else {
 		named_data_entry::process_gsml_scope(scope);
 	}

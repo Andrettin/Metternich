@@ -69,12 +69,7 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			this->equivalent_population_types.push_back(population_type::get(value));
 		}
 	} else if (tag == "commodity_throughput_modifiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-			const commodity *commodity = commodity::get(key);
-			this->commodity_throughput_modifiers[commodity] = decimillesimal_int(value);
-		});
+		scope.to_map(this->commodity_throughput_modifiers);
 	} else if (tag == "everyday_needs") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
@@ -114,23 +109,9 @@ void population_type::process_gsml_scope(const gsml_data &scope)
 			this->promotion_factors[population_type::get(child_tag)] = std::move(promotion_factor);
 		});
 	} else if (tag == "phenotype_icons") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const phenotype *phenotype = phenotype::get(key);
-			const metternich::icon *icon = icon::get(value);
-			this->phenotype_icons[phenotype] = icon;
-		});
+		scope.to_map(this->phenotype_icons);
 	} else if (tag == "phenotype_small_icons") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			const phenotype *phenotype = phenotype::get(key);
-			const metternich::icon *icon = icon::get(value);
-			this->phenotype_small_icons[phenotype] = icon;
-		});
+		scope.to_map(this->phenotype_small_icons);
 	} else {
 		data_entry::process_gsml_scope(scope);
 	}

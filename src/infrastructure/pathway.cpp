@@ -57,10 +57,7 @@ void pathway::process_gsml_scope(const gsml_data &scope)
 			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
 		});
 	} else if (tag == "commodity_cost_weights") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_cost_weights[commodity] = std::stoi(property.get_value());
-		});
+		scope.to_map(this->commodity_cost_weights);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);

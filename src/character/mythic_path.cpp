@@ -21,12 +21,7 @@ void mythic_path::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 
 	if (tag == "rank_tiers") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const std::string &key = property.get_key();
-			const std::string &value = property.get_value();
-
-			this->rank_tiers[key] = std::stoi(value);
-		});
+		scope.to_map(this->rank_tiers);
 	} else if (tag == "tier_title_names") {
 		scope.for_each_property([this](const gsml_property &property) {
 			const std::string &key = property.get_key();
