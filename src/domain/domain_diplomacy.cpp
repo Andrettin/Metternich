@@ -400,14 +400,20 @@ bool domain_diplomacy::can_attack(const metternich::domain *other_domain) const
 
 std::optional<diplomacy_state> domain_diplomacy::get_offered_diplomacy_state(const metternich::domain *other_domain) const
 {
-	return archimedes::map::get_or_default(this->offered_diplomacy_states, other_domain);
+	const auto find_iterator = this->offered_diplomacy_states.find(other_domain);
+
+	if (find_iterator != this->offered_diplomacy_states.end()) {
+		return find_iterator->second;
+	}
+
+	return std::nullopt;
 }
 
 void domain_diplomacy::set_offered_diplomacy_state(const metternich::domain *other_domain, const std::optional<diplomacy_state> &state)
 {
 	const diplomacy_state old_state = this->get_diplomacy_state(other_domain);
 
-	if (state == old_state) {
+	if (state == old_state || state == this->get_offered_diplomacy_state(other_domain)) {
 		return;
 	}
 
