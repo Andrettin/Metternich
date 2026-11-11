@@ -10,7 +10,6 @@ Q_MOC_INCLUDE("character/domain_skill.h")
 Q_MOC_INCLUDE("domain/office.h")
 Q_MOC_INCLUDE("economy/commodity.h")
 Q_MOC_INCLUDE("economy/commodity_unit.h")
-Q_MOC_INCLUDE("game/game_rule.h")
 Q_MOC_INCLUDE("map/terrain_type.h")
 Q_MOC_INCLUDE("sound/music.h")
 Q_MOC_INCLUDE("sound/sound.h")
@@ -19,7 +18,6 @@ Q_MOC_INCLUDE("ui/portrait.h")
 Q_MOC_INCLUDE("util/log_level.h")
 
 namespace archimedes {
-	class game_rule;
 	enum class log_level;
 }
 
@@ -53,6 +51,7 @@ class defines final : public defines_base, public singleton<defines>
 	Q_PROPERTY(const metternich::terrain_type* default_base_terrain MEMBER default_base_terrain READ get_default_base_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* unexplored_terrain MEMBER unexplored_terrain READ get_unexplored_terrain NOTIFY changed)
 	Q_PROPERTY(const metternich::terrain_type* default_space_terrain MEMBER default_space_terrain READ get_default_space_terrain NOTIFY changed)
+	Q_PROPERTY(bool exploration_enabled MEMBER exploration_enabled READ is_exploration_enabled NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* wealth_commodity MEMBER wealth_commodity READ get_wealth_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* regency_commodity MEMBER regency_commodity READ get_regency_commodity NOTIFY changed)
 	Q_PROPERTY(const metternich::commodity* piety_commodity MEMBER piety_commodity NOTIFY changed)
@@ -192,6 +191,11 @@ public:
 	const terrain_type *get_default_space_terrain() const
 	{
 		return this->default_space_terrain;
+	}
+
+	bool is_exploration_enabled() const
+	{
+		return this->exploration_enabled;
 	}
 
 	const commodity_map<int> &get_holding_commodity_bonuses() const
@@ -402,6 +406,7 @@ private:
 	const terrain_type *default_base_terrain = nullptr;
 	const terrain_type *unexplored_terrain = nullptr;
 	const terrain_type *default_space_terrain = nullptr;
+	bool exploration_enabled = true;
 	commodity_map<int> holding_commodity_bonuses;
 	commodity_map<int> river_holding_commodity_bonuses;
 	const commodity *wealth_commodity = nullptr;

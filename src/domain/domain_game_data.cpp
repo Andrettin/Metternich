@@ -3419,6 +3419,10 @@ void domain_game_data::set_building_class_cost_efficiency_modifier(const buildin
 
 bool domain_game_data::is_tile_explored(const QPoint &tile_pos) const
 {
+	if (!defines::get()->is_exploration_enabled()) {
+		return true;
+	}
+
 	const tile *tile = map::get()->get_tile(tile_pos);
 
 	if (tile->get_province() != nullptr && this->explored_provinces.contains(tile->get_province())) {
@@ -3450,6 +3454,10 @@ int domain_game_data::get_explored_province_count() const
 
 bool domain_game_data::is_province_explored(const metternich::province *province) const
 {
+	if (!defines::get()->is_exploration_enabled()) {
+		return true;
+	}
+
 	//get whether the province has been fully explored
 	return this->explored_provinces.contains(province);
 }

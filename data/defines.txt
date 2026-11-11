@@ -6,6 +6,7 @@ default_minimap_tile_scale = 0.25
 default_base_terrain = plains
 unexplored_terrain = unexplored
 default_space_terrain = space
+exploration_enabled = true
 
 default_start_date = 1815.11.20
 default_months_per_turn = 3
