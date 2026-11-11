@@ -1,0 +1,14 @@
+bambuk = {
+	name = "Bambuk"
+	color = { 127 117 144 }
+	terrain = plains
+	default_provincial_capital = bambuk
+	regions = {
+		africa
+	}
+	
+	history = {
+		culture = songhai
+		religion = bidaic
+	}
+}

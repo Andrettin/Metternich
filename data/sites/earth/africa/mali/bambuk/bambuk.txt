@@ -1,0 +1,8 @@
+bambuk = {
+	name = "Bambuk"
+	world = earth
+	geocoordinate = { -11.65 13.87 } #Bambouk Mountains
+	type = holding
+	holding_type = castle
+	province = bambuk #Kayes
+}

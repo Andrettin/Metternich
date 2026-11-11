@@ -11,6 +11,7 @@ earth = {
 	diplomatic_map_tile_scale = 0.5
 	geocoordinate_x_offset = -512 #shift all positions derived from geocoordinates by this offset; this will place the Florence meridian at the center of the map
 	province_image_filepath = "earth/provinces.png"
+	update_province_image = false
 }
 
 #earth_random = {

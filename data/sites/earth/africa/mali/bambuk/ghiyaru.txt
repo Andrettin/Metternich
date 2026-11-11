@@ -1,0 +1,8 @@
+ghiyaru = {
+	name = "Ghiyaru"
+	world = earth
+	geocoordinate = { -11.433333333333334 14.4 } #Goundiourou
+	type = holding
+	holding_type = temple
+	province = bambuk #Kayes
+}

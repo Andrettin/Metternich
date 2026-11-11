@@ -1,0 +1,8 @@
+goundafal = {
+	name = "Goundafal"
+	world = earth
+	geocoordinate = { -12.297222222222 13.911944444444 } #Goundafa
+	type = holding
+	holding_type = castle
+	province = bambuk #Tambacounda
+}

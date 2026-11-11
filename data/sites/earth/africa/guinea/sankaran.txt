@@ -1,0 +1,8 @@
+sankaran = {
+	name = "Sankaran"
+	world = earth
+	geocoordinate = { -10.93333 12.08333 } #Sankaran (watercourse)
+	type = holding
+	holding_type = castle
+	province = mali #Dinguiraye
+}
