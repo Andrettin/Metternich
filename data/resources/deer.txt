@@ -1,7 +1,7 @@
 deer = {
 	name = "Deer"
 	icon = deer
-	commodity = furs
+	commodity = wild_game
 	tiny_icon = garrison
 	terrain_types = {
 		forest

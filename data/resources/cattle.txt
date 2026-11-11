@@ -1,6 +1,6 @@
 cattle = {
 	name = "Cattle"
-	commodity = meat
+	commodity = cattle
 	tiny_icon = garrison
 	terrain_types = {
 		plains

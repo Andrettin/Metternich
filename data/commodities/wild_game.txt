@@ -1,0 +1,7 @@
+wild_game = {
+	name = "Wild Game"
+	type = resource
+	icon = deer
+	food_type = meat
+	base_price = 1
+}

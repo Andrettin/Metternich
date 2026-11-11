@@ -1,6 +1,6 @@
 bison = {
 	name = "Bison"
-	commodity = meat
+	commodity = wild_game
 	tiny_icon = garrison
 	terrain_types = {
 		plains
