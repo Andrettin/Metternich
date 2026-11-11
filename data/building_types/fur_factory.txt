@@ -17,7 +17,6 @@ furriers_house = {
 			or = {
 				capital = true
 				has_resource = beavers
-				has_resource = deer
 			}
 		}
 	}
@@ -43,7 +42,6 @@ furriers_shop = {
 			or = {
 				capital = true
 				has_resource = beavers
-				has_resource = deer
 			}
 		}
 	}
@@ -69,7 +67,6 @@ fur_factory = {
 			or = {
 				capital = true
 				has_resource = beavers
-				has_resource = deer
 			}
 		}
 	}
