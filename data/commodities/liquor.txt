@@ -1,6 +1,6 @@
 liquor = {
 	name = "Liquor"
-	type = good
+	type = material
 	icon = wine
 	luxury_type = alcohol
 	industrial = true
