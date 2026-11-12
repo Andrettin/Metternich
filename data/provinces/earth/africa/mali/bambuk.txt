@@ -6,9 +6,4 @@ bambuk = {
 	regions = {
 		africa
 	}
-	
-	history = {
-		culture = songhai
-		religion = bidaic
-	}
 }
