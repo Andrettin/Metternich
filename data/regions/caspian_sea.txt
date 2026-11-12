@@ -1,0 +1,4 @@
+caspian_sea = {
+	name = "Caspian Sea"
+	world = earth
+}

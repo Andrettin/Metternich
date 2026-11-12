@@ -1,0 +1,17 @@
+caspian_sea = {
+	name = "Caspian Sea"
+	color = { 0 96 205 }
+	sea = true
+	regions = {
+		caspian_sea
+	}
+}
+
+garabogaz_bay = {
+	name = "Garabogaz Bay"
+	color = { 168 108 207 }
+	bay = true
+	regions = {
+		caspian_sea
+	}
+}
