@@ -1,0 +1,8 @@
+diouboye = {
+	name = "Diouboye"
+	world = earth
+	geocoordinate = { -12.19285 13.91988 }
+	type = holding
+	holding_type = castle
+	province = bambuk #Tambacounda
+}

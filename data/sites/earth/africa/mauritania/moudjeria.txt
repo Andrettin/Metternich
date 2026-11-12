@@ -1,0 +1,8 @@
+moudjeria = {
+	name = "Moudjeria"
+	world = earth
+	geocoordinate = { -12.332194444444445 17.880055555555554 }
+	type = holding
+	holding_type = temple
+	province = aoudaghost #Tagant
+}

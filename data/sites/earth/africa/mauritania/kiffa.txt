@@ -4,5 +4,5 @@ kiffa = {
 	geocoordinate = { -11.399987 16.619979 } #from Natural Earth
 	type = holding
 	holding_type = castle
-	province = bambuk #Assaba
+	province = aoudaghost #Assaba
 }

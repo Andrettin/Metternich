@@ -1,0 +1,8 @@
+aoudaghost = {
+	name = "Aoudaghost"
+	world = earth
+	geocoordinate = { -10.410388888888889 17.42436111111111 }
+	type = holding
+	holding_type = guild
+	province = aoudaghost #Hodh El Gharbi
+}

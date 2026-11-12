@@ -1,0 +1,8 @@
+hodh = {
+	name = "Hodh"
+	world = earth
+	geocoordinate = { -9.347777777777777 16.685555555555556 }
+	type = holding
+	holding_type = castle
+	province = aoudaghost #Hodh El Gharbi
+}
