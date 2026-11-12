@@ -60,7 +60,7 @@ public:
 	static constexpr const char database_folder[] = "provinces";
 	static constexpr bool history_enabled = true;
 
-	static constexpr size_t max_holdings = 8;
+	static constexpr size_t max_holdings = 9;
 
 	static const std::set<std::string> database_dependencies;
 
