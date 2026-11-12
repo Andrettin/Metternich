@@ -152,7 +152,9 @@ void province_map_data::on_map_created()
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_holding_sites().size(), province::max_holdings));
 	}
 
-	static constexpr size_t max_expected_tile_count = 100000ull;
+	static constexpr size_t max_expected_land_tile_count = 100000ull;
+	static constexpr size_t max_expected_water_tile_count = 1000000ull;
+	const size_t max_expected_tile_count = this->province->is_water_zone() ? max_expected_water_tile_count : max_expected_land_tile_count;
 	if (this->get_tile_indices().size() > max_expected_tile_count) {
 		log::log_error(std::format("Province \"{}\" has a tile count of {}, greater than the expected maximum tile count of {}.", this->province->get_identifier(), number::to_formatted_string(this->get_tile_indices().size()), number::to_formatted_string(max_expected_tile_count)));
 	}
