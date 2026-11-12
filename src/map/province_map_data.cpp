@@ -16,9 +16,9 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
-#include "util/size_util.h"
 #include "util/vector_util.h"
 
 #include <opencv2/core/core.hpp>
@@ -152,9 +152,9 @@ void province_map_data::on_map_created()
 		log::log_error(std::format("Province \"{}\" has {} holding sites, more than the maximum of {}.", this->province->get_identifier(), this->get_holding_sites().size(), province::max_holdings));
 	}
 
-	static constexpr QSize max_expected_tile_size(1000, 1000);
-	if (this->get_territory_rect().width() > max_expected_tile_size.width() || this->get_territory_rect().height() > max_expected_tile_size.height()) {
-		log::log_error(std::format("Province \"{}\" has a size of {}, greater than the expected maximum size of {}.", this->province->get_identifier(), size::to_string(this->get_territory_rect().size()), size::to_string(max_expected_tile_size)));
+	static constexpr size_t max_expected_tile_count = 1000ull * 500ull;
+	if (this->get_tile_indices().size() > max_expected_tile_count) {
+		log::log_error(std::format("Province \"{}\" has a tile count of {}, greater than the expected maximum tile count of {}.", this->province->get_identifier(), number::to_formatted_string(max_expected_tile_count), number::to_formatted_string(max_expected_tile_count)));
 	}
 
 	//shrink the tile index vector to the actual usage, to prevent needlessly increased memory usage
