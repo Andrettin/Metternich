@@ -154,7 +154,7 @@ void province_map_data::on_map_created()
 
 	static constexpr size_t max_expected_tile_count = 1000ull * 500ull;
 	if (this->get_tile_indices().size() > max_expected_tile_count) {
-		log::log_error(std::format("Province \"{}\" has a tile count of {}, greater than the expected maximum tile count of {}.", this->province->get_identifier(), number::to_formatted_string(max_expected_tile_count), number::to_formatted_string(max_expected_tile_count)));
+		log::log_error(std::format("Province \"{}\" has a tile count of {}, greater than the expected maximum tile count of {}.", this->province->get_identifier(), number::to_formatted_string(this->get_tile_indices().size()), number::to_formatted_string(max_expected_tile_count)));
 	}
 
 	//shrink the tile index vector to the actual usage, to prevent needlessly increased memory usage
