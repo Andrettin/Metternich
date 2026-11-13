@@ -1,0 +1,8 @@
+sibi = {
+	name = "Sibi"
+	world = earth
+	geocoordinate = { -8.335 12.375556 } #Siby
+	type = holding
+	holding_type = guild
+	province = dodugu #Koulikoro
+}

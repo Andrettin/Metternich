@@ -1,0 +1,8 @@
+bamako = {
+	name = "Bamako"
+	world = earth
+	geocoordinate = { -8.001985 12.651961 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = dodugu #Koulikoro
+}

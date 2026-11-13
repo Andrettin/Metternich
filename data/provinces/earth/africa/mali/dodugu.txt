@@ -1,0 +1,9 @@
+dodugu = {
+	name = "Dodugu"
+	color = { 127 177 209 }
+	terrain = plains
+	default_provincial_capital = bamako
+	regions = {
+		africa
+	}
+}

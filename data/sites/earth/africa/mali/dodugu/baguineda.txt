@@ -4,5 +4,5 @@ baguineda = {
 	geocoordinate = { -7.773333 12.612778 } #Baguinéda-Camp
 	type = holding
 	holding_type = castle
-	province = gao #Koulikoro
+	province = dodugu #Koulikoro
 }
