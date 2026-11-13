@@ -10,9 +10,27 @@ black_sea = {
 	}
 }
 
+coast_of_bulgaria = {
+	name = "Coast of Bulgaria"
+	color = { 126 75 74 }
+	sea = true
+	regions = {
+		black_sea
+	}
+}
+
 coast_of_crimea = {
 	name = "Coast of Crimea"
 	color = { 168 78 202 }
+	sea = true
+	regions = {
+		black_sea
+	}
+}
+
+coast_of_dobruja = {
+	name = "Coast of Dobruja"
+	color = { 106 16 203 }
 	sea = true
 	regions = {
 		black_sea
