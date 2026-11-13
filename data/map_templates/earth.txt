@@ -81,6 +81,7 @@ europe = {
 		mazandaran
 		qatar
 		satakunta
+		sermersooq
 		teheran
 	}
 }
