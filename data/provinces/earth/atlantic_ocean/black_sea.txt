@@ -19,6 +19,24 @@ coast_of_crimea = {
 	}
 }
 
+coast_of_georgia = {
+	name = "Coast of Georgia"
+	color = { 42 84 203 }
+	sea = true
+	regions = {
+		black_sea
+	}
+}
+
+coast_of_krasnodar = {
+	name = "Coast of Krasnodar"
+	color = { 250 167 53 }
+	sea = true
+	regions = {
+		black_sea
+	}
+}
+
 sea_of_azov = {
 	name = "Sea of Azov"
 	color = { 68 210 89 }
