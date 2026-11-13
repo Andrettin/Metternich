@@ -1,0 +1,9 @@
+ouadane = {
+	name = "Ouadane"
+	color = { 85 99 141 }
+	terrain = desert
+	default_provincial_capital = ouadane
+	regions = {
+		africa
+	}
+}

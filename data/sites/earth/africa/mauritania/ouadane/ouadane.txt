@@ -1,0 +1,8 @@
+ouadane = {
+	name = "Ouadane"
+	world = earth
+	geocoordinate = { -11.619583333333333 20.931944444444444 }
+	type = holding
+	holding_type = castle #or guild
+	province = ouadane #Adrar
+}

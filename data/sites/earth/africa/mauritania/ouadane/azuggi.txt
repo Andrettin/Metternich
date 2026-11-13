@@ -1,0 +1,8 @@
+azuggi = {
+	name = "Azuggi"
+	world = earth
+	geocoordinate = { -13.105472222222222 20.566194444444445 } #Azougui
+	type = holding
+	holding_type = castle
+	province = ouadane #Adrar
+}

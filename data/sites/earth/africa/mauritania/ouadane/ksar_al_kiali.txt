@@ -1,0 +1,8 @@
+ksar_al_kiali = {
+	name = "Ksar-al-Kiali"
+	world = earth
+	geocoordinate = { -11.616666666667 20.933333333333 } #Ksar el Khali
+	type = holding
+	holding_type = castle
+	province = ouadane #Adrar
+}
