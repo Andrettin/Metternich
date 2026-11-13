@@ -118,6 +118,24 @@ coast_of_galicia = {
 	}
 }
 
+coast_of_guinea = {
+	name = "Coast of Guinea"
+	color = { 68 61 44 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_guinea_bissau = {
+	name = "Coast of Guinea-Bissau"
+	color = { 252 14 78 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_iceland = {
 	name = "Coast of Iceland"
 	color = { 168 51 162 }

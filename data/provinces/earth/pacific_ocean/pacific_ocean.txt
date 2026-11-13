@@ -79,6 +79,24 @@ ceram_sea = {
 	}
 }
 
+coast_of_ecuador = {
+	name = "Coast of Ecuador"
+	color = { 42 202 252 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+coast_of_peru = {
+	name = "Coast of Peru"
+	color = { 40 252 252 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 coral_sea = {
 	name = "Coral Sea"
 	color = { 53 201 201 }
@@ -163,6 +181,15 @@ gulf_of_carpentaria = {
 gulf_of_kau = {
 	name = "Gulf of Kau"
 	color = { 59 123 191 }
+	bay = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+gulf_of_panama = {
+	name = "Gulf of Panama"
+	color = { 43 222 252 }
 	bay = true
 	regions = {
 		pacific_ocean
