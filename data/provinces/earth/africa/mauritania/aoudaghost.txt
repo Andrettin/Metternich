@@ -2,7 +2,7 @@ aoudaghost = {
 	name = "Aoudaghost"
 	color = { 84 0 26 }
 	terrain = desert
-	default_provincial_capital = hodh
+	default_provincial_capital = aoudaghost
 	regions = {
 		africa
 	}
