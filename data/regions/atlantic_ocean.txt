@@ -10,6 +10,12 @@ baltic_sea = {
 	}
 }
 
+black_sea = {
+	superregions = {
+		mediterranean_sea
+	}
+}
+
 mediterranean_sea = {
 	superregions = {
 		atlantic_ocean

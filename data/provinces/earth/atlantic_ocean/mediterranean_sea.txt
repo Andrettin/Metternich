@@ -38,18 +38,6 @@ balearic_sea = {
 	}
 }
 
-black_sea = {
-	name = "Black Sea"
-	color = { 0 104 136 }
-	sea = true
-	cultural_names = {
-		roman = "Pontus Euxinos" #Source: "Ancient Warfare VII.6", 2013, p. 7.
-	}
-	regions = {
-		mediterranean_sea
-	}
-}
-
 coast_of_cyprus = {
 	name = "Coast of Cyprus"
 	color = { 171 7 112 }
@@ -187,19 +175,6 @@ ligurian_sea = {
 	color = { 200 75 128 }
 	geocoordinate = { 9.0416666666667 43.498333333333 }
 	sea = true
-	regions = {
-		mediterranean_sea
-	}
-}
-
-sea_of_azov = {
-	name = "Sea of Azov"
-	color = { 68 210 89 }
-	sea = true
-	cultural_names = {
-		greek = "Lake Maeotis"
-		roman = "Lake Maeotis" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
-	}
 	regions = {
 		mediterranean_sea
 	}

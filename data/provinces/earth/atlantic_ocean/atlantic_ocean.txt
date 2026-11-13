@@ -163,6 +163,15 @@ coast_of_morocco = {
 	}
 }
 
+coast_of_north_america = {
+	name = "Coast of North America"
+	color = { 3 161 39 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_portugal = {
 	name = "Coast of Portugal"
 	color = { 242 171 141 }

@@ -1,0 +1,33 @@
+black_sea = {
+	name = "Black Sea"
+	color = { 0 104 136 }
+	sea = true
+	cultural_names = {
+		roman = "Pontus Euxinos" #Source: "Ancient Warfare VII.6", 2013, p. 7.
+	}
+	regions = {
+		black_sea
+	}
+}
+
+coast_of_crimea = {
+	name = "Coast of Crimea"
+	color = { 168 78 202 }
+	sea = true
+	regions = {
+		black_sea
+	}
+}
+
+sea_of_azov = {
+	name = "Sea of Azov"
+	color = { 68 210 89 }
+	sea = true
+	cultural_names = {
+		greek = "Lake Maeotis"
+		roman = "Lake Maeotis" #Source: William R. Shepherd, "Historical Atlas", 1911, pp. 34-35.
+	}
+	regions = {
+		black_sea
+	}
+}

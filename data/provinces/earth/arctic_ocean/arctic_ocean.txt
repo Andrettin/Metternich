@@ -16,6 +16,15 @@ barents_sea = {
 	}
 }
 
+foxe_basin = {
+	name = "Foxe Basin"
+	color = { 112 251 251 }
+	bay = true
+	regions = {
+		arctic_ocean
+	}
+}
+
 greenland_sea = {
 	name = "Greenland Sea"
 	color = { 120 251 251 }
@@ -25,10 +34,46 @@ greenland_sea = {
 	}
 }
 
+hudson_bay = {
+	name = "Hudson Bay"
+	color = { 110 201 251 }
+	bay = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+hudson_strait = {
+	name = "Hudson Strait"
+	color = { 108 251 251 }
+	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+james_bay = {
+	name = "James Bay"
+	color = { 109 201 201 }
+	bay = true
+	regions = {
+		arctic_ocean
+	}
+}
+
 kara_sea = {
 	name = "Kara Sea"
 	color = { 87 25 195 }
 	sea = true
+	regions = {
+		arctic_ocean
+	}
+}
+
+ungava_bay = {
+	name = "Ungava Bay"
+	color = { 172 221 59 }
+	bay = true
 	regions = {
 		arctic_ocean
 	}
