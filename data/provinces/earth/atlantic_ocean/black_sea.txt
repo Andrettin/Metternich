@@ -37,8 +37,8 @@ coast_of_dobruja = {
 	}
 }
 
-coast_of_georgia = {
-	name = "Coast of Georgia"
+coast_of_kolkhida = {
+	name = "Coast of Kolkhida"
 	color = { 42 84 203 }
 	sea = true
 	regions = {
