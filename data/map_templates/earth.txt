@@ -69,10 +69,10 @@ earth_center = {
 
 europe = {
 	name = "Europe"
-	size = { 2816 2816 }
+	size = { 4608 2816 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 7168 2816 }
+	map_start_pos = { 5376 2816 }
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
