@@ -1,0 +1,8 @@
+sankore = {
+	name = "Sankore"
+	world = earth
+	geocoordinate = { -3.0055555555556 16.775833333333 } #Sankore Madrasah
+	type = holding
+	holding_type = temple
+	province = timbuktu
+}

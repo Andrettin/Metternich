@@ -1,0 +1,9 @@
+timbuktu = {
+	name = "Timbuktu"
+	color = { 0 207 25 }
+	terrain = plains
+	default_provincial_capital = timbuktu
+	regions = {
+		africa
+	}
+}

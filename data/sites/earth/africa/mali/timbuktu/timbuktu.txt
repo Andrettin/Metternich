@@ -1,0 +1,8 @@
+timbuktu = {
+	name = "Timbuktu"
+	world = earth
+	geocoordinate = { -3.016597 16.766585 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = timbuktu
+}

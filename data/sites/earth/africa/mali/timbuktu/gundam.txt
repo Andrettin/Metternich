@@ -1,0 +1,8 @@
+gundam = {
+	name = "Gundam"
+	world = earth
+	geocoordinate = { -3.666583 16.416994 } #from Natural Earth (Goundam)
+	type = holding
+	holding_type = castle
+	province = timbuktu
+}

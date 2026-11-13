@@ -1,0 +1,8 @@
+tendirma = {
+	name = "Tendirma"
+	world = earth
+	geocoordinate = { -3.633333 16.133333 } #Tindirma
+	type = holding
+	holding_type = castle
+	province = timbuktu
+}

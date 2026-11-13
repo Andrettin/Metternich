@@ -1,0 +1,8 @@
+dire = {
+	name = "Dire"
+	world = earth
+	geocoordinate = { -3.4 16.266666666667 } #Diré
+	type = holding
+	holding_type = castle
+	province = timbuktu
+}

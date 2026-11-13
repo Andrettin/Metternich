@@ -1,0 +1,8 @@
+kabara = {
+	name = "Kabara"
+	world = earth
+	geocoordinate = { -2.9853 16.70695 } #Kabara, Mali
+	type = holding
+	holding_type = castle
+	province = timbuktu
+}
