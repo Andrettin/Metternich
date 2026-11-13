@@ -4,4 +4,5 @@ bougouni = {
 	geocoordinate = { -7.489967 11.420426 } #from Natural Earth
 	type = holding
 	holding_type = castle
+	province = gao #Bougoni
 }

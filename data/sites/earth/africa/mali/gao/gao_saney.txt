@@ -4,4 +4,5 @@ gao_saney = {
 	geocoordinate = { -0.00305556 16.25083333 }
 	type = holding
 	holding_type = guild #or temple
+	province = gao
 }

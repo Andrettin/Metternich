@@ -4,4 +4,5 @@ safo = {
 	geocoordinate = { -7.923611 12.7675 } #Safo, Mali
 	type = holding
 	holding_type = castle
+	province = gao #Koulikoro
 }

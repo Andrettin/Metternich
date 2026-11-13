@@ -4,4 +4,5 @@ menaka = {
 	geocoordinate = { 2.399998 15.916663 } #from Natural Earth
 	type = holding
 	holding_type = castle
+	province = gao #Ménaka
 }

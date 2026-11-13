@@ -4,4 +4,5 @@ anchawadi = {
 	geocoordinate = { 0.276111 16.333611 }
 	type = holding
 	holding_type = castle
+	province = gao
 }

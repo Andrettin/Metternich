@@ -1,7 +1,11 @@
-songhai = {
-	name = "Songhai"
-	color = { 122 101 212 }
+gao = {
+	name = "Gao"
+	color = { 84 45 161 }
+	terrain = plains
 	default_provincial_capital = gao
+	resource_counts = {
+		fabric = 1
+	}
 	regions = {
 		africa
 	}
