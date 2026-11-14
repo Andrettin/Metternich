@@ -1,0 +1,14 @@
+longueuil = {
+	name = "Longueuil"
+	world = earth
+	geocoordinate = { -73.43802777777778 45.51408333333333 }
+	type = holding
+	holding_type = castle #barony
+	province = quebec
+	
+	history = {
+		1700.1.26 = {
+			tier = barony #created as a barony on 1700.1.26; Source: Sir Bernard Burke and Ashworth P. Burke, "The Peerage and Baronetage", 1915, pp. 2169-2170.
+		}
+	}
+}
