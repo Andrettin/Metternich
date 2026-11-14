@@ -154,6 +154,15 @@ coast_of_ireland = {
 	}
 }
 
+coast_of_liberia = {
+	name = "Coast of Liberia"
+	color = { 220 37 127 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_madeira = {
 	name = "Coast of Madeira"
 	color = { 106 105 170 }
