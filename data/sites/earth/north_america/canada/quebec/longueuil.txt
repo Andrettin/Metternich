@@ -8,7 +8,7 @@ longueuil = {
 	
 	history = {
 		1700.1.26 = {
-			tier = barony #created as a barony on 1700.1.26; Source: Sir Bernard Burke and Ashworth P. Burke, "The Peerage and Baronetage", 1915, pp. 2169-2170.
+			tier = barony #created as a barony on 1700.1.26; Source: Sir Bernard Burke and Ashworth P. Burke, "A Genealogical and Heraldic History of the the Peerage and Baronetage, the Privy Council, Knightage and Companionage", 1915, pp. 2169-2170.
 		}
 	}
 }
