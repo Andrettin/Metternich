@@ -1,0 +1,8 @@
+bir_um_grein = {
+	name = "Bir Um Grein"
+	world = earth
+	geocoordinate = { -11.583309 25.233303 } #from Natural Earth (Bir Moghrein)
+	type = holding
+	holding_type = castle
+	province = bir_um_grein #Tiris Zemmour
+}

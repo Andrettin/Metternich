@@ -1,0 +1,8 @@
+rouessa = {
+	name = "Rouessa"
+	world = earth
+	geocoordinate = { -12.58167 22.68056 } #Rouessat
+	type = holding
+	holding_type = castle
+	province = bir_um_grein #Tiris Zemmour
+}

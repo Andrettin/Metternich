@@ -1,0 +1,9 @@
+bir_um_grein = {
+	name = "Bir Um Grein"
+	color = { 127 102 14 }
+	terrain = desert
+	default_provincial_capital = bir_um_grein
+	regions = {
+		africa
+	}
+}

@@ -1,0 +1,8 @@
+fderick = {
+	name = "Fderick" #"Fdérick"
+	world = earth
+	geocoordinate = { -12.707001 22.679001 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bir_um_grein #Tiris Zemmour
+}

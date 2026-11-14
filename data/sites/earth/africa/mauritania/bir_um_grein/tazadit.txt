@@ -1,0 +1,8 @@
+tazadit = {
+	name = "Tazadit"
+	world = earth
+	geocoordinate = { -12.45 22.683333333333 } #Bathet Tazadit
+	type = holding
+	holding_type = temple
+	province = bir_um_grein #Tiris Zemmour
+}

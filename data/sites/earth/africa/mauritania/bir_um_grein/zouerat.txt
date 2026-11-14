@@ -1,0 +1,8 @@
+zouerat = {
+	name = "Zouerat" #"Zouérat"
+	world = earth
+	geocoordinate = { -12.483306 22.730381 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = bir_um_grein #Tiris Zemmour
+}
