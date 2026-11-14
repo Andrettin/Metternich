@@ -1,0 +1,14 @@
+beaverbrook = {
+	name = "Beaverbrook"
+	world = earth
+	geocoordinate = { -65.6 47.1333 } #Beaver Brook Station
+	type = holding
+	holding_type = castle #barony
+	province = new_brunswick
+	
+	history = {
+		1917 = {
+			tier = barony #created as a barony in 1917; Source: Arthur G. M. Hesilrige, "Debrett's Peerage and Titles of Courtesy", 1921, p. 104.
+		}
+	}
+}
