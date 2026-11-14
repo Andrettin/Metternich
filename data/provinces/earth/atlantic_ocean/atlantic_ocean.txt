@@ -226,6 +226,15 @@ coast_of_senegambia = {
 	}
 }
 
+coast_of_sierra_leone = {
+	name = "Coast of Sierra Leone"
+	color = { 20 227 255 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_south_georgia = {
 	name = "Coast of South Georgia"
 	color = { 114 203 253 }

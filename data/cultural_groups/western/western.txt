@@ -11,6 +11,7 @@ western = {
 		explored_regions += baltic_sea
 		explored_regions += mediterranean_sea
 		explored_regions += north_sea
+		explored_regions += red_sea
 		explored_provinces += lake_ladoga
 		explored_provinces += lake_onega
 		explored_provinces += lake_vanern
@@ -28,7 +29,6 @@ western = {
 		explored_provinces += coast_of_scotland
 		explored_provinces += coast_of_the_faroes
 		explored_provinces += norwegian_sea
-		explored_provinces += red_sea
 		explored_provinces += persian_gulf
 		
 		1180 = {

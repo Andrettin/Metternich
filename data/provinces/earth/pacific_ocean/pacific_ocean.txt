@@ -79,6 +79,15 @@ ceram_sea = {
 	}
 }
 
+coast_of_chile = {
+	name = "Coast of Chile"
+	color = { 36 252 252 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
 coast_of_ecuador = {
 	name = "Coast of Ecuador"
 	color = { 42 202 252 }
@@ -91,6 +100,15 @@ coast_of_ecuador = {
 coast_of_peru = {
 	name = "Coast of Peru"
 	color = { 40 252 252 }
+	sea = true
+	regions = {
+		pacific_ocean
+	}
+}
+
+coast_of_popayan = {
+	name = "Coast of Popayan"
+	color = { 84 122 193 }
 	sea = true
 	regions = {
 		pacific_ocean

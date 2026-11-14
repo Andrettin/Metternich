@@ -1,0 +1,35 @@
+coast_of_arabia = {
+	name = "Coast of Arabia"
+	color = { 61 127 21 }
+	sea = true
+	regions = {
+		red_sea
+	}
+}
+
+coast_of_sudan = {
+	name = "Coast of Sudan"
+	color = { 205 118 149 }
+	sea = true
+	regions = {
+		red_sea
+	}
+}
+
+gulf_of_suez = {
+	name = "Gulf of Suez"
+	color = { 79 220 250 }
+	sea = true
+	regions = {
+		red_sea
+	}
+}
+
+southern_red_sea = {
+	name = "Southern Red Sea"
+	color = { 1 108 220 }
+	sea = true
+	regions = {
+		red_sea
+	}
+}

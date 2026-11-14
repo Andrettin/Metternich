@@ -106,15 +106,6 @@ persian_gulf = {
 	}
 }
 
-red_sea = {
-	name = "Red Sea"
-	color = { 148 210 250 }
-	sea = true
-	regions = {
-		indian_ocean
-	}
-}
-
 savu_sea = {
 	name = "Savu Sea"
 	color = { 143 214 238 }

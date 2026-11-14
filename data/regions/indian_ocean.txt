@@ -3,3 +3,10 @@ indian_ocean = {
 	ocean = true
 	world = earth
 }
+
+red_sea = {
+	name = "Red Sea"
+	superregions = {
+		indian_ocean
+	}
+}
