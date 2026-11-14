@@ -1,0 +1,8 @@
+awbhali = {
+	name = "Awbhali" #"Al Awbhali"
+	world = earth
+	geocoordinate = { 45.52 13.54 } #Audhali
+	type = holding
+	holding_type = castle
+	province = aden #Abyan
+}

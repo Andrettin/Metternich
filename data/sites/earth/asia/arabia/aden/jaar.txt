@@ -1,0 +1,8 @@
+jaar = {
+	name = "Jaar"
+	world = earth
+	geocoordinate = { 45.3 13.216666666667 }
+	type = holding
+	holding_type = castle
+	province = aden #Abyan
+}

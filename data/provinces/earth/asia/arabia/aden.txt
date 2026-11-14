@@ -1,7 +1,8 @@
-yemen = {
-	name = "Yemen"
-	color = { 220 135 238 }
-	default_provincial_capital = sanaa
+aden = {
+	name = "Aden"
+	color = { 42 144 213 }
+	terrain = mountains
+	default_provincial_capital = aden
 	regions = {
 		asia
 		middle_east

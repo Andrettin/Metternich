@@ -4,5 +4,5 @@ hadibu = {
 	geocoordinate = { 54.02392696010 12.65187501930 } #from Natural Earth
 	type = resource
 	resource = fish
-	province = yemen
+	province = aden
 }

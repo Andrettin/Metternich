@@ -1,0 +1,8 @@
+dhala = {
+	name = "Dhala"
+	world = earth
+	geocoordinate = { 44.730833333333 13.696666666667 } #Ad Dali
+	type = holding
+	holding_type = castle
+	province = aden #Dhale
+}

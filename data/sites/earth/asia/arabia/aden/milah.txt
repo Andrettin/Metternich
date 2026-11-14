@@ -1,0 +1,8 @@
+milah = {
+	name = "Milah" #"Al Milah"
+	world = earth
+	geocoordinate = { 44.926656 13.325543 } #Al Milah District
+	type = holding
+	holding_type = castle
+	province = aden #Lahij
+}

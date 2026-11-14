@@ -4,5 +4,5 @@ hudaydah = {
 	geocoordinate = { 42.95297481160 14.79794557590 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = yemen
+	province = aden
 }

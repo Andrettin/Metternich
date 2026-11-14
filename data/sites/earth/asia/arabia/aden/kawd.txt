@@ -1,0 +1,8 @@
+kawd = {
+	name = "Kawd" #"Al Kawd"
+	world = earth
+	geocoordinate = { 45.36472222 13.08861111 }
+	type = holding
+	holding_type = castle
+	province = aden #Abyan
+}

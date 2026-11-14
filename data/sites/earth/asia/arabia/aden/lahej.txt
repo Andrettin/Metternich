@@ -1,0 +1,8 @@
+lahej = {
+	name = "Lahej"
+	world = earth
+	geocoordinate = { 44.883761 13.058181 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = aden #Lahij
+}
