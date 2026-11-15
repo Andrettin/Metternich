@@ -1,5 +1,5 @@
-awbhali = {
-	name = "Awbhali" #"Al Awbhali"
+al_awbhali = {
+	name = "Al Awbhali"
 	world = earth
 	geocoordinate = { 45.52 13.54 } #Audhali
 	type = holding

@@ -1,5 +1,5 @@
-bijadiyah = {
-	name = "Bijadiyah" #"Al-Bijadiyah"
+al_bijadiyah = {
+	name = "Al-Bijadiyah"
 	world = earth
 	geocoordinate = { 43.74667 24.30250 }
 	type = holding

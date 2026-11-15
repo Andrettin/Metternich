@@ -1,5 +1,5 @@
-maklah = {
-	name = "Maklah" #"Al-Maklah"
+al_maklah = {
+	name = "Al-Maklah"
 	world = earth
 	geocoordinate = { 42.4938006 24.5183859 }
 	type = holding

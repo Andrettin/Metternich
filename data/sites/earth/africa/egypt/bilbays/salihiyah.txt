@@ -1,5 +1,5 @@
-salihiyah = {
-	name = "Salihiyah" #"Al-Salihiyah"
+al_salihiyah = {
+	name = "Al-Salihiyah"
 	world = earth
 	geocoordinate = { 32.00449 30.746557 } #El Salheya
 	type = holding

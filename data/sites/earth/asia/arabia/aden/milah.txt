@@ -1,5 +1,5 @@
-milah = {
-	name = "Milah" #"Al Milah"
+al_milah = {
+	name = "Al Milah"
 	world = earth
 	geocoordinate = { 44.926656 13.325543 } #Al Milah District
 	type = holding
