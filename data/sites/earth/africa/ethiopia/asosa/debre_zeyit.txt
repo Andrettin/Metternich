@@ -1,0 +1,8 @@
+debre_zeyit = {
+	name = "Debre Zeyit"
+	world = earth
+	geocoordinate = { 35.8 10.5833 } #Debre Zeyit, Benishangul Gumuz
+	type = holding
+	holding_type = castle
+	province = asosa #Metekel
+}

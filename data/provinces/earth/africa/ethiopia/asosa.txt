@@ -1,0 +1,9 @@
+asosa = {
+	name = "Asosa"
+	color = { 168 0 97 }
+	terrain = mountains
+	default_provincial_capital = asosa
+	regions = {
+		ethiopia
+	}
+}

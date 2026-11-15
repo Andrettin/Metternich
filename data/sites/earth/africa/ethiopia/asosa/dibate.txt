@@ -1,0 +1,8 @@
+dibate = {
+	name = "Dibate"
+	world = earth
+	geocoordinate = { 36.26267305555555 10.776511944444444 }
+	type = holding
+	holding_type = guild
+	province = asosa #Metekel
+}

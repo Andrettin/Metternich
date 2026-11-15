@@ -1,0 +1,8 @@
+asosa = {
+	name = "Asosa"
+	world = earth
+	geocoordinate = { 34.533334 10.066994 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = asosa
+}

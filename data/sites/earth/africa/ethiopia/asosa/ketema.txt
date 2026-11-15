@@ -1,0 +1,8 @@
+ketema = {
+	name = "Ketema"
+	world = earth
+	geocoordinate = { 36.3167 11.05 }
+	type = holding
+	holding_type = castle
+	province = asosa #Metekel
+}

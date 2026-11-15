@@ -1,0 +1,8 @@
+genete_mariam = {
+	name = "Genete Mariam"
+	world = earth
+	geocoordinate = { 36.42075 11.098079 }
+	type = holding
+	holding_type = temple
+	province = asosa #Metekel
+}

@@ -1,0 +1,8 @@
+kormuk = {
+	name = "Kormuk"
+	world = earth
+	geocoordinate = { 34.29555555555555 10.556944444444444 } #Kurmuk, Ethiopia
+	type = holding
+	holding_type = castle
+	province = asosa
+}
