@@ -7,12 +7,6 @@ colombia = {
 	}
 	
 	history = {
-		-4000 = {
-			owner = arawaks
-			culture = arawak
-			religion = animist
-		}
-		
 		1836 = {
 			owner = colombia
 			culture = castillian

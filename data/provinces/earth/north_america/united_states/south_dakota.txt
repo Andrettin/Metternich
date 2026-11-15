@@ -11,12 +11,6 @@ south_dakota = {
 			#Alphadon lived in South Dakota in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
 		
-		-4000 = {
-			owner = sioux
-			culture = sioux
-			religion = totemist
-		}
-		
 		1673 = {
 			owner = new_france #became part of New France in 1673; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			culture = french

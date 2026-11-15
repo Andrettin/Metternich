@@ -7,15 +7,8 @@ saskatchewan = {
 	}
 	
 	history = {
-		
 		-143100000 = {
 			#Alphadon lived there in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
-		}
-		
-		-4000 = {
-			owner = sioux
-			culture = sioux
-			religion = totemist
 		}
 		
 		1670 = {

@@ -5,12 +5,4 @@ bolivar = {
 	regions = {
 		venezuela
 	}
-	
-	history = {
-		-4000 = {
-			owner = arawaks
-			culture = arawak
-			religion = animist
-		}
-	}
 }

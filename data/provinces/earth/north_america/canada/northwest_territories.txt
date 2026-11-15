@@ -5,12 +5,4 @@ northwest_territories = {
 	regions = {
 		canada
 	}
-	
-	history = {
-		-4000 = {
-			owner = sioux
-			culture = sioux
-			religion = totemist
-		}
-	}
 }

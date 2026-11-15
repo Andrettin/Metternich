@@ -7,12 +7,6 @@ manitoba = {
 	}
 	
 	history = {
-		-4000 = {
-			owner = sioux
-			culture = sioux
-			religion = totemist
-		}
-		
 		1670 = {
 			owner = ruperts_land #became part of Rupert's Land in 1670; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			culture = english

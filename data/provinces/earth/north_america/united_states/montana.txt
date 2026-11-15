@@ -11,12 +11,6 @@ montana = {
 			#Alphadon lived there 68.178-66.38 millions of years ago; Source: https://fossilworks.org/?a=samplePage&sample_no=4558
 		}
 		
-		-4000 = {
-			owner = sioux
-			culture = sioux
-			religion = totemist
-		}
-		
 		1673 = {
 			owner = new_france #became part of New France in 1673; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			culture = french
