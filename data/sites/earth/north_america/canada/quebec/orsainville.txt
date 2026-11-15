@@ -1,0 +1,18 @@
+orsainville = {
+	name = "Orsainville"
+	world = earth
+	geocoordinate = { -71.316666666667 46.9 } #Orsainville (seigneurie)
+	type = holding
+	holding_type = castle #barony and later county
+	province = quebec
+	
+	history = {
+		1671.3.14 = {
+			tier = barony #created as a barony (of the Ilets) on 1671.3.14; Source: Pierre-Georges Roy, "Inventaire des concessions en fief et seigneurie, fois et hommages et aveux et dénombrements", 1927, vol. 2, p. 111.
+		}
+		
+		1675.5 = {
+			tier = county #created as a county on 1675.5; Source: Pierre-Georges Roy, "Inventaire des concessions en fief et seigneurie, fois et hommages et aveux et dénombrements", 1927, vol. 2, pp. 111-112.
+		}
+	}
+}
