@@ -8,7 +8,7 @@ la_vega = {
 	
 	history = {
 		1556.9.28 = {
-			tier = duchy #created as a duchy on 1556.9.28; Source: Duque de Veragua, "El Ducado de Veragua", 1959, p. 785.
+			tier = duchy #created as a duchy on 1556.9.28 through a royal decree (with the royal dispatch being issued on 1557.3.16); Source: Duque de Veragua, "El Ducado de Veragua", Hidalguía, no. 37, 1959, p. 785.
 		}
 	}
 }
