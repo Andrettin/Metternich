@@ -1,0 +1,8 @@
+jammaniyah = {
+	name = "Jammaniyah" #"Al-Jammaniyah"
+	world = earth
+	geocoordinate = { 43.26058611111111 24.11833888888889 }
+	type = holding
+	holding_type = castle
+	province = halaban #Riyadh
+}

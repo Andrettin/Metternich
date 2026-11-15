@@ -1,0 +1,8 @@
+afif = {
+	name = "Afif"
+	world = earth
+	geocoordinate = { 42.947871 23.903428 }
+	type = holding
+	holding_type = castle
+	province = halaban #Riyadh
+}

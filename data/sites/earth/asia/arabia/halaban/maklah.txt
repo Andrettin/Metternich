@@ -1,0 +1,8 @@
+maklah = {
+	name = "Maklah" #"Al-Maklah"
+	world = earth
+	geocoordinate = { 42.4938006 24.5183859 }
+	type = holding
+	holding_type = castle
+	province = halaban #Riyadh
+}

@@ -1,7 +1,8 @@
-riyadh = {
-	name = "Riyadh"
-	color = { 143 165 83 }
-	default_provincial_capital = riyadh
+halaban = {
+	name = "Halaban"
+	color = { 0 156 215 }
+	terrain = desert
+	default_provincial_capital = afif
 	regions = {
 		asia
 		middle_east

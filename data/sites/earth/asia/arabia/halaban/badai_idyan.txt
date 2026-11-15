@@ -1,0 +1,8 @@
+badai_idyan = {
+	name = "Badai Idyan"
+	world = earth
+	geocoordinate = { 43.27556111111111 24.349297222222223 }
+	type = holding
+	holding_type = guild
+	province = halaban #Riyadh
+}

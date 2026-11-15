@@ -1,0 +1,8 @@
+qaiyah = {
+	name = "Qaiyah" #"Al-Qaiyah"
+	world = earth
+	geocoordinate = { 43.51105 24.31264 } #Al Qaiyah
+	type = holding
+	holding_type = temple
+	province = halaban #Riyadh
+}

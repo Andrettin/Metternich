@@ -14,9 +14,9 @@ arabia = {
 		mecca
 		asir
 		hail
+		halaban
 		medina
 		najran
-		riyadh
 		tabuk
 	}
 }
