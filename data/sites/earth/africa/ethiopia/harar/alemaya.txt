@@ -1,0 +1,8 @@
+alemaya = {
+	name = "Alemaya"
+	world = earth
+	geocoordinate = { 42.0125 9.395833333333334 } #Haramaya
+	type = holding
+	holding_type = guild
+	province = harar #East Hararghe
+}

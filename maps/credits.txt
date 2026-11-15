@@ -1,4 +1,5 @@
 /maps/earth/provinces/africa/egypt.geojson (www.naturalearthdata.com, www.geoboundaries.org and data.humdata.org/dataset/egypt-administrative-boundaries-levels-0-3) (licensed under the CC-BY 3.0 IGO)
+/maps/earth/provinces/africa/ethiopia.geojson (www.naturalearthdata.com, www.geoboundaries.org and africaopendata.org/dataset/ethiopia-shapefiles) (licensed under the CC-BY 4.0)
 /maps/earth/provinces/atlantic_ocean.geojson (www.naturalearthdata.com and www.marineregions.org) (licensed under the CC-BY 4.0)
 /maps/earth/provinces/caspian_sea.geojson (www.naturalearthdata.com and www.marineregions.org) (licensed under the CC-BY 4.0)
 /maps/earth/provinces/europe/austria.geojson (www.naturalearthdata.com, www.github.com/OpenHistoricalMap/data, www.geoboundaries.org and www.bev.gv.at/portal/page?_pageid=713,2639317&_dad=portal&_schema=PORTAL) (licensed under the CC-BY-SA 4.0)

@@ -1,0 +1,9 @@
+harar = {
+	name = "Harar"
+	color = { 42 189 93 }
+	terrain = mountains
+	default_provincial_capital = harar
+	regions = {
+		ethiopia
+	}
+}

@@ -1,0 +1,8 @@
+babile = {
+	name = "Babile"
+	world = earth
+	geocoordinate = { 42.333333333333336 9.225 } #Babille
+	type = holding
+	holding_type = castle
+	province = harar #East Hararghe
+}

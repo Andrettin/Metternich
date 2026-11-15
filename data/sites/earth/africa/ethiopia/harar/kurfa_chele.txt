@@ -1,0 +1,8 @@
+kurfa_chele = {
+	name = "Kurfa Chele"
+	world = earth
+	geocoordinate = { 41.75 9.16666667 }
+	type = holding
+	holding_type = castle
+	province = harar #East Hararghe
+}

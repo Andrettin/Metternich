@@ -1,0 +1,8 @@
+harar = {
+	name = "Harar"
+	world = earth
+	geocoordinate = { 42.150026 9.319960 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = harar
+}

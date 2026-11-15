@@ -1,0 +1,8 @@
+kombolcha = {
+	name = "Kombolcha"
+	world = earth
+	geocoordinate = { 42.11666666666667 9.433333333333334 } #Melka Rafu
+	type = holding
+	holding_type = guild
+	province = harar #East Hararghe
+}

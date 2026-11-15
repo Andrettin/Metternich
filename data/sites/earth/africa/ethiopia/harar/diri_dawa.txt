@@ -1,0 +1,8 @@
+diri_dawa = {
+	name = "Diri Dawa"
+	world = earth
+	geocoordinate = { 41.860018 9.589995 } #from Natural Earth (Dire Dawa)
+	type = holding
+	holding_type = castle
+	province = harar #Dire Dawa
+}
