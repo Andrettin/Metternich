@@ -76,9 +76,14 @@ europe = {
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
+		bolivar
+		cuba
+		guyana
 		karelia
 		lake_onega
 		mazandaran
+		new_york
+		nunavut
 		qatar
 		satakunta
 		sermersooq
