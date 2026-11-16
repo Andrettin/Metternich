@@ -262,6 +262,10 @@ void map_template::load_province_image()
 {
 	const std::filesystem::path image_filepath = this->get_province_image_filepath();
 
+	if (image_filepath.empty()) {
+		return;
+	}
+
 	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
 	this->province_image_promise = promise;
 	this->province_image_promise->start();
