@@ -164,10 +164,6 @@ void building_type::initialize()
 	if (this->wealth_cost != 0) {
 		assert_throw(this->commodity_costs.empty());
 
-		if (this->commodity_cost_weights.empty()) {
-			this->commodity_cost_weights[defines::get()->get_wealth_commodity()] = 1;
-		}
-
 		this->commodity_costs = commodity::weights_to_costs(this->wealth_cost, this->commodity_cost_weights);
 
 		this->wealth_cost = decimillesimal_int(0);
