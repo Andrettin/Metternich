@@ -1,0 +1,8 @@
+wagadougou = {
+	name = "Wagadougou"
+	world = earth
+	geocoordinate = { -1.526670 12.372262 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = wagadougou
+}

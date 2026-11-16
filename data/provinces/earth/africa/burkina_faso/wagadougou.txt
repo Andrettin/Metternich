@@ -1,0 +1,9 @@
+wagadougou = {
+	name = "Wagadougou"
+	color = { 169 165 207 }
+	terrain = plains
+	default_provincial_capital = wagadougou
+	regions = {
+		africa
+	}
+}
