@@ -1,0 +1,8 @@
+ivory_coast = {
+	name = "Ivory Coast"
+	color = { 251 47 41 }
+	default_provincial_capital = assinie
+	regions = {
+		africa
+	}
+}

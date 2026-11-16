@@ -1,0 +1,17 @@
+assinie = {
+	name = "Assinie"
+	world = earth
+	geocoordinate = { -3.3333333333333 5.1333333333333 }
+	type = holding
+	holding_type = guild #trading post/fort
+	province = ivory_coast
+	
+	history = {
+		1700 = {
+			#was a French trading post/fort in 1700; Source: "History of the World Map by Map", 2023, pp. 166-167.
+			owner = france
+			culture = french
+			religion = catholic
+		}
+	}
+}
