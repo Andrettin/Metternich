@@ -12,6 +12,7 @@ arabia = {
 	}
 	core_provinces = {
 		mecca
+		al_ahsa
 		asir
 		hail
 		halaban
