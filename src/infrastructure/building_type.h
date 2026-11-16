@@ -75,8 +75,6 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
-	static commodity_map<decimillesimal_int> commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
-
 public:
 	explicit building_type(const std::string &identifier);
 	~building_type();

@@ -126,14 +126,7 @@ void employment_type::initialize()
 			this->input_commodity_weights[defines::get()->get_wealth_commodity()] = 1;
 		}
 
-		int64_t total_weight = 0;
-		for (const auto &[commodity, weight] : this->input_commodity_weights) {
-			total_weight += weight;
-		}
-		for (const auto &[commodity, weight] : this->input_commodity_weights) {
-			assert_throw(commodity->get_base_price() > 0);
-			this->input_commodities[commodity] = (this->input_wealth_value * weight / total_weight / commodity->get_base_price());
-		}
+		this->input_commodities = commodity::weights_to_costs(this->input_wealth_value, this->input_commodity_weights);
 
 		this->input_commodity_weights.clear();
 		this->input_wealth_value = decimillesimal_int(0);

@@ -80,14 +80,7 @@ void pathway::initialize()
 			this->commodity_cost_weights[defines::get()->get_wealth_commodity()] = 1;
 		}
 
-		int64_t total_weight = 0;
-		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-			total_weight += cost_weight;
-		}
-		for (const auto &[commodity, cost_weight] : this->commodity_cost_weights) {
-			assert_throw(commodity->get_base_price() > 0);
-			this->commodity_costs[commodity] = this->wealth_cost * cost_weight / total_weight / commodity->get_base_price();
-		}
+		this->commodity_costs = commodity::weights_to_costs(this->wealth_cost, this->commodity_cost_weights);
 
 		this->commodity_cost_weights.clear();
 		this->wealth_cost = decimillesimal_int(0);

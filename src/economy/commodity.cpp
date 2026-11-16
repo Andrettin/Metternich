@@ -36,6 +36,20 @@ bool commodity::commodity_price_compare(const commodity *lhs, const commodity *r
 	return game::get()->get_price(lhs) < game::get()->get_price(rhs);
 }
 
+commodity_map<decimillesimal_int> commodity::weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights)
+{
+	commodity_map<decimillesimal_int> commodity_costs;
+
+	const int total_weight = archimedes::map::get_total_value(commodity_cost_weights);
+
+	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
+		assert_throw(commodity->get_base_price() > 0);
+		commodity_costs[commodity] = wealth_cost * cost_weight / total_weight / commodity->get_base_price();
+	}
+
+	return commodity_costs;
+}
+
 commodity::commodity(const std::string &identifier)
 	: named_data_entry(identifier), food_type(food_type::none)
 {

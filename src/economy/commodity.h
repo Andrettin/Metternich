@@ -3,6 +3,7 @@
 #include "database/data_entry_container.h"
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
+#include "economy/commodity_container.h"
 #include "util/decimillesimal_int.h"
 #include "util/millionesimal_int.h"
 
@@ -72,6 +73,8 @@ public:
 	static const std::vector<const commodity *> &get_luxury_type_commodities(const luxury_type luxury_type);
 
 	static bool commodity_price_compare(const commodity *lhs, const commodity *rhs);
+
+	static commodity_map<decimillesimal_int> weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
 
 private:
 	static inline std::map<food_type, std::vector<const commodity *>> food_type_commodities;

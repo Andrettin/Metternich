@@ -46,23 +46,6 @@ const std::set<std::string> building_type::database_dependencies = {
 	employment_type::class_identifier
 };
 
-commodity_map<decimillesimal_int> building_type::commodity_weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights)
-{
-	commodity_map<decimillesimal_int> commodity_costs;
-
-	int total_weight = 0;
-	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
-		total_weight += cost_weight;
-	}
-
-	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
-		assert_throw(commodity->get_base_price() > 0);
-		commodity_costs[commodity] = wealth_cost * cost_weight / total_weight / commodity->get_base_price();
-	}
-
-	return commodity_costs;
-}
-
 building_type::building_type(const std::string &identifier) : named_data_entry(identifier)
 {
 }
@@ -181,7 +164,7 @@ void building_type::initialize()
 	if (this->wealth_cost != 0) {
 		assert_throw(this->commodity_costs.empty());
 
-		this->commodity_costs = building_type::commodity_weights_to_costs(this->wealth_cost, this->commodity_cost_weights);
+		this->commodity_costs = commodity::weights_to_costs(this->wealth_cost, this->commodity_cost_weights);
 
 		this->wealth_cost = decimillesimal_int(0);
 	}
@@ -407,7 +390,7 @@ commodity_map<decimillesimal_int> building_type::get_commodity_costs_for_site(co
 	}
 
 	if (costs.contains(defines::get()->get_wealth_commodity()) && !this->commodity_cost_weights.empty() && (!this->commodity_cost_weights.contains(defines::get()->get_wealth_commodity()) || this->commodity_cost_weights.size() > 1)) {
-		const commodity_map<decimillesimal_int> weighted_commodity_costs = building_type::commodity_weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
+		const commodity_map<decimillesimal_int> weighted_commodity_costs = commodity::weights_to_costs(costs.find(defines::get()->get_wealth_commodity())->second, this->commodity_cost_weights);
 
 		for (const auto &[weighted_commodity, weighted_cost] : weighted_commodity_costs) {
 			costs[weighted_commodity] += weighted_cost;
