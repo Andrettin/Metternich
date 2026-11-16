@@ -1,0 +1,8 @@
+say_utes = {
+	name = "Say-Utes"
+	world = earth
+	geocoordinate = { 53.5325 44.32777778 } #Saiotes
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}

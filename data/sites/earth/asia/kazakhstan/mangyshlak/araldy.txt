@@ -1,0 +1,8 @@
+araldy = {
+	name = "Araldy"
+	world = earth
+	geocoordinate = { 50.41667 44.35 } #Aralda
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}

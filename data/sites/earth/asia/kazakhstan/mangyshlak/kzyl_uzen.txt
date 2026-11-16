@@ -1,0 +1,8 @@
+kzyl_uzen = {
+	name = "Kzyl-Uzen"
+	world = earth
+	geocoordinate = { 50.50444444 44.29861111 } #Kyzylozen
+	type = holding
+	holding_type = guild
+	province = mangyshlak
+}

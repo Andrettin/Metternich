@@ -1,0 +1,8 @@
+ashchimuryn = {
+	name = "Ashchimuryn"
+	world = earth
+	geocoordinate = { 51.08333 44.5 }
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}

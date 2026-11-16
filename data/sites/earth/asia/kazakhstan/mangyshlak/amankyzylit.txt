@@ -1,0 +1,8 @@
+amankyzylit = {
+	name = "Amankyzylit"
+	world = earth
+	geocoordinate = { 52.18401 44.35803 } #Zimovka Zhamankyzylit
+	type = holding
+	holding_type = temple
+	province = mangyshlak
+}

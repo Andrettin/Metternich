@@ -1,0 +1,8 @@
+aqtaw = {
+	name = "Aqtaw"
+	world = earth
+	geocoordinate = { 51.236500 43.623189 } #from Natural Earth (Aqtau)
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}

@@ -1,0 +1,8 @@
+tigen = {
+	name = "Tigen"
+	world = earth
+	geocoordinate = { 52.088055555556 44.480555555556 }
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}

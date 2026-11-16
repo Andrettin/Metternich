@@ -1,0 +1,9 @@
+mangyshlak = {
+	name = "Mangyshlak"
+	color = { 168 168 12 }
+	terrain = desert
+	default_provincial_capital = aqtaw
+	regions = {
+		kazakhstan
+	}
+}

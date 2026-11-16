@@ -1,0 +1,8 @@
+uzen = {
+	name = "Uzen"
+	world = earth
+	geocoordinate = { 52.800022 43.300392 } #from Natural Earth (Zhangaozen)
+	type = holding
+	holding_type = castle
+	province = mangyshlak
+}
