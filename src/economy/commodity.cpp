@@ -40,7 +40,12 @@ commodity_map<decimillesimal_int> commodity::weights_to_costs(const decimillesim
 {
 	commodity_map<decimillesimal_int> commodity_costs;
 
+	if (wealth_cost == 0) {
+		return commodity_costs;
+	}
+
 	const int total_weight = archimedes::map::get_total_value(commodity_cost_weights);
+	assert_throw(total_weight > 0);
 
 	for (const auto &[commodity, cost_weight] : commodity_cost_weights) {
 		assert_throw(commodity->get_base_price() > 0);
