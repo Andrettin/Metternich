@@ -1,0 +1,8 @@
+foda = {
+	name = "Foda"
+	world = earth
+	geocoordinate = { 49.49666 25.9452 } #Fudah
+	type = holding
+	holding_type = temple
+	province = al_ahsa #Ash Sharqiyah
+}

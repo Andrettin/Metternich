@@ -1,0 +1,8 @@
+abqaiq = {
+	name = "Abqaiq"
+	world = earth
+	geocoordinate = { 49.666111111111114 25.935 }
+	type = holding
+	holding_type = castle
+	province = al_ahsa #Ash Sharqiyah
+}

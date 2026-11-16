@@ -4,7 +4,7 @@ halaban = {
 	geocoordinate = { 44.37259125 23.47929754 }
 	type = resource
 	resource = sheep
-	province = halaban
+	province = halaban #Riyadh
 	features = {
 		prime_sheep_land
 	}

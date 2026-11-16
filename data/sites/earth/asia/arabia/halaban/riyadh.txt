@@ -2,5 +2,5 @@ riyadh = {
 	name = "Riyadh"
 	world = earth
 	geocoordinate = { 46.77274165730 24.64083314920 } #from Natural Earth
-	province = halaban
+	province = halaban #Riyadh
 }

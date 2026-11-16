@@ -1,0 +1,8 @@
+al_oyoon = {
+	name = "Al Oyoon"
+	world = earth
+	geocoordinate = { 49.56667 25.6 } #Al'Uyun
+	type = holding
+	holding_type = castle
+	province = al_ahsa #Ash Sharqiyah
+}

@@ -1,0 +1,8 @@
+al_mubarraz = {
+	name = "Al Mubarraz"
+	world = earth
+	geocoordinate = { 49.565905 25.429054 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = al_ahsa #Ash Sharqiyah
+}

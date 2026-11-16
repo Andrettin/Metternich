@@ -1,0 +1,8 @@
+ghunan = {
+	name = "Ghunan"
+	world = earth
+	geocoordinate = { 49.9 26.13333 }
+	type = holding
+	holding_type = castle
+	province = al_ahsa #Ash Sharqiyah
+}

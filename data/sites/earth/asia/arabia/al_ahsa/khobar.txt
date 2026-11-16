@@ -1,0 +1,8 @@
+khobar = {
+	name = "Khobar"
+	world = earth
+	geocoordinate = { 50.216666666667 26.3 }
+	type = holding
+	holding_type = guild
+	province = al_ahsa #Ash Sharqiyah
+}

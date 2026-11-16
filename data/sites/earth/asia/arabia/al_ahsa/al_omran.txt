@@ -1,0 +1,8 @@
+al_omran = {
+	name = "Al Omran"
+	world = earth
+	geocoordinate = { 49.72087 25.4177 } #Al'Umran
+	type = holding
+	holding_type = castle
+	province = al_ahsa #Ash Sharqiyah
+}
