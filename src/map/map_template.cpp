@@ -43,6 +43,20 @@ const std::set<std::string> map_template::database_dependencies = {
 	province::class_identifier
 };
 
+void map_template::load_province_images()
+{
+	for (map_template *map_template : map_template::get_all()) {
+		map_template->load_province_image();
+	}
+}
+
+void map_template::clear_province_images()
+{
+	for (map_template *map_template : map_template::get_all()) {
+		map_template->province_image_promise = nullptr;
+	}
+}
+
 bool map_template::is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map)
 {
 	const auto find_iterator = province_geodata_map.find(province);
@@ -91,7 +105,7 @@ void map_template::initialize()
 	if (!this->get_province_image_filepath().empty()) {
 		const QRect map_rect(QPoint(0, 0), this->get_size());
 
-		const QImage province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
+		const QImage province_image = this->get_province_image();
 
 		for (const site *site : this->get_world()->get_sites()) {
 			QPoint tile_pos = site->get_pos();
@@ -231,6 +245,36 @@ void map_template::set_province_image_filepath(const std::filesystem::path &file
 	}
 
 	this->province_image_filepath = database::get()->get_maps_path(this->get_module()) / filepath;
+	
+	//load the province image asynchronously as soon as the province image filepath is set
+	//if we wait to load until initialization, this will cause a delay for starting the game
+	this->load_province_image();
+}
+
+QImage map_template::get_province_image() const
+{
+	const std::shared_ptr<QPromise<QImage>> promise = this->get_province_image_promise();
+	assert_throw(promise != nullptr);
+	return promise->future().result();
+}
+
+void map_template::load_province_image()
+{
+	const std::filesystem::path image_filepath = this->get_province_image_filepath();
+
+	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
+	this->province_image_promise = promise;
+	this->province_image_promise->start();
+	QThreadPool::globalInstance()->start([promise, image_filepath]() {
+		QImage province_image(path::to_qstring(image_filepath));
+
+		if (province_image.format() != QImage::Format_ARGB32) {
+			province_image = province_image.convertToFormat(QImage::Format_ARGB32);
+		}
+
+		promise->addResult(std::move(province_image));
+		promise->finish();
+	});
 }
 
 void map_template::write_province_image()
@@ -295,6 +339,9 @@ void map_template::write_province_image()
 
 		const std::chrono::milliseconds elapsed_ms(elapsed_timer.elapsed());
 		log_info(std::format("Wrote province image for map template \"{}\" in {} minutes and {} seconds.", this->get_identifier(), std::chrono::duration_cast<std::chrono::minutes>(elapsed_ms).count(), (elapsed_ms.count() / 1000) % 60));
+		
+		//reload the province image, since it has changed
+		this->load_province_image();
 	} catch (...) {
 		exception::report(std::current_exception());
 		QCoreApplication::exit(EXIT_FAILURE);
@@ -356,19 +403,14 @@ QCoro::Task<map_template::application_result> map_template::apply_provinces() co
 	if (this->get_main_map_template() != nullptr) {
 		const QRect map_rect(this->get_map_start_pos(), this->get_size());
 
-		QImageReader image_reader(path::to_qstring(this->get_main_map_template()->get_province_image_filepath()));
-		image_reader.setClipRect(map_rect);
-
-		province_image = image_reader.read();
+		province_image = this->get_main_map_template()->get_province_image().copy(map_rect);
 	} else {
 		assert_throw(!this->get_province_image_filepath().empty());
 
-		province_image = QImage(path::to_qstring(this->get_province_image_filepath()));
+		province_image = this->get_province_image();
 	}
 
-	if (province_image.format() != QImage::Format_ARGB32) {
-		province_image = province_image.convertToFormat(QImage::Format_ARGB32);
-	}
+	assert_throw(province_image.format() == QImage::Format_ARGB32);
 
 	map *map = map::get();
 

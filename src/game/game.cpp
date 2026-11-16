@@ -527,6 +527,9 @@ QCoro::Task<void> game::start_coro(const bool is_new_game)
 		engine_interface::get()->reset_active_civilian_units();
 
 		this->set_running(true);
+
+		//clear map template province images, since it is no longer necessary to keep those in memory
+		map_template::clear_province_images();
 	} catch (...) {
 		exception::report(std::current_exception());
 		log::log_error("Failed to start game.");
@@ -541,6 +544,9 @@ QCoro::Task<void> game::stop_coro()
 			//already stopped
 			co_return;
 		}
+
+		//reload map template province images, since they might be necessary for starting a new game
+		map_template::load_province_images();
 
 		co_await this->clear_coro(true);
 	} catch (...) {

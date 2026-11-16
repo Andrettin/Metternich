@@ -71,6 +71,8 @@ public:
 
 	static const std::set<std::string> database_dependencies;
 
+	static void load_province_images();
+	static void clear_province_images();
 	static bool is_site_in_province(const site *site, const province *province, const province_geodata_map_type &province_geodata_map);
 
 	explicit map_template(const std::string &identifier) : named_data_entry(identifier)
@@ -170,6 +172,14 @@ public:
 	}
 
 	void set_province_image_filepath(const std::filesystem::path &filepath);
+
+	const std::shared_ptr<QPromise<QImage>> &get_province_image_promise() const
+	{
+		return this->province_image_promise;
+	}
+
+	QImage get_province_image() const;
+	void load_province_image();
 	Q_INVOKABLE void write_province_image();
 
 	bool is_randomly_generated() const
@@ -246,6 +256,7 @@ private:
 	const map_template *main_map_template = nullptr;
 	QPoint map_start_pos; //the start position for the part of the map that is actually applied
 	std::filesystem::path province_image_filepath;
+	std::shared_ptr<QPromise<QImage>> province_image_promise;
 	bool randomly_generated = false;
 	bool province_post_processing_enabled = true;
 	int land_percent = 30;
