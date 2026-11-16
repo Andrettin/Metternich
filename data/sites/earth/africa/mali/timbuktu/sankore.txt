@@ -3,6 +3,12 @@ sankore = {
 	world = earth
 	geocoordinate = { -3.0055555555556 16.775833333333 } #Sankore Madrasah
 	type = holding
-	holding_type = temple
+	holding_type = temple #mosque
 	province = timbuktu
+	
+	history = {
+		989 = {
+			developed = true #Sankore Mosque founded in Timbuktu in 989; Source: "History of the World Map by Map", 2023, pp. 140-141.
+		}
+	}
 }
