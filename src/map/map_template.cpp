@@ -255,7 +255,14 @@ QImage map_template::get_province_image() const
 {
 	const std::shared_ptr<QPromise<QImage>> promise = this->get_province_image_promise();
 	assert_throw(promise != nullptr);
-	return promise->future().result();
+
+	QImage province_image = promise->future().result();
+
+	if (province_image.isNull()) {
+		throw std::runtime_error(std::format("Failed to load province image {} for map template \"{}\".", path::to_string(this->get_province_image_filepath()), this->get_identifier()));
+	}
+
+	return province_image;
 }
 
 void map_template::load_province_image()
@@ -414,6 +421,7 @@ QCoro::Task<map_template::application_result> map_template::apply_provinces() co
 		province_image = this->get_province_image();
 	}
 
+	assert_throw(!province_image.isNull());
 	assert_throw(province_image.format() == QImage::Format_ARGB32);
 
 	map *map = map::get();
