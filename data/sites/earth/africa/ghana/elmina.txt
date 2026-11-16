@@ -1,0 +1,31 @@
+elmina = {
+	name = "Elmina"
+	world = earth
+	geocoordinate = { -1.35093 5.0847 }
+	type = holding
+	holding_type = guild #Portuguese and later Dutch trading post/fort; Source: "History of the World Map by Map", 2023, pp. 166-167.
+	province = central_gold_coast
+	cultural_names = {
+		"Sao Jorge da Mina" #"São Jorge da Mina"
+	}
+	
+	history = {
+		1482 = {
+			#the fort of São Jorge da Mina (Elmina) founded by the Portuguese in 1482; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110; Source: "History of the World Map by Map", 2023, pp. 166-167.
+			owner = portugal
+			culture = portuguese
+			religion = catholic
+		}
+		
+		1637 = {
+			owner = netherlands #São Jorge da Mina (Elmina) became a Dutch possession in 1637; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128; Source: "History of the World Map by Map", 2023, pp. 166-167.
+			culture = dutch
+			religion = protestant
+		}
+		
+		1884.11 = {
+			owner = gold_coast #part of the British Gold Coast by 1884.11; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 174-175.
+			culture = none
+		}
+	}
+}
