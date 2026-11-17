@@ -6,7 +6,7 @@
 #include "game/site_event.h"
 #include "script/context.h"
 #include "script/effect/effect.h"
-#include "util/assert_util.h"
+#include "script/scope_traits.h"
 
 namespace metternich {
 
@@ -16,17 +16,7 @@ class event_effect final : public effect<scope_type>
 public:
 	explicit event_effect(const std::string &value, const gsml_operator effect_operator) : effect<scope_type>(effect_operator)
 	{
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			this->event = character_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->event = domain_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			this->event = province_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			this->event = site_event::get(value);
-		} else {
-			assert_throw(false);
-		}
+		this->event = scope_traits_t<scope_type>::event_type::get(value);
 	}
 
 	virtual const std::string &get_class_identifier() const override

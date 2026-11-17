@@ -126,14 +126,6 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 		}
 	}
 
-	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
-		if (key == "event") {
-			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
-		} else if (key == "event_group") {
-			return std::make_unique<event_group_effect<scope_type>>(value, effect_operator);
-		}
-	}
-
 	if constexpr (std::is_same_v<scope_type, const character> || std::is_same_v<scope_type, const province> || std::is_same_v<scope_type, const site>) {
 		if (key == "scripted_modifiers") {
 			assert_throw(effect_operator == gsml_operator::subtraction);
@@ -150,6 +142,14 @@ std::unique_ptr<effect<scope_type>> effect<scope_type>::from_gsml_property(const
 	if constexpr (std::is_same_v<scope_type, const domain> || std::is_same_v<scope_type, const site>) {
 		if (key == "capital") {
 			return std::make_unique<capital_effect<scope_type>>(value, effect_operator);
+		}
+	}
+
+	if constexpr (scope_has_events<scope_type>) {
+		if (key == "event") {
+			return std::make_unique<event_effect<scope_type>>(value, effect_operator);
+		} else if (key == "event_group") {
+			return std::make_unique<event_group_effect<scope_type>>(value, effect_operator);
 		}
 	}
 

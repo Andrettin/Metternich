@@ -2,7 +2,7 @@
 
 #include "script/effect/effect.h"
 #include "script/effect/scripted_effect.h"
-#include "util/assert_util.h"
+#include "script/scope_traits.h"
 
 namespace metternich {
 
@@ -15,19 +15,7 @@ class scripted_effect_effect final : public effect<scope_type>
 public:
 	explicit scripted_effect_effect(const std::string &effect_identifier, const gsml_operator effect_operator) : effect<scope_type>(effect_operator)
 	{
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			this->scripted_effect = character_scripted_effect::get(effect_identifier);
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->scripted_effect = domain_scripted_effect::get(effect_identifier);
-		} else if constexpr (std::is_same_v<scope_type, military_unit>) {
-			this->scripted_effect = military_unit_scripted_effect::get(effect_identifier);
-		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-			this->scripted_effect = population_unit_scripted_effect::get(effect_identifier);
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			this->scripted_effect = province_scripted_effect::get(effect_identifier);
-		} else {
-			assert_throw(false);
-		}
+		this->scripted_effect = scope_traits_t<scope_type>::scripted_effect_type::get(effect_identifier);
 	}
 
 	virtual const std::string &get_class_identifier() const override
@@ -36,8 +24,7 @@ public:
 		return class_identifier;
 	}
 
-	[[nodiscard]]
-	virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
+	[[nodiscard]] virtual QCoro::Task<void> do_assignment_effect_coro(scope_type *scope, context &ctx) const override
 	{
 		co_await this->scripted_effect->get_effects().do_effects(scope, ctx);
 	}

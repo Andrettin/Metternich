@@ -7,13 +7,10 @@
 #include "database/gsml_property.h"
 #include "domain/domain.h"
 #include "game/character_event.h"
-#include "game/domain_event.h"
-#include "game/province_event.h"
-#include "game/site_event.h"
 #include "map/province.h"
 #include "map/site.h"
 #include "script/effect/scripted_effect.h"
-#include "util/assert_util.h"
+#include "script/scope_traits.h"
 
 namespace metternich {
 
@@ -43,40 +40,21 @@ void delayed_effect_instance<scope_type>::process_gsml_property(const gsml_prope
 	const std::string &key = property.get_key();
 	const std::string &value = property.get_value();
 
+	if constexpr (scope_has_events<scope_type>) {
+		if (key == "event") {
+			this->event = scope_traits_t<scope_type>::event_type::get(value);
+			return;
+		}
+	}
+
 	if (key == "scripted_effect") {
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			this->scripted_effect = character_scripted_effect::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->scripted_effect = domain_scripted_effect::get(value);
-		} else if constexpr (std::is_same_v<scope_type, military_unit>) {
-			this->scripted_effect = military_unit_scripted_effect::get(value);
-		} else if constexpr (std::is_same_v<scope_type, population_unit>) {
-			this->scripted_effect = population_unit_scripted_effect::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			this->scripted_effect = province_scripted_effect::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			this->scripted_effect = site_scripted_effect::get(value);
-		} else {
-			assert_throw(false);
-		}
-	} else if (key == "event") {
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			this->event = character_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			this->event = domain_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			this->event = province_event::get(value);
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			this->event = site_event::get(value);
-		} else {
-			assert_throw(false);
-		}
+		this->scripted_effect = scope_traits_t<scope_type>::scripted_effect_type::get(value);
 	} else if (key == "scope") {
 		this->scope = scope_type::get(value);
 	} else if (key == "remaining_turns") {
 		this->remaining_turns = std::stoi(value);
 	} else {
-		throw std::runtime_error("Invalid delayed effect instance property: \"" + key + "\".");
+		throw std::runtime_error(std::format("Invalid delayed effect instance property: \"{}\".", key));
 	}
 }
 
