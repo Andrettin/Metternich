@@ -23,13 +23,12 @@ void event_random_group::initialize()
 {
 	event_random_group::groups_by_trigger[this->get_trigger()].push_back(this);
 
-	if (this->get_none_weight() > 0) {
-		for (int i = 0; i < this->get_none_weight(); ++i) {
-			this->character_events.push_back(nullptr);
-			this->domain_events.push_back(nullptr);
-			this->province_events.push_back(nullptr);
-			this->site_events.push_back(nullptr);
-		}
+	const size_t none_weight = static_cast<size_t>(this->get_none_weight());
+	if (none_weight > 0) {
+		//add one null value per none weight to each scope type event vector
+		std::apply([none_weight](auto &... event_vectors) {
+			(event_vectors.insert(event_vectors.end(), none_weight, nullptr), ...);
+		}, this->events);
 	}
 
 	named_data_entry::initialize();

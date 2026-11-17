@@ -8,6 +8,7 @@ namespace metternich {
 class character;
 class domain;
 class province;
+class site;
 enum class event_trigger;
 
 template <typename scope_type>
@@ -21,6 +22,10 @@ class event_random_group final : public named_data_entry, public data_type<event
 	Q_PROPERTY(int none_weight MEMBER none_weight READ get_none_weight)
 	Q_PROPERTY(int delay MEMBER delay)
 	Q_PROPERTY(int delay_days MEMBER delay_days)
+
+private:
+	template <typename scope_type>
+	using event_vector = std::vector<const scoped_event_base<const scope_type> *>;
 
 public:
 	static const std::vector<event_random_group *> &get_all_of_trigger(const event_trigger trigger);
@@ -53,35 +58,13 @@ public:
 	template <typename scope_type>
 	const std::vector<const scoped_event_base<scope_type> *> &get_events() const
 	{
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			return this->character_events;
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			return this->domain_events;
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			return this->province_events;
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			return this->site_events;
-		}
+		return std::get<event_vector<scope_type>>(this->events);
 	}
 
-	void add_event(const scoped_event_base<const character> *event)
+	template <typename scope_type>
+	void add_event(const scoped_event_base<const scope_type> *event)
 	{
-		this->character_events.push_back(event);
-	}
-
-	void add_event(const scoped_event_base<const domain> *event)
-	{
-		this->domain_events.push_back(event);
-	}
-
-	void add_event(const scoped_event_base<const province> *event)
-	{
-		this->province_events.push_back(event);
-	}
-
-	void add_event(const scoped_event_base<const site> *event)
-	{
-		this->site_events.push_back(event);
+		std::get<event_vector<scope_type>>(this->events).push_back(event);
 	}
 
 private:
@@ -89,10 +72,7 @@ private:
 	int none_weight = 0;
 	int delay = 0;
 	int delay_days = 0;
-	std::vector<const scoped_event_base<const character> *> character_events;
-	std::vector<const scoped_event_base<const domain> *> domain_events;
-	std::vector<const scoped_event_base<const province> *> province_events;
-	std::vector<const scoped_event_base<const site> *> site_events;
+	std::tuple<event_vector<character>, event_vector<domain>, event_vector<province>, event_vector<site>> events;
 };
 
 }
