@@ -51,15 +51,7 @@ const std::vector<const scoped_event_base<scope_type> *> &scoped_event_base<scop
 template <typename scope_type>
 const scope_type *scoped_event_base<scope_type>::get_scope_from_context(const read_only_context &ctx)
 {
-	if constexpr (std::is_same_v<scope_type, const character>) {
-		return std::get<const character *>(ctx.root_scope);
-	} else if constexpr (std::is_same_v<scope_type, const domain>) {
-		return std::get<const domain *>(ctx.root_scope);
-	} else if constexpr (std::is_same_v<scope_type, const province>) {
-		return std::get<const province *>(ctx.root_scope);
-	} else if constexpr (std::is_same_v<scope_type, const site>) {
-		return std::get<const site *>(ctx.root_scope);
-	}
+	return std::get<const scope_type *>(ctx.root_scope);
 }
 
 template <typename scope_type>

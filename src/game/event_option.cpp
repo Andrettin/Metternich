@@ -119,20 +119,7 @@ template <typename scope_type>
 std::string event_option<scope_type>::get_effects_string(const read_only_context &ctx) const
 {
 	if (this->effects != nullptr) {
-		const scope_type *scope = nullptr;
-
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			scope = std::get<const character *>(ctx.root_scope);
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			scope = std::get<const domain *>(ctx.root_scope);
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			scope = std::get<const province *>(ctx.root_scope);
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			scope = std::get<const site *>(ctx.root_scope);
-		} else {
-			assert_throw(false);
-		}
-
+		const scope_type *scope = std::get<const scope_type *>(ctx.root_scope);
 		assert_throw(scope != nullptr);
 
 		std::string str;
