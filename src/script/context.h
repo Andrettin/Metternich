@@ -31,6 +31,9 @@ struct context_base
 	using population_unit_ptr = population_unit_type *;
 	using scope_variant_type = std::variant<std::monostate, const character *, const domain *, military_unit_ptr, population_unit_ptr, const province *, const site *>;
 
+	template <typename scope_type>
+	using saved_scope_map = std::map<std::string, scope_type *>;
+
 	context_base();
 	explicit context_base(const scope_variant_type &root_scope);
 
@@ -41,37 +44,13 @@ struct context_base
 	template <typename scope_type>
 	std::map<std::string, scope_type *> &get_saved_scopes()
 	{
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			return this->saved_character_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			return this->saved_domain_scopes;
-		} else if constexpr (std::is_same_v<scope_type, military_unit_t>) {
-			return this->saved_military_unit_scopes;
-		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
-			return this->saved_population_unit_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			return this->saved_province_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			return this->saved_site_scopes;
-		}
+		return std::get<saved_scope_map<scope_type>>(this->saved_scopes);
 	}
 
 	template <typename scope_type>
 	const std::map<std::string, scope_type *> &get_saved_scopes() const
 	{
-		if constexpr (std::is_same_v<scope_type, const character>) {
-			return this->saved_character_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const domain>) {
-			return this->saved_domain_scopes;
-		} else if constexpr (std::is_same_v<scope_type, military_unit_t>) {
-			return this->saved_military_unit_scopes;
-		} else if constexpr (std::is_same_v<scope_type, population_unit_type>) {
-			return this->saved_population_unit_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const province>) {
-			return this->saved_province_scopes;
-		} else if constexpr (std::is_same_v<scope_type, const site>) {
-			return this->saved_site_scopes;
-		}
+		return std::get<saved_scope_map<scope_type>>(this->saved_scopes);
 	}
 
 	template <typename scope_type>
@@ -108,12 +87,7 @@ struct context_base
 	scope_variant_type root_scope = std::monostate();
 	scope_variant_type source_scope = std::monostate();
 	scope_variant_type previous_scope = std::monostate();
-	std::map<std::string, const character *> saved_character_scopes;
-	std::map<std::string, const domain *> saved_domain_scopes;
-	std::map<std::string, military_unit_ptr> saved_military_unit_scopes;
-	std::map<std::string, population_unit_ptr> saved_population_unit_scopes;
-	std::map<std::string, const province *> saved_province_scopes;
-	std::map<std::string, const site *> saved_site_scopes;
+	std::tuple<saved_scope_map<const character>, saved_scope_map<const domain>, saved_scope_map<military_unit_t>, saved_scope_map<population_unit_type>, saved_scope_map<const province>, saved_scope_map<const site>> saved_scopes;
 	std::map<std::string, std::string> saved_strings;
 	std::map<std::string, const building_type *> saved_buildings;
 	army_ptr army = nullptr;

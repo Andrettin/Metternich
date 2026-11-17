@@ -167,10 +167,10 @@ read_only_context::read_only_context(const context &ctx)
 	this->source_scope = read_only_context::scope_from_mutable(ctx.source_scope);
 	this->previous_scope = read_only_context::scope_from_mutable(ctx.previous_scope);
 
-	this->saved_character_scopes = ctx.saved_character_scopes;
-	this->saved_domain_scopes = ctx.saved_domain_scopes;
-	this->saved_province_scopes = ctx.saved_province_scopes;
-	this->saved_site_scopes = ctx.saved_site_scopes;
+	std::get<saved_scope_map<const character>>(this->saved_scopes) = std::get<saved_scope_map<const character>>(ctx.saved_scopes);
+	std::get<saved_scope_map<const domain>>(this->saved_scopes) = std::get<saved_scope_map<const domain>>(ctx.saved_scopes);
+	std::get<saved_scope_map<const province>>(this->saved_scopes) = std::get<saved_scope_map<const province>>(ctx.saved_scopes);
+	std::get<saved_scope_map<const site>>(this->saved_scopes) = std::get<saved_scope_map<const site>>(ctx.saved_scopes);
 	this->saved_strings = ctx.saved_strings;
 	this->saved_buildings = ctx.saved_buildings;
 
@@ -183,11 +183,11 @@ read_only_context::read_only_context(const context &ctx)
 	this->ruin_site = ctx.ruin_site;
 	this->in_combat = ctx.in_combat;
 
-	for (const auto &[str, military_unit] : ctx.saved_military_unit_scopes) {
-		this->saved_military_unit_scopes[str] = military_unit;
+	for (const auto &[str, military_unit] : std::get<saved_scope_map<context::military_unit_t>>(ctx.saved_scopes)) {
+		std::get<saved_scope_map<military_unit_t>>(this->saved_scopes)[str] = military_unit;
 	}
-	for (const auto &[str, population_unit] : ctx.saved_population_unit_scopes) {
-		this->saved_population_unit_scopes[str] = population_unit;
+	for (const auto &[str, population_unit] : std::get<saved_scope_map<context::population_unit_type>>(ctx.saved_scopes)) {
+		std::get<saved_scope_map<population_unit_type>>(this->saved_scopes)[str] = population_unit;
 	}
 }
 
