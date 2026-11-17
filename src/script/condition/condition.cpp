@@ -136,6 +136,7 @@
 #include "script/condition/trait_condition.h"
 #include "script/condition/war_condition.h"
 #include "script/condition/year_condition.h"
+#include "script/scope_traits.h"
 #include "unit/military_unit.h"
 
 namespace metternich {

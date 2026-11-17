@@ -63,6 +63,7 @@
 #include "script/effect/technologies_effect.h"
 #include "script/effect/tooltip_effect.h"
 #include "script/effect/traits_effect.h"
+#include "script/scope_traits.h"
 #include "unit/military_unit.h"
 #include "util/assert_util.h"
 
