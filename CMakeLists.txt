@@ -638,6 +638,7 @@ set(script_HDRS
 	src/script/modifier.h
 	src/script/opinion_modifier.h
 	src/script/opinion_modifier_container.h
+	src/script/scope_traits.h
 	src/script/scripted_character_modifier.h
 	src/script/scripted_domain_modifier.h
 	src/script/scripted_modifier.h
