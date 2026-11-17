@@ -20,6 +20,10 @@ class province;
 class province_event;
 class province_scripted_condition;
 class province_scripted_effect;
+class scripted_character_modifier;
+class scripted_domain_modifier;
+class scripted_province_modifier;
+class scripted_site_modifier;
 class site;
 class site_event;
 class site_scripted_condition;
@@ -34,6 +38,7 @@ struct scope_traits<character> final
 	using event_type = character_event;
 	using scripted_condition_type = character_scripted_condition;
 	using scripted_effect_type = character_scripted_effect;
+	using scripted_modifier_type = scripted_character_modifier;
 };
 
 template <>
@@ -42,6 +47,7 @@ struct scope_traits<domain> final
 	using event_type = domain_event;
 	using scripted_condition_type = domain_scripted_condition;
 	using scripted_effect_type = domain_scripted_effect;
+	using scripted_modifier_type = scripted_domain_modifier;
 };
 
 template <>
@@ -64,6 +70,7 @@ struct scope_traits<province> final
 	using event_type = province_event;
 	using scripted_condition_type = province_scripted_condition;
 	using scripted_effect_type = province_scripted_effect;
+	using scripted_modifier_type = scripted_province_modifier;
 };
 
 template <>
@@ -72,6 +79,7 @@ struct scope_traits<site> final
 	using event_type = site_event;
 	using scripted_condition_type = site_scripted_condition;
 	using scripted_effect_type = site_scripted_effect;
+	using scripted_modifier_type = scripted_site_modifier;
 };
 
 template <typename scope_type>
