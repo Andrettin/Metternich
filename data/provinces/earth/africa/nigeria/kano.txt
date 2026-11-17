@@ -1,0 +1,9 @@
+kano = {
+	name = "Kano"
+	color = { 43 126 73 }
+	terrain = desert
+	default_provincial_capital = kano
+	regions = {
+		africa
+	}
+}

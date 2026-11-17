@@ -1,0 +1,8 @@
+hadejia = {
+	name = "Hadejia"
+	world = earth
+	geocoordinate = { 10.04 12.45 }
+	type = holding
+	holding_type = temple
+	province = kano #Jigawa
+}

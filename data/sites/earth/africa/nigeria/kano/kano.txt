@@ -1,0 +1,8 @@
+kano = {
+	name = "Kano"
+	world = earth
+	geocoordinate = { 8.518092 12.001923 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = kano
+}
