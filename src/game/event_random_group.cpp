@@ -4,6 +4,7 @@
 
 #include "database/defines.h"
 #include "game/event_trigger.h"
+#include "util/assert_util.h"
 #include "util/map_util.h"
 
 namespace metternich {
@@ -23,6 +24,7 @@ void event_random_group::initialize()
 {
 	event_random_group::groups_by_trigger[this->get_trigger()].push_back(this);
 
+	assert_throw(this->get_none_weight() >= 0);
 	const size_t none_weight = static_cast<size_t>(this->get_none_weight());
 	if (none_weight > 0) {
 		//add one null value per none weight to each scope type event vector
