@@ -88,4 +88,7 @@ using scope_traits_t = scope_traits<std::remove_const_t<scope_type>>;
 template <typename scope_type>
 concept scope_has_events = requires { typename scope_traits_t<scope_type>::event_type; };
 
+template <typename scope_type>
+concept scope_has_scripted_modifiers = requires { typename scope_traits_t<scope_type>::scripted_modifier_type; };
+
 }
