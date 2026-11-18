@@ -67,6 +67,7 @@
 #include "religion/religion.h"
 #include "script/condition/and_condition.h"
 #include "script/effect/delayed_effect_instance.h"
+#include "script/scope_traits.h"
 #include "technology/technology.h"
 #include "time/calendar.h"
 #include "ui/portrait.h"
@@ -114,6 +115,34 @@ QDate game::normalize_date(const QDate &date)
 	return normalized_date;
 }
 
+template <typename scope_type>
+static bool game::delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope)
+{
+	if (scope.get_tag() == scope_traits_t<scope_type>::delayed_effects_tag) {
+		scope.for_each_child([&delayed_effects](const gsml_data &delayed_effect_data) {
+			auto delayed_effect = std::make_unique<delayed_effect_instance<const scope_type>>();
+			delayed_effect_data.process(delayed_effect.get());
+			delayed_effects.push_back(std::move(delayed_effect));
+		});
+
+		return true;
+	}
+
+	return false;
+}
+
+template <typename scope_type>
+static void game::delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data)
+{
+	if (!delayed_effects.empty()) {
+		gsml_data delayed_effects_data(scope_traits_t<scope_type>::delayed_effects_tag);
+		for (const auto &delayed_effect : delayed_effects) {
+			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+		}
+		data.add_child(std::move(delayed_effects_data));
+	}
+}
+
 game::game()
 {
 	connect(this, &game::current_combat_changed, this, &game::combat_running_changed);
@@ -150,7 +179,7 @@ void game::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	const bool processed = std::apply([this, &scope](auto &... delayed_effect_vectors) {
+	const bool processed = std::apply([&scope](auto &... delayed_effect_vectors) {
 		return (game::delayed_effects_from_gsml_scope(delayed_effect_vectors, scope) || ...);
 	}, this->delayed_effects);
 	if (processed) {
@@ -301,7 +330,7 @@ gsml_data game::to_gsml_data() const
 	data.add_property("player_character", this->get_player_character()->get_identifier());
 	data.add_property("player_domain", this->get_player_domain()->get_identifier());
 
-	std::apply([this, &data](auto &... delayed_effect_vectors) {
+	std::apply([&data](auto &... delayed_effect_vectors) {
 		(game::delayed_effects_to_gsml_data(delayed_effect_vectors, data), ...);
 	}, this->delayed_effects);
 

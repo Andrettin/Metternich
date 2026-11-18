@@ -1,9 +1,7 @@
 #pragma once
 
 #include "database/data_entry_container.h"
-#include "database/gsml_data.h"
 #include "economy/commodity_container.h"
-#include "script/scope_traits.h"
 #include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
@@ -63,6 +61,12 @@ public:
 	using delayed_effect_vector = std::vector<std::unique_ptr<delayed_effect_instance<const scope_type>>>;
 
 	static QDate normalize_date(const QDate &date);
+
+	template <typename scope_type>
+	static bool delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope);
+
+	template <typename scope_type>
+	static void delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data);
 
 	game();
 	~game();
@@ -310,30 +314,6 @@ public:
 	}
 
 	void clear_delayed_effects();
-
-	template <typename scope_type>
-	static bool delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope)
-	{
-		if (scope.get_tag() == scope_traits_t<scope_type>::delayed_effects_tag) {
-			scope.for_each_child([&delayed_effects](const gsml_data &delayed_effect_data) {
-				auto delayed_effect = std::make_unique<delayed_effect_instance<const scope_type>>();
-				delayed_effect_data.process(delayed_effect.get());
-				delayed_effects.push_back(std::move(delayed_effect));
-			});
-		}
-	}
-
-	template <typename scope_type>
-	static void delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data)
-	{
-		if (!delayed_effects.empty()) {
-			gsml_data delayed_effects_data(scope_traits_t<scope_type>::delayed_effects_tag);
-			for (const auto &delayed_effect : delayed_effects) {
-				delayed_effects_data.add_child(delayed_effect->to_gsml_data());
-			}
-			data.add_child(std::move(delayed_effects_data));
-		}
-	}
 
 	bool has_fired_event(const metternich::event *event) const;
 	void add_fired_event(const metternich::event *event);
