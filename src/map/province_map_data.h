@@ -16,6 +16,7 @@ class province_map_data final : public QObject
 
 	Q_PROPERTY(const metternich::terrain_type* terrain READ get_terrain CONSTANT)
 	Q_PROPERTY(bool coastal READ is_coastal CONSTANT)
+	Q_PROPERTY(bool coastal_water READ is_coastal_water CONSTANT)
 	Q_PROPERTY(QRect territory_rect READ get_territory_rect NOTIFY territory_changed)
 	Q_PROPERTY(QVariantList sites READ get_sites_qvariant_list CONSTANT)
 	Q_PROPERTY(QString polygon_path READ get_polygon_path CONSTANT)
@@ -47,6 +48,11 @@ public:
 	bool is_coastal() const
 	{
 		return this->coastal;
+	}
+
+	bool is_coastal_water() const
+	{
+		return this->coastal_water;
 	}
 
 	bool has_river() const
@@ -132,6 +138,7 @@ private:
 	const terrain_type *terrain = nullptr;
 	QPoint center_tile_pos = QPoint(-1, -1);
 	bool coastal = false;
+	bool coastal_water = false;
 	bool river = false;
 	QRect territory_rect;
 	QPoint territory_centroid = QPoint(-1, -1); //a centroid is the geometric center

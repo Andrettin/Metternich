@@ -258,8 +258,14 @@ void province_map_data::add_neighbor_province(const metternich::province *provin
 {
 	this->neighbor_provinces.push_back(province);
 
-	if (province->is_sea() || province->is_bay()) {
-		this->coastal = true;
+	if (this->province->is_water_zone()) {
+		if (!province->is_water_zone()) {
+			this->coastal_water = true;
+		}
+	} else {
+		if (province->is_sea() || province->is_bay()) {
+			this->coastal = true;
+		}
 	}
 }
 
