@@ -507,9 +507,7 @@ const metternich::character *military_unit::get_commander() const
 
 bool military_unit::can_move_to(const metternich::province *province) const
 {
-	if (!this->get_type()->get_allowed_terrains().empty() && !this->get_type()->get_allowed_terrains().contains(province->get_map_data()->get_terrain())) {
-		return false;
-	}
+	bool docking = false;
 
 	switch (this->get_domain()) {
 		case military_unit_domain::land:
@@ -523,6 +521,8 @@ bool military_unit::can_move_to(const metternich::province *province) const
 				if (this->get_province() != nullptr && !this->get_province()->is_water_zone()) {
 					return false;
 				}
+
+				docking = true;
 			}
 			break;
 		case military_unit_domain::air:
@@ -531,6 +531,12 @@ bool military_unit::can_move_to(const metternich::province *province) const
 			break;
 		default:
 			assert_throw(false);
+	}
+
+	if (!this->get_type()->get_allowed_terrains().empty() && !this->get_type()->get_allowed_terrains().contains(province->get_map_data()->get_terrain())) {
+		if (!docking) { //ship allowed terrains only matters for moving to water zones
+			return false;
+		}
 	}
 
 	if (province->is_water_zone()) {
