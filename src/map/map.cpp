@@ -778,7 +778,7 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 				continue;
 			}
 
-			if (tile->get_province()->is_water_zone() || tile->get_owner() != nullptr) {
+			if (tile->get_owner() != nullptr) {
 				continue;
 			}
 
