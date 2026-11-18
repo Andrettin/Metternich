@@ -150,6 +150,13 @@ void game::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
+	const bool processed = std::apply([this, &scope](auto &... delayed_effect_vectors) {
+		return (game::delayed_effects_from_gsml_scope(delayed_effect_vectors, scope) || ...);
+	}, this->delayed_effects);
+	if (processed) {
+		return;
+	}
+
 	if (tag == "rules") {
 		auto rules = make_qunique<game_rules>();
 		scope.process(rules.get());
@@ -195,30 +202,6 @@ void game::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "generated_characters") {
 		scope.for_each_child([this](const gsml_data &character_data) {
 			character_data.process(this->get_generated_character(character_data.get_tag()));
-		});
-	} else if (tag == "character_delayed_effects") {
-		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
-			auto delayed_effect = std::make_unique<delayed_effect_instance<const character>>();
-			delayed_effect_data.process(delayed_effect.get());
-			this->add_delayed_effect(std::move(delayed_effect));
-		});
-	} else if (tag == "domain_delayed_effects") {
-		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
-			auto delayed_effect = std::make_unique<delayed_effect_instance<const domain>>();
-			delayed_effect_data.process(delayed_effect.get());
-			this->add_delayed_effect(std::move(delayed_effect));
-		});
-	} else if (tag == "province_delayed_effects") {
-		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
-			auto delayed_effect = std::make_unique<delayed_effect_instance<const province>>();
-			delayed_effect_data.process(delayed_effect.get());
-			this->add_delayed_effect(std::move(delayed_effect));
-		});
-	} else if (tag == "site_delayed_effects") {
-		scope.for_each_child([this](const gsml_data &delayed_effect_data) {
-			auto delayed_effect = std::make_unique<delayed_effect_instance<const site>>();
-			delayed_effect_data.process(delayed_effect.get());
-			this->add_delayed_effect(std::move(delayed_effect));
 		});
 	} else if (tag == "fired_events") {
 		scope.for_each_child([this](const gsml_data &fired_events_data) {
@@ -318,37 +301,9 @@ gsml_data game::to_gsml_data() const
 	data.add_property("player_character", this->get_player_character()->get_identifier());
 	data.add_property("player_domain", this->get_player_domain()->get_identifier());
 
-	if (!this->character_delayed_effects.empty()) {
-		gsml_data delayed_effects_data("character_delayed_effects");
-		for (const auto &delayed_effect : this->character_delayed_effects) {
-			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
-		}
-		data.add_child(std::move(delayed_effects_data));
-	}
-
-	if (!this->domain_delayed_effects.empty()) {
-		gsml_data delayed_effects_data("domain_delayed_effects");
-		for (const auto &delayed_effect : this->domain_delayed_effects) {
-			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
-		}
-		data.add_child(std::move(delayed_effects_data));
-	}
-
-	if (!this->province_delayed_effects.empty()) {
-		gsml_data delayed_effects_data("province_delayed_effects");
-		for (const auto &delayed_effect : this->province_delayed_effects) {
-			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
-		}
-		data.add_child(std::move(delayed_effects_data));
-	}
-
-	if (!this->site_delayed_effects.empty()) {
-		gsml_data delayed_effects_data("site_delayed_effects");
-		for (const auto &delayed_effect : this->site_delayed_effects) {
-			delayed_effects_data.add_child(delayed_effect->to_gsml_data());
-		}
-		data.add_child(std::move(delayed_effects_data));
-	}
+	std::apply([this, &data](auto &... delayed_effect_vectors) {
+		(game::delayed_effects_to_gsml_data(delayed_effect_vectors, data), ...);
+	}, this->delayed_effects);
 
 	if (!this->fired_events.empty()) {
 		gsml_data fired_events_data("fired_events");
@@ -2522,38 +2477,16 @@ void game::remove_generated_character(character *character)
 
 QCoro::Task<void> game::process_delayed_effects()
 {
-	co_await this->process_delayed_effects(this->character_delayed_effects);
-	co_await this->process_delayed_effects(this->domain_delayed_effects);
-	co_await this->process_delayed_effects(this->province_delayed_effects);
-	co_await this->process_delayed_effects(this->site_delayed_effects);
-}
-
-void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect)
-{
-	this->character_delayed_effects.push_back(std::move(delayed_effect));
-}
-
-void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const domain>> &&delayed_effect)
-{
-	this->domain_delayed_effects.push_back(std::move(delayed_effect));
-}
-
-void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect)
-{
-	this->province_delayed_effects.push_back(std::move(delayed_effect));
-}
-
-void game::add_delayed_effect(std::unique_ptr<delayed_effect_instance<const site>> &&delayed_effect)
-{
-	this->site_delayed_effects.push_back(std::move(delayed_effect));
+	co_await std::apply([this](auto &... delayed_effect_vectors) -> QCoro::Task<void> {
+		(co_await this->process_delayed_effects(delayed_effect_vectors), ...);
+	}, this->delayed_effects);
 }
 
 void game::clear_delayed_effects()
 {
-	this->character_delayed_effects.clear();
-	this->domain_delayed_effects.clear();
-	this->province_delayed_effects.clear();
-	this->site_delayed_effects.clear();
+	std::apply([](auto &... delayed_effect_vectors) {
+		(delayed_effect_vectors.clear(), ...);
+	}, this->delayed_effects);
 }
 
 bool game::has_fired_event(const metternich::event *event) const

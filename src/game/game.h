@@ -1,7 +1,9 @@
 #pragma once
 
 #include "database/data_entry_container.h"
+#include "database/gsml_data.h"
 #include "economy/commodity_container.h"
+#include "script/scope_traits.h"
 #include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
 #include "util/singleton.h"
@@ -57,6 +59,9 @@ class game final : public QObject, public singleton<game>
 	Q_PROPERTY(const metternich::game_rules* rules READ get_rules CONSTANT)
 
 public:
+	template <typename scope_type>
+	using delayed_effect_vector = std::vector<std::unique_ptr<delayed_effect_instance<const scope_type>>>;
+
 	static QDate normalize_date(const QDate &date);
 
 	game();
@@ -282,10 +287,10 @@ public:
 
 private:
 	template <typename scope_type>
-	[[nodiscard]] QCoro::Task<void> process_delayed_effects(std::vector<std::unique_ptr<delayed_effect_instance<scope_type>>> &delayed_effects)
+	[[nodiscard]] QCoro::Task<void> process_delayed_effects(delayed_effect_vector<scope_type> &delayed_effects)
 	{
 		for (size_t i = 0; i < delayed_effects.size();) {
-			const std::unique_ptr<delayed_effect_instance<scope_type>> &delayed_effect = delayed_effects[i];
+			const typename delayed_effect_vector<scope_type>::value_type &delayed_effect = delayed_effects[i];
 			delayed_effect->decrement_remaining_turns();
 
 			if (delayed_effect->get_remaining_turns() <= 0) {
@@ -298,11 +303,37 @@ private:
 	}
 
 public:
-	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const character>> &&delayed_effect);
-	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const domain>> &&delayed_effect);
-	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const province>> &&delayed_effect);
-	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const site>> &&delayed_effect);
+	template <typename scope_type>
+	void add_delayed_effect(std::unique_ptr<delayed_effect_instance<const scope_type>> &&delayed_effect)
+	{
+		std::get<delayed_effect_vector<scope_type>>(this->delayed_effects).push_back(std::move(delayed_effect));
+	}
+
 	void clear_delayed_effects();
+
+	template <typename scope_type>
+	static bool delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope)
+	{
+		if (scope.get_tag() == scope_traits_t<scope_type>::delayed_effects_tag) {
+			scope.for_each_child([&delayed_effects](const gsml_data &delayed_effect_data) {
+				auto delayed_effect = std::make_unique<delayed_effect_instance<const scope_type>>();
+				delayed_effect_data.process(delayed_effect.get());
+				delayed_effects.push_back(std::move(delayed_effect));
+			});
+		}
+	}
+
+	template <typename scope_type>
+	static void delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data)
+	{
+		if (!delayed_effects.empty()) {
+			gsml_data delayed_effects_data(scope_traits_t<scope_type>::delayed_effects_tag);
+			for (const auto &delayed_effect : delayed_effects) {
+				delayed_effects_data.add_child(delayed_effect->to_gsml_data());
+			}
+			data.add_child(std::move(delayed_effects_data));
+		}
+	}
 
 	bool has_fired_event(const metternich::event *event) const;
 	void add_fired_event(const metternich::event *event);
@@ -358,10 +389,7 @@ private:
 	bool exploration_changed = false;
 	std::vector<qunique_ptr<character>> generated_characters;
 	std::map<std::string, character *> generated_characters_by_identifier;
-	std::vector<std::unique_ptr<delayed_effect_instance<const character>>> character_delayed_effects;
-	std::vector<std::unique_ptr<delayed_effect_instance<const domain>>> domain_delayed_effects;
-	std::vector<std::unique_ptr<delayed_effect_instance<const province>>> province_delayed_effects;
-	std::vector<std::unique_ptr<delayed_effect_instance<const site>>> site_delayed_effects;
+	std::tuple<delayed_effect_vector<character>, delayed_effect_vector<domain>, delayed_effect_vector<province>, delayed_effect_vector<site>> delayed_effects;
 	std::set<const metternich::event *> fired_events;
 	qunique_ptr<combat_base> current_combat;
 	qunique_ptr<metternich::population> population;

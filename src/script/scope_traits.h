@@ -39,6 +39,8 @@ struct scope_traits<character> final
 	using scripted_condition_type = character_scripted_condition;
 	using scripted_effect_type = character_scripted_effect;
 	using scripted_modifier_type = scripted_character_modifier;
+
+	static constexpr std::string_view delayed_effects_tag = "character_delayed_effects";
 };
 
 template <>
@@ -48,6 +50,8 @@ struct scope_traits<domain> final
 	using scripted_condition_type = domain_scripted_condition;
 	using scripted_effect_type = domain_scripted_effect;
 	using scripted_modifier_type = scripted_domain_modifier;
+
+	static constexpr std::string_view delayed_effects_tag = "domain_delayed_effects";
 };
 
 template <>
@@ -71,6 +75,8 @@ struct scope_traits<province> final
 	using scripted_condition_type = province_scripted_condition;
 	using scripted_effect_type = province_scripted_effect;
 	using scripted_modifier_type = scripted_province_modifier;
+
+	static constexpr std::string_view delayed_effects_tag = "province_delayed_effects";
 };
 
 template <>
@@ -80,6 +86,8 @@ struct scope_traits<site> final
 	using scripted_condition_type = site_scripted_condition;
 	using scripted_effect_type = site_scripted_effect;
 	using scripted_modifier_type = scripted_site_modifier;
+
+	static constexpr std::string_view delayed_effects_tag = "site_delayed_effects";
 };
 
 template <typename scope_type>
