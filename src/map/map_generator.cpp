@@ -23,6 +23,7 @@
 #include "util/assert_util.h"
 #include "util/container_util.h"
 #include "util/log_util.h"
+#include "util/map_util.h"
 #include "util/number_util.h"
 #include "util/point_util.h"
 #include "util/rect_util.h"
@@ -638,20 +639,12 @@ void map_generator::expand_zone_seeds(const std::vector<QPoint> &base_seeds)
 				continue;
 			}
 
-			int best_zone_index = -1;
-			int best_zone_neighbor_count = 0;
-			for (const auto &[zone_index, count] : zone_neighbor_counts) {
-				if (count > best_zone_neighbor_count) {
-					best_zone_index = zone_index;
-					best_zone_neighbor_count = count;
-				}
-			}
-
-			assert_throw(best_zone_index != -1);
+			const std::optional<int> best_zone_index = archimedes::map::get_highest_value_key(zone_neighbor_counts);
+			assert_throw(best_zone_index.has_value() && best_zone_index.value() != -1);
 
 			//set the zone to the same as the most-neighbored one
-			zone &best_zone = this->zones[best_zone_index];
-			this->tile_zones[tile_index] = best_zone_index;
+			zone &best_zone = this->zones[best_zone_index.value()];
+			this->tile_zones[tile_index] = best_zone_index.value();
 			best_zone.tiles.push_back(tile_pos);
 
 			remaining_positions.erase(remaining_positions.begin() + i);
@@ -1116,18 +1109,7 @@ int map_generator::generate_province(province *province, std::vector<int> &group
 			}
 		}
 
-		std::vector<int> best_zone_indices;
-		int best_border_count = 0;
-		for (const auto &[border_zone_index, border_count] : zone_index_border_counts) {
-			if (border_count > best_border_count) {
-				best_zone_indices.clear();
-				best_border_count = border_count;
-			}
-
-			if (border_count == best_border_count) {
-				best_zone_indices.push_back(border_zone_index);
-			}
-		}
+		const std::vector<int> best_zone_indices = archimedes::map::get_highest_value_keys(zone_index_border_counts);
 
 		if (!best_zone_indices.empty()) {
 			zone_index = vector::get_random(best_zone_indices);

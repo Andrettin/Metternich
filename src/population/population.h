@@ -80,20 +80,7 @@ public:
 		emit main_culture_changed(culture);
 	}
 
-	void calculate_main_culture()
-	{
-		const culture *main_culture = nullptr;
-		int64_t best_size = 0;
-
-		for (const auto &[culture, size] : this->get_culture_sizes()) {
-			if (size > best_size) {
-				main_culture = culture;
-				best_size = size;
-			}
-		}
-
-		this->set_main_culture(main_culture);
-	}
+	void calculate_main_culture();
 
 	const religion_map<int64_t> &get_religion_sizes() const
 	{
@@ -118,20 +105,7 @@ public:
 		emit main_religion_changed(religion);
 	}
 
-	void calculate_main_religion()
-	{
-		const religion *main_religion = nullptr;
-		int64_t best_size = 0;
-
-		for (const auto &[religion, size] : this->get_religion_sizes()) {
-			if (size > best_size) {
-				main_religion = religion;
-				best_size = size;
-			}
-		}
-
-		this->set_main_religion(main_religion);
-	}
+	void calculate_main_religion();
 
 	const phenotype_map<int64_t> &get_phenotype_sizes() const
 	{

@@ -771,16 +771,9 @@ void province_game_data::check_trade_zone_domain()
 		}
 	}
 
-	centesimal_int best_holding_level = centesimal_int(-1);
-	const domain *best_domain = nullptr;
-	for (const auto &[domain, holding_level] : domain_economic_holding_levels) {
-		if (holding_level > best_holding_level) {
-			best_holding_level = holding_level;
-			best_domain = domain;
-		}
-	}
+	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_economic_holding_levels);
 
-	this->set_trade_zone_domain(best_domain);
+	this->set_trade_zone_domain(best_domain ? best_domain.value() : nullptr);
 }
 
 void province_game_data::check_trade_zone_domain_for_province_and_neighbors()
@@ -868,16 +861,9 @@ void province_game_data::check_temple_domain()
 		}
 	}
 
-	centesimal_int best_holding_level = centesimal_int(-1);
-	const domain *best_domain = nullptr;
-	for (const auto &[domain, holding_level] : domain_religious_holding_levels) {
-		if (holding_level > best_holding_level) {
-			best_holding_level = holding_level;
-			best_domain = domain;
-		}
-	}
+	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_religious_holding_levels);
 
-	this->set_temple_domain(best_domain);
+	this->set_temple_domain(best_domain ? best_domain.value() : nullptr);
 }
 
 void province_game_data::check_temple_domain_for_province_and_neighbors()
@@ -965,16 +951,9 @@ void province_game_data::check_cultural_society_domain()
 		}
 	}
 
-	centesimal_int best_holding_level = centesimal_int(-1);
-	const domain *best_domain = nullptr;
-	for (const auto &[domain, holding_level] : domain_cultural_holding_levels) {
-		if (holding_level > best_holding_level) {
-			best_holding_level = holding_level;
-			best_domain = domain;
-		}
-	}
+	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_cultural_holding_levels);
 
-	this->set_cultural_society_domain(best_domain);
+	this->set_cultural_society_domain(best_domain ? best_domain.value() : nullptr);
 }
 
 void province_game_data::check_cultural_society_domain_for_province_and_neighbors()
@@ -2379,18 +2358,10 @@ const icon *province_game_data::get_military_unit_icon() const
 		}
 	}
 
-	const icon *best_icon = nullptr;
-	int best_icon_count = 0;
-	for (const auto &[icon, count] : icon_counts) {
-		if (count > best_icon_count) {
-			best_icon = icon;
-			best_icon_count = count;
-		}
-	}
+	const std::optional<const icon *> best_icon = archimedes::map::get_highest_value_key(icon_counts);
+	assert_throw(best_icon.has_value() && best_icon.value() != nullptr);
 
-	assert_throw(best_icon != nullptr);
-
-	return best_icon;
+	return best_icon.value();
 }
 
 const icon *province_game_data::get_military_unit_category_icon(const military_unit_category category) const
@@ -2405,18 +2376,10 @@ const icon *province_game_data::get_military_unit_category_icon(const military_u
 		++icon_counts[military_unit->get_icon()];
 	}
 
-	const icon *best_icon = nullptr;
-	int best_icon_count = 0;
-	for (const auto &[icon, count] : icon_counts) {
-		if (count > best_icon_count) {
-			best_icon = icon;
-			best_icon_count = count;
-		}
-	}
+	const std::optional<const icon *> best_icon = archimedes::map::get_highest_value_key(icon_counts);
+	assert_throw(best_icon.has_value() && best_icon.value() != nullptr);
 
-	assert_throw(best_icon != nullptr);
-
-	return best_icon;
+	return best_icon.value();
 }
 
 QString province_game_data::get_military_unit_category_name(const military_unit_category category) const
@@ -2431,18 +2394,10 @@ QString province_game_data::get_military_unit_category_name(const military_unit_
 		++name_counts[military_unit->get_type()->get_name_qstring()];
 	}
 
-	QString best_name;
-	int best_name_count = 0;
-	for (const auto &[name, count] : name_counts) {
-		if (count > best_name_count) {
-			best_name = name;
-			best_name_count = count;
-		}
-	}
+	const std::optional<QString> best_name = archimedes::map::get_highest_value_key(name_counts);
+	assert_throw(best_name.has_value() && !best_name.value().isEmpty());
 
-	assert_throw(!best_name.isEmpty());
-
-	return best_name;
+	return best_name.value();
 }
 
 const icon *province_game_data::get_domain_military_unit_icon(metternich::domain *domain) const
@@ -2455,18 +2410,10 @@ const icon *province_game_data::get_domain_military_unit_icon(metternich::domain
 		}
 	}
 
-	const icon *best_icon = nullptr;
-	int best_icon_count = 0;
-	for (const auto &[icon, count] : icon_counts) {
-		if (count > best_icon_count) {
-			best_icon = icon;
-			best_icon_count = count;
-		}
-	}
+	const std::optional<const icon *> best_icon = archimedes::map::get_highest_value_key(icon_counts);
+	assert_throw(best_icon.has_value() && best_icon.value() != nullptr);
 
-	assert_throw(best_icon != nullptr);
-
-	return best_icon;
+	return best_icon.value();
 }
 
 QVariantList province_game_data::get_entering_armies_qvariant_list() const

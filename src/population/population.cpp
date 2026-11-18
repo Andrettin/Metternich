@@ -211,6 +211,13 @@ void population::change_culture_size(const culture *culture, const int64_t chang
 	}
 }
 
+void population::calculate_main_culture()
+{
+	const std::optional<const culture *> main_culture = archimedes::map::get_highest_value_key(this->get_culture_sizes());
+
+	this->set_main_culture(main_culture ? main_culture.value() : nullptr);
+}
+
 QVariantList population::get_religion_sizes_qvariant_list() const
 {
 	QVariantList sizes = archimedes::map::to_qvariant_list(this->get_religion_sizes());
@@ -243,6 +250,13 @@ void population::change_religion_size(const metternich::religion *religion, cons
 	if (game::get()->is_running()) {
 		emit religion_sizes_changed();
 	}
+}
+
+void population::calculate_main_religion()
+{
+	const std::optional<const religion *> main_religion = archimedes::map::get_highest_value_key(this->get_religion_sizes());
+
+	this->set_main_religion(main_religion ? main_religion.value() : nullptr);
 }
 
 QVariantList population::get_phenotype_sizes_qvariant_list() const

@@ -894,18 +894,10 @@ void map::update_minimap_rect(const QRect &tile_rect)
 				}
 			}
 
-			QColor best_color;
-			int best_count = 0;
+			const std::optional<QColor> best_color = archimedes::map::get_highest_value_key(color_counts);
+			assert_throw(best_color.has_value() && best_color.value().isValid());
 
-			for (const auto &[color, count] : color_counts) {
-				if (count > best_count) {
-					best_color = color;
-					best_count = count;
-				}
-			}
-
-			assert_throw(best_color.isValid());
-			this->minimap_image.setPixelColor(pixel_pos, best_color);
+			this->minimap_image.setPixelColor(pixel_pos, best_color.value());
 		}
 	}
 }

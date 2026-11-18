@@ -110,17 +110,9 @@ void province_history::process_gsml_scope(const gsml_data &scope, const QDate &d
 
 const culture *province_history::get_main_culture() const
 {
-	const culture *best_culture = nullptr;
-	int64_t best_weight = 0;
+	const std::optional<const culture *> best_culture = archimedes::map::get_highest_value_key(this->get_culture_weights());
 
-	for (const auto &[culture, weight] : this->get_culture_weights()) {
-		if (best_culture == nullptr || weight > best_weight) {
-			best_culture = culture;
-			best_weight = weight;
-		}
-	}
-
-	return best_culture;
+	return best_culture ? best_culture.value() : nullptr;
 }
 
 phenotype_map<int64_t> province_history::get_phenotype_weights_for_culture(const metternich::culture *culture) const

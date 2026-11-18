@@ -25,6 +25,7 @@
 #include "unit/military_unit_type.h"
 #include "util/assert_util.h"
 #include "util/container_util.h"
+#include "util/map_util.h"
 #include "util/log_util.h"
 #include "util/vector_util.h"
 
@@ -366,18 +367,10 @@ const icon *army::get_military_unit_icon() const
 		++icon_counts[military_unit->get_icon()];
 	}
 
-	const icon *best_icon = nullptr;
-	int best_icon_count = 0;
-	for (const auto &[icon, count] : icon_counts) {
-		if (count > best_icon_count) {
-			best_icon = icon;
-			best_icon_count = count;
-		}
-	}
+	const std::optional<const icon *> best_icon = archimedes::map::get_highest_value_key(icon_counts);
+	assert_throw(best_icon.has_value() && best_icon.value() != nullptr);
 
-	assert_throw(best_icon != nullptr);
-
-	return best_icon;
+	return best_icon.value();
 }
 
 }

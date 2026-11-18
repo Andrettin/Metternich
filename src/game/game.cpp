@@ -1645,12 +1645,9 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 
 		if (remaining_population > 0) {
 			//apply any remaining population to the biggest culture
-			int64_t best_weight = 0;
-			for (const auto &[weighted_culture, weight] : culture_weights) {
-				if (weight > best_weight) {
-					best_weight = weight;
-					culture = weighted_culture;
-				}
+			const std::optional<const metternich::culture *> best_culture = archimedes::map::get_highest_value_key(culture_weights);
+			if (best_culture.has_value()) {
+				culture = best_culture.value();
 			}
 		} else {
 			co_return 0;
@@ -1714,12 +1711,9 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 
 		if (remaining_population > 0) {
 			//apply any remaining population to the biggest phenotype
-			int64_t best_weight = 0;
-			for (const auto &[weighted_phenotype, weight] : phenotype_weights) {
-				if (weight > best_weight) {
-					best_weight = weight;
-					phenotype = weighted_phenotype;
-				}
+			const std::optional<const metternich::phenotype *> best_phenotype = archimedes::map::get_highest_value_key(phenotype_weights);
+			if (best_phenotype.has_value()) {
+				phenotype = best_phenotype.value();
 			}
 		} else {
 			co_return 0;

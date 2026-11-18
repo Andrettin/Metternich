@@ -1083,22 +1083,10 @@ QCoro::Task<void> domain_game_data::check_culture()
 		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
 	} else if (!this->get_population()->get_culture_sizes().empty()) {
 		//get the allowed culture with most population
-		int64_t best_size = 0;
-
-		for (const auto &[culture, size] : this->get_population()->get_culture_sizes()) {
-			if (!this->is_culture_allowed(culture)) {
-				continue;
-			}
-
-			if (size < best_size) {
-				continue;
-			} else if (size > best_size) {
-				potential_cultures.clear();
-				best_size = size;
-			}
-
-			potential_cultures.push_back(culture);
-		}
+		potential_cultures = archimedes::map::get_highest_value_keys(this->get_population()->get_culture_sizes());
+		std::erase_if(potential_cultures, [this](const metternich::culture *culture) {
+			return !this->is_culture_allowed(culture);
+		});
 	} else {
 		for (const site *holding_site : this->get_sites()) {
 			if (holding_site->get_game_data()->get_culture() == nullptr) {
@@ -1187,18 +1175,7 @@ QCoro::Task<void> domain_game_data::check_religion()
 		potential_religions = { this->get_government()->get_ruler()->get_religion() };
 	} else if (!this->get_population()->get_religion_sizes().empty()) {
 		//get the allowed culture with most population
-		int64_t best_size = 0;
-
-		for (const auto &[religion, size] : this->get_population()->get_religion_sizes()) {
-			if (size < best_size) {
-				continue;
-			} else if (size > best_size) {
-				potential_religions.clear();
-				best_size = size;
-			}
-
-			potential_religions.push_back(religion);
-		}
+		potential_religions = archimedes::map::get_highest_value_keys(this->get_population()->get_religion_sizes());
 	} else {
 		for (const site *holding_site : this->get_sites()) {
 			if (holding_site->get_game_data()->get_religion() == nullptr) {
@@ -2768,16 +2745,10 @@ const icon *domain_game_data::get_population_type_small_icon(const population_ty
 		++icon_counts[population_unit->get_small_icon()];
 	}
 
-	const icon *best_icon = nullptr;
-	int best_icon_count = 0;
-	for (const auto &[icon, count] : icon_counts) {
-		if (count > best_icon_count) {
-			best_icon = icon;
-			best_icon_count = count;
-		}
-	}
+	const std::optional<const icon *> best_icon = archimedes::map::get_highest_value_key(icon_counts);
+	assert_throw(best_icon.has_value() && best_icon.value() != nullptr);
 
-	return best_icon;
+	return best_icon.value();
 }
 
 bool domain_game_data::has_building(const building_type *building) const
