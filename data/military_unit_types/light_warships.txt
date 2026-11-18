@@ -13,6 +13,9 @@ trireme = {
 	upgrades = {
 		sloop
 	}
+	allowed_terrains = {
+		coastal_water
+	}
 }
 
 sloop = {
