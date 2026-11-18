@@ -1,0 +1,8 @@
+ngazargamu = {
+	name = "Ngazargamu"
+	world = earth
+	geocoordinate = { 12.227777777778 13.047222222222 }
+	type = holding
+	holding_type = castle
+	province = bornu
+}

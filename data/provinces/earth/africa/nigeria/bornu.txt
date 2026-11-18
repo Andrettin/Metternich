@@ -1,0 +1,9 @@
+bornu = {
+	name = "Bornu"
+	color = { 127 117 199 }
+	terrain = desert
+	default_provincial_capital = ngazargamu
+	regions = {
+		africa
+	}
+}
