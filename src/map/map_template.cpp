@@ -400,6 +400,16 @@ QCoro::Task<map_template::application_result> map_template::apply() const
 		result = co_await this->apply_provinces();
 	}
 
+	//initialize terrain before generating additional sites, since those might have terrain requirements
+	for (const province *province : province::get_all()) {
+		if (!province->get_map_data()->is_on_map()) {
+			continue;
+		}
+
+		province->get_map_data()->initialize_terrain(false);
+	}
+
+
 	this->generate_additional_sites();
 
 	co_return result;
@@ -444,14 +454,6 @@ QCoro::Task<map_template::application_result> map_template::apply_provinces() co
 		}
 
 		vector::merge(result.provinceless_tiles, line_result.provinceless_tiles);
-	}
-
-	for (const province *province : province::get_all()) {
-		if (!province->get_map_data()->is_on_map()) {
-			continue;
-		}
-
-		province->get_map_data()->initialize_terrain(false);
 	}
 
 	//apply tile sites
