@@ -409,7 +409,6 @@ QCoro::Task<map_template::application_result> map_template::apply() const
 		province->get_map_data()->initialize_terrain(false);
 	}
 
-
 	this->generate_additional_sites();
 
 	co_return result;
