@@ -215,7 +215,7 @@ void population::calculate_main_culture()
 {
 	const std::optional<const culture *> main_culture = archimedes::map::get_highest_value_key(this->get_culture_sizes());
 
-	this->set_main_culture(main_culture ? main_culture.value() : nullptr);
+	this->set_main_culture(main_culture.value_or(nullptr));
 }
 
 QVariantList population::get_religion_sizes_qvariant_list() const
@@ -256,7 +256,7 @@ void population::calculate_main_religion()
 {
 	const std::optional<const religion *> main_religion = archimedes::map::get_highest_value_key(this->get_religion_sizes());
 
-	this->set_main_religion(main_religion ? main_religion.value() : nullptr);
+	this->set_main_religion(main_religion.value_or(nullptr));
 }
 
 QVariantList population::get_phenotype_sizes_qvariant_list() const

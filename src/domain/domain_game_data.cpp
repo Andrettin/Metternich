@@ -1083,10 +1083,11 @@ QCoro::Task<void> domain_game_data::check_culture()
 		potential_cultures = { this->get_government()->get_ruler()->get_culture() };
 	} else if (!this->get_population()->get_culture_sizes().empty()) {
 		//get the allowed culture with most population
-		potential_cultures = archimedes::map::get_highest_value_keys(this->get_population()->get_culture_sizes());
-		std::erase_if(potential_cultures, [this](const metternich::culture *culture) {
-			return !this->is_culture_allowed(culture);
+		culture_map<int64_t> allowed_culture_sizes = this->get_population()->get_culture_sizes();
+		std::erase_if(allowed_culture_sizes, [this](const auto &kv_pair) {
+			return !this->is_culture_allowed(kv_pair.first);
 		});
+		potential_cultures = archimedes::map::get_highest_value_keys(allowed_culture_sizes);
 	} else {
 		for (const site *holding_site : this->get_sites()) {
 			if (holding_site->get_game_data()->get_culture() == nullptr) {

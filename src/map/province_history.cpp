@@ -112,7 +112,7 @@ const culture *province_history::get_main_culture() const
 {
 	const std::optional<const culture *> best_culture = archimedes::map::get_highest_value_key(this->get_culture_weights());
 
-	return best_culture ? best_culture.value() : nullptr;
+	return best_culture.value_or(nullptr);
 }
 
 phenotype_map<int64_t> province_history::get_phenotype_weights_for_culture(const metternich::culture *culture) const

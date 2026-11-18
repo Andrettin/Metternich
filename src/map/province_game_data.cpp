@@ -773,7 +773,7 @@ void province_game_data::check_trade_zone_domain()
 
 	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_economic_holding_levels);
 
-	this->set_trade_zone_domain(best_domain ? best_domain.value() : nullptr);
+	this->set_trade_zone_domain(best_domain.value_or(nullptr));
 }
 
 void province_game_data::check_trade_zone_domain_for_province_and_neighbors()
@@ -863,7 +863,7 @@ void province_game_data::check_temple_domain()
 
 	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_religious_holding_levels);
 
-	this->set_temple_domain(best_domain ? best_domain.value() : nullptr);
+	this->set_temple_domain(best_domain.value_or(nullptr));
 }
 
 void province_game_data::check_temple_domain_for_province_and_neighbors()
@@ -953,7 +953,7 @@ void province_game_data::check_cultural_society_domain()
 
 	const std::optional<const domain *> best_domain = archimedes::map::get_highest_value_key(domain_cultural_holding_levels);
 
-	this->set_cultural_society_domain(best_domain ? best_domain.value() : nullptr);
+	this->set_cultural_society_domain(best_domain.value_or(nullptr));
 }
 
 void province_game_data::check_cultural_society_domain_for_province_and_neighbors()

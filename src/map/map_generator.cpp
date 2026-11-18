@@ -640,7 +640,7 @@ void map_generator::expand_zone_seeds(const std::vector<QPoint> &base_seeds)
 			}
 
 			const std::optional<int> best_zone_index = archimedes::map::get_highest_value_key(zone_neighbor_counts);
-			assert_throw(best_zone_index.has_value() && best_zone_index.value() != -1);
+			assert_throw(best_zone_index.has_value());
 
 			//set the zone to the same as the most-neighbored one
 			zone &best_zone = this->zones[best_zone_index.value()];
