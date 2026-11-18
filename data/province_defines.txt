@@ -1,4 +1,5 @@
 default_province_terrain = plains
+default_coastal_water_zone_terrain = coastal_water
 default_water_zone_terrain = ocean
 province_map_tile_scale = 2
 province_population_capacity_level_per_level = 2

@@ -30,15 +30,6 @@ namespace metternich {
 
 province_map_data::province_map_data(const metternich::province *province) : province(province)
 {
-	if (province->get_terrain() != nullptr) {
-		this->terrain = province->get_terrain();
-	} else {
-		if (province->is_water_zone()) {
-			this->terrain = province_defines::get()->get_default_water_zone_terrain();
-		} else {
-			this->terrain = province_defines::get()->get_default_province_terrain();
-		}
-	}
 }
 
 void province_map_data::on_map_created()
@@ -167,6 +158,20 @@ void province_map_data::on_map_created()
 
 void province_map_data::initialize_terrain()
 {
+	if (this->province->get_terrain() != nullptr) {
+		this->terrain = this->province->get_terrain();
+	} else {
+		if (this->province->is_water_zone()) {
+			if (this->is_coastal_water()) {
+				this->terrain = province_defines::get()->get_default_coastal_water_zone_terrain();
+			} else {
+				this->terrain = province_defines::get()->get_default_water_zone_terrain();
+			}
+		} else {
+			this->terrain = province_defines::get()->get_default_province_terrain();
+		}
+	}
+
 	assert_throw(this->get_terrain() != nullptr);
 
 	//set the terrain type for the province's sites too

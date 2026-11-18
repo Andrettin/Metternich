@@ -51,6 +51,10 @@ void province_defines::check() const
 		throw std::runtime_error("No default province terrain is defined.");
 	}
 
+	if (this->get_default_coastal_water_zone_terrain() == nullptr) {
+		throw std::runtime_error("No default coastal water zone terrain is defined.");
+	}
+
 	if (this->get_default_water_zone_terrain() == nullptr) {
 		throw std::runtime_error("No default water zone terrain is defined.");
 	}

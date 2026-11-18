@@ -16,8 +16,9 @@ class province_defines final : public defines_base, public singleton<province_de
 {
 	Q_OBJECT
 
-	Q_PROPERTY(const metternich::terrain_type *default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
-	Q_PROPERTY(const metternich::terrain_type *default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* default_province_terrain MEMBER default_province_terrain  READ get_default_province_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* default_coastal_water_zone_terrain MEMBER default_coastal_water_zone_terrain  READ get_default_coastal_water_zone_terrain NOTIFY changed)
+	Q_PROPERTY(const metternich::terrain_type* default_water_zone_terrain MEMBER default_water_zone_terrain  READ get_default_water_zone_terrain NOTIFY changed)
 	Q_PROPERTY(int province_map_tile_scale MEMBER province_map_tile_scale READ get_province_map_tile_scale NOTIFY changed)
 	Q_PROPERTY(int province_population_capacity_level_per_level MEMBER province_population_capacity_level_per_level READ get_province_population_capacity_level_per_level NOTIFY changed)
 	Q_PROPERTY(int free_food_consumption_per_province MEMBER free_food_consumption_per_province READ get_free_food_consumption_per_province NOTIFY changed)
@@ -37,6 +38,11 @@ public:
 	const terrain_type *get_default_province_terrain() const
 	{
 		return this->default_province_terrain;
+	}
+
+	const terrain_type *get_default_coastal_water_zone_terrain() const
+	{
+		return this->default_coastal_water_zone_terrain;
 	}
 
 	const terrain_type *get_default_water_zone_terrain() const
@@ -69,6 +75,7 @@ signals:
 
 private:
 	const terrain_type *default_province_terrain = nullptr;
+	const terrain_type *default_coastal_water_zone_terrain = nullptr;
 	const terrain_type *default_water_zone_terrain = nullptr;
 	int province_map_tile_scale = 2;
 	int province_population_capacity_level_per_level = 0;
