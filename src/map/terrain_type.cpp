@@ -21,11 +21,6 @@ terrain_type *terrain_type::try_get_by_color(const QColor &color)
 	return archimedes::map::get_or_default(terrain_type::terrain_types_by_color, color);
 }
 
-terrain_type *terrain_type::try_get_by_character(const char character)
-{
-	return archimedes::map::get_or_default(terrain_type::terrain_types_by_character, character);
-}
-
 terrain_type *terrain_type::get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type)
 {
 	terrain_type *terrain_type = terrain_type::try_get_by_biome(elevation_type, temperature_type, moisture_type, forestation_type);
@@ -187,10 +182,6 @@ void terrain_type::initialize()
 void terrain_type::check() const
 {
 	assert_throw(this->get_color().isValid());
-
-	if (this->get_character() == 0) {
-		throw std::runtime_error(std::format("Terrain type \"{}\" has no character.", this->get_identifier()));
-	}
 
 	if (this->get_icon() == nullptr) {
 		throw std::runtime_error(std::format("Terrain type \"{}\" has no icon.", this->get_identifier()));

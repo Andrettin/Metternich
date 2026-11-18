@@ -1,7 +1,6 @@
 hills = {
 	name = "Hills"
 	color = { 65 42 17 }
-	character = h
 	icon = mountains
 	image_filepath = "tiles/terrain/barren_hills.png"
 	hills = true

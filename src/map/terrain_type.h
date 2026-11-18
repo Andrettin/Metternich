@@ -25,7 +25,6 @@ class terrain_type final : public named_data_entry, public data_type<terrain_typ
 	Q_OBJECT
 
 	Q_PROPERTY(QColor color READ get_color WRITE set_color NOTIFY changed)
-	Q_PROPERTY(char character READ get_character WRITE set_character NOTIFY changed)
 	Q_PROPERTY(const metternich::icon* icon MEMBER icon READ get_icon NOTIFY changed)
 	Q_PROPERTY(std::filesystem::path image_filepath MEMBER image_filepath WRITE set_image_filepath)
 	Q_PROPERTY(bool water MEMBER water READ is_water NOTIFY changed)
@@ -58,19 +57,6 @@ public:
 
 	static terrain_type *try_get_by_color(const QColor &color);
 
-	static terrain_type *get_by_character(const char character)
-	{
-		terrain_type *terrain_type = terrain_type::try_get_by_character(character);
-
-		if (terrain_type == nullptr) {
-			throw std::runtime_error(std::format("No terrain type found for character {}.", character));
-		}
-
-		return terrain_type;
-	}
-
-	static terrain_type *try_get_by_character(const char character);
-
 	static terrain_type *get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);
 	static terrain_type *try_get_by_biome(const metternich::elevation_type elevation_type, const metternich::temperature_type temperature_type, const metternich::moisture_type moisture_type, const metternich::forestation_type forestation_type);
 
@@ -78,12 +64,10 @@ public:
 	{
 		data_type::clear();
 		terrain_type::terrain_types_by_color.clear();
-		terrain_type::terrain_types_by_character.clear();
 	}
 
 private:
 	static inline color_unordered_map<terrain_type *> terrain_types_by_color;
-	static inline std::map<char, terrain_type *> terrain_types_by_character;
 	static inline std::map<elevation_type, std::map<temperature_type, std::map<moisture_type, std::map<forestation_type, terrain_type *>>>> terrain_types_by_biome;
 
 public:
@@ -111,25 +95,6 @@ public:
 
 		this->color = color;
 		terrain_type::terrain_types_by_color[color] = this;
-	}
-	
-	char get_character() const
-	{
-		return this->character;
-	}
-
-	void set_character(const char character)
-	{
-		if (character == this->get_character()) {
-			return;
-		}
-
-		if (terrain_type::try_get_by_character(character) != nullptr) {
-			throw std::runtime_error("Character is already used by another terrain type.");
-		}
-
-		this->character = character;
-		terrain_type::terrain_types_by_character[character] = this;
 	}
 	
 	const metternich::icon *get_icon() const
@@ -262,7 +227,6 @@ signals:
 
 private:
 	QColor color;
-	char character = 0;
 	const metternich::icon *icon = nullptr;
 	std::filesystem::path image_filepath;
 	bool water = false;

@@ -1,7 +1,6 @@
 scrub_forest = {
 	name = "Scrub Forest"
 	color = { 0 255 0 }
-	character = 2
 	icon = pine_tree
 	image_filepath = "tiles/terrain/scrub_forest.png"
 	elevation_type = flatlands

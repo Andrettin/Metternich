@@ -1,7 +1,6 @@
 high_mountains = {
 	name = "High Mountains"
 	color = { 255 255 255 }
-	character = M
 	icon = mountains
 	image_filepath = "tiles/terrain/mountains.png"
 	mountains = true

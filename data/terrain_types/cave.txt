@@ -1,7 +1,6 @@
 cave = {
 	name = "Cave"
 	color = { 160 160 160 }
-	character = .
 	icon = mountains
 	image_filepath = "tiles/terrain/cave_floor.png"
 	movement_cost = 2
