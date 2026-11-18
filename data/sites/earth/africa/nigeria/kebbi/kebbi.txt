@@ -1,0 +1,8 @@
+kebbi = {
+	name = "Kebbi"
+	world = earth
+	geocoordinate = { 4.199940 12.450414 } #from Natural Earth (Birnin Kebbi)
+	type = holding
+	holding_type = castle
+	province = kebbi
+}

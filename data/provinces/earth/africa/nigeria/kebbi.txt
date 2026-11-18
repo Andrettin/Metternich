@@ -1,0 +1,9 @@
+kebbi = {
+	name = "Kebbi"
+	color = { 85 144 76 }
+	terrain = desert
+	default_provincial_capital = kebbi
+	regions = {
+		africa
+	}
+}
