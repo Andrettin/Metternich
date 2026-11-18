@@ -116,7 +116,7 @@ QDate game::normalize_date(const QDate &date)
 }
 
 template <typename scope_type>
-static bool game::delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope)
+bool game::delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope)
 {
 	if (scope.get_tag() == scope_traits_t<scope_type>::delayed_effects_tag) {
 		scope.for_each_child([&delayed_effects](const gsml_data &delayed_effect_data) {
@@ -132,7 +132,7 @@ static bool game::delayed_effects_from_gsml_scope(delayed_effect_vector<scope_ty
 }
 
 template <typename scope_type>
-static void game::delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data)
+void game::delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data)
 {
 	if (!delayed_effects.empty()) {
 		gsml_data delayed_effects_data(scope_traits_t<scope_type>::delayed_effects_tag);

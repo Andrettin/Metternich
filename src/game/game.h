@@ -62,12 +62,14 @@ public:
 
 	static QDate normalize_date(const QDate &date);
 
+private:
 	template <typename scope_type>
 	static bool delayed_effects_from_gsml_scope(delayed_effect_vector<scope_type> &delayed_effects, const gsml_data &scope);
 
 	template <typename scope_type>
 	static void delayed_effects_to_gsml_data(const delayed_effect_vector<scope_type> &delayed_effects, gsml_data &data);
 
+public:
 	game();
 	~game();
 
