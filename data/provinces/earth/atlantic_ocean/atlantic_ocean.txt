@@ -82,6 +82,15 @@ coast_of_brazil = {
 	}
 }
 
+coast_of_canada = {
+	name = "Coast of Canada"
+	color = { 67 110 148 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_cape_verde = {
 	name = "Coast of Cape Verde"
 	color = { 234 207 114 }
@@ -118,6 +127,15 @@ coast_of_galicia = {
 	}
 }
 
+coast_of_greenland = {
+	name = "Coast of Greenland"
+	color = { 104 251 251 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_guinea = {
 	name = "Coast of Guinea"
 	color = { 68 61 44 }
@@ -130,6 +148,24 @@ coast_of_guinea = {
 coast_of_guinea_bissau = {
 	name = "Coast of Guinea-Bissau"
 	color = { 252 14 78 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_guyana = {
+	name = "Coast of Guyana"
+	color = { 22 202 252 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_hispaniola = {
+	name = "Coast of Hispaniola"
+	color = { 21 202 202 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -208,6 +244,15 @@ coast_of_portugal = {
 	}
 }
 
+coast_of_puerto_rico = {
+	name = "Coast of Puerto Rico"
+	color = { 186 169 148 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_sao_tome = {
 	name = "Coast of Sao Tome"
 	color = { 71 197 76 }
@@ -262,6 +307,15 @@ coast_of_the_azores = {
 	}
 }
 
+coast_of_the_bahamas = {
+	name = "Coast of the Bahamas"
+	color = { 168 112 132 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_the_canaries = {
 	name = "Coast of the Canaries"
 	color = { 42 210 153 }
@@ -292,6 +346,15 @@ coast_of_the_faroes = {
 coast_of_the_western_sahara = {
 	name = "Coast of the Western Sahara"
 	color = { 157 55 220 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_turks_and_caicos = {
+	name = "Coast of Turks and Caicos"
+	color = { 19 222 252 }
 	sea = true
 	regions = {
 		atlantic_ocean
