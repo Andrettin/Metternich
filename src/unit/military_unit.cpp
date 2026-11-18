@@ -24,6 +24,7 @@
 #include "item/item_type.h"
 #include "map/province.h"
 #include "map/province_game_data.h"
+#include "map/province_map_data.h"
 #include "script/condition/and_condition.h"
 #include "script/modifier.h"
 #include "species/phenotype.h"
@@ -506,6 +507,10 @@ const metternich::character *military_unit::get_commander() const
 
 bool military_unit::can_move_to(const metternich::province *province) const
 {
+	if (!this->get_type()->get_allowed_terrains().empty() && !this->get_type()->get_allowed_terrains().contains(province->get_map_data()->get_terrain())) {
+		return false;
+	}
+
 	switch (this->get_domain()) {
 		case military_unit_domain::land:
 			if (province->is_water_zone()) {

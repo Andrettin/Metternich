@@ -3,6 +3,7 @@
 #include "database/data_type.h"
 #include "database/named_data_entry.h"
 #include "economy/commodity_container.h"
+#include "map/terrain_type_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
@@ -142,6 +143,11 @@ public:
 		return this->upgrades;
 	}
 
+	const terrain_type_set &get_allowed_terrains() const
+	{
+		return this->allowed_terrains;
+	}
+
 	int get_score() const;
 
 	const sound *get_melee_attack_sound() const
@@ -177,6 +183,7 @@ private:
 	commodity_map<decimillesimal_int> maintenance_commodity_costs; //commodities paid per turn as maintenance for the military unit
 	std::vector<const promotion *> free_promotions;
 	military_unit_type_set upgrades;
+	terrain_type_set allowed_terrains;
 	const sound *melee_attack_sound = nullptr;
 	const sound *ranged_attack_sound = nullptr;
 	const sound *death_sound = nullptr;

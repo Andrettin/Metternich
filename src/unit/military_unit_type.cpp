@@ -13,6 +13,7 @@
 #include "game/battle_defines.h"
 #include "game/battle_resolution_type.h"
 #include "item/item_type.h"
+#include "map/terrain_type.h"
 #include "script/modifier.h"
 #include "script/modifier_effect/character_stat_modifier_effect.h"
 #include "script/modifier_effect/damage_bonus_modifier_effect.h"
@@ -74,6 +75,10 @@ void military_unit_type::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "upgrades") {
 		for (const std::string &value : values) {
 			this->upgrades.insert(military_unit_type::get(value));
+		}
+	} else if (tag == "allowed_terrains") {
+		for (const std::string &value : values) {
+			this->allowed_terrains.insert(terrain_type::get(value));
 		}
 	} else {
 		data_entry::process_gsml_scope(scope);
