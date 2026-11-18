@@ -34,7 +34,7 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 
 void province_map_data::on_map_created()
 {
-	this->initialize_terrain();
+	this->initialize_terrain(true);
 
 	this->nearby_provinces = this->get_neighbor_provinces();
 
@@ -156,7 +156,7 @@ void province_map_data::on_map_created()
 	emit territory_changed();
 }
 
-void province_map_data::initialize_terrain()
+void province_map_data::initialize_terrain(const bool apply_to_sites)
 {
 	if (this->province->get_terrain() != nullptr) {
 		this->terrain = this->province->get_terrain();
@@ -174,10 +174,12 @@ void province_map_data::initialize_terrain()
 
 	assert_throw(this->get_terrain() != nullptr);
 
-	//set the terrain type for the province's sites too
-	for (const site *site : this->get_sites()) {
-		if (site->get_map_data()->get_terrain() == nullptr) {
-			site->get_map_data()->set_terrain(this->get_terrain());
+	if (apply_to_sites) {
+		//set the terrain type for the province's sites too
+		for (const site *site : this->get_sites()) {
+			if (site->get_map_data()->get_terrain() == nullptr) {
+				site->get_map_data()->set_terrain(this->get_terrain());
+			}
 		}
 	}
 }

@@ -451,7 +451,7 @@ QCoro::Task<map_template::application_result> map_template::apply_provinces() co
 			continue;
 		}
 
-		province->get_map_data()->initialize_terrain();
+		province->get_map_data()->initialize_terrain(false);
 	}
 
 	//apply tile sites

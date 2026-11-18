@@ -38,7 +38,7 @@ public:
 		return this->terrain;
 	}
 
-	void initialize_terrain();
+	void initialize_terrain(const bool apply_to_sites);
 
 	const QPoint &get_center_tile_pos() const
 	{
