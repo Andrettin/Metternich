@@ -40,20 +40,14 @@ void holding_defines::process_gsml_scope(const gsml_data &scope)
 			const std::string &child_tag = child_scope.get_tag();
 			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
-			child_scope.for_each_property([this, construction_type](const gsml_property &property) {
-				const commodity *commodity = commodity::get(property.get_key());
-				this->construction_level_commodity_costs[construction_type][commodity] = commodity->string_to_value(property.get_value());
-			});
+			commodity::parse_values(child_scope, this->construction_level_commodity_costs[construction_type]);
 		});
 	} else if (tag == "construction_level_commodity_costs_per_level") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			const std::string &child_tag = child_scope.get_tag();
 			const construction_type construction_type = string::to_enum<metternich::construction_type>(child_tag);
 
-			child_scope.for_each_property([this, construction_type](const gsml_property &property) {
-				const commodity *commodity = commodity::get(property.get_key());
-				this->construction_level_commodity_costs_per_level[construction_type][commodity] = commodity->string_to_value(property.get_value());
-			});
+			commodity::parse_values(child_scope, this->construction_level_commodity_costs_per_level[construction_type]);
 		});
 	} else if (tag == "construction_level_modifiers") {
 		scope.for_each_child([this](const gsml_data &child_scope) {

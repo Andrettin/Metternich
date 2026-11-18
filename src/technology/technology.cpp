@@ -137,10 +137,7 @@ void technology::process_gsml_scope(const gsml_data &scope)
 			this->prerequisites.push_back(technology::get(value));
 		}
 	} else if (tag == "commodity_costs") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->commodity_costs[commodity] = commodity->string_to_value(property.get_value());
-		});
+		commodity::parse_values(scope, this->commodity_costs);
 	} else if (tag == "cost_factor") {
 		auto factor = std::make_unique<metternich::factor<province>>(100);
 		factor->process_gsml_data(scope);
@@ -154,10 +151,7 @@ void technology::process_gsml_scope(const gsml_data &scope)
 		factor->process_gsml_data(scope);
 		this->weight_factor = std::move(factor);
 	} else if (tag == "shared_commodities") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->shared_commodities[commodity] = commodity->string_to_value(property.get_value());
-		});
+		commodity::parse_values(scope, this->shared_commodities);
 	} else if (tag == "modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);

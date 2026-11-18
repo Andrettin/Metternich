@@ -96,10 +96,7 @@ void employment_type::process_gsml_scope(const gsml_data &scope)
 	const std::vector<std::string> &values = scope.get_values();
 
 	if (tag == "input_commodities") {
-		scope.for_each_property([this](const gsml_property &property) {
-			const commodity *commodity = commodity::get(property.get_key());
-			this->input_commodities[commodity] = commodity->string_to_value(property.get_value());
-		});
+		commodity::parse_values(scope, this->input_commodities);
 	} else if (tag == "input_commodity_weights") {
 		scope.to_map(this->input_commodity_weights);
 	} else if (tag == "employee_types") {

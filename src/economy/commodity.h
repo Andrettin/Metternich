@@ -74,6 +74,7 @@ public:
 
 	static bool commodity_price_compare(const commodity *lhs, const commodity *rhs);
 
+	static void parse_values(const gsml_data &scope, commodity_map<decimillesimal_int> &values);
 	static commodity_map<decimillesimal_int> weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights);
 
 private:

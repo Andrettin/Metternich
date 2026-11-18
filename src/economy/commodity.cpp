@@ -36,6 +36,14 @@ bool commodity::commodity_price_compare(const commodity *lhs, const commodity *r
 	return game::get()->get_price(lhs) < game::get()->get_price(rhs);
 }
 
+void commodity::parse_values(const gsml_data &scope, commodity_map<decimillesimal_int> &values)
+{
+	scope.for_each_property([&values](const gsml_property &property) {
+		const commodity *commodity = commodity::get(property.get_key());
+		values[commodity] = commodity->string_to_value(property.get_value());
+	});
+}
+
 commodity_map<decimillesimal_int> commodity::weights_to_costs(const decimillesimal_int &wealth_cost, const commodity_map<int> &commodity_cost_weights)
 {
 	commodity_map<decimillesimal_int> commodity_costs;
