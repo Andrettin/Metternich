@@ -1,0 +1,9 @@
+wadai = {
+	name = "Wadai"
+	color = { 1 198 85 }
+	terrain = desert
+	default_provincial_capital = wara
+	regions = {
+		africa
+	}
+}

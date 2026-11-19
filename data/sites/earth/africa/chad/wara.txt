@@ -1,0 +1,8 @@
+wara = {
+	name = "Wara"
+	world = earth
+	geocoordinate = { 20.672222222222 14.226666666667 } #Ouara
+	type = holding
+	holding_type = castle
+	province = wadai
+}
