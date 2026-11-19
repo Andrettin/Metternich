@@ -154,7 +154,7 @@ void province_game_data::process_gsml_scope(const gsml_data &scope)
 			this->technologies.insert(technology::get(value));
 		}
 	} else if (tag == "scripted_modifiers") {
-		scope.to_map(this->scripted_modifiers);
+		scope.to_map(this->get_scripted_modifiers());
 	} else if (tag == "population") {
 		scope.process(this->population.get());
 	} else if (tag == "domain_skill_total_holding_levels") {
@@ -285,8 +285,8 @@ gsml_data province_game_data::to_gsml_data() const
 		data.add_child(std::move(technologies_data));
 	}
 
-	if (!this->scripted_modifiers.empty()) {
-		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
+	if (!this->get_scripted_modifiers().empty()) {
+		data.add_child(gsml_data::from_map(this->get_scripted_modifiers(), "scripted_modifiers"));
 	}
 
 	data.add_child(this->population->to_gsml_data());
@@ -2073,58 +2073,6 @@ QCoro::Task<void> province_game_data::check_technologies()
 		if (!this->can_have_technology(technology)) {
 			co_await this->remove_technology(technology);
 		}
-	}
-}
-
-QVariantList province_game_data::get_scripted_modifiers_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
-}
-
-bool province_game_data::has_scripted_modifier(const scripted_province_modifier *modifier) const
-{
-	return this->get_scripted_modifiers().contains(modifier);
-}
-
-QCoro::Task<void> province_game_data::add_scripted_modifier(const scripted_province_modifier *modifier, const int duration)
-{
-	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
-		co_await this->apply_modifier(modifier->get_modifier(), 1);
-	}
-
-	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
-}
-
-QCoro::Task<void> province_game_data::remove_scripted_modifier(const scripted_province_modifier *modifier)
-{
-	this->scripted_modifiers.erase(modifier);
-
-	if (modifier->get_modifier() != nullptr) {
-		co_await this->remove_modifier(modifier->get_modifier());
-	}
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
-}
-
-QCoro::Task<void> province_game_data::decrement_scripted_modifiers()
-{
-	std::vector<const scripted_province_modifier *> modifiers_to_remove;
-	for (auto &[modifier, duration] : this->scripted_modifiers) {
-		--duration;
-
-		if (duration == 0) {
-			modifiers_to_remove.push_back(modifier);
-		}
-	}
-
-	for (const scripted_province_modifier *modifier : modifiers_to_remove) {
-		co_await this->remove_scripted_modifier(modifier);
 	}
 }
 

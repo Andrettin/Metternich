@@ -200,7 +200,7 @@ void domain_game_data::process_gsml_scope(const gsml_data &scope)
 	} else if (tag == "holding_building_counts") {
 		scope.to_map(this->holding_building_counts);
 	} else if (tag == "scripted_modifiers") {
-		scope.to_map(this->scripted_modifiers);
+		scope.to_map(this->get_scripted_modifiers());
 	} else if (tag == "historical_rulers") {
 		scope.for_each_property([this](const gsml_property &attribute_property) {
 			this->historical_rulers[string::to_date(attribute_property.get_key())] = game::get()->get_character(attribute_property.get_value());
@@ -328,8 +328,8 @@ gsml_data domain_game_data::to_gsml_data() const
 		data.add_child(gsml_data::from_map(this->holding_building_counts, "holding_building_counts"));
 	}
 
-	if (!this->scripted_modifiers.empty()) {
-		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
+	if (!this->get_scripted_modifiers().empty()) {
+		data.add_child(gsml_data::from_map(this->get_scripted_modifiers(), "scripted_modifiers"));
 	}
 
 	if (!this->historical_rulers.empty()) {
@@ -570,6 +570,8 @@ QCoro::Task<void> domain_game_data::do_turn()
 			const int64_t turn_days = game::get()->get_days_until_next_turn();
 			context ctx(this->domain);
 			co_await character->get_game_data()->decrement_status_effect_durations(std::chrono::days(turn_days), ctx);
+
+			co_await character->get_game_data()->decrement_scripted_modifiers();
 		}
 
 		if (game::get()->is_last_turn_of_quarter()) {
@@ -610,6 +612,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 		co_await this->check_rebellions();
 
 		co_await this->decrement_scripted_modifiers();
+		this->get_diplomacy()->decrement_opinion_modifiers();
 
 		co_await this->check_journal_entries();
 
@@ -2846,60 +2849,6 @@ QVariantList domain_game_data::get_item_slots_qvariant_list() const
 	}
 
 	return qvariant_list;
-}
-
-QVariantList domain_game_data::get_scripted_modifiers_qvariant_list() const
-{
-	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
-}
-
-bool domain_game_data::has_scripted_modifier(const scripted_domain_modifier *modifier) const
-{
-	return this->get_scripted_modifiers().contains(modifier);
-}
-
-QCoro::Task<void> domain_game_data::add_scripted_modifier(const scripted_domain_modifier *modifier, const int duration)
-{
-	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
-		co_await this->apply_modifier(modifier->get_modifier(), 1);
-	}
-
-	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
-}
-
-QCoro::Task<void> domain_game_data::remove_scripted_modifier(const scripted_domain_modifier *modifier)
-{
-	this->scripted_modifiers.erase(modifier);
-
-	if (modifier->get_modifier() != nullptr) {
-		co_await this->apply_modifier(modifier->get_modifier(), -1);
-	}
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
-}
-
-QCoro::Task<void> domain_game_data::decrement_scripted_modifiers()
-{
-	std::vector<const scripted_domain_modifier *> modifiers_to_remove;
-	for (auto &[modifier, duration] : this->scripted_modifiers) {
-		--duration;
-
-		if (duration == 0) {
-			modifiers_to_remove.push_back(modifier);
-		}
-	}
-
-	for (const scripted_domain_modifier *modifier : modifiers_to_remove) {
-		co_await this->remove_scripted_modifier(modifier);
-	}
-
-	this->get_diplomacy()->decrement_opinion_modifiers();
 }
 
 QCoro::Task<void> domain_game_data::apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier)

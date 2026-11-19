@@ -6,7 +6,7 @@
 #include "map/province_container.h"
 #include "map/terrain_type_container.h"
 #include "population/population_type_container.h"
-#include "script/scripted_modifier_container.h"
+#include "script/scripted_modifier_scope.h"
 #include "species/phenotype_container.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
@@ -82,7 +82,9 @@ struct read_only_context;
 template <typename scope_type>
 class modifier;
 
-class domain_game_data final : public QObject
+class domain_game_data final :
+	public QObject,
+	public scripted_modifier_scope<domain_game_data, const metternich::domain>
 {
 	Q_OBJECT
 
@@ -610,17 +612,6 @@ public:
 	std::vector<building_item_slot *> get_item_slots() const;
 	QVariantList get_item_slots_qvariant_list() const;
 
-	const scripted_domain_modifier_map<int> &get_scripted_modifiers() const
-	{
-		return this->scripted_modifiers;
-	}
-
-	QVariantList get_scripted_modifiers_qvariant_list() const;
-	bool has_scripted_modifier(const scripted_domain_modifier *modifier) const;
-	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_domain_modifier *modifier, const int duration);
-	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_domain_modifier *modifier);
-	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
-
 	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::domain> *modifier, const int multiplier = 1);
 
 	[[nodiscard]] QCoro::Task<void> remove_modifier(const modifier<const metternich::domain> *modifier)
@@ -896,7 +887,6 @@ private:
 	qunique_ptr<metternich::population> population;
 	qunique_ptr<metternich::population> country_population; //population in the domain's provinces
 	building_type_map<int> holding_building_counts;
-	scripted_domain_modifier_map<int> scripted_modifiers;
 	std::vector<const character *> characters;
 	std::map<QDate, const character *> historical_rulers;
 	std::map<QDate, const character *> historical_monarchs; //used for regnal numbers

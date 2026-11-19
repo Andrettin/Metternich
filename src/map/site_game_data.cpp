@@ -181,7 +181,7 @@ void site_game_data::process_gsml_scope(const gsml_data &scope)
 			this->add_building_slot(make_qunique<building_slot>(child_scope, this->site));
 		});
 	} else if (tag == "scripted_modifiers") {
-		scope.to_map(this->scripted_modifiers);
+		scope.to_map(this->get_scripted_modifiers());
 	} else if (tag == "population_units") {
 		scope.for_each_child([this](const gsml_data &child_scope) {
 			auto population_unit = make_qunique<metternich::population_unit>(child_scope);
@@ -305,8 +305,8 @@ gsml_data site_game_data::to_gsml_data() const
 		data.add_child(std::move(building_slots_data));
 	}
 
-	if (!this->scripted_modifiers.empty()) {
-		data.add_child(gsml_data::from_map(this->scripted_modifiers, "scripted_modifiers"));
+	if (!this->get_scripted_modifiers().empty()) {
+		data.add_child(gsml_data::from_map(this->get_scripted_modifiers(), "scripted_modifiers"));
 	}
 
 	if (!this->population_units.empty()) {
@@ -2177,40 +2177,11 @@ bool site_game_data::has_technology(const technology *technology) const
 	return this->get_province()->get_game_data()->has_technology(technology);
 }
 
-QVariantList site_game_data::get_scripted_modifiers_qvariant_list() const
+QCoro::Task<void> site_game_data::apply_modifier(const modifier<const metternich::site> *modifier, const int multiplier)
 {
-	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
-}
+	assert_throw(modifier != nullptr);
 
-bool site_game_data::has_scripted_modifier(const scripted_site_modifier *modifier) const
-{
-	return this->get_scripted_modifiers().contains(modifier);
-}
-
-QCoro::Task<void> site_game_data::add_scripted_modifier(const scripted_site_modifier *modifier, const int duration)
-{
-	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
-		co_await modifier->get_modifier()->apply(this->site);
-	}
-
-	this->scripted_modifiers[modifier] = std::max(this->scripted_modifiers[modifier], duration);
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
-}
-
-QCoro::Task<void> site_game_data::remove_scripted_modifier(const scripted_site_modifier *modifier)
-{
-	this->scripted_modifiers.erase(modifier);
-
-	if (modifier->get_modifier() != nullptr) {
-		co_await modifier->get_modifier()->remove(this->site);
-	}
-
-	if (game::get()->is_running()) {
-		emit scripted_modifiers_changed();
-	}
+	co_await modifier->apply(this->site, multiplier);
 }
 
 bool site_game_data::can_have_population() const
@@ -2233,26 +2204,6 @@ bool site_game_data::can_have_population_type(const population_type *type) const
 QVariantList site_game_data::get_population_units_qvariant_list() const
 {
 	return container::to_qvariant_list(this->get_population_units());
-}
-
-QCoro::Task<void> site_game_data::decrement_scripted_modifiers()
-{
-	if (this->scripted_modifiers.empty()) {
-		co_return;
-	}
-
-	std::vector<const scripted_site_modifier *> modifiers_to_remove;
-	for (auto &[modifier, duration] : this->scripted_modifiers) {
-		--duration;
-
-		if (duration == 0) {
-			modifiers_to_remove.push_back(modifier);
-		}
-	}
-
-	for (const scripted_site_modifier *modifier : modifiers_to_remove) {
-		co_await this->remove_scripted_modifier(modifier);
-	}
 }
 
 QCoro::Task<void> site_game_data::add_population_unit(qunique_ptr<population_unit> &&population_unit, const bool change_input_storage)

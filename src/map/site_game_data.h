@@ -4,7 +4,7 @@
 #include "economy/commodity_container.h"
 #include "infrastructure/building_slot_type_container.h"
 #include "map/site_container.h"
-#include "script/scripted_modifier_container.h"
+#include "script/scripted_modifier_scope.h"
 #include "util/centesimal_int.h"
 #include "util/decimillesimal_int.h"
 #include "util/qunique_ptr.h"
@@ -60,7 +60,9 @@ enum class construction_type;
 enum class food_type;
 struct population_unit_percentages;
 
-class site_game_data final : public QObject
+class site_game_data final :
+	public QObject,
+	public scripted_modifier_scope<site_game_data, const metternich::site>
 {
 	Q_OBJECT
 
@@ -337,16 +339,7 @@ public:
 
 	bool has_technology(const technology *technology) const;
 
-	const scripted_site_modifier_map<int> &get_scripted_modifiers() const
-	{
-		return this->scripted_modifiers;
-	}
-
-	QVariantList get_scripted_modifiers_qvariant_list() const;
-	bool has_scripted_modifier(const scripted_site_modifier *modifier) const;
-	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_site_modifier *modifier, const int duration);
-	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_site_modifier *modifier);
-	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
+	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::site> *modifier, const int multiplier);
 
 	Q_INVOKABLE bool can_have_population() const;
 	bool can_have_population_type(const population_type *type) const;
@@ -683,7 +676,6 @@ private:
 	data_entry_map<site_attribute, std::map<dice, std::vector<int>>> attribute_roll_results;
 	std::vector<qunique_ptr<building_slot>> building_slots;
 	building_slot_type_map<building_slot *> building_slot_map;
-	scripted_site_modifier_map<int> scripted_modifiers;
 	std::vector<qunique_ptr<population_unit>> population_units;
 	qunique_ptr<metternich::population> population;
 	decimillesimal_int population_capacity_level;

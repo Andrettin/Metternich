@@ -1,6 +1,6 @@
 #include "metternich.h"
 
-#include "script/scripted_modifier_container.h"
+#include "script/scripted_modifier_compare.h"
 
 #include "script/scripted_modifier.h"
 

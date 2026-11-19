@@ -3,7 +3,7 @@
 #include "character/character_container.h"
 #include "database/data_entry_container.h"
 #include "domain/domain_container.h"
-#include "script/scripted_modifier_container.h"
+#include "script/scripted_modifier_scope.h"
 #include "spell/spell_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
@@ -72,7 +72,9 @@ struct recipe_material;
 template <typename scope_type>
 class modifier;
 
-class character_game_data final : public QObject
+class character_game_data final :
+	public QObject,
+	public scripted_modifier_scope<character_game_data, const metternich::character>
 {
 	Q_OBJECT
 
@@ -619,17 +621,6 @@ public:
 
 	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits) const;
 
-	const scripted_character_modifier_map<int> &get_scripted_modifiers() const
-	{
-		return this->scripted_modifiers;
-	}
-
-	QVariantList get_scripted_modifiers_qvariant_list() const;
-	bool has_scripted_modifier(const scripted_character_modifier *modifier) const;
-	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_character_modifier *modifier, const int duration);
-	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_character_modifier *modifier);
-	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
-
 	bool is_ruler() const;
 
 	const metternich::office *get_office() const
@@ -1111,7 +1102,6 @@ private:
 	data_entry_map<damage_reduction_type, int> damage_reductions;
 	data_entry_map<trait, int> trait_counts;
 	data_entry_map<trait_type, std::vector<const trait *>> trait_choices;
-	scripted_character_modifier_map<int> scripted_modifiers;
 	const metternich::office *office = nullptr;
 	metternich::military_unit *military_unit = nullptr;
 	metternich::civilian_unit *civilian_unit = nullptr;

@@ -242,7 +242,8 @@ set(script_SRCS
 	src/script/modifier.cpp
 	src/script/opinion_modifier.cpp
 	src/script/opinion_modifier_container.cpp
-	src/script/scripted_modifier_container.cpp
+	src/script/scripted_modifier_compare.cpp
+	src/script/scripted_modifier_scope.cpp
 	src/script/scripted_scoped_modifier.cpp
 	src/script/text_processor.cpp
 )
@@ -642,7 +643,8 @@ set(script_HDRS
 	src/script/scripted_character_modifier.h
 	src/script/scripted_domain_modifier.h
 	src/script/scripted_modifier.h
-	src/script/scripted_modifier_container.h
+	src/script/scripted_modifier_compare.h
+	src/script/scripted_modifier_scope.h
 	src/script/scripted_province_modifier.h
 	src/script/scripted_scoped_modifier.h
 	src/script/scripted_site_modifier.h

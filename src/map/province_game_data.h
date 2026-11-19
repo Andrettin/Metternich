@@ -5,7 +5,7 @@
 #include "economy/resource_container.h"
 #include "map/site_container.h"
 #include "population/population_type_container.h"
-#include "script/scripted_modifier_container.h"
+#include "script/scripted_modifier_scope.h"
 #include "technology/technology_container.h"
 #include "unit/military_unit_type_container.h"
 #include "util/centesimal_int.h"
@@ -56,7 +56,9 @@ enum class military_unit_category;
 template <typename scope_type>
 class modifier;
 
-class province_game_data final : public QObject
+class province_game_data final :
+	public QObject,
+	public scripted_modifier_scope<province_game_data, const metternich::province>
 {
 	Q_OBJECT
 
@@ -332,17 +334,6 @@ public:
 	[[nodiscard]] QCoro::Task<void> on_technology_gained(const technology *technology, const int multiplier);
 	centesimal_int get_extra_technology(const technology *technology) const;
 	[[nodiscard]] QCoro::Task<void> check_technologies();
-
-	const scripted_province_modifier_map<int> &get_scripted_modifiers() const
-	{
-		return this->scripted_modifiers;
-	}
-
-	QVariantList get_scripted_modifiers_qvariant_list() const;
-	bool has_scripted_modifier(const scripted_province_modifier *modifier) const;
-	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_province_modifier *modifier, const int duration);
-	[[nodiscard]] QCoro::Task<void> remove_scripted_modifier(const scripted_province_modifier *modifier);
-	[[nodiscard]] QCoro::Task<void> decrement_scripted_modifiers();
 
 	[[nodiscard]] QCoro::Task<void> apply_modifier(const modifier<const metternich::province> *modifier, const int multiplier = 1);
 
@@ -629,7 +620,6 @@ private:
 	data_entry_map<domain_skill, centesimal_int> domain_skill_total_holding_levels;
 	data_entry_map<site_feature, int> site_feature_counts;
 	technology_set technologies;
-	scripted_province_modifier_map<int> scripted_modifiers;
 	std::vector<population_unit *> population_units;
 	qunique_ptr<metternich::population> population;
 	population_type_map<centesimal_int> population_type_modifier_multipliers;
