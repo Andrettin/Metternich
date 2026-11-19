@@ -14,7 +14,7 @@ class province_game_data;
 class site;
 class site_game_data;
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 class scripted_modifier_scope
 {
 public:
@@ -28,11 +28,13 @@ public:
 		return this->scripted_modifiers;
 	}
 
+protected:
 	scripted_modifier_map<int> &get_scripted_modifiers()
 	{
 		return this->scripted_modifiers;
 	}
 
+public:
 	QVariantList get_scripted_modifiers_qvariant_list() const;
 	bool has_scripted_modifier(const scripted_modifier_type *modifier) const;
 	[[nodiscard]] QCoro::Task<void> add_scripted_modifier(const scripted_modifier_type *modifier, const int duration);

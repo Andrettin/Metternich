@@ -16,19 +16,19 @@
 
 namespace metternich {
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 QVariantList scripted_modifier_scope<derived_type, scope_type>::get_scripted_modifiers_qvariant_list() const
 {
 	return archimedes::map::to_qvariant_list(this->get_scripted_modifiers());
 }
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 bool scripted_modifier_scope<derived_type, scope_type>::has_scripted_modifier(const scripted_modifier_type *modifier) const
 {
 	return this->get_scripted_modifiers().contains(modifier);
 }
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 QCoro::Task<void> scripted_modifier_scope<derived_type, scope_type>::add_scripted_modifier(const scripted_modifier_type *modifier, const int duration)
 {
 	if (!this->scripted_modifiers.contains(modifier) && modifier->get_modifier() != nullptr) {
@@ -42,7 +42,7 @@ QCoro::Task<void> scripted_modifier_scope<derived_type, scope_type>::add_scripte
 	}
 }
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 QCoro::Task<void> scripted_modifier_scope<derived_type, scope_type>::remove_scripted_modifier(const scripted_modifier_type *modifier)
 {
 	this->scripted_modifiers.erase(modifier);
@@ -56,7 +56,7 @@ QCoro::Task<void> scripted_modifier_scope<derived_type, scope_type>::remove_scri
 	}
 }
 
-template <typename derived_type, typename scope_type>
+template <typename derived_type, scope_has_scripted_modifiers scope_type>
 QCoro::Task<void> scripted_modifier_scope<derived_type, scope_type>::decrement_scripted_modifiers()
 {
 	if (this->scripted_modifiers.empty()) {
