@@ -1,0 +1,9 @@
+bilma = {
+	name = "Bilma"
+	color = { 1 93 195 }
+	terrain = desert
+	default_provincial_capital = bilma
+	regions = {
+		africa
+	}
+}

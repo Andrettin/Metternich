@@ -1,0 +1,8 @@
+bilma = {
+	name = "Bilma"
+	world = earth
+	geocoordinate = { 12.9177 18.693 }
+	type = holding
+	holding_type = castle
+	province = bilma
+}
