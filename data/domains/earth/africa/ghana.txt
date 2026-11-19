@@ -1,0 +1,10 @@
+ghana = {
+	name = "Ghana"
+	type = polity
+	color = { 78 144 237 }
+	default_culture = mande
+	default_religion = siguic
+	default_tier = kingdom
+	default_government_type = monarchy
+	default_capital = timbuktu #correct?
+}

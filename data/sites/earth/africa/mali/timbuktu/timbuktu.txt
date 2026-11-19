@@ -5,4 +5,10 @@ timbuktu = {
 	type = holding
 	holding_type = guild
 	province = timbuktu
+	
+	history = {
+		500 = {
+			developed = true #existed in the 500-1450 period; Source: "History of the World Map by Map", 2023, pp. 140-141.
+		}
+	}
 }

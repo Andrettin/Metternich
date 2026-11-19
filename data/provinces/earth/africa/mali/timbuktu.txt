@@ -6,4 +6,12 @@ timbuktu = {
 	regions = {
 		africa
 	}
+	
+	history = {
+		500 = {
+			owner = ghana #part of the Kingdom of Ghana in the 500-1200 period; Source: "History of the World Map by Map", 2023, pp. 140-141.
+			culture = mande
+			religion = siguic
+		}
+	}
 }

@@ -5,4 +5,10 @@ aoudaghost = {
 	type = holding
 	holding_type = guild
 	province = aoudaghost #Hodh El Gharbi
+	
+	history = {
+		500 = {
+			developed = true #Awdaghost existed in the 500-1450 period; Source: "History of the World Map by Map", 2023, pp. 140-141.
+		}
+	}
 }
