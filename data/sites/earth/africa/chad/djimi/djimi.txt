@@ -1,0 +1,8 @@
+djimi = {
+	name = "Djimi"
+	world = earth
+	geocoordinate = { 15.75182 14.13969 } #Tié Isiri
+	type = holding
+	holding_type = castle
+	province = djimi
+}

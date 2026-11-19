@@ -1,0 +1,8 @@
+auno = {
+	name = "Auno"
+	world = earth
+	geocoordinate = { 13.05 11.83542 }
+	type = holding
+	holding_type = temple
+	province = bornu
+}

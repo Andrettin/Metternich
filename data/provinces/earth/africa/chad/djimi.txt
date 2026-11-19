@@ -1,0 +1,9 @@
+djimi = {
+	name = "Djimi"
+	color = { 169 105 197 }
+	terrain = desert
+	default_provincial_capital = djimi
+	regions = {
+		africa
+	}
+}
