@@ -55,6 +55,15 @@ caribbean_sea = {
 	}
 }
 
+coast_of_amapa = {
+	name = "Coast of Amapa"
+	color = { 233 159 64 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_andalusia = {
 	name = "Coast of Andalusia"
 	color = { 0 9 155 }
@@ -94,6 +103,15 @@ coast_of_canada = {
 coast_of_cape_verde = {
 	name = "Coast of Cape Verde"
 	color = { 234 207 114 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_cayenne = {
+	name = "Coast of Cayenne"
+	color = { 108 168 39 }
 	sea = true
 	regions = {
 		atlantic_ocean
@@ -253,6 +271,15 @@ coast_of_puerto_rico = {
 	}
 }
 
+coast_of_saint_peter_and_saint_paul = {
+	name = "Coast of Saint Peter and Saint Paul"
+	color = { 249 145 111 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_sao_tome = {
 	name = "Coast of Sao Tome"
 	color = { 71 197 76 }
@@ -292,6 +319,15 @@ coast_of_sierra_leone = {
 coast_of_south_georgia = {
 	name = "Coast of South Georgia"
 	color = { 114 203 253 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_suriname = {
+	name = "Coast of Suriname"
+	color = { 126 183 94 }
 	sea = true
 	regions = {
 		atlantic_ocean
