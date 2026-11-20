@@ -1,0 +1,9 @@
+zamfara = {
+	name = "Zamfara"
+	color = { 1 138 75 }
+	terrain = desert
+	default_provincial_capital = datsi
+	regions = {
+		africa
+	}
+}

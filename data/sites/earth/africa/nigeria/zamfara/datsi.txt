@@ -1,0 +1,8 @@
+datsi = {
+	name = "Datsi"
+	world = earth
+	geocoordinate = { 6.606371999999999 12.8762119 } #Dutsi, Zamfara
+	type = holding
+	holding_type = castle
+	province = zamfara
+}
