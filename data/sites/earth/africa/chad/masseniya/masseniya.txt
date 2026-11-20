@@ -1,0 +1,8 @@
+masseniya = {
+	name = "Masseniya"
+	world = earth
+	geocoordinate = { 16.17 11.402777777777779 } #Massenya
+	type = holding
+	holding_type = castle
+	province = masseniya
+}

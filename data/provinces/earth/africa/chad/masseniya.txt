@@ -1,0 +1,9 @@
+masseniya = {
+	name = "Masseniya"
+	color = { 1 108 70 }
+	terrain = desert
+	default_provincial_capital = masseniya
+	regions = {
+		africa
+	}
+}
