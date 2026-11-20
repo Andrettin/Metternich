@@ -1,0 +1,8 @@
+makari = {
+	name = "Makari"
+	world = earth
+	geocoordinate = { 14.45388889 12.57416667 } #Makary
+	type = holding
+	holding_type = castle
+	province = makari
+}

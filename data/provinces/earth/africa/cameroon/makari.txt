@@ -1,0 +1,9 @@
+makari = {
+	name = "Makari"
+	color = { 43 111 198 }
+	terrain = desert
+	default_provincial_capital = makari
+	regions = {
+		africa
+	}
+}
