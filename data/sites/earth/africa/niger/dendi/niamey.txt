@@ -1,0 +1,8 @@
+niamey = {
+	name = "Niamey"
+	world = earth
+	geocoordinate = { 2.114710 13.518652 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = dendi
+}

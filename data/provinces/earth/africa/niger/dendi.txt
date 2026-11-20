@@ -1,0 +1,9 @@
+dendi = {
+	name = "Dendi"
+	color = { 1 153 205 }
+	terrain = plains
+	default_provincial_capital = niamey
+	regions = {
+		africa
+	}
+}
