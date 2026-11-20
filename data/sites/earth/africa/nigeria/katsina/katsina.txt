@@ -1,0 +1,8 @@
+katsina = {
+	name = "Katsina"
+	world = earth
+	geocoordinate = { 7.599991 12.990407 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = katsina
+}

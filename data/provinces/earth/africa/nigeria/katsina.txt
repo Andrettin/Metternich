@@ -1,0 +1,9 @@
+katsina = {
+	name = "Katsina"
+	color = { 43 141 203 }
+	terrain = desert
+	default_provincial_capital = katsina
+	regions = {
+		africa
+	}
+}
