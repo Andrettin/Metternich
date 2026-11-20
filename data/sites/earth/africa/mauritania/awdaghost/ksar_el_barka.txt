@@ -4,5 +4,5 @@ ksar_el_barka = {
 	geocoordinate = { -12.216666666667 18.4 }
 	type = holding
 	holding_type = castle
-	province = aoudaghost #Tagant
+	province = awdaghost #Tagant
 }

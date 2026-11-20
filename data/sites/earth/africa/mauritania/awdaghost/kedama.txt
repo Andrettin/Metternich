@@ -4,5 +4,5 @@ kedama = {
 	geocoordinate = { -7.96352 18.01019 }
 	type = holding
 	holding_type = guild
-	province = aoudaghost #Hodh ech Chargui
+	province = awdaghost #Hodh ech Chargui
 }

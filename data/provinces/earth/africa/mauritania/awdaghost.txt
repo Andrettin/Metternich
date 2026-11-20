@@ -1,8 +1,8 @@
-aoudaghost = {
-	name = "Aoudaghost"
+awdaghost = {
+	name = "Awdaghost" #also known as Aoudaghost
 	color = { 84 0 26 }
 	terrain = desert
-	default_provincial_capital = aoudaghost
+	default_provincial_capital = awdaghost
 	regions = {
 		africa
 	}

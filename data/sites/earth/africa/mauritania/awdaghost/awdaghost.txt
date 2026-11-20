@@ -1,10 +1,10 @@
-aoudaghost = {
-	name = "Aoudaghost"
+awdaghost = {
+	name = "Awdaghost" #also known as Aoudaghost
 	world = earth
 	geocoordinate = { -10.410388888888889 17.42436111111111 }
 	type = holding
 	holding_type = guild
-	province = aoudaghost #Hodh El Gharbi
+	province = awdaghost #Hodh El Gharbi
 	
 	history = {
 		500 = {
