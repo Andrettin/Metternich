@@ -639,8 +639,8 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 
 	const QRect image_rect = this->ocean_diplomatic_map_image.rect();
 
-	for (int x = 0; x < this->ocean_diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->ocean_diplomatic_map_image.height(); ++y) {
+	for (int y = 0; y < this->ocean_diplomatic_map_image.height(); ++y) {
+		for (int x = 0; x < this->ocean_diplomatic_map_image.width(); ++x) {
 			const QPoint pixel_pos(x, y);
 			const QColor pixel_color = this->ocean_diplomatic_map_image.pixelColor(pixel_pos);
 
@@ -724,8 +724,8 @@ QCoro::Task<void> map::create_empty_diplomatic_map_image()
 
 	const QRect image_rect = this->empty_diplomatic_map_image.rect();
 
-	for (int x = 0; x < this->empty_diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->empty_diplomatic_map_image.height(); ++y) {
+	for (int y = 0; y < this->empty_diplomatic_map_image.height(); ++y) {
+		for (int x = 0; x < this->empty_diplomatic_map_image.width(); ++x) {
 			const QPoint pixel_pos(x, y);
 			const QColor pixel_color = this->empty_diplomatic_map_image.pixelColor(pixel_pos);
 
@@ -808,8 +808,8 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 
 	const QRect image_rect = this->empty_terrain_diplomatic_map_image.rect();
 
-	for (int x = 0; x < this->empty_terrain_diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->empty_terrain_diplomatic_map_image.height(); ++y) {
+	for (int y = 0; y < this->empty_terrain_diplomatic_map_image.height(); ++y) {
+		for (int x = 0; x < this->empty_terrain_diplomatic_map_image.width(); ++x) {
 			const QPoint pixel_pos(x, y);
 			const QColor pixel_color = this->empty_terrain_diplomatic_map_image.pixelColor(pixel_pos);
 
