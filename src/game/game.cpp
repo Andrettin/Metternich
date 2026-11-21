@@ -2430,6 +2430,8 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 		this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
 
+		assert_throw(this->exploration_diplomatic_map_image.format() == QImage::Format_ARGB32);
+
 		//make semi-transparent pixels non-transparent
 		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
 			QRgb *image_data_line = reinterpret_cast<QRgb *>(this->exploration_diplomatic_map_image.scanLine(y));
