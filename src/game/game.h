@@ -156,6 +156,11 @@ public:
 	[[nodiscard]] QCoro::Task<void> apply_free_on_start_buildings();
 
 	[[nodiscard]] QCoro::Task<void> apply_population_history();
+
+	template <typename key_member_type, typename weight_map_type>
+	[[nodiscard]] QCoro::Task<int64_t> apply_weighted_historical_population_to_site(const 
+population_group_key &group_key, const key_member_type *population_group_key::*key_member, const weight_map_type &weights, const int64_t population, const site *site, weight_map_type::key_type *key_for_remaining);
+
 	[[nodiscard]] QCoro::Task<int64_t> apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site);
 	[[nodiscard]] QCoro::Task<void> apply_character_history(const QDate &start_date);
 

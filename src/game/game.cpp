@@ -1569,6 +1569,39 @@ QCoro::Task<void> game::apply_population_history()
 	}
 }
 
+template <typename key_member_type, typename weight_map_type>
+QCoro::Task<int64_t> game::apply_weighted_historical_population_to_site(const
+	population_group_key &group_key, const key_member_type *population_group_key::*key_member, const weight_map_type &weights, const int64_t population, const site *site, weight_map_type::key_type *key_for_remaining)
+{
+	assert_throw(!weights.empty());
+
+	int64_t remaining_population = population;
+	const int64_t total_weight = archimedes::map::get_total_value(weights);
+
+	*key_for_remaining = nullptr;
+
+	for (const auto &[weighted_key, weight] : weights) {
+		population_group_key group_key_copy = group_key;
+		group_key_copy.*key_member = weighted_key;
+
+		int64_t weighted_population = population * weight / total_weight;
+		weighted_population -= co_await this->apply_historical_population_group_to_site(group_key_copy, weighted_population, site);
+		remaining_population -= weighted_population;
+	}
+
+	if (remaining_population <= 0) {
+		co_return 0;
+	}
+
+	//apply any remaining population to the key with the largest weight
+	const auto best_key = archimedes::map::get_highest_value_key(weights);
+	if (best_key.has_value()) {
+		*key_for_remaining = best_key.value();
+	}
+
+	co_return remaining_population;
+}
+
 QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const population_group_key &group_key, const int64_t population, const site *site)
 {
 	if (population <= 0) {
@@ -1627,29 +1660,9 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 	assert_throw(culture != nullptr || !culture_weights.empty());
 
 	if (culture == nullptr) {
-		assert_throw(!culture_weights.empty());
+		remaining_population = co_await this->apply_weighted_historical_population_to_site(group_key, &population_group_key::culture, culture_weights, remaining_population, site, &culture);
 
-		int64_t new_remaining_population = remaining_population;
-		const int64_t total_weight = archimedes::map::get_total_value(culture_weights);
-
-		for (const auto &[weighted_culture, weight] : culture_weights) {
-			population_group_key group_key_copy = group_key;
-			group_key_copy.culture = weighted_culture;
-
-			int64_t culture_population = remaining_population * weight / total_weight;
-			culture_population -= co_await this->apply_historical_population_group_to_site(group_key_copy, culture_population, site);
-			new_remaining_population -= culture_population;
-		}
-
-		remaining_population = new_remaining_population;
-
-		if (remaining_population > 0) {
-			//apply any remaining population to the biggest culture
-			const std::optional<const metternich::culture *> best_culture = archimedes::map::get_highest_value_key(culture_weights);
-			if (best_culture.has_value()) {
-				culture = best_culture.value();
-			}
-		} else {
+		if (remaining_population == 0) {
 			co_return 0;
 		}
 	}
@@ -1693,29 +1706,9 @@ QCoro::Task<int64_t> game::apply_historical_population_group_to_site(const popul
 	assert_throw(phenotype != nullptr || !phenotype_weights.empty());
 
 	if (phenotype == nullptr) {
-		assert_throw(!phenotype_weights.empty());
+		remaining_population = co_await this->apply_weighted_historical_population_to_site(group_key, &population_group_key::phenotype, phenotype_weights, remaining_population, site, &phenotype);
 
-		int64_t new_remaining_population = remaining_population;
-		const int64_t total_weight = archimedes::map::get_total_value(phenotype_weights);
-
-		for (const auto &[weighted_phenotype, weight] : phenotype_weights) {
-			population_group_key group_key_copy = group_key;
-			group_key_copy.phenotype = weighted_phenotype;
-
-			int64_t phenotype_population = remaining_population * weight / total_weight;
-			phenotype_population -= co_await this->apply_historical_population_group_to_site(group_key_copy, phenotype_population, site);
-			new_remaining_population -= phenotype_population;
-		}
-
-		remaining_population = new_remaining_population;
-
-		if (remaining_population > 0) {
-			//apply any remaining population to the biggest phenotype
-			const std::optional<const metternich::phenotype *> best_phenotype = archimedes::map::get_highest_value_key(phenotype_weights);
-			if (best_phenotype.has_value()) {
-				phenotype = best_phenotype.value();
-			}
-		} else {
+		if (remaining_population == 0) {
 			co_return 0;
 		}
 	}
