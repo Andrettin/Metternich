@@ -276,7 +276,7 @@ void map_template::load_province_image()
 	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
 	this->province_image_promise = promise;
 	this->province_image_promise->start();
-	QThreadPool::globalInstance()->start([promise, image_filepath]() {
+	QtConcurrent::run([promise, image_filepath]() {
 		QImage province_image(path::to_qstring(image_filepath));
 
 		if (province_image.format() != QImage::Format_ARGB32) {
