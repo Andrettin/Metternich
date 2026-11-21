@@ -1,0 +1,8 @@
+nguru = {
+	name = "Nguru"
+	world = earth
+	geocoordinate = { 10.449998 12.880388 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = bornu #Yobe
+}
