@@ -58,6 +58,7 @@ europe = {
 		bolivar
 		cuba
 		guyana
+		jizzakh
 		karelia
 		khojand
 		lake_onega
