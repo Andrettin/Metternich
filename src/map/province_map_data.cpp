@@ -34,6 +34,8 @@ province_map_data::province_map_data(const metternich::province *province) : pro
 
 void province_map_data::on_map_created()
 {
+	//this function is safe to run on multiple threads in parallel for different provinces
+
 	this->initialize_terrain(true);
 
 	this->nearby_provinces = this->get_neighbor_provinces();
