@@ -363,16 +363,6 @@ int map::get_map_block_grid_height() const
 	return this->get_height() / defines::get()->get_map_block_size().height();
 }
 
-size_t map::get_pos_index(const QPoint &pos) const
-{
-	return point::to_index(pos, static_cast<size_t>(this->get_width()));
-}
-
-QPoint map::get_index_pos(const size_t index) const
-{
-	return point::from_index(index, static_cast<size_t>(this->get_width()));
-}
-
 tile *map::get_tile(const size_t index) const
 {
 	return &this->tiles->at(index);

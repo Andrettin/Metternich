@@ -84,8 +84,15 @@ public:
 			&& pos.y() < this->get_height());
 	}
 
-	size_t get_pos_index(const QPoint &pos) const;
-	QPoint get_index_pos(const size_t index) const;
+	size_t get_pos_index(const QPoint &pos) const
+	{
+		return point::to_index(pos, static_cast<size_t>(this->get_width()));
+	}
+
+	QPoint get_index_pos(const size_t index) const
+	{
+		return point::from_index(index, static_cast<size_t>(this->get_width()));
+	}
 
 	tile *get_tile(const size_t index) const;
 	tile *get_tile(const QPoint &pos) const;
