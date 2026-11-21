@@ -1341,11 +1341,13 @@ void character_game_data::check_portrait()
 
 	std::vector<const metternich::portrait *> potential_portraits;
 
+	const read_only_context ctx(this->character);
+
 	for (const metternich::portrait *portrait : portrait::get_character_portraits()) {
 		assert_throw(portrait->is_character_portrait());
 		assert_throw(portrait->get_character_conditions() != nullptr);
 
-		if (!portrait->get_character_conditions()->check(this->character, read_only_context(this->character))) {
+		if (!portrait->get_character_conditions()->check(this->character, ctx)) {
 			continue;
 		}
 
@@ -3290,8 +3292,10 @@ QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, co
 		co_return;
 	}
 
+	const read_only_context ctx(this->character);
+
 	if (change > 0) {
-		if (!this->can_have_trait(trait)) {
+		if (!this->can_have_trait(trait, ctx)) {
 			throw std::runtime_error(std::format("Tried to add trait \"{}\" to character \"{}\", for which the trait's conditions are not fulfilled.", trait->get_identifier(), this->character->get_identifier()));
 		}
 	}
@@ -3299,7 +3303,7 @@ QCoro::Task<void> character_game_data::change_trait_count(const trait *trait, co
 	const int old_value = this->get_trait_count(trait);
 
 	if (change > 0 && old_value == 0) {
-		if (!this->can_gain_trait(trait)) {
+		if (!this->can_gain_trait(trait, ctx)) {
 			throw std::runtime_error(std::format("Tried to add trait \"{}\" to character \"{}\", who cannot gain it.", trait->get_identifier(), this->character->get_identifier()));
 		}
 	}
@@ -3358,9 +3362,9 @@ QVariantList character_game_data::get_traits_of_type(const QString &trait_type_s
 	return container::to_qvariant_list(this->get_traits_of_type(type));
 }
 
-bool character_game_data::can_have_trait(const trait *trait) const
+bool character_game_data::can_have_trait(const trait *trait, const read_only_context &ctx) const
 {
-	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, read_only_context(this->character))) {
+	if (trait->get_conditions() != nullptr && !trait->get_conditions()->check(this->character, ctx)) {
 		return false;
 	}
 
@@ -3377,17 +3381,17 @@ bool character_game_data::can_have_trait(const trait *trait) const
 	return true;
 }
 
-bool character_game_data::can_gain_trait(const trait *trait) const
+bool character_game_data::can_gain_trait(const trait *trait, const read_only_context &ctx) const
 {
 	if (this->has_trait(trait) && !trait->is_unlimited()) {
 		return false;
 	}
 
-	if (!this->can_have_trait(trait)) {
+	if (!this->can_have_trait(trait, ctx)) {
 		return false;
 	}
 
-	if (trait->get_gain_conditions() != nullptr && !trait->get_gain_conditions()->check(this->character, read_only_context(this->character))) {
+	if (trait->get_gain_conditions() != nullptr && !trait->get_gain_conditions()->check(this->character, ctx)) {
 		return false;
 	}
 
@@ -3397,7 +3401,7 @@ bool character_game_data::can_gain_trait(const trait *trait) const
 		}
 
 
-		if (trait_type->get_gain_conditions() != nullptr && !trait_type->get_gain_conditions()->check(this->character, read_only_context(this->character))) {
+		if (trait_type->get_gain_conditions() != nullptr && !trait_type->get_gain_conditions()->check(this->character, ctx)) {
 			return false;
 		}
 	}
@@ -3463,10 +3467,12 @@ QCoro::Task<void> character_game_data::on_trait_gained(const trait *trait, const
 QCoro::Task<void> character_game_data::add_trait_of_type(const trait_type *trait_type)
 {
 	try {
-		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(vector::intersected(this->target_traits, trait_type->get_traits()));
+		const read_only_context ctx(this->character);
+
+		std::vector<const trait *> potential_traits = this->get_potential_traits_from_list(vector::intersected(this->target_traits, trait_type->get_traits()), ctx);
 
 		if (potential_traits.empty()) {
-			potential_traits = this->get_potential_traits_from_list(trait_type->get_traits());
+			potential_traits = this->get_potential_traits_from_list(trait_type->get_traits(), ctx);
 
 			if (trait_type->get_none_weight() > 0) {
 				if (this->character == game::get()->get_player_character()) {
@@ -3532,13 +3538,14 @@ QCoro::Task<bool> character_game_data::generate_trait(const trait_type *trait_ty
 {
 	std::vector<const trait *> potential_traits;
 	int best_attribute_bonus = 0;
+	const read_only_context ctx(this->character);
 
 	for (const trait *trait : trait::get_all()) {
 		if (!vector::contains(trait->get_types(), trait_type)) {
 			continue;
 		}
 
-		if (!this->can_gain_trait(trait)) {
+		if (!this->can_gain_trait(trait, ctx)) {
 			continue;
 		}
 
@@ -3580,7 +3587,7 @@ QCoro::Task<void> character_game_data::on_trait_chosen_coro(const trait *trait, 
 	}
 }
 
-std::vector<const trait *> character_game_data::get_potential_traits_from_list(const std::vector<const trait *> &traits) const
+std::vector<const trait *> character_game_data::get_potential_traits_from_list(const std::vector<const trait *> &traits, const read_only_context &ctx) const
 {
 	data_entry_map<character_stat, std::pair<int, int>> unfulfilled_stat_ranges;
 	for (const auto &[stat, range] : this->character->get_stat_ranges()) {
@@ -3608,7 +3615,7 @@ std::vector<const trait *> character_game_data::get_potential_traits_from_list(c
 			continue;
 		}
 
-		if (!this->can_gain_trait(trait)) {
+		if (!this->can_gain_trait(trait, ctx)) {
 			continue;
 		}
 
@@ -4846,11 +4853,13 @@ QCoro::Task<void> character_game_data::use_item_coro(item *item)
 
 bool character_game_data::can_use_enchantment(const enchantment *enchantment) const
 {
-	if (enchantment->get_conditions() != nullptr && !enchantment->get_conditions()->check(this->character, read_only_context(this->character))) {
+	const read_only_context ctx(this->character);
+
+	if (enchantment->get_conditions() != nullptr && !enchantment->get_conditions()->check(this->character, ctx)) {
 		return false;
 	}
 
-	if (this->is_ai() && enchantment->get_ai_conditions() != nullptr && !enchantment->get_ai_conditions()->check(this->character, read_only_context(this->character))) {
+	if (this->is_ai() && enchantment->get_ai_conditions() != nullptr && !enchantment->get_ai_conditions()->check(this->character, ctx)) {
 		return false;
 	}
 

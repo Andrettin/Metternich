@@ -25,9 +25,7 @@ public:
 
 	virtual bool check_assignment(const character *scope, const read_only_context &ctx) const override
 	{
-		Q_UNUSED(ctx);
-
-		return scope->get_game_data()->can_gain_trait(this->trait);
+		return scope->get_game_data()->can_gain_trait(this->trait, ctx);
 	}
 
 	virtual std::string get_assignment_string(const size_t indent) const override

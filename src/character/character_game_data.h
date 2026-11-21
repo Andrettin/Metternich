@@ -67,6 +67,7 @@ enum class military_unit_stat;
 enum class opinion_type;
 struct context;
 struct item_key;
+struct read_only_context;
 struct recipe_material;
 
 template <typename scope_type>
@@ -605,8 +606,8 @@ public:
 		return static_cast<int>(this->get_traits_of_type(trait_type).size());
 	}
 
-	bool can_have_trait(const trait *trait) const;
-	bool can_gain_trait(const trait *trait) const;
+	bool can_have_trait(const trait *trait, const read_only_context &ctx) const;
+	bool can_gain_trait(const trait *trait, const read_only_context &ctx) const;
 	bool has_trait(const trait *trait) const;
 	[[nodiscard]] QCoro::Task<void> on_trait_gained(const trait *trait, const int multiplier);
 	[[nodiscard]] QCoro::Task<void> add_trait_of_type(const trait_type *trait_type);
@@ -619,7 +620,7 @@ public:
 		return this->on_trait_chosen_coro(trait, trait_type);
 	}
 
-	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits) const;
+	std::vector<const trait *> get_potential_traits_from_list(const std::vector<const trait *> &traits, const read_only_context &ctx) const;
 
 	bool is_ruler() const;
 
