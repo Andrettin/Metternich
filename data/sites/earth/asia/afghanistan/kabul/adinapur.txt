@@ -1,0 +1,11 @@
+adinapur = {
+	name = "Adinapur" #also known as "Jalalabad" and "Nagarahara"
+	world = earth
+	geocoordinate = { 70.43610347380 34.44152691550 } #from Natural Earth
+	type = holding
+	holding_type = guild #or temple
+	province = kabul #Nangarhar
+	features = {
+		prime_grain_land
+	}
+}

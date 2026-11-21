@@ -1,0 +1,8 @@
+kharabat = {
+	name = "Kharabat"
+	world = earth
+	geocoordinate = { 69.18695 34.50872 } #Kōchah-ye Kharābāt
+	type = holding
+	holding_type = guild
+	province = kabul
+}

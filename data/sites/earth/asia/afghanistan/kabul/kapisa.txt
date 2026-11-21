@@ -1,0 +1,8 @@
+kapisa = {
+	name = "Kapisa"
+	world = earth
+	geocoordinate = { 69.23333333333333 34.93333333333333 } #Bagram
+	type = holding
+	holding_type = guild
+	province = kabul #Parwan
+}

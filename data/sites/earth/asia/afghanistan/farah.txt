@@ -4,5 +4,5 @@ farah = {
 	geocoordinate = { 62.09681921270 32.39172955220 } #from Natural Earth
 	type = resource
 	resource = cotton
-	province = afghanistan
+	province = kabul
 }

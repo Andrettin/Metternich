@@ -3,7 +3,6 @@ balkh = {
 	world = earth
 	geocoordinate = { 66.89973018280 36.75011985170 } #from Natural Earth
 	type = resource
-	#resource = grain #Irrigated cultivation; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
 	resource = grain
-	province = afghanistan
+	province = kabul
 }

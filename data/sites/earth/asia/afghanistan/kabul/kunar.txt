@@ -1,0 +1,8 @@
+kunar = {
+	name = "Kunar"
+	world = earth
+	geocoordinate = { 71.150005 34.866 } #from Natural Earth (Asadabad)
+	type = holding
+	holding_type = guild
+	province = kabul #Kunar
+}

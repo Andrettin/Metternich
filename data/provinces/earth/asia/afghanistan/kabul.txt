@@ -1,6 +1,7 @@
-afghanistan = {
-	name = "Afghanistan"
-	color = { 194 33 232 }
+kabul = {
+	name = "Kabul"
+	color = { 1 147 220 }
+	terrain = mountains
 	default_provincial_capital = kabul
 	regions = {
 		asia

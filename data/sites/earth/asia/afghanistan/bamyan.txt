@@ -3,7 +3,6 @@ bamyan = {
 	world = earth
 	geocoordinate = { 67.52103592820 34.82106447250 } #from Natural Earth
 	type = resource
-	#resource = grain #Mixed dry farming and grazing; Source: Map No. 504958 of the Perry-Castañeda Library Map Collection, 1971.
 	resource = grain
-	province = afghanistan
+	province = kabul
 }

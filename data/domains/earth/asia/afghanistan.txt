@@ -8,6 +8,6 @@ afghanistan = {
 	default_government_type = tribal_despotism
 	default_capital = kabul
 	core_provinces = {
-		afghanistan
+		kabul
 	}
 }

@@ -3,8 +3,11 @@ kabul = {
 	world = earth
 	geocoordinate = { 69.18326004930 34.51669028630 } #from Natural Earth
 	type = holding
-	#resource = timber
-	province = afghanistan
+	holding_type = castle
+	province = kabul
+	features = {
+		prime_timber
+	}
 	
 	history = {
 		1801 = {

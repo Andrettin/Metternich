@@ -4,7 +4,7 @@ kandahar = {
 	geocoordinate = { 65.69494584030 31.61002016100 } #from Natural Earth
 	type = resource
 	resource = sheep
-	province = afghanistan
+	province = kabul
 	features = {
 		prime_sheep_land
 	}

@@ -1,0 +1,8 @@
+lampara = {
+	name = "Lampara"
+	world = earth
+	geocoordinate = { 70.1834 34.5846 } #Pul-i-Darunteh Aramaic inscription/Inscription araméenne de Lampaka
+	type = holding
+	holding_type = temple
+	province = kabul #Laghman
+}
