@@ -48,7 +48,7 @@ earth_center = {
 
 europe = {
 	name = "Europe"
-	size = { 5632 2816 }
+	size = { 6400 2816 }
 	world = earth
 	main_map_template = earth
 	map_start_pos = { 4352 2816 }
@@ -60,13 +60,10 @@ europe = {
 		guyana
 		karelia
 		lake_onega
-		mazandaran
 		new_york
 		nunavut
-		qatar
 		satakunta
 		sermersooq
-		teheran
 	}
 }
 
