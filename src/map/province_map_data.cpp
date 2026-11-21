@@ -105,6 +105,7 @@ void province_map_data::on_map_created()
 		}
 	} else {
 		const map *map = map::get();
+		const tile::province_index_type province_index = static_cast<tile::province_index_type>(this->province->get_index());
 
 		cv::Mat image(this->get_territory_rect().height(), this->get_territory_rect().width(), CV_8UC1);
 
@@ -113,7 +114,7 @@ void province_map_data::on_map_created()
 				const QPoint relative_tile_pos = QPoint(x, y);
 				const tile *tile = map->get_tile(this->get_territory_rect().topLeft() + relative_tile_pos);
 
-				if (tile->get_province() != this->province) {
+				if (tile->get_province_index() != province_index) {
 					image.at<uchar>(y, x) = 0;
 					continue;
 				}
