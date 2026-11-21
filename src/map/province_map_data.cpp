@@ -108,8 +108,8 @@ void province_map_data::on_map_created()
 
 		cv::Mat image(this->get_territory_rect().height(), this->get_territory_rect().width(), CV_8UC1);
 
-		for (int x = 0; x < this->get_territory_rect().width(); ++x) {
-			for (int y = 0; y < this->get_territory_rect().height(); ++y) {
+		for (int y = 0; y < this->get_territory_rect().height(); ++y) {
+			for (int x = 0; x < this->get_territory_rect().width(); ++x) {
 				const QPoint relative_tile_pos = QPoint(x, y);
 				const tile *tile = map->get_tile(this->get_territory_rect().topLeft() + relative_tile_pos);
 

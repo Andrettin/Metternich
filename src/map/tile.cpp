@@ -27,11 +27,12 @@ void tile::set_province(metternich::province *province)
 
 const domain *tile::get_owner() const
 {
-	if (this->get_province() == nullptr) {
+	const province *province = this->get_province();
+	if (province == nullptr) {
 		return nullptr;
 	}
 
-	return this->get_province()->get_game_data()->get_owner();
+	return province->get_game_data()->get_owner();
 }
 
 }

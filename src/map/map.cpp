@@ -287,12 +287,14 @@ QCoro::Task<void> map::process_border_tiles()
 			continue;
 		}
 
-		QFuture<void> future = QtConcurrent::run([this, province, province_map_data]() {
+		const tile::province_index_type province_index = static_cast<tile::province_index_type>(province->get_index());
+
+		QFuture<void> future = QtConcurrent::run([this, province_index, province_map_data]() {
 			for (const uint32_t tile_index : province_map_data->get_tile_indices()) {
 				const QPoint tile_pos = this->get_index_pos(tile_index);
 				bool is_border_tile = false;
 
-				point::for_each_adjacent(tile_pos, [this, &tile_pos, province, province_map_data, &is_border_tile](const QPoint &adjacent_pos) {
+				point::for_each_adjacent(tile_pos, [this, &tile_pos, province_index, province_map_data, &is_border_tile](const QPoint &adjacent_pos) {
 					if (!this->contains(adjacent_pos)) {
 						is_border_tile = true;
 						return;
@@ -300,15 +302,18 @@ QCoro::Task<void> map::process_border_tiles()
 
 					const size_t adjacent_index = this->get_pos_index(adjacent_pos);
 					const metternich::tile *adjacent_tile = &(*this->tiles)[adjacent_index];
+
+					if (adjacent_tile->get_province_index() != province_index) {
+						return;
+					}
+
 					const metternich::province *adjacent_province = adjacent_tile->get_province();
 
-					if (province != adjacent_province) {
-						if (adjacent_province != nullptr && !vector::contains(province_map_data->get_neighbor_provinces(), adjacent_province)) {
-							province_map_data->add_neighbor_province(adjacent_province);
-						}
-
-						is_border_tile = true;
+					if (adjacent_province != nullptr && !vector::contains(province_map_data->get_neighbor_provinces(), adjacent_province)) {
+						province_map_data->add_neighbor_province(adjacent_province);
 					}
+
+					is_border_tile = true;
 				});
 
 				if (is_border_tile) {
@@ -600,8 +605,8 @@ QCoro::Task<void> map::create_ocean_diplomatic_map_image()
 
 	const QColor &color = defines::get()->get_ocean_color();
 
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
+	for (int y = 0; y < image_size.height(); ++y) {
+		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);
@@ -685,8 +690,8 @@ QCoro::Task<void> map::create_empty_diplomatic_map_image()
 
 	const QColor &color = defines::get()->get_map_blank_color();
 
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
+	for (int y = 0; y < image_size.height(); ++y) {
+		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);
@@ -768,8 +773,8 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 	this->empty_terrain_diplomatic_map_image = QImage(image_size, QImage::Format_ARGB32);
 	this->empty_terrain_diplomatic_map_image.fill(Qt::transparent);
 
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
+	for (int y = 0; y < image_size.height(); ++y) {
+		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);

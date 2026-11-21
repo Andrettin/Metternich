@@ -12,6 +12,11 @@ public:
 	static constexpr province_index_type no_province_index = std::numeric_limits<province_index_type>::max();
 	static constexpr province_index_type last_valid_province_index = no_province_index - 1;
 
+	province_index_type get_province_index() const
+	{
+		return this->province_index;
+	}
+
 	metternich::province *get_province() const;
 	void set_province(metternich::province *province);
 

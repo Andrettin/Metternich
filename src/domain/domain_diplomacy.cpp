@@ -685,8 +685,8 @@ void domain_diplomacy::create_diplomatic_map_image()
 	//normalize the tile top left
 	const QPoint tile_top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale / tile_scale;
 
-	for (int x = 0; x < image_size.width(); ++x) {
-		for (int y = 0; y < image_size.height(); ++y) {
+	for (int y = 0; y < image_size.height(); ++y) {
+		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
