@@ -640,7 +640,7 @@ QImage domain_diplomacy::finalize_diplomatic_map_image(QImage &&image)
 			}
 
 			if (
-				//whether the pixel is on the edge of the map
+				//whether the pixel is on the edge of the image
 				x == 0 || y == 0 || x == image_width - 1 || y == image_height - 1
 				//whether the pixel has a blended color
 				|| alpha != 255
