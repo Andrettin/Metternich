@@ -303,7 +303,7 @@ QCoro::Task<void> map::process_border_tiles()
 					const size_t adjacent_index = this->get_pos_index(adjacent_pos);
 					const metternich::tile *adjacent_tile = &(*this->tiles)[adjacent_index];
 
-					if (adjacent_tile->get_province_index() != province_index) {
+					if (adjacent_tile->get_province_index() == province_index) {
 						return;
 					}
 
