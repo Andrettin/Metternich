@@ -2432,16 +2432,17 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 		//make semi-transparent pixels non-transparent
 		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
-			for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
-				const QPoint pixel_pos(x, y);
-				QColor pixel_color = this->exploration_diplomatic_map_image.pixelColor(pixel_pos);
+			QRgb *image_data_line = reinterpret_cast<QRgb *>(this->exploration_diplomatic_map_image.scanLine(y));
 
-				if (pixel_color.alpha() == 0 || pixel_color.alpha() == 255) {
+			for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
+				QRgb pixel_rgba = image_data_line[x];
+				const int alpha = qAlpha(pixel_rgba);
+				if (alpha == 0 || alpha == 255) {
 					continue;
 				}
 
-				pixel_color.setAlpha(255);
-				this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, pixel_color);
+				pixel_rgba = qRgba(qRed(pixel_rgba), qGreen(pixel_rgba), qBlue(pixel_rgba), 255);
+				image_data_line[x] = pixel_rgba;
 			}
 		}
 	}
