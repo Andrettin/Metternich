@@ -675,7 +675,9 @@ void domain_diplomacy::create_diplomatic_map_image()
 	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
+	const QRgb color_rgba = color.rgba();
 	const QColor &selected_color = defines::get()->get_selected_domain_color();
+	const QRgb selected_color_rgba = selected_color.rgba();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale;
@@ -686,6 +688,9 @@ void domain_diplomacy::create_diplomatic_map_image()
 	const QPoint tile_top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale / tile_scale;
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(diplomatic_map_image.scanLine(y));
+		QRgb *selected_image_data_line = reinterpret_cast<QRgb *>(selected_diplomatic_map_image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
@@ -695,8 +700,8 @@ void domain_diplomacy::create_diplomatic_map_image()
 				continue;
 			}
 
-			diplomatic_map_image.setPixelColor(pixel_pos, color);
-			selected_diplomatic_map_image.setPixelColor(pixel_pos, selected_color);
+			image_data_line[x] = color_rgba;
+			selected_image_data_line[x] = selected_color_rgba;
 		}
 	}
 
@@ -779,7 +784,9 @@ void domain_diplomacy::create_realm_diplomatic_map_image()
 	QImage selected_diplomatic_map_image = diplomatic_map_image;
 
 	const QColor &color = this->get_diplomatic_map_color();
+	const QRgb color_rgba = color.rgba();
 	const QColor &selected_color = defines::get()->get_selected_domain_color();
+	const QRgb selected_color_rgba = selected_color.rgba();
 
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->get_game_data()->get_realm_territory_rect().topLeft() * tile_scale;
@@ -790,17 +797,21 @@ void domain_diplomacy::create_realm_diplomatic_map_image()
 	const QPoint tile_top_left = this->get_game_data()->get_realm_territory_rect().topLeft() * tile_scale / tile_scale;
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(diplomatic_map_image.scanLine(y));
+		QRgb *selected_image_data_line = reinterpret_cast<QRgb *>(selected_diplomatic_map_image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = map->get_tile(tile_top_left + relative_tile_pos);
+			const metternich::domain *tile_owner = tile->get_owner();
 
-			if (tile->get_owner() == nullptr || tile->get_owner()->get_game_data()->get_realm() != this->domain) {
+			if (tile_owner == nullptr || tile_owner->get_game_data()->get_realm() != this->domain) {
 				continue;
 			}
 
-			diplomatic_map_image.setPixelColor(pixel_pos, color);
-			selected_diplomatic_map_image.setPixelColor(pixel_pos, selected_color);
+			image_data_line[x] = color_rgba;
+			selected_image_data_line[x] = selected_color_rgba;
 		}
 	}
 
@@ -845,6 +856,8 @@ void domain_diplomacy::create_diplomatic_map_mode_image(const diplomatic_map_mod
 	const QPoint tile_top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale / tile_scale;
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
@@ -915,7 +928,8 @@ void domain_diplomacy::create_diplomatic_map_mode_image(const diplomatic_map_mod
 				}
 			}
 
-			image.setPixelColor(pixel_pos, *color);
+			const QRgb color_rgba = color->rgba();
+			image_data_line[x] = color_rgba;
 		}
 	}
 
@@ -946,6 +960,8 @@ void domain_diplomacy::create_diplomacy_state_diplomatic_map_image(const diploma
 	const QPoint tile_top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale / tile_scale;
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint relative_tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
@@ -956,8 +972,9 @@ void domain_diplomacy::create_diplomacy_state_diplomatic_map_image(const diploma
 			}
 
 			const QColor &color = defines::get()->get_diplomacy_state_color(state);
+			const QRgb color_rgba = color.rgba();
 
-			image.setPixelColor(pixel_pos, color);
+			image_data_line[x] = color_rgba;
 		}
 	}
 

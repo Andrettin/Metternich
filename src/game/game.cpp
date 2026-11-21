@@ -2400,10 +2400,13 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 	this->exploration_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_unexplored_terrain()->get_color();
+	const QRgb color_rgba = color.rgba();
 
 	const domain_game_data *domain_game_data = this->get_player_domain()->get_game_data();
 
 	for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(this->exploration_diplomatic_map_image.scanLine(y));
+
 		for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
@@ -2412,7 +2415,7 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 				continue;
 			}
 
-			this->exploration_diplomatic_map_image.setPixelColor(pixel_pos, color);
+			image_data_line[x] = color_rgba;
 		}
 	}
 
