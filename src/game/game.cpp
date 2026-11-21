@@ -2428,8 +2428,8 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 		this->exploration_diplomatic_map_image = std::move(scaled_exploration_diplomatic_map_image);
 
 		//make semi-transparent pixels non-transparent
-		for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
-			for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+			for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
 				const QPoint pixel_pos(x, y);
 				QColor pixel_color = this->exploration_diplomatic_map_image.pixelColor(pixel_pos);
 
