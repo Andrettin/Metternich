@@ -10,7 +10,7 @@ quebec = {
 		1700 = {
 			#was a French trading post in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
 			developed = true
-			owner = france
+			owner = new_france
 			culture = french
 			religion = catholic
 		}
