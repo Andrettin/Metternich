@@ -11,6 +11,7 @@ southern_ocean = {
 	name = "Southern Ocean"
 	color = { 175 36 54 }
 	sea = true
+	terrain = ocean
 	regions = {
 		southern_ocean
 	}

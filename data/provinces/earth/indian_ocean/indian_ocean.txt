@@ -74,6 +74,7 @@ indian_ocean = {
 	name = "Indian Ocean"
 	color = { 35 77 224 }
 	sea = true
+	terrain = ocean
 	regions = {
 		indian_ocean
 	}

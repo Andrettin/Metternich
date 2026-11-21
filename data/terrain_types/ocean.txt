@@ -1,11 +1,9 @@
 ocean = {
 	name = "Ocean"
-	#color = { 8 31 130 }
-	color = { 69 91 186 }
+	color = { 8 31 130 }
 	icon = oasis
 	image_filepath = "tiles/terrain/shallow_water.png"
 	water = true
-	elevation_type = water
 	subtiles = { 17 20 23 }
 	adjacency_subtiles = {
 		0 = {

@@ -549,6 +549,7 @@ north_atlantic_ocean = {
 	name = "North Atlantic Ocean"
 	color = { 135 11 136 }
 	sea = true
+	terrain = ocean
 	regions = {
 		atlantic_ocean
 	}
@@ -594,6 +595,7 @@ south_atlantic_ocean = {
 	name = "South Atlantic Ocean"
 	color = { 153 220 205 }
 	sea = true
+	terrain = ocean
 	regions = {
 		atlantic_ocean
 	}

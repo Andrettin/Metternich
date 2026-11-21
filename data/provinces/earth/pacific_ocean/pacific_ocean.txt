@@ -299,6 +299,7 @@ north_pacific_ocean = {
 	name = "North Pacific Ocean"
 	color = { 133 250 255 }
 	sea = true
+	terrain = ocean
 	regions = {
 		pacific_ocean
 	}
@@ -389,6 +390,7 @@ south_pacific_ocean = {
 	name = "South Pacific Ocean"
 	color = { 140 213 210 }
 	sea = true
+	terrain = ocean
 	regions = {
 		pacific_ocean
 	}
