@@ -1,7 +1,7 @@
 gothic_war = {
 	name = "Gothic War"
 	start_date = 535
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		eastern_rome

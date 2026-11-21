@@ -36,8 +36,8 @@ africa = {
 	diplomatic_map_tile_scale = 0.5
 }
 
-europe = {
-	name = "Europe"
+atlantic = {
+	name = "Atlantic"
 	size = { 10752 2816 }
 	world = earth
 	main_map_template = earth

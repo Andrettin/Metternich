@@ -1,7 +1,7 @@
 high_middle_ages = {
 	name = "High Middle Ages"
 	start_date = 1066.12.26
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		#apulia
@@ -20,7 +20,7 @@ barbarossa = {
 	name = "Barbarossa"
 	parent_scenario = high_middle_ages
 	start_date = 1152.3.4
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		holy_roman_empire
@@ -31,7 +31,7 @@ third_crusade = {
 	name = "Third Crusade"
 	parent_scenario = high_middle_ages
 	start_date = 1187
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		england

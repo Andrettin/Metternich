@@ -1,7 +1,7 @@
 first_mesolithic = {
 	name = "First Mesolithic"
 	start_date = -8600
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		capsa
@@ -12,7 +12,7 @@ first_mesolithic = {
 second_mesolithic = {
 	name = "Second Mesolithic"
 	start_date = -6500
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		capsa

@@ -1,7 +1,7 @@
 rise_of_rome = {
 	name = "Rise of Rome"
 	start_date = -304.10.1
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		rome
@@ -12,7 +12,7 @@ pyrrhic_war = {
 	name = "Pyrrhic War"
 	parent_scenario = rise_of_rome
 	start_date = -280
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		rome
@@ -23,7 +23,7 @@ first_punic_war = {
 	name = "First Punic War"
 	parent_scenario = rise_of_rome
 	start_date = -264
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		rome
@@ -35,7 +35,7 @@ second_punic_war = {
 	name = "Second Punic War"
 	parent_scenario = rise_of_rome
 	start_date = -218
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		rome

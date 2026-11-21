@@ -1,7 +1,7 @@
 bronze_age = {
 	name = "Bronze Age"
 	start_date = -1450
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		argos #Mycenae
@@ -17,7 +17,7 @@ mycenaean_greece_and_the_orient = {
 	name = "Mycenaean Greece and the Orient"
 	parent_scenario = bronze_age
 	start_date = -1450
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		argos #Mycenae
@@ -32,7 +32,7 @@ nordic_bronze_age = {
 	name = "Nordic Bronze Age"
 	parent_scenario = bronze_age
 	start_date = -2000
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		suionia

@@ -1,7 +1,7 @@
 assyrian_empire = {
 	name = "Assyrian Empire"
 	start_date = -720
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		assyria

@@ -2,7 +2,7 @@ alexiad = {
 	name = "Alexiad"
 	parent_scenario = high_middle_ages
 	start_date = 1081.4.1
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		byzantium

@@ -1,7 +1,7 @@
 hundred_years_war = {
 	name = "Hundred Years' War"
 	start_date = 1337
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		england
@@ -18,7 +18,7 @@ hundred_years_war = {
 lancastrian_england = {
 	name = "Lancastrian England"
 	start_date = 1399.10.13
-	map_template = europe
+	map_template = atlantic
 	hidden = true
 	default_domains = {
 		england
