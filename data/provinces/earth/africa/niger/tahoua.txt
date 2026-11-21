@@ -1,0 +1,9 @@
+tahoua = {
+	name = "Tahoua"
+	color = { 169 135 202 }
+	terrain = desert
+	default_provincial_capital = tahoua
+	regions = {
+		africa
+	}
+}
