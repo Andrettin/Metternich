@@ -1,0 +1,8 @@
+qadub = {
+	name = "Qadub"
+	world = earth
+	geocoordinate = { 53.95 12.633333333333333 }
+	type = holding
+	holding_type = temple
+	province = socotra
+}

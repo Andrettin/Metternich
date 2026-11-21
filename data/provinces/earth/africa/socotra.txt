@@ -1,0 +1,10 @@
+socotra = {
+	name = "Socotra"
+	color = { 169 60 212 }
+	terrain = hills
+	default_provincial_capital = qualnsiyah
+	regions = {
+		africa
+		middle_east
+	}
+}

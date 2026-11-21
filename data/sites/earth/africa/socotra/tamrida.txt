@@ -1,0 +1,9 @@
+tamrida = {
+	name = "Tamrida" #also known as "Hadibu"
+	world = earth
+	geocoordinate = { 54.02392696010 12.65187501930 } #from Natural Earth (Hadiboh)
+	type = holding
+	holding_type = guild
+	#resource = fish
+	province = socotra
+}

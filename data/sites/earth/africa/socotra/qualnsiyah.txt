@@ -1,0 +1,8 @@
+qualnsiyah = {
+	name = "Qualnsiyah"
+	world = earth
+	geocoordinate = { 53.4 12.5 } #Qulensya Wa Abd Al Kuri District
+	type = holding
+	holding_type = castle
+	province = socotra
+}

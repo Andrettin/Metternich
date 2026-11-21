@@ -1,0 +1,8 @@
+steroh = {
+	name = "Steroh"
+	world = earth
+	geocoordinate = { 53.9167 12.3431 }
+	type = holding
+	holding_type = castle
+	province = socotra
+}

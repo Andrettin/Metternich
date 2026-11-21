@@ -1,0 +1,8 @@
+asma = {
+	name = "Asma"
+	world = earth
+	geocoordinate = { 54.047761111111114 12.521005555555556 } #Di Asmo
+	type = holding
+	holding_type = castle
+	province = socotra
+}

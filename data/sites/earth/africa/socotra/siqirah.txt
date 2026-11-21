@@ -1,0 +1,8 @@
+siqirah = {
+	name = "Siqirah"
+	world = earth
+	geocoordinate = { 54.33847 12.60447 }
+	type = holding
+	holding_type = castle
+	province = socotra
+}
