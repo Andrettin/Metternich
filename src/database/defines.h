@@ -325,7 +325,7 @@ public:
 			return find_iterator->second;
 		}
 
-		throw std::runtime_error("Failed to get color for diplomacy state: " + static_cast<int>(state));
+		throw std::runtime_error(std::format("Failed to get color for diplomacy state: {}", std::to_underlying(state)));
 	}
 
 	const std::filesystem::path &get_river_image_filepath() const
