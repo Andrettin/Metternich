@@ -1,0 +1,18 @@
+detroit = {
+	name = "Detroit"
+	world = earth
+	geocoordinate = { -83.082002 42.331906 } #from Natural Earth
+	type = holding
+	holding_type = guild #trading post
+	province = michigan
+	
+	history = {
+		1700 = {
+			#was a French trading post and fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			owner = france
+			culture = french
+			religion = catholic
+		}
+	}
+}

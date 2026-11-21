@@ -3,5 +3,16 @@ quebec = {
 	world = earth
 	geocoordinate = { -71.24561019050 46.83996909490 } #from Natural Earth
 	type = holding
+	holding_type = guild #trading post
 	province = quebec
+	
+	history = {
+		1700 = {
+			#was a French trading post in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			owner = france
+			culture = french
+			religion = catholic
+		}
+	}
 }

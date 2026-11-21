@@ -3,4 +3,5 @@ lansing = {
 	world = earth
 	geocoordinate = { -84.54673628920 42.73352724110 } #from Natural Earth
 	type = holding
+	province = michigan
 }

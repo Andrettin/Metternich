@@ -12,6 +12,7 @@ elmina = {
 	history = {
 		1482 = {
 			#the fort of São Jorge da Mina (Elmina) founded by the Portuguese in 1482; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 107-110; Source: "History of the World Map by Map", 2023, pp. 166-167.
+			developed = true
 			owner = portugal
 			culture = portuguese
 			religion = catholic
