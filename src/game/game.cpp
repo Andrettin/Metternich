@@ -2403,8 +2403,8 @@ QCoro::Task<void> game::create_exploration_diplomatic_map_image()
 
 	const domain_game_data *domain_game_data = this->get_player_domain()->get_game_data();
 
-	for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
-		for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+	for (int y = 0; y < this->exploration_diplomatic_map_image.height(); ++y) {
+		for (int x = 0; x < this->exploration_diplomatic_map_image.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 
