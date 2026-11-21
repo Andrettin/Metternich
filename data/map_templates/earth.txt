@@ -48,22 +48,19 @@ earth_center = {
 
 europe = {
 	name = "Europe"
-	size = { 6400 2816 }
+	size = { 10752 2816 }
 	world = earth
 	main_map_template = earth
-	map_start_pos = { 4352 2816 }
+	map_start_pos = { 0 2816 }
 	minimap_tile_scale = 0.125
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
 		bolivar
-		cuba
 		guyana
 		jizzakh
 		karelia
 		khojand
 		lake_onega
-		new_york
-		nunavut
 		satakunta
 		sermersooq
 		south_kazakhstan

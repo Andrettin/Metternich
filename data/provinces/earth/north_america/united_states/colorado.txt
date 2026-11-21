@@ -7,12 +7,6 @@ colorado = {
 	}
 	
 	history = {
-		-4000 = {
-			owner = apache
-			culture = apache
-			religion = totemist
-		}
-		
 		1682 = {
 			owner = new_france #became part of New France in 1682; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			culture = french

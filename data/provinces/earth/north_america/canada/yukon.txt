@@ -5,12 +5,4 @@ yukon = {
 	regions = {
 		canada
 	}
-	
-	history = {
-		-4000 = {
-			owner = kwakiutl
-			culture = kwakiutl
-			religion = totemist
-		}
-	}
 }
