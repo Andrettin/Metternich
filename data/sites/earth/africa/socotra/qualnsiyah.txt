@@ -1,7 +1,7 @@
 qualnsiyah = {
 	name = "Qualnsiyah"
 	world = earth
-	geocoordinate = { 53.4 12.5 } #Qulensya Wa Abd Al Kuri District
+	geocoordinate = { 53.48777777777778 12.689166666666667 } #Qalansiyah
 	type = holding
 	holding_type = castle
 	province = socotra
