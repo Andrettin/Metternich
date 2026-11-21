@@ -682,22 +682,26 @@ QCoro::Task<void> map::create_empty_diplomatic_map_image()
 	this->empty_diplomatic_map_image.fill(Qt::transparent);
 
 	const QColor &color = defines::get()->get_map_blank_color();
+	const QRgb color_rgba = color.rgba();
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(this->empty_diplomatic_map_image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);
+			const province *tile_province = tile->get_province();
 
-			if (tile->get_province() == nullptr) {
+			if (tile_province == nullptr) {
 				continue;
 			}
 
-			if (tile->get_province()->is_water_zone() || tile->get_owner() != nullptr) {
+			if (tile_province->is_water_zone() || tile->get_owner() != nullptr) {
 				continue;
 			}
 
-			this->empty_diplomatic_map_image.setPixelColor(pixel_pos, color);
+			image_data_line[x] = color_rgba;
 		}
 	}
 
@@ -713,35 +717,33 @@ QCoro::Task<void> map::create_empty_diplomatic_map_image()
 		this->empty_diplomatic_map_image = std::move(scaled_empty_diplomatic_map_image);
 	}
 
+	assert_throw(this->empty_diplomatic_map_image.format() == QImage::Format_ARGB32);
+
 	std::vector<QPoint> border_pixels;
 
 	const QRect image_rect = this->empty_diplomatic_map_image.rect();
 
-	for (int y = 0; y < this->empty_diplomatic_map_image.height(); ++y) {
-		for (int x = 0; x < this->empty_diplomatic_map_image.width(); ++x) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = this->empty_diplomatic_map_image.pixelColor(pixel_pos);
+	for (int y = 0; y < image_rect.height(); ++y) {
+		const QRgb *image_data_line = reinterpret_cast<const QRgb *>(this->empty_diplomatic_map_image.constScanLine(y));
+		const QRgb *previous_image_data_line = y > 0 ? reinterpret_cast<const QRgb *>(this->empty_diplomatic_map_image.constScanLine(y - 1)) : nullptr;
 
-			if (pixel_color.alpha() == 0) {
+		for (int x = 0; x < image_rect.width(); ++x) {
+			const int alpha = qAlpha(image_data_line[x]);
+			if (alpha == 0) {
 				continue;
 			}
 
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->empty_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->empty_diplomatic_map_image.height() - 1)) {
-				continue;
-			}
-
-			if (pixel_color != color) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			const QPoint north_pos = pixel_pos + QPoint(0, -1);
-			const QPoint east_pos = pixel_pos + QPoint(1, 0);
-			const bool is_border_pixel = this->empty_diplomatic_map_image.pixelColor(north_pos).alpha() == 0 || this->empty_diplomatic_map_image.pixelColor(east_pos).alpha() == 0;
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
+			if (
+				//whether the pixel is on the edge of the map
+				x == 0 || y == 0 || x == image_rect.width() - 1 || y == image_rect.height() - 1
+				//whether the pixel has a blended color
+				|| alpha != 255
+				//whether the pixel is a north border pixel
+				|| qAlpha(previous_image_data_line[x]) == 0
+				//whether the pixel is an east border pixel
+				|| qAlpha(image_data_line[x + 1]) == 0
+			) {
+				border_pixels.emplace_back(x, y);
 			}
 		}
 	}
@@ -767,12 +769,15 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 	this->empty_terrain_diplomatic_map_image.fill(Qt::transparent);
 
 	for (int y = 0; y < image_size.height(); ++y) {
+		QRgb *image_data_line = reinterpret_cast<QRgb *>(this->empty_terrain_diplomatic_map_image.scanLine(y));
+
 		for (int x = 0; x < image_size.width(); ++x) {
 			const QPoint pixel_pos = QPoint(x, y);
 			const QPoint tile_pos = tile_scale < 1 ? pixel_pos / tile_scale : pixel_pos;
 			const tile *tile = this->get_tile(tile_pos);
+			const province *tile_province = tile->get_province();
 
-			if (tile->get_province() == nullptr) {
+			if (tile_province == nullptr) {
 				continue;
 			}
 
@@ -780,8 +785,9 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 				continue;
 			}
 
-			const QColor &color = tile->get_province()->get_map_data()->get_terrain()->get_color();
-			this->empty_terrain_diplomatic_map_image.setPixelColor(pixel_pos, color);
+			const QColor &color = tile_province->get_map_data()->get_terrain()->get_color();
+			const QRgb color_rgba = color.rgba();
+			image_data_line[x] = color_rgba;
 		}
 	}
 
@@ -797,35 +803,33 @@ QCoro::Task<void> map::create_empty_terrain_diplomatic_map_image()
 		this->empty_terrain_diplomatic_map_image = std::move(scaled_empty_terrain_diplomatic_map_image);
 	}
 
+	assert_throw(this->empty_terrain_diplomatic_map_image.format() == QImage::Format_ARGB32);
+
 	std::vector<QPoint> border_pixels;
 
 	const QRect image_rect = this->empty_terrain_diplomatic_map_image.rect();
 
-	for (int y = 0; y < this->empty_terrain_diplomatic_map_image.height(); ++y) {
-		for (int x = 0; x < this->empty_terrain_diplomatic_map_image.width(); ++x) {
-			const QPoint pixel_pos(x, y);
-			const QColor pixel_color = this->empty_terrain_diplomatic_map_image.pixelColor(pixel_pos);
+	for (int y = 0; y < image_rect.height(); ++y) {
+		const QRgb *image_data_line = reinterpret_cast<const QRgb *>(this->empty_terrain_diplomatic_map_image.constScanLine(y));
+		const QRgb *previous_image_data_line = y > 0 ? reinterpret_cast<const QRgb *>(this->empty_terrain_diplomatic_map_image.constScanLine(y - 1)) : nullptr;
 
-			if (pixel_color.alpha() == 0) {
+		for (int x = 0; x < image_rect.width(); ++x) {
+			const int alpha = qAlpha(image_data_line[x]);
+			if (alpha == 0) {
 				continue;
 			}
 
-			if (pixel_pos.x() == 0 || pixel_pos.y() == 0 || pixel_pos.x() == (this->empty_terrain_diplomatic_map_image.width() - 1) || pixel_pos.y() == (this->empty_terrain_diplomatic_map_image.height() - 1)) {
-				continue;
-			}
-
-			if (pixel_color.alpha() != 255) {
-				//blended color
-				border_pixels.push_back(pixel_pos);
-				continue;
-			}
-
-			const QPoint north_pos = pixel_pos + QPoint(0, -1);
-			const QPoint east_pos = pixel_pos + QPoint(1, 0);
-			const bool is_border_pixel = this->empty_terrain_diplomatic_map_image.pixelColor(north_pos).alpha() == 0 || this->empty_terrain_diplomatic_map_image.pixelColor(east_pos).alpha() == 0;
-
-			if (is_border_pixel) {
-				border_pixels.push_back(pixel_pos);
+			if (
+				//whether the pixel is on the edge of the map
+				x == 0 || y == 0 || x == image_rect.width() - 1 || y == image_rect.height() - 1
+				//whether the pixel has a blended color
+				|| alpha != 255
+				//whether the pixel is a north border pixel
+				|| qAlpha(previous_image_data_line[x]) == 0
+				//whether the pixel is an east border pixel
+				|| qAlpha(image_data_line[x + 1]) == 0
+			) {
+				border_pixels.emplace_back(x, y);
 			}
 		}
 	}
