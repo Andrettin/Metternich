@@ -1,0 +1,9 @@
+air = {
+	name = "Air"
+	color = { 127 102 69 }
+	terrain = desert
+	default_provincial_capital = agades
+	regions = {
+		africa
+	}
+}

@@ -1,0 +1,8 @@
+agades = {
+	name = "Agades"
+	world = earth
+	geocoordinate = { 7.982810 16.995873 } #from Natural Earth (Agadez)
+	type = holding
+	holding_type = castle
+	province = air
+}
