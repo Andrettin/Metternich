@@ -32,7 +32,7 @@ nordic_bronze_age = {
 	name = "Nordic Bronze Age"
 	parent_scenario = bronze_age
 	start_date = -2000
-	map_template = central_europe
+	map_template = europe
 	hidden = true
 	default_domains = {
 		suionia

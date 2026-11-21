@@ -36,27 +36,6 @@ africa = {
 	diplomatic_map_tile_scale = 0.5
 }
 
-central_europe = {
-	name = "Central Europe"
-	size = { 1280 1280 }
-	world = earth
-	main_map_template = earth
-	map_start_pos = { 7776 2816 }
-	minimap_tile_scale = 0.25
-	diplomatic_map_tile_scale = 1
-	ignored_provinces = {
-		bessarabia
-		gulf_of_lion
-		minsk
-		montenegro
-		satakunta
-		tyrrhenian_sea
-		upper_languedoc
-		vitebsk
-		western_mediterranean_sea
-	}
-}
-
 earth_center = {
 	name = "Earth (Center)"
 	size = { 16384 8192 }
