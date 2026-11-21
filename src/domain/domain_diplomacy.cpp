@@ -709,7 +709,7 @@ void domain_diplomacy::create_diplomatic_map_image()
 	this->diplomatic_map_image_promise = promise;
 	this->diplomatic_map_image_promise->start();
 	assert_throw(!diplomatic_map_image.isNull());
-	QtConcurrent::run([promise, image = std::move(diplomatic_map_image)]() mutable {
+	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
 		promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		promise->finish();
 	});
@@ -718,7 +718,7 @@ void domain_diplomacy::create_diplomatic_map_image()
 	this->selected_diplomatic_map_image_promise = selected_promise;
 	this->selected_diplomatic_map_image_promise->start();
 	assert_throw(!selected_diplomatic_map_image.isNull());
-	QtConcurrent::run([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
+	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
 		selected_promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		selected_promise->finish();
 	});
@@ -818,7 +818,7 @@ void domain_diplomacy::create_realm_diplomatic_map_image()
 	std::shared_ptr<QPromise<QImage>> promise = std::make_shared<QPromise<QImage>>();
 	this->realm_diplomatic_map_image_promise = promise;
 	this->realm_diplomatic_map_image_promise->start();
-	QtConcurrent::run([promise, image = std::move(diplomatic_map_image)]() mutable {
+	QThreadPool::globalInstance()->start([promise, image = std::move(diplomatic_map_image)]() mutable {
 		promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		promise->finish();
 	});
@@ -826,7 +826,7 @@ void domain_diplomacy::create_realm_diplomatic_map_image()
 	std::shared_ptr<QPromise<QImage>> selected_promise = std::make_shared<QPromise<QImage>>();
 	this->selected_realm_diplomatic_map_image_promise = selected_promise;
 	this->selected_realm_diplomatic_map_image_promise->start();
-	QtConcurrent::run([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
+	QThreadPool::globalInstance()->start([selected_promise, image = std::move(selected_diplomatic_map_image)]() mutable {
 		selected_promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		selected_promise->finish();
 	});
@@ -937,7 +937,7 @@ void domain_diplomacy::create_diplomatic_map_mode_image(const diplomatic_map_mod
 	this->diplomatic_map_mode_image_promises[mode] = promise;
 	promise->start();
 
-	QtConcurrent::run([promise, image = std::move(image)]() mutable {
+	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
 		promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		promise->finish();
 	});
@@ -982,7 +982,7 @@ void domain_diplomacy::create_diplomacy_state_diplomatic_map_image(const diploma
 	this->diplomacy_state_diplomatic_map_image_promises[state] = promise;
 	promise->start();
 
-	QtConcurrent::run([promise, image = std::move(image)]() mutable {
+	QThreadPool::globalInstance()->start([promise, image = std::move(image)]() mutable {
 		promise->addResult(domain_diplomacy::finalize_diplomatic_map_image(std::move(image)));
 		promise->finish();
 	});
