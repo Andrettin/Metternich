@@ -190,15 +190,6 @@ void province::reset_turn_data()
 	emit turn_data_changed();
 }
 
-const geocoordinate &province::get_geocoordinate() const
-{
-	if (this->get_default_provincial_capital() != nullptr) {
-		return this->get_default_provincial_capital()->get_geocoordinate();
-	}
-
-	return this->geocoordinate;
-}
-
 std::string province::get_scope_name() const
 {
 	return this->get_game_data()->get_current_cultural_name();
