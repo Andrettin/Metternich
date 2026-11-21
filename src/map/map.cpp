@@ -88,6 +88,7 @@ void map::process_gsml_scope(const gsml_data &scope)
 		QCoro::waitFor(this->process_border_tiles());
 
 		std::vector<QFuture<void>> futures;
+		futures.reserve(this->get_provinces().size());
 		for (const province *province : this->get_provinces()) {
 			QFuture<void> future = QtConcurrent::run([province]() {
 				province->get_map_data()->on_map_created();
@@ -181,6 +182,7 @@ QCoro::Task<void> map::initialize(const bool province_post_processing_enabled, s
 	this->sites = std::move(sites);
 
 	std::vector<QFuture<void>> futures;
+	futures.reserve(this->get_provinces().size());
 	for (const province *province : this->get_provinces()) {
 		QFuture<void> future = QtConcurrent::run([province]() {
 			province->get_map_data()->on_map_created();
