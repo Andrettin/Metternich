@@ -954,6 +954,9 @@ void domain_diplomacy::create_diplomacy_state_diplomatic_map_image(const diploma
 	const decimillesimal_int &tile_scale = map::get()->get_diplomatic_map_tile_scale();
 	const QPoint top_left = this->get_game_data()->get_territory_rect().topLeft() * tile_scale;
 
+	const QColor &color = defines::get()->get_diplomacy_state_color(state);
+	const QRgb color_rgba = color.rgba();
+
 	const QSize image_size = image.size();
 
 	//normalize the tile top left
@@ -970,9 +973,6 @@ void domain_diplomacy::create_diplomacy_state_diplomatic_map_image(const diploma
 			if (tile->get_owner() != this->domain) {
 				continue;
 			}
-
-			const QColor &color = defines::get()->get_diplomacy_state_color(state);
-			const QRgb color_rgba = color.rgba();
 
 			image_data_line[x] = color_rgba;
 		}
