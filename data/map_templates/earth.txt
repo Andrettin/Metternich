@@ -59,11 +59,13 @@ europe = {
 		cuba
 		guyana
 		karelia
+		khojand
 		lake_onega
 		new_york
 		nunavut
 		satakunta
 		sermersooq
+		south_kazakhstan
 	}
 }
 
