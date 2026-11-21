@@ -1,0 +1,17 @@
+fort_frederica = {
+	name = "Fort Frederica"
+	world = earth
+	geocoordinate = { -81.389282 31.223117 } #Fort Frederica National Monument
+	type = holding
+	holding_type = castle #fort
+	province = georgia
+	
+	history = {
+		1700 = {
+			#was a British fort in the 1700-1763 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = english
+			religion = protestant
+		}
+	}
+}
