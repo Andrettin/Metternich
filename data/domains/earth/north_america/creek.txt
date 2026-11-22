@@ -1,0 +1,14 @@
+creek = {
+	name = "Creek"
+	type = polity
+	color = { 108 139 208 }
+	default_culture = creek
+	default_religion = totemist
+	default_tier = kingdom
+	default_government_type = tribal_despotism
+	default_capital = fort_frederica #Georgia; should be changed to something more appropriate
+	definite_article = true
+	short_names = {
+		tribe = "Creek"
+	}
+}

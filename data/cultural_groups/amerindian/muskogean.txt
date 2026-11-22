@@ -1,0 +1,5 @@
+muskogean = {
+	name = "Muskogean"
+	rank = group
+	upper_group = amerindian
+}

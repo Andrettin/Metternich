@@ -1,0 +1,9 @@
+creek = {
+	name = "Creek"
+	group = muskogean
+	color = { 108 139 208 }
+	primary_domain = creek
+	species = {
+		human
+	}
+}
