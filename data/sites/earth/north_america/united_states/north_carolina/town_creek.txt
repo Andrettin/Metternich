@@ -1,0 +1,15 @@
+town_creek = {
+	name = "Town Creek"
+	world = earth
+	geocoordinate = { -79.9295 35.1828 } #Town Creek Indian Mound
+	type = holding
+	holding_type = temple #temple mound
+	province = north_carolina
+	
+	history = {
+		1000 = {
+			#was a South Appalachian temple mound site in the 1000-1600 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			buildings += temple
+		}
+	}
+}
