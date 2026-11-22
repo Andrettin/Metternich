@@ -24,6 +24,8 @@ religious_tribe = {
 	}
 	ruler_character_classes = {
 		aristocrat
+		cleric
+		druid
 		warrior
 	}
 	
