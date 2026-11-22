@@ -1,0 +1,15 @@
+etowah = {
+	name = "Etowah"
+	world = earth
+	geocoordinate = { -84.807064 34.128012 } #Etowah Indian Mounds
+	type = holding
+	holding_type = temple #temple mound
+	province = georgia
+	
+	history = {
+		1000 = {
+			#was a South Appalachian temple mound site in the 1000-1600 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			buildings += temple
+		}
+	}
+}

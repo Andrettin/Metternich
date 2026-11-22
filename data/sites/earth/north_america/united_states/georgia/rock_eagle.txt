@@ -1,0 +1,15 @@
+rock_eagle = {
+	name = "Rock Eagle"
+	world = earth
+	geocoordinate = { -83.3881 33.4175 } #Rock Eagle Effigy Mound
+	type = holding
+	holding_type = temple #temple mound
+	province = georgia
+	
+	history = {
+		1000 = {
+			#was a South Appalachian temple mound site in the 1000-1600 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			buildings += temple
+		}
+	}
+}

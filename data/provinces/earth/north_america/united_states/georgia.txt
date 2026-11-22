@@ -8,6 +8,13 @@ georgia = {
 	}
 	
 	history = {
+		600 = {
+			#Ocmulgee was a Middle Mississippian temple mound site in the 600-1400 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			owner = creek
+			culture = creek
+			religion = totemist
+		}
+		
 		1000 = {
 			#inhabited by the South Appalachian culture (a late Mississippian mound culture) in the 1000-1600 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
 			owner = creek
