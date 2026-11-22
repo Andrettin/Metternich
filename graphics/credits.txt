@@ -59,6 +59,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/flags/modena.svg (by Gryffindor, Panairjdde and Yaddah, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/moldavia.svg (by Shtephan, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/morocco.svg (by Denelson83 and Zscout370, from the Wikimedia Commons) (in the public domain)
+/graphics/flags/muskogee.svg (by William Augustus Bowles, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/nassau.svg (by Sebastian Walderich, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/netherlands.svg (by Zscout370, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/oldenburg.svg (by Sir Iain, from the Wikimedia Commons) (released to the public domain)

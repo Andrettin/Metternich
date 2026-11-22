@@ -2,6 +2,7 @@ creek = {
 	name = "Creek"
 	type = polity
 	color = { 108 139 208 }
+	flag = muskogee
 	default_culture = creek
 	default_religion = totemist
 	default_tier = kingdom
