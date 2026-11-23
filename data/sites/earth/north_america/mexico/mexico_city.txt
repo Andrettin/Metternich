@@ -3,7 +3,8 @@ mexico_city = {
 	world = earth
 	geocoordinate = { -99.13098820170 19.44244244280 } #from Natural Earth
 	type = holding
-	holding_type = guild #had a printing press
+	holding_type = royal_palace #viceroyal capital
+	province = mexico
 	cultural_names = {
 		aztec = "Tenochtitlan"
 	}
@@ -16,8 +17,12 @@ mexico_city = {
 			population = 250000 #Tenochtitlan had a quarter of a million people in 1521; Source: Henry Kamen, "Early Modern European Society", 2021, pp. 4, 19.
 		}
 		
+		1535 = {
+			#Mexico City became the capital of the Viceroyalty of New Spain in 1535; Source: "History of the World Map by Map", 2023, pp. 156-157.
+		}
+		
 		1539 = {
-			buildings += printing_press #printing press founded in Mexico City in 1539; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
+			#buildings += printing_press #printing press founded in Mexico City in 1539; Source: Henry Kamen, "Early Modern European Society", 2021, p. 286.
 		}
 		
 		1551 = {

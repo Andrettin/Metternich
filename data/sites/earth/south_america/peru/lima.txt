@@ -3,14 +3,23 @@ lima = {
 	world = earth
 	geocoordinate = { -77.05006209480 -12.04801267610 } #from Natural Earth
 	type = holding
+	holding_type = royal_palace #viceroyal capital
+	province = lima
 	features = {
 		academic #historical university
 	}
 	
 	history = {
+		1535 = {
+			developed = true #founded in 1535; Source: "History of the World Map by Map", 2023, pp. 156-157.
+		}
+		
+		1543 = {
+			#Lima became the capital of the Viceroyalty of Peru in 1543; Source: "History of the World Map by Map", 2023, pp. 156-157.
+		}
+		
 		1551 = {
 			#buildings += university #University founded in Lima in 1551; Source: Enrique Martínez Ruiz; Consuelo Maqueda, "Atlas Histórico de España I", 2000, p. 226.
-			developed = true
 		}
 	}
 }
