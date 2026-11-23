@@ -46,6 +46,7 @@ atlantic = {
 	diplomatic_map_tile_scale = 0.5
 	ignored_provinces = {
 		bolivar
+		dvina
 		guyana
 		jizzakh
 		karelia
