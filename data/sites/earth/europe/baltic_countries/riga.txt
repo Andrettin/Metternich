@@ -4,6 +4,7 @@ riga = {
 	geocoordinate = { 24.09996537140 56.95002382320 } #from Natural Earth
 	type = holding
 	holding_type = guild #city belonging to the Hanseatic League in the Middle Ages; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 98-99.
+	province = livonia
 	
 	history = {
 		1360 = {
