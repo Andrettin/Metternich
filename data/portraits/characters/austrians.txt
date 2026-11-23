@@ -33,6 +33,7 @@ franz_i_of_austria = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		or = {
@@ -67,6 +68,7 @@ metternich = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		character_class = {

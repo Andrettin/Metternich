@@ -11,6 +11,8 @@ eleanor_of_aquitaine = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
+			cultural_group = asian
 		}
 		or = {
 			character_class = {
@@ -66,6 +68,7 @@ cardinal_richelieu = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		religion = catholic #because of the cardinal's hat

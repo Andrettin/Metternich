@@ -30,6 +30,7 @@ jp_morgan = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		character_class = {

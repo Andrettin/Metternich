@@ -11,6 +11,8 @@ elizabeth_i_of_england = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
+			cultural_group = asian
 		}
 		or = {
 			character_class = {
@@ -45,6 +47,7 @@ francis_drake = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		character_class = {
@@ -69,6 +72,7 @@ henry_hudson = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		character_class = {
@@ -92,6 +96,7 @@ william_penn = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		religion = protestant

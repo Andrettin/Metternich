@@ -16,6 +16,7 @@ philip_ii_of_spain = {
 		}
 		not = {
 			cultural_group = african
+			cultural_group = amerindian
 			cultural_group = asian
 		}
 		or = {
