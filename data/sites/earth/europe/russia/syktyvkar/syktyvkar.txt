@@ -1,0 +1,8 @@
+syktyvkar = {
+	name = "Syktyvkar"
+	world = earth
+	geocoordinate = { 50.819988 61.659995 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = syktyvkar
+}

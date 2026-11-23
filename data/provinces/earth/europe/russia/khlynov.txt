@@ -1,0 +1,9 @@
+khlynov = {
+	name = "Khlynov"
+	color = { 127 42 59 }
+	terrain = tundra #arctic
+	default_provincial_capital = khlynov
+	regions = {
+		european_russia
+	}
+}

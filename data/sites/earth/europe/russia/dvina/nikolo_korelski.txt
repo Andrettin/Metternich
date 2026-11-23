@@ -1,0 +1,8 @@
+nikolo_korelski = {
+	name = "Nikolo-Korelski"
+	world = earth
+	geocoordinate = { 39.84583 64.58278 } #Nikolo-Korelsky Monastery
+	type = holding
+	holding_type = temple
+	province = dvina
+}

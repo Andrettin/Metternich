@@ -1,0 +1,8 @@
+solvychegodsk = {
+	name = "Solvychegodsk" #also known as Usolsk
+	world = earth
+	geocoordinate = { 46.916666666667 61.333333333333 }
+	type = holding
+	holding_type = guild #or castle
+	province = dvina
+}

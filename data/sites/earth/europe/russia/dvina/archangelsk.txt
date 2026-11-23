@@ -1,0 +1,8 @@
+archangelsk = {
+	name = "Archangelsk" #also known as Novokholmogory
+	world = earth
+	geocoordinate = { 40.545008 64.574959 } #from Natural Earth
+	type = holding
+	holding_type = guild #or castle
+	province = dvina
+}

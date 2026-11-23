@@ -1,0 +1,8 @@
+koryazhma = {
+	name = "Koryazhma"
+	world = earth
+	geocoordinate = { 47.166666666667 61.3 }
+	type = holding
+	holding_type = castle
+	province = dvina
+}

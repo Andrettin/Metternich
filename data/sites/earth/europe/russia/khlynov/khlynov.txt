@@ -1,0 +1,8 @@
+khlynov = {
+	name = "Khlynov"
+	world = earth
+	geocoordinate = { 49.669981 58.590053 } #from Natural Earth (Kirov)
+	type = holding
+	holding_type = castle
+	province = khlynov
+}

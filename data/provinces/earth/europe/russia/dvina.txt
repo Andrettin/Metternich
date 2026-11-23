@@ -1,0 +1,9 @@
+dvina = {
+	name = "Dvina"
+	color = { 0 120 225 }
+	terrain = tundra #arctic
+	default_provincial_capital = archangelsk
+	regions = {
+		european_russia
+	}
+}

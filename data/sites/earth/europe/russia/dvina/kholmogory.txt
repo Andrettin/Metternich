@@ -1,0 +1,8 @@
+kholmogory = {
+	name = "Kholmogory"
+	world = earth
+	geocoordinate = { 41.65 64.225 } #Kholmogory, Arkhangelsk Oblast
+	type = holding
+	holding_type = castle
+	province = dvina
+}

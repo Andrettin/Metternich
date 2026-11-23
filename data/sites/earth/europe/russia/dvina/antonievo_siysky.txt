@@ -1,0 +1,8 @@
+antonievo_siysky = {
+	name = "Antonievo-Siysky"
+	world = earth
+	geocoordinate = { 41.555673 63.553443 } #Antonievo-Siysky Monastery
+	type = holding
+	holding_type = temple
+	province = dvina
+}
