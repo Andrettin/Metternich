@@ -1,0 +1,9 @@
+pueblo = {
+	name = "Pueblo"
+	group = sonoran
+	color = { 162 128 8 }
+	primary_domain = pueblo
+	species = {
+		human
+	}
+}

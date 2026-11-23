@@ -1,0 +1,18 @@
+casas_grandes = {
+	name = "Casas Grandes"
+	world = earth
+	geocoordinate = { -107.95556 30.37583 }
+	type = holding
+	holding_type = guild #important trade location
+	province = chihuahua
+	
+	history = {
+		250 = {
+			developed = true #was a Mogollon culture settlement in the 250-1350 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+		}
+		
+		1350 = {
+			#became an important location for trade with Mesoamerica after 1350; Source: "History of the World Map by Map", 2023, pp. 146-147.
+		}
+	}
+}

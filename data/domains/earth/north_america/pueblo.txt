@@ -1,0 +1,15 @@
+pueblo = {
+	name = "Pueblo"
+	type = polity
+	color = { 162 128 8 }
+	flag = pueblo
+	default_culture = pueblo
+	default_religion = totemist
+	default_tier = kingdom
+	default_government_type = trade_tribe #Puebloans had strong trade ties with Mesoamerica; Source: "History of the World Map by Map", 2023, pp. 146-147.
+	default_capital = casas_grandes #should be changed to something else, e.g. Mesa Verde
+	definite_article = true
+	short_names = {
+		tribe = "Pueblo"
+	}
+}

@@ -11,6 +11,13 @@ new_mexico = {
 			#Alphadon lived in New Mexico in the Cretaceous; Source: https://paleobiodb.org/classic/basicTaxonInfo?taxon_no=487156
 		}
 		
+		250 = {
+			#inhabited by the Mogollon culture in the 250-1350 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			owner = pueblo
+			culture = pueblo
+			religion = totemist
+		}
+		
 		1600 = {
 			owner = new_spain #part of New Spain in the 1600-1700 period; Source: William R. Shepherd, "Historical Atlas", 1911, p. 128.
 			culture = castillian

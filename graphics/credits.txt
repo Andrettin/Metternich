@@ -70,6 +70,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/flags/pomerania.svg (by Hanna Dąbrowska, Urząd Marszałkowski and Bastianow, from the Wikimedia Commons) (licensed under the CC-BY-SA 2.5)
 /graphics/flags/portugal.svg (by Vítor Luís Rodrigues and António Martins-Tuválkin, from the Wikimedia Commons) (released to the public domain)
 /graphics/flags/prussia.svg (by R-41, from the Wikimedia Commons) (licensed under the CC-BY-SA 3.0)
+/graphics/flags/pueblo.svg (by the Zia Pueblo, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/romania.svg (by AdiJapan, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/russia.svg (by Zscout370, from the Wikimedia Commons) (in the public domain)
 /graphics/flags/salzburg.svg (by Jon Harald Søby, from the Wikimedia Commons) (released to the public domain)

@@ -1,0 +1,5 @@
+sonoran = {
+	name = "Sonoran"
+	rank = group
+	upper_group = amerindian
+}
