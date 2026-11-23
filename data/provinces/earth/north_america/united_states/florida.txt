@@ -1,16 +1,21 @@
 florida = {
 	name = "Florida"
 	color = { 160 48 0 }
-	default_provincial_capital = tallahassee
+	default_provincial_capital = lake_jackson #tallahassee
 	regions = {
 		united_states
 	}
 	
 	history = {
-		1300 = {
-			owner = cherokee #territory of the Southeastern cultural group (to which the Cherokee belonged) in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
-			culture = cherokee
+		600 = {
+			#Lake Jackson was a Middle Mississippian temple mound site in the 600-1400 period; Source: "History of the World Map by Map", 2023, pp. 146-147.
+			owner = creek
+			culture = creek
 			religion = totemist
+		}
+		
+		1300 = {
+			#territory of the Southeastern cultural group in the 1300-1535 period; Source: "Atlas de História Mundial", 2001, pp. 148-149.
 		}
 		
 		1600 = {

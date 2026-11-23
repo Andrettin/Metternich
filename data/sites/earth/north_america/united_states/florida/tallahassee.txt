@@ -2,7 +2,8 @@ tallahassee = {
 	name = "Tallahassee"
 	world = earth
 	geocoordinate = { -84.28003422210 30.44998760890 } #from Natural Earth
-	type = holding
-	#resource = cotton
 	province = florida
+	features = {
+		prime_cotton_land
+	}
 }
