@@ -1,0 +1,8 @@
+yagoshikha = {
+	name = "Yagoshikha"
+	world = earth
+	geocoordinate = { 56.271252 58.014285 } #Yegoshikha
+	type = holding
+	holding_type = castle
+	province = perm
+}

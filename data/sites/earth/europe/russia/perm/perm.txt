@@ -1,0 +1,8 @@
+perm = {
+	name = "Perm" #also known as Perym
+	world = earth
+	geocoordinate = { 56.248047 58.001906 } #from Natural Earth
+	type = holding
+	holding_type = temple #or castle
+	province = perm
+}

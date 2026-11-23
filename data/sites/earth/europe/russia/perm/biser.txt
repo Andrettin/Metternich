@@ -1,0 +1,8 @@
+biser = {
+	name = "Biser"
+	world = earth
+	geocoordinate = { 58.874302 58.512581 }
+	type = holding
+	holding_type = castle
+	province = perm
+}

@@ -1,0 +1,8 @@
+cherdyn = {
+	name = "Cherdyn"
+	world = earth
+	geocoordinate = { 56.483333333333 60.4 }
+	type = holding
+	holding_type = guild
+	province = perm
+}

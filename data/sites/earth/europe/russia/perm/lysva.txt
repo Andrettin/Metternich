@@ -1,0 +1,8 @@
+lysva = {
+	name = "Lysva"
+	world = earth
+	geocoordinate = { 57.804327777778 58.100380555556 }
+	type = holding
+	holding_type = castle
+	province = perm
+}

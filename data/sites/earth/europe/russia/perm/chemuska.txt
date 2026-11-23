@@ -1,0 +1,8 @@
+chemuska = {
+	name = "Chemuska"
+	world = earth
+	geocoordinate = { 56.083333333333 56.5 } #Chernushka
+	type = holding
+	holding_type = castle
+	province = perm
+}

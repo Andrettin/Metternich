@@ -1,0 +1,8 @@
+gorodki = {
+	name = "Gorodki"
+	world = earth
+	geocoordinate = { 56.859207 59.668634 } #Gorodishche, Solikamsky District, Perm Krai
+	type = holding
+	holding_type = guild
+	province = perm
+}

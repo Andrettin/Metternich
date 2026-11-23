@@ -1,0 +1,9 @@
+perm = {
+	name = "Perm"
+	color = { 168 15 227 }
+	terrain = tundra #arctic
+	default_provincial_capital = perm
+	regions = {
+		european_russia
+	}
+}
