@@ -9,15 +9,6 @@ arizpe = {
 	history = {
 		1646 = {
 			developed = true #the Spanish fort of Arizpe was founded in 1646; Source: "History of the World Map by Map", 2023, pp. 156-157.
-			owner = new_spain
-			culture = castillian
-			religion = catholic
-		}
-		
-		1600 = {
-			owner = none
-			culture = none
-			religion = none
 		}
 	}
 }
