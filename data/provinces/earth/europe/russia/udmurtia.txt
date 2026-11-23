@@ -1,0 +1,9 @@
+udmurtia = {
+	name = "Udmurtia"
+	color = { 169 45 187 }
+	terrain = forest
+	default_provincial_capital = udmurtia
+	regions = {
+		european_russia
+	}
+}

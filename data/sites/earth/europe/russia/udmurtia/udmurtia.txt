@@ -1,0 +1,8 @@
+udmurtia = {
+	name = "Udmurtia"
+	world = earth
+	geocoordinate = { 53.230022 56.850030 } #from Natural Earth (Izhevsk)
+	type = holding
+	holding_type = castle
+	province = udmurtia
+}
