@@ -6,7 +6,7 @@ florida = {
 	default_religion = catholic
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = lake_jackson #tallahassee
+	default_capital = saint_augustine #tallahassee
 	core_provinces = {
 		florida
 	}

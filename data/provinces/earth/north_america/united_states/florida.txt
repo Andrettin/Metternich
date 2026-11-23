@@ -1,7 +1,7 @@
 florida = {
 	name = "Florida"
 	color = { 160 48 0 }
-	default_provincial_capital = lake_jackson #tallahassee
+	default_provincial_capital = saint_augustine #tallahassee
 	regions = {
 		united_states
 	}

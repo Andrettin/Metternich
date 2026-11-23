@@ -5,7 +5,7 @@ turconia = {
 	default_religion = sunni
 	default_tier = duchy
 	default_government_type = monarchy
-	default_capital = lake_jackson #tallahassee
+	default_capital = saint_augustine #tallahassee
 	
 	history = {
 		my_country_tis_of_thee = {
