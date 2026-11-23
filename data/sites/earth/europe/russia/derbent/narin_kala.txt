@@ -1,0 +1,8 @@
+narin_kala = {
+	name = "Narin-Kala"
+	world = earth
+	geocoordinate = { 48.27412 42.05302 } #Naryn Castle
+	type = holding
+	holding_type = guild
+	province = derbent
+}

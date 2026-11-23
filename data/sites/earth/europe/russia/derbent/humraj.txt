@@ -1,0 +1,8 @@
+humraj = {
+	name = "Humraj"
+	world = earth
+	geocoordinate = { 46.7072956124677 42.54567207642907 } #Khunzakh
+	type = holding
+	holding_type = guild
+	province = derbent
+}

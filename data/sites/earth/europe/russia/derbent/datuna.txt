@@ -1,0 +1,8 @@
+datuna = {
+	name = "Datuna"
+	world = earth
+	geocoordinate = { 46.620861 42.470285 } #Datuna Church
+	type = holding
+	holding_type = temple
+	province = derbent
+}

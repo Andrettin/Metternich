@@ -1,0 +1,8 @@
+kuli = {
+	name = "Kuli"
+	world = earth
+	geocoordinate = { 47.243333333333 42.018333333333 } #Kuli, Kulinsky District
+	type = holding
+	holding_type = castle
+	province = derbent
+}

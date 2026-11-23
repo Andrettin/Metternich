@@ -1,0 +1,8 @@
+juma = {
+	name = "Juma"
+	world = earth
+	geocoordinate = { 48.279722222222 42.055277777778 } #Derbent Mosque/Juma Mosque of Derbent
+	type = holding
+	holding_type = temple
+	province = derbent
+}

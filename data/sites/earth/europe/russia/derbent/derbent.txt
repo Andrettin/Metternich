@@ -1,0 +1,8 @@
+derbent = {
+	name = "Derbent"
+	world = earth
+	geocoordinate = { 48.277404 42.057806 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = derbent
+}

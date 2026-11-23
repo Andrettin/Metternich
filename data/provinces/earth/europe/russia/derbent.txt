@@ -1,0 +1,9 @@
+derbent = {
+	name = "Derbent"
+	color = { 168 105 37 }
+	terrain = mountains
+	default_provincial_capital = derbent
+	regions = {
+		european_russia
+	}
+}
