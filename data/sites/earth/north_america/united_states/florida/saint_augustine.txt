@@ -1,0 +1,26 @@
+saint_augustine = {
+	name = "Saint Augustine"
+	world = earth
+	geocoordinate = { -81.314711 29.894879 } #from Natural Earth
+	type = holding
+	holding_type = castle #fort
+	province = florida
+	cultural_names = {
+		castillian = "San Agustin" #"San Agustín"
+	}
+	
+	history = {
+		1565 = {
+			developed = true #the Spanish fort of San Agustín was founded in 1565; Source: "History of the World Map by Map", 2023, pp. 156-157.
+			owner = spain
+			culture = castillian
+			religion = catholic
+		}
+		
+		1600 = {
+			owner = none
+			culture = none
+			religion = none
+		}
+	}
+}
