@@ -222,12 +222,12 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 				queued_tile_indices[this->get_pos_index(tile_pos)] = false;
 
 				//use an array for the adjacent province counts, for the sake of performance
-				//limited to 8 entries since that is the maximum adjacent tiles that a tile can have
-				std::array<std::pair<province *, int>, 8> adjacent_province_counts{};
+				//limited to 4 entries since that is the maximum cardinally adjacent tiles that a tile can have
+				std::array<std::pair<province *, int>, 4> adjacent_province_counts{};
 
 				std::vector<QPoint> adjacent_without_province;
 
-				point::for_each_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones, &queued_tile_indices](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones, &queued_tile_indices](const QPoint &adjacent_pos) {
 					if (!this->contains(adjacent_pos)) {
 						return;
 					}
@@ -259,26 +259,20 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 					}
 				});
 
-				int best_count = 0;
-				std::vector<province *> best_provinces;
+				std::vector<province *> weighted_provinces;
 
 				for (const auto &[province, province_count] : adjacent_province_counts) {
 					if (province == nullptr) {
 						break;
 					}
 
-					if (province_count > best_count) {
-						best_provinces.clear();
-						best_count = province_count;
-					} else if (province_count < best_count) {
-						continue;
+					for (int i = 0; i < province_count; ++i) {
+						weighted_provinces.push_back(province);
 					}
-
-					best_provinces.push_back(province);
 				}
 
-				if (!best_provinces.empty()) {
-					this->set_tile_province(tile_pos, vector::get_random(best_provinces));
+				if (!weighted_provinces.empty()) {
+					this->set_tile_province(tile_pos, vector::get_random(weighted_provinces));
 					for (const QPoint &adjacent_pos : adjacent_without_province) {
 						const size_t adjacent_index = this->get_pos_index(adjacent_pos);
 						queued_tile_indices[adjacent_index] = true;
