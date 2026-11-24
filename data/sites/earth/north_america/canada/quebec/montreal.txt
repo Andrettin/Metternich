@@ -2,10 +2,19 @@ montreal = {
 	name = "Montreal"
 	world = earth
 	geocoordinate = { -73.58329695810 45.49999920560 } #from Natural Earth
-	type = resource
-	resource = cattle
+	type = holding
+	holding_type = guild #trading post
 	province = quebec
 	features = {
 		prime_cattle_land
+	}
+	
+	history = {
+		1700 = {
+			#was a French trading post in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = french
+			religion = catholic
+		}
 	}
 }
