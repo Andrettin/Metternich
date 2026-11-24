@@ -1301,6 +1301,12 @@ bool domain_game_data::can_have_government_type(const metternich::government_typ
 		return false;
 	}
 
+	for (const site *core_holding : this->domain->get_core_holdings()) {
+		if (!government_type->is_holding_type_allowed(core_holding->get_holding_type())) {
+			return false;
+		}
+	}
+
 	return true;
 }
 
