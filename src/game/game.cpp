@@ -993,32 +993,18 @@ QCoro::Task<void> game::apply_sites()
 		}
 	}
 
-	//release holdings whose owner cannot hold as their own domains, if any is available
-	for (const site *site : map::get()->get_sites()) {
-		site_game_data *site_game_data = site->get_game_data();
+	//release disallowed holdings for the game's domains
+	//we need to do this in a loop, because holding release can result in trade zone/temple/cultural society domains changing for provinces, which can then allow further holdings to be released
+	bool changed = true;
+	while (changed) {
+		changed = false;
 
-		if (site_game_data->get_holding_type() == nullptr) {
-			continue;
-		}
-
-		const domain *site_owner = site_game_data->get_owner();
-		assert_throw(site_owner != nullptr);
-
-		if (site_owner->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
-			continue;
-		}
-
-		std::vector<const domain *> releasable_domains;
-		for (const domain *core_domain : site->get_core_domains()) {
-			if (!site_owner->get_game_data()->can_release_domain(core_domain, false)) {
-				continue;
+		const std::vector<domain *> domains = this->get_domains();
+		for (const domain *domain : domains) {
+			const bool released_holding = co_await domain->get_game_data()->release_disallowed_holdings();
+			if (released_holding) {
+				changed = true;
 			}
-
-			releasable_domains.push_back(core_domain);
-		}
-
-		if (!releasable_domains.empty()) {
-			co_await site_owner->get_game_data()->release_domain(vector::get_random(releasable_domains), false);
 		}
 	}
 
@@ -1057,60 +1043,6 @@ QCoro::Task<void> game::apply_sites()
 
 		province->get_game_data()->choose_provincial_capital();
 		assert_throw(province->get_game_data()->get_provincial_capital() != nullptr);
-	}
-
-	//for e.g. economic holding types, if the holding type is not allowed for the domain, see if the province already has a calculated trade zone domain which can be used for this
-	bool changed = true;
-	while (changed) {
-		changed = false;
-
-		for (const site *site : map::get()->get_sites()) {
-			site_game_data *site_game_data = site->get_game_data();
-
-			if (site_game_data->get_holding_type() == nullptr) {
-				continue;
-			}
-
-			assert_throw(site_game_data->get_owner() != nullptr);
-
-			if (site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
-				continue;
-			}
-
-			const province *site_province = site->get_map_data()->get_province();
-			const domain *province_trade_zone_domain = site_province->get_game_data()->get_trade_zone_domain();
-			const domain *province_temple_domain = site_province->get_game_data()->get_temple_domain();
-			const domain *province_cultural_society_domain = site_province->get_game_data()->get_cultural_society_domain();
-
-			if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
-				assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-				co_await site_game_data->set_owner(province_trade_zone_domain);
-				changed = true;
-			} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
-				assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-				co_await site_game_data->set_owner(province_temple_domain);
-				changed = true;
-			} else if (province_cultural_society_domain != nullptr && site_game_data->get_holding_type()->is_cultural()) {
-				assert_throw(province_cultural_society_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
-				co_await site_game_data->set_owner(province_cultural_society_domain);
-				changed = true;
-			}
-		}
-	}
-
-	//clear sites whose owner is not actually allowed to hold them
-	for (const site *site : map::get()->get_sites()) {
-		site_game_data *site_game_data = site->get_game_data();
-
-		if (site_game_data->get_holding_type() != nullptr) {
-			assert_throw(site_game_data->get_owner() != nullptr);
-
-			if (site_game_data->get_owner() != nullptr && !site_game_data->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
-				log::log_error(std::format("Clearing holding site \"{}\", since its holding type (\"{}\") is not allowed for the government type (\"{}\") of its owner (\"{}\").", site->get_identifier(), site_game_data->get_holding_type()->get_identifier(), site_game_data->get_owner()->get_game_data()->get_government_type()->get_identifier(), site_game_data->get_owner()->get_identifier()));
-
-				co_await site_game_data->set_holding_type(nullptr);
-			}
-		}
 	}
 
 	//set the capitals here, so that building requirements that require a capital can be fulfilled

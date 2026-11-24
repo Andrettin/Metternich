@@ -796,6 +796,8 @@ public:
 	[[nodiscard]] QCoro::Task<void> release_domain(const metternich::domain *releasable_domain, const bool include_only_rebellious_provinces);
 	bool has_domain_cores(const metternich::domain *other, const bool count_only_rebellious_provinces) const;
 
+	[[nodiscard]] QCoro::Task<bool> release_disallowed_holdings();
+
 	bool has_flag(const flag *flag) const
 	{
 		return this->flags.contains(flag);

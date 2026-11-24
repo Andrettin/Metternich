@@ -609,6 +609,7 @@ QCoro::Task<void> domain_game_data::do_turn()
 
 		this->get_military()->clear_armies();
 
+		co_await this->release_disallowed_holdings();
 		co_await this->check_rebellions();
 
 		co_await this->decrement_scripted_modifiers();
@@ -3915,6 +3916,12 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 
 	//FIXME: ensure the released domain has a religion that exists in the world when it is released
 	//FIXME: move any characters which have their home site in the released domain to it?
+
+	if (this->domain == game::get()->get_player_domain()) {
+		const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
+
+		engine_interface::get()->add_notification(std::format("Independence Granted to {}{}", releasable_domain->get_game_data()->has_definite_article() ? "the " : "", releasable_domain->get_game_data()->get_name()), foreign_minister_portrait, std::format("{}, we have granted independence to the {}!", this->get_form_of_address(), releasable_domain->get_game_data()->get_titled_name()));
+	}
 }
 
 bool domain_game_data::has_domain_cores(const metternich::domain *other, const bool count_only_rebellious_provinces) const
@@ -3940,6 +3947,73 @@ bool domain_game_data::has_domain_cores(const metternich::domain *other, const b
 	}
 
 	return false;
+}
+
+QCoro::Task<bool> domain_game_data::release_disallowed_holdings()
+{
+	bool released_holding = false;
+
+	std::vector<const site *> sites = this->get_sites();
+	for (const site *site : sites) {
+		site_game_data *site_game_data = site->get_game_data();
+
+		if (site_game_data->get_holding_type() == nullptr) {
+			continue;
+		}
+
+		assert_throw(site_game_data->get_owner() == this->domain);
+
+		if (this->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+			continue;
+		}
+
+		//release holdings that this domain cannot hold as their own domains, if any is available
+		std::vector<const metternich::domain *> releasable_domains;
+		for (const metternich::domain *core_domain : site->get_core_domains()) {
+			if (!this->can_release_domain(core_domain, false)) {
+				continue;
+			}
+
+			releasable_domains.push_back(core_domain);
+		}
+
+		if (!releasable_domains.empty()) {
+			co_await this->release_domain(vector::get_random(releasable_domains), false);
+			released_holding = true;
+			continue;
+		}
+
+		//for e.g. economic holding types, if the holding type is not allowed for the domain, see if the province already has a calculated trade zone domain which can be used for this
+		const province *site_province = site->get_map_data()->get_province();
+		const metternich::domain *province_trade_zone_domain = site_province->get_game_data()->get_trade_zone_domain();
+		const metternich::domain *province_temple_domain = site_province->get_game_data()->get_temple_domain();
+		const metternich::domain *province_cultural_society_domain = site_province->get_game_data()->get_cultural_society_domain();
+		const metternich::domain *new_owner = nullptr;
+
+		if (province_trade_zone_domain != nullptr && site_game_data->get_holding_type()->is_economic()) {
+			assert_throw(province_trade_zone_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+			new_owner = province_trade_zone_domain;
+		} else if (province_temple_domain != nullptr && site_game_data->get_holding_type()->is_religious()) {
+			assert_throw(province_temple_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+			new_owner = province_temple_domain;
+		} else if (province_cultural_society_domain != nullptr && site_game_data->get_holding_type()->is_cultural()) {
+			assert_throw(province_cultural_society_domain->get_game_data()->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type()));
+			new_owner = province_cultural_society_domain;
+		}
+
+		if (new_owner != nullptr) {
+			co_await site_game_data->set_owner(new_owner);
+			released_holding = true;
+
+			if (this->domain == game::get()->get_player_domain()) {
+				const portrait *foreign_minister_portrait = this->get_government()->get_foreign_minister_portrait();
+
+				engine_interface::get()->add_notification(std::format("{} Granted to {}{}", site_game_data->get_current_cultural_name(), new_owner->get_game_data()->has_definite_article() ? "the " : "", new_owner->get_game_data()->get_name()), foreign_minister_portrait, std::format("{}, we have granted our {} of {} to the {}!", this->get_form_of_address(), string::lowered(site_game_data->get_holding_type_name()), site_game_data->get_current_cultural_name(), new_owner->get_game_data()->get_titled_name()));
+			}
+		}
+	}
+
+	co_return released_holding;
 }
 
 bool domain_game_data::can_visit_site(const metternich::site *site) const
