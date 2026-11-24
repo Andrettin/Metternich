@@ -7,11 +7,6 @@ desert = {
 	elevation_type = flatlands
 	moisture_type = arid
 	movement_cost = 2
-	fallback_terrains = {
-		plains
-		hills
-		mountains
-	}
 	province_modifier = {
 		max_level = 3
 	}

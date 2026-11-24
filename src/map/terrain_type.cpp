@@ -95,11 +95,7 @@ void terrain_type::process_gsml_scope(const gsml_data &scope)
 	const std::string &tag = scope.get_tag();
 	const std::vector<std::string> &values = scope.get_values();
 
-	if (tag == "fallback_terrains") {
-		for (const std::string &value : values) {
-			this->fallback_terrains.push_back(terrain_type::get(value));
-		}
-	} else if (tag == "province_modifier") {
+	if (tag == "province_modifier") {
 		auto modifier = std::make_unique<metternich::modifier<const province>>();
 		modifier->process_gsml_data(scope);
 		this->province_modifier = std::move(modifier);

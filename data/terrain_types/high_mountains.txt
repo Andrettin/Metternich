@@ -5,12 +5,6 @@ high_mountains = {
 	image_filepath = "tiles/terrain/mountains.png"
 	mountains = true
 	movement_cost = 8
-	fallback_terrains = {
-		mountains
-		hills
-		plains
-		forest
-	}
 	province_modifier = {
 		max_level = 3
 	}

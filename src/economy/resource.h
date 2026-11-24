@@ -116,8 +116,6 @@ public:
 		return this->site_types;
 	}
 
-	const terrain_type *get_fallback_terrain(const terrain_type *terrain) const;
-
 	const modifier<const site> *get_modifier() const
 	{
 		return this->modifier.get();

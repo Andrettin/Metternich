@@ -83,19 +83,6 @@ const metternich::icon *resource::get_icon() const
 	return nullptr;
 }
 
-const terrain_type *resource::get_fallback_terrain(const terrain_type *terrain) const
-{
-	const std::vector<const terrain_type *> &resource_terrains = this->get_terrain_types();
-
-	for (const terrain_type *fallback_terrain : terrain->get_fallback_terrains()) {
-		if (vector::contains(resource_terrains, fallback_terrain)) {
-			return fallback_terrain;
-		}
-	}
-
-	return nullptr;
-}
-
 bool resource::is_enabled() const
 {
 	if (this->required_game_rule != nullptr && game::get()->get_rules() != nullptr) {

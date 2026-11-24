@@ -166,11 +166,6 @@ public:
 		return this->movement_cost;
 	}
 
-	const std::vector<const terrain_type *> &get_fallback_terrains() const
-	{
-		return this->fallback_terrains;
-	}
-
 	const modifier<const province> *get_province_modifier() const
 	{
 		return this->province_modifier.get();
@@ -240,7 +235,6 @@ private:
 	metternich::moisture_type moisture_type;
 	metternich::forestation_type forestation_type;
 	int movement_cost = 0;
-	std::vector<const terrain_type *> fallback_terrains;
 	std::unique_ptr<const modifier<const province>> province_modifier;
 	std::vector<int> tiles;
 	std::map<terrain_adjacency, std::vector<int>> adjacency_tiles;

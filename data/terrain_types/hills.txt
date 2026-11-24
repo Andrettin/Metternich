@@ -6,12 +6,6 @@ hills = {
 	hills = true
 	elevation_type = hills
 	movement_cost = 2
-	fallback_terrains = {
-		mountains
-		plains
-		savannah
-		forest
-	}
 	province_modifier = {
 		max_level = 9
 	}

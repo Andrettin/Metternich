@@ -4,9 +4,6 @@ steppe = {
 	icon = mountains
 	image_filepath = "tiles/terrain/semi_dry_grass.png"
 	movement_cost = 1
-	fallback_terrains = {
-		plains
-	}
 	province_modifier = {
 		max_level = 6
 	}

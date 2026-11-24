@@ -6,9 +6,6 @@ tundra = {
 	elevation_type = flatlands
 	temperature_type = cold
 	movement_cost = 3
-	fallback_terrains = {
-		plains
-	}
 	province_modifier = {
 		max_level = 2
 	}
