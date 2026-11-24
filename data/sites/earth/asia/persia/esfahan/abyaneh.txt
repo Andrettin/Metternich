@@ -1,0 +1,8 @@
+abyaneh = {
+	name = "Abyaneh"
+	world = earth
+	geocoordinate = { 51.59222222222222 33.585277777777776 }
+	type = holding
+	holding_type = guild
+	province = esfahan
+}

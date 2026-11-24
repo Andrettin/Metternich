@@ -1,0 +1,8 @@
+khansar = {
+	name = "Khansar"
+	world = earth
+	geocoordinate = { 50.315 33.220555555556 } #Khvansar
+	type = holding
+	holding_type = temple
+	province = esfahan
+}

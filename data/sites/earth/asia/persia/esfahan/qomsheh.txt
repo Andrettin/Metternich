@@ -1,0 +1,8 @@
+qomsheh = {
+	name = "Qomsheh"
+	world = earth
+	geocoordinate = { 51.859718 32.011494 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = esfahan
+}

@@ -1,0 +1,8 @@
+sedeh = {
+	name = "Sedeh"
+	world = earth
+	geocoordinate = { 51.469974 32.700419 } #from Natural Earth (Khomeini Shahr)
+	type = holding
+	holding_type = guild #or castle
+	province = esfahan
+}

@@ -1,0 +1,8 @@
+ardestan = {
+	name = "Ardestan"
+	world = earth
+	geocoordinate = { 52.3725 33.37972222222222 }
+	type = holding
+	holding_type = temple
+	province = esfahan
+}

@@ -1,0 +1,8 @@
+zarrinshahr = {
+	name = "Zarrinshahr"
+	world = earth
+	geocoordinate = { 51.376666666666665 32.389722222222225 } #Zarrin Shahr
+	type = holding
+	holding_type = guild
+	province = esfahan
+}

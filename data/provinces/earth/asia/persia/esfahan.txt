@@ -1,7 +1,8 @@
-isfahan = {
-	name = "Isfahan"
-	color = { 35 188 35 }
-	default_provincial_capital = isfahan
+esfahan = {
+	name = "Esfahan"
+	color = { 42 21 23 }
+	terrain = mountains
+	default_provincial_capital = esfahan
 	regions = {
 		persia
 	}

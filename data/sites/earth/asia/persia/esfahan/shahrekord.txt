@@ -4,5 +4,5 @@ shahrekord = {
 	geocoordinate = { 50.85399659410 32.32099805060 } #from Natural Earth
 	type = resource
 	resource = cotton
-	province = isfahan
+	province = esfahan
 }
