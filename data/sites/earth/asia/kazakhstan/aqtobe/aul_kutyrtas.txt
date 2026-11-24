@@ -1,0 +1,8 @@
+aul_kutyrtas = {
+	name = "Aul-Kutyrtas"
+	world = earth
+	geocoordinate = { 57.63333 49.66667 } #Kutyrtas
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}

@@ -1,0 +1,8 @@
+zharly_say = {
+	name = "Zharly-Say"
+	world = earth
+	geocoordinate = { 56.12684 48.1647 } #Zharsay
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}

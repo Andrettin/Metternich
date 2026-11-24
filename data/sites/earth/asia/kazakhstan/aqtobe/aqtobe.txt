@@ -1,0 +1,8 @@
+aqtobe = {
+	name = "Aqtobe" #"Aqtöbe"
+	world = earth
+	geocoordinate = { 57.169988 50.280018 } #from Natural Earth
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}

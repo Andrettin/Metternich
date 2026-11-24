@@ -1,0 +1,9 @@
+aqtobe = {
+	name = "Aqtobe" #"Aqtöbe"
+	color = { 169 45 132 }
+	terrain = steppe
+	default_provincial_capital = aqtobe
+	regions = {
+		kazakhstan
+	}
+}

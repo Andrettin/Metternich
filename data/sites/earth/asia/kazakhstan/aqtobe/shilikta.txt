@@ -1,0 +1,8 @@
+shilikta = {
+	name = "Shilikta"
+	world = earth
+	geocoordinate = { 58.1374 50.45942 } #Zimovka Shilikti
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}

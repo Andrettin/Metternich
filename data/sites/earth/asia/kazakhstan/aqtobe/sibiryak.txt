@@ -1,0 +1,8 @@
+sibiryak = {
+	name = "Sibiryak"
+	world = earth
+	geocoordinate = { 58.13333 50.31667 }
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}

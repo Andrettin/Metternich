@@ -1,0 +1,8 @@
+ashche_say = {
+	name = "Ashche-Say"
+	world = earth
+	geocoordinate = { 58.292826 49.417229 } #Ashchisay
+	type = holding
+	holding_type = temple
+	province = aqtobe
+}

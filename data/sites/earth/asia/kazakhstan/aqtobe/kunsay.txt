@@ -1,0 +1,8 @@
+kunsay = {
+	name = "Kunsay"
+	world = earth
+	geocoordinate = { 56.84544 49.890004 } #Qumsai
+	type = holding
+	holding_type = castle
+	province = aqtobe
+}
