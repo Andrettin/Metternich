@@ -2,7 +2,18 @@ porto_seguro = {
 	name = "Porto Seguro"
 	world = earth
 	geocoordinate = { -39.08002832190 -16.42960569370 } #from Natural Earth
-	type = resource
-	resource = coffee
+	type = holding
+	holding_type = castle #barony/viscounty
+	#resource = coffee
 	province = bahia
+	
+	history = {
+		1872.7.24 = {
+			tier = barony #created as a barony on 1872.7.24; Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 372.
+		}
+		
+		1874.5.18 = {
+			tier = viscounty #created as a viscounty on 1874.5.18; Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, p. 372.
+		}
+	}
 }

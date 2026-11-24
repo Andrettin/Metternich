@@ -1,0 +1,14 @@
+cachoeira = {
+	name = "Cachoeira"
+	world = earth
+	geocoordinate = { -38.955833333333 -12.617777777778 }
+	type = holding
+	holding_type = castle #viscounty
+	province = bahia
+	
+	history = {
+		1824.10.12 = {
+			tier = viscounty #created as a viscounty on 1824.10.12; Source: Barão de Vasconcellos, "Archivo Nobiliarchico Brasileiro", 1918, pp. 90-91.
+		}
+	}
+}
