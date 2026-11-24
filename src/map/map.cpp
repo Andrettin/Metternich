@@ -224,10 +224,11 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 				//use an array for the adjacent province counts, for the sake of performance
 				//limited to 4 entries since that is the maximum cardinally adjacent tiles that a tile can have
 				std::array<std::pair<province *, int>, 4> adjacent_province_counts{};
+				size_t total_count = 0;
 
 				std::vector<QPoint> adjacent_without_province;
 
-				point::for_each_cardinally_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones, &queued_tile_indices](const QPoint &adjacent_pos) {
+				point::for_each_cardinally_adjacent(tile_pos, [this, tile, &adjacent_province_counts, &adjacent_without_province, only_water_zones, &queued_tile_indices, &total_count](const QPoint &adjacent_pos) {
 					if (!this->contains(adjacent_pos)) {
 						return;
 					}
@@ -249,17 +250,20 @@ void map::do_province_post_processing(std::vector<QPoint> tiles_to_check, const 
 					for (auto &[count_province, count] : adjacent_province_counts) {
 						if (count_province == adjacent_tile->get_province()) {
 							++count;
+							++total_count;
 							break;
 						} else if (count_province == nullptr) {
 							//if we reached a null count province, then that means this province doesn't have a count yet
 							count_province = adjacent_tile->get_province();
 							++count;
+							++total_count;
 							break;
 						}
 					}
 				});
 
 				std::vector<province *> weighted_provinces;
+				weighted_provinces.reserve(total_count);
 
 				for (const auto &[province, province_count] : adjacent_province_counts) {
 					if (province == nullptr) {
