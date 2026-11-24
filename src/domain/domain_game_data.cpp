@@ -3957,11 +3957,14 @@ QCoro::Task<bool> domain_game_data::release_disallowed_holdings()
 	for (const site *site : sites) {
 		site_game_data *site_game_data = site->get_game_data();
 
-		if (site_game_data->get_holding_type() == nullptr) {
+		if (site_game_data->get_owner() != this->domain) {
+			//already released to a different domain together with another holding
 			continue;
 		}
 
-		assert_throw(site_game_data->get_owner() == this->domain);
+		if (site_game_data->get_holding_type() == nullptr) {
+			continue;
+		}
 
 		if (this->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
 			continue;
