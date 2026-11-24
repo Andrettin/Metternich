@@ -1143,7 +1143,7 @@ bool domain_game_data::is_culture_allowed(const metternich::culture *culture) co
 	}
 
 	if (!this->domain->get_core_provinces().empty() || !this->domain->get_core_holdings().empty()) {
-		if (this->has_domain_cores(this->domain, false)) {
+		if (this->has_domain_cores(this->domain, false, false)) {
 			//if a domain has cores, and it owns those cores, then any culture is allowed for it
 			return true;
 		}
@@ -2585,7 +2585,7 @@ QCoro::Task<void> domain_game_data::check_rebellions()
 				return true;
 			}
 
-			if (!other_domain->get_game_data()->is_alive() && !this->can_release_domain(other_domain, true)) {
+			if (!other_domain->get_game_data()->is_alive() && !this->can_release_domain(other_domain, true, false)) {
 				return true;
 			}
 
@@ -2603,7 +2603,7 @@ QCoro::Task<void> domain_game_data::check_rebellions()
 			}
 			//FIXME: add notification that some of this domain's provinces have defected to another domain
 		} else {
-			co_await this->release_domain(rebellion_domain, true);
+			co_await this->release_domain(rebellion_domain, true, false);
 			//FIXME: make the domain that is declaring independence be at war with this domain
 			//FIXME: add notification that a domain has declared independence
 		}
@@ -3797,16 +3797,16 @@ bool domain_game_data::can_form_domain_by_territory(const metternich::domain *ot
 		return false;
 	}
 
-	return this->has_domain_cores(other, false);
+	return this->has_domain_cores(other, false, false);
 }
 
-bool domain_game_data::can_release_domain(const metternich::domain *other, const bool count_only_rebellious_provinces) const
+bool domain_game_data::can_release_domain(const metternich::domain *other, const bool count_only_rebellious_provinces, const bool count_only_disallowed_holdings) const
 {
 	if (vector::contains(game::get()->get_domains(), other)) {
 		return false;
 	}
 
-	if (!other->get_cultures().empty() && this->get_culture()->get_primary_domain() != other && !other->is_cultural_union_of(this->get_culture())) {
+	if (!other->get_cultures().empty() && this->get_culture()->get_primary_domain() != other && !other->is_cultural_union_of(this->get_culture()) && !count_only_disallowed_holdings) {
 		//allow releasing the primary domain of a culture or cultural group if our provinces have a majority of the population for that culture/group
 		int64_t releasable_domain_culture_population = 0;
 		int64_t total_culture_population = 0;
@@ -3834,7 +3834,7 @@ bool domain_game_data::can_release_domain(const metternich::domain *other, const
 	}
 
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
-		if (!this->has_domain_cores(other, count_only_rebellious_provinces)) {
+		if (!this->has_domain_cores(other, count_only_rebellious_provinces, count_only_disallowed_holdings)) {
 			return false;
 		}
 
@@ -3861,7 +3861,7 @@ bool domain_game_data::can_release_domain(const metternich::domain *other, const
 	return false;
 }
 
-QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *releasable_domain, const bool include_only_rebellious_provinces)
+QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *releasable_domain, const bool include_only_rebellious_provinces, const bool include_only_disallowed_holdings)
 {
 	for (const site *holding_site : releasable_domain->get_core_holdings()) {
 		if (holding_site->get_game_data()->get_owner() != this->domain) {
@@ -3869,6 +3869,10 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 		}
 
 		if (!holding_site->get_game_data()->is_built()) {
+			continue;
+		}
+
+		if (include_only_disallowed_holdings && this->get_government_type()->is_holding_type_allowed(holding_site->get_game_data()->get_holding_type())) {
 			continue;
 		}
 
@@ -3884,11 +3888,15 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 			continue;
 		}
 
+		if (include_only_disallowed_holdings) {
+			continue;
+		}
+
 		co_await province->get_game_data()->set_owner(releasable_domain);
 	}
 
 	//if the release domain is a cultural union or a culture's primary domain, transfer all provinces with the appropriate cultures to it
-	if (!releasable_domain->get_cultures().empty()) {
+	if (!releasable_domain->get_cultures().empty() && !include_only_disallowed_holdings) {
 		const std::vector<const province *> provinces = this->get_provinces();
 		for (const province *province : provinces) {
 			if (include_only_rebellious_provinces && province->get_game_data()->get_province_loyalty() != static_cast<int>(province_loyalty_level::rebellious)) {
@@ -3924,10 +3932,14 @@ QCoro::Task<void> domain_game_data::release_domain(const metternich::domain *rel
 	}
 }
 
-bool domain_game_data::has_domain_cores(const metternich::domain *other, const bool count_only_rebellious_provinces) const
+bool domain_game_data::has_domain_cores(const metternich::domain *other, const bool count_only_rebellious_provinces, const bool count_only_disallowed_holdings) const
 {
 	if (!other->get_core_provinces().empty() || !other->get_core_holdings().empty()) {
 		for (const province *province : other->get_core_provinces()) {
+			if (count_only_disallowed_holdings) {
+				return false;
+			}
+
 			if (province->get_game_data()->get_owner() != this->domain) {
 				return false;
 			}
@@ -3939,6 +3951,10 @@ bool domain_game_data::has_domain_cores(const metternich::domain *other, const b
 
 		for (const site *holding : other->get_core_holdings()) {
 			if (holding->get_game_data()->get_owner() != this->domain) {
+				return false;
+			}
+
+			if (count_only_disallowed_holdings && this->get_government_type()->is_holding_type_allowed(holding->get_game_data()->get_holding_type())) {
 				return false;
 			}
 		}
@@ -3973,7 +3989,7 @@ QCoro::Task<bool> domain_game_data::release_disallowed_holdings()
 		//release holdings that this domain cannot hold as their own domains, if any is available
 		std::vector<const metternich::domain *> releasable_domains;
 		for (const metternich::domain *core_domain : site->get_core_domains()) {
-			if (!this->can_release_domain(core_domain, false)) {
+			if (!this->can_release_domain(core_domain, false, true)) {
 				continue;
 			}
 
@@ -3981,7 +3997,7 @@ QCoro::Task<bool> domain_game_data::release_disallowed_holdings()
 		}
 
 		if (!releasable_domains.empty()) {
-			co_await this->release_domain(vector::get_random(releasable_domains), false);
+			co_await this->release_domain(vector::get_random(releasable_domains), false, true);
 			released_holding = true;
 			continue;
 		}
