@@ -1,0 +1,8 @@
+isfarayen = {
+	name = "Isfarayen"
+	world = earth
+	geocoordinate = { 57.51 37.076388888889 } #Esfarayen
+	type = holding
+	holding_type = guild
+	province = north_khorasan
+}

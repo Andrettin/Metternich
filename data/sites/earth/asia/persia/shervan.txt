@@ -1,0 +1,8 @@
+shervan = {
+	name = "Shervan"
+	world = earth
+	geocoordinate = { 57.929444444444 37.396666666667 } #Shirvan
+	type = holding
+	holding_type = guild
+	province = north_khorasan
+}

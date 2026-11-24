@@ -1,0 +1,8 @@
+ghaisar = {
+	name = "Ghaisar"
+	world = earth
+	geocoordinate = { 59.26068 34.26703 } #Gīsūr
+	type = holding
+	holding_type = castle
+	province = tus
+}

@@ -1,6 +1,7 @@
-razavi_khorasan = {
-	name = "Razavi Khorasan"
-	color = { 52 161 33 }
+tus = {
+	name = "Tus"
+	color = { 84 192 16 }
+	terrain = mountains
 	default_provincial_capital = mashhad
 	regions = {
 		persia

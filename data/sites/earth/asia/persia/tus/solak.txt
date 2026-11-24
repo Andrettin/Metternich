@@ -1,0 +1,8 @@
+solak = {
+	name = "Solak"
+	world = earth
+	geocoordinate = { 58.51257 36.72524 } #Kalāteh-ye Sālak
+	type = holding
+	holding_type = castle
+	province = tus
+}

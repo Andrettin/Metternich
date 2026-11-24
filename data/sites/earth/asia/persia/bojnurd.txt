@@ -3,6 +3,9 @@ bojnurd = {
 	world = earth
 	geocoordinate = { 57.32000484090 37.46999839180 } #from Natural Earth
 	type = holding
-	#resource = coal
+	holding_type = castle
 	province = north_khorasan
+	features = {
+		coal_deposit
+	}
 }

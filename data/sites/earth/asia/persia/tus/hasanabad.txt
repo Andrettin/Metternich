@@ -1,0 +1,8 @@
+hasanabad = {
+	name = "Hasanabad"
+	world = earth
+	geocoordinate = { 59.47722222 37.13277778 } #Hasanabad-e Layen-e Now
+	type = holding
+	holding_type = castle
+	province = tus
+}

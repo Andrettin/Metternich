@@ -3,6 +3,9 @@ mashhad = {
 	world = earth
 	geocoordinate = { 59.56999670290 36.27001995750 } #from Natural Earth
 	type = holding
-	#resource = coal
-	province = razavi_khorasan
+	holding_type = temple
+	province = tus
+	features = {
+		coal_deposit
+	}
 }
