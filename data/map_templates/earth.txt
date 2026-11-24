@@ -55,6 +55,7 @@ atlantic = {
 		satakunta
 		sermersooq
 		south_kazakhstan
+		syktyvkar
 	}
 }
 
