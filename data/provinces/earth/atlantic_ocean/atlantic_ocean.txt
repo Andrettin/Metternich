@@ -79,6 +79,15 @@ coast_of_argentina = {
 	}
 }
 
+coast_of_bermuda = {
+	name = "Coast of Bermuda"
+	color = { 67 222 252 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_brazil = {
 	name = "Coast of Brazil"
 	color = { 25 202 202 }
@@ -376,9 +385,27 @@ coast_of_the_faroes = {
 	}
 }
 
+coast_of_the_lesser_antilles = {
+	name = "Coast of the Lesser Antilles"
+	color = { 18 202 252 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
 coast_of_the_western_sahara = {
 	name = "Coast of the Western Sahara"
 	color = { 157 55 220 }
+	sea = true
+	regions = {
+		atlantic_ocean
+	}
+}
+
+coast_of_the_windward_islands = {
+	name = "Coast of the Windward Islands"
+	color = { 17 202 202 }
 	sea = true
 	regions = {
 		atlantic_ocean

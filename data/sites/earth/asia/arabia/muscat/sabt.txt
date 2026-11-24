@@ -1,0 +1,8 @@
+sabt = {
+	name = "Sabt"
+	world = earth
+	geocoordinate = { 59.116667 22.466667 }
+	type = holding
+	holding_type = castle
+	province = muscat #Ash Sharqiyah South
+}

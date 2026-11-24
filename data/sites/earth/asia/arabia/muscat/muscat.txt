@@ -3,6 +3,7 @@ muscat = {
 	world = earth
 	geocoordinate = { 58.59331213260 23.61332480770 } #from Natural Earth
 	type = holding
+	holding_type = guild
 	#resource = opium
-	province = oman
+	province = muscat
 }

@@ -1,0 +1,8 @@
+adam = {
+	name = "Adam"
+	world = earth
+	geocoordinate = { 57.533333333333 22.383333333333 }
+	type = holding
+	holding_type = castle
+	province = muscat #Ad Dakhiliyah
+}

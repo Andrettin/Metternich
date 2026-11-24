@@ -1,0 +1,8 @@
+lizq = {
+	name = "Lizq"
+	world = earth
+	geocoordinate = { 58.17262 22.71557 }
+	type = holding
+	holding_type = castle
+	province = muscat #Ash Sharqiyah North
+}

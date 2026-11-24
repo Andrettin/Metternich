@@ -1,0 +1,8 @@
+ibra = {
+	name = "Ibra"
+	world = earth
+	geocoordinate = { 58.55 22.683333333333 }
+	type = holding
+	holding_type = guild
+	province = muscat #Ash Sharqiyah
+}

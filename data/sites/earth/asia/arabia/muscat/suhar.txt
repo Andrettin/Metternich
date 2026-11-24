@@ -4,5 +4,5 @@ suhar = {
 	geocoordinate = { 56.73441895810 24.36197334560 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = oman
+	province = muscat
 }

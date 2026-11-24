@@ -1,0 +1,8 @@
+samail = {
+	name = "Samail"
+	world = earth
+	geocoordinate = { 57.983333 23.3 }
+	type = holding
+	holding_type = temple
+	province = muscat #Ad Dakhiliyah
+}

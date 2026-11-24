@@ -1,0 +1,8 @@
+shiya = {
+	name = "Shiya"
+	world = earth
+	geocoordinate = { 57.01589 22.80007 }
+	type = holding
+	holding_type = castle
+	province = muscat #Ad Dakhiliyah
+}
