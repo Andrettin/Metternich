@@ -1,0 +1,8 @@
+bishapur = {
+	name = "Bishapur"
+	world = earth
+	geocoordinate = { 51.57083333333333 29.77777777777778 }
+	type = holding
+	holding_type = guild
+	province = shiraz
+}

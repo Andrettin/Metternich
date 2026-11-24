@@ -1,0 +1,8 @@
+persepolis = {
+	name = "Persepolis"
+	world = earth
+	geocoordinate = { 52.89 29.935 }
+	type = holding
+	holding_type = temple
+	province = shiraz
+}

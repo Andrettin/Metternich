@@ -1,0 +1,8 @@
+arsanjan = {
+	name = "Arsanjan"
+	world = earth
+	geocoordinate = { 53.308333333333 29.912222222222 }
+	type = holding
+	holding_type = castle
+	province = shiraz
+}

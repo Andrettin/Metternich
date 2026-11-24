@@ -1,6 +1,7 @@
-fars = {
-	name = "Fars"
-	color = { 228 211 218 }
+shiraz = {
+	name = "Shiraz"
+	color = { 168 15 22 }
+	terrain = mountains
 	default_provincial_capital = shiraz
 	regions = {
 		persia

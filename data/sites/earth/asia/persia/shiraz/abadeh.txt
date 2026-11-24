@@ -1,0 +1,8 @@
+abadeh = {
+	name = "Abadeh"
+	world = earth
+	geocoordinate = { 52.650555555556 31.160833333333 }
+	type = holding
+	holding_type = castle
+	province = shiraz
+}

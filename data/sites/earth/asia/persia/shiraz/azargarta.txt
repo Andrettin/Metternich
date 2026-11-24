@@ -1,0 +1,8 @@
+azargarta = {
+	name = "Azargarta"
+	world = earth
+	geocoordinate = { 52.685 30.888055555556 } #Eqlid
+	type = holding
+	holding_type = castle
+	province = shiraz
+}

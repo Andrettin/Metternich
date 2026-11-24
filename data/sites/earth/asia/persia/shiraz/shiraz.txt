@@ -3,6 +3,7 @@ shiraz = {
 	world = earth
 	geocoordinate = { 52.57001053750 29.62996014300 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	#resource = opium
-	province = fars
+	province = shiraz
 }

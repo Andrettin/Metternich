@@ -1,0 +1,8 @@
+estakhr = {
+	name = "Estakhr"
+	world = earth
+	geocoordinate = { 52.909444444444 29.981666666667 } #Istakhr
+	type = holding
+	holding_type = temple
+	province = shiraz
+}

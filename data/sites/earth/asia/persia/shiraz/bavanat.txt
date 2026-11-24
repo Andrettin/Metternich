@@ -1,0 +1,8 @@
+bavanat = {
+	name = "Bavanat"
+	world = earth
+	geocoordinate = { 53.650833333333 30.455 }
+	type = holding
+	holding_type = castle
+	province = shiraz
+}
