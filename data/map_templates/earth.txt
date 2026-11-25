@@ -49,6 +49,7 @@ atlantic = {
 		dvina
 		guyana
 		jizzakh
+		kabul
 		karelia
 		khojand
 		lake_onega
