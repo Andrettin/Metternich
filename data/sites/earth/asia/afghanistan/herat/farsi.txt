@@ -1,0 +1,8 @@
+farsi = {
+	name = "Farsi"
+	world = earth
+	geocoordinate = { 63.245 33.7846 }
+	type = holding
+	holding_type = castle
+	province = herat
+}

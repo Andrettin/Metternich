@@ -1,0 +1,8 @@
+tilia_tepe = {
+	name = "Tilia Tepe"
+	world = earth
+	geocoordinate = { 65.787 36.7 } #Tillya Tepe
+	type = holding
+	holding_type = temple
+	province = balkh #Jowzjan
+}

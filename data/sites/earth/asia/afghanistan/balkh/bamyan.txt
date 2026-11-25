@@ -4,5 +4,5 @@ bamyan = {
 	geocoordinate = { 67.52103592820 34.82106447250 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = kabul
+	province = balkh #Bamyan
 }

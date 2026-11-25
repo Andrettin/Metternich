@@ -4,7 +4,7 @@ fayzabad = {
 	geocoordinate = { 70.57924719130 37.12976076160 } #from Natural Earth
 	type = resource
 	resource = sheep
-	province = kabul
+	province = kabul #Badakhshan
 	features = {
 		prime_sheep_land
 	}

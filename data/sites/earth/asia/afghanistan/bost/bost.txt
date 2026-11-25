@@ -1,0 +1,8 @@
+bost = {
+	name = "Bost"
+	world = earth
+	geocoordinate = { 64.35999955340 31.58299802240 } #from Natural Earth (Lashkar Gah)
+	type = holding
+	holding_type = guild
+	province = bost #Helmand
+}

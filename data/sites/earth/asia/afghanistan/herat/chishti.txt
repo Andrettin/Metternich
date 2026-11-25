@@ -1,0 +1,8 @@
+chishti = {
+	name = "Chishti"
+	world = earth
+	geocoordinate = { 63.7411 34.3533 } #Chishti Sharif
+	type = holding
+	holding_type = castle
+	province = herat
+}

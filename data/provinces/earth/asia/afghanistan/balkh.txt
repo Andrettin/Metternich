@@ -1,0 +1,17 @@
+balkh = {
+	name = "Balkh"
+	color = { 85 69 136 }
+	terrain = steppe
+	default_provincial_capital = balkh
+	regions = {
+		asia
+	}
+	
+	history = {
+		1801 = {
+			owner = afghanistan #part of Afghanistan in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = pashtun
+			religion = sunni
+		}
+	}
+}

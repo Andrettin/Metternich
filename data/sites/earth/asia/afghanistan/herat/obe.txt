@@ -1,0 +1,8 @@
+obe = {
+	name = "Obe"
+	world = earth
+	geocoordinate = { 63.176388888889 34.369722222222 }
+	type = holding
+	holding_type = castle
+	province = herat
+}

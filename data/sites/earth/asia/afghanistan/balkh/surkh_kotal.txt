@@ -1,0 +1,8 @@
+surkh_kotal = {
+	name = "Surkh Kotal"
+	world = earth
+	geocoordinate = { 68.566667 36.05 }
+	type = holding
+	holding_type = castle
+	province = balkh #Baghlan
+}

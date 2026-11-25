@@ -1,0 +1,8 @@
+zarghun = {
+	name = "Zarghun"
+	world = earth
+	geocoordinate = { 62.616666666667 34.283333333333 } #Pashtun Zarghun
+	type = holding
+	holding_type = guild
+	province = herat
+}

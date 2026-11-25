@@ -1,0 +1,17 @@
+bost = {
+	name = "Bost"
+	color = { 127 141 219 }
+	terrain = desert
+	default_provincial_capital = bost
+	regions = {
+		asia
+	}
+	
+	history = {
+		1801 = {
+			owner = afghanistan #part of Afghanistan in 1801; Source: William R. Shepherd, "Historical Atlas", 1911, pp. 170-171.
+			culture = pashtun
+			religion = sunni
+		}
+	}
+}

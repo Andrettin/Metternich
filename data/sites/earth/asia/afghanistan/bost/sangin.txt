@@ -1,0 +1,8 @@
+sangin = {
+	name = "Sangin"
+	world = earth
+	geocoordinate = { 64.83388889 32.07333333 }
+	type = holding
+	holding_type = temple
+	province = bost #Helmand
+}

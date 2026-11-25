@@ -1,0 +1,8 @@
+gulran = {
+	name = "Gulran"
+	world = earth
+	geocoordinate = { 61.67 35.1 }
+	type = holding
+	holding_type = castle
+	province = herat
+}

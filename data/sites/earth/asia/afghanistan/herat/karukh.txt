@@ -1,0 +1,8 @@
+karukh = {
+	name = "Karukh"
+	world = earth
+	geocoordinate = { 62.591776 34.486770 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = herat
+}

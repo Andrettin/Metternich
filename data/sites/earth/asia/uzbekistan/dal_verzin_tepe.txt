@@ -1,0 +1,8 @@
+dal_verzin_tepe = {
+	name = "Dal'verzin Tepe"
+	world = earth
+	geocoordinate = { 67.86055556 38.10111111 } #Dalverzin Tepe
+	type = holding
+	holding_type = castle
+	province = surkhandarya
+}

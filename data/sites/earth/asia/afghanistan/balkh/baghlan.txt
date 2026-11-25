@@ -2,5 +2,5 @@ baghlan = {
 	name = "Baghlan"
 	world = earth
 	geocoordinate = { 68.69925858450 36.13933026030 } #from Natural Earth
-	province = kabul
+	province = balkh #Baghlan
 }

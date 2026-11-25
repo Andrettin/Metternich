@@ -2,5 +2,5 @@ pol_e_khomri = {
 	name = "Pol-e Khomri"
 	world = earth
 	geocoordinate = { 68.70111893600 35.95107301740 } #from Natural Earth
-	province = kabul
+	province = balkh #Baghlan
 }

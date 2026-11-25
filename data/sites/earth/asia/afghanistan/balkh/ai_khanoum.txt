@@ -1,0 +1,8 @@
+ai_khanoum = {
+	name = "Ai-Khanoum"
+	world = earth
+	geocoordinate = { 69.41083333333333 37.16638888888889 }
+	type = holding
+	holding_type = guild
+	province = balkh #Takhar
+}

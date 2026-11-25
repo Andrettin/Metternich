@@ -1,7 +1,7 @@
 khatlon = {
 	name = "Khatlon"
 	color = { 75 185 61 }
-	default_provincial_capital = kulob
+	default_provincial_capital = takht_i_sangin #kulob
 	regions = {
 		tajikistan
 	}

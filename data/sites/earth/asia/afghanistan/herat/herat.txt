@@ -2,7 +2,10 @@ herat = {
 	name = "Herat"
 	world = earth
 	geocoordinate = { 62.16999304080 34.33000917460 } #from Natural Earth
-	type = resource
-	resource = fruit
-	province = kabul
+	type = holding
+	holding_type = castle
+	province = herat
+	features = {
+		prime_fruit_land
+	}
 }
