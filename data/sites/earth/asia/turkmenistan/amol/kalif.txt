@@ -1,0 +1,8 @@
+kalif = {
+	name = "Kalif"
+	world = earth
+	geocoordinate = { 66.31722222 37.36333333 } #Kelif
+	type = holding
+	holding_type = temple
+	province = amol
+}

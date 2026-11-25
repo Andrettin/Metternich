@@ -1,0 +1,8 @@
+termez = {
+	name = "Termez"
+	world = earth
+	geocoordinate = { 67.27293737680 37.23293275860 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = chaghaniyan
+}

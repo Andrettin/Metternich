@@ -1,0 +1,9 @@
+chaghaniyan = {
+	name = "Chaghaniyan"
+	color = { 169 159 72 }
+	terrain = plains
+	default_provincial_capital = chaghaniyan
+	regions = {
+		uzbekistan
+	}
+}

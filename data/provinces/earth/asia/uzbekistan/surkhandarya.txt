@@ -1,8 +1,0 @@
-surkhandarya = {
-	name = "Surkhandarya"
-	color = { 163 99 28 }
-	default_provincial_capital = dal_verzin_tepe #termiz
-	regions = {
-		uzbekistan
-	}
-}

@@ -1,0 +1,8 @@
+amol = {
+	name = "Amol"
+	world = earth
+	geocoordinate = { 63.580036 39.110002 } #from Natural Earth (Türkmenabat)
+	type = holding
+	holding_type = castle
+	province = amol
+}

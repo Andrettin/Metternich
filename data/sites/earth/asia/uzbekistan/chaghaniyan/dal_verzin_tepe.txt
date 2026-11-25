@@ -4,5 +4,5 @@ dal_verzin_tepe = {
 	geocoordinate = { 67.86055556 38.10111111 } #Dalverzin Tepe
 	type = holding
 	holding_type = castle
-	province = surkhandarya
+	province = chaghaniyan
 }

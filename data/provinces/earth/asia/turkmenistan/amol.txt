@@ -1,0 +1,9 @@
+amol = {
+	name = "Amol"
+	color = { 43 150 198 }
+	terrain = desert
+	default_provincial_capital = amol
+	regions = {
+		uzbekistan
+	}
+}

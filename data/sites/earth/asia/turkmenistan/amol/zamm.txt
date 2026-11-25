@@ -1,0 +1,8 @@
+zamm = {
+	name = "Zamm"
+	world = earth
+	geocoordinate = { 65.199731 37.824809 } #from Natural Earth (Atamyrat/Kerki)
+	type = holding
+	holding_type = castle
+	province = amol
+}

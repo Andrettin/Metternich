@@ -1,0 +1,8 @@
+chaghaniyan = {
+	name = "Chaghaniyan"
+	world = earth
+	geocoordinate = { 67.887164 38.277158 } #from Natural Earth (Denow)
+	type = holding
+	holding_type = castle
+	province = chaghaniyan
+}
