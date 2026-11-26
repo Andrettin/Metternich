@@ -1788,7 +1788,7 @@ decimillesimal_int province_game_data::get_population_capacity_level_for_holding
 
 decimillesimal_int province_game_data::get_population_capacity_level_for_holding_level(const centesimal_int &holding_level) const
 {
-	return this->get_population_capacity_level_for_holding_level(province_defines::get()->get_province_population_capacity_level_per_level() * this->get_level(), holding_level);
+	return this->get_population_capacity_level_for_holding_level(std::max(province_defines::get()->get_province_population_capacity_level_per_level() * this->get_level(), 1), holding_level);
 }
 
 decimillesimal_int province_game_data::get_free_food_consumption_for_holding_level(const centesimal_int &holding_level) const
