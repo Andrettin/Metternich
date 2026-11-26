@@ -1,6 +1,7 @@
 belize = {
 	name = "Belize"
 	color = { 253 125 139 }
+	terrain = forest #jungle
 	default_provincial_capital = belmopan
 	regions = {
 		central_america

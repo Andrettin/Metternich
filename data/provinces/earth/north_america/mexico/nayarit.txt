@@ -1,6 +1,7 @@
 nayarit = {
 	name = "Nayarit"
 	color = { 243 139 3 }
+	terrain = plains
 	default_provincial_capital = tepic
 	regions = {
 		mexico

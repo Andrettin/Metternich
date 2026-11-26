@@ -1,6 +1,7 @@
 puerto_rico = {
 	name = "Puerto Rico"
 	color = { 180 106 222 }
+	terrain = hills
 	default_provincial_capital = san_juan
 	regions = {
 		caribbean

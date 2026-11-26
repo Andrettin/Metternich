@@ -1,6 +1,7 @@
 azores = {
 	name = "Azores"
 	color = { 144 160 128 }
+	terrain = plains
 	default_provincial_capital = ponta_delgada
 	regions = {
 		portugal

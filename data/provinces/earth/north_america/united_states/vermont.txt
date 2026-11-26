@@ -1,6 +1,7 @@
 vermont = {
 	name = "Vermont"
 	color = { 176 192 64 }
+	terrain = hills
 	default_provincial_capital = burlington
 	regions = {
 		thirteen_colonies

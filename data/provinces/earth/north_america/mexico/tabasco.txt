@@ -1,6 +1,7 @@
 tabasco = {
 	name = "Tabasco"
 	color = { 183 127 51 }
+	terrain = plains
 	default_provincial_capital = villahermosa
 	regions = {
 		mexico

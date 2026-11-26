@@ -1,6 +1,7 @@
 jamaica = {
 	name = "Jamaica"
 	color = { 122 95 199 }
+	terrain = mountains
 	default_provincial_capital = kingston
 	cultural_names = {
 		castillian = "Santiago"

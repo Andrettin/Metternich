@@ -1,7 +1,11 @@
 connecticut = {
 	name = "Connecticut"
 	color = { 48 64 192 }
+	terrain = plains
 	default_provincial_capital = hartford
+	features = {
+		fertile
+	}
 	regions = {
 		thirteen_colonies
 		united_states

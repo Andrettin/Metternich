@@ -1,6 +1,7 @@
 new_hampshire = {
 	name = "New Hampshire"
 	color = { 48 192 64 }
+	terrain = forest #woods
 	default_provincial_capital = concord
 	regions = {
 		thirteen_colonies
