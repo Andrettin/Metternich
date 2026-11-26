@@ -1,0 +1,8 @@
+munk = {
+	name = "Munk"
+	world = earth
+	geocoordinate = { 69.68333333 38.3 } #Baljuvon
+	type = holding
+	holding_type = guild
+	province = khuttal #Khatlon
+}

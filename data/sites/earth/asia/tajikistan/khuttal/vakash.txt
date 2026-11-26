@@ -1,0 +1,8 @@
+vakash = {
+	name = "Vakash"
+	world = earth
+	geocoordinate = { 68.831111111111 37.710833333333 } #Vakhsh
+	type = holding
+	holding_type = castle
+	province = khuttal #Khatlon
+}

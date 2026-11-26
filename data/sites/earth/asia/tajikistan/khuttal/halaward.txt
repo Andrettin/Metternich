@@ -1,0 +1,8 @@
+halaward = {
+	name = "Halaward"
+	world = earth
+	geocoordinate = { 68.64644444 37.58886111 } #Kafirkala
+	type = holding
+	holding_type = guild
+	province = khuttal #Khatlon
+}

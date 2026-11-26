@@ -4,5 +4,5 @@ takht_i_sangin = {
 	geocoordinate = { 68.285 37.0989 } #Takhti-Sangin
 	type = holding
 	holding_type = temple
-	province = khatlon
+	province = khuttal #Khatlon
 }

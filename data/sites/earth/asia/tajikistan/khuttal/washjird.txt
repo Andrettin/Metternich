@@ -1,0 +1,8 @@
+washjird = {
+	name = "Washjird"
+	world = earth
+	geocoordinate = { 69.31666667 38.55 } #Vashgird
+	type = holding
+	holding_type = temple
+	province = khuttal #Districts of Republican Subordination
+}

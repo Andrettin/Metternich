@@ -1,0 +1,8 @@
+rasht_tajikistan = {
+	name = "Rasht"
+	world = earth
+	geocoordinate = { 70.7011 39.0863 } #Rasht Valley
+	type = holding
+	holding_type = castle
+	province = khuttal #Districts of Republican Subordination
+}

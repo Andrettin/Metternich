@@ -1,0 +1,8 @@
+qobadhiyan = {
+	name = "Qobadhiyan"
+	world = earth
+	geocoordinate = { 68.185 37.4075 } #Qabodiyon
+	type = holding
+	holding_type = castle
+	province = khuttal #Khatlon
+}

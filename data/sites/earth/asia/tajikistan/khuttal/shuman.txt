@@ -2,7 +2,7 @@ shuman = {
 	name = "Shuman"
 	world = earth
 	geocoordinate = { 68.538055555556 38.526388888889 } #Hisor
-	#type = holding
-	#holding_type = guild
-	#province = #Districts of Republican Subordination
+	type = holding
+	holding_type = guild
+	province = khuttal #Districts of Republican Subordination
 }

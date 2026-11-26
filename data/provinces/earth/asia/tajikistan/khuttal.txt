@@ -1,0 +1,9 @@
+khuttal = {
+	name = "Khuttal"
+	color = { 127 156 94 }
+	terrain = plains
+	default_provincial_capital = kulob
+	regions = {
+		tajikistan
+	}
+}
