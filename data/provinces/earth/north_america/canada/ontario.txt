@@ -1,7 +1,7 @@
 ontario = {
 	name = "Ontario"
 	color = { 176 0 192 }
-	default_provincial_capital = ottawa
+	default_provincial_capital = earnscliffe #ottawa
 	regions = {
 		canada
 	}

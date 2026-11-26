@@ -1,0 +1,14 @@
+atholstan = {
+	name = "Atholstan"
+	world = earth
+	geocoordinate = { -74.17361111111111 45.03638888888889 } #Athelstan, Hinchinbrooke
+	type = holding
+	holding_type = castle #barony
+	province = quebec
+	
+	history = {
+		1917 = {
+			tier = barony #created as a barony in 1917; Source: Arthur G. M. Hesilrige, "Debrett's Peerage and Titles of Courtesy", 1921, p. 77.
+		}
+	}
+}

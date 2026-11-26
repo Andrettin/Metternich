@@ -1,0 +1,18 @@
+earnscliffe = {
+	name = "Earnscliffe"
+	world = earth
+	geocoordinate = { -75.698888888889 45.4375 }
+	type = holding
+	holding_type = castle #barony
+	province = ontario
+	
+	history = {
+		1891 = {
+			tier = barony #created as a barony (MacDonald of Earnscliffe) in 1891; Source: Arthur G. M. Hesilrige, "Debrett's Peerage and Titles of Courtesy", 1921, pp. 600, 1028.
+		}
+		
+		1920 = {
+			tier = none #extinguished as a barony in 1920; Source: Arthur G. M. Hesilrige, "Debrett's Peerage and Titles of Courtesy", 1921, p. 1028.
+		}
+	}
+}

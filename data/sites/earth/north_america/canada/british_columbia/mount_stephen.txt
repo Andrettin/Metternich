@@ -1,0 +1,14 @@
+mount_stephen = {
+	name = "Mount Stephen"
+	world = earth
+	geocoordinate = { -116.436389 51.399166 }
+	type = holding
+	holding_type = castle #barony
+	province = british_columbia
+	
+	history = {
+		1891 = {
+			tier = barony #created as a barony in 1891; Source: Arthur G. M. Hesilrige, "Debrett's Peerage and Titles of Courtesy", 1921, p. 661.
+		}
+	}
+}

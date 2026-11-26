@@ -5,5 +5,5 @@ kwakiutl = {
 	default_religion = totemist
 	default_tier = kingdom
 	default_government_type = tribal_despotism
-	default_capital = victoria
+	default_capital = mount_stephen #victoria
 }
