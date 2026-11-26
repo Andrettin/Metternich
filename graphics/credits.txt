@@ -149,6 +149,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/icons/commodities/steel_extra_2.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/stone.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/sugar_cane.png (by Jinn) (licensed under the CC0)
+/graphics/icons/commodities/sulfur.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/timber.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/tin.png (by Jinn) (licensed under the CC0)
 /graphics/icons/commodities/tobacco.png (by Exidelo) (licensed under the CC0)
