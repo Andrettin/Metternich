@@ -28,6 +28,8 @@ class population_defines final : public defines_base, public singleton<populatio
 	Q_PROPERTY(archimedes::decimillesimal_int base_monthly_literacy_change_rate MEMBER base_monthly_literacy_change_rate READ get_base_monthly_literacy_change_rate NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int base_literacy_educator_percent MEMBER base_literacy_educator_percent READ get_base_literacy_educator_percent NOTIFY changed)
 	Q_PROPERTY(archimedes::decimillesimal_int max_literacy_educator_percent MEMBER max_literacy_educator_percent READ get_max_literacy_educator_percent NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int everyday_need_elasticity MEMBER everyday_need_elasticity READ get_everyday_need_elasticity NOTIFY changed)
+	Q_PROPERTY(archimedes::decimillesimal_int luxury_need_elasticity MEMBER luxury_need_elasticity READ get_luxury_need_elasticity NOTIFY changed)
 
 public:
 	population_defines();
@@ -86,6 +88,16 @@ public:
 		return this->max_literacy_educator_percent;
 	}
 
+	const decimillesimal_int &get_everyday_need_elasticity() const
+	{
+		return this->everyday_need_elasticity;
+	}
+
+	const decimillesimal_int &get_luxury_need_elasticity() const
+	{
+		return this->luxury_need_elasticity;
+	}
+
 	const std::map<food_type, decimillesimal_int> &get_population_food_consumption() const
 	{
 		return this->population_food_consumption;
@@ -114,6 +126,8 @@ private:
 	decimillesimal_int base_monthly_literacy_change_rate;
 	decimillesimal_int base_literacy_educator_percent;
 	decimillesimal_int max_literacy_educator_percent;
+	decimillesimal_int everyday_need_elasticity;
+	decimillesimal_int luxury_need_elasticity;
 	std::map<food_type, decimillesimal_int> population_food_consumption;
 	std::unique_ptr<factor<population_unit>> promotion_chance;
 	std::unique_ptr<factor<population_unit>> demotion_chance;

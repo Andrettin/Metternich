@@ -823,11 +823,11 @@ QCoro::Task<void> population_unit::consume_food(const std::map<food_type, std::v
 
 void population_unit::purchase_needs(const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
-	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(this->get_type()->get_everyday_needs(), luxury_type_commodities, trade_domains, remaining_demands));
-	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), luxury_type_commodities, trade_domains, remaining_demands));
+	this->set_fulfilled_everyday_needs_percent(this->purchase_needs(this->get_type()->get_everyday_needs(), population_defines::get()->get_everyday_need_elasticity(), luxury_type_commodities, trade_domains, remaining_demands));
+	this->set_fulfilled_luxury_needs_percent(this->purchase_needs(this->get_type()->get_luxury_needs(), population_defines::get()->get_luxury_need_elasticity(), luxury_type_commodities, trade_domains, remaining_demands));
 }
 
-int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> &base_needs, const decimillesimal_int &demand_elasticity, const std::map<luxury_type, std::vector<const commodity *>> &luxury_type_commodities, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	decimillesimal_int total_need_wealth;
 
@@ -883,15 +883,15 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 					continue;
 				}
 
-				this->purchase_need_commodity(commodity, need, total_fulfilled_need_wealth, trade_domains, remaining_demands);
+				this->purchase_need_commodity(commodity, need, demand_elasticity, total_fulfilled_need_wealth, trade_domains, remaining_demands);
 
-				if (need == 0) {
+				if (need <= 0) {
 					break;
 				}
 			}
 		} else {
 			const commodity *commodity = std::get<const metternich::commodity *>(need_type);
-			this->purchase_need_commodity(commodity, need, total_fulfilled_need_wealth, trade_domains, remaining_demands);
+			this->purchase_need_commodity(commodity, need, demand_elasticity, total_fulfilled_need_wealth, trade_domains, remaining_demands);
 		}
 	}
 
@@ -899,13 +899,18 @@ int population_unit::purchase_needs(const luxury_demand_map<decimillesimal_int> 
 	return fulfilled_percent.to_int();
 }
 
-void population_unit::purchase_need_commodity(const commodity *commodity, decimillesimal_int &need, decimillesimal_int &total_fulfilled_need_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
+void population_unit::purchase_need_commodity(const commodity *commodity, decimillesimal_int &need, const decimillesimal_int &demand_elasticity, decimillesimal_int &total_fulfilled_need_wealth, const std::vector<const metternich::domain *> &trade_domains, commodity_map<decimillesimal_int> &remaining_demands)
 {
 	assert_throw(need > 0);
 
-	decimillesimal_int affordable_need = decimillesimal_int::min(need, this->get_wealth() / game::get()->get_price(commodity));
+	//the need taking into account demand elasticity
+	const decimillesimal_int &price = game::get()->get_price(commodity);
+	const decimillesimal_int &base_price = commodity->get_base_price();
+	const decimillesimal_int effective_need = need + (need * (price - base_price) / base_price * -demand_elasticity);
 
-	if (affordable_need == 0) {
+	decimillesimal_int affordable_need = decimillesimal_int::min(effective_need, this->get_wealth() / game::get()->get_price(commodity));
+
+	if (affordable_need <= 0) {
 		return;
 	}
 
@@ -929,7 +934,10 @@ void population_unit::purchase_need_commodity(const commodity *commodity, decimi
 		this->change_wealth(-purchase_price);
 
 		affordable_need -= bought_quantity;
-		fulfilled_need += bought_quantity;
+
+		//invert the elasticity calculation for calculating fulfillment
+		fulfilled_need += bought_quantity * need / effective_need;
+
 		if (affordable_need == 0) {
 			break;
 		}
