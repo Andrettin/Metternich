@@ -1,0 +1,3 @@
+sulfur = {
+	filepath = "icons/commodities/sulfur.png"
+}

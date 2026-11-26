@@ -1,7 +1,7 @@
 sulfur = {
 	name = "Sulfur"
 	type = resource
-	icon = spices_yellow
+	icon = sulfur
 	mineral = true
 	base_price = 1
 	units = {
