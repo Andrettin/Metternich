@@ -1,0 +1,17 @@
+michilimackinac = {
+	name = "Michilimackinac"
+	world = earth
+	geocoordinate = { -84.735978 45.786667 } #Fort Michilimackinac
+	type = holding
+	holding_type = castle #fort
+	province = michigan
+	
+	history = {
+		1700 = {
+			#was a French fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = french
+			religion = catholic
+		}
+	}
+}
