@@ -1,0 +1,24 @@
+fort_louisbourg = {
+	name = "Fort Louisbourg"
+	world = earth
+	geocoordinate = { -59.985 45.8925 } #Fortress of Louisbourg
+	type = holding
+	holding_type = castle #fort
+	province = nova_scotia
+	
+	history = {
+		1700 = {
+			#was a French fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = french
+			religion = catholic
+		}
+		
+		1745 = {
+			#fell to the British in 1745, during King George's War; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			owner = great_britain
+			culture = english
+			religion = protestant
+		}
+	}
+}
