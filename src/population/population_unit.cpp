@@ -908,7 +908,7 @@ void population_unit::purchase_need_commodity(const commodity *commodity, decimi
 	const decimillesimal_int &base_price = commodity->get_base_price();
 	const decimillesimal_int effective_need = need + (need * (price - base_price) / base_price * -demand_elasticity);
 
-	decimillesimal_int affordable_need = decimillesimal_int::min(effective_need, this->get_wealth() / game::get()->get_price(commodity));
+	decimillesimal_int affordable_need = decimillesimal_int::min(effective_need, this->get_wealth() / price);
 
 	if (affordable_need <= 0) {
 		return;
@@ -930,7 +930,7 @@ void population_unit::purchase_need_commodity(const commodity *commodity, decimi
 
 		trade_domain->get_economy()->do_sale(this->domain, commodity, bought_quantity, false, false);
 
-		const decimillesimal_int purchase_price = bought_quantity * game::get()->get_price(commodity);
+		const decimillesimal_int purchase_price = bought_quantity * price;
 		this->change_wealth(-purchase_price);
 
 		affordable_need -= bought_quantity;
@@ -945,7 +945,7 @@ void population_unit::purchase_need_commodity(const commodity *commodity, decimi
 
 	need -= fulfilled_need;
 
-	total_fulfilled_need_wealth += fulfilled_need * commodity->get_base_price();
+	total_fulfilled_need_wealth += fulfilled_need * base_price;
 
 	if (affordable_need > 0) {
 		remaining_demands[commodity] += affordable_need;
