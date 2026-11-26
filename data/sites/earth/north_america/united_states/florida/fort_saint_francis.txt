@@ -1,0 +1,17 @@
+fort_saint_francis = {
+	name = "Fort Saint Francis"
+	world = earth
+	geocoordinate = { -81.60388888888889 29.93861111111111 } #Fort San Francisco de Pupo
+	type = holding
+	holding_type = castle #fort
+	province = florida
+	
+	history = {
+		1700 = {
+			#was a Spanish fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = castillian
+			religion = catholic
+		}
+	}
+}

@@ -1,0 +1,17 @@
+fort_saint_george = {
+	name = "Fort Saint George"
+	world = earth
+	geocoordinate = { -81.429722222222 30.425833333333 } #Fort George Island
+	type = holding
+	holding_type = castle #fort
+	province = florida
+	
+	history = {
+		1700 = {
+			#was a British fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = english
+			religion = protestant
+		}
+	}
+}

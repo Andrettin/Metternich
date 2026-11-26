@@ -1,0 +1,17 @@
+fort_piccolata = {
+	name = "Fort Piccolata"
+	world = earth
+	geocoordinate = { -81.60083333333333 29.923055555555557 } #Fort Picolata
+	type = holding
+	holding_type = castle #fort
+	province = florida
+	
+	history = {
+		1700 = {
+			#was a Spanish fort in the 1700-1750 period; Source: "History of the World Map by Map", 2023, pp. 196-197.
+			developed = true
+			culture = castillian
+			religion = catholic
+		}
+	}
+}
