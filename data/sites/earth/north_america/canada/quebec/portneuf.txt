@@ -1,0 +1,14 @@
+portneuf = {
+	name = "Portneuf"
+	world = earth
+	geocoordinate = { -71.8833 46.7 }
+	type = holding
+	holding_type = castle #barony
+	province = quebec
+	
+	history = {
+		1681.3 = {
+			tier = barony #created as a barony on 1681.3; Source: Pierre-Georges Roy, "Inventaire des concessions en fief et seigneurie, fois et hommages et aveux et dénombrements", 1927, vol. 1, pp. 238-240.
+		}
+	}
+}
