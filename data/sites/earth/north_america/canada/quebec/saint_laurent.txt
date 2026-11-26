@@ -1,0 +1,14 @@
+saint_laurent = {
+	name = "Saint-Laurent"
+	world = earth
+	geocoordinate = { -71.016666666667 46.866666666667 } #Saint-Laurent-de-l'Île-d'Orléans
+	type = holding
+	holding_type = castle #county
+	province = quebec
+	
+	history = {
+		1675.4 = {
+			tier = county #created as a county on 1675.4; Source: Pierre-Georges Roy, "Inventaire des concessions en fief et seigneurie, fois et hommages et aveux et dénombrements", 1927, vol. 1, pp. 67-74.
+		}
+	}
+}
