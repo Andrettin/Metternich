@@ -62,6 +62,7 @@
 #include "map/terrain_type.h"
 #include "map/tile.h"
 #include "population/population.h"
+#include "population/population_defines.h"
 #include "population/population_type.h"
 #include "population/population_unit_percentages.h"
 #include "religion/religion.h"
@@ -1402,8 +1403,8 @@ QCoro::Task<void> game::apply_population_history()
 			}
 
 			if (site_game_data->get_population_units().empty()) {
-				//ensure holdings have at least one population unit
-				const int64_t population = 10000; //a bit of population to start with
+				//ensure holdings have at least one population unit of the base size
+				const int64_t population = population_defines::get()->get_base_population_size();
 				co_await this->apply_historical_population_group_to_site(population_group_key(), population, site);
 			}
 		}
