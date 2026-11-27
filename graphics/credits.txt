@@ -388,6 +388,7 @@ The *_2x.png files are licensed under the same license as the corresponding file
 /graphics/portraits/characters/maria_theresia.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/metternich.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/montezuma_ii.png (by Jinn) (licensed under the CC0)
+/graphics/portraits/characters/nzinga_mbande.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/otto_von_bismarck.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/philip_ii_of_spain.png (by Jinn) (licensed under the CC0)
 /graphics/portraits/characters/sailor.png (by Exidelo) (licensed under the CC0)

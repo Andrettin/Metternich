@@ -2,5 +2,6 @@ shaka = {
 	filepath = "portraits/characters/shaka.png"
 	character_conditions = {
 		cultural_group = african
+		gender = male
 	}
 }

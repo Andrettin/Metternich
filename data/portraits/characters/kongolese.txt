@@ -1,0 +1,7 @@
+nzinga_mbande = {
+	filepath = "portraits/characters/nzinga_mbande.png"
+	character_conditions = {
+		cultural_group = african
+		gender = female
+	}
+}
