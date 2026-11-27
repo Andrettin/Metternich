@@ -2,7 +2,7 @@ fertilizer_factory = {
 	name = "Fertilizer Factory"
 	building_class = fertilizer_factory
 	portrait = smithy
-	icon = spices_yellow
+	icon = sulfur
 	holding_types = {
 		guild
 	}

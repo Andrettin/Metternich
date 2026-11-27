@@ -18,7 +18,7 @@ fabric = {
 
 fertilizer = {
 	name = "Fertilizer"
-	icon = spices_yellow
+	icon = sulfur
 	resource = true
 	holding_types = {
 		guild

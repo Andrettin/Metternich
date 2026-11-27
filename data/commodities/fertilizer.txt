@@ -1,7 +1,7 @@
 fertilizer = {
 	name = "Fertilizer"
 	type = material
-	icon = spices_yellow
+	icon = sulfur
 	industrial = true
 	base_price = 3
 }

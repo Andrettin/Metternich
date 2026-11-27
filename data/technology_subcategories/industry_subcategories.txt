@@ -13,7 +13,7 @@ cattle_herding = {
 chemistry = {
 	name = "Chemistry"
 	category = industry
-	icon = spices_yellow
+	icon = sulfur
 }
 
 farming = {

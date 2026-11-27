@@ -55,7 +55,7 @@ silver_deposit = {
 
 sulfur_deposit = {
 	name = "Sulfur Deposit"
-	icon = spices_yellow
+	icon = sulfur
 	resource = true
 	domain_modifier = {
 		scripted_modifier_effect = resource

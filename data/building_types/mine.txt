@@ -131,7 +131,7 @@ sulfur_mine = {
 	name = "Sulfur Mine"
 	building_class = sulfur_mine
 	portrait = coal_pit
-	icon = spices_yellow
+	icon = sulfur
 	wealth_cost = 6gb
 	holding_types = {
 		castle
