@@ -1018,10 +1018,15 @@ QCoro::Task<void> game::apply_sites()
 		province->get_game_data()->choose_provincial_capital();
 
 		if (province->get_game_data()->get_provincial_capital() != nullptr) {
-			continue;
+			const domain *owner = province->get_game_data()->get_owner();
+			assert_throw(owner != nullptr);
+
+			if (owner->get_game_data()->get_government_type()->is_holding_type_allowed(province->get_game_data()->get_provincial_capital()->get_game_data()->get_holding_type())) {
+				continue;
+			}
 		}
 
-		//if no holding is built in the province, then ensure the best provincial capital slot is built
+		//if no allowed holding is built in the province, then ensure the best provincial capital slot is built
 		const site *provincial_capital_slot = province->get_game_data()->get_best_provincial_capital_slot();
 
 		if (provincial_capital_slot == nullptr) {

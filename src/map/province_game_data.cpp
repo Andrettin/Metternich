@@ -1204,7 +1204,7 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 		return nullptr;
 	}
 
-	assert_throw(this->get_provincial_capital() == nullptr);
+	assert_throw(this->get_provincial_capital() == nullptr || !this->get_owner()->get_game_data()->get_government_type()->is_holding_type_allowed(this->get_provincial_capital()->get_game_data()->get_holding_type()));
 
 	const government_type *government_type = this->get_owner()->get_game_data()->get_government_type();
 	std::vector<const site *> potential_provincial_capitals;
