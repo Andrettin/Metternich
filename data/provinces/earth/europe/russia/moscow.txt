@@ -1,7 +1,11 @@
 moscow = {
 	name = "Moscow"
-	color = { 224 160 33 }
+	color = { 0 21 215 }
+	terrain = plains
 	default_provincial_capital = moscow
+	resource_counts = {
+		fabric = 1
+	}
 	regions = {
 		european_russia
 	}

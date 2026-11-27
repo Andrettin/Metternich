@@ -3,9 +3,9 @@ moscow = {
 	world = earth
 	geocoordinate = { 37.61552282590 55.75216412260 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	province = moscow
 	features = {
-		#fabric
 		prime_timber
 	}
 	

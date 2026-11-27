@@ -1,0 +1,8 @@
+podolsk = {
+	name = "Podolsk"
+	world = earth
+	geocoordinate = { 37.529947 55.380430 } #from Natural Earth
+	type = holding
+	holding_type = guild
+	province = moscow
+}
