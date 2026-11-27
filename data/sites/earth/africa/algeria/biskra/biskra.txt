@@ -3,6 +3,7 @@ biskra = {
 	world = earth
 	geocoordinate = { 5.73002722029 34.85997682600 } #from Natural Earth
 	type = holding
+	holding_type = castle
 	province = biskra
 	features = {
 		iron_deposit

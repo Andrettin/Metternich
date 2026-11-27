@@ -1,0 +1,8 @@
+nebka = {
+	name = "Nebka"
+	world = earth
+	geocoordinate = { 5.91357 34.65615 }
+	type = holding
+	holding_type = castle
+	province = biskra
+}

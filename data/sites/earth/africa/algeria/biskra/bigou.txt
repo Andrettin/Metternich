@@ -1,0 +1,8 @@
+bigou = {
+	name = "Bigou"
+	world = earth
+	geocoordinate = { 5.53947 34.66229 }
+	type = holding
+	holding_type = castle
+	province = biskra
+}

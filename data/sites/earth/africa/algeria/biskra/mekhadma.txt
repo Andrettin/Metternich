@@ -1,0 +1,8 @@
+mekhadma = {
+	name = "Mekhadma"
+	world = earth
+	geocoordinate = { 5.483333 34.65 }
+	type = holding
+	holding_type = castle
+	province = biskra
+}

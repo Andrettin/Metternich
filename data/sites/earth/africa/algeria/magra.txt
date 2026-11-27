@@ -1,0 +1,8 @@
+magra = {
+	name = "Magra"
+	world = earth
+	geocoordinate = { 5.06666667 35.6 }
+	type = holding
+	holding_type = guild
+	province = msila
+}

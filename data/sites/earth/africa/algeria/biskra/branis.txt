@@ -1,0 +1,8 @@
+branis = {
+	name = "Branis"
+	world = earth
+	geocoordinate = { 5.775 35 }
+	type = holding
+	holding_type = castle
+	province = biskra
+}

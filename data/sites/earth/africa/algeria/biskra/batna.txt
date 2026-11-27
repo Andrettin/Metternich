@@ -1,0 +1,8 @@
+batna = {
+	name = "Batna"
+	world = earth
+	geocoordinate = { 6.170000 35.569959 } #from Natural Earth
+	type = holding
+	holding_type = temple
+	province = biskra #Batna
+}

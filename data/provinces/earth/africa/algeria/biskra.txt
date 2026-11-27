@@ -1,6 +1,7 @@
 biskra = {
 	name = "Biskra"
-	color = { 188 220 25 }
+	color = { 126 126 139 }
+	terrain = desert
 	default_provincial_capital = biskra
 	regions = {
 		algeria
