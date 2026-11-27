@@ -1128,6 +1128,7 @@ void province_game_data::choose_provincial_capital()
 	std::vector<const site *> potential_provincial_capitals;
 	bool found_default_provincial_capital = false;
 	bool found_preferred_holding_type = false;
+	bool found_allowed_holding_type = false;
 	centesimal_int best_holding_level;
 
 	for (const site *site : this->province->get_map_data()->get_holding_sites()) {
@@ -1139,39 +1140,55 @@ void province_game_data::choose_provincial_capital()
 			continue;
 		}
 
-		if (!government_type->is_holding_type_allowed(site->get_game_data()->get_holding_type())) {
+		const bool is_holding_type_allowed = government_type->is_holding_type_allowed(site->get_game_data()->get_holding_type());
+
+		if (is_holding_type_allowed) {
+			if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
+				potential_provincial_capitals = { site };
+				break;
+			} else if (this->get_owner() != nullptr && site == this->get_owner()->get_game_data()->get_capital()) {
+				potential_provincial_capitals = { site };
+				break;
+			} else if (site == this->province->get_default_provincial_capital()) {
+				potential_provincial_capitals = { site };
+				found_default_provincial_capital = true;
+				continue;
+			}
+		}
+
+		if (found_default_provincial_capital) {
 			continue;
 		}
 
-		if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
-			potential_provincial_capitals = { site };
-			break;
-		} else if (this->get_owner() != nullptr && site == this->get_owner()->get_game_data()->get_capital()) {
-			potential_provincial_capitals = { site };
-			break;
-		} else if (site == this->province->get_default_provincial_capital()) {
-			potential_provincial_capitals = { site };
-			found_default_provincial_capital = true;
-		} else if (!found_default_provincial_capital) {
-			if (found_preferred_holding_type) {
-				if (!government_type->is_holding_type_preferred(site->get_game_data()->get_holding_type())) {
-					continue;
-				}
-			} else if (government_type->is_holding_type_preferred(site->get_game_data()->get_holding_type())) {
-				potential_provincial_capitals.clear();
-				found_preferred_holding_type = true;
-				best_holding_level = site->get_game_data()->get_holding_level();
-			}
-
-			if (site->get_game_data()->get_holding_level() > best_holding_level) {
-				potential_provincial_capitals.clear();
-				best_holding_level = site->get_game_data()->get_holding_level();
-			} else if (site->get_game_data()->get_holding_level() < best_holding_level) {
+		if (found_allowed_holding_type) {
+			if (!is_holding_type_allowed) {
 				continue;
 			}
-
-			potential_provincial_capitals.push_back(site);
+		} else if (is_holding_type_allowed) {
+			assert_throw(!found_preferred_holding_type);
+			potential_provincial_capitals.clear();
+			found_allowed_holding_type = true;
+			best_holding_level = site->get_game_data()->get_holding_level();
 		}
+
+		if (found_preferred_holding_type) {
+			if (!government_type->is_holding_type_preferred(site->get_game_data()->get_holding_type())) {
+				continue;
+			}
+		} else if (government_type->is_holding_type_preferred(site->get_game_data()->get_holding_type())) {
+			potential_provincial_capitals.clear();
+			found_preferred_holding_type = true;
+			best_holding_level = site->get_game_data()->get_holding_level();
+		}
+
+		if (site->get_game_data()->get_holding_level() > best_holding_level) {
+			potential_provincial_capitals.clear();
+			best_holding_level = site->get_game_data()->get_holding_level();
+		} else if (site->get_game_data()->get_holding_level() < best_holding_level) {
+			continue;
+		}
+
+		potential_provincial_capitals.push_back(site);
 	}
 
 	if (!potential_provincial_capitals.empty()) {
