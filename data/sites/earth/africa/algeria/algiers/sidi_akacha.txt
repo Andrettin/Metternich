@@ -1,0 +1,8 @@
+sidi_akacha = {
+	name = "Sidi-Akacha"
+	world = earth
+	geocoordinate = { 1.3 36.46666667 } #Sidi Akkacha
+	type = holding
+	holding_type = castle
+	province = algiers #Chlef
+}

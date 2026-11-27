@@ -4,7 +4,7 @@ bejaia = {
 	geocoordinate = { 5.07001582706 36.76037762350 } #from Natural Earth
 	type = resource
 	resource = grain
-	province = algeria
+	province = algiers
 	
 	history = {
 		1360 = {

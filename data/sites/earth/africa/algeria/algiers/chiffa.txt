@@ -1,0 +1,8 @@
+chiffa = {
+	name = "Chiffa"
+	world = earth
+	geocoordinate = { 2.7411111111111 36.4625 }
+	type = holding
+	holding_type = temple
+	province = algiers #Blida
+}

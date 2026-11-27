@@ -8,7 +8,7 @@ algeria = {
 	default_government_type = monarchy
 	default_capital = algiers
 	core_provinces = {
-		algeria
+		algiers
 	}
 	
 	history = {

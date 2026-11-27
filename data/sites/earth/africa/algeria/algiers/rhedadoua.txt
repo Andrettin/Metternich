@@ -1,0 +1,8 @@
+rhedadoua = {
+	name = "Rhedadoua"
+	world = earth
+	geocoordinate = { 1.22446 35.90005 }
+	type = holding
+	holding_type = castle
+	province = algiers #Relizane
+}

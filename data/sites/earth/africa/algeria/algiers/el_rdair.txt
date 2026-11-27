@@ -1,0 +1,8 @@
+el_rdair = {
+	name = "El Rdair"
+	world = earth
+	geocoordinate = { 3.92191 36.78539 } #Er Rdaïr
+	type = holding
+	holding_type = castle
+	province = algiers #Boumerdes
+}

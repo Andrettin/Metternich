@@ -1,0 +1,8 @@
+el_achour = {
+	name = "El-Achour"
+	world = earth
+	geocoordinate = { 2.9919444444444 36.733888888889 }
+	type = holding
+	holding_type = castle
+	province = algiers
+}

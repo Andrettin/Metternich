@@ -4,7 +4,7 @@ algiers_regulars = {
 	
 	history = {
 		1815 = { #1820 = {
-			province = algeria
+			province = algiers
 		}
 	}
 }
@@ -15,7 +15,7 @@ algiers_artillery = {
 	
 	history = {
 		1815 = { #1820 = {
-			province = algeria
+			province = algiers
 		}
 	}
 }

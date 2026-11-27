@@ -1,0 +1,8 @@
+tirourda = {
+	name = "Tirourda"
+	world = earth
+	geocoordinate = { 4.29588 36.48084 }
+	type = holding
+	holding_type = castle
+	province = algiers #Tizi Ouzou
+}

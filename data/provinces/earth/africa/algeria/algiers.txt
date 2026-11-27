@@ -1,6 +1,7 @@
-algeria = {
-	name = "Algeria"
-	color = { 136 222 8 }
+algiers = {
+	name = "Algiers"
+	color = { 42 150 143 }
+	terrain = mountains
 	default_provincial_capital = algiers
 	regions = {
 		algeria

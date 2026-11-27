@@ -1,0 +1,8 @@
+tipasa = {
+	name = "Tipasa"
+	world = earth
+	geocoordinate = { 2.441918 36.594243 }
+	type = holding
+	holding_type = guild
+	province = algiers #Tipaza
+}
