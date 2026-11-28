@@ -1126,6 +1126,7 @@ void province_game_data::choose_provincial_capital()
 
 	const government_type *government_type = this->get_owner()->get_game_data()->get_government_type();
 	std::vector<const site *> potential_provincial_capitals;
+	bool found_default_capital = false;
 	bool found_default_provincial_capital = false;
 	bool found_preferred_holding_type = false;
 	bool found_allowed_holding_type = false;
@@ -1148,15 +1149,16 @@ void province_game_data::choose_provincial_capital()
 				break;
 			} else if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
 				potential_provincial_capitals = { site };
-				break;
-			} else if (site == this->province->get_default_provincial_capital()) {
+				found_default_capital = true;
+				continue;
+			} else if (site == this->province->get_default_provincial_capital() && !found_default_capital) {
 				potential_provincial_capitals = { site };
 				found_default_provincial_capital = true;
 				continue;
 			}
 		}
 
-		if (found_default_provincial_capital) {
+		if (found_default_capital || found_default_provincial_capital) {
 			continue;
 		}
 
