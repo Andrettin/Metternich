@@ -1593,8 +1593,14 @@ QCoro::Task<void> domain_game_data::add_site(const site *site)
 
 	co_await this->on_site_gained(site, 1);
 
-	if (this->get_capital() == nullptr) {
-		co_await this->choose_capital();
+	if (site->is_holding() && site->get_game_data()->is_built()) {
+		if (
+			this->get_capital() == nullptr
+			|| (this->get_government_type()->is_holding_type_allowed(site->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_allowed(this->get_capital()->get_game_data()->get_holding_type()))
+			|| (this->get_government_type()->is_holding_type_preferred(site->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_preferred(this->get_capital()->get_game_data()->get_holding_type()))
+		) {
+			co_await this->choose_capital();
+		}
 	}
 
 	//discoveries are applied to all provinces in which a domain has holdings
