@@ -1798,19 +1798,9 @@ QCoro::Task<void> domain_game_data::choose_capital()
 	const site *best_capital = nullptr;
 
 	for (const site *site : this->get_sites()) {
-		const site_game_data *site_game_data = site->get_game_data();
-
-		if (!this->is_better_capital_than(site, best_capital, true)) {
-			continue;
+		if (this->is_better_capital_than(site, best_capital, true)) {
+			best_capital = site;
 		}
-
-		if (best_capital != nullptr) {
-			if (best_capital->get_game_data()->is_provincial_capital() && !site_game_data->is_provincial_capital()) {
-				continue;
-			}
-		}
-
-		best_capital = site;
 	}
 
 	co_await this->set_capital(best_capital);
@@ -1818,7 +1808,13 @@ QCoro::Task<void> domain_game_data::choose_capital()
 
 bool domain_game_data::is_better_capital_than(const site *site, const metternich::site *other_site, const bool consider_holding_level) const
 {
-	assert_throw(site->is_holding() && site->get_game_data()->is_built());
+	if (!site->is_holding()) {
+		return false;
+	}
+
+	if (!site->get_game_data()->is_built()) {
+		return false;
+	}
 
 	if (!site->get_game_data()->can_be_capital(false)) {
 		return false;

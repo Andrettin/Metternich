@@ -1143,10 +1143,10 @@ void province_game_data::choose_provincial_capital()
 		const bool is_holding_type_allowed = government_type->is_holding_type_allowed(site->get_game_data()->get_holding_type());
 
 		if (is_holding_type_allowed) {
-			if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
+			if (this->get_owner() != nullptr && site == this->get_owner()->get_game_data()->get_capital()) {
 				potential_provincial_capitals = { site };
 				break;
-			} else if (this->get_owner() != nullptr && site == this->get_owner()->get_game_data()->get_capital()) {
+			} else if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {
 				potential_provincial_capitals = { site };
 				break;
 			} else if (site == this->province->get_default_provincial_capital()) {
