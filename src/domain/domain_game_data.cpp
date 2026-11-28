@@ -1855,6 +1855,13 @@ bool domain_game_data::is_better_capital_than(const site *site, const metternich
 		return false;
 	}
 
+	//prefer sites who are the default provincial capital of their province
+	const bool is_default_provincial_capital = (site->get_game_data()->get_province()->get_default_provincial_capital() == site);
+	const bool is_other_default_provincial_capital = (other_site->get_game_data()->get_province()->get_default_provincial_capital() == other_site);
+	if (is_default_provincial_capital != is_other_default_provincial_capital) {
+		return is_default_provincial_capital;
+	}
+
 	if (consider_holding_level && site->get_game_data()->get_holding_level() != other_site->get_game_data()->get_holding_level()) {
 		return site->get_game_data()->get_holding_level() > other_site->get_game_data()->get_holding_level();
 	}
