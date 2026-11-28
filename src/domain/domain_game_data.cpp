@@ -1854,6 +1854,12 @@ QCoro::Task<void> domain_game_data::choose_capital()
 
 bool domain_game_data::is_better_capital(const site *site) const
 {
+	assert_throw(site->is_holding() && site->get_game_data()->is_built());
+
+	if (!site->get_game_data()->can_be_capital(false)) {
+		return false;
+	}
+
 	if (this->get_capital() == nullptr) {
 		return true;
 	}
@@ -1881,7 +1887,7 @@ bool domain_game_data::is_better_capital(const site *site) const
 	}
 
 	const province *default_capital_province = default_capital->get_game_data()->get_province();
-	if (site->get_game_data()->get_province() == default_capital_province) {
+	if (site->get_game_data()->get_province() == default_capital_province && this->get_capital()->get_game_data()->get_province() != default_capital_province) {
 		return true;
 	}
 

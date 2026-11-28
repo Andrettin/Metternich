@@ -860,7 +860,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		co_await this->check_features();
 
 		if (this->get_owner() != nullptr) {
-			if (this->can_be_capital(false) && this->get_owner()->get_game_data()->is_better_capital(this->site)) {
+			if (this->get_owner()->get_game_data()->is_better_capital(this->site)) {
 				co_await this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}
