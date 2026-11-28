@@ -1594,12 +1594,8 @@ QCoro::Task<void> domain_game_data::add_site(const site *site)
 	co_await this->on_site_gained(site, 1);
 
 	if (site->is_holding() && site->get_game_data()->is_built()) {
-		if (
-			this->get_capital() == nullptr
-			|| (this->get_government_type()->is_holding_type_allowed(site->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_allowed(this->get_capital()->get_game_data()->get_holding_type()))
-			|| (this->get_government_type()->is_holding_type_preferred(site->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_preferred(this->get_capital()->get_game_data()->get_holding_type()))
-		) {
-			co_await this->choose_capital();
+		if (this->is_better_capital(site)) {
+			co_await this->set_capital(site);
 		}
 	}
 
@@ -1854,6 +1850,32 @@ QCoro::Task<void> domain_game_data::choose_capital()
 	}
 
 	co_await this->set_capital(best_capital);
+}
+
+bool domain_game_data::is_better_capital(const site *site) const
+{
+	if (this->get_capital() == nullptr) {
+		return true;
+	}
+
+	if (this->get_government_type() != nullptr) {
+		const holding_type *site_holding_type = site->get_game_data()->get_holding_type();
+		const holding_type *capital_holding_type = this->get_capital()->get_game_data()->get_holding_type();
+
+		if (this->get_government_type()->is_holding_type_allowed(site_holding_type) && !this->get_government_type()->is_holding_type_allowed(capital_holding_type)) {
+			return true;
+		} else if (!this->get_government_type()->is_holding_type_allowed(site_holding_type) && this->get_government_type()->is_holding_type_allowed(capital_holding_type)) {
+			return false;
+		}
+
+		if (this->get_government_type()->is_holding_type_preferred(site_holding_type) && !this->get_government_type()->is_holding_type_preferred(capital_holding_type)) {
+			return true;
+		} else if (!this->get_government_type()->is_holding_type_preferred(site_holding_type) && this->get_government_type()->is_holding_type_preferred(capital_holding_type)) {
+			return false;
+		}
+	}
+
+	return false;
 }
 
 const province *domain_game_data::get_capital_province() const

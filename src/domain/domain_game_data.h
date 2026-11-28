@@ -318,6 +318,7 @@ public:
 
 	[[nodiscard]] QCoro::Task<void> set_capital(const site *capital);
 	[[nodiscard]] QCoro::Task<void> choose_capital();
+	bool is_better_capital(const site *site) const;
 
 	const province *get_capital_province() const;
 
