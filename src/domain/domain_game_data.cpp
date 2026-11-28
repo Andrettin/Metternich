@@ -1808,6 +1808,8 @@ QCoro::Task<void> domain_game_data::choose_capital()
 
 bool domain_game_data::is_better_capital_than(const site *site, const metternich::site *other_site, const bool consider_holding_level) const
 {
+	assert_throw(site->get_map_data()->is_on_map());
+
 	if (!site->is_holding()) {
 		return false;
 	}
@@ -1823,6 +1825,8 @@ bool domain_game_data::is_better_capital_than(const site *site, const metternich
 	if (other_site == nullptr) {
 		return true;
 	}
+
+	assert_throw(other_site->get_map_data()->is_on_map());
 
 	if (this->get_government_type() != nullptr) {
 		const holding_type *site_holding_type = site->get_game_data()->get_holding_type();
