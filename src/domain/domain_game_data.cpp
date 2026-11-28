@@ -1875,6 +1875,16 @@ bool domain_game_data::is_better_capital(const site *site) const
 		}
 	}
 
+	const metternich::site *default_capital = this->domain->get_default_capital();
+	if (site == default_capital) {
+		return true;
+	}
+
+	const province *default_capital_province = default_capital->get_game_data()->get_province();
+	if (site->get_game_data()->get_province() == default_capital_province) {
+		return true;
+	}
+
 	return false;
 }
 
