@@ -57,7 +57,7 @@ public:
 			co_return;
 		}
 
-		if (!holding->get_game_data()->can_be_capital()) {
+		if (!holding->get_game_data()->can_be_capital(true)) {
 			co_return;
 		}
 

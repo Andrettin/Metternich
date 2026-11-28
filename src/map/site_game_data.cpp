@@ -565,7 +565,7 @@ bool site_game_data::is_capital() const
 	return is_capital;
 }
 
-bool site_game_data::can_be_capital() const
+bool site_game_data::can_be_capital(const bool allowed_only) const
 {
 	if (!this->site->is_holding()) {
 		return false;
@@ -581,8 +581,10 @@ bool site_game_data::can_be_capital() const
 
 	const domain_game_data *owner_game_data = this->get_owner()->get_game_data();
 
-	if (!owner_game_data->get_government_type()->is_holding_type_allowed(this->get_holding_type())) {
-		return false;
+	if (allowed_only) {
+		if (!owner_game_data->get_government_type()->is_holding_type_allowed(this->get_holding_type())) {
+			return false;
+		}
 	}
 
 	if (owner_game_data->get_province_count() > 0 && this->get_province()->get_game_data()->get_owner() != this->get_owner()) {
@@ -858,7 +860,7 @@ QCoro::Task<void> site_game_data::set_holding_type(const metternich::holding_typ
 		co_await this->check_features();
 
 		if (this->get_owner() != nullptr) {
-			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital()) {
+			if (this->get_owner()->get_game_data()->get_capital() == nullptr && this->can_be_capital(false)) {
 				co_await this->get_owner()->get_game_data()->set_capital(this->site);
 			}
 		}

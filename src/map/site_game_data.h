@@ -128,7 +128,7 @@ public:
 
 	bool is_provincial_capital() const;
 	bool is_capital() const;
-	bool can_be_capital() const;
+	bool can_be_capital(const bool allowed_only) const;
 
 	int get_level() const;
 

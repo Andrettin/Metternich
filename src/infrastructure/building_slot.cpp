@@ -254,7 +254,7 @@ bool building_slot::can_have_building(const building_type *building) const
 		}
 	}
 
-	if (building->is_capitol() && !this->get_holding()->get_game_data()->can_be_capital()) {
+	if (building->is_capitol() && !this->get_holding()->get_game_data()->can_be_capital(true)) {
 		return false;
 	}
 

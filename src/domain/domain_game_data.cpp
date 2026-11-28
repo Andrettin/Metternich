@@ -1734,7 +1734,7 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 	}
 
 	if (capital != nullptr) {
-		assert_throw(capital->get_game_data()->can_be_capital());
+		assert_throw(capital->get_game_data()->can_be_capital(false));
 		assert_throw(capital->get_game_data()->get_owner() == this->domain);
 	}
 
@@ -1794,7 +1794,7 @@ QCoro::Task<void> domain_game_data::set_capital(const site *capital)
 QCoro::Task<void> domain_game_data::choose_capital()
 {
 	const site *default_capital = this->domain->get_default_capital();
-	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital()) {
+	if (default_capital->get_game_data()->get_owner() == this->domain && default_capital->get_game_data()->can_be_capital(true)) {
 		co_await this->set_capital(default_capital);
 		co_return;
 	}
@@ -1803,7 +1803,7 @@ QCoro::Task<void> domain_game_data::choose_capital()
 	if (default_capital_province != nullptr) {
 		const province_game_data *province_game_data = default_capital_province->get_game_data();
 
-		if (province_game_data->get_owner() == this->domain && province_game_data->get_provincial_capital() != nullptr && province_game_data->get_provincial_capital()->get_game_data()->get_owner() == this->domain && province_game_data->get_provincial_capital()->get_game_data()->can_be_capital()) {
+		if (province_game_data->get_owner() == this->domain && province_game_data->get_provincial_capital() != nullptr && province_game_data->get_provincial_capital()->get_game_data()->get_owner() == this->domain && province_game_data->get_provincial_capital()->get_game_data()->can_be_capital(true)) {
 			co_await this->set_capital(province_game_data->get_provincial_capital());
 			co_return;
 		}
@@ -1814,8 +1814,12 @@ QCoro::Task<void> domain_game_data::choose_capital()
 	for (const site *site : this->get_sites()) {
 		const site_game_data *site_game_data = site->get_game_data();
 
-		if (!site_game_data->can_be_capital()) {
+		if (!site_game_data->can_be_capital(false)) {
 			continue;
+		}
+
+		if (best_capital != nullptr && !this->get_government_type()->is_holding_type_allowed(best_capital->get_game_data()->get_holding_type()) && this->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+			best_capital = nullptr;
 		}
 
 		if (best_capital != nullptr && !this->get_government_type()->is_holding_type_preferred(best_capital->get_game_data()->get_holding_type()) && this->get_government_type()->is_holding_type_preferred(site_game_data->get_holding_type())) {
@@ -1823,6 +1827,10 @@ QCoro::Task<void> domain_game_data::choose_capital()
 		}
 
 		if (best_capital != nullptr) {
+			if (this->get_government_type()->is_holding_type_allowed(best_capital->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_allowed(site_game_data->get_holding_type())) {
+				continue;
+			}
+
 			if (this->get_government_type()->is_holding_type_preferred(best_capital->get_game_data()->get_holding_type()) && !this->get_government_type()->is_holding_type_preferred(site_game_data->get_holding_type())) {
 				continue;
 			}
