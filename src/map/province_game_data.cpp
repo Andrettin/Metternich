@@ -1198,7 +1198,7 @@ void province_game_data::choose_provincial_capital()
 	}
 }
 
-const site *province_game_data::get_best_provincial_capital_slot() const
+const site *province_game_data::get_best_provincial_capital_slot(const bool allowed_only) const
 {
 	if (this->get_owner() == nullptr) {
 		return nullptr;
@@ -1227,6 +1227,9 @@ const site *province_game_data::get_best_provincial_capital_slot() const
 		}
 
 		const bool is_holding_type_allowed = government_type->is_holding_type_allowed(site->get_holding_type());
+		if (allowed_only && !is_holding_type_allowed) {
+			continue;
+		}
 
 		if (is_holding_type_allowed) {
 			if (this->get_owner() != nullptr && site == this->get_owner()->get_default_capital()) {

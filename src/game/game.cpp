@@ -1017,17 +1017,23 @@ QCoro::Task<void> game::apply_sites()
 
 		province->get_game_data()->choose_provincial_capital();
 
+		bool is_provincial_capital_disallowed = false;
+
 		if (province->get_game_data()->get_provincial_capital() != nullptr) {
 			const domain *owner = province->get_game_data()->get_owner();
 			assert_throw(owner != nullptr);
 
 			if (owner->get_game_data()->get_government_type()->is_holding_type_allowed(province->get_game_data()->get_provincial_capital()->get_game_data()->get_holding_type())) {
 				continue;
+			} else {
+				is_provincial_capital_disallowed = true;
 			}
 		}
 
 		//if no allowed holding is built in the province, then ensure the best provincial capital slot is built
-		const site *provincial_capital_slot = province->get_game_data()->get_best_provincial_capital_slot();
+		//if the provincial capital already exists but is a disallowed holding, then it only makes sense to look for an allowed holding to construct the new provincial capital on
+		const bool allowed_only = is_provincial_capital_disallowed;
+		const site *provincial_capital_slot = province->get_game_data()->get_best_provincial_capital_slot(allowed_only);
 
 		if (provincial_capital_slot == nullptr) {
 			log::log_error(std::format("Province \"{}\" has no suitable provincial capital slot.", province->get_identifier()));

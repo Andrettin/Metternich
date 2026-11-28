@@ -203,7 +203,7 @@ public:
 	const site *get_provincial_capital() const;
 	void set_provincial_capital(const site *site);
 	void choose_provincial_capital();
-	const site *get_best_provincial_capital_slot() const;
+	const site *get_best_provincial_capital_slot(const bool allowed_only) const;
 	const QPoint &get_center_tile_pos() const;
 
 	int get_province_loyalty() const
